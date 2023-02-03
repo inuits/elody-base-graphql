@@ -1,7 +1,7 @@
-import * as express from 'express';
-import * as cors from 'cors';
+import express from 'express';
+import cors from 'cors';
 import { expressMiddleware } from '@apollo/server/express4';
-import  * as http from 'http';
+import  http from 'http';
 import { environment } from './environment';
 import { CollectionAPI } from './sources/collection';
 import {
