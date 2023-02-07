@@ -1,7 +1,7 @@
 import { Express } from 'express';
-import { Environment } from './environment';
+import { environment } from './environment';
 
-const applyConfigEndpoint = (app: Express, environment: Environment) => {
+const applyConfigEndpoint = (app: Express) => {
   app.get('/api/config', async (req, res) => {
     res.end(
       JSON.stringify({

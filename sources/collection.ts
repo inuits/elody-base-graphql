@@ -44,22 +44,22 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
-    try {
-      setId(data);
-      const ldesResource = data.data['foaf:page'];
-      const iiifPresentation =
-        data.data['Entiteit.isHetOnderwerpVan'][0]['@id'];
-      addCustomMetadataToEntity(data, [
-        { key: 'ldesResource', value: ldesResource, label: 'Bron' },
-        {
-          key: 'iiifPresentation',
-          value: iiifPresentation,
-          label: 'Presentatie',
-        },
-      ]);
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    //   setId(data);
+    //   const ldesResource = data.data['foaf:page'];
+    //   const iiifPresentation =
+    //     data.data['Entiteit.isHetOnderwerpVan'][0]['@id'];
+    //   addCustomMetadataToEntity(data, [
+    //     { key: 'ldesResource', value: ldesResource, label: 'Bron' },
+    //     {
+    //       key: 'iiifPresentation',
+    //       value: iiifPresentation,
+    //       label: 'Presentatie',
+    //     },
+    //   ]);
+    // } catch (e) {
+    //   console.log(e);
+    // }
     return data;
   }
 

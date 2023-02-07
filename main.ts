@@ -16,10 +16,19 @@ import applyConfigEndpoint from './configEndpoint';
 import applyMediaFileEndpoint from './sources/mediafiles';
 import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
-import { ContextValue } from './types';
-// import { applyCodegenEndpoints } from './codegenEndpoint';
+import { ContextValue, DataSources } from './types';
+import { applyCodegenEndpoints } from './codegenEndpoint';
 
-const start = (application: any) => {
+const addCustomEndpoints = (customEndpoints: Function[], app: any) => {
+  customEndpoints.forEach((endpoint: Function) => {
+    endpoint(app)
+  })
+
+}
+
+const start = (application: any, customEndpoints: Function[] = []) => {
+const applicationEndpoints = [applyConfigEndpoint, applyCodegenEndpoints, ...customEndpoints]
+
   if (environment.sentryEnabled) {
     Sentry.init({
       dsn: environment.sentryDsn,
@@ -30,7 +39,6 @@ const start = (application: any) => {
 
   const configureMiddleware = (app: any) => {
     applyAuthSession(app, environment.sessionSecret);
-    applyConfigEndpoint(app, environment);
     applyEnvironmentConfig({
       tokenLogging: environment.apollo.tokenLogging,
       staticJWT: environment.staticToken,
@@ -98,6 +106,10 @@ const start = (application: any) => {
       })
     );
 
+    if (customEndpoints){
+      addCustomEndpoints(applicationEndpoints, app)
+    }
+
     await new Promise<void>((resolve) =>
       httpServer.listen({ port: environment.port }, resolve)
     );
@@ -110,5 +122,5 @@ const start = (application: any) => {
 };
 
 export default start;
-export type { ContextValue };
+export type { ContextValue, DataSources };
 export { environment };
