@@ -1,4 +1,4 @@
-import { MediafileMetaData } from '../sources/forms';
+import { MediafileMetaData } from '../../baseGraphql/sources/forms';
 import {
   Form,
   Maybe,
