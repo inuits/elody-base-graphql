@@ -44,8 +44,8 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
+    setId(data);
     // try {
-    //   setId(data);
     //   const ldesResource = data.data['foaf:page'];
     //   const iiifPresentation =
     //     data.data['Entiteit.isHetOnderwerpVan'][0]['@id'];
