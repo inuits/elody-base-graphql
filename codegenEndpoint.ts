@@ -1,9 +1,8 @@
 import { parse } from 'graphql';
-// import { coghentQueries } from 'coghent-module';
 import { Express } from 'express';
 
-export const applyCodegenEndpoints = (app: Express) => {
-//   const queryObject = parse(JSON.stringify(coghentQueries));
+export const applyCodegenEndpoints = (app: Express, queries: any) => {
+//   const queryObject = parse(JSON.stringify(queries));
 //   app.get('api/codegen/queries', () => {
 //     return queryObject;
 //   });

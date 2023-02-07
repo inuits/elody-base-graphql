@@ -19,16 +19,13 @@ import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
 
-const addCustomEndpoints = (customEndpoints: Function[], app: any) => {
-  customEndpoints.forEach((endpoint: Function) => {
-    endpoint(app)
+const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
+  applicationEndpoints.forEach((endpoint: Function) => {
+    endpoint()
   })
-
 }
 
-const start = (application: any, customEndpoints: Function[] = []) => {
-const applicationEndpoints = [applyConfigEndpoint, applyCodegenEndpoints, ...customEndpoints]
-
+const start = (application: any, customEndpoints: Function[] = [], queries: any) => {
   if (environment.sentryEnabled) {
     Sentry.init({
       dsn: environment.sentryDsn,
@@ -43,19 +40,6 @@ const applicationEndpoints = [applyConfigEndpoint, applyCodegenEndpoints, ...cus
       tokenLogging: environment.apollo.tokenLogging,
       staticJWT: environment.staticToken,
     });
-    applyAuthEndpoints(
-      app,
-      environment.oauth.baseUrl,
-      environment.clientSecret
-    );
-
-    applyMediaFileEndpoint(
-      app,
-      environment.api.storageApiUrl,
-      environment.api.iiifUrl,
-      environment.staticToken
-    );
-    // applyCodegenEndpoints(app);
   };
 
   const startApolloServer = async () => {
@@ -105,9 +89,16 @@ const applicationEndpoints = [applyConfigEndpoint, applyCodegenEndpoints, ...cus
         },
       })
     );
+    const applicationEndpoints: Function[] = [
+      function(){applyAuthEndpoints(app, environment.oauth.baseUrl, environment.clientSecret)}, 
+      function(){applyConfigEndpoint(app)}, 
+      function(){applyCodegenEndpoints(app, queries)},
+      function(){applyMediaFileEndpoint(app, environment.api.storageApiUrl, environment.api.iiifUrl, environment.staticToken)},
+      ...customEndpoints
+    ]
 
-    if (customEndpoints){
-      addCustomEndpoints(applicationEndpoints, app)
+    if (applicationEndpoints){
+      addApplicationEndpoints(applicationEndpoints)
     }
 
     await new Promise<void>((resolve) =>
@@ -123,4 +114,4 @@ const applicationEndpoints = [applyConfigEndpoint, applyCodegenEndpoints, ...cus
 
 export default start;
 export type { ContextValue, DataSources };
-export { environment };
+export { environment, applyCodegenEndpoints };
