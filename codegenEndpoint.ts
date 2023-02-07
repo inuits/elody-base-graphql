@@ -1,5 +1,5 @@
 import { parse } from 'graphql';
-import { coghentQueries } from 'coghent-module';
+// import { coghentQueries } from 'coghent-module';
 import { Express } from 'express';
 
 export const applyCodegenEndpoints = (app: Express) => {
