@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { expressMiddleware } from '@apollo/server/express4';
-import  http from 'http';
+import http from 'http';
 import { environment } from './environment';
 import { CollectionAPI } from './sources/collection';
 import {
@@ -18,14 +18,19 @@ import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
+import { Application } from 'graphql-modules';
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
-    endpoint()
-  })
-}
+    endpoint();
+  });
+};
 
-const start = (application: any, customEndpoints: Function[] = [], queries: any) => {
+const start = (
+  application: Application,
+  customEndpoints: Function[] = [],
+  queries: any
+) => {
   if (environment.sentryEnabled) {
     Sentry.init({
       dsn: environment.sentryDsn,
@@ -90,15 +95,32 @@ const start = (application: any, customEndpoints: Function[] = [], queries: any)
       })
     );
     const applicationEndpoints: Function[] = [
-      function(){applyAuthEndpoints(app, environment.oauth.baseUrl, environment.clientSecret)}, 
-      function(){applyConfigEndpoint(app)}, 
-      function(){applyCodegenEndpoints(app, queries)},
-      function(){applyMediaFileEndpoint(app, environment.api.storageApiUrl, environment.api.iiifUrl, environment.staticToken)},
-      ...customEndpoints
-    ]
+      function () {
+        applyAuthEndpoints(
+          app,
+          environment.oauth.baseUrl,
+          environment.clientSecret
+        );
+      },
+      function () {
+        applyConfigEndpoint(app);
+      },
+      function () {
+        applyCodegenEndpoints(app, queries, application.schema);
+      },
+      function () {
+        applyMediaFileEndpoint(
+          app,
+          environment.api.storageApiUrl,
+          environment.api.iiifUrl,
+          environment.staticToken
+        );
+      },
+      ...customEndpoints,
+    ];
 
-    if (applicationEndpoints){
-      addApplicationEndpoints(applicationEndpoints)
+    if (applicationEndpoints) {
+      addApplicationEndpoints(applicationEndpoints);
     }
 
     await new Promise<void>((resolve) =>
