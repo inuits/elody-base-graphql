@@ -4,9 +4,9 @@
   "license": "MIT",
   "main": "./main.ts",
   "dependencies": {
-    "@graphql-codegen/cli": "^2.16.1",
     "@apollo/datasource-rest": "^4.3.2",
     "@apollo/server": "^4.2.1",
+    "@graphql-codegen/cli": "^2.16.1",
     "@graphql-modules/core": "^0.7.17",
     "@sentry/node": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
@@ -25,7 +25,7 @@
     "form-data": "^4.0.0",
     "graphql-import-node": "^0.0.5",
     "graphql-modules": "^2.1.0",
-    "graphql-upload": "^16.0.2",
+    "graphql-upload-ts": "^2.0.5",
     "http-proxy-middleware": "^2.0.6",
     "i": "^0.3.7",
     "inuits-apollo-server-auth": "^1.0.28",
@@ -74,6 +74,6 @@
     "webpack-node-externals": "^3.0.0"
   },
   "publishConfig": {
-    "registry": "https://nexus.inuits.io/repository/npm-private"
+    "registry": "https://nexus.inuits.io/repository/npm"
   }
 }
