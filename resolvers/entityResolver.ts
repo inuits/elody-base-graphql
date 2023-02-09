@@ -68,7 +68,7 @@ export const resolvePermission = async (
       collection
     );
   } catch (error) {
-    throw new Error('No permissions found');
+    // throw new Error('No permissions found');
   }
 
   return permissionsFromApi.map((item: string) =>
