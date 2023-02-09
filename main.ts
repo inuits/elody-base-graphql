@@ -19,6 +19,7 @@ import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
 import { Application } from 'graphql-modules';
+import { graphqlUploadExpress } from 'graphql-upload-ts';
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -52,6 +53,7 @@ const start = (
     const httpServer = http.createServer(app);
 
     const server = new ApolloServer<ContextValue>({
+      csrfPrevention: true,
       gateway: {
         async load() {
           return { executor: application.createApolloExecutor() };
@@ -122,6 +124,8 @@ const start = (
     if (applicationEndpoints) {
       addApplicationEndpoints(applicationEndpoints);
     }
+
+    app.use(graphqlUploadExpress());
 
     await new Promise<void>((resolve) =>
       httpServer.listen({ port: environment.port }, resolve)
