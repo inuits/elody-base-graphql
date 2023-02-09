@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "license": "MIT",
   "main": "./main.ts",
-  "private": true,
   "dependencies": {
     "@graphql-codegen/cli": "^2.16.1",
     "@apollo/datasource-rest": "^4.3.2",
@@ -73,5 +72,8 @@
     "webpack-cli": "^4.7.2",
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^3.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.inuits.io/repository/npm-private"
   }
 }
