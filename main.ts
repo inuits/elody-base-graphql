@@ -18,6 +18,7 @@ import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
+import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
 import multer from "multer";
@@ -99,6 +100,7 @@ const start = (
         },
       })
     );
+
     const applicationEndpoints: Function[] = [
       function () {
         applyAuthEndpoints(
@@ -112,6 +114,9 @@ const start = (
       },
       function () {
         applyCodegenEndpoints(app, queries, application.schema);
+      },
+      function () {
+        applyUploadEndpoint(app);
       },
       function () {
         applyMediaFileEndpoint(
