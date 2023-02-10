@@ -21,7 +21,6 @@ import { applyCodegenEndpoints } from './codegenEndpoint';
 import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
-import multer from "multer";
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -68,20 +67,20 @@ const start = (
       },
     });
 
-    const upload = multer();
     app.use(
       cors({
         credentials: false,
         origin: [environment.damsFrontend],
       }),
       express.json(),
-      express.urlencoded({ extended: true }),
-      upload.any()
+      express.urlencoded({ extended: true })
     );
 
     await server.start();
 
     configureMiddleware(app);
+
+    app.use(graphqlUploadExpress());
 
     app.use(
       environment.apollo.graphqlPath,
@@ -132,8 +131,6 @@ const start = (
     if (applicationEndpoints) {
       addApplicationEndpoints(applicationEndpoints);
     }
-
-    app.use(graphqlUploadExpress());
 
     await new Promise<void>((resolve) =>
       httpServer.listen({ port: environment.port }, resolve)

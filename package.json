@@ -10,7 +10,6 @@
     "@graphql-modules/core": "^0.7.17",
     "@sentry/node": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
-    "@types/multer": "^1.4.7",
     "@types/node": "^18.11.14",
     "apollo": "^2.33.4",
     "apollo-server": "^3.11.1",
@@ -31,7 +30,6 @@
     "i": "^0.3.7",
     "inuits-apollo-server-auth": "^1.0.28",
     "jwt-decode": "^3.1.2",
-    "multer": "1.4.5-lts.1",
     "node-fetch": "^2.6.7",
     "npm": "^8.19.2",
     "reflect-metadata": "^0.1.12"
