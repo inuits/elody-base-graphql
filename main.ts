@@ -20,6 +20,7 @@ import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
 import { Application } from 'graphql-modules';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
+import multer from "multer";
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -66,13 +67,15 @@ const start = (
       },
     });
 
+    const upload = multer();
     app.use(
       cors({
         credentials: false,
         origin: [environment.damsFrontend],
       }),
       express.json(),
-      express.urlencoded({ extended: true })
+      express.urlencoded({ extended: true }),
+      upload.any()
     );
 
     await server.start();
