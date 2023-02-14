@@ -54,7 +54,6 @@ const uploadMediafile = async (
 ) => {
   const upload = await fetch(uploadUrl, {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: addJwt(undefined, req, undefined),
     },
     method: 'POST',
@@ -72,6 +71,7 @@ export const applyUploadEndpoint = (app: Express) => {
         req
       );
       const upload = uploadMediafile(new URL(uploadUrl), req.body, req);
+      console.log(await upload);
       res.status((await upload).status).end();
     } catch (e) {
       res.status(500).end(e);
