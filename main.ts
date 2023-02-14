@@ -76,6 +76,7 @@ const start = (
       express.urlencoded({
         extended: true,
         limit: environment.maxUploadSize,
+        parameterLimit: 1000000,
       })
     );
 
