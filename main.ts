@@ -72,10 +72,10 @@ const start = (
         credentials: false,
         origin: [environment.damsFrontend],
       }),
-      express.json(),
+      express.json({ limit: environment.maxUploadSize }),
       express.urlencoded({
         extended: true,
-        limit: environment.maxUploadSize.toString() + 'mb',
+        limit: environment.maxUploadSize,
       })
     );
 

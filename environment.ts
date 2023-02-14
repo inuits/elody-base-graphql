@@ -85,5 +85,5 @@ export const environment: Environment = {
   sentryDsnFrontend: process.env.SENTRY_DSN_FRONTEND || '',
   nomadNamespace: process.env.NOMAD_NAMESPACE || '',
   ignorePermissions: process.env.IGNORE_PERMISSIONS === 'true',
-  maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250,
+  maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250 * 1024,
 };

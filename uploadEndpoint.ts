@@ -7,7 +7,7 @@ import {
   Entitytyping,
 } from '../../generated-types/type-defs';
 
-const baseURL = `${env.api.collectionApiUrl}`;
+const collectionBaseURL = `${env.api.collectionApiUrl}`;
 
 const createNewEntity = async (
   createMediafile: Boolean,
@@ -26,7 +26,7 @@ const createNewEntity = async (
   };
 
   const url = await fetch(
-    baseURL +
+    collectionBaseURL +
       `entities?create_mediafile=${
         createMediafile ? 1 : 0
       }&mediafile_filename=${mediafileName}`,
@@ -45,9 +45,16 @@ const createNewEntity = async (
   return url;
 };
 
-const uploadMediafile = async (uploadUrl: URL, mediafile: FormData) => {
+const uploadMediafile = async (
+  uploadUrl: URL,
+  mediafile: FormData,
+  req: Request
+) => {
   const upload = await fetch(uploadUrl, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: addJwt(undefined, req, undefined),
+    },
     method: 'POST',
     body: mediafile,
   });
@@ -62,7 +69,8 @@ export const applyUploadEndpoint = (app: Express) => {
         req.query.filename as string,
         req
       );
-      const upload = uploadMediafile(new URL(uploadUrl), req.body);
+      const upload = uploadMediafile(new URL(uploadUrl), req.body, req);
+      console.log(await upload);
       res.status((await upload).status).end();
     } catch (e) {
       res.status(500).end(e);
