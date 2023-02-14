@@ -8,14 +8,14 @@ let staticToken: string | undefined | null = undefined;
 export const addJwt = (proxyReq: any, req: any, res: any) => {
   const auth =
     req.session && req.session.auth && req.session.auth.accessToken
-      ? 'Bearer ' + req.session.auth.accessToken
-      : 'Bearer ' + staticToken;
+      ? req.session.auth.accessToken
+      : staticToken;
 
   if (proxyReq) {
     proxyReq.setHeader('Authorization', auth);
   }
 
-  return auth as string;
+  return ('Bearer ' + auth) as string;
 };
 
 const applyMediaFileEndpoint = (
