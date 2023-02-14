@@ -6,6 +6,8 @@ import {
   Metadata,
   Entitytyping,
 } from '../../generated-types/type-defs';
+import fetch from 'node-fetch';
+import FormData from 'form-data';
 
 const collectionBaseURL = `${env.api.collectionApiUrl}`;
 
