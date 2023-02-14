@@ -5,13 +5,17 @@ import fetch from 'node-fetch';
 let staticToken: string | undefined | null = undefined;
 
 // Proxy for storage API
-const addJwt = (proxyReq: any, req: any, res: any) => {
-  proxyReq.setHeader(
-    'Authorization',
-    'Bearer ' + req.session && req.session.auth && req.session.auth.accessToken
-      ? req.session.auth.accessToken
-      : staticToken
-  );
+export const addJwt = (proxyReq: any, req: any, res: any) => {
+  const auth =
+    req.session && req.session.auth && req.session.auth.accessToken
+      ? 'Bearer ' + req.session.auth.accessToken
+      : staticToken;
+
+  if (proxyReq) {
+    proxyReq.setHeader('Authorization', auth);
+  }
+
+  return auth as string;
 };
 
 const applyMediaFileEndpoint = (

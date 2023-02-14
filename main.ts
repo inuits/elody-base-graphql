@@ -73,7 +73,10 @@ const start = (
         origin: [environment.damsFrontend],
       }),
       express.json(),
-      express.urlencoded({ extended: true })
+      express.urlencoded({
+        extended: true,
+        limit: environment.maxUploadSize.toString() + 'mb',
+      })
     );
 
     await server.start();
