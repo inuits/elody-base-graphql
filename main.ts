@@ -20,7 +20,6 @@ import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
 import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
-import { graphqlUploadExpress } from 'graphql-upload-ts';
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -83,8 +82,6 @@ const start = (
     await server.start();
 
     configureMiddleware(app);
-
-    app.use(graphqlUploadExpress());
 
     app.use(
       environment.apollo.graphqlPath,
