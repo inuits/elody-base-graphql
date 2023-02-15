@@ -18,7 +18,7 @@ export class SearchAPI extends AuthRESTDataSource {
     skip: number,
     searchValue: SearchFilter
   ): Promise<EntitiesResults> {
-    let data = [];
+    let data;
     try {
       let search = searchValue;
       data = await this.post(
@@ -29,6 +29,6 @@ export class SearchAPI extends AuthRESTDataSource {
     } catch (e) {
       console.log(e);
     }
-    return data;
+    return data as EntitiesResults;
   }
 }

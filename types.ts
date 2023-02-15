@@ -1,15 +1,8 @@
-import { CollectionAPI } from './modules/baseGraphql/sources/collection';
-import { SearchAPI } from './modules/baseGraphql/sources/search';
-import { ImportAPI } from './modules/baseGraphql/sources/import';
-import { StorageAPI } from './modules/baseGraphql/sources/storage';
-import { AuthSessionResponse } from 'inuits-apollo-server-auth';
-import { Cookie, Session, SessionData } from 'express-session';
-import {
-  FilterOption,
-  Maybe,
-  MetadataFieldOption,
-} from './generated-types/type-defs';
-import { BaseContext } from '@apollo/server';
+import { CollectionAPI } from '../baseGraphql/sources/collection';
+import { SearchAPI } from '../baseGraphql/sources/search';
+import { ImportAPI } from '../importModule/sources/import';
+import { StorageAPI } from '../baseGraphql/sources/storage';
+import { Maybe, MetadataFieldOption } from '../../generated-types/type-defs';
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
