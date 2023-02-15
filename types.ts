@@ -2,7 +2,11 @@ import { CollectionAPI } from '../baseGraphql/sources/collection';
 import { SearchAPI } from '../baseGraphql/sources/search';
 import { ImportAPI } from '../importModule/sources/import';
 import { StorageAPI } from '../baseGraphql/sources/storage';
-import { Maybe, MetadataFieldOption } from '../../generated-types/type-defs';
+import {
+  AdvancedFilter,
+  Maybe,
+  MetadataFieldOption,
+} from '../../generated-types/type-defs';
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
@@ -14,7 +18,7 @@ export interface DataSources {
 export interface ContextValue {
   dataSources: DataSources;
 }
-
+// TODO: Remove if unused
 export type filter = {
   key: string;
   label: string;
@@ -24,7 +28,7 @@ export type filter = {
 };
 
 type Filters = {
-  filters: Record<string, Array<filter>>;
+  filters: Record<string, Array<AdvancedFilter>>;
 };
 
 export type Config = Record<string, Array<string>> & Filters;
