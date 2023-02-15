@@ -70,9 +70,8 @@ export const applyUploadEndpoint = (app: Express) => {
         req.query.filename as string,
         req
       );
-      const upload = uploadMediafile(new URL(uploadUrl), req.body, req);
-      console.log(await upload);
-      res.status((await upload).status).end();
+      const upload = await uploadMediafile(new URL(uploadUrl), req.body, req);
+      res.status(upload.status).end(await upload.json());
     } catch (e) {
       res.status(500).end(e);
     }
