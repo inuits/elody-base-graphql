@@ -10,7 +10,7 @@ import {
   applyEnvironmentConfig,
 } from 'inuits-apollo-server-auth';
 import { SearchAPI } from './sources/search';
-import { ImportAPI } from 'import-module/sources/import';
+import { ImportAPI } from 'import-module';
 import { StorageAPI } from './sources/storage';
 import applyConfigEndpoint from './configEndpoint';
 import applyMediaFileEndpoint from './sources/mediafiles';
