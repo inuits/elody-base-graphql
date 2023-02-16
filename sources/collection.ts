@@ -28,7 +28,7 @@ import { Config } from '../types';
 import { setId, setType } from 'base-module/parsers/entity';
 import { environment as env } from '../environment';
 import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
-import { parsedInput } from 'advanced-filter-module/parsers/advancedFilterParser';
+import { parsedInput } from 'advanced-filter-module';
 export type relationInput = Record<string, string>[];
 type updateNode = { id: String; order: number };
 let sixthCollectionId: string | 'no-id' = 'no-id';
