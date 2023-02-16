@@ -25,7 +25,7 @@ import {
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 import { Config } from '../types';
-import { setId, setType } from 'base-module/parsers/entity';
+import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../environment';
 import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
 import { parsedInput } from 'advanced-filter-module';
