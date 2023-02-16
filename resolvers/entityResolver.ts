@@ -61,7 +61,7 @@ export const resolvePermission = async (
   id: string,
   collection: Collection = Collection.Entities
 ): Promise<Permission[]> => {
-  let permissionsFromApi = [];
+  let permissionsFromApi: any = [];
   try {
     permissionsFromApi = await dataSources.CollectionAPI.getPermission(
       id,
