@@ -2,7 +2,7 @@ import {
   isKeyIncludedOrExcludedInMetaData,
   parseMedia,
   parseMetaDataAndMetaDataRelation,
-} from 'base-module/parsers/entity';
+} from '../parsers/entity';
 import {
   Collection,
   Entity,

@@ -2,7 +2,7 @@ import {
   EntitiesResults,
   SearchFilter,
 } from '../../../generated-types/type-defs';
-import { setId, setType } from 'base-module/parsers/entity';
+import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../environment';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 

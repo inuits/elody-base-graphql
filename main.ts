@@ -20,7 +20,7 @@ import { ContextValue, DataSources } from './types';
 import { applyCodegenEndpoints } from './codegenEndpoint';
 import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
-import { baseModule } from './baseModule/baseModule';
+import { baseModule, baseSchema } from './baseModule/baseModule';
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -147,4 +147,4 @@ const start = (
 
 export default start;
 export type { ContextValue, DataSources };
-export { environment, applyCodegenEndpoints, baseModule };
+export { environment, applyCodegenEndpoints, baseModule, baseSchema };
