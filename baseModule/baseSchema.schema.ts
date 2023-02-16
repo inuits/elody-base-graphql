@@ -180,7 +180,7 @@ export const baseSchema = gql`
     config_key: String
   }
 
-  enum RelationFieldViewMode { 
+  enum RelationFieldViewMode {
     small
     big
   }
@@ -207,27 +207,27 @@ export const baseSchema = gql`
     metadata: [MetadataFieldInput]
     identifiers: [String]
   }
-  
+
   type KeyValue {
     keyValue(key: String!): String!
   }
 
   type relationValues {
-      teaserMetadata(
-        keys: [String]!
-        excludeOrInclude: ExcludeOrInclude!
-      ): [MetadataAndRelation]!
-      id: String!
-      metaData: KeyValue
-      relationType: String!
+    teaserMetadata(
+      keys: [String]!
+      excludeOrInclude: ExcludeOrInclude!
+    ): [MetadataAndRelation]!
+    id: String!
+    metaData: KeyValue
+    relationType: String!
   }
 
   type IntialValues {
-      keyValue(key: String!): String
-      relation(key: String!): [relationValues]
+    keyValue(key: String!): String
+    relation(key: String!): [relationValues]
   }
 
-  enum ColumnSizes { 
+  enum ColumnSizes {
     fifty
     thirty
     seventy
@@ -243,12 +243,17 @@ export const baseSchema = gql`
     label(input: String): String!
   }
 
-  type WindowElementPanel {
+  type PanelMetaData {
     label(input: String!): String!
-    metaData(key: String!): String
+    key(input: String!): String!
   }
 
-  type WindowElement { 
+  type WindowElementPanel {
+    label(input: String!): String!
+    metaData: PanelMetaData!
+  }
+
+  type WindowElement {
     label(input: String): String!
     panels: WindowElementPanel!
   }
@@ -258,14 +263,14 @@ export const baseSchema = gql`
   }
 
   type EntityViewElements {
-    entityListElement: EntityListElement 
-    mediaFileElement: MediaFileElement 
+    entityListElement: EntityListElement
+    mediaFileElement: MediaFileElement
     windowElement: WindowElement
   }
 
   type Column {
-    size(size: ColumnSizes): ColumnSizes! 
-    elements: EntityViewElements! 
+    size(size: ColumnSizes): ColumnSizes!
+    elements: EntityViewElements!
   }
 
   interface Entity {

@@ -22,6 +22,7 @@ import {
   Form,
   Maybe,
   MediaFileElement,
+  PanelMetaData,
   Resolvers,
   SearchInputType,
   WindowElement,
@@ -314,8 +315,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    metaData: async (_source, { key }, { dataSources }) => {
-      return key ? key : 'no-key';
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
+  },
+  PanelMetaData: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    key: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
     },
   },
   Column: {
