@@ -307,10 +307,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return returnString;
     },
     relation: async (parent: any, { key }, { dataSources }) => {
-      return parent.relations.filter(
-        (relation: { label: string; type: string }) =>
-          relation.label === key && relation.type !== null
-      );
+      return parent.relations
+        ? parent.relations.filter(
+            (relation: { label: string; type: string }) =>
+              relation.label === key && relation.type !== null
+          )
+        : [];
     },
   },
   relationValues: {
