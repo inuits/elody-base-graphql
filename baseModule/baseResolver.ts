@@ -89,6 +89,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     UserPermissions: async (_source, _args, { dataSources }) => {
       return dataSources.CollectionAPI.getUserPermissions();
     },
+    Menu: async (_source, { name }, { dataSources }) => {
+      return {
+        menu: {
+          name,
+        },
+      };
+    },
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -320,7 +327,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.key;
     },
     relationType: async (parent: any, _args, { dataSources }) => {
-      return parent.type;
+      return parent.type === null ? 'no-type-in-api' : parent.type;
     },
     toBeDeleted: () => false,
   },
@@ -386,6 +393,38 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     windowElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElement;
+    },
+  },
+  MenuWrapper: {
+    menu: async (parent, {}, { dataSources }) => {
+      return parent.menu;
+    },
+  },
+  Menu: {
+    menuItem: async (
+      _source,
+      { label, linkType, destination },
+      { dataSources }
+    ) => {
+      return {
+        label,
+        linkType,
+        destination,
+      };
+    },
+  },
+  MenuItem: {
+    label: async (parent, {}, { dataSources }) => {
+      return parent.label;
+    },
+    linkType: async (parent, {}, { dataSources }) => {
+      return parent.linkType;
+    },
+    destination: async (parent, {}, { dataSources }) => {
+      return parent.destination;
+    },
+    subMenu: async (parent, { name }, { dataSources }) => {
+      return { name };
     },
   },
 };

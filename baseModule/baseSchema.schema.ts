@@ -31,6 +31,32 @@ export const baseSchema = gql`
     mediafiles
   }
 
+  enum MenuLinkType {
+    route
+    modal
+  }
+
+  # Menu Types
+  type MenuItem {
+    label: String!
+    linkType: MenuLinkType!
+    destination: String!
+    subMenu(name: String!): Menu
+  }
+
+  type Menu {
+    name: String!
+    menuItem(
+      label: String!
+      linkType: MenuLinkType!
+      destination: String!
+    ): MenuItem
+  }
+
+  type MenuWrapper {
+    menu: Menu!
+  }
+
   type Form {
     fields: [MetadataOrRelationField]!
   }
@@ -399,8 +425,9 @@ export const baseSchema = gql`
     Form(type: String!): Form
     User: User
     UserPermissions: userPermissions
+    Menu(name: String!): MenuWrapper
   }
-
+  #
   type Mutation {
     updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
     replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
