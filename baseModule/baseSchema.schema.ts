@@ -220,11 +220,30 @@ export const baseSchema = gql`
     id: String!
     metaData: KeyValue
     relationType: String!
+    toBeDeleted: Boolean!
   }
 
   type IntialValues {
     keyValue(key: String!): String
     relation(key: String!): [relationValues]
+  }
+
+  input RelationValuesInput {
+    label: String!
+    id: String!
+    metaData: [MetadataValuesInput!]!
+    relationType: String!
+    toBeDeleted: Boolean!
+  }
+
+  input MetadataValuesInput {
+    key: String!
+    value: String!
+  }
+
+  input EntityFormInput {
+    metadata: [MetadataValuesInput!]!
+    relations: [RelationValuesInput!]!
   }
 
   enum ColumnSizes {
@@ -283,6 +302,8 @@ export const baseSchema = gql`
     ): [MetadataAndRelation]!
     form: Form
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
 
   type BaseEntity implements Entity {
@@ -296,8 +317,9 @@ export const baseSchema = gql`
     media: Media
     form: Form
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
-
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
@@ -310,6 +332,8 @@ export const baseSchema = gql`
     form: Form
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
 
   type person implements Entity {
@@ -322,6 +346,8 @@ export const baseSchema = gql`
     ): [MetadataAndRelation]!
     form: Form
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
 
   type SimpleEntity implements Entity {
@@ -335,6 +361,8 @@ export const baseSchema = gql`
     media: Media
     form: Form
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
 
   type IntermediateEntity implements Entity {
@@ -348,6 +376,8 @@ export const baseSchema = gql`
     media: Media
     form: Form
     permission: [Permission]
+    intialValues: IntialValues!
+    entityView: ColumnList!
   }
 
   type EntitiesResults {
@@ -372,6 +402,7 @@ export const baseSchema = gql`
   }
 
   type Mutation {
+    updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
     replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
     replaceMetadata(id: String!, metadata: [MetadataInput!]!): [Metadata!]!
     setMediaPrimaire(entity_id: String!, mediafile_id: String!): String

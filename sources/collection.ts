@@ -29,8 +29,14 @@ import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../environment';
 import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
 import { parsedInput } from 'advanced-filter-module';
-export type relationInput = Record<string, string>[];
+export type relationInput = {
+  label: string;
+  key: string;
+  type: string;
+  [key: string]: string;
+};
 type updateNode = { id: String; order: number };
+export type InputRelationsDelete = Array<{ key: string; type: string }>;
 let sixthCollectionId: string | 'no-id' = 'no-id';
 
 export class CollectionAPI extends AuthRESTDataSource {
@@ -145,7 +151,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
-  async patchRelations(id: string, relations: relationInput): Promise<any[]> {
+  async patchRelations(id: string, relations: relationInput[]): Promise<any[]> {
     return await this.patch(`entities/${id}/relations`, { body: relations });
   }
 
@@ -233,7 +239,10 @@ export class CollectionAPI extends AuthRESTDataSource {
     return sixthCollectionId;
   }
 
-  async deleteRelations(id: string, relations: any[]): Promise<string> {
+  async deleteRelations(
+    id: string,
+    relations: InputRelationsDelete
+  ): Promise<string> {
     const body = relations;
     await this.delete(`entities/${id}/relations`, { body });
     return 'Delete success.';

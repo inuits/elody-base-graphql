@@ -1,5 +1,6 @@
 import { filterInputParser } from 'advanced-filter-module';
 import {
+  formInputToPatchDeleteRelationsMetadata,
   FormInputToRelations,
   isMetaDataRelation,
   MediaFileToMedia,
@@ -22,6 +23,8 @@ import {
   Form,
   Maybe,
   MediaFileElement,
+  MetadataInput,
+  MetadataValuesInput,
   PanelMetaData,
   Resolvers,
   SearchInputType,
@@ -29,6 +32,7 @@ import {
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
+import { InputRelationsDelete, relationInput } from '../sources/collection';
 
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
@@ -105,12 +109,41 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       const relationInput = FormInputToRelations(form);
-
+      //@ts-ignore
       if (relationInput && relationInput.length > 0)
+        //@ts-ignore
         await dataSources.CollectionAPI.patchRelations(id, relationInput);
 
       if (form?.Metadata)
         await dataSources.CollectionAPI.patchMetadata(id, form.Metadata);
+
+      return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
+    },
+    updateRelationsAndMetadata: async (
+      _source,
+      { id, data },
+      { dataSources }
+    ) => {
+      const dataForApi = formInputToPatchDeleteRelationsMetadata(
+        data.relations,
+        data.metadata
+      );
+
+      if (dataForApi.relationsToDelete !== 'nothing-to-delete')
+        await dataSources.CollectionAPI.deleteRelations(
+          id,
+          dataForApi.relationsToDelete
+        );
+      if (dataForApi.relationsToUpdate !== 'nothing-to-update')
+        await dataSources.CollectionAPI.patchRelations(
+          id,
+          dataForApi.relationsToUpdate
+        );
+      if (dataForApi.metadataToUpdate !== 'nothing-to-update')
+        await dataSources.CollectionAPI.patchMetadata(
+          id,
+          dataForApi.metadataToUpdate
+        );
 
       return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
     },
@@ -141,14 +174,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return dataSources.CollectionAPI.deleteData(id, path);
     },
     deleteRelations: async (_source, { id, metadata }, { dataSources }) => {
-      return dataSources.CollectionAPI.deleteRelations(id, metadata);
+      return dataSources.CollectionAPI.deleteRelations(
+        id,
+        metadata as InputRelationsDelete
+      );
     },
     updateMediafilesOrder: async (_source, { value }, { dataSources }) => {
       return dataSources.CollectionAPI.updateMediafilesOrder(value);
     },
   },
   Entity: {
-    __resolveType(obj: any) {
+    __resolveType(obj) {
       if (obj.type === 'asset') {
         return 'Asset';
       }
@@ -286,6 +322,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     relationType: async (parent: any, _args, { dataSources }) => {
       return parent.type;
     },
+    toBeDeleted: () => false,
   },
   MediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {

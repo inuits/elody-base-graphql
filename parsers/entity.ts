@@ -1,4 +1,7 @@
-import { relationInput } from "../../baseGraphql/sources/collection";
+import {
+  InputRelationsDelete,
+  relationInput,
+} from '../../baseGraphql/sources/collection';
 import {
   RelationMetaData,
   ExcludeOrInclude,
@@ -9,13 +12,15 @@ import {
   MetadataRelation,
   MetadataFormInput,
   MediaFileMetadata,
-} from "../../../generated-types/type-defs";
+  RelationValuesInput,
+  MetadataValuesInput,
+} from '../../../generated-types/type-defs';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
-  "key",
-  "value",
-  "type",
-  "label",
+  'key',
+  'value',
+  'type',
+  'label',
 ];
 
 export const setId = (entityRaw: any) => {
@@ -33,11 +38,11 @@ export const setType = (entityRaw: any, type: string) => {
 
 export const isMetaDataRelation = (input: {
   type?: string;
-}): "MetadataRelation" | "Metadata" => {
+}): 'MetadataRelation' | 'Metadata' => {
   if (input.type) {
-    return "MetadataRelation";
+    return 'MetadataRelation';
   }
-  return "Metadata";
+  return 'Metadata';
 };
 
 export const parseMetaDataAndMetaDataRelation = (
@@ -53,7 +58,7 @@ export const parseMetaDataAndMetaDataRelation = (
 export const parseMetaData = (input: any): Metadata => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ("" as string),
+    value: input.value ? input.value : ('' as string),
     lang: input.lang as string,
     label: input.label ? input.label : (input.key as string),
     immutable: input.immutable ? input.immutable : (false as boolean),
@@ -63,7 +68,7 @@ export const parseMetaData = (input: any): Metadata => {
 export const parseMetaDataRelation = (input: any): MetadataRelation => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ("" as string),
+    value: input.value ? input.value : ('' as string),
     label: input.label ? input.label : (input.key as string),
     type: input.type as string,
     metadataOnRelation: getMetaDataOnRelation(input),
@@ -103,7 +108,7 @@ export const isKeyIncludedOrExcludedInMetaData = (
   let returnValue: boolean = false;
 
   switch (excludeOrInclude) {
-    case "exclude":
+    case 'exclude':
       if (input.key && allowedKeys.includes(input.key)) {
         returnValue = false;
       } else {
@@ -160,10 +165,12 @@ export const MediaFileToMedia = (input: {
   return x;
 };
 
+export type relationInputOld = Record<string, string>[];
+
 export const FormInputToRelations = (
   form: Maybe<MetadataFormInput> | undefined
-): relationInput | undefined => {
-  let input: relationInput | undefined = undefined;
+): relationInputOld | undefined => {
+  let input: relationInputOld | undefined = undefined;
   if (form?.relations) {
     //REFACTOR NEEDED NO OBJECT IN METADATA
     input = form?.relations.map((relation) => {
@@ -192,8 +199,8 @@ export const FormInputToRelations = (
 
 export const FormInputToMetadata = (
   form: Maybe<MetadataFormInput> | undefined
-): relationInput | undefined => {
-  let input: relationInput | undefined = undefined;
+): relationInputOld | undefined => {
+  let input: relationInputOld | undefined = undefined;
   if (form?.relations) {
     //REFACTOR NEEDED NO OBJECT IN METADATA
     input = form?.relations.map((relation) => {
@@ -219,8 +226,59 @@ export const FormInputToMetadata = (
   return input;
 };
 
+type ApiInputToPatchDeleteRelationsMetadata = {
+  relationsToDelete: InputRelationsDelete | 'nothing-to-delete';
+  relationsToUpdate: relationInput[] | 'nothing-to-update';
+  metadataToUpdate: MetadataValuesInput[] | 'nothing-to-update';
+};
+export const formInputToPatchDeleteRelationsMetadata = (
+  relationsInput: RelationValuesInput[],
+  metadataInput: MetadataValuesInput[]
+): ApiInputToPatchDeleteRelationsMetadata => {
+  const output: ApiInputToPatchDeleteRelationsMetadata = {
+    relationsToDelete: 'nothing-to-delete',
+    relationsToUpdate: 'nothing-to-update',
+    metadataToUpdate:
+      metadataInput.length > 0 ? metadataInput : 'nothing-to-update',
+  };
+
+  relationsInput.forEach((relation) => {
+    if (relation.toBeDeleted) {
+      if (output.relationsToDelete === 'nothing-to-delete') {
+        output.relationsToDelete = [];
+      }
+
+      output.relationsToDelete.push({
+        key: relation.id,
+        type: relation.relationType,
+      });
+    }
+
+    if (!relation.toBeDeleted) {
+      let relationUpdated: relationInput = {
+        label: relation.label,
+        key: relation.id,
+        type: relation.relationType,
+      };
+      if (relation.metaData !== null) {
+        relation.metaData.forEach((metadata) => {
+          relationUpdated[metadata.key] = metadata.value;
+        });
+      }
+
+      if (output.relationsToUpdate === 'nothing-to-update') {
+        output.relationsToUpdate = [];
+      }
+
+      output.relationsToUpdate.push(relationUpdated);
+    }
+  });
+
+  return output;
+};
+
 export const parseIdToGetMoreData = (id: string) => {
-  if (id.includes("entities/") || id.includes("mediafiles/")) {
+  if (id.includes('entities/') || id.includes('mediafiles/')) {
     return id;
   }
   return `entities/${id}`;
