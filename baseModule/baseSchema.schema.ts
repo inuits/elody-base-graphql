@@ -250,7 +250,7 @@ export const baseSchema = gql`
   }
 
   type IntialValues {
-    keyValue(key: String!): String
+    keyValue(key: String!): String!
     relation(key: String!): [relationValues]
   }
 
