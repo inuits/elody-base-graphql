@@ -114,9 +114,6 @@ const start = (
         applyConfigEndpoint(app);
       },
       function () {
-        applyCodegenEndpoints(app, queries, application.schema);
-      },
-      function () {
         applyUploadEndpoint(app);
       },
       function () {
