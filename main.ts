@@ -17,7 +17,6 @@ import applyMediaFileEndpoint from './sources/mediafiles';
 import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
-import { applyCodegenEndpoints } from './codegenEndpoint';
 import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
 import { baseModule, baseSchema } from './baseModule/baseModule';
@@ -144,4 +143,4 @@ const start = (
 
 export default start;
 export type { ContextValue, DataSources };
-export { environment, applyCodegenEndpoints, baseModule, baseSchema };
+export { environment, baseModule, baseSchema };
