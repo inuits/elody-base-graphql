@@ -1,21 +1,18 @@
 import { Express, Request, Response } from 'express';
-import { environment as env, environment } from 'base-graphql';
+import { environment as env } from 'base-graphql';
 import { addJwt } from './sources/mediafiles';
 import {
   EntityInput,
   Metadata,
   Entitytyping,
 } from '../../generated-types/type-defs';
-import fetch from 'node-fetch';
-import FormData from 'form-data';
+import fetch, { Response as FetchResponse } from 'node-fetch';
 
 const collectionBaseURL = `${env.api.collectionApiUrl}`;
 
-const createNewEntity = async (
-  createMediafile: Boolean,
-  mediafileName: string,
-  req: Request
-): Promise<string> => {
+const createNewEntity = (
+  createMediafile: Boolean, mediafileName: string, request: Request
+): Promise<FetchResponse> => {
   const body: EntityInput = {
     id: mediafileName,
     type: Entitytyping.Asset,
@@ -27,7 +24,7 @@ const createNewEntity = async (
     ] as Metadata[],
   };
 
-  const url = await fetch(
+  return fetch(
     collectionBaseURL +
       `entities?create_mediafile=${
         createMediafile ? 1 : 0
@@ -37,44 +34,29 @@ const createNewEntity = async (
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: addJwt(undefined, req, undefined),
+        Authorization: addJwt(undefined, request, undefined),
         Accept: 'text/uri-list',
       },
     }
-  ).then(async (res) => {
-    return await res.text();
-  });
-  return url;
-};
-
-const uploadMediafile = async (
-  uploadUrl: URL,
-  mediafile: FormData,
-  req: Request
-) => {
-  const upload = await fetch(uploadUrl, {
-    headers: {
-      Authorization: addJwt(undefined, req, undefined),
-    },
-    method: 'POST',
-    body: mediafile,
-  });
-  return upload;
+  );
 };
 
 export const applyUploadEndpoint = (app: Express) => {
-  app.post(`/api/upload`, async (req: Request, res: Response) => {
+  app.post(`/api/upload`, async (request: Request, response: Response) => {
     try {
       const uploadUrl = await createNewEntity(
-        true,
-        req.query.filename as string,
-        req
+        true, request.query.filename as string, request
+      ).then(async (newEntityResponse: FetchResponse) => {
+        if (!newEntityResponse.ok) throw newEntityResponse;
+        return await newEntityResponse.text();
+      }).catch(async (newEntityResponse: FetchResponse) =>
+        response.status(newEntityResponse.status).end(await newEntityResponse.text())
       );
-      // const upload = await uploadMediafile(new URL(uploadUrl), req.body, req);
-      res.status(200).setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ url: uploadUrl }));
-    } catch (e) {
-      res.status(500).end(e);
+
+      response.status(200).setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify({ url: uploadUrl }));
+    } catch (exception) {
+      response.status(500).end(exception);
     }
   });
 };
