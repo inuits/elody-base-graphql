@@ -4,7 +4,6 @@ import { addJwt } from './sources/mediafiles';
 import {
   EntityInput,
   Metadata,
-  Entitytyping,
   MediaFileInput,
 } from '../../generated-types/type-defs';
 import fetch, { Response as FetchResponse } from 'node-fetch';
@@ -31,21 +30,21 @@ export const applyUploadEndpoint = (app: Express) => {
 };
 
 const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
-  const entityTypeToCreate = request.query.entityTypeToCreate as string;
+  const entityToCreate = request.query.entityToCreate as string;
   const filename = request.query.filename as string;
 
-  if (!entityTypeToCreate)
+  if (!entityToCreate)
     return await createMediafile(filename, request);
 
-  return await createNewEntity(true, filename, request)
+  return await createNewEntity(entityToCreate, filename, request)
 };
 
 const createNewEntity = (
-  createMediafile: Boolean, mediafileName: string, request: Request
+  entityToCreate: string, mediafileName: string, request: Request
 ): Promise<FetchResponse> => {
   const body: EntityInput = {
     id: mediafileName,
-    type: Entitytyping.Asset,
+    type: entityToCreate,
     metadata: [
       {
         key: 'title',
@@ -56,9 +55,7 @@ const createNewEntity = (
 
   return fetch(
     collectionBaseURL +
-      `entities?create_mediafile=${
-        createMediafile ? 1 : 0
-      }&mediafile_filename=${mediafileName}`,
+      `entities?create_mediafile=1&mediafile_filename=${mediafileName}`,
     {
       method: 'POST',
       body: JSON.stringify(body),
