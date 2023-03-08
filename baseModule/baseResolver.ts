@@ -96,6 +96,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         },
       };
     },
+    DropzoneEntityToCreate: async (_source, {}, { dataSources }) => {
+      return {
+        options: []
+      };
+    }
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -430,4 +435,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return { name };
     },
   },
+  DropzoneEntityToCreate: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    }
+  }
 };

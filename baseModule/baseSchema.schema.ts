@@ -57,6 +57,22 @@ export const baseSchema = gql`
     menu: Menu!
   }
 
+  type DropzoneEntityToCreate {
+    options(
+      input: [DropzoneEntityOptionInput!]!
+    ): [DropzoneEntityOption!]!
+  }
+
+  input DropzoneEntityOptionInput {
+    label: String!
+    value: String!
+  }
+
+  type DropzoneEntityOption {
+    label: String!
+    value: String!
+  }
+
   type Form {
     fields: [MetadataOrRelationField]!
   }
@@ -229,7 +245,7 @@ export const baseSchema = gql`
   input EntityInput {
     title: String
     id: String
-    type: Entitytyping
+    type: String
     metadata: [MetadataFieldInput]
     identifiers: [String]
   }
@@ -426,6 +442,7 @@ export const baseSchema = gql`
     User: User
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
+    DropzoneEntityToCreate: DropzoneEntityToCreate!
   }
   #
   type Mutation {
