@@ -289,9 +289,15 @@ export const baseSchema = gql`
   }
 
   enum ColumnSizes {
-    fifty
+    ten
+    twenty
     thirty
+    forty
+    fifty
+    sixty
     seventy
+    eighty
+    ninety
   }
 
   type EntityListElement {
