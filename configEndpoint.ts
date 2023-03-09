@@ -16,6 +16,10 @@ const applyConfigEndpoint = (app: Express) => {
           logoutEndpoint: environment.oauth.logoutEndpoint,
           redirectUri: environment.damsFrontend,
         },
+        features: {
+          useOldSingleEntityComponent:
+            environment.features.useOldSingleEntityComponent,
+        },
         SENTRY_ENABLED: environment.sentryEnabled,
         SENTRY_DSN_FRONTEND: environment.sentryDsnFrontend,
         NOMAD_NAMESPACE: environment.nomadNamespace,

@@ -27,6 +27,9 @@ export interface Environment {
     iiifUrlFrontend: string;
     storageApiUrl: string;
   };
+  features: {
+    useOldSingleEntityComponent: boolean;
+  };
   damsFrontend: string;
   graphqlEndpoint: string;
   staticToken: string | undefined | null;
@@ -75,6 +78,10 @@ export const environment: Environment = {
       process.env.IMAGE_API_URL_EXT || 'http://localhost:8182/iiif/image',
     storageApiUrl:
       process.env.STORAGE_API_URL || 'http://storage-api.dams.localhost:8100/',
+  },
+  features: {
+    useOldSingleEntityComponent:
+      process.env.OLD_SINGLE_ENTITY_COMPONENT === 'false',
   },
   damsFrontend:
     process.env.DAMS_FRONTEND_URL || 'http://dashboard.dams.localhost:8100',
