@@ -46,7 +46,7 @@ export const baseSchema = gql`
     icon: MenuIcons
     isLoggedIn: Boolean
   }
- 
+
   enum MenuIcons {
     BookOpen
     Create
@@ -319,6 +319,12 @@ export const baseSchema = gql`
 
   type MediaFileElement {
     label(input: String): String!
+  }
+
+  enum PanelType {
+    metadata
+    relation
+    mediainfo
   }
 
   type PanelMetaData {
