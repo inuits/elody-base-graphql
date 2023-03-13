@@ -23,6 +23,7 @@ import {
   Form,
   Maybe,
   MediaFileElement,
+  MenuIcons,
   MetadataInput,
   MetadataValuesInput,
   PanelMetaData,
@@ -411,13 +412,15 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, linkType, destination },
+      { label, linkType, destination, icon, isLoggedIn },
       { dataSources }
     ) => {
       return {
         label,
         linkType,
         destination,
+        icon,
+        isLoggedIn
       };
     },
   },
@@ -434,6 +437,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     subMenu: async (parent, { name }, { dataSources }) => {
       return { name };
     },
+    icon: async (parent, {}, { dataSources }) => {
+      return parent.icon as MenuIcons
+    },
+    isLoggedIn: async (parent, {}, { dataSources }) => {
+      return parent.isLoggedIn as boolean
+    }
   },
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {

@@ -37,11 +37,22 @@ export const baseSchema = gql`
   }
 
   # Menu Types
+
   type MenuItem {
     label: String!
     linkType: MenuLinkType!
     destination: String!
     subMenu(name: String!): Menu
+    icon: MenuIcons
+    isLoggedIn: Boolean
+  }
+ 
+  enum MenuIcons {
+    BookOpen
+    Create
+    Image
+    Upload
+    History
   }
 
   type Menu {
@@ -50,6 +61,8 @@ export const baseSchema = gql`
       label: String!
       linkType: MenuLinkType!
       destination: String!
+      icon: MenuIcons
+      isLoggedIn: Boolean
     ): MenuItem
   }
 
