@@ -21,6 +21,7 @@ import {
   EntitiesResults,
   FilterInput,
   AdvancedFilter,
+  RelationType,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -105,6 +106,10 @@ export class CollectionAPI extends AuthRESTDataSource {
   async addRelations(id: string, relations: any[]): Promise<any[]> {
     relations.map((relation) => (relation.key = 'entities/' + relation.key));
     return await this.post(`entities/${id}/relations`, { body: relations });
+  }
+
+  async getRelations(entityId: string): Promise<Metadata[]> {
+    return await this.get(`entities/${entityId}/relations`);
   }
 
   async getMediaFile(mediaFileId: String): Promise<any> {

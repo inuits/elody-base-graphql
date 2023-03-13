@@ -71,9 +71,7 @@ export const baseSchema = gql`
   }
 
   type DropzoneEntityToCreate {
-    options(
-      input: [DropzoneEntityOptionInput!]!
-    ): [DropzoneEntityOption!]!
+    options(input: [DropzoneEntityOptionInput!]!): [DropzoneEntityOption!]!
   }
 
   input DropzoneEntityOptionInput {
@@ -328,9 +326,16 @@ export const baseSchema = gql`
     key(input: String!): String!
   }
 
+  type PanelRelation {
+    value: String
+    label: String
+  }
+
   type WindowElementPanel {
     label(input: String!): String!
+    panelType(input: PanelType!): PanelType!
     metaData: PanelMetaData!
+    relation: [PanelRelation]
   }
 
   type WindowElement {

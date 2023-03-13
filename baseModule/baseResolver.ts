@@ -17,16 +17,19 @@ import {
   Column,
   ColumnSizes,
   EntitiesResults,
+  Entity,
   EntityListElement,
   EntityViewElements,
   ExcludeOrInclude,
   Form,
   Maybe,
   MediaFileElement,
+  Metadata,
   MenuIcons,
   MetadataInput,
   MetadataValuesInput,
   PanelMetaData,
+  PanelRelation,
   Resolvers,
   SearchInputType,
   WindowElement,
@@ -99,9 +102,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     DropzoneEntityToCreate: async (_source, {}, { dataSources }) => {
       return {
-        options: []
+        options: [],
       };
-    }
+    },
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -368,8 +371,19 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    panelType: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
+    },
+    relation: async (parent: any, {}, { dataSources }) => {
+      const relations = (
+        await dataSources.CollectionAPI.getRelations(parent.object_id)
+      ).map((rel: Metadata) => {
+        return { value: rel.value, label: rel.label };
+      });
+      return relations as [PanelRelation];
     },
   },
   PanelMetaData: {
@@ -447,6 +461,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
-    }
-  }
+    },
+  },
 };
