@@ -9,11 +9,30 @@ import {
 } from '../../generated-types/type-defs';
 import fetch, { Response as FetchResponse } from 'node-fetch';
 
+type UploadRequestData = {
+  body: any;
+  uri: string;
+};
+
+const csvImportServiceUrl = `${env.api.csvImportServiceUrl}`;
 const collectionBaseURL = `${env.api.collectionApiUrl}`;
 
+const filenamePlaceholder = "filename_placeholder";
+const createEntityUri = `${collectionBaseURL}entities?create_mediafile=1&mediafile_filename=${filenamePlaceholder}`;
+
 export const applyUploadEndpoint = (app: Express) => {
+  app.post(`/api/upload/request-data`, async (request: Request, response: Response) => {
+    try {
+      const uploadRequestData = await getUploadRequestData(request);
+      response.end(JSON.stringify(uploadRequestData));
+    } catch (exception) {
+      response.status(500).end(String(exception));
+    }
+  });
+
   app.post(`/api/upload`, async (request: Request, response: Response) => {
     try {
+      verifyUploadRequest(request);
       const uploadUrl = await getUploadUrl(request)
         .then(async (getUrlResponse: FetchResponse) => {
           if (!getUrlResponse.ok) throw getUrlResponse;
@@ -33,67 +52,94 @@ export const applyUploadEndpoint = (app: Express) => {
   });
 };
 
-const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
-  const entityToCreate = request.query.entityToCreate as string;
-  const filename = request.query.filename as string;
+const getUploadRequestData = async (request: Request): Promise<UploadRequestData> => {
+  const filetype = (request.query.filetype as string).trim();
+  const entityToCreate = request.query.entityToCreate as Entitytyping;
 
-  if (!entityToCreate) return await createMediafile(filename, request);
+  if (filetype === 'text/csv' && entityToCreate) {
+    const response = await fetch(`${csvImportServiceUrl}/parser/entities`, {
+        method: 'POST',
+        body: request.body,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: addJwt(undefined, request, undefined),
+        },
+      }
+    );
 
-  return await createNewEntity(entityToCreate, filename, request);
+    return {
+      body: JSON.parse(response.body.read().toString()),
+      uri: createEntityUri
+    };
+  }
+
+  let uploadRequestData = defaultMediafileData();
+  if (entityToCreate === "asset")
+    uploadRequestData = defaultEntityData(entityToCreate);
+
+  return uploadRequestData;
 };
 
-const createNewEntity = (
-  entityToCreate: string,
-  mediafileName: string,
-  request: Request
-): Promise<FetchResponse> => {
-  const body: EntityInput = {
-    id: mediafileName,
-    type: entityToCreate as Entitytyping,
+const defaultEntityData = (entityToCreate: Entitytyping): UploadRequestData => {
+  const entityBody: EntityInput = {
+    id: `${filenamePlaceholder}`,
+    type: entityToCreate,
     metadata: [
       {
         key: 'title',
-        value: mediafileName,
+        value: `${filenamePlaceholder}`,
       },
     ] as Metadata[],
   };
 
-  return fetch(
-    collectionBaseURL +
-      `entities?create_mediafile=1&mediafile_filename=${mediafileName}`,
-    {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: addJwt(undefined, request, undefined),
-        Accept: 'text/uri-list',
+  return {
+    body: entityBody as string,
+    uri: createEntityUri
+  };
+};
+
+const defaultMediafileData = (): UploadRequestData => {
+  const mediafileBody: MediaFileInput = {
+    filename: `${filenamePlaceholder}`,
+    metadata: [
+      {
+        key: 'title',
+        value:`${filenamePlaceholder}`,
       },
+    ] as Metadata[],
+  };
+
+  return {
+    body: mediafileBody as string,
+    uri: collectionBaseURL + 'mediafiles'
+  };
+};
+
+const verifyUploadRequest = (request: Request) => {
+  const replacePlaceholders = (obj: any, newValue: string) => {
+    for (const key in obj) {
+      const value = obj[key];
+      if (value === filenamePlaceholder)
+        obj[key] = newValue;
+      else if (typeof value === 'object')
+        replacePlaceholders(value, newValue);
     }
-  );
-};
-
-const createMediafile = (
-  mediafileName: string,
-  request: Request
-): Promise<FetchResponse> => {
-  const body: MediaFileInput = {
-    filename: mediafileName,
-    metadata: [
-      {
-        key: 'title',
-        value: mediafileName,
-      },
-    ] as Metadata[],
   };
 
-  return fetch(collectionBaseURL + 'mediafiles', {
+  const uploadRequestData = request.body as UploadRequestData;
+  const filename = request.query.filename as string;
+  replacePlaceholders(uploadRequestData.body, filename);
+};
+
+const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
+  const uploadRequestData = request.body as UploadRequestData;
+  return fetch(uploadRequestData.uri, {
     method: 'POST',
-    body: JSON.stringify(body),
+    body: JSON.stringify(uploadRequestData.body),
     headers: {
       'Content-Type': 'application/json',
       Authorization: addJwt(undefined, request, undefined),
-      Accept: 'text/uri-list',
-    },
+      Accept: 'text/uri-list'
+    }
   });
 };
