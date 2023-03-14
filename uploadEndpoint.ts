@@ -34,14 +34,14 @@ export const applyUploadEndpoint = (app: Express) => {
     try {
       verifyUploadRequest(request);
       const uploadUrl = await getUploadUrl(request)
-        .then(async (getUrlResponse: FetchResponse) => {
-          if (!getUrlResponse.ok) throw getUrlResponse;
-          return await getUrlResponse.text();
+        .then(async (urlResponse: FetchResponse) => {
+          if (!urlResponse.ok) throw urlResponse;
+          return await urlResponse.text();
         })
-        .catch(async (getUrlResponse: FetchResponse) =>
+        .catch(async (UrlResponse: FetchResponse) =>
           response
-            .status(getUrlResponse.status)
-            .end(await getUrlResponse.text())
+            .status(UrlResponse.status)
+            .end(await UrlResponse.text())
         );
 
       response.status(200).setHeader('Content-Type', 'application/json');
