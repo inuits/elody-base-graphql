@@ -12,7 +12,7 @@ export const addJwt = (proxyReq: any, req: any, res: any) => {
       : staticToken;
 
   if (proxyReq) {
-    proxyReq.setHeader('Authorization', auth);
+    proxyReq.setHeader('Authorization', 'Bearer ' + auth);
   }
 
   return ('Bearer ' + auth) as string;
