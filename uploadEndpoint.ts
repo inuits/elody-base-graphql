@@ -17,14 +17,18 @@ type UploadRequestData = {
 const csvImportServiceUrl = `${env.api.csvImportServiceUrl}`;
 const collectionBaseURL = `${env.api.collectionApiUrl}`;
 
-const filenamePlaceholder = "filename_placeholder";
+const filenamePlaceholder = 'filename_placeholder';
 const createEntityUri = `${collectionBaseURL}entities?create_mediafile=1&mediafile_filename=${filenamePlaceholder}`;
 
 export const applyUploadEndpoint = (app: Express) => {
   app.post(`/api/upload/request-data`, async (request: Request, response: Response) => {
     try {
-      const uploadRequestData = await getUploadRequestData(request);
-      response.end(JSON.stringify(uploadRequestData));
+      let body = '';
+      request.on('data', chunk => body += chunk.toString());
+      request.on('end', async () => {
+        const uploadRequestData = await getUploadRequestData(request, body);
+        response.end(JSON.stringify(uploadRequestData));
+      });
     } catch (exception) {
       response.status(500).end(String(exception));
     }
@@ -52,29 +56,36 @@ export const applyUploadEndpoint = (app: Express) => {
   });
 };
 
-const getUploadRequestData = async (request: Request): Promise<UploadRequestData> => {
+const getUploadRequestData = async (request: Request, body: string): Promise<UploadRequestData> => {
   const filetype = (request.query.filetype as string).trim();
   const entityToCreate = request.query.entityToCreate as Entitytyping;
 
   if (filetype === 'text/csv' && entityToCreate) {
     const response = await fetch(`${csvImportServiceUrl}/parser/entities`, {
         method: 'POST',
-        body: request.body,
+        body,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/csv',
           Authorization: addJwt(undefined, request, undefined),
         },
       }
     );
 
-    return {
-      body: JSON.parse(response.body.read().toString()),
-      uri: createEntityUri
-    };
+    let result = '';
+    response.body.on('data', chunk => result += chunk.toString());
+    return new Promise((resolve) => {
+      response.body.on('end', async () => {
+        const uploadRequestData = {
+          body: JSON.parse(result),
+          uri: createEntityUri
+        };
+        resolve(uploadRequestData);
+      });
+    });
   }
 
   let uploadRequestData = defaultMediafileData();
-  if (entityToCreate === "asset")
+  if (entityToCreate === 'asset')
     uploadRequestData = defaultEntityData(entityToCreate);
 
   return uploadRequestData;
