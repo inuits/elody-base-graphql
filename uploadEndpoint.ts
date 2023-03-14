@@ -129,6 +129,7 @@ const verifyUploadRequest = (request: Request) => {
   const uploadRequestData = request.body as UploadRequestData;
   const filename = request.query.filename as string;
   replacePlaceholders(uploadRequestData.body, filename);
+  uploadRequestData.uri = uploadRequestData.uri.replace(filenamePlaceholder, filename);
 };
 
 const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
