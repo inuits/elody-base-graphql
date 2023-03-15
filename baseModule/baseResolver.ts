@@ -347,10 +347,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
   },
   EntityListElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input;
     },
     type: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -363,6 +369,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
     panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
     },
@@ -370,6 +379,9 @@ export const baseResolver: Resolvers<ContextValue> = {
   WindowElementPanel: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input;
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
@@ -434,7 +446,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         linkType,
         destination,
         icon,
-        isLoggedIn
+        isLoggedIn,
       };
     },
   },
@@ -452,11 +464,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return { name };
     },
     icon: async (parent, {}, { dataSources }) => {
-      return parent.icon as MenuIcons
+      return parent.icon as MenuIcons;
     },
     isLoggedIn: async (parent, {}, { dataSources }) => {
-      return parent.isLoggedIn as boolean
-    }
+      return parent.isLoggedIn as boolean;
+    },
   },
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {

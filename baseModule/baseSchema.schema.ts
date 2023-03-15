@@ -313,12 +313,14 @@ export const baseSchema = gql`
 
   type EntityListElement {
     label(input: String): String
+    isCollapsed(input: Boolean!): Boolean!
     type(input: String): String
     key(input: String): String
   }
 
   type MediaFileElement {
     label(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
   }
 
   enum PanelType {
@@ -340,12 +342,14 @@ export const baseSchema = gql`
   type WindowElementPanel {
     label(input: String!): String!
     panelType(input: PanelType!): PanelType!
+    isCollapsed(input: Boolean!): Boolean!
     metaData: PanelMetaData!
     relation: [PanelRelation]
   }
 
   type WindowElement {
     label(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
     panels: WindowElementPanel!
   }
 
