@@ -81,7 +81,7 @@ export const environment: Environment = {
   },
   features: {
     useOldSingleEntityComponent:
-      process.env.OLD_SINGLE_ENTITY_COMPONENT === 'false',
+      process.env.OLD_SINGLE_ENTITY_COMPONENT === 'true',
   },
   damsFrontend:
     process.env.DAMS_FRONTEND_URL || 'http://dashboard.dams.localhost:8100',

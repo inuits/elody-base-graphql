@@ -270,6 +270,7 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
+    media: Media
     id: String!
     metaData: KeyValue
     relationType: String!
