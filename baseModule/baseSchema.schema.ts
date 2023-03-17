@@ -313,7 +313,7 @@ export const baseSchema = gql`
   }
 
   type EntityListElement {
-    label(input: String): String
+    label(input: String): String!
     isCollapsed(input: Boolean!): Boolean!
     type(input: String): String
     key(input: String): String
@@ -397,6 +397,7 @@ export const baseSchema = gql`
     intialValues: IntialValues!
     entityView: ColumnList!
   }
+
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
@@ -479,7 +480,7 @@ export const baseSchema = gql`
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
   }
-  #
+
   type Mutation {
     updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
     replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
