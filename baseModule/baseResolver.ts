@@ -5,6 +5,7 @@ import {
   isMetaDataRelation,
   MediaFileToMedia,
   parseIdToGetMoreData,
+  removePrefixFromId,
 } from '../parsers/entity';
 import {
   resolveMedia,
@@ -34,6 +35,7 @@ import {
   SearchInputType,
   WindowElement,
   WindowElementPanel,
+  Entitytyping,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
@@ -41,7 +43,7 @@ import { InputRelationsDelete, relationInput } from '../sources/collection';
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
-      if (type === 'MediaFile') {
+      if (type == Entitytyping.Mediafile) {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
         return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
@@ -201,10 +203,12 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   Entity: {
     __resolveType(obj) {
-      if (obj.type === 'asset') {
+      if (obj.type == Entitytyping.Asset) {
         return 'Asset';
+      } else if (obj.type == Entitytyping.Mediafile) {
+        return 'MediaFileEntity';
       }
-      return 'MediaFileEntity';
+      return 'BaseEntity';
     },
   },
   BaseEntity: {
@@ -274,6 +278,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         parent['_id'].replace('mediafiles/', ''),
         Collection.Mediafiles
       );
+    },
+    intialValues: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    entityView: async (parent: any, _args, { dataSources }) => {
+      return parent;
     },
   },
   MetadataRelation: {
@@ -390,12 +400,23 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as PanelMetaData;
     },
     relation: async (parent: any, {}, { dataSources }) => {
-      const relations = (
-        await dataSources.CollectionAPI.getRelations(parent.object_id)
-      ).map((rel: Metadata) => {
-        return { value: rel.value, label: rel.label };
-      });
-      return relations as [PanelRelation];
+      try {
+        const collection: Collection = parent.uuid.includes(Collection.Entities)
+          ? Collection.Entities
+          : Collection.Mediafiles;
+        const relations = (
+          await dataSources.CollectionAPI.getRelations(
+            removePrefixFromId(parent.uuid),
+            collection
+          )
+        ).map((rel: Metadata) => {
+          return { value: rel.value, label: rel.label };
+        });
+        return relations as [PanelRelation];
+      } catch (e) {
+        console.log('Item has no relations');
+        return [];
+      }
     },
   },
   PanelMetaData: {

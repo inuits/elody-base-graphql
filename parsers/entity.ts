@@ -14,6 +14,7 @@ import {
   MediaFileMetadata,
   RelationValuesInput,
   MetadataValuesInput,
+  Collection,
 } from '../../../generated-types/type-defs';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
@@ -277,9 +278,22 @@ export const formInputToPatchDeleteRelationsMetadata = (
   return output;
 };
 
-export const parseIdToGetMoreData = (id: string) => {
+export const parseIdToGetMoreData = (id: string): string => {
   if (id.includes('entities/') || id.includes('mediafiles/')) {
     return id;
   }
   return `entities/${id}`;
+};
+
+export const removePrefixFromId = (id: string) => {
+  const prefixes = Object.values(Collection).map(
+    (col: Collection) => col + '/'
+  );
+  prefixes.forEach((prefix: string) => {
+    if (id.includes(prefix)) {
+      id = id.replace(prefix, '');
+      return id;
+    }
+  });
+  return id;
 };

@@ -22,6 +22,7 @@ import {
   FilterInput,
   AdvancedFilter,
   RelationType,
+  Entitytyping,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -108,12 +109,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return await this.post(`entities/${id}/relations`, { body: relations });
   }
 
-  async getRelations(entityId: string): Promise<Metadata[]> {
-    return await this.get(`entities/${entityId}/relations`);
+  async getRelations(
+    entityId: string,
+    collection: Collection = Collection.Entities
+  ): Promise<Metadata[]> {
+    return await this.get(`${collection}/${entityId}/relations`);
   }
 
   async getMediaFile(mediaFileId: String): Promise<any> {
     const res = await this.get(`/mediafiles/${mediaFileId}`);
+    setId(res);
+    setType(res, Entitytyping.Mediafile);
     return res;
   }
 
@@ -379,13 +385,13 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (data.results) {
         data.results?.forEach((element: any) => {
           setId(element);
-          setType(element, 'MediaFile');
+          setType(element, Entitytyping.Mediafile);
         });
         result = data;
       } else {
         data.forEach((element: any) => {
           setId(element);
-          setType(element, 'MediaFile');
+          setType(element, Entitytyping.Mediafile);
         });
         result = { results: data, count: data.length, limit: limit };
       }
