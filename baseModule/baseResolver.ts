@@ -204,7 +204,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (obj.type === 'asset') {
         return 'Asset';
       }
-      return 'BaseEntity';
+      return 'MediaFileEntity';
     },
   },
   BaseEntity: {
