@@ -343,6 +343,7 @@ export const baseSchema = gql`
   type WindowElementPanel {
     label(input: String!): String!
     panelType(input: PanelType!): PanelType!
+    isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
     metaData: PanelMetaData!
     relation: [PanelRelation]
