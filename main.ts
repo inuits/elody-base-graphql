@@ -20,6 +20,25 @@ import { ContextValue, DataSources } from './types';
 import { applyUploadEndpoint } from './uploadEndpoint';
 import { Application } from 'graphql-modules';
 import { baseModule, baseSchema } from './baseModule/baseModule';
+import { InputField } from '../../generated-types/type-defs';
+import { baseFields } from './sources/forms';
+
+const addCustomFieldsToBaseFields = (customInputFields: {
+  [key: string]: InputField;
+}) => {
+  try {
+    Object.keys(customInputFields).forEach((fieldKey: string) => {
+      if (baseFields[fieldKey]) {
+        throw Error(
+          `The key ${fieldKey} does already exist in baseFields, please choose another one`
+        );
+      }
+      baseFields[fieldKey] = customInputFields[fieldKey];
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
@@ -30,7 +49,7 @@ const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
 const start = (
   application: Application,
   customEndpoints: Function[] = [],
-  queries: any
+  customInputFields: { [key: string]: InputField } | undefined = undefined
 ) => {
   if (environment.sentryEnabled) {
     Sentry.init({
@@ -128,6 +147,9 @@ const start = (
 
     if (applicationEndpoints) {
       addApplicationEndpoints(applicationEndpoints);
+    }
+    if (customInputFields) {
+      addCustomFieldsToBaseFields(customInputFields);
     }
 
     await new Promise<void>((resolve) =>

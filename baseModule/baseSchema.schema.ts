@@ -14,11 +14,20 @@ export const baseSchema = gql`
   }
 
   enum InputFieldTypes {
-    boolean
-    text
-    number
     checkbox
+    date
+    number
+    radio
+    range
+    text
+    color
     dropdown
+    dropdownMultiselect
+  }
+
+  enum BaseFieldType {
+    baseTextField
+    baseDateField
   }
 
   enum validation {
@@ -37,7 +46,6 @@ export const baseSchema = gql`
   }
 
   # Menu Types
-
   type MenuItem {
     label: String!
     linkType: MenuLinkType!
@@ -178,8 +186,11 @@ export const baseSchema = gql`
     payload: [String]
   }
 
-  type Form {
-    fields: [MetadataOrRelationField]!
+  type InputField {
+    type: InputFieldTypes!
+    acceptedEntityTypes: [String]
+    validation: Boolean
+    options: [MetadataFieldOption]
   }
 
   type Media {
@@ -333,6 +344,7 @@ export const baseSchema = gql`
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
+    inputField(type: BaseFieldType!): InputField!
   }
 
   type PanelRelation {

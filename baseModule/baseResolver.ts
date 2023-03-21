@@ -39,6 +39,7 @@ import {
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
+import { baseFields } from '../sources/forms';
 
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
@@ -390,6 +391,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    isEditable: async (_source, { input }, { dataSources }) => {
+      return input != undefined ? input : false;
+    },
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input;
     },
@@ -425,6 +429,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     key: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    inputField: async (_source, { type }, { dataSources }) => {
+      return baseFields[type];
     },
   },
   Column: {
