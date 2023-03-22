@@ -190,7 +190,8 @@ export const baseSchema = gql`
     type: InputFieldTypes!
     acceptedEntityTypes: [String]
     validation: Boolean
-    options: [MetadataFieldOption]
+    options: [String]
+    optionsConfigKey: String
   }
 
   type Media {
