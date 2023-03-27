@@ -38,7 +38,8 @@ import {
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
-import { DataSources } from '../types';
+import { baseFields } from '../sources/forms';
+
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
@@ -393,6 +394,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     key: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    inputField: async (_source, { type }, { dataSources }) => {
+      return baseFields[type];
     },
   },
   Column: {

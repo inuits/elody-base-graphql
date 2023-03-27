@@ -231,8 +231,11 @@ export const baseSchema = gql`
     payload: [String]
   }
 
-  type Form {
-    fields: [MetadataOrRelationField]!
+  type InputField {
+    type: InputFieldTypes!
+    acceptedEntityTypes: [String]
+    validation: Boolean
+    options: [MetadataFieldOption]
   }
 
   type Media {

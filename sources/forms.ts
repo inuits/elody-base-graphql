@@ -4,7 +4,6 @@ import {
   InputField,
   MetadataOrRelationField,
 } from '../../../generated-types/type-defs';
-import { DataSources } from '../types';
 
 export const baseFields: { [key: string]: InputField } = {
   baseTextField: {
@@ -13,19 +12,6 @@ export const baseFields: { [key: string]: InputField } = {
   baseDateField: {
     type: InputFieldTypes.Date,
   },
-};
-
-export const getOptionsByConfigKey = async (
-  field: InputField,
-  dataSources: DataSources
-): Promise<InputField> => {
-  if (!field.optionsConfigKey) return field;
-
-  const optionsForField = (await dataSources.CollectionAPI.getConfig())[
-    field.optionsConfigKey
-  ];
-  field.options = optionsForField;
-  return field;
 };
 
 // Remove this
