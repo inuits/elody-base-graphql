@@ -208,6 +208,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         return 'Asset';
       } else if (obj.type == Entitytyping.Mediafile) {
         return 'MediaFileEntity';
+      } else if (obj.type == Entitytyping.Manifest) {
+        return 'ManifestEntity';
       }
       return 'BaseEntity';
     },

@@ -30,6 +30,14 @@ export const baseSchema = gql`
     baseDateField
   }
 
+  type InputField {
+    type: InputFieldTypes!
+    acceptedEntityTypes: [String]
+    validation: Boolean
+    options: [String]
+    optionsConfigKey: String
+  }
+
   enum validation {
     required
     optional
@@ -40,19 +48,58 @@ export const baseSchema = gql`
     mediafiles
   }
 
-  enum MenuLinkType {
-    route
-    modal
+  #TYPEMODALS
+
+  enum ModalState {
+    Initial
+    Show
+    Hide
+    Loading
+  }
+
+  enum TypeModals {
+    Upload
+    Create
+  }
+
+  enum ModalChoices {
+    Import
+    Dropzone
+  }
+
+  input MenuTypeLinkInputModal {
+    typeModal: TypeModals!
+  }
+
+  input MenuTypeLinkInputRoute {
+    destination: String!
+  }
+
+  input MenuTypeLinkInput {
+    modal: MenuTypeLinkInputModal
+    route: MenuTypeLinkInputRoute
+  }
+
+  type MenuTypeLinkModal {
+    typeModal: TypeModals!
+  }
+
+  type MenuTypeLinkRoute {
+    destination: String!
+  }
+
+  type MenuTypeLink {
+    modal: MenuTypeLinkModal
+    route: MenuTypeLinkRoute
   }
 
   # Menu Types
   type MenuItem {
     label: String!
-    linkType: MenuLinkType!
-    destination: String!
     subMenu(name: String!): Menu
     icon: MenuIcons
     isLoggedIn: Boolean
+    typeLink: MenuTypeLink
   }
 
   enum MenuIcons {
@@ -62,15 +109,13 @@ export const baseSchema = gql`
     Upload
     History
   }
-
   type Menu {
     name: String!
     menuItem(
       label: String!
-      linkType: MenuLinkType!
-      destination: String!
       icon: MenuIcons
       isLoggedIn: Boolean
+      typeLink: MenuTypeLinkInput
     ): MenuItem
   }
 
@@ -282,7 +327,6 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
-    media: Media
     id: String!
     metaData: KeyValue
     relationType: String!
@@ -325,15 +369,13 @@ export const baseSchema = gql`
   }
 
   type EntityListElement {
-    label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String
     type(input: String): String
     key(input: String): String
   }
 
   type MediaFileElement {
     label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
   }
 
   enum PanelType {
