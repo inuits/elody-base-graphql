@@ -230,12 +230,13 @@ export const baseSchema = gql`
   type userPermissions {
     payload: [String]
   }
-
+  
   type InputField {
     type: InputFieldTypes!
     acceptedEntityTypes: [String]
     validation: Boolean
-    options: [MetadataFieldOption]
+    options: [String]
+    optionsConfigKey: String
   }
 
   type Media {
