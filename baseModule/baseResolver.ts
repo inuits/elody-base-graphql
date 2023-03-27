@@ -499,7 +499,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.typeLink as MenuTypeLink;
     },
   },
-
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
