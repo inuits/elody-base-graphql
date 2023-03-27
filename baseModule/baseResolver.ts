@@ -36,6 +36,7 @@ import {
   WindowElement,
   WindowElementPanel,
   Entitytyping,
+  MenuTypeLink,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
@@ -470,27 +471,20 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, linkType, destination, icon, isLoggedIn },
+      { label, icon, isLoggedIn, typeLink },
       { dataSources }
     ) => {
       return {
         label,
-        linkType,
-        destination,
         icon,
         isLoggedIn,
+        typeLink,
       };
     },
   },
   MenuItem: {
     label: async (parent, {}, { dataSources }) => {
       return parent.label;
-    },
-    linkType: async (parent, {}, { dataSources }) => {
-      return parent.linkType;
-    },
-    destination: async (parent, {}, { dataSources }) => {
-      return parent.destination;
     },
     subMenu: async (parent, { name }, { dataSources }) => {
       return { name };
@@ -501,7 +495,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     isLoggedIn: async (parent, {}, { dataSources }) => {
       return parent.isLoggedIn as boolean;
     },
+    typeLink: async (parent, {}, { dataSources }) => {
+      return parent.typeLink as MenuTypeLink;
+    },
   },
+
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
