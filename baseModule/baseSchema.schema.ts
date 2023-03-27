@@ -25,9 +25,12 @@ export const baseSchema = gql`
     dropdownMultiselect
   }
 
-  enum BaseFieldType {
-    baseTextField
-    baseDateField
+  type InputField {
+    type: InputFieldTypes!
+    acceptedEntityTypes: [String]
+    validation: Boolean
+    options: [String]
+    optionsConfigKey: String
   }
 
   enum validation {
@@ -39,20 +42,59 @@ export const baseSchema = gql`
     entities
     mediafiles
   }
+ 
+  #TYPEMODALS 
 
-  enum MenuLinkType {
-    route
-    modal
+  enum ModalState {
+    Initial 
+  Show 
+  Hide 
+  Loading
+}
+
+  enum TypeModals {
+    Upload
+    Create
+  }
+
+  enum ModalChoices {
+    Import
+    Dropzone
+  }
+
+  input MenuTypeLinkInputModal {
+    typeModal: TypeModals!
+  }
+
+  input MenuTypeLinkInputRoute {
+    destination: String!
+  }
+
+  input MenuTypeLinkInput {
+    modal: MenuTypeLinkInputModal
+    route: MenuTypeLinkInputRoute
+  }
+
+  type MenuTypeLinkModal {
+    typeModal: TypeModals!
+  }
+
+  type MenuTypeLinkRoute {
+    destination: String!
+  }
+
+  type MenuTypeLink {
+    modal: MenuTypeLinkModal
+    route: MenuTypeLinkRoute
   }
 
   # Menu Types
   type MenuItem {
     label: String!
-    linkType: MenuLinkType!
-    destination: String!
     subMenu(name: String!): Menu
     icon: MenuIcons
     isLoggedIn: Boolean
+    typeLink: MenuTypeLink
   }
 
   enum MenuIcons {
@@ -62,15 +104,13 @@ export const baseSchema = gql`
     Upload
     History
   }
-
   type Menu {
     name: String!
     menuItem(
       label: String!
-      linkType: MenuLinkType!
-      destination: String!
       icon: MenuIcons
       isLoggedIn: Boolean
+      typeLink: MenuTypeLinkInput
     ): MenuItem
   }
 
@@ -186,12 +226,8 @@ export const baseSchema = gql`
     payload: [String]
   }
 
-  type InputField {
-    type: InputFieldTypes!
-    acceptedEntityTypes: [String]
-    validation: Boolean
-    options: [String]
-    optionsConfigKey: String
+  type Form {
+    fields: [MetadataOrRelationField]!
   }
 
   type Media {
@@ -282,7 +318,6 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
-    media: Media
     id: String!
     metaData: KeyValue
     relationType: String!
@@ -325,15 +360,13 @@ export const baseSchema = gql`
   }
 
   type EntityListElement {
-    label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String
     type(input: String): String
     key(input: String): String
   }
 
   type MediaFileElement {
     label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
   }
 
   enum PanelType {
@@ -345,7 +378,6 @@ export const baseSchema = gql`
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
-    inputField(type: BaseFieldType!): InputField!
   }
 
   type PanelRelation {
@@ -356,15 +388,12 @@ export const baseSchema = gql`
   type WindowElementPanel {
     label(input: String!): String!
     panelType(input: PanelType!): PanelType!
-    isEditable(input: Boolean!): Boolean!
-    isCollapsed(input: Boolean!): Boolean!
     metaData: PanelMetaData!
     relation: [PanelRelation]
   }
 
   type WindowElement {
     label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
     panels: WindowElementPanel!
   }
 
@@ -411,7 +440,6 @@ export const baseSchema = gql`
     intialValues: IntialValues!
     entityView: ColumnList!
   }
-
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
@@ -494,7 +522,7 @@ export const baseSchema = gql`
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
   }
-
+  
   type Mutation {
     updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
     replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
