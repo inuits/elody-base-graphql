@@ -5,6 +5,7 @@ import {
   isMetaDataRelation,
   MediaFileToMedia,
   parseIdToGetMoreData,
+  removePrefixFromId,
 } from '../parsers/entity';
 import {
   resolveMedia,
@@ -38,8 +39,8 @@ import {
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
-import { baseFields } from '../sources/forms';
-
+import { DataSources } from '../types';
+import { baseFields, getOptionsByConfigKey } from '../sources/forms';
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
@@ -373,6 +374,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    isEditable: async (_source, { input }, { dataSources }) => {
+      return input != undefined ? input : false;
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
     },
@@ -380,14 +387,26 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as PanelMetaData;
     },
     relation: async (parent: any, {}, { dataSources }) => {
-      const relations = (
-        await dataSources.CollectionAPI.getRelations(parent.object_id)
-      ).map((rel: Metadata) => {
-        return { value: rel.value, label: rel.label };
-      });
-      return relations as [PanelRelation];
+      try {
+        const collection: Collection = parent.uuid.includes(Collection.Entities)
+          ? Collection.Entities
+          : Collection.Mediafiles;
+        const relations = (
+          await dataSources.CollectionAPI.getRelations(
+            removePrefixFromId(parent.uuid),
+            collection
+          )
+        ).map((rel: Metadata) => {
+          return { value: rel.value, label: rel.label };
+        });
+        return relations as [PanelRelation];
+      } catch (e) {
+        console.log('Item has no relations');
+        return [];
+      }
     },
   },
+
   PanelMetaData: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -396,7 +415,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     inputField: async (_source, { type }, { dataSources }) => {
-      return baseFields[type];
+      const field = baseFields[type];
+      const fieldWithOptions = getOptionsByConfigKey(field, dataSources);
+      return fieldWithOptions;
     },
   },
   Column: {
@@ -438,7 +459,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         label,
         icon,
         isLoggedIn,
-        typeLink
+        typeLink,
       };
     },
   },
@@ -457,13 +478,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     typeLink: async (parent, {}, { dataSources }) => {
       return parent.typeLink as MenuTypeLink;
-    }
+    },
   },
   DropzoneEntityToCreate: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },
   },
-  
 };
-
