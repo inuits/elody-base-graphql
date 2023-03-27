@@ -25,6 +25,11 @@ export const baseSchema = gql`
     dropdownMultiselect
   }
 
+  enum BaseFieldType {
+    baseTextField
+    baseDateField
+  }
+
   type InputField {
     type: InputFieldTypes!
     acceptedEntityTypes: [String]
@@ -42,15 +47,15 @@ export const baseSchema = gql`
     entities
     mediafiles
   }
- 
-  #TYPEMODALS 
+
+  #TYPEMODALS
 
   enum ModalState {
-    Initial 
-  Show 
-  Hide 
-  Loading
-}
+    Initial
+    Show
+    Hide
+    Loading
+  }
 
   enum TypeModals {
     Upload
@@ -378,6 +383,7 @@ export const baseSchema = gql`
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
+    inputField(type: BaseFieldType!): InputField!
   }
 
   type PanelRelation {
@@ -388,12 +394,15 @@ export const baseSchema = gql`
   type WindowElementPanel {
     label(input: String!): String!
     panelType(input: PanelType!): PanelType!
+    isEditable(input: Boolean!): Boolean!
+    isCollapsed(input: Boolean!): Boolean!
     metaData: PanelMetaData!
     relation: [PanelRelation]
   }
 
   type WindowElement {
     label(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
     panels: WindowElementPanel!
   }
 
@@ -522,7 +531,7 @@ export const baseSchema = gql`
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
   }
-  
+
   type Mutation {
     updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
     replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
