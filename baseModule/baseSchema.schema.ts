@@ -108,6 +108,7 @@ export const baseSchema = gql`
     Image
     Upload
     History
+    Apps
   }
   type Menu {
     name: String!
