@@ -456,22 +456,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
   }
 
-  type ManifestEntity implements Entity {
-    id: String!
-    uuid: String!
-    type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
-    media: Media
-    form: Form
-    teaserMetadata: [MetadataAndRelation]
-    permission: [Permission]
-    intialValues: IntialValues!
-    entityView: ColumnList!
-  }
-
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
