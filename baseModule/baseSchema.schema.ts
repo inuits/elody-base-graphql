@@ -230,7 +230,7 @@ export const baseSchema = gql`
   type userPermissions {
     payload: [String]
   }
-  
+
   type InputField {
     type: InputFieldTypes!
     acceptedEntityTypes: [String]
@@ -369,12 +369,14 @@ export const baseSchema = gql`
   }
 
   type EntityListElement {
+    isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
     type(input: String): String
     key(input: String): String
   }
 
   type MediaFileElement {
+    isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
   }
 
