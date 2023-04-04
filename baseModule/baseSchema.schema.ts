@@ -408,7 +408,6 @@ export const baseSchema = gql`
 
   type WindowElement {
     label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
     panels: WindowElementPanel!
   }
 
