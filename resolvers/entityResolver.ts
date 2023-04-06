@@ -20,6 +20,7 @@ export const resolveMedia = async (dataSources: DataSources, parent: any) => {
   // } catch {
   //   console.error(`no mediafiles for ${parent.id}`);
   // }
+  console.log(parent);
   return parseMedia(parent);
 };
 
