@@ -314,7 +314,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       let returnString: string = '';
       metaData.forEach((data: any) => {
-        returnString = returnString + ' ' + data.value;
+        returnString = data.value;
       });
       return returnString;
     },
@@ -350,10 +350,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
   },
   EntityListElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
     },
     type: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -378,7 +384,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input != undefined ? input : false;
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
-      return input;
+      return input !== undefined ? input : false;
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
