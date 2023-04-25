@@ -182,12 +182,6 @@ export const baseSchema = gql`
     MultiSelectInput
   }
 
-  input SearchFilter {
-    value: String
-    isAsc: Boolean
-    key: String
-  }
-
   input MetadataInput {
     key: String!
     value: String
@@ -274,7 +268,16 @@ export const baseSchema = gql`
     linkedEntity: Entity
   }
 
+  type SortOptions {
+    options(input: [MetadataFieldOptionInput!]!): [MetadataFieldOption!]!
+  }
+
   type MetadataFieldOption {
+    label: String
+    value: String!
+  }
+
+  input MetadataFieldOptionInput {
     label: String
     value: String!
   }
@@ -516,6 +519,7 @@ export const baseSchema = gql`
 
   type EntitiesResults {
     results: [Entity]
+    sortKeys(sortItems: [String]): [String]
     count: Int
     limit: Int
   }
@@ -535,6 +539,7 @@ export const baseSchema = gql`
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
+    SortOptions: SortOptions!
   }
 
   type Mutation {

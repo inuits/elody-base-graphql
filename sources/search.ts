@@ -22,8 +22,11 @@ export class SearchAPI extends AuthRESTDataSource {
     try {
       let search = searchValue;
       data = await this.post(
-        `search/collection?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
-        { body: { ...search, relation_filter: [], skip_relations: true } }
+        `search/collection?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&asc=${search.isAsc}&order_by=${search.order_by}`,
+        { body: { relation_filter: [], skip_relations: true } }
       );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
