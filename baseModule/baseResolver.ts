@@ -212,6 +212,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (obj.type === 'asset') {
         return 'Asset';
       }
+      else if (obj.type === 'museum'){
+        return 'Museum';
+      }
       return 'BaseEntity';
     },
   },
