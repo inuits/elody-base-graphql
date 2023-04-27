@@ -216,18 +216,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return dataSources.CollectionAPI.updateMediafilesOrder(value);
     },
   },
-  Entity: {
-    //@ts-ignore
-    //Should be moved to client specific module (types are not the same for all tenants)
-    __resolveType(obj) {
-      if (obj.type === 'asset') {
-        return 'Asset';
-      } else if (obj.type === 'museum') {
-        return 'Museum';
-      }
-      return 'BaseEntity';
-    },
-  },
   BaseEntity: {
     media: async (parent: any, _args, { dataSources }) => {
       return resolveMedia(dataSources, parent);
