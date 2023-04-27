@@ -70,11 +70,20 @@ export const baseResolver: Resolvers<ContextValue> = {
           skip || 0,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
         );
-      } else if (searchInputType === SearchInputType.AdvancedInputType) {
+      } else if (
+        searchInputType === SearchInputType.AdvancedInputType &&
+        advancedSearchValue?.length
+      ) {
         entities = await dataSources.CollectionAPI.GetAdvancedEntities(
           limit || 20,
           skip || 0,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
+        );
+      } else if (searchInputType === SearchInputType.AdvancedInputType) {
+        entities = await dataSources.CollectionAPI.getEntities(
+          limit || 20,
+          skip || 0,
+          searchValue || { value: '' }
         );
       } else {
         entities = await dataSources.SearchAPI.getEntities(

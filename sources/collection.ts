@@ -50,6 +50,28 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { payload: data };
   }
 
+  async getEntities(
+    limit: number,
+    skip: number,
+    searchValue: SearchFilter
+  ): Promise<EntitiesResults> {
+    let data;
+    try {
+      let search = searchValue;
+      data = await this.get(
+        `${Collection.Entities}?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&asc=${search.isAsc}&order_by=${search.order_by}`
+      );
+      data.results.forEach((element: any) => setId(element));
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(data);
+    return data as EntitiesResults;
+  }
+
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
     setId(data);
