@@ -108,6 +108,7 @@ export const baseSchema = gql`
     Image
     Upload
     History
+    Iot
   }
   type Menu {
     name: String!
@@ -436,7 +437,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     form: Form
     permission: [Permission]
     intialValues: IntialValues!

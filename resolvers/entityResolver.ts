@@ -82,7 +82,7 @@ export const addCustomMetadataToEntity = async (
   metadataInput: Metadata[]
 ): Promise<Entity> => {
   metadataInput.forEach((item: Metadata) => {
-    entity.metadata.push(item);
+    entity.metadata?.push(item);
   });
   return entity;
 };
