@@ -68,7 +68,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       console.log(e);
     }
-    console.log(data);
     return data as EntitiesResults;
   }
 
