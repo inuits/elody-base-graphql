@@ -7,14 +7,22 @@ import {
 import { DataSources } from '../types';
 
 export const baseFields: { [key: string]: InputField } = {
-  baseTextField: {
-    type: InputFieldTypes.Text,
+  baseCheckbox: {
+    type: InputFieldTypes.Checkbox,
   },
   baseDateField: {
     type: InputFieldTypes.Date,
   },
+  baseNumberField: {
+    type: InputFieldTypes.Number,
+  },
+  baseColorField: {
+    type: InputFieldTypes.Color,
+  },
+  baseTextField: {
+    type: InputFieldTypes.Text,
+  },
 };
-
 
 export const getOptionsByConfigKey = async (
   field: InputField,
@@ -28,7 +36,6 @@ export const getOptionsByConfigKey = async (
   field.options = optionsForField;
   return field;
 };
-
 
 // Remove this
 export const SourceField: MetadataOrRelationField = {
