@@ -440,7 +440,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     value: async (_source: any, { input }, { dataSources }) => {
-      return _source[input];
+      return _source[input] || '';
     },
     inputField: async (_source, { type }, { dataSources }) => {
       const field = baseFields[type];
