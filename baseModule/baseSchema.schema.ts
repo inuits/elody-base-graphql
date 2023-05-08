@@ -360,6 +360,18 @@ export const baseSchema = gql`
     relations: [RelationValuesInput!]!
   }
 
+  enum Orientations {
+    top
+    right
+    bottom
+    left
+  }
+
+  type ExpandButtonOptions {
+    shown(input: Boolean!): Boolean!
+    orientation(input: Orientations): Orientations
+  }
+
   enum ColumnSizes {
     ten
     twenty
@@ -390,6 +402,12 @@ export const baseSchema = gql`
     mediainfo
   }
 
+  type PanelInfo {
+    label(input: String!): String!
+    value(input: String!): String!
+    inputField(type: BaseFieldType!): InputField!
+  }
+
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
@@ -406,6 +424,7 @@ export const baseSchema = gql`
     panelType(input: PanelType!): PanelType!
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
+    info: PanelInfo!
     metaData: PanelMetaData!
     relation: [PanelRelation]
   }
@@ -413,6 +432,7 @@ export const baseSchema = gql`
   type WindowElement {
     label(input: String): String!
     panels: WindowElementPanel!
+    expandButtonOptions: ExpandButtonOptions
   }
 
   type ColumnList {

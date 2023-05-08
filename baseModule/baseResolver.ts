@@ -30,6 +30,7 @@ import {
   MetadataInput,
   MetadataValuesInput,
   PanelMetaData,
+  PanelInfo,
   PanelRelation,
   Resolvers,
   SearchInputType,
@@ -41,6 +42,8 @@ import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { DataSources } from '../types';
 import { baseFields, getOptionsByConfigKey } from '../sources/forms';
+import { Orientations } from '../../../generated-types/type-defs';
+import { ExpandButtonOptions } from '../../../generated-types/type-defs';
 export const baseResolver: Resolvers<ContextValue> = {
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
@@ -381,6 +384,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
     },
+    expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ExpandButtonOptions;
+    },
   },
   WindowElementPanel: {
     label: async (_source, { input }, { dataSources }) => {
@@ -394,6 +400,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
+    },
+    info: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelInfo;
     },
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
@@ -418,7 +427,27 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
     },
   },
-
+  ExpandButtonOptions: {
+    shown: async (_source, { input }, { dataSources }) => {
+      return input ? input : true;
+    },
+    orientation: async (_source, { input }, { dataSources }) => {
+      return input ? input : Orientations.Left;
+    },
+  },
+  PanelInfo: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    value: async (_source: any, { input }, { dataSources }) => {
+      return _source[input];
+    },
+    inputField: async (_source, { type }, { dataSources }) => {
+      const field = baseFields[type];
+      const fieldWithOptions = getOptionsByConfigKey(field, dataSources);
+      return fieldWithOptions;
+    },
+  },
   PanelMetaData: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
