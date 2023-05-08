@@ -234,7 +234,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -243,7 +242,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -252,7 +250,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -279,7 +276,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       let parsedMedia = MediaFileToMedia(parent);
       return parsedMedia;
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(
         dataSources,

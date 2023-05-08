@@ -458,7 +458,6 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -473,7 +472,6 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -487,7 +485,6 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
     media: Media
-    form: Form
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
@@ -502,7 +499,6 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -517,7 +513,6 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -532,7 +527,6 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]!
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
