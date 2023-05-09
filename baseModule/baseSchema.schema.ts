@@ -124,18 +124,80 @@ export const baseSchema = gql`
     menu: Menu!
   }
 
+  # DropdownOption
+  enum DamsIcons {
+    NoIcon
+    AngleDoubleLeft
+    AngleDoubleRight
+    AngleDown
+    AngleLeft
+    AngleRight
+    AngleUp
+    Apps
+    ArrowCircleLeft
+    ArrowCircleRight
+    AudioThumbnail
+    BookOpen
+    Check
+    CheckCircle
+    CheckSquare
+    Create
+    Cross
+    Desktop
+    DocumentInfo
+    Download
+    DownloadAlt
+    Edit
+    EditAlt
+    EllipsisV
+    ExclamationTriangle
+    Export
+    Eye
+    FileAlt
+    Filter
+    History
+    Image
+    Link
+    ListUl
+    Minus
+    Music
+    NoImage
+    Plus
+    PlusCircle
+    Redo
+    Save
+    SearchGlass
+    SearchMinus
+    SearchPlus
+    SignOut
+    SortDown
+    SortUp
+    SquareFull
+    Text
+    Trash
+    Upload
+    User
+    UserCircle
+  }
+
+  type DropdownOption {
+    icon: DamsIcons!
+    label: String!
+    value: String!
+  }
+
+  input DropdownOptionInput {
+    icon: DamsIcons!
+    label: String!
+    value: String!
+  }
+
   type DropzoneEntityToCreate {
-    options(input: [DropzoneEntityOptionInput!]!): [DropzoneEntityOption!]!
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
-  input DropzoneEntityOptionInput {
-    label: String!
-    value: String!
-  }
-
-  type DropzoneEntityOption {
-    label: String!
-    value: String!
+  type BulkOperations {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
   type Form {
@@ -555,6 +617,7 @@ export const baseSchema = gql`
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     SortOptions: SortOptions!
+    BulkOperations: BulkOperations!
   }
 
   type Mutation {

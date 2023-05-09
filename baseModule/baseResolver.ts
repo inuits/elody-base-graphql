@@ -125,6 +125,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         options: [],
       };
     },
+    BulkOperations: async (_source, {}, { dataSources }) => {
+      return { options: [] };
+    },
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -523,6 +526,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   SortOptions: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  BulkOperations: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },
