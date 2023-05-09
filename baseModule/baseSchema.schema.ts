@@ -330,7 +330,7 @@ export const baseSchema = gql`
     teaserMetadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     id: String!
     metaData: KeyValue
     relationType: String!
@@ -470,7 +470,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
@@ -483,7 +483,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
@@ -498,7 +498,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -511,7 +511,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
@@ -525,7 +525,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
