@@ -74,21 +74,6 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
     setId(data);
-    // try {
-    //   const ldesResource = data.data['foaf:page'];
-    //   const iiifPresentation =
-    //     data.data['Entiteit.isHetOnderwerpVan'][0]['@id'];
-    //   addCustomMetadataToEntity(data, [
-    //     { key: 'ldesResource', value: ldesResource, label: 'Bron' },
-    //     {
-    //       key: 'iiifPresentation',
-    //       value: iiifPresentation,
-    //       label: 'Presentatie',
-    //     },
-    //   ]);
-    // } catch (e) {
-    //   console.log(e);
-    // }
     return data;
   }
 
@@ -230,19 +215,15 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
   }
 
-  async createEntity(entity: EntityInput, objectId: string): Promise<any> {
+  async createEntity(
+    entity: EntityInput,
+    metadata: Metadata[] = []
+  ): Promise<any> {
     const body = entity as Entity;
     const newEntity = await this.post(`entities`, {
       body: {
         type: body.type,
-        id: objectId,
-        metadata: [
-          {
-            key: 'title',
-            value: entity.title,
-          },
-        ] as Metadata[],
-        object_id: objectId,
+        metadata,
       },
     });
     return setId(newEntity);
