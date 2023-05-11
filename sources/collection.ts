@@ -1,5 +1,4 @@
 import {
-  Entity,
   Metadata,
   MediaFile,
   PaginationInfo,
@@ -14,14 +13,11 @@ import {
   MediaFileMetadataInput,
   OrderArrayInput,
   MetadataInput,
-  SavedSearchesResults,
   SavedSearchInput,
   SavedSearchedEntity,
   SearchFilter,
   EntitiesResults,
   FilterInput,
-  AdvancedFilter,
-  RelationType,
   Entitytyping,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
@@ -29,7 +25,6 @@ import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
-import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
 import { parsedInput } from 'advanced-filter-module';
 export type relationInput = {
   label: string;
@@ -217,14 +212,19 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async createEntity(
     entity: EntityInput,
-    metadata: Metadata[] = []
+    metadata: Metadata[] = [],
+    customId: string | undefined = undefined
   ): Promise<any> {
-    const body = entity as Entity;
+    const body: any = {
+      type: entity.type,
+      metadata,
+    };
+    if (customId) {
+      body.id = customId;
+      body.object_id = customId;
+    }
     const newEntity = await this.post(`entities`, {
-      body: {
-        type: body.type,
-        metadata,
-      },
+      body,
     });
     return setId(newEntity);
   }
