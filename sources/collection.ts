@@ -28,7 +28,7 @@ import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
-import { environment as env } from '../environment';
+import { environment as env } from '../main';
 import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
 import { parsedInput } from 'advanced-filter-module';
 export type relationInput = {
@@ -42,7 +42,7 @@ export type InputRelationsDelete = Array<{ key: string; type: string }>;
 let sixthCollectionId: string | 'no-id' = 'no-id';
 
 export class CollectionAPI extends AuthRESTDataSource {
-  public baseURL = `${env.api.collectionApiUrl}/`;
+  public baseURL = `${env?.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
 
   async getUserPermissions(): Promise<{ payload: string[] }> {

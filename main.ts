@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { expressMiddleware } from '@apollo/server/express4';
 import http from 'http';
-import { environment } from './environment';
+import { Environment } from './environment';
 import { CollectionAPI } from './sources/collection';
 import {
   applyAuthEndpoints,
@@ -22,6 +22,8 @@ import { Application } from 'graphql-modules';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
+
+let environment: Environment | undefined = undefined;
 
 const addCustomFieldsToBaseFields = (customInputFields: {
   [key: string]: InputField;
@@ -48,22 +50,24 @@ const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
 
 const start = (
   application: Application,
+  appConfig: Environment,
   customEndpoints: Function[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined
 ) => {
-  if (environment.sentryEnabled) {
+  environment = appConfig;
+  if (appConfig.sentryEnabled) {
     Sentry.init({
-      dsn: environment.sentryDsn,
+      dsn: appConfig.sentryDsn,
       sendClientReports: false,
-      environment: environment.nomadNamespace,
+      environment: appConfig.nomadNamespace,
     });
   }
 
   const configureMiddleware = (app: any) => {
-    applyAuthSession(app, environment.sessionSecret);
+    applyAuthSession(app, appConfig.sessionSecret);
     applyEnvironmentConfig({
-      tokenLogging: environment.apollo.tokenLogging,
-      staticJWT: environment.staticToken,
+      tokenLogging: appConfig.apollo.tokenLogging,
+      staticJWT: appConfig.staticToken,
     });
   };
 
@@ -88,12 +92,12 @@ const start = (
     app.use(
       cors({
         credentials: false,
-        origin: [environment.damsFrontend],
+        origin: [appConfig.damsFrontend],
       }),
-      express.json({ limit: environment.maxUploadSize }),
+      express.json({ limit: appConfig.maxUploadSize }),
       express.urlencoded({
         extended: true,
-        limit: environment.maxUploadSize,
+        limit: appConfig.maxUploadSize,
         parameterLimit: 1000000,
       })
     );
@@ -103,7 +107,7 @@ const start = (
     configureMiddleware(app);
 
     app.use(
-      environment.apollo.graphqlPath,
+      appConfig.apollo.graphqlPath,
       expressMiddleware(server, {
         context: async ({ req }) => {
           const { cache } = server;
@@ -124,12 +128,12 @@ const start = (
       function () {
         applyAuthEndpoints(
           app,
-          environment.oauth.baseUrl,
-          environment.clientSecret
+          appConfig.oauth.baseUrl,
+          appConfig.clientSecret
         );
       },
       function () {
-        applyConfigEndpoint(app);
+        applyConfigEndpoint(app, appConfig);
       },
       function () {
         applyUploadEndpoint(app);
@@ -137,9 +141,9 @@ const start = (
       function () {
         applyMediaFileEndpoint(
           app,
-          environment.api.storageApiUrl,
-          environment.api.iiifUrl,
-          environment.staticToken
+          appConfig.api.storageApiUrl,
+          appConfig.api.iiifUrl,
+          appConfig.staticToken
         );
       },
       ...customEndpoints,
@@ -153,9 +157,9 @@ const start = (
     }
 
     await new Promise<void>((resolve) =>
-      httpServer.listen({ port: environment.port }, resolve)
+      httpServer.listen({ port: appConfig.port }, resolve)
     );
-    console.log(`Server is running on port ${environment.port}`);
+    console.log(`Server is running on port ${appConfig.port}`);
 
     return { app };
   };

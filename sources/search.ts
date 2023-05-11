@@ -3,11 +3,11 @@ import {
   SearchFilter,
 } from '../../../generated-types/type-defs';
 import { setId, setType } from '../parsers/entity';
-import { environment as env } from '../environment';
+import { environment as env } from '../main';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 export class SearchAPI extends AuthRESTDataSource {
-  public baseURL = `${env.api.searchApiUrl}/`;
+  public baseURL = `${env?.api.searchApiUrl}/`;
 
   getSkip(skip: number, limit: number) {
     return skip - 1 === 0 ? 0 : limit * (skip - 1);
