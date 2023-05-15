@@ -20,6 +20,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           useOldSingleEntityComponent:
             config.features.useOldSingleEntityComponent,
         },
+        routerConfig: config.routerConfig,
         SENTRY_ENABLED: config.sentryEnabled,
         SENTRY_DSN_FRONTEND: config.sentryDsnFrontend,
         NOMAD_NAMESPACE: config.nomadNamespace,

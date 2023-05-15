@@ -28,6 +28,7 @@ export interface Environment {
   features: {
     useOldSingleEntityComponent: boolean;
   };
+  routerConfig: any;
   damsFrontend: string;
   graphqlEndpoint: string;
   staticToken: string | undefined | null;
