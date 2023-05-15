@@ -37,6 +37,7 @@ import {
   WindowElement,
   WindowElementPanel,
   MenuTypeLink,
+  MediaFileElementTypes,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
@@ -360,6 +361,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
+    },
+    type: async (_source, { input }, { dataSources }) => {
+      return input || MediaFileElementTypes.Media;
     },
   },
   EntityListElement: {

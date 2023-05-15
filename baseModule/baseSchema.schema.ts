@@ -422,6 +422,11 @@ export const baseSchema = gql`
     relations: [RelationValuesInput!]!
   }
 
+  enum MediaFileElementTypes {
+    map
+    media
+  }
+
   enum Orientations {
     top
     right
@@ -456,6 +461,7 @@ export const baseSchema = gql`
   type MediaFileElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
+    type(input: MediaFileElementTypes): String!
   }
 
   enum PanelType {
