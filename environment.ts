@@ -38,4 +38,5 @@ export interface Environment {
   nomadNamespace: string;
   ignorePermissions: boolean;
   maxUploadSize: number;
+  bulkSelectAllSizeLimit: number;
 }

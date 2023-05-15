@@ -21,6 +21,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.useOldSingleEntityComponent,
         },
         routerConfig: config.routerConfig,
+        bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
         SENTRY_ENABLED: config.sentryEnabled,
         SENTRY_DSN_FRONTEND: config.sentryDsnFrontend,
         NOMAD_NAMESPACE: config.nomadNamespace,
