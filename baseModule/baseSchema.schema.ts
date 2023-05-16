@@ -60,6 +60,7 @@ export const baseSchema = gql`
   enum TypeModals {
     Upload
     Create
+    BulkOperations
   }
 
   enum ModalChoices {
@@ -194,6 +195,12 @@ export const baseSchema = gql`
 
   type DropzoneEntityToCreate {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
+  enum BulkOperationTypes {
+    downloadMediafiles
+    exportCsv
+    edit
   }
 
   type BulkOperations {
