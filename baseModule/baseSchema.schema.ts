@@ -462,6 +462,10 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MediaFileElementTypes): String!
+    metadata(
+      keys: [String]!
+      excludeOrInclude: ExcludeOrInclude!
+    ): [MetadataAndRelation]
   }
 
   enum PanelType {

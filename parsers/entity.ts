@@ -59,7 +59,7 @@ export const parseMetaDataAndMetaDataRelation = (
 export const parseMetaData = (input: any): Metadata => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ('' as string),
+    value: input.value ? input.value.toString() : ('' as string),
     lang: input.lang as string,
     label: input.label ? input.label : (input.key as string),
     immutable: input.immutable ? input.immutable : (false as boolean),
@@ -69,7 +69,7 @@ export const parseMetaData = (input: any): Metadata => {
 export const parseMetaDataRelation = (input: any): MetadataRelation => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ('' as string),
+    value: input.value ? input.value.toString() : ('' as string),
     label: input.label ? input.label : (input.key as string),
     type: input.type as string,
     metadataOnRelation: getMetaDataOnRelation(input),
