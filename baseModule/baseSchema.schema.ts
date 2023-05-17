@@ -179,6 +179,8 @@ export const baseSchema = gql`
     Upload
     User
     UserCircle
+    WindowGrid
+    WindowMaximize
   }
 
   type DropdownOption {
