@@ -45,7 +45,34 @@ import { DataSources } from '../types';
 import { baseFields, getOptionsByConfigKey } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
+import { GraphQLScalarType, Kind } from 'graphql';
 export const baseResolver: Resolvers<ContextValue> = {
+  StringOrInt: new GraphQLScalarType({
+    name: "StringOrInt",
+    description: "A String or an Int union type",
+    serialize(value) {
+      if (typeof value !== "string" && typeof value !== "number")
+        throw new Error("Value must be either a String or an Int");
+      if (typeof value === "number" && !Number.isInteger(value))
+        throw new Error("Number value must be an Int");
+      return value;
+    },
+    parseValue(value) {
+      if (typeof value !== "string" && typeof value !== "number")
+        throw new Error("Value must be either a String or an Int");
+      if (typeof value === "number" && !Number.isInteger(value))
+        throw new Error("Number value must be an Int");
+      return value;
+    },
+    parseLiteral(value) {
+      switch (value.kind) {
+        case Kind.INT: return parseInt(value.value, 10);
+        case Kind.STRING: return value.value;
+        default:
+          throw new Error("Value must be either a String or an Int");
+      }
+    }
+  }),
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
       if (type === 'MediaFile') {
@@ -127,6 +154,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
     },
     BulkOperations: async (_source, {}, { dataSources }) => {
+      return { options: [] };
+    },
+    PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
     },
   },
@@ -535,6 +565,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   BulkOperations: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  PaginationLimitOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },

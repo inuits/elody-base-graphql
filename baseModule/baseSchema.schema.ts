@@ -183,16 +183,17 @@ export const baseSchema = gql`
     WindowMaximize
   }
 
+  scalar StringOrInt
   type DropdownOption {
     icon: DamsIcons!
     label: String!
-    value: String!
+    value: StringOrInt!
   }
 
   input DropdownOptionInput {
     icon: DamsIcons!
     label: String!
-    value: String!
+    value: StringOrInt!
   }
 
   type DropzoneEntityToCreate {
@@ -340,8 +341,12 @@ export const baseSchema = gql`
     linkedEntity: Entity
   }
 
+  type PaginationLimitOptions {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
   type SortOptions {
-    options(input: [MetadataFieldOptionInput!]!): [MetadataFieldOption!]!
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
   type MetadataFieldOption {
@@ -637,6 +642,7 @@ export const baseSchema = gql`
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     SortOptions: SortOptions!
     BulkOperations: BulkOperations!
+    PaginationLimitOptions: PaginationLimitOptions!
   }
 
   type Mutation {
