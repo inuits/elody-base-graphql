@@ -27,6 +27,7 @@ export interface Environment {
   };
   features: {
     useOldSingleEntityComponent: boolean;
+    hasSimpleSearch?: boolean;
   };
   routerConfig: any;
   damsFrontend: string;

@@ -19,6 +19,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
         features: {
           useOldSingleEntityComponent:
             config.features.useOldSingleEntityComponent,
+          hasSimpleSearch: config.features.hasSimpleSearch,
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
