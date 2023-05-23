@@ -110,6 +110,7 @@ export const baseSchema = gql`
     Upload
     History
     Iot
+    Police
   }
   type Menu {
     name: String!
