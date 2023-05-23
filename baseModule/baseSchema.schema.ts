@@ -211,6 +211,10 @@ export const baseSchema = gql`
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
+  type BulkOperationCsvExportKeys {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
   type Form {
     fields: [MetadataOrRelationField]!
   }
@@ -642,8 +646,9 @@ export const baseSchema = gql`
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     SortOptions: SortOptions!
-    BulkOperations: BulkOperations!
     PaginationLimitOptions: PaginationLimitOptions!
+    BulkOperations: BulkOperations!
+    BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
   }
 
   type Mutation {
