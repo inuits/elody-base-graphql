@@ -48,30 +48,32 @@ import { ExpandButtonOptions } from '../../../generated-types/type-defs';
 import { GraphQLScalarType, Kind } from 'graphql';
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
-    name: "StringOrInt",
-    description: "A String or an Int union type",
+    name: 'StringOrInt',
+    description: 'A String or an Int union type',
     serialize(value) {
-      if (typeof value !== "string" && typeof value !== "number")
-        throw new Error("Value must be either a String or an Int");
-      if (typeof value === "number" && !Number.isInteger(value))
-        throw new Error("Number value must be an Int");
+      if (typeof value !== 'string' && typeof value !== 'number')
+        throw new Error('Value must be either a String or an Int');
+      if (typeof value === 'number' && !Number.isInteger(value))
+        throw new Error('Number value must be an Int');
       return value;
     },
     parseValue(value) {
-      if (typeof value !== "string" && typeof value !== "number")
-        throw new Error("Value must be either a String or an Int");
-      if (typeof value === "number" && !Number.isInteger(value))
-        throw new Error("Number value must be an Int");
+      if (typeof value !== 'string' && typeof value !== 'number')
+        throw new Error('Value must be either a String or an Int');
+      if (typeof value === 'number' && !Number.isInteger(value))
+        throw new Error('Number value must be an Int');
       return value;
     },
     parseLiteral(value) {
       switch (value.kind) {
-        case Kind.INT: return parseInt(value.value, 10);
-        case Kind.STRING: return value.value;
+        case Kind.INT:
+          return parseInt(value.value, 10);
+        case Kind.STRING:
+          return value.value;
         default:
-          throw new Error("Value must be either a String or an Int");
+          throw new Error('Value must be either a String or an Int');
       }
-    }
+    },
   }),
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
@@ -112,12 +114,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       } else if (searchInputType === SearchInputType.AdvancedInputType) {
         entities = await dataSources.CollectionAPI.getEntities(
-          limit || 20,
-          skip || 0,
-          searchValue || { value: '' }
-        );
-      } else {
-        entities = await dataSources.SearchAPI.getEntities(
           limit || 20,
           skip || 0,
           searchValue || { value: '' }
