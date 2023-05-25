@@ -57,7 +57,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         `${Collection.Entities}?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
-        )}&asc=${search.isAsc}&order_by=${search.order_by}`
+        )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
       );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
