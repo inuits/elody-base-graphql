@@ -12,6 +12,7 @@ import {
   Permission,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
+import { customSort } from '../helpers/helpers';
 
 export const resolveMedia = async (dataSources: DataSources, parent: any) => {
   // let mediafiles: MediaFile[] = [];
@@ -53,7 +54,7 @@ export const resolveMetadata = async (
       value: parent.type,
     });
   }
-
+  metadataArray = customSort(keys as string[], metadataArray, 'key');
   return metadataArray;
 };
 
