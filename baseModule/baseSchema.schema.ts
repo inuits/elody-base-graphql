@@ -1,5 +1,6 @@
 import { gql } from 'graphql-modules';
 export const baseSchema = gql`
+  scalar JSON
   # Generic
   enum ExcludeOrInclude {
     exclude
@@ -331,7 +332,7 @@ export const baseSchema = gql`
 
   type Metadata {
     key: String!
-    value: String!
+    value: JSON!
     lang: String
     label: String!
     immutable: Boolean
@@ -339,7 +340,7 @@ export const baseSchema = gql`
 
   type MetadataRelation {
     key: String!
-    value: String!
+    value: JSON!
     label: String!
     type: String
     metadataOnRelation: [RelationMetaData]
