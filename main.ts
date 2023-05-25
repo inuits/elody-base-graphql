@@ -22,6 +22,7 @@ import { Application } from 'graphql-modules';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
+import { applyExportEndpoint } from './exportEndpoint';
 
 let environment: Environment | undefined = undefined;
 
@@ -137,6 +138,9 @@ const start = (
       },
       function () {
         applyUploadEndpoint(app);
+      },
+      function () {
+        applyExportEndpoint(app);
       },
       function () {
         applyMediaFileEndpoint(

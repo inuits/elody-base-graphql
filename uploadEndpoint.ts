@@ -14,11 +14,8 @@ type UploadRequestData = {
   uri: string;
 };
 
-const csvImportServiceUrl = `${env?.api.csvImportServiceUrl}`;
-const collectionBaseURL = `${env?.api.collectionApiUrl}`;
-
 const filenamePlaceholder = 'filename_placeholder';
-const createEntityUri = `${collectionBaseURL}entities?create_mediafile=1&mediafile_filename=${filenamePlaceholder}`;
+const createEntityUriQueryParameters = `create_mediafile=1&mediafile_filename=${filenamePlaceholder}`;
 
 export const applyUploadEndpoint = (app: Express) => {
   app.post(
@@ -65,7 +62,7 @@ const getUploadRequestData = async (
   const entityToCreate = request.query.entityToCreate as Entitytyping;
 
   if (filetype === 'text/csv' && entityToCreate) {
-    const response = await fetch(`${csvImportServiceUrl}/parser/entities`, {
+    const response = await fetch(`${env?.api.csvImportServiceUrl}/parser/entities`, {
       method: 'POST',
       body,
       headers: {
@@ -80,7 +77,7 @@ const getUploadRequestData = async (
       response.body.on('end', async () => {
         const uploadRequestData = {
           body: JSON.parse(result),
-          uri: createEntityUri,
+          uri: `${env?.api.collectionApiUrl}/entities?${createEntityUriQueryParameters}`,
         };
         resolve(uploadRequestData);
       });
@@ -108,7 +105,7 @@ const defaultEntityData = (entityToCreate: Entitytyping): UploadRequestData => {
 
   return {
     body: entityBody as string,
-    uri: createEntityUri,
+    uri: `${env?.api.collectionApiUrl}/entities?${createEntityUriQueryParameters}`,
   };
 };
 
@@ -125,7 +122,7 @@ const defaultMediafileData = (): UploadRequestData => {
 
   return {
     body: mediafileBody as string,
-    uri: collectionBaseURL + 'mediafiles',
+    uri: env?.api.collectionApiUrl + 'mediafiles',
   };
 };
 
