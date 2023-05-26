@@ -1,29 +1,32 @@
 import { Express } from 'express';
-import { environment } from './environment';
+import { Environment } from './environment';
 
-const applyConfigEndpoint = (app: Express) => {
+const applyConfigEndpoint = (app: Express, config: Environment) => {
   app.get('/api/config', async (req, res) => {
     res.end(
       JSON.stringify({
-        graphQlLink: environment.graphqlEndpoint,
-        iiifLink: environment.api.iiifUrlFrontend,
+        graphQlLink: config.graphqlEndpoint,
+        iiifLink: config.api.iiifUrlFrontend,
         oidc: {
-          baseUrl: environment.oauth.baseUrlFrontend,
-          clientId: environment.oauth.clientId,
-          tokenEndpoint: environment.oauth.tokenEndpoint,
-          authEndpoint: environment.oauth.authEndpoint,
-          apiCodeEndpoint: environment.oauth.apiCodeEndpoint,
-          logoutEndpoint: environment.oauth.logoutEndpoint,
-          redirectUri: environment.damsFrontend,
+          baseUrl: config.oauth.baseUrlFrontend,
+          clientId: config.oauth.clientId,
+          tokenEndpoint: config.oauth.tokenEndpoint,
+          authEndpoint: config.oauth.authEndpoint,
+          apiCodeEndpoint: config.oauth.apiCodeEndpoint,
+          logoutEndpoint: config.oauth.logoutEndpoint,
+          redirectUri: config.damsFrontend,
         },
         features: {
           useOldSingleEntityComponent:
-            environment.features.useOldSingleEntityComponent,
+            config.features.useOldSingleEntityComponent,
+          hasSimpleSearch: config.features.hasSimpleSearch,
         },
-        SENTRY_ENABLED: environment.sentryEnabled,
-        SENTRY_DSN_FRONTEND: environment.sentryDsnFrontend,
-        NOMAD_NAMESPACE: environment.nomadNamespace,
-        IGNORE_PERMISSIONS: environment.ignorePermissions,
+        routerConfig: config.routerConfig,
+        bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
+        SENTRY_ENABLED: config.sentryEnabled,
+        SENTRY_DSN_FRONTEND: config.sentryDsnFrontend,
+        NOMAD_NAMESPACE: config.nomadNamespace,
+        IGNORE_PERMISSIONS: config.ignorePermissions,
       })
     );
   });

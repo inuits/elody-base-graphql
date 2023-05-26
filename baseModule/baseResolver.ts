@@ -30,6 +30,7 @@ import {
   MetadataInput,
   MetadataValuesInput,
   PanelMetaData,
+  PanelInfo,
   PanelRelation,
   Resolvers,
   SearchInputType,
@@ -37,15 +38,47 @@ import {
   WindowElementPanel,
   Entitytyping,
   MenuTypeLink,
+  MediaFileElementTypes,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
+import { DataSources } from '../types';
 import { baseFields, getOptionsByConfigKey } from '../sources/forms';
-
+import { Orientations } from '../../../generated-types/type-defs';
+import { ExpandButtonOptions } from '../../../generated-types/type-defs';
+import { GraphQLScalarType, Kind } from 'graphql';
 export const baseResolver: Resolvers<ContextValue> = {
+  StringOrInt: new GraphQLScalarType({
+    name: 'StringOrInt',
+    description: 'A String or an Int union type',
+    serialize(value) {
+      if (typeof value !== 'string' && typeof value !== 'number')
+        throw new Error('Value must be either a String or an Int');
+      if (typeof value === 'number' && !Number.isInteger(value))
+        throw new Error('Number value must be an Int');
+      return value;
+    },
+    parseValue(value) {
+      if (typeof value !== 'string' && typeof value !== 'number')
+        throw new Error('Value must be either a String or an Int');
+      if (typeof value === 'number' && !Number.isInteger(value))
+        throw new Error('Number value must be an Int');
+      return value;
+    },
+    parseLiteral(value) {
+      switch (value.kind) {
+        case Kind.INT:
+          return parseInt(value.value, 10);
+        case Kind.STRING:
+          return value.value;
+        default:
+          throw new Error('Value must be either a String or an Int');
+      }
+    },
+  }),
   Query: {
     Entity: async (_source, { id, type }, { dataSources }) => {
-      if (type == Entitytyping.Mediafile) {
+      if (type === 'MediaFile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
         return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
@@ -71,14 +104,17 @@ export const baseResolver: Resolvers<ContextValue> = {
           skip || 0,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
         );
-      } else if (searchInputType === SearchInputType.AdvancedInputType) {
+      } else if (
+        searchInputType === SearchInputType.AdvancedInputType &&
+        advancedSearchValue?.length
+      ) {
         entities = await dataSources.CollectionAPI.GetAdvancedEntities(
           limit || 20,
           skip || 0,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
         );
-      } else {
-        entities = await dataSources.SearchAPI.getEntities(
+      } else if (searchInputType === SearchInputType.AdvancedInputType) {
+        entities = await dataSources.CollectionAPI.getEntities(
           limit || 20,
           skip || 0,
           searchValue || { value: '' }
@@ -108,6 +144,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       return {
         options: [],
       };
+    },
+    SortOptions: async (_source, {}, { dataSources }) => {
+      return {
+        options: [],
+      };
+    },
+    PaginationLimitOptions: async (_source, {}, { dataSources }) => {
+      return { options: [] };
+    },
+    BulkOperations: async (_source, {}, { dataSources }) => {
+      return { options: [] };
+    },
+    BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
+      return { options: [] };
     },
   },
   Mutation: {
@@ -230,7 +280,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -239,7 +288,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -248,7 +296,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -275,19 +322,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       let parsedMedia = MediaFileToMedia(parent);
       return parsedMedia;
     },
-    form: () => null,
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(
         dataSources,
         parent['_id'].replace('mediafiles/', ''),
         Collection.Mediafiles
       );
-    },
-    intialValues: async (parent: any, _args, { dataSources }) => {
-      return parent;
-    },
-    entityView: async (parent: any, _args, { dataSources }) => {
-      return parent;
     },
   },
   MetadataRelation: {
@@ -325,7 +365,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       let returnString: string = '';
       metaData.forEach((data: any) => {
-        returnString = returnString + ' ' + data.value;
+        returnString = data.value;
       });
       return returnString;
     },
@@ -362,7 +402,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
-      return input;
+      return input !== undefined ? input : false;
+    },
+    type: async (_source, { input }, { dataSources }) => {
+      return input || MediaFileElementTypes.Media;
     },
   },
   EntityListElement: {
@@ -370,7 +413,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
-      return input;
+      return input !== undefined ? input : false;
     },
     type: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -383,11 +426,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    isCollapsed: async (_source, { input }, { dataSources }) => {
-      return input;
-    },
     panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
+    },
+    expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ExpandButtonOptions;
     },
   },
   WindowElementPanel: {
@@ -398,10 +441,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input != undefined ? input : false;
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
-      return input;
+      return input !== undefined ? input : false;
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
+    },
+    info: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelInfo;
     },
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
@@ -424,6 +470,27 @@ export const baseResolver: Resolvers<ContextValue> = {
         console.log('Item has no relations');
         return [];
       }
+    },
+  },
+  ExpandButtonOptions: {
+    shown: async (_source, { input }, { dataSources }) => {
+      return input ? input : true;
+    },
+    orientation: async (_source, { input }, { dataSources }) => {
+      return input ? input : Orientations.Left;
+    },
+  },
+  PanelInfo: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    value: async (_source: any, { input }, { dataSources }) => {
+      return _source[input] || '';
+    },
+    inputField: async (_source, { type }, { dataSources }) => {
+      const field = baseFields[type];
+      const fieldWithOptions = getOptionsByConfigKey(field, dataSources);
+      return fieldWithOptions;
     },
   },
   PanelMetaData: {
@@ -500,6 +567,26 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   DropzoneEntityToCreate: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  SortOptions: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  PaginationLimitOptions: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  BulkOperations: {
+    options: async (parent, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  BulkOperationCsvExportKeys: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },

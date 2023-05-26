@@ -3,7 +3,7 @@ import { environment as env } from 'base-graphql';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 export class StorageAPI extends AuthRESTDataSource {
-  public baseURL = `${env.api.storageApiUrl}`;
+  public baseURL = `${env?.api.storageApiUrl}`;
 
   async uploadFile(id: String, file: any): Promise<any> {
     const form = new FormData();

@@ -3,11 +3,11 @@ import {
   SearchFilter,
 } from '../../../generated-types/type-defs';
 import { setId, setType } from '../parsers/entity';
-import { environment as env } from '../environment';
+import { environment as env } from '../main';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 export class SearchAPI extends AuthRESTDataSource {
-  public baseURL = `${env.api.searchApiUrl}/`;
+  public baseURL = `${env?.api.searchApiUrl}/`;
 
   getSkip(skip: number, limit: number) {
     return skip - 1 === 0 ? 0 : limit * (skip - 1);
@@ -22,8 +22,11 @@ export class SearchAPI extends AuthRESTDataSource {
     try {
       let search = searchValue;
       data = await this.post(
-        `search/collection?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
-        { body: { ...search, relation_filter: [], skip_relations: true } }
+        `search/collection?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&asc=${search.isAsc}&order_by=${search.order_by}`,
+        { body: { relation_filter: [], skip_relations: true } }
       );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {

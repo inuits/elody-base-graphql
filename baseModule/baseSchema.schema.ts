@@ -1,5 +1,6 @@
 import { gql } from 'graphql-modules';
 export const baseSchema = gql`
+  scalar JSON
   # Generic
   enum ExcludeOrInclude {
     exclude
@@ -60,6 +61,7 @@ export const baseSchema = gql`
   enum TypeModals {
     Upload
     Create
+    BulkOperations
   }
 
   enum ModalChoices {
@@ -124,18 +126,93 @@ export const baseSchema = gql`
     menu: Menu!
   }
 
+  # DropdownOption
+  enum DamsIcons {
+    NoIcon
+    AngleDoubleLeft
+    AngleDoubleRight
+    AngleDown
+    AngleLeft
+    AngleRight
+    AngleUp
+    Apps
+    ArrowCircleLeft
+    ArrowCircleRight
+    AudioThumbnail
+    BookOpen
+    Check
+    CheckCircle
+    CheckSquare
+    Create
+    Cross
+    Desktop
+    DocumentInfo
+    Download
+    DownloadAlt
+    Edit
+    EditAlt
+    EllipsisV
+    ExclamationTriangle
+    Export
+    Eye
+    FileAlt
+    Filter
+    History
+    Image
+    Link
+    ListUl
+    Minus
+    Music
+    NoImage
+    Plus
+    PlusCircle
+    Redo
+    Save
+    SearchGlass
+    SearchMinus
+    SearchPlus
+    SignOut
+    SortDown
+    SortUp
+    SquareFull
+    Text
+    Trash
+    Upload
+    User
+    UserCircle
+    WindowGrid
+    WindowMaximize
+  }
+
+  scalar StringOrInt
+  type DropdownOption {
+    icon: DamsIcons!
+    label: String!
+    value: StringOrInt!
+  }
+
+  input DropdownOptionInput {
+    icon: DamsIcons!
+    label: String!
+    value: StringOrInt!
+  }
+
   type DropzoneEntityToCreate {
-    options(input: [DropzoneEntityOptionInput!]!): [DropzoneEntityOption!]!
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
-  input DropzoneEntityOptionInput {
-    label: String!
-    value: String!
+  enum BulkOperationTypes {
+    downloadMediafiles
+    exportCsv
+    edit
   }
 
-  type DropzoneEntityOption {
-    label: String!
-    value: String!
+  type BulkOperations {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
+  type BulkOperationCsvExportKeys {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
   type Form {
@@ -181,12 +258,6 @@ export const baseSchema = gql`
     MinMaxInput
     TextInput
     MultiSelectInput
-  }
-
-  input SearchFilter {
-    value: String
-    isAsc: Boolean
-    key: String
   }
 
   input MetadataInput {
@@ -260,7 +331,7 @@ export const baseSchema = gql`
 
   type Metadata {
     key: String!
-    value: String!
+    value: JSON!
     lang: String
     label: String!
     immutable: Boolean
@@ -268,14 +339,27 @@ export const baseSchema = gql`
 
   type MetadataRelation {
     key: String!
-    value: String!
+    value: JSON!
     label: String!
     type: String
     metadataOnRelation: [RelationMetaData]
     linkedEntity: Entity
   }
 
+  type PaginationLimitOptions {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
+  type SortOptions {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
   type MetadataFieldOption {
+    label: String
+    value: String!
+  }
+
+  input MetadataFieldOptionInput {
     label: String
     value: String!
   }
@@ -327,7 +411,7 @@ export const baseSchema = gql`
     teaserMetadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     id: String!
     metaData: KeyValue
     relationType: String!
@@ -357,6 +441,23 @@ export const baseSchema = gql`
     relations: [RelationValuesInput!]!
   }
 
+  enum MediaFileElementTypes {
+    map
+    media
+  }
+
+  enum Orientations {
+    top
+    right
+    bottom
+    left
+  }
+
+  type ExpandButtonOptions {
+    shown(input: Boolean!): Boolean!
+    orientation(input: Orientations): Orientations
+  }
+
   enum ColumnSizes {
     ten
     twenty
@@ -379,12 +480,23 @@ export const baseSchema = gql`
   type MediaFileElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
+    type(input: MediaFileElementTypes): String!
+    metadata(
+      keys: [String]!
+      excludeOrInclude: ExcludeOrInclude!
+    ): [MetadataAndRelation]
   }
 
   enum PanelType {
     metadata
     relation
     mediainfo
+  }
+
+  type PanelInfo {
+    label(input: String!): String!
+    value(input: String!): String!
+    inputField(type: BaseFieldType!): InputField!
   }
 
   type PanelMetaData {
@@ -403,14 +515,15 @@ export const baseSchema = gql`
     panelType(input: PanelType!): PanelType!
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
+    info: PanelInfo!
     metaData: PanelMetaData!
     relation: [PanelRelation]
   }
 
   type WindowElement {
     label(input: String): String!
-    isCollapsed(input: Boolean!): Boolean!
     panels: WindowElementPanel!
+    expandButtonOptions: ExpandButtonOptions
   }
 
   type ColumnList {
@@ -435,8 +548,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
-    form: Form
+    ): [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -449,14 +561,12 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
   }
-
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
@@ -464,9 +574,8 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
-    form: Form
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
@@ -480,8 +589,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
-    form: Form
+    ): [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -494,9 +602,8 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -509,9 +616,8 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]!
+    ): [MetadataAndRelation]
     media: Media
-    form: Form
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
@@ -519,6 +625,7 @@ export const baseSchema = gql`
 
   type EntitiesResults {
     results: [Entity]
+    sortKeys(sortItems: [String]): [String]
     count: Int
     limit: Int
   }
@@ -538,6 +645,10 @@ export const baseSchema = gql`
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
     DropzoneEntityToCreate: DropzoneEntityToCreate!
+    SortOptions: SortOptions!
+    PaginationLimitOptions: PaginationLimitOptions!
+    BulkOperations: BulkOperations!
+    BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
   }
 
   type Mutation {

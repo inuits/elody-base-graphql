@@ -12,6 +12,7 @@ import {
   Permission,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
+import { customSort } from '../helpers/helpers';
 
 export const resolveMedia = async (dataSources: DataSources, parent: any) => {
   // let mediafiles: MediaFile[] = [];
@@ -20,6 +21,7 @@ export const resolveMedia = async (dataSources: DataSources, parent: any) => {
   // } catch {
   //   console.error(`no mediafiles for ${parent.id}`);
   // }
+  console.log(parent);
   return parseMedia(parent);
 };
 
@@ -52,7 +54,7 @@ export const resolveMetadata = async (
       value: parent.type,
     });
   }
-
+  metadataArray = customSort(keys as string[], metadataArray, 'key');
   return metadataArray;
 };
 
@@ -81,7 +83,7 @@ export const addCustomMetadataToEntity = async (
   metadataInput: Metadata[]
 ): Promise<Entity> => {
   metadataInput.forEach((item: Metadata) => {
-    entity.metadata.push(item);
+    entity.metadata?.push(item);
   });
   return entity;
 };

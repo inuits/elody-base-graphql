@@ -1,5 +1,4 @@
 import {
-  Entity,
   Metadata,
   MediaFile,
   PaginationInfo,
@@ -14,22 +13,18 @@ import {
   MediaFileMetadataInput,
   OrderArrayInput,
   MetadataInput,
-  SavedSearchesResults,
   SavedSearchInput,
   SavedSearchedEntity,
   SearchFilter,
   EntitiesResults,
   FilterInput,
-  AdvancedFilter,
-  RelationType,
   Entitytyping,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
-import { environment as env } from '../environment';
-import { addCustomMetadataToEntity } from '../resolvers/entityResolver';
+import { environment as env } from '../main';
 import { parsedInput } from 'advanced-filter-module';
 export type relationInput = {
   label: string;
@@ -42,7 +37,7 @@ export type InputRelationsDelete = Array<{ key: string; type: string }>;
 let sixthCollectionId: string | 'no-id' = 'no-id';
 
 export class CollectionAPI extends AuthRESTDataSource {
-  public baseURL = `${env.api.collectionApiUrl}/`;
+  public baseURL = `${env?.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
 
   async getUserPermissions(): Promise<{ payload: string[] }> {
@@ -50,24 +45,30 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { payload: data };
   }
 
+  async getEntities(
+    limit: number,
+    skip: number,
+    searchValue: SearchFilter
+  ): Promise<EntitiesResults> {
+    let data;
+    try {
+      let search = searchValue;
+      data = await this.get(
+        `${Collection.Entities}?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
+      );
+      data.results.forEach((element: any) => setId(element));
+    } catch (e) {
+      console.log(e);
+    }
+    return data as EntitiesResults;
+  }
+
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
     setId(data);
-    // try {
-    //   const ldesResource = data.data['foaf:page'];
-    //   const iiifPresentation =
-    //     data.data['Entiteit.isHetOnderwerpVan'][0]['@id'];
-    //   addCustomMetadataToEntity(data, [
-    //     { key: 'ldesResource', value: ldesResource, label: 'Bron' },
-    //     {
-    //       key: 'iiifPresentation',
-    //       value: iiifPresentation,
-    //       label: 'Presentatie',
-    //     },
-    //   ]);
-    // } catch (e) {
-    //   console.log(e);
-    // }
     return data;
   }
 
@@ -209,20 +210,21 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
   }
 
-  async createEntity(entity: EntityInput, objectId: string): Promise<any> {
-    const body = entity as Entity;
+  async createEntity(
+    entity: EntityInput,
+    metadata: Metadata[] = [],
+    customId: string | undefined = undefined
+  ): Promise<any> {
+    const body: any = {
+      type: entity.type,
+      metadata,
+    };
+    if (customId) {
+      body.id = customId;
+      body.object_id = customId;
+    }
     const newEntity = await this.post(`entities`, {
-      body: {
-        type: body.type,
-        id: objectId,
-        metadata: [
-          {
-            key: 'title',
-            value: entity.title,
-          },
-        ] as Metadata[],
-        object_id: objectId,
-      },
+      body,
     });
     return setId(newEntity);
   }
