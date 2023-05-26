@@ -10,7 +10,10 @@ export const applyExportEndpoint = (app: Express) => {
       (request.query.field as string[]).forEach(field =>
         fieldQueryParameter += `&field[]=${field}`);
 
-      await fetch(`${env?.api.collectionApiUrl}/entities?${fieldQueryParameter}`, {
+      await fetch(
+        `${env?.api.collectionApiUrl}/entities?ids=${
+          request.query.ids
+        }${fieldQueryParameter}`, {
         method: 'GET',
         headers: {
           'Accept': 'text/csv',
