@@ -232,7 +232,6 @@ export class CollectionAPI extends AuthRESTDataSource {
   async updateMediafilesOrder(orderArray: OrderArrayInput): Promise<string> {
     let mfs: updateNode[] = Object.values(orderArray['value']);
 
-    console.log(Object.values(orderArray['value']));
     for (let i = 0; i < mfs.length; i++) {
       let mf: updateNode = mfs[i];
       console.log(mf.id, mf.order);
@@ -409,6 +408,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: parsedInput[]
   ): Promise<EntitiesResults> {
     let body = advancedSearchValue;
+    console.log(body);
     const data = await this.post(
       `entities/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
       { body }

@@ -83,6 +83,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
       }
     },
+    EntityTypeInfo: async (_source, {type}) => {
+      return {
+        type 
+      } as Entity
+    },
     Entities: async (
       _source,
       { limit, skip, searchValue, advancedSearchValue, searchInputType },
@@ -272,14 +277,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntermediateEntity: {
-    metadata: async (parent: any, { keys, excludeOrInclude }) => {
-      return await resolveMetadata(parent, keys, excludeOrInclude);
-    },
-    permission: async (parent: any, _args, { dataSources }) => {
-      return resolvePermission(dataSources, parent.id);
-    },
-  },
-  person: {
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
       return await resolveMetadata(parent, keys, excludeOrInclude);
     },

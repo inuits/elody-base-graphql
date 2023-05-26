@@ -258,7 +258,7 @@ export const baseSchema = gql`
   enum AdvancedInputType {
     MinMaxInput
     TextInput
-    MultiSelectInput
+    SelectionInput
   }
 
   input MetadataInput {
@@ -553,6 +553,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
+    advancedFilters: advancedFilters
   }
 
   type BaseEntity implements Entity {
@@ -567,7 +568,9 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
+    advancedFilters: advancedFilters
   }
+
   type MediaFileEntity implements Entity {
     id: String!
     uuid: String!
@@ -581,19 +584,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-  }
-
-  type person implements Entity {
-    id: String!
-    uuid: String!
-    type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]
-    permission: [Permission]
-    intialValues: IntialValues!
-    entityView: ColumnList!
+    advancedFilters: advancedFilters
   }
 
   type SimpleEntity implements Entity {
@@ -608,6 +599,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
+    advancedFilters: advancedFilters
   }
 
   type IntermediateEntity implements Entity {
@@ -622,6 +614,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
+    advancedFilters: advancedFilters
   }
 
   type EntitiesResults {
@@ -641,6 +634,7 @@ export const baseSchema = gql`
       advancedSearchValue: [FilterInput]
       fetchPolicy: String
     ): EntitiesResults
+    EntityTypeInfo(type: String): Entity
     Form(type: String!): Form
     User: User
     UserPermissions: userPermissions
