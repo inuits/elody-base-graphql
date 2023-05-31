@@ -38,6 +38,7 @@ import {
   WindowElementPanel,
   MenuTypeLink,
   MediaFileElementTypes,
+  AdvancedFilterTypes,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
@@ -82,11 +83,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       } else {
         return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
       }
-    },
-    EntityTypeInfo: async (_source, {type}) => {
-      return {
-        type 
-      } as Entity
     },
     Entities: async (
       _source,

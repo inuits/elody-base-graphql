@@ -634,7 +634,6 @@ export const baseSchema = gql`
       advancedSearchValue: [FilterInput]
       fetchPolicy: String
     ): EntitiesResults
-    EntityTypeInfo(type: String): Entity
     Form(type: String!): Form
     User: User
     UserPermissions: userPermissions
