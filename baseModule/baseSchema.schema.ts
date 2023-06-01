@@ -304,14 +304,6 @@ export const baseSchema = gql`
     payload: [String]
   }
 
-  type InputField {
-    type: InputFieldTypes!
-    acceptedEntityTypes: [String]
-    validation: Boolean
-    options: [String]
-    optionsConfigKey: String
-  }
-
   type Media {
     primaryMediafile: String
     primary_transcode: String
@@ -405,7 +397,7 @@ export const baseSchema = gql`
   }
 
   type KeyValue {
-    keyValue(key: String!): String!
+    keyValue(key: String!): JSON!
   }
 
   type relationValues {
@@ -420,7 +412,7 @@ export const baseSchema = gql`
   }
 
   type IntialValues {
-    keyValue(key: String!): String!
+    keyValue(key: String!): JSON!
     relation(key: String!): [relationValues]
   }
 
@@ -482,10 +474,7 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MediaFileElementTypes): String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]
+    metaData: PanelMetaData!
   }
 
   enum PanelType {
