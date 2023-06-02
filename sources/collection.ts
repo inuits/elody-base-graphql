@@ -19,6 +19,7 @@ import {
   EntitiesResults,
   FilterInput,
   Entitytyping,
+  FilterMatcherMap,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -39,6 +40,10 @@ let sixthCollectionId: string | 'no-id' = 'no-id';
 export class CollectionAPI extends AuthRESTDataSource {
   public baseURL = `${env?.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
+
+  async getFilterMatcherMapping(): Promise<FilterMatcherMap> {
+    return await this.get(`filter/matchers`);
+  }
 
   async getUserPermissions(): Promise<{ payload: string[] }> {
     let data: string[] = await this.get<string[]>('user/permissions');
