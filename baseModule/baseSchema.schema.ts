@@ -542,7 +542,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-    advancedFilters: advancedFilters
+    advancedFilters: AdvancedFilters
   }
 
   type BaseEntity implements Entity {
@@ -557,7 +557,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-    advancedFilters: advancedFilters
+    advancedFilters: AdvancedFilters
   }
 
   type MediaFileEntity implements Entity {
@@ -573,7 +573,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-    advancedFilters: advancedFilters
+    advancedFilters: AdvancedFilters
   }
 
   type SimpleEntity implements Entity {
@@ -588,7 +588,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-    advancedFilters: advancedFilters
+    advancedFilters: AdvancedFilters
   }
 
   type IntermediateEntity implements Entity {
@@ -603,7 +603,7 @@ export const baseSchema = gql`
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!
-    advancedFilters: advancedFilters
+    advancedFilters: AdvancedFilters
   }
 
   type EntitiesResults {
