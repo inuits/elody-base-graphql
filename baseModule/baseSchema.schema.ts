@@ -621,6 +621,7 @@ export const baseSchema = gql`
       searchInputType: SearchInputType
       searchValue: SearchFilter
       advancedSearchValue: [FilterInput]
+      advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
     ): EntitiesResults
     Form(type: String!): Form

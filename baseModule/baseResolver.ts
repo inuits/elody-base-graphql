@@ -86,7 +86,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     Entities: async (
       _source,
-      { limit, skip, searchValue, advancedSearchValue, searchInputType },
+      { limit, skip, searchValue, advancedSearchValue, advancedFilterInputs, searchInputType },
       { dataSources }
     ) => {
       let entities: EntitiesResults = { results: [] };
@@ -106,11 +106,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       } else if (
         searchInputType === SearchInputType.AdvancedInputType &&
-        advancedSearchValue?.length
+        advancedFilterInputs?.length
       ) {
         entities = await dataSources.CollectionAPI.GetAdvancedEntities(
           limit || 20,
           skip || 0,
+          advancedFilterInputs,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
         );
       } else if (searchInputType === SearchInputType.AdvancedInputType) {

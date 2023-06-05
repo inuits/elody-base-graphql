@@ -20,6 +20,7 @@ import {
   FilterInput,
   Entitytyping,
   FilterMatcherMap,
+  AdvancedFilterInput,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -410,10 +411,10 @@ export class CollectionAPI extends AuthRESTDataSource {
   async GetAdvancedEntities(
     limit: number,
     skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: parsedInput[]
   ): Promise<EntitiesResults> {
-    let body = advancedSearchValue;
-    console.log(body);
+    const body = advancedFilterInputs;
     const data = await this.post(
       `entities/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
       { body }
