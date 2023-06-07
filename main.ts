@@ -23,6 +23,7 @@ import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
 import { applyExportEndpoint } from './exportEndpoint';
+import { resolveMedia, resolveMetadata } from './resolvers/entityResolver';
 
 let environment: Environment | undefined = undefined;
 
@@ -173,4 +174,4 @@ const start = (
 
 export default start;
 export type { ContextValue, DataSources, Environment };
-export { environment, baseModule, baseSchema };
+export { environment, baseModule, baseSchema, resolveMedia, resolveMetadata };
