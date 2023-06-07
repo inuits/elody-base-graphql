@@ -428,4 +428,13 @@ export class CollectionAPI extends AuthRESTDataSource {
       return { results: data, count: data.length, limit: limit };
     }
   }
+
+  async GetFilterOptions(input: AdvancedFilterInput): Promise<string[]> {
+    const body = [input];
+    const data = await this.post(`entities/filter`, { body });
+
+    if (data.results)
+      return data.results[0].options;
+    return [];
+  }
 }
