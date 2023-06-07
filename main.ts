@@ -172,5 +172,5 @@ const start = (
 };
 
 export default start;
-export type { ContextValue, DataSources };
+export type { ContextValue, DataSources, Environment };
 export { environment, baseModule, baseSchema };
