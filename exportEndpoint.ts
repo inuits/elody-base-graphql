@@ -1,6 +1,6 @@
 import fetch, { Response as FetchResponse } from 'node-fetch';
 import { addJwt } from './sources/mediafiles';
-import { environment as env } from 'base-graphql';
+import { environment as env } from './main';
 import { Express, Request, Response } from 'express';
 
 export const applyExportEndpoint = (app: Express) => {
