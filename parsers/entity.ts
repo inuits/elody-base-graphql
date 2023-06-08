@@ -1,7 +1,7 @@
 import {
   InputRelationsDelete,
   relationInput,
-} from '../../baseGraphql/sources/collection';
+} from 'base-graphql';
 import {
   RelationMetaData,
   ExcludeOrInclude,

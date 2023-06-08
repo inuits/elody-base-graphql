@@ -29,11 +29,21 @@
     "jwt-decode": "^3.1.2",
     "node-fetch": "^2.6.7",
     "npm": "^8.19.2",
+    "typescript": "^4.3.5",
     "reflect-metadata": "^0.1.12",
+    "import-module": "*",
+    "base-graphql": "*",
+    "mediafile-module": "*",
     "advanced-filter-module": "*",
-    "mediafile-module": "*"
-  },
-  "devDependencies": {
+    "graphql": "^16.6.0",
+    "graphql-codegen": "^0.4.0",
+    "@graphql-codegen/add": "^3.2.1",
+    "@graphql-codegen/graphql-modules-preset": "^2.5.12",
+    "@graphql-codegen/typed-document-node": "2.3.13",
+    "@graphql-codegen/typescript": "^2.8.8",
+    "@graphql-codegen/typescript-operations": "^2.5.13",
+    "@graphql-codegen/typescript-resolvers": "^2.7.13",
+    "graphql-codegen-webpack-plugin": "0.0.7",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@graphql-tools/load": "^6.2.8",
@@ -54,9 +64,6 @@
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "graphql": "^16.6.0",
-    "graphql-codegen": "^0.4.0",
-    "graphql-codegen-webpack-plugin": "0.0.7",
     "husky": "^6.0.0",
     "jest": "^27.0.6",
     "lint-staged": "^11.0.1",
@@ -66,14 +73,16 @@
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.1.0",
-    "typescript": "^4.3.5",
     "webpack": "^5.45.1",
     "webpack-cli": "^4.7.2",
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^3.0.0"
   },
+  "devDependencies": {
+
+  },
   "publishConfig": {
-    "main": "./dist/modules/baseGraphql/main.js",
+    "main": "./dist/modules/dams/inuits-dams-base-graphql//main.js",
     "registry": "https://nexus.inuits.io/repository/npm-private"
   }
 }

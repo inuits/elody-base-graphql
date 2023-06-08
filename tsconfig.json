@@ -10,7 +10,12 @@
     "removeComments": true,
     "rootDir": "../../",
     "target": "es6",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"],
+      "graphql": ["node_modules/graphql"]
+    }
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"],

@@ -1,6 +1,6 @@
 import {
   AdvancedFilter,
-  Collection,
+  Collection
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
