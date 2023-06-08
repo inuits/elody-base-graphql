@@ -40,9 +40,8 @@ import {
   MediaFileElementTypes,
   AdvancedFilterTypes,
 } from '../../../generated-types/type-defs';
-import { ContextValue } from 'base-graphql';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
-import { DataSources } from '../types';
+import { ContextValue, DataSources } from '../types';
 import { baseFields, getOptionsByConfigKey } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
