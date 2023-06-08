@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { environment as env } from 'base-graphql';
+import { environment as env } from './main';
 import { addJwt } from './sources/mediafiles';
 import {
   EntityInput,
