@@ -1,5 +1,5 @@
 import FormData from 'form-data';
-import { environment as env } from 'base-graphql';
+import { environment as env } from '../main';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 export class StorageAPI extends AuthRESTDataSource {
