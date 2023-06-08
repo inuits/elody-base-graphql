@@ -32,7 +32,6 @@
     "typescript": "^4.3.5",
     "reflect-metadata": "^0.1.12",
     "import-module": "*",
-    "base-graphql": "*",
     "mediafile-module": "*",
     "advanced-filter-module": "*",
     "graphql": "^16.6.0",

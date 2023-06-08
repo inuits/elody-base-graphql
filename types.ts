@@ -1,7 +1,7 @@
-import { CollectionAPI } from 'base-graphql';
-import { SearchAPI } from 'base-graphql';
+import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
-import { StorageAPI } from 'base-graphql';
+import { CollectionAPI } from './sources/collection';
+import { StorageAPI } from './sources/storage';
 import {
   AdvancedFilter,
   Maybe,

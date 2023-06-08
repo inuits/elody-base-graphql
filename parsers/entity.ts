@@ -1,7 +1,4 @@
-import {
-  InputRelationsDelete,
-  relationInput,
-} from 'base-graphql';
+import { InputRelationsDelete } from '../sources/collection';
 import {
   RelationMetaData,
   ExcludeOrInclude,
@@ -16,6 +13,7 @@ import {
   MetadataValuesInput,
   Collection,
 } from '../../../generated-types/type-defs';
+import { relationInput } from '../sources/collection';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
   'key',

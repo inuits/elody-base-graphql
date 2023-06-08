@@ -1,4 +1,4 @@
-import { MediafileMetaData } from 'base-graphql';
+import { MediafileMetaData } from '../sources/forms';
 import {
   Form,
   Maybe,
