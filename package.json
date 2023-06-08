@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -29,7 +29,9 @@
     "jwt-decode": "^3.1.2",
     "node-fetch": "^2.6.7",
     "npm": "^8.19.2",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.12",
+    "advanced-filter-module": "*",
+    "mediafile-module": "*"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
