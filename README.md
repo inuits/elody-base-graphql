@@ -21,6 +21,7 @@ Follow these steps to publish a package to nexus for use in graphql pipeline:
 
 Follow these steps to publish a package to nexus for use in graphql pipeline:
 
+- Change the `main` entry under `publishConfig` inside of the `package.json` to `./dist/modules/{moduleDirectoryName}/{moduleFileName}.js`
 - `pnpm run generate` from the inuits-dams-frontend directory
 - `pnpm run build` from in the directory of the module you want to publish
 - Bump `package.json` version
