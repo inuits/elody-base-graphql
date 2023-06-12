@@ -14,7 +14,7 @@ Follow these steps to publish a package to nexus for use in graphql pipeline:
 
 - Bump `package.json` version
 - Commit new `package.json` and other changes inside the graphql module
-- The gitlab pipeline should start running where the package gets built and published to nexus automatically
+- The gitlab pipeline should start running where the npm package gets built and published to nexus automatically
 
 
 ### How to publish a graphql module to nexus (manually)
