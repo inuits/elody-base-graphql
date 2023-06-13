@@ -337,10 +337,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntialValues: {
-    keyValue: async (parent, _args, { dataSources }) => {
+    keyValue: async (parent, {key, unit, displayUnit}, { dataSources }) => {
       const metaData = await resolveMetadata(
         parent,
-        [_args.key],
+        [key],
         ExcludeOrInclude.Include
       );
       let returnString: string = '';
