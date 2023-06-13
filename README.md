@@ -35,7 +35,7 @@ To add the gitlab pipeline ([example project](https://gitlab.inuits.io/rnd/inuit
 
 - package.json: dependencies + update publishConfig/main
 - tsconfig.json: add baseUrl and paths
-- add the gitlab-ci.yml
+- add the gitlab-ci.yml & change the graphql image path to the correct customer
 - rename graphqlModules => graphql-modules etc.
 - the following dependencies are needed to be able to run the graphql types:
     ```javascript
