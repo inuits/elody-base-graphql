@@ -18,7 +18,6 @@ import {
   Column,
   ColumnSizes,
   EntitiesResults,
-  Entity,
   EntityListElement,
   EntityViewElements,
   ExcludeOrInclude,
@@ -27,8 +26,6 @@ import {
   MediaFileElement,
   Metadata,
   MenuIcons,
-  MetadataInput,
-  MetadataValuesInput,
   PanelMetaData,
   PanelInfo,
   PanelRelation,
@@ -38,7 +35,6 @@ import {
   WindowElementPanel,
   MenuTypeLink,
   MediaFileElementTypes,
-  AdvancedFilterTypes,
 } from '../../../generated-types/type-defs';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { ContextValue, DataSources } from '../types';
@@ -46,6 +42,7 @@ import { baseFields, getOptionsByConfigKey } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
 import { GraphQLScalarType, Kind } from 'graphql';
+
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
     name: 'StringOrInt',
@@ -264,22 +261,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return resolvePermission(dataSources, parent.id);
     },
   },
-  SimpleEntity: {
-    metadata: async (parent: any, { keys, excludeOrInclude }) => {
-      return await resolveMetadata(parent, keys, excludeOrInclude);
-    },
-    permission: async (parent: any, _args, { dataSources }) => {
-      return resolvePermission(dataSources, parent.id);
-    },
-  },
-  IntermediateEntity: {
-    metadata: async (parent: any, { keys, excludeOrInclude }) => {
-      return await resolveMetadata(parent, keys, excludeOrInclude);
-    },
-    permission: async (parent: any, _args, { dataSources }) => {
-      return resolvePermission(dataSources, parent.id);
-    },
-  },
   MediaFileEntity: {
     id: async (parent: any) => {
       return parent._key;
@@ -337,17 +318,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntialValues: {
-    keyValue: async (parent, {key, unit, displayUnit}, { dataSources }) => {
+    keyValue: async (parent, {key}, { dataSources }) => {
       const metaData = await resolveMetadata(
         parent,
         [key],
         ExcludeOrInclude.Include
       );
-      let returnString: string = '';
-      metaData.forEach((data: any) => {
-        returnString = data.value;
-      });
-      return returnString;
+      const value = metaData[0].value
+      return value;
     },
     relation: async (parent: any, { key }, { dataSources }) => {
       return parent.relations
@@ -479,6 +457,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     key: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    unit: async (_source, {input}, {dataSources}) => {
+      return input
     },
     inputField: async (_source, { type }, { dataSources }) => {
       const field = baseFields[type];
