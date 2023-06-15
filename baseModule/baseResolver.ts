@@ -324,7 +324,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         [key],
         ExcludeOrInclude.Include
       );
-      return metaData[0].value || "";
+      try {
+      return metaData[0].value
+      } catch(e){
+        console.log(e)
+        return ""
+      }
+    
     },
     relation: async (parent: any, { key }, { dataSources }) => {
       return parent.relations
