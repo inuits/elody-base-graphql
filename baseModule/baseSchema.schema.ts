@@ -7,6 +7,11 @@ export const baseSchema = gql`
     include
   }
 
+  enum Unit {
+    datetime
+    seconds
+  }
+
   enum Permission {
     canget
     canput
@@ -325,6 +330,7 @@ export const baseSchema = gql`
   type Metadata {
     key: String!
     value: JSON!
+    unit(input: Unit!): Unit
     lang: String
     label: String!
     immutable: Boolean
@@ -412,7 +418,7 @@ export const baseSchema = gql`
   }
 
   type IntialValues {
-    keyValue(key: String!, unit:String, displayUnit:String): JSON!
+    keyValue(key: String!): JSON!
     relation(key: String!): [relationValues]
   }
 
@@ -492,6 +498,7 @@ export const baseSchema = gql`
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
+    unit(input: Unit!): Unit!
     inputField(type: BaseFieldType!): InputField!
   }
 
@@ -570,36 +577,6 @@ export const baseSchema = gql`
     ): [MetadataAndRelation]
     media: Media
     teaserMetadata: [MetadataAndRelation]
-    permission: [Permission]
-    intialValues: IntialValues!
-    entityView: ColumnList!
-    advancedFilters: AdvancedFilters
-  }
-
-  type SimpleEntity implements Entity {
-    id: String!
-    uuid: String!
-    type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]
-    media: Media
-    permission: [Permission]
-    intialValues: IntialValues!
-    entityView: ColumnList!
-    advancedFilters: AdvancedFilters
-  }
-
-  type IntermediateEntity implements Entity {
-    id: String!
-    uuid: String!
-    type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]
-    media: Media
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!

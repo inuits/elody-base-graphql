@@ -1,3 +1,5 @@
+import { Unit } from "../../../generated-types/type-defs";
+
 export const customSort = (
   customSortOrder: string[],
   arrayToSort: any[],
