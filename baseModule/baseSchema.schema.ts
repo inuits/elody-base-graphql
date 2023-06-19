@@ -226,7 +226,6 @@ export const baseSchema = gql`
   }
 
   type Form {
-    
     inputFields(type: [BaseFieldType]!): [InputField]!
   }
 
