@@ -1,11 +1,7 @@
-import { MediafileMetaData } from '../sources/forms';
 import {
-  Form,
-  Maybe,
-  MetadataField,
   MetadataFieldOption,
 } from '../../../generated-types/type-defs';
-import { Config, DataSources } from '../types';
+import { Config } from '../types';
 
 export const getOptionsByKey = (
   cfg: Config,
