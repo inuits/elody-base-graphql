@@ -13,6 +13,9 @@ export const baseFields: { [key: string]: InputField } = {
   baseDateField: {
     type: InputFieldTypes.Date,
   },
+  baseDateTimeField: {
+    type: 'datetime-local'
+  },
   baseNumberField: {
     type: InputFieldTypes.Number,
   },

@@ -28,16 +28,20 @@ export const baseSchema = gql`
     text
     color
     dropdown
-    dropdownMultiselect
   }
 
   enum BaseFieldType {
+    baseCheckbox
+    baseColorField
     baseTextField
+    baseNumberField
     baseDateField
+    baseDateTimeField
   }
 
   type InputField {
-    type: InputFieldTypes!
+    fieldName(input: String): String
+    type: String!
     acceptedEntityTypes: [String]
     validation: Boolean
     options: [String]
@@ -222,7 +226,8 @@ export const baseSchema = gql`
   }
 
   type Form {
-    fields: [MetadataOrRelationField]!
+    
+    inputFields(type: [BaseFieldType]!): [InputField]!
   }
 
   input updateOrderNode {
@@ -590,6 +595,11 @@ export const baseSchema = gql`
     limit: Int
   }
 
+  type CreateEntityForm  {
+    idPrefix: String
+    fields(input: [BaseFieldType]): [InputField]
+  }
+
   type Query {
     Entity(id: String!, type: String!): Entity
     Entities(
@@ -610,6 +620,7 @@ export const baseSchema = gql`
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations: BulkOperations!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
+    GetCreateEntityForm(type: String!): CreateEntityForm!
   }
 
   type Mutation {
