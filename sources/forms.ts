@@ -54,30 +54,3 @@ export const RightsField: MetadataOrRelationField = {
   type: InputFieldTypes.Dropdown,
   config_key: 'mediafiles_rights_values',
 };
-
-export const MediafileMetaData: Form = {
-  fields: [
-    {
-      ...RightsField,
-    },
-    {
-      ...SourceField,
-    },
-    {
-      key: 'publication_status',
-      label: 'Status',
-      type: InputFieldTypes.Dropdown,
-      config_key: 'mediafiles_publication_status_values',
-    },
-    {
-      key: 'photographer',
-      label: 'Photographer',
-      type: InputFieldTypes.Text,
-    },
-    {
-      key: 'copyright',
-      label: 'Rechtenhouder',
-      type: InputFieldTypes.Text,
-    },
-  ],
-};

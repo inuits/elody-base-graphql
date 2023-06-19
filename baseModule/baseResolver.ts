@@ -12,7 +12,6 @@ import {
   resolveMetadata,
   resolvePermission,
 } from '../resolvers/entityResolver';
-import { resolveMediafileForm } from '../resolvers/formResolver';
 import {
   Collection,
   Column,
@@ -21,8 +20,6 @@ import {
   EntityListElement,
   EntityViewElements,
   ExcludeOrInclude,
-  Form,
-  Maybe,
   MediaFileElement,
   Metadata,
   MenuIcons,
@@ -119,15 +116,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
       return entities;
     },
-    Form: async (_source, { type }, { dataSources }): Promise<Maybe<Form>> => {
-      console.log(type)
-      switch (type) {
-        case 'media':
-          return await resolveMediafileForm(dataSources);
-        default:
-          return null;
-      }
-    },
     UserPermissions: async (_source, _args, { dataSources }) => {
       return dataSources.CollectionAPI.getUserPermissions();
     },
@@ -157,10 +145,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
       return { options: [] };
     },
-    GetCreateEntityForm: async (_source, {type}, {dataSources}) => {
-      console.log('her')
-      return {}
-    }
   },
   Mutation: {
     linkMediafileToEntity: async (

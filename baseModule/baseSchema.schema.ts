@@ -225,8 +225,13 @@ export const baseSchema = gql`
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
-  type Form {
-    inputFields(type: [BaseFieldType]!): [InputField]!
+  interface Form {
+    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
+  }
+
+  type CreateEntityForm implements Form {
+    idPrefix: String
+    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
   }
 
   input updateOrderNode {
@@ -592,11 +597,6 @@ export const baseSchema = gql`
     sortKeys(sortItems: [String]): [String]
     count: Int
     limit: Int
-  }
-
-  type CreateEntityForm  {
-    idPrefix: String
-    fields(input: [BaseFieldType]): [InputField]
   }
 
   type Query {

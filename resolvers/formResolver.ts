@@ -28,24 +28,3 @@ export const getOptionsByKey = (
   });
   return returnValue;
 };
-
-export const resolveMediafileForm = async (
-  dataSources: DataSources
-): Promise<Maybe<Form>> => {
-  let temp: Form = MediafileMetaData;
-  const fetchedConfig = await dataSources.CollectionAPI.getConfig();
-  temp.fields.forEach((f) => {
-    let tempFilter = f as MetadataField;
-    if (tempFilter.config_key) {
-      const options = getOptionsByKey(
-        fetchedConfig,
-        tempFilter.config_key as string
-      );
-      if (options !== 'not-found-in-config') {
-        tempFilter.options = options;
-      }
-    }
-  });
-
-  return temp;
-};
