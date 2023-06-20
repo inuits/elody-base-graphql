@@ -10,6 +10,7 @@ export const baseSchema = gql`
   enum Unit {
     datetime
     seconds
+    coordinates
   }
 
   enum Permission {
@@ -441,7 +442,7 @@ export const baseSchema = gql`
 
   input MetadataValuesInput {
     key: String!
-    value: String!
+    value: JSON!
   }
 
   input EntityFormInput {
