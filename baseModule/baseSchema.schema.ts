@@ -606,7 +606,7 @@ export const baseSchema = gql`
       limit: Int
       skip: Int
       searchInputType: SearchInputType
-      searchValue: SearchFilter
+      searchValue: SearchFilter!
       advancedSearchValue: [FilterInput]
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
