@@ -570,6 +570,7 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]
+    teaserMetadata: [MetadataAndRelation]
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
