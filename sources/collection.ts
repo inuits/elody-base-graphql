@@ -207,11 +207,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async deleteData(id: string, path: Collection): Promise<any> {
+  async deleteData(id: string, path: Collection, deleteMediafiles: boolean): Promise<any> {
     if (id == null) {
       return 'no id was specified';
     } else {
-      await this.delete(`${path}/${id}`);
+      await this.delete(`${path}/${id}?delete_mediafiles=${deleteMediafiles ? 1 : 0}`);
       return 'data has been successfully deleted';
     }
   }

@@ -226,8 +226,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         mediafile_id
       );
     },
-    deleteData: async (_source, { id, path }, { dataSources }) => {
-      return dataSources.CollectionAPI.deleteData(id, path);
+    deleteData: async (_source, { id, path, deleteMediafiles }, { dataSources }) => {
+      return dataSources.CollectionAPI.deleteData(id, path, deleteMediafiles);
     },
     deleteRelations: async (_source, { id, metadata }, { dataSources }) => {
       return dataSources.CollectionAPI.deleteRelations(

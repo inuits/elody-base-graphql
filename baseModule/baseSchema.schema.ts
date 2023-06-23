@@ -72,6 +72,7 @@ export const baseSchema = gql`
     Upload
     Create
     BulkOperations
+    Confirm
   }
 
   enum ModalChoices {
@@ -630,7 +631,7 @@ export const baseSchema = gql`
     replaceMetadata(id: String!, metadata: [MetadataInput!]!): [Metadata!]!
     setMediaPrimaire(entity_id: String!, mediafile_id: String!): String
     setThumbnailPrimaire(entity_id: String!, mediafile_id: String!): String
-    deleteData(id: String!, path: Collection!): String
+    deleteData(id: String!, path: Collection!, deleteMediafiles: Boolean!): String
     updateMediafilesOrder(value: OrderArrayInput!): String
     deleteRelations(id: String!, metadata: [MetadataInput!]!): String
     linkMediafileToEntity(
