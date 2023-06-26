@@ -367,8 +367,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    type: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
+    entityTypes: async (parent: any, {input}, {dataSources}) => {
+      return input || []
     },
     entityList: async (parent: any, {metaKey}, { dataSources }): Promise<any[]> => {
       const ids: [string] = parent.metadata.find(
