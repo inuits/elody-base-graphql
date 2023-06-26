@@ -484,9 +484,8 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
     type(input: String): String
-    metaKey(input: String): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
-    entityList: [Entity]
+    entityList(metaKey: String): [Entity]
   }
 
   type MediaFileElement {

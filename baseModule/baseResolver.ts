@@ -370,8 +370,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     type: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    key: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
+    entityList: async (parent: any, {metaKey}, { dataSources }): Promise<any[]> => {
+      const ids: [string] = parent.metadata.find(
+          (dataItem: Metadata) => dataItem.key === metaKey
+        )?.value
+        const entities: Promise<any>[] = []
+
+      if (!ids) return []
+
+      ids.forEach(async (id) => {
+        const entity = dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
+        entities.push(entity)
+      })
+
+      const res = await Promise.all(entities)
+      
+      return res
     },
   },
   WindowElement: {
