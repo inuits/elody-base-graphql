@@ -484,8 +484,8 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
     type(input: String): String
-    meta_key(input: String): String
-    entity_types(input: [Entitytyping]): [Entitytyping]
+    metaKey(input: String): String
+    entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList: [Entity]
   }
 
