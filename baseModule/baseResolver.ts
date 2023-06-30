@@ -29,9 +29,13 @@ import {
   Resolvers,
   SearchInputType,
   WindowElement,
+  ActionElement,
   WindowElementPanel,
   MenuTypeLink,
   MediaFileElementTypes,
+  Actions,
+  BaseFieldType,
+  InputField,
 } from '../../../generated-types/type-defs';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { ContextValue, DataSources } from '../types';
@@ -70,6 +74,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   }),
   Query: {
+    OCRForm: async (_source, {}, { dataSources }) => {
+      return {
+        inputFields: [],
+      };
+    },
     Entity: async (_source, { id, type }, { dataSources }) => {
       if (type === 'MediaFile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
@@ -79,7 +88,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     Entities: async (
       _source,
-      { limit, skip, searchValue, advancedSearchValue, advancedFilterInputs, searchInputType },
+      {
+        limit,
+        skip,
+        searchValue,
+        advancedSearchValue,
+        advancedFilterInputs,
+        searchInputType,
+      },
       { dataSources }
     ) => {
       let entities: EntitiesResults = { results: [] };
@@ -144,6 +160,27 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
       return { options: [] };
+    },
+  },
+  OCRForm: {
+    // inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
+    inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
+      const inputFieldsArray: any[] = [];
+
+      type.forEach((fieldType, i) => {
+        if (fieldType !== null) {
+          const field = baseFields[fieldType];
+
+          let fieldWithOptions = getOptionsByConfigKey(field, dataSources).then(
+            (result) => {
+              result.fieldName = fieldLabels[i];
+              inputFieldsArray.push(result);
+            }
+          );
+          // inputFieldsArray.push(fieldWithOptions);
+        }
+      });
+      return inputFieldsArray;
     },
   },
   Mutation: {
@@ -226,7 +263,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         mediafile_id
       );
     },
-    deleteData: async (_source, { id, path, deleteMediafiles }, { dataSources }) => {
+    deleteData: async (
+      _source,
+      { id, path, deleteMediafiles },
+      { dataSources }
+    ) => {
       return dataSources.CollectionAPI.deleteData(id, path, deleteMediafiles);
     },
     deleteRelations: async (_source, { id, metadata }, { dataSources }) => {
@@ -283,9 +324,20 @@ export const baseResolver: Resolvers<ContextValue> = {
   MetadataRelation: {
     linkedEntity: async (parent, _args, { dataSources }) => {
       if (parent.type !== 'hasMediafile') {
-        return await dataSources.CollectionAPI.getEntity(
-          parseIdToGetMoreData(parent.key)
-        );
+        // Check if the Object is an OCR'ed mediafile
+        if (
+          parent?.metadataOnRelation?.find(
+            (m) => m !== null && m.key === 'is_ocr' && Boolean(m.value) === true
+          )
+        ) {
+          // OCR'ed objects are mediafiles, so use getMediaFile
+          return await dataSources.CollectionAPI.getMediaFile(parent.key);
+        } else {
+          // use getEntity for the other things
+          return await dataSources.CollectionAPI.getEntity(
+            parseIdToGetMoreData(parent.key)
+          );
+        }
       }
     },
   },
@@ -307,25 +359,25 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntialValues: {
-    keyValue: async (parent, {key}, { dataSources }) => {
+    keyValue: async (parent, { key }, { dataSources }) => {
       const metaData = await resolveMetadata(
         parent,
         [key],
         ExcludeOrInclude.Include
       );
       try {
-      return metaData[0].value
-      } catch(e){
-        console.log(e)
-        return ""
+        return metaData[0].value;
+      } catch (e) {
+        console.log(e);
+        return '';
       }
-    
     },
     relation: async (parent: any, { key }, { dataSources }) => {
       return parent.relations
         ? parent.relations.filter(
-            (relation: { label: string; type: string }) =>
-              relation.label === key && relation.type !== null
+            (relation: { label: string; type: string }) => {
+              return relation.label === key && relation.type !== null;
+            }
           )
         : [];
     },
@@ -367,28 +419,34 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    metaKey: async (parent, {key}, {dataSources}) => {
-      return key ? key : 'no-key'
+    metaKey: async (parent, { key }, { dataSources }) => {
+      return key ? key : 'no-key';
     },
-    entityTypes: async (parent: any, {input}, {dataSources}) => {
-      return input || []
+    entityTypes: async (parent: any, { input }, { dataSources }) => {
+      return input || [];
     },
-    entityList: async (parent: any, {metaKey}, { dataSources }): Promise<any[]> => {
+    entityList: async (
+      parent: any,
+      { metaKey },
+      { dataSources }
+    ): Promise<any[]> => {
       const ids: [string] = parent.metadata.find(
-          (dataItem: Metadata) => dataItem.key === metaKey
-        )?.value
-        const entities: Promise<any>[] = []
+        (dataItem: Metadata) => dataItem.key === metaKey
+      )?.value;
+      const entities: Promise<any>[] = [];
 
-      if (!ids) return []
+      if (!ids) return [];
 
       ids.forEach(async (id) => {
-        const entity = dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
-        entities.push(entity)
-      })
+        const entity = dataSources.CollectionAPI.getEntity(
+          parseIdToGetMoreData(id)
+        );
+        entities.push(entity);
+      });
 
-      const res = await Promise.all(entities)
-      
-      return res
+      const res = await Promise.all(entities);
+
+      return res;
     },
   },
   WindowElement: {
@@ -400,6 +458,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ExpandButtonOptions;
+    },
+  },
+  ActionElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    actions: async (_source, { input }, { dataSources }) => {
+      return input ? input : [Actions.NoActions];
     },
   },
   WindowElementPanel: {
@@ -424,15 +490,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     relation: async (parent: any, {}, { dataSources }) => {
       try {
         const collection: Collection = parent.uuid.includes(Collection.Entities)
-          ? Collection.Entities
-          : Collection.Mediafiles;
+          ? Collection.Mediafiles
+          : Collection.Entities;
         const relations = (
           await dataSources.CollectionAPI.getRelations(
             removePrefixFromId(parent.uuid),
             collection
           )
         ).map((rel: Metadata) => {
-          return { value: rel.value, label: rel.label };
+          return { value: rel.value || rel.key, label: rel.label };
         });
         return relations as [PanelRelation];
       } catch (e) {
@@ -469,8 +535,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     key: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    unit: async (_source, {input}, {dataSources}) => {
-      return input
+    unit: async (_source, { input }, { dataSources }) => {
+      return input;
     },
     inputField: async (_source, { type }, { dataSources }) => {
       const field = baseFields[type];
@@ -500,6 +566,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     windowElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElement;
+    },
+    actionElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ActionElement;
     },
   },
   MenuWrapper: {

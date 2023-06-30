@@ -3,6 +3,8 @@ import {
   InputFieldTypes,
   InputField,
   MetadataOrRelationField,
+  LanguageType,
+  FileformatType,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -14,7 +16,7 @@ export const baseFields: { [key: string]: InputField } = {
     type: InputFieldTypes.Date,
   },
   baseDateTimeField: {
-    type: 'datetime-local'
+    type: 'datetime-local',
   },
   baseNumberField: {
     type: InputFieldTypes.Number,
@@ -24,6 +26,16 @@ export const baseFields: { [key: string]: InputField } = {
   },
   baseTextField: {
     type: InputFieldTypes.Text,
+  },
+  languageTypeField: {
+    type: InputFieldTypes.Dropdown,
+    options: Object.values(LanguageType),
+    optionsConfigKey: undefined,
+  },
+  fileformatTypeField: {
+    type: InputFieldTypes.Dropdown,
+    options: Object.values(FileformatType),
+    optionsConfigKey: undefined,
   },
 };
 

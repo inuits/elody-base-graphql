@@ -19,6 +19,11 @@ export const baseSchema = gql`
     canpatch
     candelete
   }
+  enum Actions {
+    ocr
+    download
+    noActions
+  }
 
   enum InputFieldTypes {
     checkbox
@@ -38,6 +43,20 @@ export const baseSchema = gql`
     baseNumberField
     baseDateField
     baseDateTimeField
+    languageTypeField
+    fileformatTypeField
+  }
+
+  enum languageType {
+    nld
+    fra
+    eng
+  }
+
+  enum fileformatType {
+    pdf
+    alto
+    txt
   }
 
   type InputField {
@@ -73,6 +92,7 @@ export const baseSchema = gql`
     Create
     BulkOperations
     Confirm
+    OCR
   }
 
   enum ModalChoices {
@@ -233,6 +253,10 @@ export const baseSchema = gql`
 
   type CreateEntityForm implements Form {
     idPrefix: String
+    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
+  }
+
+  type OCRForm implements Form {
     inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
   }
 
@@ -535,6 +559,11 @@ export const baseSchema = gql`
     expandButtonOptions: ExpandButtonOptions
   }
 
+  type ActionElement {
+    label(input: String): String!
+    actions(input: [Actions]): [Actions]
+  }
+
   type ColumnList {
     column: Column!
   }
@@ -543,6 +572,7 @@ export const baseSchema = gql`
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
     windowElement: WindowElement
+    actionElement: ActionElement
   }
 
   type Column {
@@ -624,6 +654,7 @@ export const baseSchema = gql`
     BulkOperations: BulkOperations!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
     GetCreateEntityForm(type: String!): CreateEntityForm!
+    OCRForm: OCRForm!
   }
 
   type Mutation {
@@ -632,7 +663,11 @@ export const baseSchema = gql`
     replaceMetadata(id: String!, metadata: [MetadataInput!]!): [Metadata!]!
     setMediaPrimaire(entity_id: String!, mediafile_id: String!): String
     setThumbnailPrimaire(entity_id: String!, mediafile_id: String!): String
-    deleteData(id: String!, path: Collection!, deleteMediafiles: Boolean!): String
+    deleteData(
+      id: String!
+      path: Collection!
+      deleteMediafiles: Boolean!
+    ): String
     updateMediafilesOrder(value: OrderArrayInput!): String
     deleteRelations(id: String!, metadata: [MetadataInput!]!): String
     linkMediafileToEntity(
