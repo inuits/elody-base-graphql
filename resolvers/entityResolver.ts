@@ -57,6 +57,14 @@ export const resolveMetadata = async (
   return metadataArray;
 };
 
+export const resolveRelations = async (parent: any) => {
+  let relations: string[] = [];
+  if (parent.relations)
+    relations = parent.relations.filter((relation: any) => relation.type === "belongsTo");
+
+  return relations;
+};
+
 export const resolvePermission = async (
   dataSources: DataSources,
   id: string,

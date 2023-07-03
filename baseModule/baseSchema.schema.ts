@@ -452,8 +452,14 @@ export const baseSchema = gql`
     toBeDeleted: Boolean!
   }
 
+  enum IntialValuesSource {
+    root
+    metadata
+    relations
+  }
+
   type IntialValues {
-    keyValue(key: String!): JSON!
+    keyValue(key: String!, source: IntialValuesSource!): JSON!
     relation(key: String!): [relationValues]
   }
 
@@ -588,6 +594,7 @@ export const baseSchema = gql`
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
     ): [MetadataAndRelation]
+    teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
     entityView: ColumnList!

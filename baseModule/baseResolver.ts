@@ -11,6 +11,7 @@ import {
   resolveMedia,
   resolveMetadata,
   resolvePermission,
+  resolveRelations,
 } from '../resolvers/entityResolver';
 import {
   Collection,
@@ -36,6 +37,7 @@ import {
   Actions,
   BaseFieldType,
   InputField,
+  IntialValuesSource,
 } from '../../../generated-types/type-defs';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { ContextValue, DataSources } from '../types';
@@ -293,7 +295,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   MediaFileEntity: {
     id: async (parent: any) => {
-      return parent._key;
+      return parent._id;
     },
     type: async (parent: any) => 'MediaFile',
     metadata: async (parent: any, { keys, excludeOrInclude }) => {
@@ -312,6 +314,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     media: async (parent: any, _args) => {
       let parsedMedia = MediaFileToMedia(parent);
       return parsedMedia;
+    },
+    intialValues: async (parent: any, _args) => {
+      return parent;
     },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(
@@ -359,18 +364,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntialValues: {
-    keyValue: async (parent, { key }, { dataSources }) => {
-      const metaData = await resolveMetadata(
-        parent,
-        [key],
-        ExcludeOrInclude.Include
-      );
-      try {
-        return metaData[0].value;
-      } catch (e) {
-        console.log(e);
-        return '';
+    keyValue: async (parent: any, { key, source }, { dataSources }) => {
+      if (source === IntialValuesSource.Metadata) {
+        const metadata = await resolveMetadata(parent, [key], ExcludeOrInclude.Include);
+        try {
+          return metadata[0].value;
+        } catch {
+          return ""
+        }
+      } else if (source === IntialValuesSource.Root) {
+        return parent[key];
+      } else if (source === IntialValuesSource.Relations) {
+        const relation: any = (await resolveRelations(parent))[0];
+        return relation[key];
       }
+
+      return "";
     },
     relation: async (parent: any, { key }, { dataSources }) => {
       return parent.relations
