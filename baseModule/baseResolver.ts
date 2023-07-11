@@ -113,6 +113,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         entities = await dataSources.CollectionAPI.getAdvancedMediaFiles(
           limit || 20,
           skip || 0,
+          advancedFilterInputs,
           advancedSearchValue ? filterInputParser(advancedSearchValue) : []
         );
       } else if (

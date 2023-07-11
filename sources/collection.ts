@@ -365,6 +365,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getAdvancedMediaFiles(
     limit: number,
     skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: parsedInput[]
   ): Promise<EntitiesResults> {
     let result = { results: [], count: 0, limit };
@@ -384,7 +385,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         });
       }
 
-      let body = advancedSearchValue;
+      const body = advancedFilterInputs;
 
       const data = await this.post(
         `mediafiles/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
