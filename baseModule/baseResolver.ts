@@ -368,16 +368,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
       if (source === IntialValuesSource.Metadata) {
         const metadata = await resolveMetadata(parent, [key], ExcludeOrInclude.Include);
-        try {
-          return metadata[0].value;
-        } catch {
-          return ""
-        }
+        return metadata[0]?.value ?? "";
       } else if (source === IntialValuesSource.Root) {
-        return parent[key];
+        return parent?.[key] ?? "";
       } else if (source === IntialValuesSource.Relations) {
         const relation: any = (await resolveRelations(parent))[0];
-        return relation[key];
+        return relation?.[key] ?? "";
       }
 
       return "";
