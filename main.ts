@@ -114,7 +114,7 @@ const start = (
       expressMiddleware(server, {
         context: async ({ req }) => {
           const { cache } = server;
-          const session = { auth: req.session };
+          const session = { ...req.session };
           return {
             dataSources: {
               CollectionAPI: new CollectionAPI({ session, cache }),
