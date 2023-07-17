@@ -9,5 +9,5 @@ include:
     ref: 'master'
 
 variables:
-  GRAPHQL_IMAGE: 'pza/dams-graphql'
+  GRAPHQL_IMAGE: 'coghent/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
