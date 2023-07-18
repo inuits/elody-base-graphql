@@ -11,6 +11,7 @@ export const baseSchema = gql`
     datetime
     seconds
     coordinates
+    list
   }
 
   enum Permission {
