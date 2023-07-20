@@ -17,9 +17,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           redirectUri: config.damsFrontend,
         },
         features: {
-          useOldSingleEntityComponent:
-            config.features.useOldSingleEntityComponent,
           hasSimpleSearch: config.features.hasSimpleSearch,
+        },
+        customization: {
+          applicationTitle: config.customization.applicationTitle,
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,

@@ -26,8 +26,10 @@ export interface Environment {
     storageApiUrl: string;
   };
   features: {
-    useOldSingleEntityComponent: boolean;
     hasSimpleSearch?: boolean;
+  };
+  customization: {
+    applicationTitle: string;
   };
   routerConfig: any;
   damsFrontend: string;
