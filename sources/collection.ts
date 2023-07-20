@@ -207,11 +207,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async deleteData(id: string, path: Collection, deleteMediafiles: boolean): Promise<any> {
+  async deleteData(
+    id: string,
+    path: Collection,
+    deleteMediafiles: boolean
+  ): Promise<any> {
     if (id == null) {
       return 'no id was specified';
     } else {
-      await this.delete(`${path}/${id}?delete_mediafiles=${deleteMediafiles ? 1 : 0}`);
+      await this.delete(
+        `${path}/${id}?delete_mediafiles=${deleteMediafiles ? 1 : 0}`
+      );
       return 'data has been successfully deleted';
     }
   }
@@ -228,7 +234,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (customId && customId.length) {
       body.id = customId;
       body.object_id = customId;
-      body.identifiers = [customId]
+      body.identifiers = [customId];
     }
     const newEntity = await this.post(`entities`, {
       body,
@@ -411,14 +417,22 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async GetAdvancedEntities(
+    type: Entitytyping,
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: parsedInput[]
+    advancedSearchValue: SearchFilter
   ): Promise<EntitiesResults> {
+    let search = advancedSearchValue;
     const body = advancedFilterInputs;
+    const collection: string =
+      type !== Entitytyping.Mediafile ? 'entities' : 'mediafiles';
+    console.log({ collection });
     const data = await this.post(
-      `entities/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
+      `${collection}/filter?limit=${limit}&skip=${this.getSkip(
+        skip,
+        limit
+      )}&order_by=${search.order_by}`,
       { body }
     );
 
@@ -431,15 +445,16 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
   }
 
-  async GetFilterOptions(input: AdvancedFilterInput, limit: number): Promise<string[]> {
+  async GetFilterOptions(
+    input: AdvancedFilterInput,
+    limit: number
+  ): Promise<string[]> {
     const body = [input];
-    const data = await this.post(
-      `entities/filter?limit=${limit}&skip=0`,
-      { body }
-    );
+    const data = await this.post(`entities/filter?limit=${limit}&skip=0`, {
+      body,
+    });
 
-    if (data.results && data.results.length > 0)
-      return data.results[0].options;
+    if (data.results && data.results.length > 0) return data.results[0].options;
     return [];
   }
 }

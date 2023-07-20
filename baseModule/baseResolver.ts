@@ -35,9 +35,8 @@ import {
   MenuTypeLink,
   MediaFileElementTypes,
   Actions,
-  BaseFieldType,
-  InputField,
   IntialValuesSource,
+  Entitytyping,
 } from '../../../generated-types/type-defs';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { ContextValue, DataSources } from '../types';
@@ -91,6 +90,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     Entities: async (
       _source,
       {
+        type,
         limit,
         skip,
         searchValue,
@@ -101,6 +101,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       let entities: EntitiesResults = { results: [] };
+      const entityType: Entitytyping = type || Entitytyping.Asset;
       if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
         entities = await dataSources.CollectionAPI.getSavedSearches(
           limit || 20,
@@ -108,23 +109,15 @@ export const baseResolver: Resolvers<ContextValue> = {
           searchValue
         );
       } else if (
-        searchInputType === SearchInputType.AdvancedInputMediaFilesType
-      ) {
-        entities = await dataSources.CollectionAPI.getAdvancedMediaFiles(
-          limit || 20,
-          skip || 0,
-          advancedFilterInputs,
-          advancedSearchValue ? filterInputParser(advancedSearchValue) : []
-        );
-      } else if (
         searchInputType === SearchInputType.AdvancedInputType &&
         advancedFilterInputs?.length
       ) {
         entities = await dataSources.CollectionAPI.GetAdvancedEntities(
+          entityType,
           limit || 20,
           skip || 0,
           advancedFilterInputs,
-          advancedSearchValue ? filterInputParser(advancedSearchValue) : []
+          searchValue || { value: '' }
         );
       } else if (searchInputType === SearchInputType.AdvancedInputType) {
         entities = await dataSources.CollectionAPI.getEntities(
@@ -366,17 +359,22 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
+      console.log(parent);
       if (source === IntialValuesSource.Metadata) {
-        const metadata = await resolveMetadata(parent, [key], ExcludeOrInclude.Include);
-        return metadata[0]?.value ?? "";
+        const metadata = await resolveMetadata(
+          parent,
+          [key],
+          ExcludeOrInclude.Include
+        );
+        return metadata[0]?.value ?? '';
       } else if (source === IntialValuesSource.Root) {
-        return parent?.[key] ?? "";
+        return parent?.[key] ?? '';
       } else if (source === IntialValuesSource.Relations) {
         const relation: any = (await resolveRelations(parent))[0];
-        return relation?.[key] ?? "";
+        return relation?.[key] ?? '';
       }
 
-      return "";
+      return '';
     },
     relation: async (parent: any, { key }, { dataSources }) => {
       return parent.relations
