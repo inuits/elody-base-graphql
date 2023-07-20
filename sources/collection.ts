@@ -432,7 +432,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       `${collection}/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
-      )}&order_by=${search.order_by}`,
+      )}&order_by=${search.order_by}&asc=${search.isAsc ? 1 : 0}`,
       { body }
     );
 
