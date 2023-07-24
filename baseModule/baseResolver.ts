@@ -366,7 +366,10 @@ export const baseResolver: Resolvers<ContextValue> = {
           [key],
           ExcludeOrInclude.Include
         );
-        return metadata[0]?.value ?? '';
+        if (key === "manifest") {
+          return parent.data.id || parent.data["@id"];
+        }
+        return metadata[0]?.value ?? "";
       } else if (source === IntialValuesSource.Root) {
         return parent?.[key] ?? '';
       } else if (source === IntialValuesSource.Relations) {
