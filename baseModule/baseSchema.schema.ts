@@ -661,7 +661,7 @@ export const baseSchema = gql`
     User: User
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
-    EntityTypeSortOptions(entityType: Entitytyping!): Entity!
+    EntityTypeSortOptions(entityType: String!): Entity!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations: BulkOperations!
