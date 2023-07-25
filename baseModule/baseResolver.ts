@@ -37,6 +37,7 @@ import {
   Actions,
   IntialValuesSource,
   Entitytyping,
+  Entity,
 } from '../../../generated-types/type-defs';
 import { InputRelationsDelete, relationInput } from '../sources/collection';
 import { ContextValue, DataSources } from '../types';
@@ -143,10 +144,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         options: [],
       };
     },
-    SortOptions: async (_source, {}, { dataSources }) => {
+    EntityTypeSortOptions: async (_source, { entityType }, { dataSources }) => {
       return {
-        options: [],
-      };
+        type: entityType,
+        sortOptions: {},
+      } as Entity;
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };

@@ -185,6 +185,7 @@ export const baseSchema = gql`
     Edit
     EditAlt
     EllipsisV
+    EllipsisH
     ExclamationTriangle
     Export
     Eye
@@ -600,6 +601,7 @@ export const baseSchema = gql`
     intialValues: IntialValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
   }
 
   type BaseEntity implements Entity {
@@ -616,6 +618,7 @@ export const baseSchema = gql`
     intialValues: IntialValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
   }
 
   type MediaFileEntity implements Entity {
@@ -632,6 +635,7 @@ export const baseSchema = gql`
     intialValues: IntialValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
   }
 
   type EntitiesResults {
@@ -657,8 +661,8 @@ export const baseSchema = gql`
     User: User
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
+    EntityTypeSortOptions(entityType: Entitytyping!): Entity!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
-    SortOptions: SortOptions!
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations: BulkOperations!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
