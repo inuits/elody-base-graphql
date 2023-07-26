@@ -17,7 +17,7 @@ Follow these steps to publish a package to nexus for use in graphql pipeline:
 - The gitlab pipeline should start running where the npm package gets built and published to nexus automatically
 
 
-### How to publish a graphql module to nexus (manually)
+### How to publish a graphql module to nexus (manually - depricated)
 
 Follow these steps to publish a package to nexus for use in graphql pipeline:
 
