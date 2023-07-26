@@ -23,8 +23,13 @@ import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
 import { applyExportEndpoint } from './exportEndpoint';
-import { resolveMedia, resolveMetadata, resolvePermission } from './resolvers/entityResolver';
+import {
+  resolveMedia,
+  resolveMetadata,
+  resolvePermission,
+} from './resolvers/entityResolver';
 import { parseIdToGetMoreData } from './parsers/entity';
+import { applyTranslationEndpoint } from './translationEndpoint';
 
 let environment: Environment | undefined = undefined;
 
@@ -54,6 +59,7 @@ const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
 const start = (
   application: Application,
   appConfig: Environment,
+  appTranslations: Object,
   customEndpoints: Function[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined
 ) => {
@@ -152,6 +158,9 @@ const start = (
           appConfig.staticToken
         );
       },
+      function () {
+        applyTranslationEndpoint(app, appTranslations);
+      },
       ...customEndpoints,
     ];
 
@@ -175,4 +184,12 @@ const start = (
 
 export default start;
 export type { ContextValue, DataSources, Environment };
-export { environment, baseModule, baseSchema, resolveMedia, resolveMetadata, parseIdToGetMoreData, resolvePermission };
+export {
+  environment,
+  baseModule,
+  baseSchema,
+  resolveMedia,
+  resolveMetadata,
+  parseIdToGetMoreData,
+  resolvePermission,
+};
