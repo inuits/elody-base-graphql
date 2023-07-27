@@ -21,6 +21,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
+          applicationLocale: config.customization.applicationLocale,
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,

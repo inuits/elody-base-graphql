@@ -30,6 +30,7 @@ export interface Environment {
   };
   customization: {
     applicationTitle: string;
+    applicationLocale: string;
   };
   routerConfig: any;
   damsFrontend: string;
