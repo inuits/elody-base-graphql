@@ -102,12 +102,25 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       let entities: EntitiesResults = { results: [] };
+      
       const entityType: Entitytyping = type || Entitytyping.Asset;
+
       if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
         entities = await dataSources.CollectionAPI.getSavedSearches(
           limit || 20,
           skip || 0,
           searchValue
+        );
+      } else if (
+        searchInputType === SearchInputType.AdvancedInputMediaFilesType &&
+        advancedFilterInputs?.length
+      ) {
+        entities = await dataSources.CollectionAPI.GetAdvancedEntities(
+          Entitytyping.Mediafile,
+          limit || 20,
+          skip || 0,
+          advancedFilterInputs,
+          searchValue || { value: '' }
         );
       } else if (
         searchInputType === SearchInputType.AdvancedInputType &&
