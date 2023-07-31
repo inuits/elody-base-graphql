@@ -424,13 +424,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: SearchFilter
   ): Promise<EntitiesResults> {
-
-    
     let data : EntetiesCallReturn  = 'no-call-is-triggerd'
 
-    if(Entitytyping.Mediafile === type){
+    if(Entitytyping.Mediafile === type) {
        data = await this.doAdvancedMediaCall(limit, skip, advancedFilterInputs, advancedSearchValue)
-    }else{
+    } else {
       data = await this.doAdvancedEntitiesCall(limit, skip, advancedFilterInputs, advancedSearchValue)
     }
 
@@ -440,9 +438,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
     if (!Array.isArray(data)) {
       data.results?.forEach((element: unknown) : unknown => setId(element));
-      //Todo write typescheker for EntitieResults 
+      //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
-    } 
+    }
     if(Array.isArray(data)) {
       data.forEach((element: Record<string, unknown>) : Record<string, unknown> => setId(element));
       return { results: data, count: data.length, limit: limit };
@@ -452,25 +450,24 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   private async doAdvancedEntitiesCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
-
+    const body = advancedFilterInputs;
     return await this.post(
         `entities/filter?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
         )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
-        { advancedFilterInputs }
+        { body }
       );
   }
 
-
   private async doAdvancedMediaCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
-    const itemWithParentId= advancedFilterInputs.find(( currentValue: AdvancedFilterInput) => {
-      if(currentValue.parent) {
+    const itemWithParentId = advancedFilterInputs.find(( currentValue: AdvancedFilterInput) => {
+      if (currentValue.parent) {
         return currentValue
       }
     })
 
-    if(itemWithParentId){
+    if (itemWithParentId) {
       return this.get(
         `entities/${itemWithParentId.parent}/mediafiles?limit=${limit}&skip=${this.getSkip(
           skip,
@@ -479,8 +476,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       ).then((result : Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>): EntetiesCallReturn => {
         //Add mediafile type to the result, is missing from the mediafile endpoint
         if(!Array.isArray(result)){
-          return result.results.map((item: unknown): Record<string, unknown> => { 
-            //Todo write typescheker for EntitieResults 
+          return result.results.map((item: unknown): Record<string, unknown> => {
+            //Todo write typescheker for EntitieResults
             return {...item as Object, type : 'mediafile'} as Record<string, unknown>
           })
         }
