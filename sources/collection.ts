@@ -426,13 +426,13 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntitiesResults> {
     let data : EntetiesCallReturn  = 'no-call-is-triggerd'
 
-    if(Entitytyping.Mediafile === type) {
-       data = await this.doAdvancedMediaCall(limit, skip, advancedFilterInputs, advancedSearchValue)
+    if (Entitytyping.Mediafile === type) {
+      data = await this.doAdvancedMediaCall(limit, skip, advancedFilterInputs, advancedSearchValue)
     } else {
       data = await this.doAdvancedEntitiesCall(limit, skip, advancedFilterInputs, advancedSearchValue)
     }
 
-    if(data === 'no-call-is-triggerd') {
+    if (data === 'no-call-is-triggerd') {
       throw Error("No call triggerd wen trying to search for entities");
     }
 
@@ -441,7 +441,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
     }
-    if(Array.isArray(data)) {
+    if (Array.isArray(data)) {
       data.forEach((element: Record<string, unknown>) : Record<string, unknown> => setId(element));
       return { results: data, count: data.length, limit: limit };
     }
@@ -452,12 +452,12 @@ export class CollectionAPI extends AuthRESTDataSource {
   private async doAdvancedEntitiesCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-        `entities/filter?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
-        { body }
-      );
+      `entities/filter?limit=${limit}&skip=${this.getSkip(
+        skip,
+        limit
+      )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
+      { body }
+    );
   }
 
   private async doAdvancedMediaCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
@@ -473,20 +473,29 @@ export class CollectionAPI extends AuthRESTDataSource {
           skip,
           limit
         )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`
-      ).then((result : Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>): EntetiesCallReturn => {
-        //Add mediafile type to the result, is missing from the mediafile endpoint
-        if(!Array.isArray(result)){
-          return result.results.map((item: unknown): Record<string, unknown> => {
-            //Todo write typescheker for EntitieResults
-            return {...item as Object, type : 'mediafile'} as Record<string, unknown>
-          })
-        }
+      ).then((result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>): EntetiesCallReturn => this.handleAdvancedMediaResult(result));
+    } else {
+      const body = advancedFilterInputs;
+      return await this.post(
+        `mediafiles/filter?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
+        { body }
+      ).then((result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>): EntetiesCallReturn => this.handleAdvancedMediaResult(result));
+    }
+  }
 
-        return 'no-call-is-triggerd'
-      });
+  private handleAdvancedMediaResult(result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>) : EntetiesCallReturn {
+    //Add mediafile type to the result, is missing from the mediafile endpoint
+    if(!Array.isArray(result)){
+      return result.results.map((item: unknown): Record<string, unknown> => {
+        //Todo write typescheker for EntitieResults
+        return {...item as Object, type : 'mediafile'} as Record<string, unknown>
+      })
     }
 
-    return Promise.resolve('no-call-is-triggerd')
+    return 'no-call-is-triggerd'
   }
 
   async GetFilterOptions(

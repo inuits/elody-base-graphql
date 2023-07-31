@@ -113,7 +113,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       } else if (
         searchInputType === SearchInputType.AdvancedInputMediaFilesType &&
-        advancedFilterInputs?.length
+        advancedFilterInputs?.length >= 0
       ) {
         entities = await dataSources.CollectionAPI.GetAdvancedEntities(
           Entitytyping.Mediafile,
@@ -374,7 +374,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
-      console.log(parent);
       if (source === IntialValuesSource.Metadata) {
         const metadata = await resolveMetadata(
           parent,
