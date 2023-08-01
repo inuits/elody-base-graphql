@@ -82,7 +82,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
     },
     Entity: async (_source, { id, type }, { dataSources }) => {
-      if (type === 'MediaFile') {
+      if (type.toLowerCase() === 'mediafile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
         return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
