@@ -21,6 +21,8 @@ import {
   Entitytyping,
   FilterMatcherMap,
   AdvancedFilterInput,
+  MetadataValuesInput,
+  BaseRelationValuesInput,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -170,10 +172,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
-  async patchRelations(id: string, relations: relationInput[]): Promise<any[]> {
-    return await this.patch(`entities/${id}/relations`, { body: relations });
-  }
-
   async replaceMetadata(
     id: String,
     metadata: Maybe<MetadataFieldInput>[]
@@ -181,11 +179,24 @@ export class CollectionAPI extends AuthRESTDataSource {
     return await this.put(`entities/${id}/metadata`, { metadata });
   }
 
-  async patchMetadata(
-    id: String,
-    metadata: Maybe<MetadataInput>[]
-  ): Promise<Metadata[]> {
+  async patchMetadata(id: String, metadata: MetadataValuesInput[]): Promise<Metadata[]> {
+    if (metadata.length <= 0) return [];
     return await this.patch(`entities/${id}/metadata`, { body: metadata });
+  }
+
+  async postRelations(id: string, relations: BaseRelationValuesInput[]): Promise<any[]> {
+    if (relations.length <= 0) return [];
+    return await this.post(`entities/${id}/relations`, { body: relations });
+  }
+
+  async patchRelations(id: string, relations: BaseRelationValuesInput[]): Promise<any[]> {
+    if (relations.length <= 0) return [];
+    return await this.patch(`entities/${id}/relations`, { body: relations });
+  }
+
+  async deleteRelations(id: string, relations: BaseRelationValuesInput[]): Promise<any> {
+    if (relations.length <= 0) return [];
+    return await this.delete(`entities/${id}/relations`, { body: relations });
   }
 
   async getJobs(
@@ -263,15 +274,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       sixthCollectionId = await this.get(`entities/sixthcollection/entity_id`);
     }
     return sixthCollectionId;
-  }
-
-  async deleteRelations(
-    id: string,
-    relations: InputRelationsDelete
-  ): Promise<string> {
-    const body = relations;
-    await this.delete(`entities/${id}/relations`, { body });
-    return 'Delete success.';
   }
 
   async getConfig(): Promise<Config> {

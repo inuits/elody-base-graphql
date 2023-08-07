@@ -1,19 +1,14 @@
-import { InputRelationsDelete } from '../sources/collection';
 import {
-  RelationMetaData,
+  Collection,
   ExcludeOrInclude,
   Maybe,
-  MediaFile,
+  MediaFileMetadata,
   Metadata,
   MetadataAndRelation,
-  MetadataRelation,
   MetadataFormInput,
-  MediaFileMetadata,
-  RelationValuesInput,
-  MetadataValuesInput,
-  Collection,
+  MetadataRelation,
+  RelationMetaData,
 } from '../../../generated-types/type-defs';
-import { relationInput } from '../sources/collection';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
   'key',
@@ -223,57 +218,6 @@ export const FormInputToMetadata = (
   }
 
   return input;
-};
-
-type ApiInputToPatchDeleteRelationsMetadata = {
-  relationsToDelete: InputRelationsDelete | 'nothing-to-delete';
-  relationsToUpdate: relationInput[] | 'nothing-to-update';
-  metadataToUpdate: MetadataValuesInput[] | 'nothing-to-update';
-};
-export const formInputToPatchDeleteRelationsMetadata = (
-  relationsInput: RelationValuesInput[],
-  metadataInput: MetadataValuesInput[]
-): ApiInputToPatchDeleteRelationsMetadata => {
-  const output: ApiInputToPatchDeleteRelationsMetadata = {
-    relationsToDelete: 'nothing-to-delete',
-    relationsToUpdate: 'nothing-to-update',
-    metadataToUpdate:
-      metadataInput.length > 0 ? metadataInput : 'nothing-to-update',
-  };
-
-  relationsInput.forEach((relation) => {
-    if (relation.toBeDeleted) {
-      if (output.relationsToDelete === 'nothing-to-delete') {
-        output.relationsToDelete = [];
-      }
-
-      output.relationsToDelete.push({
-        key: relation.id,
-        type: relation.relationType,
-      });
-    }
-
-    if (!relation.toBeDeleted) {
-      let relationUpdated: relationInput = {
-        label: relation.label,
-        key: relation.id,
-        type: relation.relationType,
-      };
-      if (relation.metaData !== null) {
-        relation.metaData.forEach((metadata) => {
-          relationUpdated[metadata.key] = metadata.value;
-        });
-      }
-
-      if (output.relationsToUpdate === 'nothing-to-update') {
-        output.relationsToUpdate = [];
-      }
-
-      output.relationsToUpdate.push(relationUpdated);
-    }
-  });
-
-  return output;
 };
 
 export const parseIdToGetMoreData = (id: string): string => {

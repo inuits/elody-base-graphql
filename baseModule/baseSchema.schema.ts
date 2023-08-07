@@ -89,11 +89,12 @@ export const baseSchema = gql`
   }
 
   enum TypeModals {
-    Upload
-    Create
     BulkOperations
     Confirm
+    Create
+    EntityPicker
     OCR
+    Upload
   }
 
   enum ModalChoices {
@@ -443,34 +444,32 @@ export const baseSchema = gql`
     keyValue(key: String!): JSON!
   }
 
-  type relationValues {
-    teaserMetadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-    ): [MetadataAndRelation]
-    id: String!
-    metaData: KeyValue
-    relationType: String!
-    toBeDeleted: Boolean!
-  }
-
-  enum IntialValuesSource {
+  enum KeyValueSource {
     root
     metadata
     relations
   }
 
   type IntialValues {
-    keyValue(key: String!, source: IntialValuesSource!): JSON!
-    relation(key: String!): [relationValues]
+    keyValue(key: String!, source: KeyValueSource!): JSON!
   }
 
-  input RelationValuesInput {
+  type RelationValues {
+    relations: [IntialValues!]!
+  }
+
+  enum EditStatus {
+    new
+    changed
+    deleted
+    unchanged
+  }
+
+  input BaseRelationValuesInput {
+    key: String!
     label: String!
-    id: String!
-    metaData: [MetadataValuesInput!]!
-    relationType: String!
-    toBeDeleted: Boolean!
+    type: String!
+    editStatus: EditStatus!
   }
 
   input MetadataValuesInput {
@@ -480,7 +479,7 @@ export const baseSchema = gql`
 
   input EntityFormInput {
     metadata: [MetadataValuesInput!]!
-    relations: [RelationValuesInput!]!
+    relations: [BaseRelationValuesInput!]!
   }
 
   enum MediaFileElementTypes {
@@ -599,6 +598,7 @@ export const baseSchema = gql`
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
+    relationValues: RelationValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -616,6 +616,7 @@ export const baseSchema = gql`
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
+    relationValues: RelationValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -633,6 +634,7 @@ export const baseSchema = gql`
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
+    relationValues: RelationValues!
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -671,18 +673,12 @@ export const baseSchema = gql`
   }
 
   type Mutation {
-    updateRelationsAndMetadata(id: String!, data: EntityFormInput!): Entity
-    replaceRelationsAndMetaData(id: String!, form: MetadataFormInput): Entity
-    replaceMetadata(id: String!, metadata: [MetadataInput!]!): [Metadata!]!
-    setMediaPrimaire(entity_id: String!, mediafile_id: String!): String
-    setThumbnailPrimaire(entity_id: String!, mediafile_id: String!): String
+    mutateEntityValues(id: String!, formInput: EntityFormInput!): Entity
     deleteData(
       id: String!
       path: Collection!
       deleteMediafiles: Boolean!
     ): String
-    updateMediafilesOrder(value: OrderArrayInput!): String
-    deleteRelations(id: String!, metadata: [MetadataInput!]!): String
     linkMediafileToEntity(
       entityId: String!
       mediaFileInput: MediaFileInput!

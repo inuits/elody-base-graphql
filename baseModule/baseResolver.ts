@@ -1,7 +1,4 @@
-import { filterInputParser } from 'advanced-filter-module';
 import {
-  formInputToPatchDeleteRelationsMetadata,
-  FormInputToRelations,
   isMetaDataRelation,
   MediaFileToMedia,
   parseIdToGetMoreData,
@@ -11,7 +8,6 @@ import {
   resolveMedia,
   resolveMetadata,
   resolvePermission,
-  resolveRelations,
 } from '../resolvers/entityResolver';
 import {
   Collection,
@@ -35,12 +31,13 @@ import {
   MenuTypeLink,
   MediaFileElementTypes,
   Actions,
-  IntialValuesSource,
+  KeyValueSource,
   Entitytyping,
   Entity,
+  EditStatus,
+  BaseRelationValuesInput,
 } from '../../../generated-types/type-defs';
-import { InputRelationsDelete, relationInput } from '../sources/collection';
-import { ContextValue, DataSources } from '../types';
+import { ContextValue } from '../types';
 import { baseFields, getOptionsByConfigKey } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
@@ -102,7 +99,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       let entities: EntitiesResults = { results: [] };
-      
       const entityType: Entitytyping = type || Entitytyping.Asset;
 
       if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
@@ -207,72 +203,37 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       return linkedResult;
     },
-    replaceRelationsAndMetaData: async (
-      _source,
-      { id, form },
-      { dataSources }
-    ) => {
-      const relationInput = FormInputToRelations(form);
-      //@ts-ignore
-      if (relationInput && relationInput.length > 0)
-        //@ts-ignore
-        await dataSources.CollectionAPI.patchRelations(id, relationInput);
+    mutateEntityValues: async (_source, { id, formInput }, { dataSources }) => {
+      const filterEditStatus = (editStatus: EditStatus): BaseRelationValuesInput[] => {
+        return formInput.relations
+          .filter(relationInput => relationInput.editStatus === editStatus)
+          .map(relationInput => {
+            const relation: any = {};
+            Object.keys(relationInput).filter(key => key !== "editStatus").forEach(key => {
+              relation[key] = (relationInput as any)[key];
+            });
+            return relation;
+          });
+      };
 
-      if (form?.Metadata)
-        await dataSources.CollectionAPI.patchMetadata(id, form.Metadata);
-
-      return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
-    },
-    updateRelationsAndMetadata: async (
-      _source,
-      { id, data },
-      { dataSources }
-    ) => {
-      const dataForApi = formInputToPatchDeleteRelationsMetadata(
-        data.relations,
-        data.metadata
+      await dataSources.CollectionAPI.patchMetadata(
+        id,
+        formInput.metadata
+      );
+      await dataSources.CollectionAPI.postRelations(
+        id,
+        filterEditStatus(EditStatus.New)
+      );
+      await dataSources.CollectionAPI.patchRelations(
+        id,
+        filterEditStatus(EditStatus.Changed)
+      );
+      await dataSources.CollectionAPI.deleteRelations(
+        id,
+        filterEditStatus(EditStatus.Deleted)
       );
 
-      if (dataForApi.relationsToDelete !== 'nothing-to-delete')
-        await dataSources.CollectionAPI.deleteRelations(
-          id,
-          dataForApi.relationsToDelete
-        );
-      if (dataForApi.relationsToUpdate !== 'nothing-to-update')
-        await dataSources.CollectionAPI.patchRelations(
-          id,
-          dataForApi.relationsToUpdate
-        );
-      if (dataForApi.metadataToUpdate !== 'nothing-to-update')
-        await dataSources.CollectionAPI.patchMetadata(
-          id,
-          dataForApi.metadataToUpdate
-        );
-
-      return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
-    },
-    replaceMetadata: async (_source, { id, metadata }, { dataSources }) => {
-      return dataSources.CollectionAPI.replaceMetadata(id, metadata);
-    },
-    setMediaPrimaire: async (
-      _source,
-      { entity_id, mediafile_id },
-      { dataSources }
-    ) => {
-      return dataSources.CollectionAPI.setMediaPrimaire(
-        entity_id,
-        mediafile_id
-      );
-    },
-    setThumbnailPrimaire: async (
-      _source,
-      { entity_id, mediafile_id },
-      { dataSources }
-    ) => {
-      return dataSources.CollectionAPI.setThumbnailPrimaire(
-        entity_id,
-        mediafile_id
-      );
+      return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
     },
     deleteData: async (
       _source,
@@ -280,15 +241,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return dataSources.CollectionAPI.deleteData(id, path, deleteMediafiles);
-    },
-    deleteRelations: async (_source, { id, metadata }, { dataSources }) => {
-      return dataSources.CollectionAPI.deleteRelations(
-        id,
-        metadata as InputRelationsDelete
-      );
-    },
-    updateMediafilesOrder: async (_source, { value }, { dataSources }) => {
-      return dataSources.CollectionAPI.updateMediafilesOrder(value);
     },
   },
   BaseEntity: {
@@ -326,6 +278,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     intialValues: async (parent: any, _args) => {
       return parent;
+    },
+    relationValues: async (parent: any, _args, { dataSources }) => {
+      return parent.relations;
     },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(
@@ -374,7 +329,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
-      if (source === IntialValuesSource.Metadata) {
+      if (source === KeyValueSource.Metadata) {
         const metadata = await resolveMetadata(
           parent,
           [key],
@@ -384,43 +339,19 @@ export const baseResolver: Resolvers<ContextValue> = {
           return parent.data.id || parent.data["@id"];
         }
         return metadata[0]?.value ?? "";
-      } else if (source === IntialValuesSource.Root) {
+      } else if (source === KeyValueSource.Root) {
         return parent?.[key] ?? '';
-      } else if (source === IntialValuesSource.Relations) {
-        const relation: any = (await resolveRelations(parent))[0];
-        return relation?.[key] ?? '';
+      } else if (source === KeyValueSource.Relations) {
+        return parent?.[key] ?? '';
       }
 
       return '';
     },
-    relation: async (parent: any, { key }, { dataSources }) => {
-      return parent.relations
-        ? parent.relations.filter(
-            (relation: { label: string; type: string }) => {
-              return relation.label === key && relation.type !== null;
-            }
-          )
-        : [];
-    },
   },
-  relationValues: {
-    teaserMetadata: async (
-      parent: any,
-      { keys, excludeOrInclude },
-      { dataSources }
-    ) => {
-      const entity = await dataSources.CollectionAPI.getEntity(
-        parseIdToGetMoreData(parent.key)
-      );
-      return await resolveMetadata(entity, keys, excludeOrInclude);
+  RelationValues: {
+    relations: async (parent: any, {}, { dataSources }) => {
+      return parent;
     },
-    id: async (parent: any, _args, { dataSources }) => {
-      return parent.key;
-    },
-    relationType: async (parent: any, _args, { dataSources }) => {
-      return parent.type === null ? 'no-type-in-api' : parent.type;
-    },
-    toBeDeleted: () => false,
   },
   MediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
