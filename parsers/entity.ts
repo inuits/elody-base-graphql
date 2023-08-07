@@ -23,7 +23,6 @@ const PROTECTED_METADATA_RELATION_KEY: string[] = [
 ];
 
 export const setId = (entityRaw: any) => {
-  console.log(entityRaw)
   entityRaw.id = entityRaw.object_id
     ? entityRaw.object_id
     : entityRaw.identifiers ? entityRaw.identifiers[0] : entityRaw._id;
