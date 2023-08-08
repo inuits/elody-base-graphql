@@ -259,9 +259,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       metadata,
     };
     if (customId && customId.length) {
-      body.id = customId;
-      body.object_id = customId;
-      body.identifiers = [customId];
+      body['_id'] = customId;
+      body.identifiers = entity.identifiers;
     }
     const newEntity = await this.post(`entities`, {
       body,
