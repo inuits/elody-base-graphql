@@ -345,8 +345,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       } else if (source === KeyValueSource.Root) {
         return parent?.[key] ?? '';
       } else if (source === KeyValueSource.Relations) {
-        return parent?.relations.find((relation: any) => relation.type === key)
-          .value;
+        try {
+          return parent?.relations.find((relation: any) => relation.type === key)
+            .value;
+        } catch {
+          return parent?.[key] ?? '';
+        }
       }
 
       return '';
