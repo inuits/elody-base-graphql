@@ -204,22 +204,23 @@ export const baseResolver: Resolvers<ContextValue> = {
       return linkedResult;
     },
     mutateEntityValues: async (_source, { id, formInput }, { dataSources }) => {
-      const filterEditStatus = (editStatus: EditStatus): BaseRelationValuesInput[] => {
+      const filterEditStatus = (
+        editStatus: EditStatus
+      ): BaseRelationValuesInput[] => {
         return formInput.relations
-          .filter(relationInput => relationInput.editStatus === editStatus)
-          .map(relationInput => {
+          .filter((relationInput) => relationInput.editStatus === editStatus)
+          .map((relationInput) => {
             const relation: any = {};
-            Object.keys(relationInput).filter(key => key !== "editStatus").forEach(key => {
-              relation[key] = (relationInput as any)[key];
-            });
+            Object.keys(relationInput)
+              .filter((key) => key !== 'editStatus')
+              .forEach((key) => {
+                relation[key] = (relationInput as any)[key];
+              });
             return relation;
           });
       };
 
-      await dataSources.CollectionAPI.patchMetadata(
-        id,
-        formInput.metadata
-      );
+      await dataSources.CollectionAPI.patchMetadata(id, formInput.metadata);
       await dataSources.CollectionAPI.postRelations(
         id,
         filterEditStatus(EditStatus.New)
@@ -233,7 +234,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         filterEditStatus(EditStatus.Deleted)
       );
 
-      return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
+      return await dataSources.CollectionAPI.getEntity(
+        parseIdToGetMoreData(id)
+      );
     },
     deleteData: async (
       _source,
@@ -335,14 +338,15 @@ export const baseResolver: Resolvers<ContextValue> = {
           [key],
           ExcludeOrInclude.Include
         );
-        if (key === "manifest") {
-          return parent.data.id || parent.data["@id"];
+        if (key === 'manifest') {
+          return parent.data.id || parent.data['@id'];
         }
-        return metadata[0]?.value ?? "";
+        return metadata[0]?.value ?? '';
       } else if (source === KeyValueSource.Root) {
         return parent?.[key] ?? '';
       } else if (source === KeyValueSource.Relations) {
-        return parent?.[key] ?? '';
+        return parent?.relations.find((relation: any) => relation.type === key)
+          .value;
       }
 
       return '';
