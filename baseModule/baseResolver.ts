@@ -283,7 +283,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent;
     },
     relationValues: async (parent: any, _args, { dataSources }) => {
-      return parent.relations;
+      return parent.relations ?? [];
     },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(
