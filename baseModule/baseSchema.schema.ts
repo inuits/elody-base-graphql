@@ -70,7 +70,6 @@ export const baseSchema = gql`
     acceptedEntityTypes: [String]
     validation: Boolean
     options: [String]
-    optionsConfigKey: String
   }
 
   enum validation {
@@ -608,7 +607,7 @@ export const baseSchema = gql`
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -627,7 +626,7 @@ export const baseSchema = gql`
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -646,7 +645,7 @@ export const baseSchema = gql`
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions

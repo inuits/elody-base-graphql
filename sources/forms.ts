@@ -27,28 +27,25 @@ export const baseFields: { [key: string]: InputField } = {
   baseTextField: {
     type: InputFieldTypes.Text,
   },
-  languageTypeField: {
-    type: InputFieldTypes.Dropdown,
-    options: Object.values(LanguageType),
-    optionsConfigKey: undefined,
-  },
   fileformatTypeField: {
     type: InputFieldTypes.Dropdown,
     options: Object.values(FileformatType),
-    optionsConfigKey: undefined,
   },
 };
 
-export const getOptionsByConfigKey = async (
+export const getOptionsByEntityType = async (
   field: InputField,
   dataSources: DataSources
 ): Promise<InputField> => {
-  if (!field.optionsConfigKey) return field;
+  if (!field.acceptedEntityTypes) return field;
 
-  const optionsForField = (await dataSources.CollectionAPI.getConfig())[
-    field.optionsConfigKey
-  ];
-  field.options = optionsForField;
+  const optionsForField = await dataSources.CollectionAPI.getEntitiesByType(
+    field.acceptedEntityTypes[0] as string
+  );
+  field.options = optionsForField.map(
+    (option) =>
+      option?.metadata?.find((dataItem) => dataItem?.key === 'title')?.value
+  );
   return field;
 };
 

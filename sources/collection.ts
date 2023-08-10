@@ -23,6 +23,7 @@ import {
   AdvancedFilterInput,
   MetadataValuesInput,
   BaseRelationValuesInput,
+  Entity,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
@@ -76,6 +77,17 @@ export class CollectionAPI extends AuthRESTDataSource {
       console.log(e);
     }
     return data as EntitiesResults;
+  }
+
+  async getEntitiesByType(entityType: string): Promise<Entity[]> {
+    let data;
+    try {
+      data = await this.get(`${Collection.Entities}?type=${entityType}`);
+      data.results.forEach((element: any) => setId(element));
+    } catch (e) {
+      console.log(e);
+    }
+    return data.results;
   }
 
   async getEntity(id: string): Promise<any> {

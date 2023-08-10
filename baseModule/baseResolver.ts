@@ -40,7 +40,7 @@ import {
   BaseRelationValuesInput,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
-import { baseFields, getOptionsByConfigKey } from '../sources/forms';
+import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
 import { GraphQLScalarType, Kind } from 'graphql';
@@ -180,12 +180,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         if (fieldType !== null) {
           const field = baseFields[fieldType];
 
-          let fieldWithOptions = getOptionsByConfigKey(field, dataSources).then(
-            (result) => {
-              result.fieldName = fieldLabels[i];
-              inputFieldsArray.push(result);
-            }
-          );
+          let fieldWithOptions = getOptionsByEntityType(
+            field,
+            dataSources
+          ).then((result) => {
+            result.fieldName = fieldLabels[i];
+            inputFieldsArray.push(result);
+          });
           // inputFieldsArray.push(fieldWithOptions);
         }
       });
@@ -349,8 +350,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         return parent?.[key] ?? '';
       } else if (source === KeyValueSource.Relations) {
         try {
-          return parent?.relations.find((relation: any) => relation.type === key)
-            .value;
+          return parent?.relations.find(
+            (relation: any) => relation.type === key
+          ).value;
         } catch {
           return parent?.[key] ?? '';
         }
@@ -487,7 +489,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     inputField: async (_source, { type }, { dataSources }) => {
       const field = baseFields[type];
-      const fieldWithOptions = getOptionsByConfigKey(field, dataSources);
+      const fieldWithOptions = getOptionsByEntityType(field, dataSources);
       return fieldWithOptions;
     },
   },
@@ -503,7 +505,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     inputField: async (_source, { type }, { dataSources }) => {
       const field = baseFields[type];
-      const fieldWithOptions = getOptionsByConfigKey(field, dataSources);
+      const fieldWithOptions = getOptionsByEntityType(field, dataSources);
       return fieldWithOptions;
     },
   },
