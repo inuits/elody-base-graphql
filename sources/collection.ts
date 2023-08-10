@@ -21,13 +21,15 @@ import {
   Entitytyping,
   FilterMatcherMap,
   AdvancedFilterInput,
+  MetadataValuesInput,
+  BaseRelationValuesInput,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
-import { parsedInput } from 'advanced-filter-module';
+
 export type relationInput = {
   label: string;
   key: string;
@@ -35,7 +37,10 @@ export type relationInput = {
   [key: string]: string;
 };
 type updateNode = { id: String; order: number };
-type EntetiesCallReturn = { results: Array<unknown> } | Array<unknown> | 'no-call-is-triggerd'
+type EntetiesCallReturn =
+  | { results: Array<unknown> }
+  | Array<unknown>
+  | 'no-call-is-triggerd';
 export type InputRelationsDelete = Array<{ key: string; type: string }>;
 let sixthCollectionId: string | 'no-id' = 'no-id';
 
@@ -170,10 +175,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
-  async patchRelations(id: string, relations: relationInput[]): Promise<any[]> {
-    return await this.patch(`entities/${id}/relations`, { body: relations });
-  }
-
   async replaceMetadata(
     id: String,
     metadata: Maybe<MetadataFieldInput>[]
@@ -183,9 +184,34 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async patchMetadata(
     id: String,
-    metadata: Maybe<MetadataInput>[]
+    metadata: MetadataValuesInput[]
   ): Promise<Metadata[]> {
+    if (metadata.length <= 0) return [];
     return await this.patch(`entities/${id}/metadata`, { body: metadata });
+  }
+
+  async postRelations(
+    id: string,
+    relations: BaseRelationValuesInput[]
+  ): Promise<any[]> {
+    if (relations.length <= 0) return [];
+    return await this.post(`entities/${id}/relations`, { body: relations });
+  }
+
+  async patchRelations(
+    id: string,
+    relations: BaseRelationValuesInput[]
+  ): Promise<any[]> {
+    if (relations.length <= 0) return [];
+    return await this.patch(`entities/${id}/relations`, { body: relations });
+  }
+
+  async deleteRelations(
+    id: string,
+    relations: BaseRelationValuesInput[]
+  ): Promise<any> {
+    if (relations.length <= 0) return [];
+    return await this.delete(`entities/${id}/relations`, { body: relations });
   }
 
   async getJobs(
@@ -233,9 +259,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       metadata,
     };
     if (customId && customId.length) {
-      body.id = customId;
-      body.object_id = customId;
-      body.identifiers = [customId];
+      body['_id'] = customId;
+      body.identifiers = entity.identifiers;
     }
     const newEntity = await this.post(`entities`, {
       body,
@@ -263,15 +288,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       sixthCollectionId = await this.get(`entities/sixthcollection/entity_id`);
     }
     return sixthCollectionId;
-  }
-
-  async deleteRelations(
-    id: string,
-    relations: InputRelationsDelete
-  ): Promise<string> {
-    const body = relations;
-    await this.delete(`entities/${id}/relations`, { body });
-    return 'Delete success.';
   }
 
   async getConfig(): Promise<Config> {
@@ -373,7 +389,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: parsedInput[]
+    advancedSearchValue: any[]
   ): Promise<EntitiesResults> {
     let result = { results: [], count: 0, limit };
     try {
@@ -382,7 +398,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
       //mediaFileFilters - publication status
       if (advancedSearchValue) {
-        advancedSearchValue.forEach((filter: parsedInput) => {
+        advancedSearchValue.forEach((filter: any) => {
           if (
             filter &&
             filter.item_types?.includes('publication_status_media_file')
@@ -424,72 +440,124 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: SearchFilter
   ): Promise<EntitiesResults> {
+    let data: EntetiesCallReturn = 'no-call-is-triggerd';
 
-    
-    let data : EntetiesCallReturn  = 'no-call-is-triggerd'
-
-    if(Entitytyping.Mediafile === type){
-       data = await this.doAdvancedMediaCall(limit, skip, advancedFilterInputs, advancedSearchValue)
-    }else{
-      data = await this.doAdvancedEntitiesCall(limit, skip, advancedFilterInputs, advancedSearchValue)
+    if (Entitytyping.Mediafile === type) {
+      data = await this.doAdvancedMediaCall(
+        limit,
+        skip,
+        advancedFilterInputs,
+        advancedSearchValue
+      );
+    } else {
+      data = await this.doAdvancedEntitiesCall(
+        limit,
+        skip,
+        advancedFilterInputs,
+        advancedSearchValue
+      );
     }
 
-    if(data === 'no-call-is-triggerd') {
-      throw Error("No call triggerd wen trying to search for entities");
+    if (data === 'no-call-is-triggerd') {
+      throw Error('No call triggerd wen trying to search for entities');
     }
 
     if (!Array.isArray(data)) {
-      data.results?.forEach((element: unknown) : unknown => setId(element));
-      //Todo write typescheker for EntitieResults 
+      data.results?.forEach((element: unknown): unknown => setId(element));
+      //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
-    } 
-    if(Array.isArray(data)) {
-      data.forEach((element: Record<string, unknown>) : Record<string, unknown> => setId(element));
+    }
+    if (Array.isArray(data)) {
+      data.forEach(
+        (element: Record<string, unknown>): Record<string, unknown> =>
+          setId(element)
+      );
       return { results: data, count: data.length, limit: limit };
     }
 
-    return { results : [], count: 0, limit}
+    return { results: [], count: 0, limit };
   }
 
-  private async doAdvancedEntitiesCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
-
+  private async doAdvancedEntitiesCall(
+    limit: number,
+    skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
+    advancedSearchValue: SearchFilter
+  ): Promise<EntetiesCallReturn> {
+    const body = advancedFilterInputs;
     return await this.post(
-        `entities/filter?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
-        { advancedFilterInputs }
-      );
+      `entities/filter?limit=${limit}&skip=${this.getSkip(
+        skip,
+        limit
+      )}&order_by=${advancedSearchValue.order_by}&asc=${
+        advancedSearchValue.isAsc ? 1 : 0
+      }`,
+      { body }
+    );
   }
 
-
-  private async doAdvancedMediaCall(limit: number, skip: number, advancedFilterInputs: AdvancedFilterInput[], advancedSearchValue: SearchFilter) : Promise<EntetiesCallReturn> {
-    const itemWithParentId= advancedFilterInputs.find(( currentValue: AdvancedFilterInput) => {
-      if(currentValue.parent) {
-        return currentValue
+  private async doAdvancedMediaCall(
+    limit: number,
+    skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
+    advancedSearchValue: SearchFilter
+  ): Promise<EntetiesCallReturn> {
+    const itemWithParentId = advancedFilterInputs.find(
+      (currentValue: AdvancedFilterInput) => {
+        if (currentValue.parent) {
+          return currentValue;
+        }
       }
-    })
+    );
 
-    if(itemWithParentId){
+    if (itemWithParentId) {
       return this.get(
-        `entities/${itemWithParentId.parent}/mediafiles?limit=${limit}&skip=${this.getSkip(
+        `entities/${
+          itemWithParentId.parent
+        }/mediafiles?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
-        )}&order_by=${advancedSearchValue.order_by}&asc=${advancedSearchValue.isAsc ? 1 : 0}`
-      ).then((result : Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>): EntetiesCallReturn => {
-        //Add mediafile type to the result, is missing from the mediafile endpoint
-        if(!Array.isArray(result)){
-          return result.results.map((item: unknown): Record<string, unknown> => { 
-            //Todo write typescheker for EntitieResults 
-            return {...item as Object, type : 'mediafile'} as Record<string, unknown>
-          })
-        }
+        )}&order_by=${advancedSearchValue.order_by}&asc=${
+          advancedSearchValue.isAsc ? 1 : 0
+        }`
+      ).then(
+        (
+          result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
+        ): EntetiesCallReturn => this.handleAdvancedMediaResult(result)
+      );
+    } else {
+      const body = advancedFilterInputs;
+      return await this.post(
+        `mediafiles/filter?limit=${limit}&skip=${this.getSkip(
+          skip,
+          limit
+        )}&order_by=${advancedSearchValue.order_by}&asc=${
+          advancedSearchValue.isAsc ? 1 : 0
+        }`,
+        { body }
+      ).then(
+        (
+          result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
+        ): EntetiesCallReturn => this.handleAdvancedMediaResult(result)
+      );
+    }
+  }
 
-        return 'no-call-is-triggerd'
+  private handleAdvancedMediaResult(
+    result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
+  ): EntetiesCallReturn {
+    //Add mediafile type to the result, is missing from the mediafile endpoint
+    if (!Array.isArray(result)) {
+      return result.results.map((item: unknown): Record<string, unknown> => {
+        //Todo write typescheker for EntitieResults
+        return { ...(item as Object), type: 'mediafile' } as Record<
+          string,
+          unknown
+        >;
       });
     }
 
-    return Promise.resolve('no-call-is-triggerd')
+    return 'no-call-is-triggerd';
   }
 
   async GetFilterOptions(
