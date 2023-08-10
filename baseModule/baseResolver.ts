@@ -369,6 +369,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   RelationValues: {
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input ?? '';
+    },
     relations: async (parent: any, {}, { dataSources }) => {
       return parent;
     },

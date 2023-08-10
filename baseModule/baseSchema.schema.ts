@@ -458,6 +458,7 @@ export const baseSchema = gql`
   }
 
   type RelationValues {
+    label(input: String): String!
     relations: [IntialValues!]!
   }
 
@@ -470,8 +471,9 @@ export const baseSchema = gql`
 
   input BaseRelationValuesInput {
     key: String!
-    label: String!
+    label: String
     type: String!
+    value: String
     editStatus: EditStatus!
   }
 
