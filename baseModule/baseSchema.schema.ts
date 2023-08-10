@@ -8,10 +8,14 @@ export const baseSchema = gql`
   }
 
   enum Unit {
-    datetime
-    seconds
-    coordinates
-    list
+    DATETIME_DEFAULT
+    DATETIME_DMY12
+    DATETIME_MDY12
+    DATETIME_DMY24
+    DATETIME_MDY24
+    SECONDS_DEFAULT
+    COORDINATES_DEFAULT
+    LIST_DEFAULT
   }
 
   enum Permission {
@@ -368,7 +372,7 @@ export const baseSchema = gql`
   type Metadata {
     key: String!
     value: JSON!
-    unit(input: Unit!): Unit
+    unit(input: Unit): Unit
     lang: String
     label: String!
     immutable: Boolean
@@ -587,6 +591,11 @@ export const baseSchema = gql`
     elements: EntityViewElements!
   }
 
+  input teaserMetadataOptions{
+    key: String
+    unit: Unit
+  }
+
   interface Entity {
     id: String!
     uuid: String!
@@ -594,6 +603,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
+      options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
     teaserMetadata: [MetadataAndRelation]
     permission: [Permission]
@@ -611,6 +621,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
+      options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
     teaserMetadata: [MetadataAndRelation]
     media: Media
@@ -629,6 +640,7 @@ export const baseSchema = gql`
     metadata(
       keys: [String]!
       excludeOrInclude: ExcludeOrInclude!
+      options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
     media: Media
     teaserMetadata: [MetadataAndRelation]

@@ -34,6 +34,8 @@ import {
   KeyValueSource,
   Entitytyping,
   Entity,
+  TeaserMetadataOptions,
+  format-time
   EditStatus,
   BaseRelationValuesInput,
 } from '../../../generated-types/type-defs';
@@ -250,8 +252,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     media: async (parent: any, _args, { dataSources }) => {
       return resolveMedia(dataSources, parent);
     },
-    metadata: async (parent: any, { keys, excludeOrInclude }) => {
-      return await resolveMetadata(parent, keys, excludeOrInclude);
+    metadata: async (parent: any, { keys, excludeOrInclude, options}) => {
+      console.log(options)
+      return await resolveMetadata(parent, keys, excludeOrInclude, options as TeaserMetadataOptions[]);
     },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);

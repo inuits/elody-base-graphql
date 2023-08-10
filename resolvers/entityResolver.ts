@@ -10,6 +10,7 @@ import {
   Maybe,
   Metadata,
   Permission,
+  TeaserMetadataOptions,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 import { customSort } from '../helpers/helpers';
@@ -27,8 +28,9 @@ export const resolveMedia = async (dataSources: DataSources, parent: any) => {
 export const resolveMetadata = async (
   parent: any,
   keys: Maybe<string>[],
-  excludeOrInclude: ExcludeOrInclude
-) => {
+  excludeOrInclude: ExcludeOrInclude,
+  options: TeaserMetadataOptions[] = []
+  ) => {
   let metadataArray = [];
 
   if (parent.metadata) {
@@ -44,6 +46,13 @@ export const resolveMetadata = async (
     });
   }
   metadataArray = metadataArray.map(parseMetaDataAndMetaDataRelation);
+  metadataArray = metadataArray.map((metadataItem: any) => {
+    const matchingOption = options.find(option => option.key === metadataItem.key);
+    if (matchingOption) {
+      metadataItem.unit = matchingOption.unit;
+    }
+    return metadataItem;
+  });
 
   if (keys.includes('type')) {
     //Add type
