@@ -253,7 +253,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return resolveMedia(dataSources, parent);
     },
     metadata: async (parent: any, { keys, excludeOrInclude, options }) => {
-      console.log(options);
       return await resolveMetadata(
         parent,
         keys,
