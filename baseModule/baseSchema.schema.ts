@@ -257,13 +257,17 @@ export const baseSchema = gql`
     inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
   }
 
-  type CreateEntityForm implements Form {
-    idPrefix: String
+  type OCRForm implements Form {
     inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
   }
 
-  type OCRForm implements Form {
-    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
+  type CreateEntityForm {
+    idPrefix: String
+    formFields: Entity!
+  }
+
+  type FormFields {
+    metaData: PanelMetaData!
   }
 
   input updateOrderNode {
@@ -617,6 +621,7 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
+    createFormFields: FormFields
   }
 
   type BaseEntity implements Entity {
@@ -636,6 +641,7 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
+    createFormFields: FormFields
   }
 
   type MediaFileEntity implements Entity {
@@ -655,6 +661,7 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
+    createFormFields: FormFields
   }
 
   type EntitiesResults {
@@ -685,8 +692,8 @@ export const baseSchema = gql`
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations: BulkOperations!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
-    GetCreateEntityForm(type: String!): CreateEntityForm!
     OCRForm: OCRForm!
+    CreateEntityForm(type: Entitytyping!): CreateEntityForm!
   }
 
   type Mutation {
