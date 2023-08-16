@@ -264,6 +264,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return resolvePermission(dataSources, parent.id);
     },
   },
+  teaserMetadata:{
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
+  },
   MediaFileEntity: {
     id: async (parent: any) => {
       return parent._id;

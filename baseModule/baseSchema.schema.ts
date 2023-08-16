@@ -597,6 +597,10 @@ export const baseSchema = gql`
     unit: Unit
   }
 
+  type teaserMetadata{
+    metaData: PanelMetaData
+  }
+
   interface Entity {
     id: String!
     uuid: String!
@@ -606,7 +610,7 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
       options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
-    teaserMetadata: [MetadataAndRelation]
+    teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
     relationValues: RelationValues
@@ -624,7 +628,7 @@ export const baseSchema = gql`
       excludeOrInclude: ExcludeOrInclude!
       options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
-    teaserMetadata: [MetadataAndRelation]
+    teaserMetadata: teaserMetadata
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
@@ -644,7 +648,7 @@ export const baseSchema = gql`
       options: [teaserMetadataOptions]
     ): [MetadataAndRelation]
     media: Media
-    teaserMetadata: [MetadataAndRelation]
+    teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
     relationValues: RelationValues
