@@ -535,6 +535,12 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
+  type PromGraphElement { 
+    label(input: String): String!
+    query(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
+  }
+
   enum PanelType {
     metadata
     relation
@@ -587,6 +593,7 @@ export const baseSchema = gql`
   type EntityViewElements {
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
+    promGraphElement: PromGraphElement
     windowElement: WindowElement
     actionElement: ActionElement
   }

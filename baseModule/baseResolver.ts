@@ -27,6 +27,7 @@ import {
   SearchInputType,
   WindowElement,
   ActionElement,
+  PromGraphElement,
   WindowElementPanel,
   MenuTypeLink,
   MediaFileElementTypes,
@@ -391,6 +392,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || MediaFileElementTypes.Media;
     },
   },
+  PromGraphElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    query: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-query';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+  },
   EntityListElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -548,6 +560,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     actionElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as ActionElement;
+    },
+    promGraphElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PromGraphElement;
     },
   },
   MenuWrapper: {
