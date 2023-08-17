@@ -14,7 +14,7 @@ const applyPromEndpoint = (app: Express, promUrl: string) => {
       target: promUrl,
       changeOrigin: true,
       pathRewrite: {
-        '^/api/prom': '/',
+        '^/api/prom': '/api/v1',
       },
       onProxyReq: logReq,
     })
