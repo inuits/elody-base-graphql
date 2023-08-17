@@ -24,6 +24,7 @@ export interface Environment {
     iiifUrl: string;
     iiifUrlFrontend: string;
     storageApiUrl: string;
+    promUrl: 'no-prom' | string;
   };
   features: {
     hasSimpleSearch?: boolean;

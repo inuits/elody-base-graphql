@@ -23,6 +23,7 @@ import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
 import { applyExportEndpoint } from './exportEndpoint';
+import  applyPromEndpoint  from './sources/prom';
 import {
   resolveMedia,
   resolveMetadata,
@@ -164,6 +165,10 @@ const start = (
       ...customEndpoints,
     ];
 
+    if(appConfig.api.promUrl !== 'no-prom'){
+      applyPromEndpoint(app, appConfig.api.promUrl)
+    }
+
     if (applicationEndpoints) {
       addApplicationEndpoints(applicationEndpoints);
     }
@@ -192,4 +197,5 @@ export {
   resolveMetadata,
   parseIdToGetMoreData,
   resolvePermission,
+  applyPromEndpoint
 };
