@@ -1,9 +1,10 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { Express } from 'express';
-import fetch from 'node-fetch';
 
 const logReq = (proxyReq: any, req: any, res: any) => {
-  console.log(proxyReq);
+  console.log('proxyReq', proxyReq);
+  console.log('req', req);
+  console.log('res', res);
 };
 
 const applyPromEndpoint = (app: Express, promUrl: string) => {
