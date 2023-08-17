@@ -39,6 +39,7 @@ export const baseSchema = gql`
     text
     color
     dropdown
+    textarea
   }
 
   enum BaseFieldType {
@@ -48,6 +49,7 @@ export const baseSchema = gql`
     baseNumberField
     baseDateField
     baseDateTimeField
+    baseTextareaField
     languageTypeField
     fileformatTypeField
   }

@@ -28,6 +28,9 @@ export const baseFields: { [key: string]: InputField } = {
   baseTextField: {
     type: InputFieldTypes.Text,
   },
+  baseTextareaField: {
+    type: InputFieldTypes.Textarea,
+  },
   fileformatTypeField: {
     type: InputFieldTypes.Dropdown,
     options: Object.values(FileformatType),
