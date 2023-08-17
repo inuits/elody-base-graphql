@@ -5,6 +5,7 @@ import {
   MetadataOrRelationField,
   LanguageType,
   FileformatType,
+  Entitytyping,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -38,13 +39,14 @@ export const getOptionsByEntityType = async (
   dataSources: DataSources
 ): Promise<InputField> => {
   if (!field.acceptedEntityTypes) return field;
+  const key = field.acceptedEntityTypes.includes('IotDeviceModel') ? 'id' : 'title';
 
   const optionsForField = await dataSources.CollectionAPI.getEntitiesByType(
     field.acceptedEntityTypes[0] as string
   );
   field.options = optionsForField.map(
     (option) =>
-      option?.metadata?.find((dataItem) => dataItem?.key === 'title')?.value
+      option?.metadata?.find((dataItem) => dataItem?.key === key)?.value
   );
   return field;
 };
