@@ -516,16 +516,16 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const itemWithParentId = advancedFilterInputs.find(
       (currentValue: AdvancedFilterInput) => {
-        if (currentValue.parent) {
+        if (currentValue.parents) {
           return currentValue;
         }
       }
     );
 
-    if (itemWithParentId) {
+    if (itemWithParentId && itemWithParentId.parents) {
       return this.get(
         `entities/${
-          itemWithParentId.parent
+          itemWithParentId.parents[0]
         }/mediafiles?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
