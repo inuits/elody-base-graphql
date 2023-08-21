@@ -8,17 +8,19 @@ const logReq = (proxyReq: any, req: any, res: any) => {
 };
 
 const applyPromEndpoint = (app: Express, promUrl: string) => {
-  app.use(
-    '/api/prom',
-    createProxyMiddleware({
-      target: promUrl,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api/prom': '/api/v1',
-      },
-      onProxyReq: logReq,
-    })
-  );
+  if (promUrl) {
+    app.use(
+      '/api/prom',
+      createProxyMiddleware({
+        target: promUrl,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/prom': '/api/v1',
+        },
+        onProxyReq: logReq,
+      })
+    );
+  }
 };
 
 export default applyPromEndpoint;

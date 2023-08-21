@@ -537,7 +537,7 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
-  type PromGraphElement { 
+  type PromGraphElement {
     label(input: String): String!
     query(input: String): String!
     isCollapsed(input: Boolean!): Boolean!
@@ -605,12 +605,12 @@ export const baseSchema = gql`
     elements: EntityViewElements!
   }
 
-  input teaserMetadataOptions{
+  input teaserMetadataOptions {
     key: String
     unit: Unit
   }
 
-  type teaserMetadata{
+  type teaserMetadata {
     metaData: PanelMetaData
   }
 
