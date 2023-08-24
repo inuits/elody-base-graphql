@@ -40,6 +40,7 @@ export const baseSchema = gql`
     color
     dropdown
     textarea
+    dropdownMultiselect
   }
 
   enum BaseFieldType {
