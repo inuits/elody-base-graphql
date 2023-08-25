@@ -185,6 +185,7 @@ export const baseSchema = gql`
     CheckSquare
     Create
     Cross
+    CrossCircle
     Desktop
     DocumentInfo
     Download
@@ -482,6 +483,7 @@ export const baseSchema = gql`
     type: String!
     value: String
     editStatus: EditStatus!
+    teaserMetadata: [MetadataInput]
   }
 
   input MetadataValuesInput {

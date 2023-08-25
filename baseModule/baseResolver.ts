@@ -215,7 +215,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           .map((relationInput) => {
             const relation: any = {};
             Object.keys(relationInput)
-              .filter((key) => key !== 'editStatus')
+              .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
               .forEach((key) => {
                 relation[key] = (relationInput as any)[key];
               });
