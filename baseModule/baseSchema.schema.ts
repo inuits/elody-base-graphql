@@ -629,7 +629,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -649,7 +649,7 @@ export const baseSchema = gql`
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -669,7 +669,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
-    relationValues: RelationValues!
+    relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
