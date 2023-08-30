@@ -265,7 +265,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return resolvePermission(dataSources, parent.id);
     },
   },
-  teaserMetadata:{
+  teaserMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
     },

@@ -146,6 +146,7 @@ export const baseSchema = gql`
   enum MenuIcons {
     BookOpen
     Create
+    Focus
     Image
     Upload
     History
@@ -199,6 +200,7 @@ export const baseSchema = gql`
     Eye
     FileAlt
     Filter
+    Focus
     History
     Image
     Link
