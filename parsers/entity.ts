@@ -132,11 +132,11 @@ export const parseMedia = (input: {
   id: string;
 }) => {
   return {
-    primaryMediafile: input.primary_mediafile,
-    primaryMediafileLocation: input.primary_mediafile_location,
-    primaryThumbnailLocation: input.primary_thumbnail_location,
-    parentId: input.id,
-    primary_transcode: input.primary_transcode,
+    primaryMediafile: input?.primary_mediafile,
+    primaryMediafileLocation: input?.primary_mediafile_location,
+    primaryThumbnailLocation: input?.primary_thumbnail_location,
+    parentId: input?.id,
+    primary_transcode: input?.primary_transcode,
   };
 };
 
