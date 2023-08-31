@@ -72,7 +72,7 @@ export const baseSchema = gql`
     type: String!
     acceptedEntityTypes: [String]
     validation: Boolean
-    options: [String]
+    options: [KeyAndValue]
   }
 
   enum validation {
@@ -95,6 +95,7 @@ export const baseSchema = gql`
   }
 
   enum TypeModals {
+    BulkOperationsEdit
     BulkOperations
     Confirm
     Create
@@ -373,7 +374,7 @@ export const baseSchema = gql`
     stories
   }
 
-  type RelationMetaData {
+  type KeyAndValue {
     key: String!
     value: String!
   }
@@ -392,7 +393,7 @@ export const baseSchema = gql`
     value: JSON!
     label: String!
     type: String
-    metadataOnRelation: [RelationMetaData]
+    metadataOnRelation: [KeyAndValue]
     linkedEntity: Entity
   }
 

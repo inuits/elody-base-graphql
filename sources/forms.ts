@@ -33,7 +33,9 @@ export const baseFields: { [key: string]: InputField } = {
   },
   fileformatTypeField: {
     type: InputFieldTypes.Dropdown,
-    options: Object.values(FileformatType),
+    options: Object.values(FileformatType).map((format: string) => {
+      return { key: format, value: format };
+    }),
   },
 };
 
@@ -42,15 +44,25 @@ export const getOptionsByEntityType = async (
   dataSources: DataSources
 ): Promise<InputField> => {
   if (!field.acceptedEntityTypes) return field;
-  const key = field.acceptedEntityTypes.includes('IotDeviceModel') ? 'id' : 'title';
 
-  const optionsForField = await dataSources.CollectionAPI.getEntitiesByType(
-    field.acceptedEntityTypes[0] as string
-  );
-  field.options = optionsForField.map(
-    (option) =>
-      option?.metadata?.find((dataItem) => dataItem?.key === key)?.value
-  );
+  let optionsForField = [];
+  for (let i: number = 0; i <= field.acceptedEntityTypes.length; i++) {
+    const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
+      field.acceptedEntityTypes[i - 1] as string
+    );
+    optionsForField.push(...optionsByType);
+  }
+
+  field.options = optionsForField.map((option) => {
+    const metadata = option?.metadata;
+    if (!metadata) return { key: option.id, value: '' };
+    return {
+      key: option.id,
+      value: metadata.find((dataItem) => {
+        return dataItem?.key === 'title' || dataItem?.key === 'name';
+      })?.value,
+    };
+  });
   return field;
 };
 

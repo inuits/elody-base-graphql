@@ -7,7 +7,7 @@ import {
   MetadataAndRelation,
   MetadataFormInput,
   MetadataRelation,
-  RelationMetaData,
+  KeyAndValue,
 } from '../../../generated-types/type-defs';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
@@ -20,7 +20,9 @@ const PROTECTED_METADATA_RELATION_KEY: string[] = [
 export const setId = (entityRaw: any) => {
   entityRaw.id = entityRaw.object_id
     ? entityRaw.object_id
-    : entityRaw.identifiers ? entityRaw.identifiers[0] : entityRaw._id;
+    : entityRaw.identifiers
+    ? entityRaw.identifiers[0]
+    : entityRaw._id;
   entityRaw.uuid = entityRaw._id;
   return entityRaw;
 };
@@ -72,8 +74,8 @@ export const parseMetaDataRelation = (input: any): MetadataRelation => {
 //Get all extra metadation on a relations
 export const getMetaDataOnRelation = (
   input: Record<string, string | Record<string, string>>
-): RelationMetaData[] => {
-  let metadataOnRelation: RelationMetaData[] = [];
+): KeyAndValue[] => {
+  let metadataOnRelation: KeyAndValue[] = [];
   for (const [key, value] of Object.entries(input)) {
     if (!PROTECTED_METADATA_RELATION_KEY.includes(key)) {
       //If the metadat is also object, flatten it like and at to main set
