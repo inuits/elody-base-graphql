@@ -322,9 +322,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           return await dataSources.CollectionAPI.getMediaFile(parent.key);
         } else {
           // use getEntity for the other things
-          return await dataSources.CollectionAPI.getEntity(
-            parseIdToGetMoreData(parent.key)
-          );
+//        return await dataSources.CollectionAPI.getEntity(
+//          parseIdToGetMoreData(parent.key)
+//        );
         }
       }
     },
@@ -432,7 +432,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         const entity = dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id)
         );
-        entities.push(entity);
+//      entities.push(entity);
       });
 
       const res = await Promise.all(entities);
