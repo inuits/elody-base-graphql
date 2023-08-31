@@ -8,6 +8,7 @@ import {
   Entity,
   ExcludeOrInclude,
   Maybe,
+  MediaFile,
   Metadata,
   Permission,
   TeaserMetadataOptions,
@@ -16,13 +17,27 @@ import { DataSources } from '../types';
 import { customSort } from '../helpers/helpers';
 
 export const resolveMedia = async (dataSources: DataSources, parent: any) => {
-  // let mediafiles: MediaFile[] = [];
-  // try {
-  //   mediafiles = await dataSources.CollectionAPI.getMediafiles(parent.id);
-  // } catch {
-  //   console.error(`no mediafiles for ${parent.id}`);
-  // }
-  return parseMedia(parent);
+  // TODO: Load media inside of initialValues
+  let input: any[] = [];
+  try {
+    await dataSources.CollectionAPI.getMediafiles(parent.id).then(
+      (mediafiles: any) => {
+        input = mediafiles.results.map((mediafile: MediaFile) => {
+          return {
+            primary_mediafile: mediafile.filename,
+            primary_mediafile_location: mediafile.original_file_location,
+            primary_thumbnail_location: mediafile.thumbnail_file_location,
+            primary_transcode: mediafile.transcode_filename,
+            id: mediafile._id,
+          };
+        });
+      }
+    );
+  } catch {
+    console.error(`no mediafiles for ${parent.id}`);
+  }
+
+  return parseMedia(input[0]);
 };
 
 export const resolveMetadata = async (
@@ -30,7 +45,7 @@ export const resolveMetadata = async (
   keys: Maybe<string>[],
   excludeOrInclude: ExcludeOrInclude,
   options: TeaserMetadataOptions[] = []
-  ) => {
+) => {
   let metadataArray = [];
 
   if (parent.metadata) {
@@ -47,7 +62,9 @@ export const resolveMetadata = async (
   }
   metadataArray = metadataArray.map(parseMetaDataAndMetaDataRelation);
   metadataArray = metadataArray.map((metadataItem: any) => {
-    const matchingOption = options.find(option => option.key === metadataItem.key);
+    const matchingOption = options.find(
+      (option) => option.key === metadataItem.key
+    );
     if (matchingOption) {
       metadataItem.unit = matchingOption.unit;
     }
@@ -69,7 +86,9 @@ export const resolveMetadata = async (
 export const resolveRelations = async (parent: any) => {
   let relations: string[] = [];
   if (parent.relations)
-    relations = parent.relations.filter((relation: any) => relation.type === "belongsTo");
+    relations = parent.relations.filter(
+      (relation: any) => relation.type === 'belongsTo'
+    );
 
   return relations;
 };
