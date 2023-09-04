@@ -6,6 +6,7 @@ import {
   LanguageType,
   FileformatType,
   Entitytyping,
+  DamsIcons,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -34,7 +35,7 @@ export const baseFields: { [key: string]: InputField } = {
   fileformatTypeField: {
     type: InputFieldTypes.Dropdown,
     options: Object.values(FileformatType).map((format: string) => {
-      return { key: format, value: format };
+      return { icon: DamsIcons.NoIcon, label: format, value: format };
     }),
   },
 };
@@ -55,12 +56,14 @@ export const getOptionsByEntityType = async (
 
   field.options = optionsForField.map((option) => {
     const metadata = option?.metadata;
-    if (!metadata) return { key: option.id, value: '' };
+    if (!metadata)
+      return { icon: DamsIcons.NoIcon, label: '', value: option.id };
     return {
-      key: option.id,
-      value: metadata.find((dataItem) => {
+      icon: DamsIcons.NoIcon,
+      label: metadata.find((dataItem) => {
         return dataItem?.key === 'title' || dataItem?.key === 'name';
       })?.value,
+      value: option.id,
     };
   });
   return field;

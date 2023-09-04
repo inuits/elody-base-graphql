@@ -516,13 +516,13 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const itemWithParentId = advancedFilterInputs.find(
       (currentValue: AdvancedFilterInput) => {
-        if (currentValue.parent_key === "relations") {
+        if (currentValue.parent_key === 'relations') {
           return currentValue;
         }
       }
     );
 
-    if (itemWithParentId && itemWithParentId.parent_key === "relations") {
+    if (itemWithParentId && itemWithParentId.parent_key === 'relations') {
       return this.get(
         `entities/${
           itemWithParentId.value[0]

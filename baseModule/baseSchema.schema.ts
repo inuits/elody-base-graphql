@@ -72,7 +72,7 @@ export const baseSchema = gql`
     type: String!
     acceptedEntityTypes: [String]
     validation: Boolean
-    options: [KeyAndValue]
+    options: [DropdownOption]
   }
 
   enum validation {
@@ -722,5 +722,10 @@ export const baseSchema = gql`
       entityId: String!
       mediaFileInput: MediaFileInput!
     ): MediaFile
+    bulkAddRelations(
+      entityIds: [String!]!
+      relationEntityId: String!
+      relationType: String!
+    ): String
   }
 `;

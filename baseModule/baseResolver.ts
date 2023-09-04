@@ -248,6 +248,26 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return dataSources.CollectionAPI.deleteData(id, path, deleteMediafiles);
     },
+    bulkAddRelations: async (
+      _source,
+      { entityIds, relationEntityId, relationType },
+      { dataSources }
+    ) => {
+      const relationsInput: BaseRelationValuesInput[] = entityIds.map(
+        (entityId: string) => {
+          return {
+            editStatus: EditStatus.New,
+            key: entityId,
+            type: relationType,
+          };
+        }
+      );
+      dataSources.CollectionAPI.patchRelations(
+        relationEntityId,
+        relationsInput
+      );
+      return '';
+    },
   },
   BaseEntity: {
     media: async (parent: any, _args, { dataSources }) => {
@@ -322,9 +342,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           return await dataSources.CollectionAPI.getMediaFile(parent.key);
         } else {
           // use getEntity for the other things
-//        return await dataSources.CollectionAPI.getEntity(
-//          parseIdToGetMoreData(parent.key)
-//        );
+          //        return await dataSources.CollectionAPI.getEntity(
+          //          parseIdToGetMoreData(parent.key)
+          //        );
         }
       }
     },
@@ -432,7 +452,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         const entity = dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id)
         );
-//      entities.push(entity);
+        //      entities.push(entity);
       });
 
       const res = await Promise.all(entities);
