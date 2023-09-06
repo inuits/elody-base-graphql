@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { AnyObject, ObjectSchema, date, number, object, string } from 'yup';
+import { AnyObject, ObjectSchema, date, object, string } from 'yup';
 
 const baseValidationSchema = object({
   id: string().required(),
