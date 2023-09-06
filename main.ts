@@ -12,25 +12,26 @@ import {
 import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
 import { StorageAPI } from './sources/storage';
-import applyConfigEndpoint from './configEndpoint';
+import applyConfigEndpoint from './endpoints/configEndpoint';
 import applyMediaFileEndpoint from './sources/mediafiles';
 import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
-import { applyUploadEndpoint } from './uploadEndpoint';
+import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
 import { Application } from 'graphql-modules';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
-import { applyExportEndpoint } from './exportEndpoint';
-import  applyPromEndpoint  from './sources/prom';
+import { applyExportEndpoint } from './endpoints/exportEndpoint';
+import applyPromEndpoint from './sources/prom';
 import {
   resolveMedia,
   resolveMetadata,
   resolvePermission,
 } from './resolvers/entityResolver';
 import { parseIdToGetMoreData } from './parsers/entity';
-import { applyTranslationEndpoint } from './translationEndpoint';
+import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
+import { applyValidationEndpoint } from './endpoints/validationEndpoint';
 
 let environment: Environment | undefined = undefined;
 
@@ -162,11 +163,14 @@ const start = (
       function () {
         applyTranslationEndpoint(app, appTranslations);
       },
+      function () {
+        applyValidationEndpoint(app);
+      },
       ...customEndpoints,
     ];
 
-    if(appConfig.api.promUrl !== 'no-prom'){
-      applyPromEndpoint(app, appConfig.api.promUrl)
+    if (appConfig.api.promUrl !== 'no-prom') {
+      applyPromEndpoint(app, appConfig.api.promUrl);
     }
 
     if (applicationEndpoints) {
@@ -197,5 +201,5 @@ export {
   resolveMetadata,
   parseIdToGetMoreData,
   resolvePermission,
-  applyPromEndpoint
+  applyPromEndpoint,
 };

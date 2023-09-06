@@ -1,12 +1,12 @@
 import { Express, Request, Response } from 'express';
-import { environment as env } from './main';
-import { addJwt } from './sources/mediafiles';
+import { environment as env } from '../main';
+import { addJwt } from '../sources/mediafiles';
 import {
   EntityInput,
   Metadata,
   MediaFileInput,
   Entitytyping,
-} from '../../generated-types/type-defs';
+} from '../../../generated-types/type-defs';
 import fetch, { Response as FetchResponse } from 'node-fetch';
 
 type UploadRequestData = {
@@ -62,14 +62,17 @@ const getUploadRequestData = async (
   const entityToCreate = request.query.entityToCreate as Entitytyping;
 
   if (filetype === 'text/csv' && entityToCreate) {
-    const response = await fetch(`${env?.api.csvImportServiceUrl}/parser/entities`, {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'text/csv',
-        Authorization: addJwt(undefined, request, undefined),
-      },
-    });
+    const response = await fetch(
+      `${env?.api.csvImportServiceUrl}/parser/entities`,
+      {
+        method: 'POST',
+        body,
+        headers: {
+          'Content-Type': 'text/csv',
+          Authorization: addJwt(undefined, request, undefined),
+        },
+      }
+    );
 
     let result = '';
     response.body.on('data', (chunk) => (result += chunk.toString()));

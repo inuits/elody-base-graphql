@@ -54,16 +54,16 @@ export const getOptionsByEntityType = async (
     optionsForField.push(...optionsByType);
   }
 
-  field.options = optionsForField.map((option) => {
+  field.options = optionsForField.map((option: any) => {
     const metadata = option?.metadata;
     if (!metadata)
       return { icon: DamsIcons.NoIcon, label: '', value: option.id };
     return {
       icon: DamsIcons.NoIcon,
-      label: metadata.find((dataItem) => {
+      label: metadata.find((dataItem: any) => {
         return dataItem?.key === 'title' || dataItem?.key === 'name';
       })?.value,
-      value: option.id,
+      value: option['_id'],
     };
   });
   return field;

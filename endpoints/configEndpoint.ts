@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { Environment } from './environment';
+import { Environment } from '../environment';
 
 const applyConfigEndpoint = (app: Express, config: Environment) => {
   app.get('/api/config', async (req, res) => {
