@@ -63,7 +63,8 @@ const start = (
   appConfig: Environment,
   appTranslations: Object,
   customEndpoints: Function[] = [],
-  customInputFields: { [key: string]: InputField } | undefined = undefined
+  customInputFields: { [key: string]: InputField } | undefined = undefined,
+  customValidationSchemas: Object[] | undefined = undefined
 ) => {
   environment = appConfig;
   if (appConfig.sentryEnabled) {
@@ -164,7 +165,7 @@ const start = (
         applyTranslationEndpoint(app, appTranslations);
       },
       function () {
-        applyValidationEndpoint(app);
+        applyValidationEndpoint(app, customValidationSchemas);
       },
       ...customEndpoints,
     ];
