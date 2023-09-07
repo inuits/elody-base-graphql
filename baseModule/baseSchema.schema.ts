@@ -71,7 +71,7 @@ export const baseSchema = gql`
     fieldName(input: String): String
     type: String!
     acceptedEntityTypes: [String]
-    validation: Boolean
+    validation(input: String): String
     options: [DropdownOption]
   }
 

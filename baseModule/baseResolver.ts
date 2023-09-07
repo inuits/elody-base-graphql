@@ -38,6 +38,7 @@ import {
   TeaserMetadataOptions,
   EditStatus,
   BaseRelationValuesInput,
+  InputField,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -171,28 +172,27 @@ export const baseResolver: Resolvers<ContextValue> = {
       return { options: [] };
     },
   },
-  OCRForm: {
-    // inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
-    inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
-      const inputFieldsArray: any[] = [];
+  // OCRForm: {
+  //   // inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
+  //   inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
+  //     const inputFieldsArray: any[] = [];
 
-      type.forEach((fieldType, i) => {
-        if (fieldType !== null) {
-          const field = baseFields[fieldType];
+  //     type.forEach((fieldType, i) => {
+  //       if (fieldType !== null) {
+  //         const field = baseFields[fieldType];
 
-          let fieldWithOptions = getOptionsByEntityType(
-            field,
-            dataSources
-          ).then((result) => {
-            result.fieldName = fieldLabels[i];
-            inputFieldsArray.push(result);
-          });
-          // inputFieldsArray.push(fieldWithOptions);
-        }
-      });
-      return inputFieldsArray;
-    },
-  },
+  //         let fieldWithOptions = getOptionsByEntityType(dataSources).then(
+  //           (result) => {
+  //             result.fieldName = fieldLabels[i];
+  //             inputFieldsArray.push(result);
+  //           }
+  //         );
+  //         // inputFieldsArray.push(fieldWithOptions);
+  //       }
+  //     });
+  //     return inputFieldsArray;
+  //   },
+  // },
   Mutation: {
     linkMediafileToEntity: async (
       _source,
@@ -533,10 +533,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     value: async (_source: any, { input }, { dataSources }) => {
       return _source[input] || '';
     },
-    inputField: async (_source, { type }, { dataSources }) => {
-      const field = baseFields[type];
-      const fieldWithOptions = getOptionsByEntityType(field, dataSources);
-      return fieldWithOptions;
+    inputField: async (parent, { type }, { dataSources }) => {
+      return baseFields[type];
     },
   },
   PanelMetaData: {
@@ -549,10 +547,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     unit: async (_source, { input }, { dataSources }) => {
       return input;
     },
-    inputField: async (_source, { type }, { dataSources }) => {
-      const field = baseFields[type];
-      const fieldWithOptions = getOptionsByEntityType(field, dataSources);
-      return fieldWithOptions;
+    inputField: async (parent: any, { type }, { dataSources }) => {
+      return baseFields[type];
     },
   },
   Column: {
@@ -644,6 +640,27 @@ export const baseResolver: Resolvers<ContextValue> = {
   BulkOperationCsvExportKeys: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
+    },
+  },
+  InputField: {
+    fieldName: async (parent, { input }, { dataSources }) => {
+      return input || '';
+    },
+    type: async (parent, _args, { dataSources }) => {
+      return parent.type;
+    },
+    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
+      return parent.acceptedEntityTypes || [];
+    },
+    validation: async (parent, { input }, { dataSources }) => {
+      return input || '';
+    },
+    options: async (parent, _args, { dataSources }) => {
+      const options = getOptionsByEntityType(
+        (parent.acceptedEntityTypes as string[]) || undefined,
+        dataSources
+      );
+      return options;
     },
   },
 };
