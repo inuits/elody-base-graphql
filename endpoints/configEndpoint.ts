@@ -18,7 +18,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
         },
         features: {
           hasSimpleSearch: config.features.hasSimpleSearch,
-          hasDirectoryImport: config.features.hasDirectoryImport,
+          hasDirectoryImport: config.features.hasDirectoryImport || true,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
