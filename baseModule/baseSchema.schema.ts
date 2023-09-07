@@ -269,8 +269,13 @@ export const baseSchema = gql`
   }
 
   type CreateEntityForm {
-    idPrefix: String
+    idSyntax: IdSyntax
     formFields: Entity!
+  }
+
+  type IdSyntax {
+    prefix: String
+    field: String
   }
 
   type FormFields {
@@ -534,6 +539,13 @@ export const baseSchema = gql`
     metaKey(key: String): String!
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]
+    relationType(input: String): String
+    viewMode(input: EntityListViewMode): EntityListViewMode
+  }
+
+  enum EntityListViewMode {
+    Dropdown
+    Library
   }
 
   type MediaFileElement {
@@ -581,6 +593,7 @@ export const baseSchema = gql`
     info: PanelInfo!
     metaData: PanelMetaData!
     relation: [PanelRelation]
+    entityListElement: EntityListElement
   }
 
   type WindowElement {
@@ -709,6 +722,7 @@ export const baseSchema = gql`
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
     OCRForm: OCRForm!
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
+    BulkOperationsRelationForm: WindowElement!
   }
 
   type Mutation {

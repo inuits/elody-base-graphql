@@ -16,6 +16,7 @@ import {
   EntitiesResults,
   EntityListElement,
   EntityViewElements,
+  EntityListViewMode,
   ExcludeOrInclude,
   MediaFileElement,
   Metadata,
@@ -436,6 +437,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
+    viewMode: async (parent: any, { input }, { dataSources }) => {
+      return input || EntityListViewMode.Library;
+    },
     entityList: async (
       parent: any,
       { metaKey },
@@ -516,6 +520,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         console.log('Item has no relations');
         return [];
       }
+    },
+    entityListElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as EntityListElement;
     },
   },
   ExpandButtonOptions: {
