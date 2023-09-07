@@ -28,6 +28,7 @@ export interface Environment {
   };
   features: {
     hasSimpleSearch?: boolean;
+    hasDirectoryImport?: boolean;
   };
   customization: {
     applicationTitle: string;
