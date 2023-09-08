@@ -23,6 +23,7 @@ import { baseModule, baseSchema } from './baseModule/baseModule';
 import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
 import { applyExportEndpoint } from './endpoints/exportEndpoint';
+import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
 import applyPromEndpoint from './sources/prom';
 import {
   resolveMedia,
@@ -166,6 +167,9 @@ const start = (
       },
       function () {
         applyValidationEndpoint(app, customValidationSchemas);
+      },
+      function () {
+        applyTenantEndpoint(app);
       },
       ...customEndpoints,
     ];

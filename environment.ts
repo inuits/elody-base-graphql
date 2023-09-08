@@ -45,4 +45,5 @@ export interface Environment {
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
+  hasTenantSelect: boolean;
 }
