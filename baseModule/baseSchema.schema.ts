@@ -698,6 +698,7 @@ export const baseSchema = gql`
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
     ): EntitiesResults
+    Tenants: EntitiesResults
     Form(type: String!): Form
     User: User
     UserPermissions: userPermissions

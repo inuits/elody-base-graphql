@@ -79,6 +79,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data as EntitiesResults;
   }
 
+  async getTenants(): Promise<EntitiesResults> {
+    let data: any;
+    try {
+      data = await this.get("tenants");
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+    return data as EntitiesResults;
+  }
+
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
     try {

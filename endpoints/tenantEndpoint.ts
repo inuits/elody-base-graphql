@@ -6,9 +6,9 @@ declare module "express-session" {
 }
 export const applyTenantEndpoint = (app: Express) => {
   app.use(express.json());
-  
+
   app.get("/api/tenant", async (req, res) => {
-    res.status(200).json(req.session.tenant);
+    res.status(200).json(req.session.tenant || {});
   });
 
   app.post("/api/tenant", async (req, res) => {

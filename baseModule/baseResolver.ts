@@ -141,6 +141,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
       return entities;
     },
+    Tenants: async (_source, _args, { dataSources }) => {
+      return dataSources.CollectionAPI.getTenants();
+    },
     UserPermissions: async (_source, _args, { dataSources }) => {
       return dataSources.CollectionAPI.getUserPermissions();
     },
