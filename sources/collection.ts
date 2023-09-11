@@ -57,7 +57,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   //@ts-ignore
   constructor(options) {
     super(options);
-    this.session2 = options.session2;
+    this.session2 = options.session;
   }
   async willSendRequest(request : WillSendRequestOptions) {
     //Todo use composition to fix
