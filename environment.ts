@@ -29,6 +29,7 @@ export interface Environment {
   features: {
     hasSimpleSearch?: boolean;
     hasDirectoryImport?: boolean;
+    hasTenantSelect?: boolean;
   };
   customization: {
     applicationTitle: string;
@@ -45,5 +46,4 @@ export interface Environment {
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
-  hasTenantSelect: boolean;
 }
