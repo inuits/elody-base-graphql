@@ -659,6 +659,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || '';
     },
     options: async (parent, _args, { dataSources }) => {
+      if (parent["options"] && parent["options"].length > 0)
+        return parent["options"];
+
       const options = getOptionsByEntityType(
         (parent.acceptedEntityTypes as string[]) || undefined,
         dataSources
