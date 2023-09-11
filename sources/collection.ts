@@ -26,6 +26,9 @@ import {
   Entity,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
+import type {
+  WillSendRequestOptions,
+} from "@apollo/datasource-rest";
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
@@ -48,7 +51,28 @@ let sixthCollectionId: string | 'no-id' = 'no-id';
 export class CollectionAPI extends AuthRESTDataSource {
   public baseURL = `${env?.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
+  private session2: any;
 
+
+  //@ts-ignore
+  constructor(options) {
+    super(options);
+    this.session2 = options.session2;
+  }
+  async willSendRequest(request : WillSendRequestOptions) {
+    //Todo use composition to fix
+    const accessToken = this.session2?.auth?.accessToken
+    const JWT_TOKEN = accessToken
+    if (JWT_TOKEN) {
+      request.headers["Authorization"] = "Bearer " + JWT_TOKEN;
+    } else {
+      throw new Error(`AUTH | NO TOKEN`);
+    }
+    const tenant = this.session2.tenant;
+    if(tenant) {
+      request.headers["X-tenant-id"] = tenant;
+    }
+  }
   async getFilterMatcherMapping(): Promise<FilterMatcherMap> {
     return await this.get(`filter/matchers`);
   }
