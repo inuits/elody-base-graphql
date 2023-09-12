@@ -153,6 +153,7 @@ export const baseSchema = gql`
     History
     Iot
     Police
+    Settings
   }
   type Menu {
     name: String!
@@ -227,6 +228,7 @@ export const baseSchema = gql`
     UserCircle
     WindowGrid
     WindowMaximize
+    Settings
   }
 
   scalar StringOrInt
