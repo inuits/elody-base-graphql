@@ -48,7 +48,7 @@ export const getOptionsByEntityType = async (
   if (!acceptedEntityTypes) return [];
 
   let optionsForField = [];
-  for (let i: number = 0; i <= acceptedEntityTypes.length; i++) {
+  for (let i: number = 1; i <= acceptedEntityTypes.length; i++) {
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
       acceptedEntityTypes[i - 1] as string
     );
