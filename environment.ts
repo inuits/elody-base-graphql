@@ -29,6 +29,7 @@ export interface Environment {
   features: {
     hasSimpleSearch?: boolean;
     hasDirectoryImport?: boolean;
+    hasTenantSelect?: boolean;
   };
   customization: {
     applicationTitle: string;

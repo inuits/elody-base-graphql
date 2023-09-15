@@ -71,7 +71,7 @@ export const baseSchema = gql`
     fieldName(input: String): String
     type: String!
     acceptedEntityTypes: [String]
-    validation: Boolean
+    validation(input: String): String
     options: [DropdownOption]
   }
 
@@ -153,6 +153,7 @@ export const baseSchema = gql`
     History
     Iot
     Police
+    Settings
   }
   type Menu {
     name: String!
@@ -227,6 +228,7 @@ export const baseSchema = gql`
     UserCircle
     WindowGrid
     WindowMaximize
+    Settings
   }
 
   scalar StringOrInt
@@ -711,6 +713,7 @@ export const baseSchema = gql`
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
     ): EntitiesResults
+    Tenants: EntitiesResults
     Form(type: String!): Form
     User: User
     UserPermissions: userPermissions

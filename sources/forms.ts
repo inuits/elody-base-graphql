@@ -7,6 +7,7 @@ import {
   FileformatType,
   Entitytyping,
   DamsIcons,
+  DropdownOption,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -41,20 +42,20 @@ export const baseFields: { [key: string]: InputField } = {
 };
 
 export const getOptionsByEntityType = async (
-  field: InputField,
+  acceptedEntityTypes: string[] | undefined,
   dataSources: DataSources
-): Promise<InputField> => {
-  if (!field.acceptedEntityTypes) return field;
+): Promise<DropdownOption[]> => {
+  if (!acceptedEntityTypes) return [];
 
   let optionsForField = [];
-  for (let i: number = 0; i <= field.acceptedEntityTypes.length; i++) {
+  for (let i: number = 1; i <= acceptedEntityTypes.length; i++) {
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
-      field.acceptedEntityTypes[i - 1] as string
+      acceptedEntityTypes[i - 1] as string
     );
     optionsForField.push(...optionsByType);
   }
 
-  field.options = optionsForField.map((option: any) => {
+  const options = optionsForField.map((option: any) => {
     const metadata = option?.metadata;
     if (!metadata)
       return { icon: DamsIcons.NoIcon, label: '', value: option.id };
@@ -66,7 +67,7 @@ export const getOptionsByEntityType = async (
       value: option['_id'],
     };
   });
-  return field;
+  return options;
 };
 
 // Remove this

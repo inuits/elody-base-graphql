@@ -26,6 +26,9 @@ import {
   Entity,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
+import type {
+  WillSendRequestOptions,
+} from "@apollo/datasource-rest";
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
@@ -73,6 +76,17 @@ export class CollectionAPI extends AuthRESTDataSource {
         )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
       );
       data.results.forEach((element: any) => setId(element));
+    } catch (e) {
+      console.log(e);
+    }
+    return data as EntitiesResults;
+  }
+
+  async getTenants(): Promise<EntitiesResults> {
+    let data: any;
+    try {
+      data = await this.get("tenants");
+      console.log(data);
     } catch (e) {
       console.log(e);
     }
