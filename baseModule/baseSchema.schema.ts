@@ -695,6 +695,29 @@ export const baseSchema = gql`
     createFormFields: FormFields
   }
 
+
+  type Tenant implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    metadata(
+      keys: [String]!
+      excludeOrInclude: ExcludeOrInclude!
+      options: [teaserMetadataOptions]
+    ): [MetadataAndRelation]
+    media: Media
+    teaserMetadata: teaserMetadata
+    title: [MetadataAndRelation]
+    permission: [Permission]
+    intialValues: IntialValues!
+    relationValues: RelationValues
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    createFormFields: FormFields
+  }
+
+
   type EntitiesResults {
     results: [Entity]
     sortKeys(sortItems: [String]): [String]
