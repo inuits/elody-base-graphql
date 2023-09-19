@@ -609,12 +609,18 @@ export const baseSchema = gql`
     label(input: String): String!
     actions(input: [Actions]): [Actions]
   }
+  
+  type ManifestViewerElement {
+    label(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
+  }
 
   type ColumnList {
     column: Column!
   }
 
   type EntityViewElements {
+    manifestViewerElement: ManifestViewerElement
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
     promGraphElement: PromGraphElement

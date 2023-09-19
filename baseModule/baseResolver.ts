@@ -39,7 +39,7 @@ import {
   TeaserMetadataOptions,
   EditStatus,
   BaseRelationValuesInput,
-  InputField,
+  InputField, ManifestViewerElement,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -467,6 +467,14 @@ export const baseResolver: Resolvers<ContextValue> = {
       return res;
     },
   },
+  ManifestViewerElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+  },
   WindowElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -589,6 +597,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     promGraphElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as PromGraphElement;
+    },
+    manifestViewerElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ManifestViewerElement;
     },
   },
   MenuWrapper: {
