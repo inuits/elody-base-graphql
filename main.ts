@@ -32,7 +32,6 @@ import {
 } from './resolvers/entityResolver';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
-import { applyValidationEndpoint } from './endpoints/validationEndpoint';
 
 let environment: Environment | undefined = undefined;
 
@@ -64,8 +63,7 @@ const start = (
   appConfig: Environment,
   appTranslations: Object,
   customEndpoints: Function[] = [],
-  customInputFields: { [key: string]: InputField } | undefined = undefined,
-  customValidationSchemas: Object[] | undefined = undefined
+  customInputFields: { [key: string]: InputField } | undefined = undefined
 ) => {
   environment = appConfig;
   if (appConfig.sentryEnabled) {
@@ -164,9 +162,6 @@ const start = (
       },
       function () {
         applyTranslationEndpoint(app, appTranslations);
-      },
-      function () {
-        applyValidationEndpoint(app, customValidationSchemas);
       },
       function () {
         applyTenantEndpoint(app);

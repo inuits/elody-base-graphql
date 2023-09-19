@@ -155,6 +155,7 @@ export const baseSchema = gql`
     Police
     Settings
   }
+
   type Menu {
     name: String!
     menuItem(
