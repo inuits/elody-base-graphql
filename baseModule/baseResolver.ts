@@ -374,13 +374,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
       if (source === KeyValueSource.Metadata) {
         const metadata = await resolveMetadata(
-          parent,
-          [key],
-          ExcludeOrInclude.Include
+            parent,
+            [key],
+            ExcludeOrInclude.Include
         );
-        if (key === 'manifest') {
-          return parent.data.id || parent.data['@id'];
-        }
         return metadata[0]?.value ?? '';
       } else if (source === KeyValueSource.Root) {
         return parent?.[key] ?? '';
@@ -475,8 +472,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input !== undefined ? input : false;
     },
     manifestUrl: async (_source: any, {metadataKey}, {dataSources}) => {
-      const url = _source.metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey )
-      return url
+      const url = _source.metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey ).value
+      return url || 'no-manifest-url'
     }
   },
   WindowElement: {
