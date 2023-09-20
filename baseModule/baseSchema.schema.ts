@@ -613,6 +613,7 @@ export const baseSchema = gql`
   type ManifestViewerElement {
     label(input: String): String!
     isCollapsed(input: Boolean!): Boolean!
+    manifestUrl(metadataKey: String!): String!
   }
 
   type ColumnList {

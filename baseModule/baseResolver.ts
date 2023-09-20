@@ -474,6 +474,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    manifestUrl: async (_source: any, {metadataKey}, {dataSources}) => {
+      const url = _source.metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey )
+      return url
+    }
   },
   WindowElement: {
     label: async (_source, { input }, { dataSources }) => {
