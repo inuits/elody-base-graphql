@@ -250,9 +250,10 @@ export const baseSchema = gql`
   }
 
   enum BulkOperationTypes {
-    downloadMediafiles
-    exportCsv
-    edit
+      downloadMediafiles
+      exportCsv
+      edit
+      addToMiradorViewerCollection  
   }
 
   type BulkOperations {
