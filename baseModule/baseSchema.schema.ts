@@ -250,10 +250,10 @@ export const baseSchema = gql`
   }
 
   enum BulkOperationTypes {
-      downloadMediafiles
-      exportCsv
-      edit
-      addToManifestViewerCollection  
+    downloadMediafiles
+    exportCsv
+    edit
+    addToManifestViewerCollection
   }
 
   type BulkOperations {
@@ -610,11 +610,12 @@ export const baseSchema = gql`
     label(input: String): String!
     actions(input: [Actions]): [Actions]
   }
-  
+
   type ManifestViewerElement {
     label(input: String): String!
     isCollapsed(input: Boolean!): Boolean!
     manifestUrl(metadataKey: String!): String!
+    manifestVersion(metadataKey: String!): Int!
   }
 
   type ColumnList {
@@ -703,7 +704,6 @@ export const baseSchema = gql`
     createFormFields: FormFields
   }
 
-
   type Tenant implements Entity {
     id: String!
     uuid: String!
@@ -724,7 +724,6 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     createFormFields: FormFields
   }
-
 
   type EntitiesResults {
     results: [Entity]

@@ -39,7 +39,8 @@ import {
   TeaserMetadataOptions,
   EditStatus,
   BaseRelationValuesInput,
-  InputField, ManifestViewerElement,
+  InputField,
+  ManifestViewerElement,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -374,9 +375,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
       if (source === KeyValueSource.Metadata) {
         const metadata = await resolveMetadata(
-            parent,
-            [key],
-            ExcludeOrInclude.Include
+          parent,
+          [key],
+          ExcludeOrInclude.Include
         );
         return metadata[0]?.value ?? '';
       } else if (source === KeyValueSource.Root) {
@@ -471,10 +472,18 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    manifestUrl: async (_source: any, {metadataKey}, {dataSources}) => {
-      const url = _source.metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey ).value
-      return url || 'no-manifest-url'
-    }
+    manifestUrl: async (_source: any, { metadataKey }, { dataSources }) => {
+      const url = _source.metadata.find(
+        (metadataItem: Metadata) => metadataItem.key === metadataKey
+      )?.value;
+      return url;
+    },
+    manifestVersion: async (_source: any, { metadataKey }, { dataSources }) => {
+      const version = _source.metadata.find(
+        (metadataItem: Metadata) => metadataItem.key === metadataKey
+      )?.value;
+      return version || 3;
+    },
   },
   WindowElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -678,8 +687,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || '';
     },
     options: async (parent, _args, { dataSources }) => {
-      if (parent["options"] && parent["options"].length > 0)
-        return parent["options"];
+      if (parent['options'] && parent['options'].length > 0)
+        return parent['options'];
 
       const options = getOptionsByEntityType(
         (parent.acceptedEntityTypes as string[]) || undefined,
