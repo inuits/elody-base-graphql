@@ -23,11 +23,14 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hasDirectoryImport === undefined
               ? true
               : config.features.hasDirectoryImport,
-
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
           applicationLocale: config.customization.applicationLocale,
+          hideEmptyFields:
+            config.customization.hideEmptyFields === undefined
+              ? false
+              : config.customization.hideEmptyFields,
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,

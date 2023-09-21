@@ -34,6 +34,7 @@ export interface Environment {
   customization: {
     applicationTitle: string;
     applicationLocale: string;
+    hideEmptyFields?: boolean;
   };
   routerConfig: any;
   damsFrontend: string;
