@@ -234,13 +234,13 @@ export const baseSchema = gql`
 
   scalar StringOrInt
   type DropdownOption {
-    icon: DamsIcons!
+    icon: DamsIcons
     label: String!
     value: StringOrInt!
   }
 
   input DropdownOptionInput {
-    icon: DamsIcons!
+    icon: DamsIcons
     label: String!
     value: StringOrInt!
   }
