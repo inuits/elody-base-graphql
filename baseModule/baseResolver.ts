@@ -278,14 +278,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     media: async (parent: any, _args, { dataSources }) => {
       return resolveMedia(dataSources, parent);
     },
-    metadata: async (parent: any, { keys, excludeOrInclude, options }) => {
-      return await resolveMetadata(
-        parent,
-        keys,
-        excludeOrInclude,
-        options as TeaserMetadataOptions[]
-      );
-    },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -300,19 +292,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent._id;
     },
     type: async (parent: any) => 'MediaFile',
-    metadata: async (parent: any, { keys, excludeOrInclude }) => {
-      const parseMetadata = await resolveMetadata(
-        parent,
-        keys,
-        excludeOrInclude
-      );
-      parseMetadata.push({
-        key: 'filename',
-        label: 'filename',
-        value: parent.filename,
-      });
-      return parseMetadata;
-    },
     media: async (parent: any, _args) => {
       let parsedMedia = MediaFileToMedia(parent);
       return parsedMedia;

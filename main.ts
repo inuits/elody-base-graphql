@@ -13,7 +13,7 @@ import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
 import { StorageAPI } from './sources/storage';
 import applyConfigEndpoint from './endpoints/configEndpoint';
-import applyMediaFileEndpoint from './sources/mediafiles';
+import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
 import * as Sentry from '@sentry/node';
 import { ApolloServer } from '@apollo/server';
 import { ContextValue, DataSources } from './types';
@@ -24,7 +24,7 @@ import { InputField } from '../../generated-types/type-defs';
 import { baseFields } from './sources/forms';
 import { applyExportEndpoint } from './endpoints/exportEndpoint';
 import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
-import applyPromEndpoint from './sources/prom';
+import applyPromEndpoint from './endpoints/promEndpoint';
 import {
   resolveMedia,
   resolveMetadata,

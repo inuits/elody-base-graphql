@@ -1,5 +1,5 @@
 import fetch, { Response as FetchResponse } from 'node-fetch';
-import { addJwt } from '../sources/mediafiles';
+import { addJwt } from './mediafilesEndpoint';
 import { environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 

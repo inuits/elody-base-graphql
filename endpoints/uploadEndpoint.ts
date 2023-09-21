@@ -1,6 +1,6 @@
 import { Express, Request, Response } from 'express';
 import { environment as env } from '../main';
-import { addJwt } from '../sources/mediafiles';
+import { addJwt } from './mediafilesEndpoint';
 import {
   EntityInput,
   Metadata,

@@ -112,13 +112,3 @@ export const resolvePermission = async (
     item.replace('-', '')
   ) as Permission[];
 };
-
-export const addCustomMetadataToEntity = async (
-  entity: Entity,
-  metadataInput: Metadata[]
-): Promise<Entity> => {
-  metadataInput.forEach((item: Metadata) => {
-    entity.metadata?.push(item);
-  });
-  return entity;
-};

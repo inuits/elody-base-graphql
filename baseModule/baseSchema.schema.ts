@@ -649,11 +649,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-      options: [teaserMetadataOptions]
-    ): [MetadataAndRelation]
     teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
@@ -668,11 +663,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-      options: [teaserMetadataOptions]
-    ): [MetadataAndRelation]
     teaserMetadata: teaserMetadata
     media: Media
     permission: [Permission]
@@ -688,11 +678,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-      options: [teaserMetadataOptions]
-    ): [MetadataAndRelation]
     media: Media
     teaserMetadata: teaserMetadata
     permission: [Permission]
@@ -708,11 +693,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    metadata(
-      keys: [String]!
-      excludeOrInclude: ExcludeOrInclude!
-      options: [teaserMetadataOptions]
-    ): [MetadataAndRelation]
     media: Media
     teaserMetadata: teaserMetadata
     title: [MetadataAndRelation]
