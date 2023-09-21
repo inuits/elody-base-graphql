@@ -1,34 +1,31 @@
 import {
-  Metadata,
-  MediaFile,
-  PaginationInfo,
-  JobsResults,
+  AdvancedFilterInput,
+  BaseRelationValuesInput,
+  Collection,
+  DropdownOption,
+  EntitiesResults,
+  Entity,
+  EntityInput,
+  Entitytyping,
+  FilterInput,
+  FilterMatcherMap,
   Filters,
   Job,
-  MetadataFieldInput,
+  JobsResults,
   Maybe,
-  Collection,
-  EntityInput,
+  MediaFile,
   MediaFileInput,
   MediaFileMetadataInput,
-  OrderArrayInput,
-  MetadataInput,
-  SavedSearchInput,
-  SavedSearchedEntity,
-  SearchFilter,
-  EntitiesResults,
-  FilterInput,
-  Entitytyping,
-  FilterMatcherMap,
-  AdvancedFilterInput,
+  Metadata,
+  MetadataFieldInput,
   MetadataValuesInput,
-  BaseRelationValuesInput,
-  Entity,
+  OrderArrayInput,
+  PaginationInfo,
+  SavedSearchedEntity,
+  SavedSearchInput,
+  SearchFilter,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
-import type {
-  WillSendRequestOptions,
-} from "@apollo/datasource-rest";
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
@@ -589,13 +586,13 @@ export class CollectionAPI extends AuthRESTDataSource {
   async GetFilterOptions(
     input: AdvancedFilterInput,
     limit: number
-  ): Promise<string[]> {
+  ): Promise<DropdownOption[]> {
     const body = [input];
     const data = await this.post(`entities/filter?limit=${limit}&skip=0`, {
       body,
     });
 
-    if (data.results && data.results.length > 0) return data.results[0].options;
+    if (data.results && data.results.length > 0) return data.results;
     return [];
   }
 }
