@@ -11,6 +11,7 @@ export const baseSchema = gql`
     SECONDS_DEFAULT
     COORDINATES_DEFAULT
     LIST_DEFAULT
+    HTML
   }
 
   enum Permission {
