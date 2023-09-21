@@ -100,7 +100,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       console.log(e);
     }
-    return data.results;
+    return data?.results;
   }
 
   async getEntity(id: string): Promise<any> {
