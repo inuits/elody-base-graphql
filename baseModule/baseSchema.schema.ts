@@ -253,7 +253,7 @@ export const baseSchema = gql`
       downloadMediafiles
       exportCsv
       edit
-      addToMiradorViewerCollection  
+      addToManifestViewerCollection  
   }
 
   type BulkOperations {
