@@ -48,6 +48,8 @@ let sixthCollectionId: string | 'no-id' = 'no-id';
 export class CollectionAPI extends AuthRESTDataSource {
   public baseURL = `${env?.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
+  public preferredLanguage: string =
+    env?.customization?.applicationLocale || 'en';
 
   async getFilterMatcherMapping(): Promise<FilterMatcherMap> {
     return await this.get(`filter/matchers`);
@@ -82,7 +84,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getTenants(): Promise<EntitiesResults> {
     let data: any;
     try {
-      data = await this.get("tenants");
+      data = await this.get('tenants');
       console.log(data);
     } catch (e) {
       console.log(e);

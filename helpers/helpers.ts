@@ -1,4 +1,5 @@
-import { Unit } from "../../../generated-types/type-defs";
+import { Unit } from '../../../generated-types/type-defs';
+import { DataSources } from '../types';
 
 export const customSort = (
   customSortOrder: string[],
@@ -14,4 +15,11 @@ export const customSort = (
     return ordering[a[sortKey]] - ordering[b[sortKey]];
   });
   return arrayToSort;
+};
+
+export const setPreferredLanguageForDataSources = (
+  dataSources: DataSources,
+  preferredLanguage: string
+) => {
+  dataSources.CollectionAPI.preferredLanguage = preferredLanguage;
 };

@@ -8,6 +8,7 @@ import {
   resolveMedia,
   resolveMetadata,
   resolvePermission,
+  resolveMetadataItemOfPreferredLanguage,
 } from '../resolvers/entityResolver';
 import {
   Collection,
@@ -46,6 +47,7 @@ import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
 import { GraphQLScalarType, Kind } from 'graphql';
+import { setPreferredLanguageForDataSources } from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -82,7 +84,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         inputFields: [],
       };
     },
-    Entity: async (_source, { id, type }, { dataSources }) => {
+    Entity: async (
+      _source,
+      { id, type, preferredLanguage },
+      { dataSources }
+    ) => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
       if (type.toLowerCase() === 'mediafile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
@@ -352,11 +360,14 @@ export const baseResolver: Resolvers<ContextValue> = {
   IntialValues: {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
       if (source === KeyValueSource.Metadata) {
-        const metadata = await resolveMetadata(
-          parent,
-          [key],
-          ExcludeOrInclude.Include
-        );
+        const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+        const metadata = await resolveMetadata(parent, [key], undefined);
+        if (metadata.length > 1) {
+          return resolveMetadataItemOfPreferredLanguage(
+            metadata,
+            preferredLanguage
+          )?.value;
+        }
         return metadata[0]?.value ?? '';
       } else if (source === KeyValueSource.Root) {
         return parent?.[key] ?? '';

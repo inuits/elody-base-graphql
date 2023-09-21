@@ -41,7 +41,6 @@ export const resolveMedia = async (dataSources: DataSources, parent: any) => {
 export const resolveMetadata = async (
   parent: any,
   keys: Maybe<string>[],
-  excludeOrInclude: ExcludeOrInclude,
   options: TeaserMetadataOptions[] = []
 ) => {
   let metadataArray = [];
@@ -74,6 +73,21 @@ export const resolveMetadata = async (
   }
   metadataArray = customSort(keys as string[], metadataArray, 'key');
   return metadataArray;
+};
+
+export const resolveMetadataItemOfPreferredLanguage = (
+  metadata: any[],
+  preferredLanguage: string
+) => {
+  let preferredLanguageMetadataItem = metadata[0];
+  metadata.forEach((item) => {
+    const itemLanguageMetadata = item.metadataOnRelation.find(
+      (item: { [key: string]: string }) => item.key === 'lang'
+    );
+    if (itemLanguageMetadata.value === preferredLanguage)
+      preferredLanguageMetadataItem = item;
+  });
+  return preferredLanguageMetadataItem;
 };
 
 export const resolveRelations = async (parent: any) => {
