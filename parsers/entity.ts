@@ -1,6 +1,5 @@
 import {
   Collection,
-  ExcludeOrInclude,
   Maybe,
   MediaFileMetadata,
   Metadata,
@@ -94,34 +93,6 @@ export const getMetaDataOnRelation = (
   }
 
   return metadataOnRelation;
-};
-
-export const isKeyIncludedOrExcludedInMetaData = (
-  input: { key?: string },
-  allowedKeys: Maybe<string>[],
-  excludeOrInclude: ExcludeOrInclude
-): boolean => {
-  let returnValue: boolean = false;
-
-  switch (excludeOrInclude) {
-    case 'exclude':
-      if (input.key && allowedKeys.includes(input.key)) {
-        returnValue = false;
-      } else {
-        returnValue = true;
-      }
-      break;
-
-    default:
-      if (input.key && allowedKeys.includes(input.key)) {
-        returnValue = true;
-      } else {
-        returnValue = false;
-      }
-      break;
-  }
-
-  return returnValue;
 };
 
 export const parseMedia = (input: {

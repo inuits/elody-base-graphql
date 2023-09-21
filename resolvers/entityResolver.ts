@@ -1,12 +1,10 @@
 import {
-  isKeyIncludedOrExcludedInMetaData,
   parseMedia,
   parseMetaDataAndMetaDataRelation,
 } from '../parsers/entity';
 import {
   Collection,
   Entity,
-  ExcludeOrInclude,
   Maybe,
   MediaFile,
   Metadata,
@@ -50,13 +48,8 @@ export const resolveMetadata = async (
 
   if (parent.metadata) {
     metadataArray = parent.metadata.filter((metadataInput: any) => {
-      //Exclude parent items by default TODO make dynamic
       if (metadataInput.type !== 'parent') {
-        return isKeyIncludedOrExcludedInMetaData(
-          metadataInput,
-          keys,
-          excludeOrInclude
-        );
+        return metadataInput.key && keys.includes(metadataInput.key);
       }
     });
   }

@@ -2,11 +2,6 @@ import { gql } from 'graphql-modules';
 export const baseSchema = gql`
   scalar JSON
   # Generic
-  enum ExcludeOrInclude {
-    exclude
-    include
-  }
-
   enum Unit {
     DATETIME_DEFAULT
     DATETIME_DMY12
@@ -713,7 +708,7 @@ export const baseSchema = gql`
   }
 
   type Query {
-    Entity(id: String!, type: String!): Entity
+    Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
       type: Entitytyping
       limit: Int
