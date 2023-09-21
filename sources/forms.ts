@@ -52,7 +52,8 @@ export const getOptionsByEntityType = async (
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
       acceptedEntityTypes[i - 1] as string
     );
-    optionsForField.push(...optionsByType);
+    if (optionsByType)
+      optionsForField.push(...optionsByType);
   }
 
   const options = optionsForField.map((option: any) => {
