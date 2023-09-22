@@ -408,7 +408,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     query: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-query';
+      return input ? input : ['no-query'];
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
