@@ -557,7 +557,7 @@ export const baseSchema = gql`
 
   type PromGraphElement {
     label(input: String): String!
-    query(input: String): String!
+    query(input: [String!]!): [String!]!
     isCollapsed(input: Boolean!): Boolean!
   }
 
