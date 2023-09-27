@@ -32,8 +32,13 @@ import {
 } from './resolvers/entityResolver';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
+import { loadTranslations } from './translations/loadTranslations';
+import path from 'path';
 
 let environment: Environment | undefined = undefined;
+const baseTranslations: Object = loadTranslations(
+  path.join(__dirname, './translations/baseTranslations.json')
+);
 
 const addCustomFieldsToBaseFields = (customInputFields: {
   [key: string]: InputField;
@@ -202,4 +207,6 @@ export {
   parseIdToGetMoreData,
   resolvePermission,
   applyPromEndpoint,
+  loadTranslations,
+  baseTranslations,
 };
