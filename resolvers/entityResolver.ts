@@ -80,13 +80,18 @@ export const resolveMetadataItemOfPreferredLanguage = (
   preferredLanguage: string
 ) => {
   let preferredLanguageMetadataItem = metadata[0];
-  metadata.forEach((item) => {
-    const itemLanguageMetadata = item.metadataOnRelation.find(
-      (item: { [key: string]: string }) => item.key === 'lang'
-    );
-    if (itemLanguageMetadata.value === preferredLanguage)
-      preferredLanguageMetadataItem = item;
-  });
+  try {
+    metadata.forEach((item) => {
+      const itemLanguageMetadata = item.metadataOnRelation.find(
+        (item: { [key: string]: string }) => item.key === 'lang'
+      );
+      if (itemLanguageMetadata.value === preferredLanguage)
+        preferredLanguageMetadataItem = item;
+    });
+  } catch {
+    return preferredLanguageMetadataItem;
+  }
+
   return preferredLanguageMetadataItem;
 };
 
