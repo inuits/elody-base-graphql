@@ -22,6 +22,32 @@
       "download-mediafiles":"Download mediafiles",
       "export-to-csv":"Export to CSV"
     },
+    "confirm": {
+      "discard-edit": {
+        "message": "Are you certain you wish leave the entity editor? Any unsaved changes will be discarded.",
+        "confirm": "Leave editor",
+        "cancel": "Cancel"
+      },
+      "delete-entity": {
+        "message": "Are you certain you wish to delete this entity?",
+        "confirm": "Delete entity",
+        "secondary-confirm": "Delete entity and mediafiles",
+        "cancel": "Cancel"
+      },
+      "discard-create": {
+        "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
+        "confirm": "Leave",
+        "cancel":"Cancel"
+      },
+      "discard-update": {
+        "message": "Are you certain you wish to stop editting? Any unsaved changes will be discarded",
+        "confirm": "Leave",
+        "cancel":"Cancel"
+      }
+    },
+    "dropdown":{
+      "select-option":"select option"
+    },
     "dropzone":{
       "drag-add":"Drag your files, or click here to add your files",
       "failed":"File(s) failed to upload.",
@@ -37,10 +63,33 @@
       "create":"Create entity",
       "type":"Type"
     },
+    "filters":{
+      "filter":"Filters",
+      "add-filter":"Add filter",
+      "active":"active",
+      "clear":"Clear all",
+      "apply":"Apply filter(s)",
+      "matcher-labels":{
+        "select-filter-type":"Select filter type",
+        "AnyMatcher":"on any value",
+        "ContainsMatcher":"partly",
+        "ExactMatcher":"exact",
+        "IdMatcher":"ID",
+        "InBetweenMatcher":"between two values",
+        "MaxIncludedMatcher":"on maximum value (included)",
+        "MaxMatcher":"on maximum value (not included)",
+        "MinIncludedMatcher":"on minimum value (included)",
+        "MinMatcher":"on minimum value (not included)",
+        "NoneMatcher":"on empty value"
+      }
+    },
     "jobs":{
       "finished":"finished",
       "failed":"failed",
       "pending":"pending"
+    },
+    "history-view":{
+      "search":"Search History"
     },
     "notifications":{
       "success":{
@@ -68,6 +117,21 @@
           "description":"You don't have access to this page/action"
         }
       }
+    },
+    "pagination":{
+      "page":"page",
+      "of":"of"
+    },
+    "saved-searches":{
+      "new":"Save as new",
+      "save-changes":"Save changes",
+      "edit-label":"Edit label",
+      "reset":"Reset",
+      "delete":"Delete",
+      "all-filters":"All filters",
+      "search-title":"Search title",
+      "edit":"Edit",
+      "search-saved-searches":"Search Saved Searches"
     },
     "search":{
       "noresult":"No results",
@@ -125,6 +189,32 @@
       "download-mediafiles":"Download media bestanden",
       "export-to-csv":"Exporteer naar CSV"
     },
+    "confirm": {
+      "discard-edit": {
+        "message": "Ben je zeker dat je de entiteit-editor wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
+        "confirm": "Verlaat editor",
+        "cancel": "Annuleren"
+      },
+      "delete-entity": {
+        "message": "Ben je zeker dat je deze entiteit wilt verwijderen?",
+        "confirm": "Verwijder entiteit",
+        "secondary-confirm": "Verwijder entiteit en media bestanden",
+        "cancel": "Annuleren"
+      },
+      "discard-create": {
+        "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
+        "confirm": "Verlaten",
+        "cancel":"Annuleren"
+      },
+      "discard-update": {
+        "message": "Ben je zeker dat je wilt stoppen met bewerken? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
+        "confirm": "Verlaten",
+        "cancel":"Annuleren"
+      }
+    },
+    "dropdown":{
+      "select-option":"selecteer optie"
+    },
     "dropzone":{
       "drag-add":"Sleep je bestanden, of klik hier om bestanden toe te voegen",
       "failed":"Bestand(en) konden niet worden gëuploaded.",
@@ -140,10 +230,33 @@
       "create":"Maak entiteit",
       "type":"Type"
     },
+    "filters":{
+      "filter":"Filters",
+      "add-filter":"Filter toevoegen",
+      "active":"actief",
+      "clear":"Alles wissen",
+      "apply":"Filter(s) toepassen",
+      "matcher-labels":{
+        "select-filter-type":"Selecteer filter type",
+        "AnyMatcher":"op eender welke waarde",
+        "ContainsMatcher":"gedeeltelijk",
+        "ExactMatcher":"exact",
+        "IdMatcher":"ID",
+        "InBetweenMatcher":"tussen twee waardes",
+        "MaxIncludedMatcher":"op maximum waarde (inclusief)",
+        "MaxMatcher":"op maximum waarde (exclusief)",
+        "MinIncludedMatcher":"op minimum waarde (inclusief)",
+        "MinMatcher":"op minimum waarde (exclusief)",
+        "NoneMatcher":"op lege waarde"
+      }
+    },
     "jobs":{
       "finished":"klaar",
       "failed":"mislukt",
       "pending":"pending"
+    },
+    "history-view":{
+      "search":"Zoek geschiedenis"
     },
     "notifications":{
       "success":{
@@ -171,6 +284,21 @@
           "description":"Je hebt geen toegang tot deze pagina/actie"
         }
       }
+    },
+    "pagination":{
+      "page":"pagina",
+      "of":"van"
+    },
+    "saved-searches":{
+      "new":"Opslaan als nieuw",
+      "save-changes":"Wijzigingen opslaan",
+      "edit-label":"Label bewerken",
+      "reset":"Reset",
+      "delete":"Verwijderen",
+      "all-filters":"Alle filters",
+      "search-title":"Zoek titel",
+      "edit":"Bewerken",
+      "search-saved-searches":"Zoek in bewaarde zoekopdrachten"
     },
     "search":{
       "noresult":"Geen resultaten",
