@@ -150,6 +150,7 @@ export const baseSchema = gql`
     Iot
     Police
     Settings
+    KeyholeSquare
   }
 
   type Menu {
