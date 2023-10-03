@@ -158,7 +158,8 @@
       "page-not-found":"Oops, we couldn't find the page you are looking for.",
       "go-home":"Go back home",
       "users": "Users",
-      "settings": "Settings"
+      "settings": "Settings",
+      "upload": "Upload"
     },
     "upload":{
       "upload-files":"Upload files",
@@ -321,7 +322,8 @@
       "page-not-found":"Oops, we konden deze pagina niet vinden.",
       "go-home":"Ga terug naar het startscherm",
       "users": "Gebruikers",
-      "settings": "Instellingen"
+      "settings": "Instellingen",
+      "upload": "Upload"
     },
     "upload":{
       "upload-files":"Bestanden uploaden",
