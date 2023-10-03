@@ -52,16 +52,14 @@ export const getOptionsByEntityType = async (
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
       acceptedEntityTypes[i - 1] as string
     );
-    console.log(optionsByType)
     if (optionsByType)
       optionsForField.push(...optionsByType);
   }
 
   const options = optionsForField.map((option: any) => {
     const metadata = option?.metadata;
-    console.log(metadata)
-    if (!metadata)
-      return { icon: DamsIcons.NoIcon, label: '', value: option.id };
+    if (!metadata.length)
+      return { icon: DamsIcons.NoIcon, label: option.id, value: option.id };
     return {
       icon: DamsIcons.NoIcon,
       label: metadata.find((dataItem: any) => {
