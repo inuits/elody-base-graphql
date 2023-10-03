@@ -107,7 +107,7 @@ const defaultEntityData = (entityToCreate: Entitytyping): UploadRequestData => {
   };
 
   return {
-    body: entityBody.toString(),
+    body: entityBody,
     uri: `${env?.api.collectionApiUrl}/entities?${createEntityUriQueryParameters}`,
   };
 };
