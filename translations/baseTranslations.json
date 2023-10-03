@@ -83,6 +83,9 @@
         "NoneMatcher":"on empty value"
       }
     },
+    "form": {
+      "create": "Create"
+    },
     "jobs":{
       "finished":"finished",
       "failed":"failed",
@@ -250,6 +253,9 @@
         "MinMatcher":"op minimum waarde (exclusief)",
         "NoneMatcher":"op lege waarde"
       }
+    },
+    "form": {
+      "create": "Creëer"
     },
     "jobs":{
       "finished":"klaar",
