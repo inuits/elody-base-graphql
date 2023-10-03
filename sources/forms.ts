@@ -52,36 +52,23 @@ export const getOptionsByEntityType = async (
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
       acceptedEntityTypes[i - 1] as string
     );
+    console.log(optionsByType)
     if (optionsByType)
       optionsForField.push(...optionsByType);
   }
 
   const options = optionsForField.map((option: any) => {
     const metadata = option?.metadata;
+    console.log(metadata)
     if (!metadata)
       return { icon: DamsIcons.NoIcon, label: '', value: option.id };
     return {
       icon: DamsIcons.NoIcon,
       label: metadata.find((dataItem: any) => {
-        return dataItem?.key === 'title' || dataItem?.key === 'name';
+        return dataItem?.key === 'title' || dataItem?.key === 'name' || dataItem?.key === 'email';
       })?.value,
       value: option['_id'],
     };
   });
   return options;
-};
-
-// Remove this
-export const SourceField: MetadataOrRelationField = {
-  key: 'source',
-  label: 'Source',
-  type: InputFieldTypes.Dropdown,
-  config_key: 'mediafiles_source_values',
-};
-
-export const RightsField: MetadataOrRelationField = {
-  key: 'rights',
-  label: 'Rights',
-  type: InputFieldTypes.Dropdown,
-  config_key: 'mediafiles_rights_values',
 };

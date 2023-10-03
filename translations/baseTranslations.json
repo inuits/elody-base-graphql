@@ -86,13 +86,20 @@
     "form": {
       "create": "Create"
     },
+    "history-view":{
+      "search":"Search History"
+    },
     "jobs":{
       "finished":"finished",
       "failed":"failed",
       "pending":"pending"
     },
-    "history-view":{
-      "search":"Search History"
+    "metadata": {
+      "labels": {
+        "email": "Email",
+        "firstName": "First name",
+        "lastName": "Last name"
+      }
     },
     "notifications":{
       "success":{
@@ -257,13 +264,20 @@
     "form": {
       "create": "Creëer"
     },
+    "history-view":{
+      "search":"Zoek geschiedenis"
+    },
     "jobs":{
       "finished":"klaar",
       "failed":"mislukt",
       "pending":"pending"
     },
-    "history-view":{
-      "search":"Zoek geschiedenis"
+    "metadata": {
+      "labels": {
+        "email": "Email",
+        "firstName": "Voornaam",
+        "lastName": "Achternaam"
+      }
     },
     "notifications":{
       "success":{
