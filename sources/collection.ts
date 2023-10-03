@@ -283,7 +283,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       type: entity.type,
       metadata,
     };
-    if (customId && customId.length) {
+    if (customId) {
       body['_id'] = customId;
       body.identifiers = entity.identifiers;
     }

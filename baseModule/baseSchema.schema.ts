@@ -454,7 +454,7 @@ export const baseSchema = gql`
   # EntityTypes
   input EntityInput {
     title: String
-    id: String
+    id: String!
     type: String
     metadata: [MetadataFieldInput]
     identifiers: [String]
