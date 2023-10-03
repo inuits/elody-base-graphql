@@ -16,6 +16,9 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           logoutEndpoint: config.oauth.logoutEndpoint,
           redirectUri: config.damsFrontend,
         },
+          api: {
+            storageApiUrl: config.api.storageApiUrl
+          },
         features: {
           hasSimpleSearch: config.features.hasSimpleSearch,
           hasTenantSelect: config.features.hasTenantSelect,
