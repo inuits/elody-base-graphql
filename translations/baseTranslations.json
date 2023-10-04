@@ -169,7 +169,8 @@
       "go-home":"Go back home",
       "users": "Users",
       "settings": "Settings",
-      "upload": "Upload"
+      "upload": "Upload",
+      "tenant": "Tenant"
     },
     "upload":{
       "upload-files":"Upload files",
@@ -343,7 +344,8 @@
       "go-home":"Ga terug naar het startscherm",
       "users": "Gebruikers",
       "settings": "Instellingen",
-      "upload": "Upload"
+      "upload": "Upload",
+      "tenant": "Tenant"
     },
     "upload":{
       "upload-files":"Bestanden uploaden",
