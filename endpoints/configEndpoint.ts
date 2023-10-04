@@ -16,9 +16,9 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           logoutEndpoint: config.oauth.logoutEndpoint,
           redirectUri: config.damsFrontend,
         },
-          api: {
-            storageApiUrl: config.api.storageApiUrl
-          },
+        api: {
+          storageApiUrl: config.api.storageApiUrl,
+        },
         features: {
           hasSimpleSearch: config.features.hasSimpleSearch,
           hasTenantSelect: config.features.hasTenantSelect,
@@ -26,6 +26,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hasDirectoryImport === undefined
               ? true
               : config.features.hasDirectoryImport,
+          hasGridView:
+            config.features.hasGridView === undefined
+              ? true
+              : config.features.hasGridView,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,

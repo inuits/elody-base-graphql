@@ -30,6 +30,7 @@ export interface Environment {
     hasSimpleSearch?: boolean;
     hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
+    hasGridView?: boolean;
   };
   customization: {
     applicationTitle: string;
