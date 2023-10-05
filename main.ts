@@ -32,6 +32,7 @@ import {
 } from './resolvers/entityResolver';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
+import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
 
@@ -170,6 +171,9 @@ const start = (
       },
       function () {
         applyTenantEndpoint(app);
+      },
+      function () {
+        applyHealthEndpoint(app);
       },
       ...customEndpoints,
     ];
