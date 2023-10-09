@@ -18,7 +18,7 @@
       "graphql": ["node_modules/graphql"]
     }
   },
-  "include": ["./**/*.ts"],
   "exclude": ["node_modules"],
+  "include": ["./**/*.ts", "./**/*.json"],
   "files": ["../../generated-types/type-defs.ts"]
 }
