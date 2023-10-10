@@ -276,17 +276,12 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async createEntity(
     entity: EntityInput,
-    metadata: Metadata[] = [],
-    customId: string | undefined = undefined
+    metadata: Metadata[] = []
   ): Promise<any> {
     const body: any = {
       type: entity.type,
       metadata,
     };
-    if (customId) {
-      body['_id'] = customId;
-      body.identifiers = entity.identifiers;
-    }
     const newEntity = await this.post(`entities`, {
       body,
     });
