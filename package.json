@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.0.112",
+  "version": "0.0.113",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -25,7 +25,7 @@
     "graphql-modules": "^2.1.0",
     "http-proxy-middleware": "^2.0.6",
     "i": "^0.3.7",
-    "inuits-apollo-server-auth": "1.0.x",
+    "inuits-apollo-server-auth": "1.0.41",
     "jwt-decode": "^3.1.2",
     "node-fetch": "^2.6.7",
     "npm": "^8.19.2",
