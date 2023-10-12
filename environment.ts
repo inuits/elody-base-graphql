@@ -32,6 +32,7 @@ export interface Environment {
     hasTenantSelect?: boolean;
     hasGridView?: boolean;
     hasBulkSelect?: boolean;
+    hideSuperTenant?: boolean;
   };
   customization: {
     applicationTitle: string;

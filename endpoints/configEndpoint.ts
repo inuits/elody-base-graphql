@@ -34,6 +34,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hasBulkSelect === undefined
               ? true
               : config.features.hasBulkSelect,
+          hideSuperTenant:
+            config.features.hideSuperTenant === undefined
+              ? false
+              : config.features.hideSuperTenant,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
