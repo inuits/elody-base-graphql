@@ -753,4 +753,10 @@ export const baseSchema = gql`
       relationType: String!
     ): String
   }
+  
+  enum ViewModes {
+    ViewModesList
+    ViewModesGrid
+    ViewModesMedia
+  }
 `;

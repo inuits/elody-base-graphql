@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import { Environment } from '../environment';
+import { ViewModes } from '../../../generated-types/type-defs';
 
 const applyConfigEndpoint = (app: Express, config: Environment) => {
   app.get('/api/config', async (req, res) => {
@@ -38,6 +39,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hideSuperTenant === undefined
               ? false
               : config.features.hideSuperTenant,
+          allowedViewModes:
+              config.features.allowedViewModes === undefined
+              ? [ViewModes.ViewModesList, ViewModes.ViewModesGrid, ViewModes.ViewModesMedia]
+              : config.features.allowedViewModes
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
