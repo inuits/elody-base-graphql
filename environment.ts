@@ -31,6 +31,7 @@ export interface Environment {
     hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
     hasGridView?: boolean;
+    hasBulkSelect?: boolean;
   };
   customization: {
     applicationTitle: string;

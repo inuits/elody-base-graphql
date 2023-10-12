@@ -30,6 +30,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hasGridView === undefined
               ? true
               : config.features.hasGridView,
+          hasBulkSelect:
+            config.features.hasBulkSelect === undefined
+              ? true
+              : config.features.hasBulkSelect,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
