@@ -8,7 +8,7 @@ import {
   applyAuthEndpoints,
   applyAuthSession,
   applyEnvironmentConfig,
-} from 'inuits-apollo-server-auth';
+} from './auth/index';
 import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
 import { StorageAPI } from './sources/storage';

@@ -8,6 +8,10 @@
   },
   "dependencies": {
     "@apollo/datasource-rest": "^4.3.2",
+    "@apollo/utils.keyvaluecache": "^2.1.0",
+    "apollo-server-errors": "^3.0.1",
+    "url": "0.11.0",
+    "apollo-server-env": "4.2.1"
     "@apollo/server": "^4.2.1",
     "@graphql-codegen/cli": "^4.0.1",
     "@graphql-modules/core": "^0.7.17",
