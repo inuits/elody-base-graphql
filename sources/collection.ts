@@ -25,7 +25,7 @@ import {
   SavedSearchInput,
   SearchFilter,
 } from '../../../generated-types/type-defs';
-import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
+import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';

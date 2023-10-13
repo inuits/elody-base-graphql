@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 import { environment as env } from '../main';
-import { AuthRESTDataSource } from 'inuits-apollo-server-auth';
+import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
 export class StorageAPI extends AuthRESTDataSource {
   public baseURL = `${env?.api.storageApiUrl}`;
