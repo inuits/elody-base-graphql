@@ -20,7 +20,6 @@ export function applyAuthSession(app: any, clientSecret: string) {
       resave: false,
       cookie: {
         httpOnly: true,
-        maxAge: 3600000,
         secure: false,
         sameSite: "strict",
       },
