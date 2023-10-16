@@ -413,6 +413,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    days: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : 7;
+    },
   },
   EntityListElement: {
     label: async (_source, { input }, { dataSources }) => {

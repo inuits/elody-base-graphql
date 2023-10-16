@@ -560,6 +560,7 @@ export const baseSchema = gql`
     label(input: String): String!
     query(input: [String!]!): [String!]!
     isCollapsed(input: Boolean!): Boolean!
+    days(input: Int): Int
   }
 
   enum PanelType {
