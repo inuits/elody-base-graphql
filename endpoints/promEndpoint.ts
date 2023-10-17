@@ -8,6 +8,8 @@ const applyPromEndpoint = (app: Express, promUrl: string) => {
       createProxyMiddleware({
         target: promUrl,
         changeOrigin: true,
+        timeout: 120000,
+        proxyTimeout: 120000,
         pathRewrite: {
           '^/api/prom': '/api/v1',
         },
