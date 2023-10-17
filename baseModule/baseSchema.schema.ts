@@ -411,6 +411,10 @@ export const baseSchema = gql`
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
+  type BulkOperationOptions {
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
   type MetadataFieldOption {
     label: String
     value: String!
@@ -655,6 +659,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     createFormFields: FormFields
+    bulkOperationOptions: BulkOperationOptions
   }
 
   type BaseEntity implements Entity {
@@ -670,6 +675,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     createFormFields: FormFields
+    bulkOperationOptions: BulkOperationOptions
   }
 
   type MediaFileEntity implements Entity {
@@ -685,6 +691,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     createFormFields: FormFields
+    bulkOperationOptions: BulkOperationOptions
   }
 
   type Tenant implements Entity {
@@ -701,6 +708,24 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     createFormFields: FormFields
+    bulkOperationOptions: BulkOperationOptions
+  }
+
+  type User implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    media: Media
+    teaserMetadata: teaserMetadata
+    title: [MetadataAndRelation]
+    permission: [Permission]
+    intialValues: IntialValues!
+    relationValues: RelationValues
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    createFormFields: FormFields
+    bulkOperationOptions: BulkOperationOptions
   }
 
   type EntitiesResults {
@@ -730,7 +755,7 @@ export const baseSchema = gql`
     EntityTypeSortOptions(entityType: String!): Entity!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
-    BulkOperations: BulkOperations!
+    BulkOperations(entityType: String!): Entity!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
     OCRForm: OCRForm!
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
@@ -754,7 +779,7 @@ export const baseSchema = gql`
       relationType: String!
     ): String
   }
-  
+
   enum ViewModes {
     ViewModesList
     ViewModesGrid

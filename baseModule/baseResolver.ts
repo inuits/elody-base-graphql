@@ -177,8 +177,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
     },
-    BulkOperations: async (_source, {}, { dataSources }) => {
-      return { options: [] };
+    BulkOperations: async (_source, { entityType }, { dataSources }) => {
+      return {
+        type: entityType,
+        bulkOperationOptions: {},
+      } as Entity;
     },
     BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
       return { options: [] };
@@ -650,12 +653,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
   },
-  PaginationLimitOptions: {
+  BulkOperationOptions: {
     options: async (parent, { input }, { dataSources }) => {
+      console.log({ input });
       return input;
     },
   },
-  BulkOperations: {
+  PaginationLimitOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },
