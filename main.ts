@@ -91,7 +91,7 @@ const start = (
   const startApolloServer = async () => {
     const app = express();
     const httpServer = http.createServer(app);
-
+    httpServer.setTimeout(60000)
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
       gateway: {
