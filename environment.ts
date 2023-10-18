@@ -1,4 +1,4 @@
-import { ViewModes } from '../../generated-types/type-defs'
+import { ViewModes } from '../../generated-types/type-defs';
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -31,7 +31,6 @@ export interface Environment {
     hasSimpleSearch?: boolean;
     hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
-    hasGridView?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     allowedViewModes?: ViewModes[];

@@ -27,10 +27,6 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hasDirectoryImport === undefined
               ? true
               : config.features.hasDirectoryImport,
-          hasGridView:
-            config.features.hasGridView === undefined
-              ? true
-              : config.features.hasGridView,
           hasBulkSelect:
             config.features.hasBulkSelect === undefined
               ? true
@@ -40,9 +36,13 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
               ? false
               : config.features.hideSuperTenant,
           allowedViewModes:
-              config.features.allowedViewModes === undefined
-              ? [ViewModes.ViewModesList, ViewModes.ViewModesGrid, ViewModes.ViewModesMedia]
-              : config.features.allowedViewModes
+            config.features.allowedViewModes === undefined
+              ? [
+                  ViewModes.ViewModesList,
+                  ViewModes.ViewModesGrid,
+                  ViewModes.ViewModesMedia,
+                ]
+              : config.features.allowedViewModes,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
