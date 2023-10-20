@@ -21,7 +21,13 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           storageApiUrl: config.api.storageApiUrl,
         },
         features: {
-          hasSimpleSearch: config.features.hasSimpleSearch,
+          simpleSearch: {
+            hasSimpleSearch: config.features.simpleSearch.hasSimpleSearch,
+            simpleSearchEntityTypes:
+              config.features.simpleSearch.simpleSearchEntityTypes,
+            simpleSearchMetadataKey:
+              config.features.simpleSearch.simpleSearchMetadataKey,
+          },
           hasTenantSelect: config.features.hasTenantSelect,
           hasDirectoryImport:
             config.features.hasDirectoryImport === undefined

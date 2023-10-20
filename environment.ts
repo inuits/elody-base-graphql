@@ -1,4 +1,4 @@
-import { ViewModes } from '../../generated-types/type-defs';
+import { Entitytyping, ViewModes } from '../../generated-types/type-defs';
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -28,7 +28,11 @@ export interface Environment {
     promUrl: 'no-prom' | string;
   };
   features: {
-    hasSimpleSearch?: boolean;
+    simpleSearch: {
+      hasSimpleSearch: boolean;
+      simpleSearchEntityTypes?: Entitytyping[];
+      simpleSearchMetadataKey?: string;
+    };
     hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
     hasBulkSelect?: boolean;

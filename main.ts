@@ -35,6 +35,7 @@ import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
+import {AuthRESTDataSource} from "./auth/index";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -213,4 +214,5 @@ export {
   applyPromEndpoint,
   loadTranslations,
   baseTranslations,
+  AuthRESTDataSource
 };

@@ -98,6 +98,7 @@ export const baseSchema = gql`
     EntityPicker
     OCR
     Upload
+      Search
   }
 
   enum ModalChoices {
