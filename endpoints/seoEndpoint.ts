@@ -4,6 +4,7 @@ import {
   BaseEntity,
   Collection,
   Metadata,
+  MetadataRelation,
 } from '../../../generated-types/type-defs';
 import fetch from 'node-fetch';
 
@@ -18,9 +19,13 @@ const getMetadataItemValueByKey = (
   );
 };
 
+const getMediafileMetadataForPugObject = (): Object => {
+  return {};
+};
+
 const getPugEntityObject = (entity: any, environment: Environment): Object => {
   const metadata: Metadata[] = entity.metadata;
-  return {
+  let pugEntityObject = {
     title: getMetadataItemValueByKey(
       'title',
       metadata,
@@ -29,6 +34,16 @@ const getPugEntityObject = (entity: any, environment: Environment): Object => {
     description: getMetadataItemValueByKey('description', metadata),
     site_name: environment.customization.applicationTitle || '',
   };
+  if (
+    !entity.relations.find(
+      (relationItem: MetadataRelation) => relationItem.type === 'hasMediafile'
+    )
+  )
+    return pugEntityObject;
+
+  const mediafileMetadata = getMediafileMetadataForPugObject();
+  pugEntityObject = { ...pugEntityObject, ...mediafileMetadata };
+  return pugEntityObject;
 };
 
 export const applySEOEndpoint = (app: Express, environment: Environment) => {
@@ -48,7 +63,8 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
       console.log(entity);
       const pugEntityObject = getPugEntityObject(entity, environment);
       res.render('seo', pugEntityObject);
-    } catch {
+    } catch (e) {
+      console.log(e);
       res.render('seo', { title: environment?.customization.applicationTitle });
     }
   });
