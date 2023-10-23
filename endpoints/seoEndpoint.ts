@@ -1,13 +1,11 @@
 import { Express, Request, Response } from 'express';
 import { Environment } from '../environment';
-import path from 'path';
 import {
   BaseEntity,
   Collection,
   Metadata,
 } from '../../../generated-types/type-defs';
 import fetch from 'node-fetch';
-import { environment } from '../main';
 
 const getMetadataItemValueByKey = (
   metadataKey: string,
@@ -20,20 +18,21 @@ const getMetadataItemValueByKey = (
   );
 };
 
-const getPugEntityObject = (entity: any): Object => {
+const getPugEntityObject = (entity: any, environment: Environment): Object => {
   const metadata: Metadata[] = entity.metadata;
   return {
     title: getMetadataItemValueByKey(
       'title',
       metadata,
-      environment?.customization.applicationTitle
+      environment.customization.applicationTitle
     ),
     description: getMetadataItemValueByKey('description', metadata),
-    site_name: environment?.customization.applicationTitle || '',
+    site_name: environment.customization.applicationTitle || '',
   };
 };
 
 export const applySEOEndpoint = (app: Express, environment: Environment) => {
+  if (!environment) return;
   app.get('/api/seo', async (req: Request, res: Response) => {
     try {
       const uri = new URL(req.query.request_uri as string);
@@ -47,7 +46,7 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
       );
       const entity = (await response.json()) as BaseEntity;
       console.log(entity);
-      const pugEntityObject = getPugEntityObject(entity);
+      const pugEntityObject = getPugEntityObject(entity, environment);
       res.render('seo', pugEntityObject);
     } catch {
       res.render('seo', { title: environment?.customization.applicationTitle });
