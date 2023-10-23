@@ -8,7 +8,8 @@ import {
   applyAuthEndpoints,
   applyAuthSession,
   applyEnvironmentConfig,
-} from './auth/index';
+  AuthRESTDataSource,
+} from './auth';
 import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
 import { StorageAPI } from './sources/storage';
@@ -35,7 +36,6 @@ import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
-import {AuthRESTDataSource} from "./auth/index";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -92,7 +92,7 @@ const start = (
   const startApolloServer = async () => {
     const app = express();
     const httpServer = http.createServer(app);
-    httpServer.setTimeout(120000)
+    httpServer.setTimeout(120000);
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
       gateway: {
@@ -214,5 +214,5 @@ export {
   applyPromEndpoint,
   loadTranslations,
   baseTranslations,
-  AuthRESTDataSource
+  AuthRESTDataSource,
 };
