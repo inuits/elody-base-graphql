@@ -1,0 +1,56 @@
+import { Express, Request, Response } from 'express';
+import { Environment } from '../environment';
+import path from 'path';
+import {
+  BaseEntity,
+  Collection,
+  Metadata,
+} from '../../../generated-types/type-defs';
+import fetch from 'node-fetch';
+import { environment } from '../main';
+
+const getMetadataItemValueByKey = (
+  metadataKey: string,
+  metadata: Metadata[],
+  backupValue: string = ''
+): string => {
+  return (
+    metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey)
+      ?.value || backupValue
+  );
+};
+
+const getPugEntityObject = (entity: any): Object => {
+  const metadata: Metadata[] = entity.metadata;
+  return {
+    title: getMetadataItemValueByKey(
+      'title',
+      metadata,
+      environment?.customization.applicationTitle
+    ),
+    description: getMetadataItemValueByKey('description', metadata),
+    site_name: environment?.customization.applicationTitle || '',
+  };
+};
+
+export const applySEOEndpoint = (app: Express, environment: Environment) => {
+  app.get('/api/seo', async (req: Request, res: Response) => {
+    try {
+      const uri = new URL(req.query.request_uri as string);
+      const entityId = uri.pathname.split('/').reverse()[0];
+      const response = await fetch(
+        `${environment.api.collectionApiUrl}/${Collection.Entities}/${entityId}`,
+        {
+          method: 'get',
+          headers: { Authorization: 'Bearer ' + environment.staticToken },
+        }
+      );
+      const entity = (await response.json()) as BaseEntity;
+      console.log(entity);
+      const pugEntityObject = getPugEntityObject(entity);
+      res.render('seo', pugEntityObject);
+    } catch {
+      res.render('seo', { title: environment?.customization.applicationTitle });
+    }
+  });
+};

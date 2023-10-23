@@ -36,6 +36,7 @@ import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
+import { applySEOEndpoint } from './endpoints/seoEndpoint';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -73,6 +74,9 @@ const start = (
   customInputFields: { [key: string]: InputField } | undefined = undefined
 ) => {
   environment = appConfig;
+
+  const applicationEndpoints: Function[] = [];
+
   if (appConfig.sentryEnabled) {
     Sentry.init({
       dsn: appConfig.sentryDsn,
@@ -142,42 +146,52 @@ const start = (
       })
     );
 
-    const applicationEndpoints: Function[] = [
-      function () {
-        applyAuthEndpoints(
-          app,
-          appConfig.oauth.baseUrl,
-          appConfig.clientSecret
-        );
-      },
-      function () {
-        applyConfigEndpoint(app, appConfig);
-      },
-      function () {
-        applyUploadEndpoint(app);
-      },
-      function () {
-        applyExportEndpoint(app);
-      },
-      function () {
-        applyMediaFileEndpoint(
-          app,
-          appConfig.api.storageApiUrl,
-          appConfig.api.iiifUrl,
-          appConfig.staticToken
-        );
-      },
-      function () {
-        applyTranslationEndpoint(app, appTranslations);
-      },
-      function () {
-        applyTenantEndpoint(app);
-      },
-      function () {
-        applyHealthEndpoint(app);
-      },
-      ...customEndpoints,
-    ];
+    applicationEndpoints.push(
+      ...[
+        function () {
+          applyAuthEndpoints(
+            app,
+            appConfig.oauth.baseUrl,
+            appConfig.clientSecret
+          );
+        },
+        function () {
+          applyConfigEndpoint(app, appConfig);
+        },
+        function () {
+          applyUploadEndpoint(app);
+        },
+        function () {
+          applyExportEndpoint(app);
+        },
+        function () {
+          applyMediaFileEndpoint(
+            app,
+            appConfig.api.storageApiUrl,
+            appConfig.api.iiifUrl,
+            appConfig.staticToken
+          );
+        },
+        function () {
+          applyTranslationEndpoint(app, appTranslations);
+        },
+        function () {
+          applyTenantEndpoint(app);
+        },
+        function () {
+          applyHealthEndpoint(app);
+        },
+      ]
+    );
+    applicationEndpoints.push(...customEndpoints);
+
+    app.set('views', path.join(__dirname + '/views'));
+    app.set('view engine', 'pug');
+
+    if (appConfig.features.hasSEO)
+      applicationEndpoints.push(function () {
+        applySEOEndpoint(app, environment as Environment);
+      });
 
     if (appConfig.api.promUrl !== 'no-prom') {
       applyPromEndpoint(app, appConfig.api.promUrl);

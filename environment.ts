@@ -38,6 +38,7 @@ export interface Environment {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     allowedViewModes?: ViewModes[];
+    hasSEO?: boolean;
   };
   customization: {
     applicationTitle: string;
