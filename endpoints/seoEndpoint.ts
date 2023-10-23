@@ -19,7 +19,17 @@ const getMetadataItemValueByKey = (
   );
 };
 
-const getMediafileMetadataForPugObject = (): Object => {
+const getMediafileMetadataForPugObject = async (
+  mediafileId: string,
+  environment: Environment
+): Promise<Object> => {
+  const mediafile = await fetch(
+    `${environment.api.collectionApiUrl}/${Collection.Mediafiles}/${mediafileId}`,
+    {
+      method: 'get',
+      headers: { Authorization: 'Bearer ' + environment.staticToken },
+    }
+  );
   return {};
 };
 
@@ -34,14 +44,16 @@ const getPugEntityObject = (entity: any, environment: Environment): Object => {
     description: getMetadataItemValueByKey('description', metadata),
     site_name: environment.customization.applicationTitle || '',
   };
-  if (
-    !entity.relations.find(
-      (relationItem: MetadataRelation) => relationItem.type === 'hasMediafile'
-    )
-  )
-    return pugEntityObject;
+  const mediafile = entity.relations.find(
+    (relationItem: MetadataRelation) => relationItem.type === 'hasMediafile'
+  );
+  if (!mediafile) return pugEntityObject;
 
-  const mediafileMetadata = getMediafileMetadataForPugObject();
+  const mediafileMetadata = getMediafileMetadataForPugObject(
+    mediafile.key,
+    environment
+  );
+
   pugEntityObject = { ...pugEntityObject, ...mediafileMetadata };
   return pugEntityObject;
 };
