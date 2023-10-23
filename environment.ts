@@ -1,4 +1,4 @@
-import { Entitytyping, ViewModes } from '../../generated-types/type-defs';
+import { Entitytyping } from '../../generated-types/type-defs';
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -37,7 +37,6 @@ export interface Environment {
     hasTenantSelect?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
-    allowedViewModes?: ViewModes[];
     hasSEO?: boolean;
   };
   customization: {

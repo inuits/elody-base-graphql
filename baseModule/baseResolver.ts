@@ -41,6 +41,7 @@ import {
   BaseRelationValuesInput,
   InputField,
   ManifestViewerElement,
+  ViewModes,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -309,6 +310,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     intialValues: async (parent: any, _args) => {
       return parent;
     },
+    allowedViewModes: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
     relationValues: async (parent: any, _args, { dataSources }) => {
       return parent.relations ?? [];
     },
@@ -385,6 +389,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
 
       return '';
+    },
+  },
+  AllowedViewModes: {
+    viewModes: async (parent, { input }, { dataSources }) => {
+      return input ? input : [ViewModes.ViewModesList];
     },
   },
   RelationValues: {

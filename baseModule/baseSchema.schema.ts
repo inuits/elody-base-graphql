@@ -478,6 +478,10 @@ export const baseSchema = gql`
   type IntialValues {
     keyValue(key: String!, source: KeyValueSource!): JSON!
   }
+  
+  type AllowedViewModes {
+    viewModes(input: [ViewModes]): [ViewModes]
+  }
 
   type RelationValues {
     label(input: String): String!
@@ -655,6 +659,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
     relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
@@ -671,6 +676,7 @@ export const baseSchema = gql`
     media: Media
     permission: [Permission]
     intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
     relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
@@ -687,6 +693,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     permission: [Permission]
     intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
     relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
@@ -704,6 +711,7 @@ export const baseSchema = gql`
     title: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
     relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
@@ -721,6 +729,7 @@ export const baseSchema = gql`
     title: [MetadataAndRelation]
     permission: [Permission]
     intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
     relationValues: RelationValues
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
