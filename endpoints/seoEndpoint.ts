@@ -19,18 +19,25 @@ const getMetadataItemValueByKey = (
   );
 };
 
-const getMediafileMetadataForPugObject = async (
+const getMediafileValueForPugObject = async (
   mediafileId: string,
   environment: Environment
 ): Promise<Object> => {
-  const mediafile = await fetch(
-    `${environment.api.collectionApiUrl}/${Collection.Mediafiles}/${mediafileId}`,
-    {
-      method: 'get',
-      headers: { Authorization: 'Bearer ' + environment.staticToken },
-    }
-  );
-  return {};
+  try {
+    const response = await fetch(
+      `${environment.api.collectionApiUrl}/${Collection.Mediafiles}/${mediafileId}`,
+      {
+        method: 'get',
+        headers: { Authorization: 'Bearer ' + environment.staticToken },
+      }
+    );
+    const mediafile = (await response.json()) as BaseEntity;
+    const imageUrl = mediafile[environment.features.SEO.seoMetadataKeys.image];
+    return { image: imageUrl };
+  } catch (e) {
+    console.log(e);
+    return { image: '' };
+  }
 };
 
 const getPugEntityObject = (
@@ -52,13 +59,13 @@ const getPugEntityObject = (
     site_name: environment.customization.applicationTitle || '',
     req_url: reqUrl,
   };
-  console.log(pugEntityObject);
+
   const mediafile = entity.relations.find(
     (relationItem: MetadataRelation) => relationItem.type === 'hasMediafile'
   );
   if (!mediafile || pugEntityObject.image) return pugEntityObject;
 
-  const mediafileMetadata = getMediafileMetadataForPugObject(
+  const mediafileMetadata = getMediafileValueForPugObject(
     mediafile.key,
     environment
   );
