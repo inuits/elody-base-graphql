@@ -95,8 +95,8 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
     } catch (e) {
       console.log(e);
       res.render('seo', {
-        title: environment?.customization.applicationTitle,
-        site_name: environment?.customization.applicationTitle,
+        title: environment.customization.applicationTitle,
+        site_name: environment.customization.applicationTitle,
       });
     }
   });
