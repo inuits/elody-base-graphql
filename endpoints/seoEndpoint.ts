@@ -36,7 +36,6 @@ const getMediafileValueForPugObject = async (
     const imageUrl: string = mediafile[metadataKeys.image];
     return { image: imageUrl };
   } catch (e) {
-    console.log(e);
     return { image: '' };
   }
 };
@@ -93,7 +92,6 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
       const pugEntityObject = getPugEntityObject(entity, uri.href, environment);
       res.render('seo', pugEntityObject);
     } catch (e) {
-      console.log(e);
       res.render('seo', {
         title: environment.customization.applicationTitle,
         site_name: environment.customization.applicationTitle,
