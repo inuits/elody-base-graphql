@@ -188,7 +188,7 @@ const start = (
     app.set('views', path.join(__dirname + '/views'));
     app.set('view engine', 'pug');
 
-    if (appConfig.features.hasSEO)
+    if (appConfig.features.SEO.hasSEO)
       applicationEndpoints.push(function () {
         applySEOEndpoint(app, environment as Environment);
       });

@@ -33,21 +33,30 @@ const getMediafileMetadataForPugObject = async (
   return {};
 };
 
-const getPugEntityObject = (entity: any, environment: Environment): Object => {
+const getPugEntityObject = (
+  entity: any,
+  reqUrl: string,
+  environment: Environment
+): Object => {
   const metadata: Metadata[] = entity.metadata;
+  const metadataKeys = environment.features.SEO.seoMetadataKeys;
+  if (!metadataKeys) return {};
   let pugEntityObject = {
     title: getMetadataItemValueByKey(
-      'title',
+      metadataKeys.title,
       metadata,
       environment.customization.applicationTitle
     ),
-    description: getMetadataItemValueByKey('description', metadata),
+    description: getMetadataItemValueByKey(metadataKeys.description, metadata),
+    image: getMetadataItemValueByKey(metadataKeys.image, metadata),
     site_name: environment.customization.applicationTitle || '',
+    req_url: reqUrl,
   };
+  console.log(pugEntityObject);
   const mediafile = entity.relations.find(
     (relationItem: MetadataRelation) => relationItem.type === 'hasMediafile'
   );
-  if (!mediafile) return pugEntityObject;
+  if (!mediafile || pugEntityObject.image) return pugEntityObject;
 
   const mediafileMetadata = getMediafileMetadataForPugObject(
     mediafile.key,
@@ -73,7 +82,7 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
       );
       const entity = (await response.json()) as BaseEntity;
       console.log(entity);
-      const pugEntityObject = getPugEntityObject(entity, environment);
+      const pugEntityObject = getPugEntityObject(entity, uri.href, environment);
       res.render('seo', pugEntityObject);
     } catch (e) {
       console.log(e);

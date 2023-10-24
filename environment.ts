@@ -37,7 +37,14 @@ export interface Environment {
     hasTenantSelect?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
-    hasSEO?: boolean;
+    SEO: {
+      hasSEO: boolean;
+      seoMetadataKeys?: {
+        title: string;
+        description: string;
+        image: string;
+      };
+    };
   };
   customization: {
     applicationTitle: string;
