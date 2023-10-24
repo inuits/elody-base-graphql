@@ -21,7 +21,8 @@ const getMetadataItemValueByKey = (
 
 const getMediafileValueForPugObject = async (
   mediafileId: string,
-  environment: Environment
+  environment: Environment,
+  metadataKeys: { [key: string]: string }
 ): Promise<Object> => {
   try {
     const response = await fetch(
@@ -31,8 +32,8 @@ const getMediafileValueForPugObject = async (
         headers: { Authorization: 'Bearer ' + environment.staticToken },
       }
     );
-    const mediafile = (await response.json()) as BaseEntity;
-    const imageUrl = mediafile[environment.features.SEO.seoMetadataKeys.image];
+    const mediafile = (await response.json()) as any;
+    const imageUrl: string = mediafile[metadataKeys.image];
     return { image: imageUrl };
   } catch (e) {
     console.log(e);
@@ -67,7 +68,8 @@ const getPugEntityObject = (
 
   const mediafileMetadata = getMediafileValueForPugObject(
     mediafile.key,
-    environment
+    environment,
+    metadataKeys
   );
 
   pugEntityObject = { ...pugEntityObject, ...mediafileMetadata };
