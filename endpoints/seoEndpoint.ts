@@ -71,7 +71,7 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
   if (!environment) return;
   app.get('/api/seo', async (req: Request, res: Response) => {
     try {
-      const uri = new URL(req.query.request_uri as string);
+      const uri = new URL(req.query?.request_uri as string);
       const entityId = uri.pathname.split('/').reverse()[0];
       const response = await fetch(
         `${environment.api.collectionApiUrl}/${Collection.Entities}/${entityId}`,
@@ -81,12 +81,14 @@ export const applySEOEndpoint = (app: Express, environment: Environment) => {
         }
       );
       const entity = (await response.json()) as BaseEntity;
-      console.log(entity);
       const pugEntityObject = getPugEntityObject(entity, uri.href, environment);
       res.render('seo', pugEntityObject);
     } catch (e) {
       console.log(e);
-      res.render('seo', { title: environment?.customization.applicationTitle });
+      res.render('seo', {
+        title: environment?.customization.applicationTitle,
+        site_name: environment?.customization.applicationTitle,
+      });
     }
   });
 };
