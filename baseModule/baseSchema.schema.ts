@@ -565,11 +565,61 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
-  type PromGraphElement {
+  enum GraphType {
+    bar
+    bubble
+    doughnut
+    line
+    pie
+    polarArea
+    radar
+    scatter
+  }
+
+  enum TimeUnit {
+    month
+    hour
+    dayOfYear
+    dayOfWeek
+  }
+
+  input GraphDatasetFilterInput {
+    key: String
+    values: [String!]
+  }
+
+  input GraphDatasetInput {
+    labels: [String!]!
+    filter: GraphDatasetFilterInput
+  }
+
+  type GraphDatasetFilter {
+    key: String
+    values: [String!]
+  }
+
+  type GraphDataset {
+    labels: [String!]!
+    filter: GraphDatasetFilter
+  }
+
+  type GraphElement {
     label(input: String): String!
-    query(input: [String!]!): [String!]!
     isCollapsed(input: Boolean!): Boolean!
-    days(input: Int): Int
+    type(input: GraphType!): GraphType!
+    datasource(input: String!): String!
+    dataset(input: GraphDatasetInput!): GraphDataset!
+    timeUnit(input: TimeUnit!): TimeUnit!
+    datapoints(input: Int!): Int!
+    convert_to(input: String!): String
+  }
+
+  input GraphElementInput {
+    datasource: String!
+    dataset: GraphDatasetInput!
+    timeUnit: TimeUnit!
+    datapoints: Int!
+    convert_to: String
   }
 
   enum PanelType {
@@ -633,7 +683,7 @@ export const baseSchema = gql`
     manifestViewerElement: ManifestViewerElement
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
-    promGraphElement: PromGraphElement
+    graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
   }
@@ -770,6 +820,7 @@ export const baseSchema = gql`
     OCRForm: OCRForm!
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
     BulkOperationsRelationForm: WindowElement!
+    GraphData(id: String!, graph: GraphElementInput!): JSON!
   }
 
   type Mutation {

@@ -10,6 +10,7 @@ import {
   FilterInput,
   FilterMatcherMap,
   Filters,
+  GraphElementInput,
   Job,
   JobsResults,
   Maybe,
@@ -591,5 +592,19 @@ export class CollectionAPI extends AuthRESTDataSource {
 
     if (data.results && data.results.length > 0) return data.results;
     return [];
+  }
+
+  async GetStats(id: string, graph: GraphElementInput): Promise<any> {
+    let filterValuesQueryString = ""
+    for (const value of graph.dataset?.filter?.values || [])
+      filterValuesQueryString += `&filter_values=${value}`;
+
+    const data = await this.get(`stats/${graph.datasource}/${
+      id
+    }?time_unit=${graph.timeUnit}&datapoints=${graph.datapoints}&convert_to=${
+      graph.convert_to || ""
+    }&filter_key=${graph.dataset?.filter?.key || ""}${filterValuesQueryString}`);
+    if (data.results && data.results.length > 0) return data.results[0];
+    return undefined;
   }
 }

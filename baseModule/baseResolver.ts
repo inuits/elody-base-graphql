@@ -11,37 +11,36 @@ import {
   resolveMetadataItemOfPreferredLanguage,
 } from '../resolvers/entityResolver';
 import {
+  ActionElement,
+  Actions,
+  BaseRelationValuesInput,
   Collection,
   Column,
   ColumnSizes,
+  EditStatus,
   EntitiesResults,
+  Entity,
   EntityListElement,
-  EntityViewElements,
   EntityListViewMode,
+  Entitytyping,
+  EntityViewElements,
+  GraphElement,
+  KeyValueSource,
+  ManifestViewerElement,
   MediaFileElement,
-  Metadata,
+  MediaFileElementTypes,
   MenuIcons,
-  PanelMetaData,
+  MenuTypeLink,
+  Metadata,
   PanelInfo,
+  PanelMetaData,
   PanelRelation,
   Resolvers,
   SearchInputType,
-  WindowElement,
-  ActionElement,
-  PromGraphElement,
-  WindowElementPanel,
-  MenuTypeLink,
-  MediaFileElementTypes,
-  Actions,
-  KeyValueSource,
-  Entitytyping,
-  Entity,
-  TeaserMetadataOptions,
-  EditStatus,
-  BaseRelationValuesInput,
-  InputField,
-  ManifestViewerElement,
+  TimeUnit,
   ViewModes,
+  WindowElement,
+  WindowElementPanel,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -186,6 +185,29 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
       return { options: [] };
+    },
+    GraphData: async (_source, { id, graph }, { dataSources }) => {
+      const stats = await dataSources.CollectionAPI.GetStats(id, graph);
+      if (!stats) return { labels: [], dataset: { data: [] } };
+
+      stats.labels = stats.labels.map((label: any) => {
+        if (graph.timeUnit === TimeUnit.DayOfYear) {
+          const date = new Date(new Date().getFullYear(), 0);
+          date.setDate(label);
+          return date.toLocaleString("nl-BE", {
+            weekday: "short",
+            day: "numeric",
+            month: "short"
+          })
+        }
+      });
+
+      for (let i = 0; i < graph.dataset.labels.length; i++) {
+        stats.datasets[i].label = graph.dataset.labels[0];
+        stats.datasets[i]["borderWidth"] = 1;
+      }
+
+      return { labels: stats.labels, datasets: stats.datasets };
     },
   },
   // OCRForm: {
@@ -415,18 +437,33 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || MediaFileElementTypes.Media;
     },
   },
-  PromGraphElement: {
+  GraphElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
-    },
-    query: async (_source, { input }, { dataSources }) => {
-      return input ? input : ['no-query'];
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    days: async (_source, { input }, { dataSources }) => {
-      return input !== undefined ? input : 7;
+    type: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    datasource: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    dataset: async (_source, { input }, { dataSources }) => {
+      return {
+        labels: input.labels,
+        filter: input.filter
+      };
+    },
+    timeUnit: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    datapoints: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    convert_to: async (_source, { input }, { dataSources }) => {
+      return input;
     },
   },
   EntityListElement: {
@@ -609,8 +646,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     actionElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as ActionElement;
     },
-    promGraphElement: async (parent: unknown, {}, { dataSources }) => {
-      return parent as PromGraphElement;
+    graphElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as GraphElement;
     },
     manifestViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as ManifestViewerElement;
