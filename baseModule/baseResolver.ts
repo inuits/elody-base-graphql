@@ -616,6 +616,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     unit: async (_source, { input }, { dataSources }) => {
       return input;
     },
+    linkText: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
     },

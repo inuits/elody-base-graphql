@@ -98,7 +98,7 @@ export const baseSchema = gql`
     EntityPicker
     OCR
     Upload
-      Search
+    Search
   }
 
   enum ModalChoices {
@@ -478,7 +478,7 @@ export const baseSchema = gql`
   type IntialValues {
     keyValue(key: String!, source: KeyValueSource!): JSON!
   }
-  
+
   type AllowedViewModes {
     viewModes(input: [ViewModes]): [ViewModes]
   }
@@ -638,6 +638,7 @@ export const baseSchema = gql`
     label(input: String!): String!
     key(input: String!): String!
     unit(input: Unit!): Unit!
+    linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
   }
 
