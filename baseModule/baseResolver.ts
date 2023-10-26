@@ -27,6 +27,7 @@ import {
   GraphElement,
   KeyValueSource,
   ManifestViewerElement,
+  MarkdownViewerElement,
   MediaFileElement,
   MediaFileElementTypes,
   MenuIcons,
@@ -194,17 +195,17 @@ export const baseResolver: Resolvers<ContextValue> = {
         if (graph.timeUnit === TimeUnit.DayOfYear) {
           const date = new Date(new Date().getFullYear(), 0);
           date.setDate(label);
-          return date.toLocaleString("nl-BE", {
-            weekday: "short",
-            day: "numeric",
-            month: "short"
-          })
+          return date.toLocaleString('nl-BE', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+          });
         }
       });
 
       for (let i = 0; i < graph.dataset.labels.length; i++) {
         stats.datasets[i].label = graph.dataset.labels[0];
-        stats.datasets[i]["borderWidth"] = 1;
+        stats.datasets[i]['borderWidth'] = 1;
       }
 
       return { labels: stats.labels, datasets: stats.datasets };
@@ -453,7 +454,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     dataset: async (_source, { input }, { dataSources }) => {
       return {
         labels: input.labels,
-        filter: input.filter
+        filter: input.filter,
       };
     },
     timeUnit: async (_source, { input }, { dataSources }) => {
@@ -514,16 +515,34 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input !== undefined ? input : false;
     },
     manifestUrl: async (_source: any, { metadataKey }, { dataSources }) => {
-      const url = _source.metadata.find(
+      const value = _source.metadata.find(
         (metadataItem: Metadata) => metadataItem.key === metadataKey
       )?.value;
-      return url;
+      return value;
     },
     manifestVersion: async (_source: any, { metadataKey }, { dataSources }) => {
-      const version = _source.metadata.find(
+      const value = _source.metadata.find(
         (metadataItem: Metadata) => metadataItem.key === metadataKey
       )?.value;
-      return version || 3;
+      return value || 3;
+    },
+  },
+  MarkdownViewerElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    markdownContent: async (_source: any, { metadataKey }, { dataSources }) => {
+      const content = _source.metadata.filter(
+        (metadataItem: Metadata) => metadataItem.key === metadataKey
+      );
+
+      return resolveMetadataItemOfPreferredLanguage(
+        content,
+        dataSources.CollectionAPI.preferredLanguage
+      )?.value;
     },
   },
   WindowElement: {
@@ -654,6 +673,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     manifestViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as ManifestViewerElement;
+    },
+    markdownViewerElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MarkdownViewerElement;
     },
   },
   MenuWrapper: {

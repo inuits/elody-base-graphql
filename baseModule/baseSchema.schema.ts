@@ -2,6 +2,17 @@ import { gql } from 'graphql-modules';
 export const baseSchema = gql`
   scalar JSON
   # Generic
+  enum RouteNames {
+    Home
+    SingleEntity
+    NotFound
+  }
+
+  enum Entitytyping {
+    asset
+    mediafile
+  }
+
   enum Unit {
     DATETIME_DEFAULT
     DATETIME_DMY12
@@ -152,6 +163,7 @@ export const baseSchema = gql`
     Police
     Settings
     KeyholeSquare
+    InfoCircle
   }
 
   type Menu {
@@ -204,6 +216,8 @@ export const baseSchema = gql`
     Focus
     History
     Image
+    InfoCircle
+    KeyholeSquare
     Link
     ListUl
     Minus
@@ -676,11 +690,18 @@ export const baseSchema = gql`
     manifestVersion(metadataKey: String!): Int!
   }
 
+  type MarkdownViewerElement {
+    label(input: String): String!
+    isCollapsed(input: Boolean!): Boolean!
+    markdownContent(metadataKey: String!): String!
+  }
+
   type ColumnList {
     column: Column!
   }
 
   type EntityViewElements {
+    markdownViewerElement: MarkdownViewerElement
     manifestViewerElement: ManifestViewerElement
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
