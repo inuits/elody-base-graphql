@@ -80,10 +80,9 @@ export const resolveMetadataItemOfPreferredLanguage = (
   preferredLanguage: string
 ) => {
   let preferredLanguageMetadataItem = metadata[0];
-  console.log(metadata);
   try {
     metadata.forEach((item) => {
-      let itemLanguageMetadata = item.lang;
+      let itemLanguageMetadata = { value: item.lang };
       if (!itemLanguageMetadata)
         itemLanguageMetadata = item.metadataOnRelation.find(
           (item: { [key: string]: string }) => item.key === 'lang'
