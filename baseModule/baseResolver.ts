@@ -204,7 +204,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       });
 
       for (let i = 0; i < graph.dataset.labels.length; i++) {
-        stats.datasets[i].label = graph.dataset.labels[0];
+        stats.datasets[i].label = graph.dataset.labels[i];
         stats.datasets[i]['borderWidth'] = 1;
       }
 
