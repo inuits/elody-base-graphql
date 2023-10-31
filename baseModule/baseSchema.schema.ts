@@ -200,6 +200,7 @@ export const baseSchema = gql`
     Check
     CheckCircle
     CheckSquare
+    Close
     Create
     Cross
     CrossCircle
@@ -228,6 +229,7 @@ export const baseSchema = gql`
     NoImage
     Plus
     PlusCircle
+    QuestionCircle
     Redo
     Save
     SearchGlass
