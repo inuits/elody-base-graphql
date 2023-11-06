@@ -843,6 +843,8 @@ export const baseSchema = gql`
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
+    PermissionMappingPerEntity(type: String!): Boolean!
+    PermissionMappingEntities: [PermissionMapping!]!
   }
 
   type Mutation {
@@ -867,5 +869,10 @@ export const baseSchema = gql`
     ViewModesList
     ViewModesGrid
     ViewModesMedia
+  }
+  
+  type PermissionMapping {
+    permission: Permission!
+    hasPermission: Boolean!
   }
 `;

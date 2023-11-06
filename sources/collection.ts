@@ -104,6 +104,50 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data?.results;
   }
 
+  async postEntitiesFilterSoftCall(entityType: string): Promise<string> {
+    let data;
+    const body = [{
+        type: "type",
+        value: entityType
+    }]
+    try {
+      data = await this.post(`${Collection.Entities}/filter?soft=1`, { body });
+    } catch (e) {
+      return "401";
+    }
+    return data;
+  }
+
+  async patchEntityDetailSoftCall(): Promise<string> {
+    let data;
+    try {
+      data = await this.patch(`entities/123456789/metadata?soft=1`);
+    } catch (e) {
+      return "401";
+    }
+    return data;
+  }
+
+  async putEntityDetailSoftCall(): Promise<string> {
+    let data;
+    try {
+      data = await this.put(`entities/123456789/metadata?soft=1`);
+    } catch (e) {
+      return "401";
+    }
+    return data;
+  }
+
+  async delEntityDetailSoftCall(): Promise<string> {
+    let data;
+    try {
+      data = await this.delete(`entities/123456789?soft=1`);
+    } catch (e) {
+      return "401";
+    }
+    return data;
+  }
+
   async getEntity(id: string): Promise<any> {
     let data = await this.get<any>(id);
     setId(data);

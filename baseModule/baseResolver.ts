@@ -36,6 +36,7 @@ import {
   PanelInfo,
   PanelMetaData,
   PanelRelation,
+  Permission,
   Resolvers,
   SearchInputType,
   TimeUnit,
@@ -209,6 +210,29 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
 
       return { labels: stats.labels, datasets: stats.datasets };
+    },
+    PermissionMappingPerEntity: async (_source, { type }, { dataSources }) => {
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
+      return status == "200";
+    },
+    PermissionMappingEntities: async (_source, { }, { dataSources }) => {
+      const patch = await dataSources.CollectionAPI.patchEntityDetailSoftCall();
+      const put = await dataSources.CollectionAPI.putEntityDetailSoftCall();
+      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall();
+      return [
+            {
+              permission: Permission.Canpatch,
+              hasPermission: patch == "200",
+            },
+            {
+              permission: Permission.Canput,
+              hasPermission: put == "200",
+            },
+            {
+              permission: Permission.Candelete,
+              hasPermission: del == "200",
+            },
+      ]
     },
   },
   // OCRForm: {
