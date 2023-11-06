@@ -312,6 +312,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     media: async (parent: any, _args, { dataSources }) => {
       return resolveMedia(dataSources, parent);
     },
+    intialValues: async (parent: any, _args) => {
+      return parent;
+    },
     permission: async (parent: any, _args, { dataSources }) => {
       return resolvePermission(dataSources, parent.id);
     },
@@ -389,29 +392,32 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
-      if (source === KeyValueSource.Metadata) {
-        const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
-        const metadata = await resolveMetadata(parent, [key], undefined);
-        if (metadata.length > 1) {
-          return resolveMetadataItemOfPreferredLanguage(
-            metadata,
-            preferredLanguage
-          )?.value;
-        }
-        return metadata[0]?.value ?? '';
-      } else if (source === KeyValueSource.Root) {
-        return parent?.[key] ?? '';
-      } else if (source === KeyValueSource.Relations) {
-        try {
-          return parent?.relations.find(
-            (relation: any) => relation.type === key
-          ).value;
-        } catch {
+      try {
+        if (source === KeyValueSource.Metadata) {
+          const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+          const metadata = await resolveMetadata(parent, [key], undefined);
+          if (metadata.length > 1) {
+            return resolveMetadataItemOfPreferredLanguage(
+              metadata,
+              preferredLanguage
+            )?.value;
+          }
+          return metadata[0]?.value ?? '';
+        } else if (source === KeyValueSource.Root) {
           return parent?.[key] ?? '';
+        } else if (source === KeyValueSource.Relations) {
+          try {
+            return parent?.relations.find(
+              (relation: any) => relation.type === key
+            ).value;
+          } catch {
+            return parent?.[key] ?? '';
+          }
         }
+        return '';
+      } catch (e) {
+        return '';
       }
-
-      return '';
     },
   },
   AllowedViewModes: {
