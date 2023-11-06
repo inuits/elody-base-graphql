@@ -327,6 +327,10 @@
       "asset-library":"Zoek asset library...",
       "mediafile-library":"Zoek Mediafiles..."
     },
+    "language":{
+      "nl":"Nederlands",
+      "en":"Engels"
+    },
     "library":{
       "search":"Zoeken",
       "items":"items",
