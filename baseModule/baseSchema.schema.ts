@@ -26,9 +26,9 @@ export const baseSchema = gql`
   }
 
   enum Permission {
-    canget
-    canput
-    canpatch
+    cancreate
+    canread
+    canupdate
     candelete
   }
   enum Actions {
@@ -146,6 +146,7 @@ export const baseSchema = gql`
   # Menu Types
   type MenuItem {
     label: String!
+    entityType: Entitytyping
     subMenu(name: String!): Menu
     icon: MenuIcons
     isLoggedIn: Boolean
@@ -170,6 +171,7 @@ export const baseSchema = gql`
     name: String!
     menuItem(
       label: String!
+      entityType: Entitytyping
       icon: MenuIcons
       isLoggedIn: Boolean
       typeLink: MenuTypeLinkInput

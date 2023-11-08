@@ -212,21 +212,21 @@ export const baseResolver: Resolvers<ContextValue> = {
       return { labels: stats.labels, datasets: stats.datasets };
     },
     PermissionMappingPerEntity: async (_source, { type }, { dataSources }) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type)
       return status == "200";
     },
     PermissionMappingEntities: async (_source, { }, { dataSources }) => {
-      const patch = await dataSources.CollectionAPI.patchEntityDetailSoftCall();
-      const put = await dataSources.CollectionAPI.putEntityDetailSoftCall();
+      const create = await dataSources.CollectionAPI.postEntitySoftCall();
+      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall();
       const del = await dataSources.CollectionAPI.delEntityDetailSoftCall();
       return [
             {
-              permission: Permission.Canpatch,
-              hasPermission: patch == "200",
+              permission: Permission.Cancreate,
+              hasPermission: create == "200",
             },
             {
-              permission: Permission.Canput,
-              hasPermission: put == "200",
+              permission: Permission.Canupdate,
+              hasPermission: edit == "200",
             },
             {
               permission: Permission.Candelete,
@@ -716,11 +716,12 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, icon, isLoggedIn, typeLink },
+      { label, entityType, icon, isLoggedIn, typeLink },
       { dataSources }
     ) => {
       return {
         label,
+        entityType,
         icon,
         isLoggedIn,
         typeLink,
@@ -730,6 +731,9 @@ export const baseResolver: Resolvers<ContextValue> = {
   MenuItem: {
     label: async (parent, {}, { dataSources }) => {
       return parent.label;
+    },
+    entityType: async (parent, {}, { dataSources }) => {
+      return parent.entityType as Entitytyping;
     },
     subMenu: async (parent, { name }, { dataSources }) => {
       return { name };
