@@ -26,7 +26,8 @@ export class AuthRESTDataSource extends RESTDataSource {
       console.log("\n willsendrequest | no token available");
       console.log("\n willsendrequest | STATIC", envConfig.staticJWT);
       console.log("\n willsendrequest | SESSION", this.session);
-      throw new AuthenticationError(`AUTH | NO TOKEN`, { statusCode: 401 });
+      if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== "true")
+        throw new AuthenticationError(`AUTH | NO TOKEN`, { statusCode: 401 });
     }
 
     const tenant = this.session.tenant;
