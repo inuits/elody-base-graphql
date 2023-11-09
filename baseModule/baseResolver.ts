@@ -34,8 +34,10 @@ import {
   MenuTypeLink,
   Metadata,
   PanelInfo,
+  PanelLink,
   PanelMetaData,
   PanelRelation,
+  PanelThumbnail,
   Permission,
   Resolvers,
   SearchInputType,
@@ -212,27 +214,29 @@ export const baseResolver: Resolvers<ContextValue> = {
       return { labels: stats.labels, datasets: stats.datasets };
     },
     PermissionMappingPerEntity: async (_source, { type }, { dataSources }) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type)
-      return status == "200";
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
+        type
+      )
+      return status == '200';
     },
-    PermissionMappingEntities: async (_source, { }, { dataSources }) => {
+    PermissionMappingEntities: async (_source, {}, { dataSources }) => {
       const create = await dataSources.CollectionAPI.postEntitySoftCall();
       const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall();
       const del = await dataSources.CollectionAPI.delEntityDetailSoftCall();
       return [
-            {
-              permission: Permission.Cancreate,
-              hasPermission: create == "200",
-            },
-            {
-              permission: Permission.Canupdate,
-              hasPermission: edit == "200",
-            },
-            {
-              permission: Permission.Candelete,
-              hasPermission: del == "200",
-            },
-      ]
+        {
+          permission: Permission.Cancreate,
+          hasPermission: create == '200',
+        },
+        {
+          permission: Permission.Canupdate,
+          hasPermission: edit == '200',
+        },
+        {
+          permission: Permission.Candelete,
+          hasPermission: del == '200',
+        },
+      ];
     },
   },
   // OCRForm: {
@@ -346,6 +350,12 @@ export const baseResolver: Resolvers<ContextValue> = {
   teaserMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
+    },
+    thumbnail: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelThumbnail;
+    },
+    link: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelLink;
     },
   },
   MediaFileEntity: {
@@ -670,6 +680,31 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
+    },
+  },
+  PanelThumbnail: {
+    key: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    customUrl: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    width: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    height: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+  },
+  PanelLink: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    key: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    linkText: async (_source, { input }, { dataSources }) => {
+      return input;
     },
   },
   Column: {

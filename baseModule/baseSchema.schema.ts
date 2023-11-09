@@ -658,6 +658,19 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
   }
 
+  type PanelThumbnail {
+    key(input: String!): String
+    customUrl(input: String!): String
+    width(input: Int!): Int
+    height(input: Int!): Int
+  }
+
+  type PanelLink {
+    label(input: String!): String!
+    key(input: String!): String!
+    linkText(input: String!): String
+  }
+
   type PanelRelation {
     value: String
     label: String
@@ -724,6 +737,8 @@ export const baseSchema = gql`
 
   type teaserMetadata {
     metaData: PanelMetaData
+    thumbnail: PanelThumbnail
+    link: PanelLink
   }
 
   interface Entity {
@@ -872,7 +887,7 @@ export const baseSchema = gql`
     ViewModesGrid
     ViewModesMedia
   }
-  
+
   type PermissionMapping {
     permission: Permission!
     hasPermission: Boolean!
