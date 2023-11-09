@@ -288,13 +288,7 @@ export const baseSchema = gql`
   }
 
   type CreateEntityForm {
-    idSyntax: IdSyntax
     formFields: Entity!
-  }
-
-  type IdSyntax {
-    prefix: String
-    field: String
   }
 
   type FormFields {
