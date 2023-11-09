@@ -118,16 +118,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async patchEntityDetailSoftCall(): Promise<string> {
-    let data;
-    try {
-      data = await this.patch(`entities/123456789/metadata?soft=1`);
-    } catch (e) {
-      return "401";
-    }
-    return data;
-  }
-
   async postEntitySoftCall(): Promise<string> {
     let data;
     try {
@@ -138,10 +128,20 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async delEntityDetailSoftCall(): Promise<string> {
+  async patchEntityDetailSoftCall(id: String): Promise<string> {
     let data;
     try {
-      data = await this.delete(`entities/123456789?soft=1`);
+      data = await this.patch(`entities/${id}/metadata?soft=1`);
+    } catch (e) {
+      return "401";
+    }
+    return data;
+  }
+
+  async delEntityDetailSoftCall(id: String): Promise<string> {
+    let data;
+    try {
+      data = await this.delete(`entities/${id}?soft=1`);
     } catch (e) {
       return "401";
     }

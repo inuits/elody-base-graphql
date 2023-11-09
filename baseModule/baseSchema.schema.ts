@@ -862,8 +862,9 @@ export const baseSchema = gql`
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
-    PermissionMappingPerEntity(type: String!): Boolean!
-    PermissionMappingEntities: [PermissionMapping!]!
+    PermissionMappingPerEntityType(type: String!): Boolean!
+    PermissionMappingCreate: Boolean!
+    PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
   }
 
   type Mutation {

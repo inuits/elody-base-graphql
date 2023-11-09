@@ -213,30 +213,27 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return { labels: stats.labels, datasets: stats.datasets };
     },
-    PermissionMappingPerEntity: async (_source, { type }, { dataSources }) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
-        type
-      );
-      return status == '200';
+    PermissionMappingPerEntityType: async (_source, { type }, { dataSources }) => {
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
+      return status == "200";
     },
-    PermissionMappingEntities: async (_source, {}, { dataSources }) => {
-      const create = await dataSources.CollectionAPI.postEntitySoftCall();
-      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall();
-      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall();
+    PermissionMappingCreate: async (_source, {}, { dataSources }) => {
+      const status = await dataSources.CollectionAPI.postEntitySoftCall();
+      return status == "200";
+    },
+    PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
+      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(id);
+      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id);
       return [
-        {
-          permission: Permission.Cancreate,
-          hasPermission: create == '200',
-        },
-        {
-          permission: Permission.Canupdate,
-          hasPermission: edit == '200',
-        },
-        {
-          permission: Permission.Candelete,
-          hasPermission: del == '200',
-        },
-      ];
+            {
+              permission: Permission.Canupdate,
+              hasPermission: edit == "200",
+            },
+            {
+              permission: Permission.Candelete,
+              hasPermission: del == "200",
+            },
+      ]
     },
   },
   // OCRForm: {
