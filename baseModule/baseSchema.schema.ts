@@ -244,6 +244,7 @@ export const baseSchema = gql`
     WindowGrid
     WindowMaximize
     Settings
+    Iiif
   }
 
   scalar StringOrInt
@@ -669,6 +670,7 @@ export const baseSchema = gql`
     label(input: String!): String!
     key(input: String!): String!
     linkText(input: String!): String
+    linkIcon(input: DamsIcons!): DamsIcons
   }
 
   type PanelRelation {

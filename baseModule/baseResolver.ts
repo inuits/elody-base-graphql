@@ -216,7 +216,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     PermissionMappingPerEntity: async (_source, { type }, { dataSources }) => {
       let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
         type
-      )
+      );
       return status == '200';
     },
     PermissionMappingEntities: async (_source, {}, { dataSources }) => {
@@ -704,6 +704,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     linkText: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    linkIcon: async (_source, { input }, { dataSources }) => {
       return input;
     },
   },
