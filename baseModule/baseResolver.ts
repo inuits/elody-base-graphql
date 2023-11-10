@@ -12,7 +12,7 @@ import {
 } from '../resolvers/entityResolver';
 import {
   ActionElement,
-  Actions,
+  Actions, BaseEntity,
   BaseRelationValuesInput,
   Collection,
   Column,
@@ -83,6 +83,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   }),
   Query: {
+    CreateEntityForm: async (_source, { type }, { dataSources }) => {
+      return {
+        formFields: {
+          type,
+          createFormFields: {},
+        } as BaseEntity,
+      };
+    },
     OCRForm: async (_source, {}, { dataSources }) => {
       return {
         inputFields: [],
@@ -807,6 +815,11 @@ export const baseResolver: Resolvers<ContextValue> = {
   BulkOperationCsvExportKeys: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
+    },
+  },
+  FormFields: {
+    metaData: async (parent: any, {}, { dataSources }) => {
+      return parent as PanelMetaData;
     },
   },
   InputField: {
