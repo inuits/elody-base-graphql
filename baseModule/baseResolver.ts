@@ -759,7 +759,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, entityType, icon, isLoggedIn, typeLink },
+      { label, entityType, icon, isLoggedIn, typeLink, requiresAuth },
       { dataSources }
     ) => {
       return {
@@ -768,6 +768,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         icon,
         isLoggedIn,
         typeLink,
+        requiresAuth,
       };
     },
   },
@@ -789,6 +790,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     typeLink: async (parent, {}, { dataSources }) => {
       return parent.typeLink as MenuTypeLink;
+    },
+    requiresAuth: async (parent, {}, { dataSources }) => {
+      return parent.requiresAuth as boolean;
     },
   },
   DropzoneEntityToCreate: {

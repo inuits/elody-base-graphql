@@ -151,6 +151,7 @@ export const baseSchema = gql`
     icon: MenuIcons
     isLoggedIn: Boolean
     typeLink: MenuTypeLink
+    requiresAuth: Boolean
   }
 
   enum MenuIcons {
@@ -175,6 +176,7 @@ export const baseSchema = gql`
       icon: MenuIcons
       isLoggedIn: Boolean
       typeLink: MenuTypeLinkInput
+      requiresAuth: Boolean
     ): MenuItem
   }
 
