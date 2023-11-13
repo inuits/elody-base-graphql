@@ -278,7 +278,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       return linkedResult;
     },
-    mutateEntityValues: async (_source, { id, formInput }, { dataSources }) => {
+    mutateEntityValues: async (_source, { id, formInput, collection }, { dataSources }) => {
       const filterEditStatus = (
         editStatus: EditStatus
       ): BaseRelationValuesInput[] => {
@@ -295,23 +295,31 @@ export const baseResolver: Resolvers<ContextValue> = {
           });
       };
 
-      await dataSources.CollectionAPI.patchMetadata(id, formInput.metadata);
-      await dataSources.CollectionAPI.postRelations(
-        id,
-        filterEditStatus(EditStatus.New)
-      );
-      await dataSources.CollectionAPI.patchRelations(
-        id,
-        filterEditStatus(EditStatus.Changed)
-      );
-      await dataSources.CollectionAPI.deleteRelations(
-        id,
-        filterEditStatus(EditStatus.Deleted)
-      );
+      await dataSources.CollectionAPI.patchMetadata(id, formInput.metadata, collection);
+      if (collection !== Collection.Mediafiles) {
+        await dataSources.CollectionAPI.postRelations(
+          id,
+          filterEditStatus(EditStatus.New),
+          collection
+        );
+        await dataSources.CollectionAPI.patchRelations(
+          id,
+          filterEditStatus(EditStatus.Changed),
+          collection
+        );
+        await dataSources.CollectionAPI.deleteRelations(
+          id,
+          filterEditStatus(EditStatus.Deleted),
+          collection
+        );
+      }
 
-      return await dataSources.CollectionAPI.getEntity(
-        parseIdToGetMoreData(id)
-      );
+      if (collection === Collection.Entities)
+        return await dataSources.CollectionAPI.getEntity(
+          parseIdToGetMoreData(id)
+        );
+      else
+        return await dataSources.CollectionAPI.getMediaFile(id);
     },
     deleteData: async (
       _source,

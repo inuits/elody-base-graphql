@@ -864,7 +864,7 @@ export const baseSchema = gql`
   }
 
   type Mutation {
-    mutateEntityValues(id: String!, formInput: EntityFormInput!): Entity
+    mutateEntityValues(id: String!, formInput: EntityFormInput!, collection: Collection!): Entity
     deleteData(
       id: String!
       path: Collection!

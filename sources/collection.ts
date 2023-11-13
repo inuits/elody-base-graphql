@@ -31,6 +31,7 @@ import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
+import { GraphQLError } from 'graphql';
 
 export type relationInput = {
   label: string;
@@ -254,34 +255,38 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async patchMetadata(
     id: String,
-    metadata: MetadataValuesInput[]
+    metadata: MetadataValuesInput[],
+    collection: Collection = Collection.Entities
   ): Promise<Metadata[]> {
     if (metadata.length <= 0) return [];
-    return await this.patch(`entities/${id}/metadata`, { body: metadata });
+    return await this.patch(`${collection}/${id}/metadata`, { body: metadata });
   }
 
   async postRelations(
     id: string,
-    relations: BaseRelationValuesInput[]
+    relations: BaseRelationValuesInput[],
+    collection: Collection = Collection.Entities
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
-    return await this.post(`entities/${id}/relations`, { body: relations });
+    return await this.post(`${collection}/${id}/relations`, { body: relations });
   }
 
   async patchRelations(
     id: string,
-    relations: BaseRelationValuesInput[]
+    relations: BaseRelationValuesInput[],
+    collection: Collection = Collection.Entities
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
-    return await this.patch(`entities/${id}/relations`, { body: relations });
+    return await this.patch(`${collection}/${id}/relations`, { body: relations });
   }
 
   async deleteRelations(
     id: string,
-    relations: BaseRelationValuesInput[]
+    relations: BaseRelationValuesInput[],
+    collection: Collection = Collection.Entities
   ): Promise<any> {
     if (relations.length <= 0) return [];
-    return await this.delete(`entities/${id}/relations`, { body: relations });
+    return await this.delete(`${collection}/${id}/relations`, { body: relations });
   }
 
   async getJobs(
