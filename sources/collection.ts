@@ -656,4 +656,20 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (data.results && data.results.length > 0) return data.results[0];
     return undefined;
   }
+
+  async linkWithExternalSource(entityId: string, externalSourceEntityId: string, externalSource: string) {
+    const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
+    const body: object = {}
+    body[`${externalSource}_id`] = externalSourceEntityId
+    const data = this.post(endpoint, body)
+    console.log(data)
+
+  }
+
+  async removeLinkWithExternalSource(entityId: string, externalSource: string) {
+    const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
+    const data = this.delete(endpoint)
+    console.log(data)
+
+  }
 }
