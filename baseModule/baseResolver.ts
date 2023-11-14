@@ -41,6 +41,7 @@ import {
   Permission,
   Resolvers,
   SearchInputType,
+  SingleMediaFileElement,
   TimeUnit,
   ViewModes,
   WindowElement,
@@ -491,6 +492,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || MediaFileElementTypes.Media;
     },
   },
+  SingleMediaFileElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    type: async (_source, { input }, { dataSources }) => {
+      return input || MediaFileElementTypes.Media;
+    },
+  },
   GraphElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -742,6 +754,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mediaFileElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MediaFileElement;
+    },
+    singleMediaFileElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as SingleMediaFileElement;
     },
     windowElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElement;

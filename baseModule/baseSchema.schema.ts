@@ -578,6 +578,13 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
+  type SingleMediaFileElement {
+    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String!
+    type(input: MediaFileElementTypes): String!
+    metaData: PanelMetaData!
+  }
+
   enum GraphType {
     bar
     bubble
@@ -718,6 +725,7 @@ export const baseSchema = gql`
     manifestViewerElement: ManifestViewerElement
     entityListElement: EntityListElement
     mediaFileElement: MediaFileElement
+    singleMediaFileElement: SingleMediaFileElement
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
