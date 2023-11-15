@@ -83,12 +83,14 @@ export const resolveMetadataItemOfPreferredLanguage = (
   try {
     metadata.forEach((item) => {
       let itemLanguageMetadata = { value: item.lang };
-      if (!itemLanguageMetadata)
+      if (!itemLanguageMetadata.value)
         itemLanguageMetadata = item.metadataOnRelation.find(
           (item: { [key: string]: string }) => item.key === 'lang'
         );
-      if (itemLanguageMetadata.value == preferredLanguage)
+
+      if (itemLanguageMetadata.value === preferredLanguage) {
         preferredLanguageMetadataItem = item;
+      }
     });
   } catch (e) {
     console.log(e);
