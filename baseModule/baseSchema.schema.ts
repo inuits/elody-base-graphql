@@ -665,6 +665,7 @@ export const baseSchema = gql`
   type PanelThumbnail {
     key(input: String!): String
     customUrl(input: String!): String
+    filename(input: String, fromMediafile: Boolean): String!
     width(input: Int!): Int
     height(input: Int!): Int
   }
