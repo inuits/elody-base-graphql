@@ -716,9 +716,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     filename: async (_source: any, { input, fromMediafile }, { dataSources }) => {
       if (!fromMediafile) return input || '';
-      const thumbnailId: string = _source.relations.find((relation: any) => relation.type === 'hasMediafile' && relation.is_primary_thumbnail).key
-      const mediafile = await dataSources.CollectionAPI.getMediaFile(thumbnailId)
-      return mediafile.filename
+      try{
+        const thumbnailId: string = _source.relations.find((relation: any) => relation.type === 'hasMediafile' && relation.is_primary_thumbnail).key
+        const mediafile = await dataSources.CollectionAPI.getMediaFile(thumbnailId)
+        return mediafile.filename
+      } catch {
+        return ''
+      }
+
     },
     width: async (_source, { input }, { dataSources }) => {
       return input;
