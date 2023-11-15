@@ -1,5 +1,5 @@
 import {
-  AdvancedFilterInput,
+  AdvancedFilterInput, BaseEntity,
   BaseRelationValuesInput,
   Collection,
   DropdownOption,
@@ -122,7 +122,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async postEntitySoftCall(): Promise<string> {
     let data;
     try {
-      data = await this.post(`entities?soft=1`);
+      data = await this.post(`${Collection.Entities}?soft=1`);
     } catch (e) {
       return "401";
     }
@@ -132,7 +132,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async patchEntityDetailSoftCall(id: String): Promise<string> {
     let data;
     try {
-      data = await this.patch(`entities/${id}/metadata?soft=1`);
+      data = await this.patch(`${Collection.Entities}/${id}/metadata?soft=1`);
     } catch (e) {
       return "401";
     }
@@ -142,7 +142,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async delEntityDetailSoftCall(id: String): Promise<string> {
     let data;
     try {
-      data = await this.delete(`entities/${id}?soft=1`);
+      data = await this.delete(`${Collection.Entities}/${id}?soft=1`);
     } catch (e) {
       return "401";
     }
@@ -165,7 +165,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     mediafile_id: string
   ): Promise<any> {
     const data = await this.put<any>(
-      `entities/${entity_id}/set_primary_mediafile/${mediafile_id}`
+      `${Collection.Entities}/${entity_id}/set_primary_mediafile/${mediafile_id}`
     );
     return data;
   }
@@ -175,14 +175,14 @@ export class CollectionAPI extends AuthRESTDataSource {
     mediafile_id: string
   ): Promise<any> {
     const data = await this.put<any>(
-      `entities/${entity_id}/set_primary_thumbnail/${mediafile_id}`
+      `${Collection.Entities}/${entity_id}/set_primary_thumbnail/${mediafile_id}`
     );
     return data;
   }
 
   async getMediafiles(id: string): Promise<MediaFile[]> {
     if (id !== 'noid') {
-      return await this.get(`entities/${id}/mediafiles?non_public=1`);
+      return await this.get(`${Collection.Entities}/${id}/mediafiles?non_public=1`);
     } else {
       return [];
     }
@@ -190,7 +190,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async addRelations(id: string, relations: any[]): Promise<any[]> {
     relations.map((relation) => (relation.key = 'entities/' + relation.key));
-    return await this.post(`entities/${id}/relations`, { body: relations });
+    return await this.post(`${Collection.Entities}/${id}/relations`, { body: relations });
   }
 
   async getRelations(
@@ -201,14 +201,14 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getMediaFile(mediaFileId: String): Promise<any> {
-    const res = await this.get(`/mediafiles/${mediaFileId}`);
+    const res = await this.get(`${Collection.Mediafiles}/${mediaFileId}`);
     setId(res);
     setType(res, Entitytyping.Mediafile);
     return res;
   }
 
   async getAssetsRelationedWithMediafFile(mediaFileId: String): Promise<any> {
-    const assets = await this.get(`/mediafiles/${mediaFileId}/assets`);
+    const assets = await this.get(`${Collection.Mediafiles}/${mediaFileId}/assets`);
     assets.forEach((asset: any) => {
       setId(asset);
     });
@@ -221,7 +221,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       { key: 'source', value: 'niets-geselecteerd' },
       { key: 'publication_status', value: 'niet-publiek' },
     ];
-    const res = await this.post(`/mediafiles`, { body: mediaFileInput });
+    const res = await this.post(`${Collection.Mediafiles}`, { body: mediaFileInput });
     return res;
   }
 
@@ -229,7 +229,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     entityId: String,
     mediaFileInput: MediaFileInput
   ): Promise<any> {
-    const res = await this.post(`/entities/${entityId}/mediafiles`, {
+    const res = await this.post(`${Collection.Entities}/${entityId}/mediafiles`, {
       body: mediaFileInput,
     });
     return res;
@@ -239,7 +239,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     mediafileId: String,
     mediaFileMetadata: Maybe<MediaFileMetadataInput>[]
   ): Promise<any> {
-    return await this.patch(`/mediafiles/${mediafileId}`, {
+    return await this.patch(`${Collection.Mediafiles}/${mediafileId}`, {
       body: {
         metadata: mediaFileMetadata,
       },
@@ -250,7 +250,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     id: String,
     metadata: Maybe<MetadataFieldInput>[]
   ): Promise<Metadata[]> {
-    return await this.put(`entities/${id}/metadata`, { metadata });
+    return await this.put(`${Collection.Entities}/${id}/metadata`, { metadata });
   }
 
   async patchMetadata(
@@ -332,7 +332,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       type: entity.type,
       metadata,
     };
-    const newEntity = await this.post(`entities`, {
+    const newEntity = await this.post(`${Collection.Entities}`, {
       body,
     });
     return setId(newEntity);
@@ -355,7 +355,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getSixthCollectionId(): Promise<string> {
     if (sixthCollectionId == 'no-id') {
-      sixthCollectionId = await this.get(`entities/sixthcollection/entity_id`);
+      sixthCollectionId = await this.get(`${Collection.Entities}/sixthcollection/entity_id`);
     }
     return sixthCollectionId;
   }
@@ -481,7 +481,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       const body = advancedFilterInputs;
 
       const data = await this.post(
-        `mediafiles/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
+        `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
         { body }
       );
       if (data.results) {
@@ -556,7 +556,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `entities/filter?limit=${limit}&skip=${this.getSkip(
+      `${Collection.Entities}/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -582,7 +582,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
     if (itemWithParentId && itemWithParentId.parent_key === 'relations') {
       return this.get(
-        `entities/${
+        `${Collection.Entities}/${
           itemWithParentId.value[0]
         }/mediafiles?limit=${limit}&skip=${this.getSkip(
           skip,
@@ -598,7 +598,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } else {
       const body = advancedFilterInputs;
       return await this.post(
-        `mediafiles/filter?limit=${limit}&skip=${this.getSkip(
+        `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
         )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -635,7 +635,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     limit: number
   ): Promise<DropdownOption[]> {
     const body = [input];
-    const data = await this.post(`entities/filter?limit=${limit}&skip=0`, {
+    const data = await this.post(`${Collection.Entities}/filter?limit=${limit}&skip=0`, {
       body,
     });
 
@@ -657,19 +657,18 @@ export class CollectionAPI extends AuthRESTDataSource {
     return undefined;
   }
 
-  async linkWithExternalSource(entityId: string, externalSourceEntityId: string, externalSource: string) {
+  async linkWithExternalSource(entityId: string, externalSourceEntityId: string, externalSource: string): Promise<BaseEntity> {
     const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
-    const body: object = {}
+    const body: {[key: string]: string} = {}
     body[`${externalSource}_id`] = externalSourceEntityId
-    const data = this.post(endpoint, body)
-    console.log(data)
-
+    const data = this.post(endpoint, {body})
+    return data as Promise<BaseEntity>
   }
 
   async removeLinkWithExternalSource(entityId: string, externalSource: string) {
     const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
     const data = this.delete(endpoint)
     console.log(data)
-
+    return data
   }
 }

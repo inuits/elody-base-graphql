@@ -7,17 +7,7 @@ import {
   MetadataRelation,
 } from '../../../generated-types/type-defs';
 import fetch from 'node-fetch';
-
-const getMetadataItemValueByKey = (
-  metadataKey: string,
-  metadata: Metadata[],
-  backupValue: string = ''
-): string => {
-  return (
-    metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey)
-      ?.value || backupValue
-  );
-};
+import {getMetadataItemValueByKey} from '../helpers/helpers'
 
 const getMediafileValueForPugObject = async (
   mediafileId: string,

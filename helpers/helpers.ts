@@ -1,4 +1,4 @@
-import { Unit } from '../../../generated-types/type-defs';
+import {Metadata, Unit} from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
 export const customSort = (
@@ -22,4 +22,15 @@ export const setPreferredLanguageForDataSources = (
   preferredLanguage: string
 ) => {
   dataSources.CollectionAPI.preferredLanguage = preferredLanguage;
+};
+
+export const getMetadataItemValueByKey = (
+    metadataKey: string,
+    metadata: Metadata[],
+    backupValue: string = ''
+): string => {
+  return (
+      metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey)
+          ?.value || backupValue
+  );
 };

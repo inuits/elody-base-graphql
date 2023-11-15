@@ -37,6 +37,7 @@ import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
 import { applySEOEndpoint } from './endpoints/seoEndpoint';
+import {getMetadataItemValueByKey} from "./helpers/helpers";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -229,4 +230,5 @@ export {
   loadTranslations,
   baseTranslations,
   AuthRESTDataSource,
+  getMetadataItemValueByKey
 };

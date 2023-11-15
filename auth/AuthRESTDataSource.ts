@@ -20,12 +20,10 @@ export class AuthRESTDataSource extends RESTDataSource {
   async willSendRequest(request: WillSendRequestOptions) {
     const accessToken = this.session?.auth?.accessToken;
     const JWT_TOKEN = accessToken || envConfig.staticJWT;
+    request.headers["Content-Type"] = "application/json"
     if (JWT_TOKEN) {
       request.headers["Authorization"] = "Bearer " + JWT_TOKEN;
     } else {
-      console.log("\n willsendrequest | no token available");
-      console.log("\n willsendrequest | STATIC", envConfig.staticJWT);
-      console.log("\n willsendrequest | SESSION", this.session);
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== "true")
         throw new AuthenticationError(`AUTH | NO TOKEN`, { statusCode: 401 });
     }
