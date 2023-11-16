@@ -377,10 +377,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent._id;
     },
     type: async (parent: any) => 'MediaFile',
-    media: async (parent: any, _args) => {
-      let parsedMedia = MediaFileToMedia(parent);
-      return parsedMedia;
-    },
     intialValues: async (parent: any, _args) => {
       return parent;
     },
@@ -399,6 +395,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         parent['_id'].replace('mediafiles/', ''),
         Collection.Mediafiles
       );
+    },
+    teaserMetadata: async (parent: any, _args, { dataSources }) => {
+      return parent;
     },
   },
   MetadataRelation: {
