@@ -36,7 +36,6 @@ export const applyUploadEndpoint = (app: Express) => {
 
   app.post(`/api/upload`, async (request: Request, response: Response) => {
     try {
-      verifyUploadRequest(request);
       const uploadUrl = await getUploadUrl(request)
         .then(async (urlResponse: FetchResponse) => {
           if (!urlResponse.ok) throw urlResponse;
@@ -58,17 +57,15 @@ const getUploadRequestData = async (
   request: Request,
   body: string
 ): Promise<UploadRequestData> => {
-  const filetype = (request.query.filetype as string).trim();
-  const entityToCreate = request.query.entityToCreate as Entitytyping;
 
-  if (filetype === 'text/csv' && entityToCreate) {
     const response = await fetch(
-      `${env?.api.csvImportServiceUrl}/parser/entities`,
+      `${env?.api.collectionApiUrl}/batch`,
       {
         method: 'POST',
         body,
         headers: {
           'Content-Type': 'text/csv',
+          'Accept': 'text/uri-list',
           Authorization: addJwt(undefined, request, undefined),
         },
       }
@@ -78,22 +75,16 @@ const getUploadRequestData = async (
     response.body.on('data', (chunk) => (result += chunk.toString()));
     return new Promise((resolve) => {
       response.body.on('end', async () => {
+        let jsonstr = `["${result.split('\n').join('","')}"]`;
         const uploadRequestData = {
-          body: JSON.parse(result),
+          body: JSON.parse( jsonstr),
           uri: `${env?.api.collectionApiUrl}/entities?${createEntityUriQueryParameters}`,
         };
         resolve(uploadRequestData);
       });
     });
-  }
 
-  let uploadRequestData = defaultMediafileData();
-  if (entityToCreate === 'asset')
-    uploadRequestData = defaultEntityData(entityToCreate);
-
-  return uploadRequestData;
 };
-
 const defaultEntityData = (entityToCreate: Entitytyping): UploadRequestData => {
   const entityBody: EntityInput = {
     id: `${filenamePlaceholder}`,
@@ -148,10 +139,16 @@ const verifyUploadRequest = (request: Request) => {
 };
 
 const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
-  const uploadRequestData = request.body as UploadRequestData;
-  return fetch(uploadRequestData.uri, {
+  return fetch(`${env?.api.collectionApiUrl}/mediafiles`, {
     method: 'POST',
-    body: JSON.stringify(uploadRequestData.body),
+    body: JSON.stringify({
+    filename: `${request.query.filename }`, metadata: [
+        {
+          key: 'title',
+          value: `${request.query.filename}`,
+        },
+      ],
+    }),
     headers: {
       'Content-Type': 'application/json',
       Authorization: addJwt(undefined, request, undefined),
