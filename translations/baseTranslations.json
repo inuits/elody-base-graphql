@@ -180,13 +180,13 @@
     },
     "tooltip":{
       "advancedFilterTypes":{
-        "id": "This is a test for id",
-        "text": "This is a test for text",
-        "date": "This is a test for date",
-        "number": "This is a test for number",
-        "selection": "This is a test for selection",
-        "boolean": "This is a test for boolean",
-        "type": "This is a test for type"
+        "id": "This filter allows you to search based on an id. An exact / partial search can be performed on an id. In addition, you can search for empty / non-empty id's on this field.",
+        "text": "This filter allows you to search based on text in the field. You can search for the exact text or find partial text. You can also search for fields that are empty / not empty.",
+        "date": "This filter allows searching items within time intervals, via dates. The date you enter can be found exactly or you can choose to find all dates earlier / later / inside / outside ... than this one to be found.",
+        "number": "This filter searches based on numbers. You can enter a number that is smaller / larger / in between / outside / equal ... to the field you are looking for.",
+        "selection": "This filter can build a list of possible selections from your search: !with the filter type 'exact'! It can also search for partial, empty and non-empty fields.",
+        "boolean": "This filter allows you to find fields based on two opposite values. For example: yes / no.",
+        "type": "This filter can search for different types of this field that are in the system."
       }
     }
   },
@@ -372,8 +372,8 @@
     "tooltip":{
       "advancedFilterTypes":{
         "id": "Met deze filter kan je zoeken op basis van een id. Er kan exact / gedeeltelijk op een id gezocht worden. Daarnaast kan je op dit veld zoeken naar lege / niet lege id's.",
-        "text": "Met deze filter kan je zoeken op basis van de tekst in het veld. Je kan naar exacte tekst gaan zoeken of gedeeltelijke tekst terugvinden. Je kan ook zoeken naar velden die leeg / niet leeg zijn.",
-        "date": "Met deze filter kan gezocht worden naar datums. De datum die je ingeeft kan exact teruggevonden worden of je kan kiezen om alle datums vroeger / later / erbinnen / erbuiten ... dan deze te vinden.",
+        "text": "Met deze filter kan je zoeken op basis van tekst in het veld. Je kan naar exacte tekst gaan zoeken of gedeeltelijke tekst terugvinden. Je kan ook zoeken naar velden die leeg / niet leeg zijn.",
+        "date": "Met deze filter kan gezocht worden items binnen tijdsintervallen, via datums. De datum die je ingeeft kan exact teruggevonden worden of je kan kiezen om alle datums vroeger / later / erbinnen / erbuiten ... dan deze te vinden.",
         "number": "Deze filter zoekt op basis van getallen. Je kan een getal ingeven dat kleiner / groter / ertussen / erbuiten / gelijk ... is aan het veld dat je zoekt.",
         "selection": "Deze filter kan een lijst met mogelijke selecties opbouwen van je zoekopdracht: !met het filtertype 'exact'!. Ook kan er naar gedeeltelijke, lege en niet lege velden gezocht worden.",
         "boolean": "Met deze filter kan je velden vinden op basis van twee tegenovergestelde waarden. Bijvoorbeeld: ja / nee.",
