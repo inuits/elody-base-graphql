@@ -25,6 +25,7 @@ export interface Environment {
     iiifUrl: string;
     iiifUrlFrontend: string;
     storageApiUrl: string;
+    storageApiUrlExt: string;
     promUrl: 'no-prom' | string;
   };
   features: {

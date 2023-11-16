@@ -17,7 +17,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           redirectUri: config.damsFrontend,
         },
         api: {
-          storageApiUrl: config.api.storageApiUrl,
+          storageApiUrl: config.api.storageApiUrlExt,
         },
         features: {
           simpleSearch: {
