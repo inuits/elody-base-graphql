@@ -139,7 +139,8 @@ const verifyUploadRequest = (request: Request) => {
 };
 
 const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
-  return fetch(`${env?.api.collectionApiUrl}/mediafiles`, {
+  const entityIdUri = request.query.entityIdUri || "";
+  return fetch(`${env?.api.collectionApiUrl}${entityIdUri}/mediafiles`, {
     method: 'POST',
     body: JSON.stringify({
     filename: `${request.query.filename }`, metadata: [
