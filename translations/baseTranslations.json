@@ -61,7 +61,8 @@
     },
     "entity":{
       "create":"Create entity",
-      "type":"Type"
+      "type":"Type",
+      "belongs-to": "Belongs to"
     },
     "filters":{
       "filter":"Filters",
@@ -240,7 +241,8 @@
     },
     "entity":{
       "create":"Maak entiteit",
-      "type":"Type"
+      "type":"Type",
+      "belongs-to": "Behoort tot"
     },
     "filters":{
       "filter":"Filters",
