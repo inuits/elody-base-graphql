@@ -187,7 +187,8 @@
         "selection": "This filter can build a list of possible selections from your search: !with the filter type 'exact'! It can also search for partial, empty and non-empty fields.",
         "boolean": "This filter allows you to find fields based on two opposite values. For example: yes / no.",
         "type": "This filter can search for different types of this field that are in the system."
-      }
+      },
+      "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
     }
   },
   "nl": {
@@ -378,7 +379,8 @@
         "selection": "Deze filter kan een lijst met mogelijke selecties opbouwen van je zoekopdracht: !met het filtertype 'exact'!. Ook kan er naar gedeeltelijke, lege en niet lege velden gezocht worden.",
         "boolean": "Met deze filter kan je velden vinden op basis van twee tegenovergestelde waarden. Bijvoorbeeld: ja / nee.",
         "type": "Deze filter kan gaan zoeken naar verschillende types van dit veld die in het systeem zitten."
-      }
+      },
+      "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
     }
   }
 }
