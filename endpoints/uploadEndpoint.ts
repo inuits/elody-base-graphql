@@ -140,7 +140,6 @@ const verifyUploadRequest = (request: Request) => {
 
 const getUploadUrl = async (request: Request): Promise<FetchResponse> => {
   const entityIdUri = request.query.entityIdUri || "";
-  console.log("The JWT token: " + addJwt(undefined, request, undefined));
   return fetch(`${env?.api.collectionApiUrl}${entityIdUri}/mediafiles`, {
     method: 'POST',
     body: JSON.stringify({
