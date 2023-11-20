@@ -12,6 +12,7 @@ export const addJwt = (proxyReq: any, req: any, res: any) => {
       : staticToken;
 
   if (proxyReq) {
+    console.log("Updating proxy header token " + auth);
     proxyReq.setHeader('Authorization', 'Bearer ' + auth);
   }
 
