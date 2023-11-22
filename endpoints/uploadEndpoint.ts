@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import { addJwt } from './mediafilesEndpoint';
-import { environment as env } from '../main';
+import { AuthRESTDataSource, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 
 export const applyUploadEndpoint = (app: Express) => {
@@ -52,30 +52,21 @@ const __batchEntities = async (request: Request, csv: string): Promise<string[]>
 };
 
 const __createMediafileForEntity = async (request: Request): Promise<string> => {
-  const response = await fetch(
-    `${env?.api.collectionApiUrl}/entities/${request.query.entityId}/mediafiles`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'text/uri-list',
-        Authorization: addJwt(undefined, request, undefined),
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        filename: `${request.query.filename }`,
-        metadata: [
-          {
-            key: 'title',
-            value: `${request.query.filename}`,
-          },
-        ],
-      }),
+  const datasource = new AuthRESTDataSource({ session: request.session });
+  const body = {
+    filename: `${ request.query.filename }`,
+    metadata: [
+        {
+          key: 'title',
+          value: `${request.query.filename}`,
+        },
+    ],
+  }
+  return await datasource.post(`${env?.api.collectionApiUrl}/entities/${request.query.entityId}/mediafiles`, {
+    body,
+    headers: {
+      Accept: 'text/uri-list',
+      'Content-Type': 'application/json',
     }
-  );
-
-  let responseBody = '';
-  response.body.on('data', (chunk) => (responseBody += chunk.toString()));
-  return new Promise((resolve) => {
-    response.body.on('end', async () => resolve(responseBody));
   });
 };

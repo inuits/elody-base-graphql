@@ -12,7 +12,7 @@ import { RequestWithBody } from "@apollo/datasource-rest/dist/RESTDataSource";
 export class AuthRESTDataSource extends RESTDataSource {
   private session: any;
 
-  constructor(options: { session: any; cache: KeyValueCache }) {
+  constructor(options: { session: any; cache?: KeyValueCache }) {
     super(options);
     this.session = options.session;
   }
@@ -77,7 +77,7 @@ export class AuthRESTDataSource extends RESTDataSource {
     return this.withRetry(super.get.bind(this) as any, path, params, init);
   }
 
-  protected async post<TResult = any>(
+  public async post<TResult = any>(
     path: string,
     body?: BodyInit | object,
     init?: RequestInit
