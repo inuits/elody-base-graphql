@@ -73,16 +73,23 @@
       "apply":"Apply filter(s)",
       "matcher-labels":{
         "select-filter-type":"Select filter type",
-        "AnyMatcher":"on any value",
-        "ContainsMatcher":"partly",
-        "ExactMatcher":"exact",
+        "AnyMatcher":"has a value",
+        "ContainsMatcher":"contains",
+        "ExactMatcher":"is exactly",
         "IdMatcher":"ID",
         "InBetweenMatcher":"between two values",
         "MaxIncludedMatcher":"on maximum value (included)",
         "MaxMatcher":"on maximum value (not included)",
         "MinIncludedMatcher":"on minimum value (included)",
         "MinMatcher":"on minimum value (not included)",
-        "NoneMatcher":"on empty value"
+        "NoneMatcher":"has no value"
+      },
+      "matcher-placeholders": {
+        "date": "date",
+        "number": "number",
+        "keyword": "keyword",
+        "property": "property",
+        "ID": "ID"
       }
     },
     "form": {
@@ -266,16 +273,23 @@
       "apply":"Filter(s) toepassen",
       "matcher-labels":{
         "select-filter-type":"Selecteer filter type",
-        "AnyMatcher":"op eender welke waarde",
-        "ContainsMatcher":"gedeeltelijk",
-        "ExactMatcher":"exact",
+        "AnyMatcher":"is ingevuld",
+        "ContainsMatcher":"bevat",
+        "ExactMatcher":"is gelijk aan",
         "IdMatcher":"ID",
         "InBetweenMatcher":"tussen twee waardes",
         "MaxIncludedMatcher":"op maximum waarde (inclusief)",
         "MaxMatcher":"op maximum waarde (exclusief)",
         "MinIncludedMatcher":"op minimum waarde (inclusief)",
         "MinMatcher":"op minimum waarde (exclusief)",
-        "NoneMatcher":"op lege waarde"
+        "NoneMatcher":"is niet ingevuld"
+      },
+      "matcher-placeholders": {
+        "date": "datum",
+        "number": "nummer",
+        "keyword": "trefwoord",
+        "property": "eigenschap",
+        "ID": "ID"
       }
     },
     "form": {
