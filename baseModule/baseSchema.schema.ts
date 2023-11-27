@@ -73,6 +73,10 @@ export const baseSchema = gql`
     alto
     txt
   }
+  
+  enum TranscodeType {
+    pdf
+  }
 
   type InputField {
     fieldName(input: String): String
@@ -80,11 +84,6 @@ export const baseSchema = gql`
     acceptedEntityTypes: [String]
     validation(input: String): String
     options: [DropdownOption]
-  }
-
-  enum validation {
-    required
-    optional
   }
 
   enum Collection {
@@ -296,14 +295,11 @@ export const baseSchema = gql`
   type FormFields {
     metaData: PanelMetaData!
   }
-
-  input updateOrderNode {
-    id: String!
-    order: Int!
-  }
-
-  input OrderArrayInput {
-    value: [updateOrderNode!]!
+  
+  input TranscodeMediafileInput {
+    filename: String!
+    _id: String!
+    identifiers: [String!]!
   }
 
   input MetadataFieldInput {
@@ -445,7 +441,6 @@ export const baseSchema = gql`
     type: InputFieldTypes!
     order: Int
     active: Boolean
-    validation: validation
     options: [MetadataFieldOption]
     config_key: String
   }
@@ -887,6 +882,11 @@ export const baseSchema = gql`
       entityIds: [String!]!
       relationEntityId: String!
       relationType: String!
+    ): String
+    generateTranscode(
+      mediafiles: [TranscodeMediafileInput!]!
+      transcodeType: TranscodeType!
+      masterEntityId: String
     ): String
   }
 

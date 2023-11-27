@@ -20,11 +20,10 @@ import {
   Metadata,
   MetadataFieldInput,
   MetadataValuesInput,
-  OrderArrayInput,
   PaginationInfo,
   SavedSearchedEntity,
   SavedSearchInput,
-  SearchFilter,
+  SearchFilter, TranscodeMediafileInput, TranscodeType,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
@@ -340,17 +339,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return setId(newEntity);
   }
 
-  async updateMediafilesOrder(orderArray: OrderArrayInput): Promise<string> {
-    let mfs: updateNode[] = Object.values(orderArray['value']);
-
-    for (let i = 0; i < mfs.length; i++) {
-      let mf: updateNode = mfs[i];
-      console.log(mf.id, mf.order);
-      await this.patch(`/${mf.id}`, { body: { order: mf.order } });
-    }
-    return 'Successfuly changed mediafile order';
-  }
-
   async getPermission(id: string, collection: Collection): Promise<string[]> {
     return this.get(`${collection}/${id}/permissions`);
   }
@@ -659,18 +647,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     return undefined;
   }
 
-  async linkWithExternalSource(entityId: string, externalSourceEntityId: string, externalSource: string): Promise<BaseEntity> {
-    const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
-    const body: {[key: string]: string} = {}
-    body[`${externalSource}_id`] = externalSourceEntityId
-    const data = this.post(endpoint, {body})
-    return data as Promise<BaseEntity>
-  }
-
-  async removeLinkWithExternalSource(entityId: string, externalSource: string) {
-    const endpoint: string = `${Collection.Entities}/${entityId}/external_link/${externalSource}`
-    const data = this.delete(endpoint)
-    console.log(data)
-    return data
+  async GenerateTranscode(mediafiles: TranscodeMediafileInput[], transcodeType: TranscodeType, masterEntityId: string | undefined = undefined): Promise<any>{
+    const data = await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`, {body: mediafiles})
   }
 }
