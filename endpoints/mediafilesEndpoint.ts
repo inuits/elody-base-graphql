@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { Express } from 'express';
-import fetch from 'node-fetch';
+import {AuthRESTDataSource} from "../auth";
 
 let staticToken: string | undefined | null = undefined;
 
@@ -39,20 +39,16 @@ const applyMediaFileEndpoint = (
   );
 
   app.use('/api/iiif*.json', async (req, res) => {
-    fetch(`${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`, {
-      method: 'Get',
-    }).then((resFetch) => {
-      resFetch.json().then((json) => {
-        res.send(
-          JSON.parse(
-            JSON.stringify(json).replace(
+    const datasource = new AuthRESTDataSource({ session: req.session });
+    const response = await datasource.get(`${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`);
+    res.send(
+        JSON.parse(
+            JSON.stringify(response).replace(
               iiifUrlFrontend,
               `//${req.headers.host}/api`
             )
-          )
-        );
-      });
-    });
+        )
+    );
   });
 
   app.use(

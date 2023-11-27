@@ -20,7 +20,7 @@ export class AuthRESTDataSource extends RESTDataSource {
   async willSendRequest(request: WillSendRequestOptions) {
     const accessToken = this.session?.auth?.accessToken;
     const JWT_TOKEN = accessToken || envConfig.staticJWT;
-    request.headers["Content-Type"] = "application/json"
+    // request.headers["Content-Type"] = "application/json"
     if (JWT_TOKEN) {
       request.headers["Authorization"] = "Bearer " + JWT_TOKEN;
     } else {
@@ -69,7 +69,7 @@ export class AuthRESTDataSource extends RESTDataSource {
     return new Promise((resolve) => resolve(fn(...args)));
   }
 
-  protected async get<TResult = any>(
+  public async get<TResult = any>(
     path: string,
     params?: any,
     init?: RequestInit
