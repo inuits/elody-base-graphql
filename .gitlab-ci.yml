@@ -5,7 +5,7 @@
 
 include:
   - project: 'inuits/gitlab-ci/pipeline-templates'
-    file: 'graphql-module-pipeline.yml'
+    file: 'applications/graphql-module-pipeline.yml'
     ref: 'master'
 
 variables:
