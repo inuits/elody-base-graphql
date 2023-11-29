@@ -122,7 +122,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.post(`${Collection.Entities}?soft=1`);
+      console.log('Data')
+      console.log(data)
     } catch (e) {
+      console.log('Error')
+      console.log(e)
       return "401";
     }
     return data;
