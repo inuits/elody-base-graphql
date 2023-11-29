@@ -1,6 +1,5 @@
 import {
   isMetaDataRelation,
-  MediaFileToMedia,
   parseIdToGetMoreData,
   removePrefixFromId,
 } from '../parsers/entity';
@@ -38,7 +37,7 @@ import {
   PanelMetaData,
   PanelRelation,
   PanelThumbnail,
-  Permission, RelationInput,
+  Permission,
   Resolvers,
   SearchInputType,
   SingleMediaFileElement,
@@ -350,7 +349,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return '';
     },
     generateTranscode: async (_source, {mediafiles, transcodeType, masterEntityId}, {dataSources}) => {
-      await dataSources.CollectionAPI.GenerateTranscode(mediafiles, transcodeType, masterEntityId as string)
+      try{
+        await dataSources.TranscodeService.generateTranscode(mediafiles, transcodeType, masterEntityId as string)
+      }catch(e){
+        return ''
+      }
+
       return ''
     }
   },

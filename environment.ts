@@ -27,6 +27,7 @@ export interface Environment {
     storageApiUrl: string;
     storageApiUrlExt: string;
     promUrl: 'no-prom' | string;
+    transcodeService?: string
   };
   features: {
     simpleSearch: {

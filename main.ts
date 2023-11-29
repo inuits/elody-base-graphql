@@ -38,6 +38,7 @@ import { loadTranslations } from './translations/loadTranslations';
 import path from 'path';
 import { applySEOEndpoint } from './endpoints/seoEndpoint';
 import {getMetadataItemValueByKey} from "./helpers/helpers";
+import {TranscodeService} from "./sources/transcode";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -135,14 +136,14 @@ const start = (
         context: async ({ req }) => {
           const { cache } = server;
           const session = { ...req.session };
-          return {
-            dataSources: {
+          const dataSources = {
               CollectionAPI: new CollectionAPI({ session, cache }),
               SearchAPI: new SearchAPI({ session, cache }),
               ImportAPI: new ImportAPI({ session, cache }),
               StorageAPI: new StorageAPI({ session, cache }),
-            },
-          };
+        }
+        if (environment.api.transcodeService) dataSources['TranscodeService'] = new TranscodeService({session, cache})
+          return {dataSources}
         },
       })
     );

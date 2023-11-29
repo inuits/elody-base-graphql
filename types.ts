@@ -7,12 +7,14 @@ import {
   Maybe,
   MetadataFieldOption,
 } from '../../generated-types/type-defs';
+import {TranscodeService} from "./sources/transcode";
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
   SearchAPI: SearchAPI;
   ImportAPI: ImportAPI;
   StorageAPI: StorageAPI;
+  TranscodeService?: TranscodeService;
 }
 
 export interface ContextValue {

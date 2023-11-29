@@ -32,18 +32,10 @@ import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
 import { GraphQLError } from 'graphql';
 
-export type relationInput = {
-  label: string;
-  key: string;
-  type: string;
-  [key: string]: string;
-};
-type updateNode = { id: String; order: number };
 type EntetiesCallReturn =
   | { results: Array<unknown> }
   | Array<unknown>
   | 'no-call-is-triggerd';
-export type InputRelationsDelete = Array<{ key: string; type: string }>;
 let sixthCollectionId: string | 'no-id' = 'no-id';
 
 export class CollectionAPI extends AuthRESTDataSource {
@@ -645,9 +637,5 @@ export class CollectionAPI extends AuthRESTDataSource {
     }&filter_key=${graph.dataset?.filter?.key || ""}${filterValuesQueryString}`);
     if (data.results && data.results.length > 0) return data.results[0];
     return undefined;
-  }
-
-  async GenerateTranscode(mediafiles: TranscodeMediafileInput[], transcodeType: TranscodeType, masterEntityId: string | undefined = undefined): Promise<any>{
-    const data = await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`, {body: mediafiles})
   }
 }
