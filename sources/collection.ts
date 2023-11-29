@@ -121,7 +121,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async postEntitySoftCall(): Promise<string> {
     let data;
     try {
-      data = await this.post(`${Collection.Entities}?soft=1`, {body: {}});
+      data = await this.post(`${Collection.Entities}?soft=1`);
     } catch (e) {
       return "401";
     }
