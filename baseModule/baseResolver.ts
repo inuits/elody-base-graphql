@@ -350,7 +350,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return '';
     },
     generateTranscode: async (_source, {mediafiles, transcodeType, masterEntityId}, {dataSources}) => {
-      dataSources.CollectionAPI.GenerateTranscode(mediafiles, transcodeType, masterEntityId)
+      await dataSources.CollectionAPI.GenerateTranscode(mediafiles, transcodeType, masterEntityId as string)
       return ''
     }
   },
