@@ -50,7 +50,7 @@ import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { Orientations } from '../../../generated-types/type-defs';
 import { ExpandButtonOptions } from '../../../generated-types/type-defs';
-import { GraphQLScalarType, Kind } from 'graphql';
+import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
 import { setPreferredLanguageForDataSources } from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -349,11 +349,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       return '';
     },
     generateTranscode: async (_source, {mediafiles, transcodeType, masterEntityId}, {dataSources}) => {
-      try{
+        if (!dataSources.TranscodeService) throw new GraphQLError('Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file')
         await dataSources.TranscodeService.generateTranscode(mediafiles, transcodeType, masterEntityId as string)
-      }catch(e){
-        return ''
-      }
 
       return ''
     }
