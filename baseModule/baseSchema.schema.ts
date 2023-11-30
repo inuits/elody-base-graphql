@@ -270,6 +270,7 @@ export const baseSchema = gql`
     exportCsv
     edit
     addToManifestViewerCollection
+    transcodePDF
   }
 
   type BulkOperations {
