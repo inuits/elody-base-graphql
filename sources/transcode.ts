@@ -6,6 +6,6 @@ export class TranscodeService extends AuthRESTDataSource {
     public baseURL = `${env?.api.transcodeService}/`;
 
     async generateTranscode(mediafiles: TranscodeMediafileInput[], transcodeType: TranscodeType, masterEntityId: string | undefined = undefined): Promise<any>{
-        const data = await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`, {body: mediafiles})
+        return await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`, {body: mediafiles})
     }
 }
