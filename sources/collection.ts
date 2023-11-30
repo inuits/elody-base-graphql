@@ -145,6 +145,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     setId(data);
     return data;
   }
+  async getEntityById(id: string): Promise<any> {
+    let data = await this.get<any>(`${Collection.Entities}/${id}`);
+    setId(data);
+    return data;
+  }
 
   async getNewObjectId(): Promise<string> {
     const data = await this.get(`${Collection.Entities}/sixthcollection/id`);

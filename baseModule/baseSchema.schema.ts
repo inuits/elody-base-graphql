@@ -482,6 +482,7 @@ export const baseSchema = gql`
     root
     metadata
     relations
+    relationMetadata
   }
 
   type IntialValues {

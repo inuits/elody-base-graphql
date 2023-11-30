@@ -473,6 +473,10 @@ export const baseResolver: Resolvers<ContextValue> = {
           } catch {
             return parent?.[key] ?? '';
           }
+        } else if (source === KeyValueSource.RelationMetadata) {
+          return parent?.relations.find(
+              (relation: any) => relation.type === key
+          ).metadata.map((data: Metadata) => data.value)[0];
         }
         return '';
       } catch (e) {
