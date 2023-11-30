@@ -1,6 +1,11 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { Express } from 'express';
 import {AuthRESTDataSource} from "../auth";
+import { environment as env } from '../main';
+import {
+  Collection,
+} from '../../../generated-types/type-defs';
+
 
 let staticToken: string | undefined | null = undefined;
 
@@ -18,6 +23,19 @@ export const addJwt = (proxyReq: any, req: any, res: any) => {
   return ('Bearer ' + auth) as string;
 };
 
+function extractIdFromMediafilePath(path: string): string | null {
+  const regex = /\/api\/mediafile\/([a-f\d-]+)-[^\/]+$/;
+  const match = path.match(regex);
+
+  return match ? match[1] : null;
+}
+
+export const addHeader = (proxyReq: any, req: any, res: any) => {
+  const mediafileId = extractIdFromMediafilePath(req.originalUrl);
+  res.setHeader("Link", `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`);
+};
+
+
 const applyMediaFileEndpoint = (
   app: Express,
   storageApiUrl: string,
@@ -25,7 +43,6 @@ const applyMediaFileEndpoint = (
   staticTokenInput: string | undefined | null
 ) => {
   staticToken = staticTokenInput;
-
   app.use(
     '/api/mediafile',
     createProxyMiddleware({
@@ -35,6 +52,7 @@ const applyMediaFileEndpoint = (
         '^/api/mediafile': '/',
       },
       onProxyReq: addJwt,
+      onProxyRes: addHeader,
     })
   );
 
