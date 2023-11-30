@@ -22,6 +22,7 @@ import {
   EntityViewElements,
   ExpandButtonOptions,
   GraphElement,
+  IntialValues,
   KeyValueSource,
   ManifestViewerElement,
   MarkdownViewerElement,
@@ -451,6 +452,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   IntialValues: {
+    id: async (parent: any, {}, { dataSources }) => {
+      return parent.id
+    },
     keyValue: async (parent: any, { key, source }, { dataSources }) => {
       try {
         if (source === KeyValueSource.Metadata) {
@@ -483,6 +487,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         return '';
       }
     },
+    relationMetadata: async (parent: any, { type }, { dataSources }) => {
+      const relation = parent?.relations.find(
+          (relation: any) => relation.type === type
+      )
+      return await dataSources.CollectionAPI.getEntityById(relation.key) as IntialValues;
+    }
   },
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {

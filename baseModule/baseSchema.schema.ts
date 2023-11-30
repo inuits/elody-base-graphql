@@ -486,7 +486,9 @@ export const baseSchema = gql`
   }
 
   type IntialValues {
+    id: String!
     keyValue(key: String!, source: KeyValueSource!): JSON!
+    relationMetadata(type: String!): IntialValues
   }
 
   type AllowedViewModes {
