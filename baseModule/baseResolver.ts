@@ -1,17 +1,14 @@
-import {
-  isMetaDataRelation,
-  parseIdToGetMoreData,
-  removePrefixFromId,
-} from '../parsers/entity';
+import {isMetaDataRelation, parseIdToGetMoreData, removePrefixFromId,} from '../parsers/entity';
 import {
   resolveMedia,
   resolveMetadata,
-  resolvePermission,
   resolveMetadataItemOfPreferredLanguage,
+  resolvePermission,
 } from '../resolvers/entityResolver';
 import {
   ActionElement,
-  Actions, BaseEntity,
+  Actions,
+  BaseEntity,
   BaseRelationValuesInput,
   Collection,
   Column,
@@ -23,15 +20,18 @@ import {
   EntityListViewMode,
   Entitytyping,
   EntityViewElements,
+  ExpandButtonOptions,
   GraphElement,
   KeyValueSource,
   ManifestViewerElement,
   MarkdownViewerElement,
+  MediaFile,
   MediaFileElement,
   MediaFileElementTypes,
   MenuIcons,
   MenuTypeLink,
   Metadata,
+  Orientations,
   PanelInfo,
   PanelLink,
   PanelMetaData,
@@ -42,16 +42,16 @@ import {
   SearchInputType,
   SingleMediaFileElement,
   TimeUnit,
+  TranscodeMediafileInput,
+  TranscodeType,
   ViewModes,
   WindowElement,
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
-import { ContextValue } from '../types';
-import { baseFields, getOptionsByEntityType } from '../sources/forms';
-import { Orientations } from '../../../generated-types/type-defs';
-import { ExpandButtonOptions } from '../../../generated-types/type-defs';
+import {ContextValue} from '../types';
+import {baseFields, getOptionsByEntityType} from '../sources/forms';
 import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
-import { setPreferredLanguageForDataSources } from '../helpers/helpers';
+import {setPreferredLanguageForDataSources} from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -348,10 +348,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return '';
     },
+    bulkGenerateTranscodes: async (_source, {entityIds, transcodeType}, {dataSources}) => {
+      if (!dataSources.TranscodeService) throw new GraphQLError('Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file')
+      entityIds.forEach(async (id: string): Promise<void> => {
+        const entityMediafiles: MediaFile[] = await dataSources.CollectionAPI.getMediafiles(id)
+        const transcodeMediafileInput: TranscodeMediafileInput[] = entityMediafiles.map((mediafile: MediaFile) => {return {_id: mediafile._id, filename: mediafile.filename as string, identifiers: []}})
+        if (dataSources.TranscodeService) await dataSources.TranscodeService.generateTranscode(transcodeMediafileInput, transcodeType, id)
+      })
+      return ''
+    },
     generateTranscode: async (_source, {mediafiles, transcodeType, masterEntityId}, {dataSources}) => {
         if (!dataSources.TranscodeService) throw new GraphQLError('Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file')
         await dataSources.TranscodeService.generateTranscode(mediafiles, transcodeType, masterEntityId as string)
-
       return ''
     }
   },

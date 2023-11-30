@@ -883,6 +883,10 @@ export const baseSchema = gql`
       relationEntityId: String!
       relationType: String!
     ): String
+    bulkGenerateTranscodes(
+      entityIds: [String!]!
+      transcodeType: TranscodeType!
+    ): String
     generateTranscode(
       mediafiles: [TranscodeMediafileInput!]!
       transcodeType: TranscodeType!
