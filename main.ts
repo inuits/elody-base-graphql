@@ -142,7 +142,7 @@ const start = (
               ImportAPI: new ImportAPI({ session, cache }),
               StorageAPI: new StorageAPI({ session, cache }),
         }
-        if (environment.api.transcodeService) dataSources['TranscodeService'] = new TranscodeService({session, cache})
+        if (environment?.api.transcodeService) Object.assign(dataSources, {TranscodeService: new TranscodeService({session, cache})})
           return {dataSources}
         },
       })
