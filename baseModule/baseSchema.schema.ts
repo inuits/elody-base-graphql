@@ -298,12 +298,6 @@ export const baseSchema = gql`
   type FormFields {
     metaData: PanelMetaData!
   }
-  
-  input TranscodeMediafileInput {
-    filename: String!
-    _id: String!
-    identifiers: [String!]!
-  }
 
   input MetadataFieldInput {
     key: String!
@@ -889,12 +883,8 @@ export const baseSchema = gql`
       relationEntityId: String!
       relationType: String!
     ): String
-    bulkGenerateTranscodes(
-      entityIds: [String!]!
-      transcodeType: TranscodeType!
-    ): String
     generateTranscode(
-      mediafiles: [TranscodeMediafileInput!]!
+      mediafileIds: [String!]!
       transcodeType: TranscodeType!
       masterEntityId: String
     ): String

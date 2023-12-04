@@ -1,5 +1,5 @@
 import {
-  AdvancedFilterInput, BaseEntity,
+  AdvancedFilterInput,
   BaseRelationValuesInput,
   Collection,
   DropdownOption,
@@ -23,14 +23,13 @@ import {
   PaginationInfo,
   SavedSearchedEntity,
   SavedSearchInput,
-  SearchFilter, TranscodeMediafileInput, TranscodeType,
+  SearchFilter,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
 import { Config } from '../types';
 import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
-import { GraphQLError } from 'graphql';
 
 type EntetiesCallReturn =
   | { results: Array<unknown> }
@@ -444,54 +443,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     const response = await this.get(`saved_searches/${uuid}`);
     this.setLabels(response);
     return response;
-  }
-
-  async getAdvancedMediaFiles(
-    limit: number,
-    skip: number,
-    advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: any[]
-  ): Promise<EntitiesResults> {
-    let result = { results: [], count: 0, limit };
-    try {
-      //Remove asset filter - first initial filter
-      advancedSearchValue.shift();
-
-      //mediaFileFilters - publication status
-      if (advancedSearchValue) {
-        advancedSearchValue.forEach((filter: any) => {
-          if (
-            filter &&
-            filter.item_types?.includes('publication_status_media_file')
-          ) {
-            filter.item_types = ['publication_status'];
-          }
-        });
-      }
-
-      const body = advancedFilterInputs;
-
-      const data = await this.post(
-        `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}`,
-        { body }
-      );
-      if (data.results) {
-        data.results?.forEach((element: any) => {
-          setId(element);
-          setType(element, Entitytyping.Mediafile);
-        });
-        result = data;
-      } else {
-        data.forEach((element: any) => {
-          setId(element);
-          setType(element, Entitytyping.Mediafile);
-        });
-        result = { results: data, count: data.length, limit: limit };
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    return result;
   }
 
   async GetAdvancedEntities(
