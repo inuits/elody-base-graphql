@@ -107,6 +107,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       return "401";
     }
+    if (data === "good") return "200";
     return data;
   }
 
@@ -117,6 +118,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       return "401";
     }
+    if (data === "good") return "200";
     return data;
   }
 
@@ -127,6 +129,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       return "401";
     }
+    if (data === "good") return "200";
     return data;
   }
 
@@ -137,6 +140,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       return "401";
     }
+    if (data === "good") return "200";
     return data;
   }
 
