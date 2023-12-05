@@ -357,7 +357,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         })
 
         Promise.all(mediafiles).then(async (resolvedMediafiles: MediaFile[]) => {
-          console.log(resolvedMediafiles)
           if (!dataSources.TranscodeService) throw new GraphQLError('Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file')
           result = await dataSources.TranscodeService.generateTranscode(resolvedMediafiles, transcodeType, masterEntityId as string)
         })
