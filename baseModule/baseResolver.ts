@@ -870,7 +870,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   BulkOperationOptions: {
     options: async (parent, { input }, { dataSources }) => {
-      console.log({ input });
       return input;
     },
   },
