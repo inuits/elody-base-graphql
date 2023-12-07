@@ -483,7 +483,7 @@ export const baseSchema = gql`
 
   type IntialValues {
     id: String!
-    keyValue(key: String!, source: KeyValueSource!): JSON!
+    keyValue(key: String!, source: KeyValueSource!, uuid: String): JSON!
     relationMetadata(type: String!): IntialValues
   }
 
@@ -555,6 +555,7 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
     metaKey(key: String): String!
+    customQuery(input: String): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]
     relationType(input: String): String

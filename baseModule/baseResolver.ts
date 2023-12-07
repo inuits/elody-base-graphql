@@ -458,7 +458,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     id: async (parent: any, {}, { dataSources }) => {
       return parent.id
     },
-    keyValue: async (parent: any, { key, source }, { dataSources }) => {
+    keyValue: async (parent: any, { key, source, uuid }, { dataSources }) => {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
@@ -482,7 +482,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           }
         } else if (source === KeyValueSource.RelationMetadata) {
           return parent?.relations.find(
-              (relation: any) => relation.type === key
+              (relation: any) => relation.type === key && relation.key === uuid
           ).metadata.map((data: Metadata) => data.value)[0];
         }
         return '';
@@ -493,7 +493,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     relationMetadata: async (parent: any, { type }, { dataSources }) => {
       const relation = parent?.relations.find(
           (relation: any) => relation.type === type
-      )
+      );
       return await dataSources.CollectionAPI.getEntityById(relation.key) as IntialValues;
     }
   },
@@ -571,34 +571,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     metaKey: async (parent, { key }, { dataSources }) => {
       return key ? key : 'no-key';
     },
+    customQuery: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
+    },
     entityTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
     viewMode: async (parent: any, { input }, { dataSources }) => {
       return input || EntityListViewMode.Library;
-    },
-    entityList: async (
-      parent: any,
-      { metaKey },
-      { dataSources }
-    ): Promise<any[]> => {
-      const ids: [string] = parent.metadata.find(
-        (dataItem: Metadata) => dataItem.key === metaKey
-      )?.value;
-      const entities: Promise<any>[] = [];
-
-      if (!ids) return [];
-
-      ids.forEach(async (id) => {
-        const entity = dataSources.CollectionAPI.getEntity(
-          parseIdToGetMoreData(id)
-        );
-        //      entities.push(entity);
-      });
-
-      const res = await Promise.all(entities);
-
-      return res;
     },
   },
   ManifestViewerElement: {
