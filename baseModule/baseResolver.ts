@@ -31,7 +31,7 @@ import {
   MediaFileElementTypes,
   MenuIcons,
   MenuTypeLink,
-  Metadata,
+  Metadata, MetadataOrRelationField,
   Orientations,
   PanelInfo,
   PanelLink,
@@ -726,11 +726,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     filename: async (_source: any, { input, fromMediafile }, { dataSources }) => {
       if (!fromMediafile) return input || '';
       try{
-        const thumbnailId: string = _source.relations.find((relation: any) => relation.type === 'hasMediafile' && relation.is_primary_thumbnail).key
+        const mediafileRelations: any[] = _source.relations.filter((relation: any) => relation.type === 'hasMediafile')
+        const thumbnailMediafile: any = mediafileRelations.find((mediafile: any) => mediafile.is_primary_thumbnail) || mediafileRelations[0]
+        const thumbnailId: string = thumbnailMediafile.key
         const mediafile = await dataSources.CollectionAPI.getMediaFile(thumbnailId)
-        return mediafile.filename
+        return mediafile.transcode_filename || mediafile.filename
       } catch {
-        return ''
+        return undefined
       }
 
     },
