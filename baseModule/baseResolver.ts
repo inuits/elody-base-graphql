@@ -716,6 +716,23 @@ export const baseResolver: Resolvers<ContextValue> = {
       return baseFields[type];
     },
   },
+  PanelRelationMetaData: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    key: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    unit: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    linkText: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    inputField: async (parent: any, { type }, { dataSources }) => {
+      return baseFields[type];
+    },
+  },
   PanelThumbnail: {
     key: async (_source, { input }, { dataSources }) => {
       return input;

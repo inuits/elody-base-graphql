@@ -658,6 +658,14 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
   }
+  
+  type PanelRelationMetaData {
+    label(input: String!): String!
+    key(input: String!): String!
+    unit(input: Unit!): Unit!
+    linkText(input: String!): String
+    inputField(type: BaseFieldType!): InputField!
+  }
 
   type PanelThumbnail {
     key(input: String!): String
