@@ -510,6 +510,7 @@ export const baseSchema = gql`
     value: String
     editStatus: EditStatus!
     teaserMetadata: [MetadataInput]
+    metadata: [MetadataInput]
   }
 
   input MetadataValuesInput {

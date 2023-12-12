@@ -456,7 +456,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     id: async (parent: any, {}, { dataSources }) => {
-      return parent.id
+      return parent._id
     },
     keyValue: async (parent: any, { key, source, uuid }, { dataSources }) => {
       try {
