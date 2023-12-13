@@ -749,6 +749,7 @@ export const baseSchema = gql`
 
   type teaserMetadata {
     metaData: PanelMetaData
+    relationMetaData: PanelRelationMetaData
     thumbnail: PanelThumbnail
     link: PanelLink
   }

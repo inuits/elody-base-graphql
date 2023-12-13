@@ -36,6 +36,7 @@ import {
   PanelInfo,
   PanelLink,
   PanelMetaData,
+  PanelRelationMetaData,
   PanelRelation,
   PanelThumbnail,
   Permission,
@@ -381,6 +382,9 @@ export const baseResolver: Resolvers<ContextValue> = {
   teaserMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
+    },
+    relationMetaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelRelationMetaData
     },
     thumbnail: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelThumbnail;
