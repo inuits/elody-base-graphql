@@ -557,6 +557,7 @@ export const baseSchema = gql`
     label(input: String): String
     metaKey(key: String): String!
     customQuery(input: String): String
+    customQueryRelationType(input: String): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]
     relationType(input: String): String
