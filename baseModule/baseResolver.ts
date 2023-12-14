@@ -572,9 +572,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    metaKey: async (parent, { key }, { dataSources }) => {
-      return key ? key : 'no-key';
-    },
     customQuery: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },

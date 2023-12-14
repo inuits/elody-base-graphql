@@ -555,7 +555,6 @@ export const baseSchema = gql`
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
-    metaKey(key: String): String!
     customQuery(input: String): String
     customQueryRelationType(input: String): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
