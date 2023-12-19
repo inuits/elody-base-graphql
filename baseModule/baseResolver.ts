@@ -1,4 +1,8 @@
-import {isMetaDataRelation, parseIdToGetMoreData, removePrefixFromId,} from '../parsers/entity';
+import {
+  isMetaDataRelation,
+  parseIdToGetMoreData,
+  removePrefixFromId,
+} from '../parsers/entity';
 import {
   resolveMedia,
   resolveMetadata,
@@ -31,7 +35,8 @@ import {
   MediaFileElementTypes,
   MenuIcons,
   MenuTypeLink,
-  Metadata, MetadataOrRelationField,
+  Metadata,
+  MetadataOrRelationField,
   Orientations,
   PanelInfo,
   PanelLink,
@@ -48,10 +53,10 @@ import {
   WindowElement,
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
-import {ContextValue} from '../types';
-import {baseFields, getOptionsByEntityType} from '../sources/forms';
-import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
-import {setPreferredLanguageForDataSources} from '../helpers/helpers';
+import { ContextValue } from '../types';
+import { baseFields, getOptionsByEntityType } from '../sources/forms';
+import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
+import { setPreferredLanguageForDataSources } from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -221,27 +226,35 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return { labels: stats.labels, datasets: stats.datasets };
     },
-    PermissionMappingPerEntityType: async (_source, { type }, { dataSources }) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
-      return status == "200";
+    PermissionMappingPerEntityType: async (
+      _source,
+      { type },
+      { dataSources }
+    ) => {
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
+        type
+      );
+      return status == '200';
     },
     PermissionMappingCreate: async (_source, {}, { dataSources }) => {
       const status = await dataSources.CollectionAPI.postEntitySoftCall();
-      return status == "200";
+      return status == '200';
     },
     PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
-      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(id);
+      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
+        id
+      );
       const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id);
       return [
-            {
-              permission: Permission.Canupdate,
-              hasPermission: edit == "200",
-            },
-            {
-              permission: Permission.Candelete,
-              hasPermission: del == "200",
-            },
-      ]
+        {
+          permission: Permission.Canupdate,
+          hasPermission: edit == '200',
+        },
+        {
+          permission: Permission.Candelete,
+          hasPermission: del == '200',
+        },
+      ];
     },
   },
   // OCRForm: {
@@ -278,7 +291,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       return linkedResult;
     },
-    mutateEntityValues: async (_source, { id, formInput, collection }, { dataSources }) => {
+    mutateEntityValues: async (
+      _source,
+      { id, formInput, collection },
+      { dataSources }
+    ) => {
       const filterEditStatus = (
         editStatus: EditStatus
       ): BaseRelationValuesInput[] => {
@@ -295,7 +312,11 @@ export const baseResolver: Resolvers<ContextValue> = {
           });
       };
 
-      await dataSources.CollectionAPI.patchMetadata(id, formInput.metadata, collection);
+      await dataSources.CollectionAPI.patchMetadata(
+        id,
+        formInput.metadata,
+        collection
+      );
       if (collection !== Collection.Mediafiles) {
         await dataSources.CollectionAPI.postRelations(
           id,
@@ -318,8 +339,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id)
         );
-      else
-        return await dataSources.CollectionAPI.getMediaFile(id);
+      else return await dataSources.CollectionAPI.getMediaFile(id);
     },
     deleteData: async (
       _source,
@@ -348,25 +368,40 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return '';
     },
-    generateTranscode: async (_source, {mediafileIds, transcodeType, masterEntityId}, {dataSources}) => {
-      const mediafiles: Promise<MediaFile>[] = []
-      let result = "no-transcodes"
+    generateTranscode: async (
+      _source,
+      { mediafileIds, transcodeType, masterEntityId },
+      { dataSources }
+    ) => {
+      const mediafiles: Promise<MediaFile>[] = [];
+      let result = 'no-transcodes';
 
-      try{
-        mediafileIds.forEach( (mediafileId: string) => {
-          mediafiles.push(dataSources.CollectionAPI.getMediaFile(mediafileId))
-        })
+      try {
+        mediafileIds.forEach((mediafileId: string) => {
+          mediafiles.push(dataSources.CollectionAPI.getMediaFile(mediafileId));
+        });
 
-        Promise.all(mediafiles).then(async (resolvedMediafiles: MediaFile[]) => {
-          if (!dataSources.TranscodeService) throw new GraphQLError('Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file')
-          result = await dataSources.TranscodeService.generateTranscode(resolvedMediafiles, transcodeType, masterEntityId as string)
-        })
+        Promise.all(mediafiles).then(
+          async (resolvedMediafiles: MediaFile[]) => {
+            if (!dataSources.TranscodeService)
+              throw new GraphQLError(
+                'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
+              );
+            result = await dataSources.TranscodeService.generateTranscode(
+              resolvedMediafiles,
+              transcodeType,
+              masterEntityId as string
+            );
+          }
+        );
 
-        return result
-      } catch(e) {
-        throw new GraphQLError(`Unable to transcode mediafiles to ${transcodeType}`)
+        return result;
+      } catch (e) {
+        throw new GraphQLError(
+          `Unable to transcode mediafiles to ${transcodeType}`
+        );
       }
-    }
+    },
   },
   BaseEntity: {
     media: async (parent: any, _args, { dataSources }) => {
@@ -384,7 +419,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as PanelMetaData;
     },
     relationMetaData: async (parent: unknown, {}, { dataSources }) => {
-      return parent as PanelRelationMetaData
+      return parent as PanelRelationMetaData;
     },
     thumbnail: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelThumbnail;
@@ -460,7 +495,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   IntialValues: {
     id: async (parent: any, {}, { dataSources }) => {
-      return parent._id
+      return parent._id;
     },
     keyValue: async (parent: any, { key, source, uuid }, { dataSources }) => {
       try {
@@ -485,9 +520,11 @@ export const baseResolver: Resolvers<ContextValue> = {
             return parent?.[key] ?? '';
           }
         } else if (source === KeyValueSource.RelationMetadata) {
-          return parent?.relations.find(
+          return parent?.relations
+            .find(
               (relation: any) => relation.type === key && relation.key === uuid
-          ).metadata.map((data: Metadata) => data.value)[0];
+            )
+            .metadata.map((data: Metadata) => data.value)[0];
         }
         return '';
       } catch (e) {
@@ -496,10 +533,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationMetadata: async (parent: any, { type }, { dataSources }) => {
       const relation = parent?.relations.find(
-          (relation: any) => relation.type === type
+        (relation: any) => relation.type === type
       );
-      return await dataSources.CollectionAPI.getEntityById(relation.key) as IntialValues;
-    }
+      return (await dataSources.CollectionAPI.getEntityById(
+        relation.key
+      )) as IntialValues;
+    },
   },
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {
@@ -669,7 +708,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             collection
           )
         ).map((rel: Metadata) => {
-          return { value: rel.value || rel.key, label: rel.label };
+          return { value: rel.value || rel.key, label: rel.label || '' };
         });
         return relations as [PanelRelation];
       } catch (e) {
@@ -741,18 +780,28 @@ export const baseResolver: Resolvers<ContextValue> = {
     customUrl: async (_source, { input }, { dataSources }) => {
       return input;
     },
-    filename: async (_source: any, { input, fromMediafile }, { dataSources }) => {
+    filename: async (
+      _source: any,
+      { input, fromMediafile },
+      { dataSources }
+    ) => {
       if (!fromMediafile) return input || '';
-      try{
-        const mediafileRelations: any[] = _source.relations.filter((relation: any) => relation.type === 'hasMediafile')
-        const thumbnailMediafile: any = mediafileRelations.find((mediafile: any) => mediafile.is_primary_thumbnail) || mediafileRelations[0]
-        const thumbnailId: string = thumbnailMediafile.key
-        const mediafile = await dataSources.CollectionAPI.getMediaFile(thumbnailId)
-        return mediafile.transcode_filename || mediafile.filename
+      try {
+        const mediafileRelations: any[] = _source.relations.filter(
+          (relation: any) => relation.type === 'hasMediafile'
+        );
+        const thumbnailMediafile: any =
+          mediafileRelations.find(
+            (mediafile: any) => mediafile.is_primary_thumbnail
+          ) || mediafileRelations[0];
+        const thumbnailId: string = thumbnailMediafile.key;
+        const mediafile = await dataSources.CollectionAPI.getMediaFile(
+          thumbnailId
+        );
+        return mediafile.transcode_filename || mediafile.filename;
       } catch {
-        return undefined
+        return undefined;
       }
-
     },
     width: async (_source, { input }, { dataSources }) => {
       return input;
