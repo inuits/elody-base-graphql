@@ -1,4 +1,5 @@
 import { gql } from 'graphql-modules';
+
 export const baseSchema = gql`
   scalar JSON
   # Generic
@@ -48,6 +49,7 @@ export const baseSchema = gql`
     dropdown
     textarea
     dropdownMultiselect
+    dropdownSingleselect
   }
 
   enum BaseFieldType {
@@ -73,7 +75,7 @@ export const baseSchema = gql`
     alto
     txt
   }
-  
+
   enum TranscodeType {
     pdf
   }
@@ -84,6 +86,7 @@ export const baseSchema = gql`
     acceptedEntityTypes: [String]
     validation(input: String): String
     options: [DropdownOption]
+    relationType(input: String!): String
   }
 
   enum Collection {
@@ -658,7 +661,7 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
   }
-  
+
   type PanelRelationMetaData {
     label(input: String!): String!
     key(input: String!): String!
@@ -879,7 +882,11 @@ export const baseSchema = gql`
   }
 
   type Mutation {
-    mutateEntityValues(id: String!, formInput: EntityFormInput!, collection: Collection!): Entity
+    mutateEntityValues(
+      id: String!
+      formInput: EntityFormInput!
+      collection: Collection!
+    ): Entity
     deleteData(
       id: String!
       path: Collection!

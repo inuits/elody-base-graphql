@@ -513,9 +513,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           return parent?.[key] ?? '';
         } else if (source === KeyValueSource.Relations) {
           try {
-            return parent?.relations.find(
-              (relation: any) => relation.type === key
-            ).value;
+            return parent?.relations
+              .filter((relation: any) => relation.type === key)
+              .map((rel: BaseRelationValuesInput) => rel.value);
           } catch {
             return parent?.[key] ?? '';
           }
@@ -959,6 +959,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         dataSources
       );
       return options;
+    },
+    relationType: async (parent, { input }, { dataSources }) => {
+      return input || '';
     },
   },
 };
