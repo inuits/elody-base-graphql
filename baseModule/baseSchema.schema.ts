@@ -558,12 +558,14 @@ export const baseSchema = gql`
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
-    customQuery(input: String): String
-    customQueryRelationType(input: String): String
+    type(input: MediaFileElementTypes): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]
     relationType(input: String): String
     viewMode(input: EntityListViewMode): EntityListViewMode
+    customQuery(input: String): String
+    customQueryRelationType(input: String): String
+    searchInputType(input: String): String
   }
 
   enum EntityListViewMode {
@@ -668,6 +670,7 @@ export const baseSchema = gql`
     unit(input: Unit!): Unit!
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
+    showOnlyInEditMode(input: Boolean): Boolean
   }
 
   type PanelThumbnail {

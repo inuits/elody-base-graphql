@@ -611,8 +611,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    type: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
+    },
     customQuery: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
+    },
+    searchInputType: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'AdvancedInputType';
     },
     entityTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
@@ -771,6 +777,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
+    },
+    showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
+      return input ? input : false;
     },
   },
   PanelThumbnail: {
