@@ -32,7 +32,7 @@ import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
 
 type EntetiesCallReturn =
-  | { results: Array<unknown> }
+  | { count: number, results: Array<unknown> }
   | Array<unknown>
   | 'no-call-is-triggerd';
 let sixthCollectionId: string | 'no-id' = 'no-id';
@@ -480,11 +480,14 @@ export class CollectionAPI extends AuthRESTDataSource {
       return data as EntitiesResults;
     }
     if (Array.isArray(data)) {
+      let count;
+      if (data.length-1 === limit) count = data.shift().count;
+      else count = data.length
       data.forEach(
         (element: Record<string, unknown>): Record<string, unknown> =>
           setId(element)
       );
-      return { results: data, count: data.length, limit: limit };
+      return { results: data, count: count, limit: limit };
     }
 
     return { results: [], count: 0, limit };
@@ -560,13 +563,15 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): EntetiesCallReturn {
     //Add mediafile type to the result, is missing from the mediafile endpoint
     if (!Array.isArray(result)) {
-      return result.results.map((item: unknown): Record<string, unknown> => {
+      const finalResult = result.results.map((item: unknown): Record<string, unknown> => {
         //Todo write typescheker for EntitieResults
         return { ...(item as Object), type: 'mediafile' } as Record<
           string,
           unknown
         >;
       });
+      finalResult.unshift({ "count": result.count ? result.count : result.results.length});
+      return finalResult;
     }
 
     return 'no-call-is-triggerd';
