@@ -481,7 +481,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
     if (Array.isArray(data)) {
       let count;
-      if (data[0].count) count = data.shift().count;
+      if (data[0].count !== undefined) count = data.shift().count;
       else count = data.length
       data.forEach(
         (element: Record<string, unknown>): Record<string, unknown> =>
