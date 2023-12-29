@@ -336,7 +336,7 @@ export const baseSchema = gql`
 
   input MetadataInput {
     key: String!
-    value: String
+    value: JSON
     lang: String
     type: String
     label: String
