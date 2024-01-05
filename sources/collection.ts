@@ -97,16 +97,18 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async postEntitiesFilterSoftCall(entityType: string): Promise<string> {
     let data;
-    const body = [{
-        type: "type",
-        value: entityType
-    }]
+    const body = [
+      {
+        type: 'type',
+        value: entityType,
+      },
+    ];
     try {
       data = await this.post(`${Collection.Entities}/filter?soft=1`, { body });
     } catch (e) {
-      return "401";
+      return '401';
     }
-    if (data === "good") return "200";
+    if (data === 'good') return '200';
     return data;
   }
 
@@ -115,9 +117,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       data = await this.post(`${Collection.Entities}?soft=1`);
     } catch (e) {
-      return "401";
+      return '401';
     }
-    if (data === "good") return "200";
+    if (data === 'good') return '200';
     return data;
   }
 
@@ -126,9 +128,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       data = await this.patch(`${Collection.Entities}/${id}/metadata?soft=1`);
     } catch (e) {
-      return "401";
+      return '401';
     }
-    if (data === "good") return "200";
+    if (data === 'good') return '200';
     return data;
   }
 
@@ -137,9 +139,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       data = await this.delete(`${Collection.Entities}/${id}?soft=1`);
     } catch (e) {
-      return "401";
+      return '401';
     }
-    if (data === "good") return "200";
+    if (data === 'good') return '200';
     return data;
   }
 
@@ -148,6 +150,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     setId(data);
     return data;
   }
+
   async getEntityById(id: string): Promise<any> {
     let data = await this.get<any>(`${Collection.Entities}/${id}`);
     setId(data);
@@ -181,7 +184,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getMediafiles(id: string): Promise<MediaFile[]> {
     if (id !== 'noid') {
-      return await this.get(`${Collection.Entities}/${id}/mediafiles?non_public=1`);
+      return await this.get(
+        `${Collection.Entities}/${id}/mediafiles?non_public=1`
+      );
     } else {
       return [];
     }
@@ -189,7 +194,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async addRelations(id: string, relations: any[]): Promise<any[]> {
     relations.map((relation) => (relation.key = 'entities/' + relation.key));
-    return await this.post(`${Collection.Entities}/${id}/relations`, { body: relations });
+    return await this.post(`${Collection.Entities}/${id}/relations`, {
+      body: relations,
+    });
   }
 
   async getRelations(
@@ -207,7 +214,9 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getAssetsRelationedWithMediafFile(mediaFileId: String): Promise<any> {
-    const assets = await this.get(`${Collection.Mediafiles}/${mediaFileId}/assets`);
+    const assets = await this.get(
+      `${Collection.Mediafiles}/${mediaFileId}/assets`
+    );
     assets.forEach((asset: any) => {
       setId(asset);
     });
@@ -220,7 +229,9 @@ export class CollectionAPI extends AuthRESTDataSource {
       { key: 'source', value: 'niets-geselecteerd' },
       { key: 'publication_status', value: 'niet-publiek' },
     ];
-    const res = await this.post(`${Collection.Mediafiles}`, { body: mediaFileInput });
+    const res = await this.post(`${Collection.Mediafiles}`, {
+      body: mediaFileInput,
+    });
     return res;
   }
 
@@ -228,9 +239,12 @@ export class CollectionAPI extends AuthRESTDataSource {
     entityId: String,
     mediaFileInput: MediaFileInput
   ): Promise<any> {
-    const res = await this.post(`${Collection.Entities}/${entityId}/mediafiles`, {
-      body: mediaFileInput,
-    });
+    const res = await this.post(
+      `${Collection.Entities}/${entityId}/mediafiles`,
+      {
+        body: mediaFileInput,
+      }
+    );
     return res;
   }
 
@@ -249,7 +263,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     id: String,
     metadata: Maybe<MetadataFieldInput>[]
   ): Promise<Metadata[]> {
-    return await this.put(`${Collection.Entities}/${id}/metadata`, { metadata });
+    return await this.put(`${Collection.Entities}/${id}/metadata`, {
+      metadata,
+    });
   }
 
   async patchMetadata(
@@ -267,7 +283,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
-    return await this.post(`${collection}/${id}/relations`, { body: relations });
+    return await this.post(`${collection}/${id}/relations`, {
+      body: relations,
+    });
   }
 
   async patchRelations(
@@ -276,7 +294,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
-    return await this.patch(`${collection}/${id}/relations`, { body: relations });
+    return await this.patch(`${collection}/${id}/relations`, {
+      body: relations,
+    });
   }
 
   async deleteRelations(
@@ -285,7 +305,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<any> {
     if (relations.length <= 0) return [];
-    return await this.delete(`${collection}/${id}/relations`, { body: relations });
+    return await this.delete(`${collection}/${id}/relations`, {
+      body: relations,
+    });
   }
 
   async getJobs(
@@ -331,7 +353,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const body: any = {
       type: entity.type,
       metadata,
-      relations
+      relations,
     };
     const newEntity = await this.post(`${Collection.Entities}`, {
       body,
@@ -345,7 +367,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getSixthCollectionId(): Promise<string> {
     if (sixthCollectionId == 'no-id') {
-      sixthCollectionId = await this.get(`${Collection.Entities}/sixthcollection/entity_id`);
+      sixthCollectionId = await this.get(
+        `${Collection.Entities}/sixthcollection/entity_id`
+      );
     }
     return sixthCollectionId;
   }
@@ -487,7 +511,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         (element: Record<string, unknown>): Record<string, unknown> =>
           setId(element)
       );
-      return { results: data, count: count, limit: limit };
+      return { results: data as Entity[], count: count, limit: limit };
     }
 
     return { results: [], count: 0, limit };
@@ -582,24 +606,29 @@ export class CollectionAPI extends AuthRESTDataSource {
     limit: number
   ): Promise<DropdownOption[]> {
     const body = [input];
-    const data = await this.post(`${Collection.Entities}/filter?limit=${limit}&skip=0`, {
-      body,
-    });
+    const data = await this.post(
+      `${Collection.Entities}/filter?limit=${limit}&skip=0`,
+      {
+        body,
+      }
+    );
 
     if (data.results && data.results.length > 0) return data.results;
     return [];
   }
 
   async GetStats(id: string, graph: GraphElementInput): Promise<any> {
-    let filterValuesQueryString = ""
+    let filterValuesQueryString = '';
     for (const value of graph.dataset?.filter?.values || [])
       filterValuesQueryString += `&filter_values=${value}`;
 
-    const data = await this.get(`stats/${graph.datasource}/${
-      id
-    }?time_unit=${graph.timeUnit}&datapoints=${graph.datapoints}&convert_to=${
-      graph.convert_to || ""
-    }&filter_key=${graph.dataset?.filter?.key || ""}${filterValuesQueryString}`);
+    const data = await this.get(
+      `stats/${graph.datasource}/${id}?time_unit=${graph.timeUnit}&datapoints=${
+        graph.datapoints
+      }&convert_to=${graph.convert_to || ''}&filter_key=${
+        graph.dataset?.filter?.key || ''
+      }${filterValuesQueryString}`
+    );
     if (data.results && data.results.length > 0) return data.results[0];
     return undefined;
   }
