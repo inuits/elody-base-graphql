@@ -515,7 +515,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           try {
             return parent?.relations
               .filter((relation: any) => relation.type === key)
-              .map((rel: BaseRelationValuesInput) => rel.value);
+              .map((rel: BaseRelationValuesInput) => String(rel.value));
           } catch {
             return parent?.[key] ?? '';
           }
