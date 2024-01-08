@@ -236,8 +236,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
-    PermissionMappingCreate: async (_source, {}, { dataSources }) => {
-      const status = await dataSources.CollectionAPI.postEntitySoftCall();
+    PermissionMappingCreate: async (_source, { entityType }, { dataSources }) => {
+      const status = await dataSources.CollectionAPI.postEntitySoftCall(entityType);
       return status == '200';
     },
     PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {

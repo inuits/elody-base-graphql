@@ -880,7 +880,7 @@ export const baseSchema = gql`
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
-    PermissionMappingCreate: Boolean!
+    PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
   }
 
