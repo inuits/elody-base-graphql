@@ -80,11 +80,31 @@ export const baseSchema = gql`
     pdf
   }
 
+  type ConditionalRequired {
+    field: String
+    value: String
+  }
+
+  input ConditionalRequiredInput {
+    field: String
+    value: String
+  }
+
+  type Validation {
+    value: String
+    required_if: ConditionalRequired
+  }
+
+  input ValidationInput {
+    value: String
+    required_if: ConditionalRequiredInput
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
     acceptedEntityTypes: [String]
-    validation(input: String): String
+    validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType(input: String!): String
   }

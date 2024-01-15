@@ -52,6 +52,8 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  Validation,
+  ConditionalRequired,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -236,8 +238,14 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
-    PermissionMappingCreate: async (_source, { entityType }, { dataSources }) => {
-      const status = await dataSources.CollectionAPI.postEntitySoftCall(entityType);
+    PermissionMappingCreate: async (
+      _source,
+      { entityType },
+      { dataSources }
+    ) => {
+      const status = await dataSources.CollectionAPI.postEntitySoftCall(
+        entityType
+      );
       return status == '200';
     },
     PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
@@ -957,7 +965,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.acceptedEntityTypes || [];
     },
     validation: async (parent, { input }, { dataSources }) => {
-      return input || '';
+      return input as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
       if (parent['options'] && parent['options'].length > 0)
@@ -971,6 +979,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationType: async (parent, { input }, { dataSources }) => {
       return input || '';
+    },
+  },
+  Validation: {
+    value: async (parent, _args, { dataSources }) => {
+      return parent.value || '';
+    },
+    required_if: async (parent, _args, { dataSources }) => {
+      return parent.required_if as ConditionalRequired;
+    },
+  },
+  ConditionalRequired: {
+    value: async (parent, _args, { dataSources }) => {
+      return parent.value || '';
+    },
+    field: async (parent, _args, { dataSources }) => {
+      return parent.field || '';
     },
   },
 };
