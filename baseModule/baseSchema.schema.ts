@@ -81,13 +81,15 @@ export const baseSchema = gql`
   }
 
   type ConditionalRequired {
-    field: String
+    field: String!
     value: String
+    ifAnyValue: Boolean!
   }
 
   input ConditionalRequiredInput {
-    field: String
+    field: String!
     value: String
+    ifAnyValue: Boolean
   }
 
   type Validation {

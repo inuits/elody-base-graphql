@@ -991,10 +991,13 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   ConditionalRequired: {
     value: async (parent, _args, { dataSources }) => {
-      return parent.value || '';
+      return parent.value as string;
     },
     field: async (parent, _args, { dataSources }) => {
-      return parent.field || '';
+      return parent.field;
+    },
+    ifAnyValue: async (parent, _args, { dataSources }) => {
+      return parent.ifAnyValue || false;
     },
   },
 };
