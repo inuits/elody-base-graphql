@@ -80,13 +80,13 @@ export const baseSchema = gql`
     pdf
   }
 
-  type ConditionalRequired {
+  type Conditional {
     field: String!
     value: String
     ifAnyValue: Boolean!
   }
 
-  input ConditionalRequiredInput {
+  input ConditionalInput {
     field: String!
     value: String
     ifAnyValue: Boolean
@@ -94,12 +94,14 @@ export const baseSchema = gql`
 
   type Validation {
     value: String
-    required_if: ConditionalRequired
+    required_if: Conditional
+    available_if: Conditional
   }
 
   input ValidationInput {
     value: String
-    required_if: ConditionalRequiredInput
+    required_if: ConditionalInput
+    available_if: ConditionalInput
   }
 
   type InputField {

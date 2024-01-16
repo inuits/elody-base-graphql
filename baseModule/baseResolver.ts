@@ -53,7 +53,7 @@ import {
   WindowElement,
   WindowElementPanel,
   Validation,
-  ConditionalRequired,
+  Conditional,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -986,10 +986,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.value || '';
     },
     required_if: async (parent, _args, { dataSources }) => {
-      return parent.required_if as ConditionalRequired;
+      return parent.required_if as Conditional;
+    },
+    available_if: async (parent, _args, { dataSources }) => {
+      return parent.available_if as Conditional;
     },
   },
-  ConditionalRequired: {
+  Conditional: {
     value: async (parent, _args, { dataSources }) => {
       return parent.value as string;
     },
