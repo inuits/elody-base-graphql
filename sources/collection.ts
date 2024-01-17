@@ -128,7 +128,9 @@ export class CollectionAPI extends AuthRESTDataSource {
   async patchEntityDetailSoftCall(id: String): Promise<string> {
     let data;
     try {
-      data = await this.patch(`${Collection.Entities}/${id}/metadata?soft=1`);
+      data = await this.patch(`${Collection.Entities}/${id}?soft=1`, {
+        body: {}
+      });
     } catch (e) {
       return '401';
     }
