@@ -33,7 +33,7 @@ export interface Environment {
     simpleSearch: {
       hasSimpleSearch: boolean;
       simpleSearchEntityTypes?: Entitytyping[];
-      simpleSearchMetadataKey?: string;
+      simpleSearchMetadataKey?: string[];
     };
     hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
