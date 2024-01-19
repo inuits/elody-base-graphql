@@ -127,7 +127,11 @@
         }
       },
       "graphql-errors":{
-        "duplicate":{
+        "duplicate-entity":{
+          "title":"Duplicate",
+          "description":"Creation failed, duplicate identifier detected"
+        },
+        "duplicate-upload":{
           "title":"Duplicate",
           "description":"Duplicate file detected, upload reverted"
         },
@@ -327,7 +331,11 @@
         }
       },
       "graphql-errors":{
-        "duplicate":{
+        "duplicate-entity":{
+          "title":"Duplicaat",
+          "description":"Creëren mislukt, duplicate identificatiewaarde gedetecteerd"
+        },
+        "duplicate-upload":{
           "title":"Duplicaat",
           "description":"Dubbel bestand gedetecteerd, upload teruggedraaid"
         },
