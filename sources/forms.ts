@@ -1,11 +1,7 @@
 import {
-  Form,
   InputFieldTypes,
   InputField,
-  MetadataOrRelationField,
-  LanguageType,
   FileformatType,
-  Entitytyping,
   DamsIcons,
   DropdownOption,
 } from '../../../generated-types/type-defs';

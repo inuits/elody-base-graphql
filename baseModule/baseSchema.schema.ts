@@ -60,8 +60,6 @@ export const baseSchema = gql`
     baseDateField
     baseDateTimeField
     baseTextareaField
-    languageTypeField
-    fileformatTypeField
   }
 
   enum languageType {
@@ -308,14 +306,6 @@ export const baseSchema = gql`
 
   type BulkOperationCsvExportKeys {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
-  }
-
-  interface Form {
-    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
-  }
-
-  type OCRForm implements Form {
-    inputFields(type: [BaseFieldType]!, fieldLabels: [String]!): [InputField]
   }
 
   type CreateEntityForm {
@@ -890,7 +880,6 @@ export const baseSchema = gql`
       fetchPolicy: String
     ): EntitiesResults
     Tenants: EntitiesResults
-    Form(type: String!): Form
     User: User
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
@@ -899,7 +888,6 @@ export const baseSchema = gql`
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations(entityType: String!): Entity!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
-    OCRForm: OCRForm!
     CreateEntityForm(type: Entitytyping!): CreateEntityForm!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!

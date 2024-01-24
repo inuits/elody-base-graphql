@@ -98,11 +98,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         } as BaseEntity,
       };
     },
-    OCRForm: async (_source, {}, { dataSources }) => {
-      return {
-        inputFields: [],
-      };
-    },
     Entity: async (
       _source,
       { id, type, preferredLanguage },
@@ -265,27 +260,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       ];
     },
   },
-  // OCRForm: {
-  //   // inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
-  //   inputFields: async (parent, { type, fieldLabels }, { dataSources }) => {
-  //     const inputFieldsArray: any[] = [];
-
-  //     type.forEach((fieldType, i) => {
-  //       if (fieldType !== null) {
-  //         const field = baseFields[fieldType];
-
-  //         let fieldWithOptions = getOptionsByEntityType(dataSources).then(
-  //           (result) => {
-  //             result.fieldName = fieldLabels[i];
-  //             inputFieldsArray.push(result);
-  //           }
-  //         );
-  //         // inputFieldsArray.push(fieldWithOptions);
-  //       }
-  //     });
-  //     return inputFieldsArray;
-  //   },
-  // },
   Mutation: {
     linkMediafileToEntity: async (
       _source,
