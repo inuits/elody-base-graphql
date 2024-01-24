@@ -296,7 +296,6 @@ export const baseSchema = gql`
     downloadMediafiles
     exportCsv
     edit
-    addToManifestViewerCollection
     transcodePDF
   }
 
