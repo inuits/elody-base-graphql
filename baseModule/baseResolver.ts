@@ -410,6 +410,56 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as PanelLink;
     },
   },
+  User: {
+    permission: async (parent: any, _args, { dataSources }) => {
+      // Todo fix permissions
+      // return resolvePermission(dataSources, parent.id);
+      return [Permission.Canupdate];
+    },
+    intialValues: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    allowedViewModes: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    relationValues: async (parent: any, _args, { dataSources }) => {
+      return parent.relations ?? [];
+    },
+    entityView: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    teaserMetadata: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+  },
+  Tenant: {
+    id: async (parent: any, _args, { dataSources }) => {
+      return parent._id;
+    },
+    uuid: async (parent: any, _args, { dataSources }) => {
+      return parent._id;
+    },
+    permission: async (parent: any, _args, { dataSources }) => {
+      // Todo fix permissions
+      // return resolvePermission(dataSources, parent.id);
+      return [Permission.Canupdate];
+    },
+    intialValues: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    allowedViewModes: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    relationValues: async (parent: any, _args, { dataSources }) => {
+      return parent.relations ?? [];
+    },
+    entityView: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    teaserMetadata: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+  },
   MediaFileEntity: {
     id: async (parent: any) => {
       return parent._id;

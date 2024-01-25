@@ -10,8 +10,9 @@ export const baseSchema = gql`
   }
 
   enum Entitytyping {
-    asset
-    mediafile
+    BaseEntity
+    tenant
+    user
   }
 
   enum Unit {
