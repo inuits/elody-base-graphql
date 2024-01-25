@@ -24,6 +24,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             hasSimpleSearch: config.features.simpleSearch.hasSimpleSearch,
             simpleSearchEntityTypes:
               config.features.simpleSearch.simpleSearchEntityTypes,
+              itemTypes: config.features.simpleSearch.itemTypes,
             simpleSearchMetadataKey:
               config.features.simpleSearch.simpleSearchMetadataKey,
           },
