@@ -1,9 +1,9 @@
 import {
-  InputFieldTypes,
-  InputField,
-  FileformatType,
   DamsIcons,
   DropdownOption,
+  FileType,
+  InputField,
+  InputFieldTypes,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -29,11 +29,13 @@ export const baseFields: { [key: string]: InputField } = {
   baseTextareaField: {
     type: InputFieldTypes.Textarea,
   },
-  fileformatTypeField: {
-    type: InputFieldTypes.Dropdown,
-    options: Object.values(FileformatType).map((format: string) => {
-      return { icon: DamsIcons.NoIcon, label: format, value: format };
-    }),
+  baseFileUploadField: {
+    type: InputFieldTypes.FileUpload,
+    fileTypes: [FileType.Csv, FileType.Jpeg, FileType.Jpg],
+  },
+  baseCsvUploadField: {
+    type: InputFieldTypes.CsvUpload,
+    fileTypes: [FileType.Csv],
   },
 };
 
@@ -48,8 +50,7 @@ export const getOptionsByEntityType = async (
     const optionsByType = await dataSources.CollectionAPI.getEntitiesByType(
       acceptedEntityTypes[i - 1] as string
     );
-    if (optionsByType)
-      optionsForField.push(...optionsByType);
+    if (optionsByType) optionsForField.push(...optionsByType);
   }
 
   const options = optionsForField.map((option: any) => {
@@ -59,7 +60,11 @@ export const getOptionsByEntityType = async (
     return {
       icon: DamsIcons.NoIcon,
       label: metadata.find((dataItem: any) => {
-        return dataItem?.key === 'title' || dataItem?.key === 'name' || dataItem?.key === 'email';
+        return (
+          dataItem?.key === 'title' ||
+          dataItem?.key === 'name' ||
+          dataItem?.key === 'email'
+        );
       })?.value,
       value: option['_id'],
     };

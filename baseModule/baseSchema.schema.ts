@@ -51,6 +51,8 @@ export const baseSchema = gql`
     textarea
     dropdownMultiselect
     dropdownSingleselect
+    fileUpload
+    csvUpload
   }
 
   enum BaseFieldType {
@@ -61,22 +63,36 @@ export const baseSchema = gql`
     baseDateField
     baseDateTimeField
     baseTextareaField
+    baseFileUploadField
+    baseCsvUploadField
   }
 
-  enum languageType {
-    nld
-    fra
-    eng
-  }
-
-  enum fileformatType {
+  enum FileType {
     pdf
     alto
     txt
+    csv
+    png
+    jpg
+    jpeg
+    svg
   }
 
   enum TranscodeType {
     pdf
+  }
+
+  type FormFields {
+    metaData: PanelMetaData!
+    uploadField: UploadField
+  }
+
+  type Form {
+    formFields: FormFields!
+  }
+
+  type CreateEntityForm {
+    formFields: Entity!
   }
 
   type Conditional {
@@ -103,6 +119,15 @@ export const baseSchema = gql`
     available_if: ConditionalInput
   }
 
+  input InputFieldInput {
+    fieldName: String
+    type: String!
+    acceptedEntityTypes: [String]
+    validation: ValidationInput
+    options: [DropdownOptionInput]
+    relationType: String
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -110,6 +135,7 @@ export const baseSchema = gql`
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType(input: String!): String
+    fileTypes: [FileType]
   }
 
   enum Collection {
@@ -306,14 +332,6 @@ export const baseSchema = gql`
 
   type BulkOperationCsvExportKeys {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
-  }
-
-  type CreateEntityForm {
-    formFields: Entity!
-  }
-
-  type FormFields {
-    metaData: PanelMetaData!
   }
 
   input MetadataFieldInput {
@@ -667,6 +685,11 @@ export const baseSchema = gql`
   type PanelInfo {
     label(input: String!): String!
     value(input: String!): String!
+    inputField(type: BaseFieldType!): InputField!
+  }
+
+  type UploadField {
+    label(input: String!): String!
     inputField(type: BaseFieldType!): InputField!
   }
 
