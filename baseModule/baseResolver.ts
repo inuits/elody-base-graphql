@@ -108,7 +108,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (type.toLowerCase() === 'mediafile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
-        return dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
+        return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
       }
     },
     Entities: async (

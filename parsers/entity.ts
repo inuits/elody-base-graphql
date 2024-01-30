@@ -17,11 +17,12 @@ const PROTECTED_METADATA_RELATION_KEY: string[] = [
 ];
 
 export const setId = (entityRaw: any) => {
-  entityRaw.id = entityRaw.object_id
-    ? entityRaw.object_id
-    : entityRaw._id
-    ? entityRaw._id
-    : entityRaw.identifiers[0];
+  if (!entityRaw.id)
+    entityRaw.id = entityRaw.object_id
+      ? entityRaw.object_id
+      : entityRaw._id
+      ? entityRaw._id
+      : entityRaw.identifiers[0];
   entityRaw.uuid = entityRaw._id;
   return entityRaw;
 };
