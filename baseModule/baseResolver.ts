@@ -529,7 +529,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     id: async (parent: any, {}, { dataSources }) => {
       return parent._id;
     },
-    keyValue: async (parent: any, { key, source, uuid }, { dataSources }) => {
+    keyValue: async (parent: any, { key, source, uuid, metadataKeyAsLabel }, { dataSources }) => {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
@@ -545,9 +545,14 @@ export const baseResolver: Resolvers<ContextValue> = {
           return parent?.[key] ?? '';
         } else if (source === KeyValueSource.Relations) {
           try {
-            return parent?.relations
-              .filter((relation: any) => relation.type === key)
-              .map((rel: BaseRelationValuesInput) => rel.value);
+            const relation = parent?.relations
+              .filter((relation: any) => relation.type === key)?.[0];
+            if (relation) {
+              const entity = await dataSources.CollectionAPI.getEntityById(relation.key);
+              return entity.metadata.find(
+                (metadata: any) => metadata.key === metadataKeyAsLabel
+              )?.value ?? '';
+            }
           } catch {
             return parent?.[key] ?? '';
           }
