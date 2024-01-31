@@ -201,6 +201,17 @@
         "type": "This filter can search for different types of this field that are in the system."
       },
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
+    },
+    "contextMenu": {
+      "contextMenuLinkAction": {
+        "followLink": "Open this entity in a new tab"
+      },
+      "contextMenuGeneralAction": {
+        "setPrimaryMediafile": "Set this as the primary mediafile for the asset"
+      },
+      "contextMenuElodyAction": {
+        "delete": "Delete the link between this mediafile and the asset"
+      }
     }
   },
   "nl": {
@@ -405,6 +416,17 @@
         "type": "Deze filter kan gaan zoeken naar verschillende types van dit veld die in het systeem zitten."
       },
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
+    },
+    "contextMenu": {
+      "contextMenuLinkAction": {
+        "followLink": "Open deze entiteit in een nieuw tabblad"
+      },
+      "contextMenuGeneralAction": {
+        "setPrimaryMediafile": "Stel dit in als de primaire mediafile voor deze asset"
+      },
+      "contextMenuElodyAction": {
+        "delete": "Verwijder de relatie tussen deze mediafile en de asset"
+      }
     }
   }
 }

@@ -17,6 +17,12 @@ import {
   Collection,
   Column,
   ColumnSizes,
+  ContextMenuActions,
+  ContextMenuElodyAction,
+  ContextMenuElodyActionEnum,
+  ContextMenuGeneralAction,
+  ContextMenuGeneralActionEnum,
+  ContextMenuLinkAction,
   EditStatus,
   EntitiesResults,
   Entity,
@@ -46,6 +52,7 @@ import {
   PanelThumbnail,
   Permission,
   Resolvers,
+  RouteNames,
   SearchInputType,
   SingleMediaFileElement,
   TimeUnit,
@@ -408,6 +415,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     link: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelLink;
+    },
+    contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuActions;
     },
   },
   User: {
@@ -1032,4 +1042,39 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.ifAnyValue || false;
     },
   },
+  ContextMenuActions: {
+    doLinkAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuLinkAction;
+    },
+    doGeneralAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuGeneralAction;
+    },
+    doElodyAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuElodyAction;
+    }
+  },
+  ContextMenuLinkAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    action: async (_source, { input }, { dataSources }) => {
+      return input ? input : RouteNames.SingleEntity;
+    },
+  },
+  ContextMenuElodyAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    action: async (_source, { input }, { dataSources }) => {
+      return input as ContextMenuElodyActionEnum;
+    },
+  },
+  ContextMenuGeneralAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    action: async (_source, { input }, { dataSources }) => {
+      return input as ContextMenuGeneralActionEnum;
+    },
+  }
 };

@@ -795,11 +795,41 @@ export const baseSchema = gql`
     unit: Unit
   }
 
+  enum ContextMenuGeneralActionEnum {
+    SetPrimaryMediafile
+  }
+  
+  enum ContextMenuElodyActionEnum {
+    Delete
+  }
+
+  type ContextMenuGeneralAction {
+    label(input: String): String!
+    action(input: ContextMenuGeneralActionEnum): ContextMenuGeneralActionEnum!
+  }
+  
+  type ContextMenuElodyAction {
+    label(input: String): String!
+    action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
+  }
+  
+  type ContextMenuLinkAction {
+    label(input: String): String!
+    action(input: RouteNames): RouteNames!
+  }
+  
+  type ContextMenuActions {
+    doLinkAction: ContextMenuLinkAction
+    doGeneralAction: ContextMenuGeneralAction
+    doElodyAction: ContextMenuElodyAction
+  }
+
   type teaserMetadata {
     metaData: PanelMetaData
     relationMetaData: PanelRelationMetaData
     thumbnail: PanelThumbnail
     link: PanelLink
+    contextMenuActions: ContextMenuActions
   }
 
   interface Entity {
