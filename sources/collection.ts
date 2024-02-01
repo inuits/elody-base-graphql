@@ -27,9 +27,10 @@ import {
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
+import { baseTypeCollectionMapping as collection } from './typeCollectionMapping';
 import { Config } from '../types';
-import { setId, setType } from '../parsers/entity';
 import { environment as env } from '../main';
+import { setId, setType } from '../parsers/entity';
 
 type EntetiesCallReturn =
   | { count: number, results: Array<unknown> }
@@ -55,13 +56,14 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getEntities(
     limit: number,
     skip: number,
-    searchValue: SearchFilter
+    searchValue: SearchFilter,
+    type: Entitytyping
   ): Promise<EntitiesResults> {
     let data;
     try {
       let search = searchValue;
       data = await this.get(
-        `${Collection.Entities}?limit=${limit}&skip=${this.getSkip(
+        `${collection[type]}?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
         )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
@@ -87,7 +89,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
     try {
-      data = await this.get(`${Collection.Entities}?type=${entityType}`);
+      data = await this.get(`${collection[entityType]}?type=${entityType}`);
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
       console.log(e);
@@ -104,7 +106,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       },
     ];
     try {
-      data = await this.post(`${Collection.Entities}/filter?soft=1`, { body });
+      data = await this.post(`${collection[entityType]}/filter?soft=1`, { body });
     } catch (e) {
       return '401';
     }
@@ -115,7 +117,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async postEntitySoftCall(entityType: string): Promise<string> {
     let data;
     try {
-      data = await this.post(`${Collection.Entities}?soft=1`, {
+      data = await this.post(`${collection[entityType]}?soft=1`, {
         body: { type: entityType }
       });
     } catch (e) {
@@ -359,7 +361,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       metadata,
       relations,
     };
-    const newEntity = await this.post(`${Collection.Entities}`, {
+    const newEntity = await this.post(`${collection[entity.type as Entitytyping]}`, {
       body,
     });
     return setId(newEntity);
@@ -491,6 +493,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       );
     } else {
       data = await this.doAdvancedEntitiesCall(
+        type,
         limit,
         skip,
         advancedFilterInputs,
@@ -522,6 +525,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   private async doAdvancedEntitiesCall(
+    type: Entitytyping,
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
@@ -529,7 +533,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `${Collection.Entities}/filter?limit=${limit}&skip=${this.getSkip(
+      `${collection[type]}/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${

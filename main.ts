@@ -1,44 +1,45 @@
-import express from 'express';
-import cors from 'cors';
-import { expressMiddleware } from '@apollo/server/express4';
-import http from 'http';
-import { Environment } from './environment';
-import { CollectionAPI } from './sources/collection';
 import {
   applyAuthEndpoints,
   applyAuthSession,
   applyEnvironmentConfig,
   AuthRESTDataSource,
 } from './auth';
-import { SearchAPI } from './sources/search';
-import { ImportAPI } from 'import-module';
-import { StorageAPI } from './sources/storage';
-import applyConfigEndpoint from './endpoints/configEndpoint';
-import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
-import * as Sentry from '@sentry/node';
-import { ApolloServer } from '@apollo/server';
-import { ContextValue, DataSources } from './types';
-import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
-import { Application } from 'graphql-modules';
-import { baseModule, baseSchema } from './baseModule/baseModule';
-import { InputField } from '../../generated-types/type-defs';
-import { baseFields } from './sources/forms';
-import { applyExportEndpoint } from './endpoints/exportEndpoint';
-import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
-import applyPromEndpoint from './endpoints/promEndpoint';
 import {
   resolveMedia,
   resolveMetadata,
   resolvePermission,
 } from './resolvers/entityResolver';
-import { parseIdToGetMoreData } from './parsers/entity';
-import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
-import { applyHealthEndpoint } from './endpoints/healthEndpoint';
-import { loadTranslations } from './translations/loadTranslations';
+import * as Sentry from '@sentry/node';
+import applyConfigEndpoint from './endpoints/configEndpoint';
+import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
+import applyPromEndpoint from './endpoints/promEndpoint';
+import cors from 'cors';
+import express from 'express';
+import http from 'http';
 import path from 'path';
+import { ApolloServer } from '@apollo/server';
+import { Application } from 'graphql-modules';
+import { applyExportEndpoint } from './endpoints/exportEndpoint';
+import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { applySEOEndpoint } from './endpoints/seoEndpoint';
-import {getMetadataItemValueByKey} from "./helpers/helpers";
-import {TranscodeService} from "./sources/transcode";
+import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
+import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
+import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
+import { baseFields } from './sources/forms';
+import { baseModule, baseSchema } from './baseModule/baseModule';
+import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
+import { Collection, InputField } from '../../generated-types/type-defs';
+import { CollectionAPI } from './sources/collection';
+import { ContextValue, DataSources } from './types';
+import { Environment } from './environment';
+import { expressMiddleware } from '@apollo/server/express4';
+import { getMetadataItemValueByKey } from "./helpers/helpers";
+import { ImportAPI } from 'import-module';
+import { loadTranslations } from './translations/loadTranslations';
+import { parseIdToGetMoreData } from './parsers/entity';
+import { SearchAPI } from './sources/search';
+import { StorageAPI } from './sources/storage';
+import { TranscodeService } from "./sources/transcode";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -62,6 +63,23 @@ const addCustomFieldsToBaseFields = (customInputFields: {
   }
 };
 
+const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
+  [key: string]: Collection;
+}) => {
+  try {
+    Object.keys(customTypeCollectionMapping).forEach((key: string) => {
+      if (baseTypeCollectionMapping[key]) {
+        throw Error(
+          `The key ${key} does already exist in baseTypeCollectionMapping, please choose another one`
+        );
+      }
+      baseTypeCollectionMapping[key] = customTypeCollectionMapping[key];
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
   applicationEndpoints.forEach((endpoint: Function) => {
     endpoint();
@@ -73,7 +91,8 @@ const start = (
   appConfig: Environment,
   appTranslations: Object,
   customEndpoints: Function[] = [],
-  customInputFields: { [key: string]: InputField } | undefined = undefined
+  customInputFields: { [key: string]: InputField } | undefined = undefined,
+  customTypeCollectionMapping: { [key: string]: Collection } | undefined = undefined
 ) => {
   environment = appConfig;
 
@@ -202,8 +221,13 @@ const start = (
     if (applicationEndpoints) {
       addApplicationEndpoints(applicationEndpoints);
     }
+
     if (customInputFields) {
       addCustomFieldsToBaseFields(customInputFields);
+    }
+
+    if (customTypeCollectionMapping) {
+      addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
 
     await new Promise<void>((resolve) =>

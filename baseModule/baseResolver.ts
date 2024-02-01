@@ -166,7 +166,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         entities = await dataSources.CollectionAPI.getEntities(
           limit || 20,
           skip || 0,
-          searchValue || { value: '' }
+          searchValue || { value: '' },
+          entityType
         );
       }
       return entities;

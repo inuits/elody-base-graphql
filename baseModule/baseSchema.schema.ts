@@ -9,6 +9,11 @@ export const baseSchema = gql`
     NotFound
   }
 
+  enum Collection {
+    entities
+    mediafiles
+  }
+
   enum Entitytyping {
     BaseEntity
     tenant
@@ -137,13 +142,6 @@ export const baseSchema = gql`
     relationType(input: String!): String
     fileTypes: [FileType]
   }
-
-  enum Collection {
-    entities
-    mediafiles
-  }
-
-  #TYPEMODALS
 
   enum ModalState {
     Initial
@@ -928,7 +926,7 @@ export const baseSchema = gql`
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
-      type: Entitytyping
+      type: Entitytyping!
       limit: Int
       skip: Int
       searchInputType: SearchInputType
