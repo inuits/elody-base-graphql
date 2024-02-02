@@ -977,6 +977,10 @@ export const baseSchema = gql`
       transcodeType: TranscodeType!
       masterEntityId: String
     ): String
+    setPrimaryMediafile(
+      entityId: String!
+      mediafileId: String!
+    ): JSON
   }
 
   enum ViewModes {

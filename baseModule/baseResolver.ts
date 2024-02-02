@@ -392,6 +392,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       }
     },
+    setPrimaryMediafile: async (
+        _source,
+        { entityId, mediafileId },
+        { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.setMediaPrimaire(entityId, mediafileId);
+    },
   },
   BaseEntity: {
     media: async (parent: any, _args, { dataSources }) => {
