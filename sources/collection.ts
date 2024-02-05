@@ -86,10 +86,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data as EntitiesResults;
   }
 
+  getCollectionValueForEntityType(entityType: string): string {
+    if (!collection.hasOwnProperty(entityType)) {
+      throw new Error(`Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`);
+    }
+    return collection[entityType];
+  }
+
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
     try {
-      data = await this.get(`${collection[entityType]}?type=${entityType}`);
+      data = await this.get(`${this.getCollectionValueForEntityType(entityType)}?type=${entityType}`);
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
       console.log(e);
@@ -106,7 +113,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       },
     ];
     try {
-      data = await this.post(`${collection[entityType]}/filter?soft=1`, { body });
+      data = await this.post(`${this.getCollectionValueForEntityType(entityType)}/filter?soft=1`, { body });
     } catch (e) {
       return '401';
     }
@@ -117,7 +124,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   async postEntitySoftCall(entityType: string): Promise<string> {
     let data;
     try {
-      data = await this.post(`${collection[entityType]}?soft=1`, {
+      data = await this.post(`${this.getCollectionValueForEntityType(entityType)}?soft=1`, {
         body: { type: entityType }
       });
     } catch (e) {
