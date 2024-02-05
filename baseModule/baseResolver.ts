@@ -1068,6 +1068,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     action: async (_source, { input }, { dataSources }) => {
       return input ? input : RouteNames.SingleEntity;
     },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
   },
   ContextMenuElodyAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1076,6 +1079,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     action: async (_source, { input }, { dataSources }) => {
       return input as ContextMenuElodyActionEnum;
     },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
   },
   ContextMenuGeneralAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1083,6 +1089,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     action: async (_source, { input }, { dataSources }) => {
       return input as ContextMenuGeneralActionEnum;
+    },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
     },
   }
 };
