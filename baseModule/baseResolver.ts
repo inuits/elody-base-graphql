@@ -399,6 +399,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return await dataSources.CollectionAPI.setMediaPrimaire(entityId, mediafileId);
     },
+    setPrimaryThumbnail: async (
+        _source,
+        { entityId, mediafileId },
+        { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.setThumbnailPrimaire(entityId, mediafileId);
+    },
   },
   BaseEntity: {
     media: async (parent: any, _args, { dataSources }) => {

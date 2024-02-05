@@ -795,6 +795,7 @@ export const baseSchema = gql`
 
   enum ContextMenuGeneralActionEnum {
     SetPrimaryMediafile
+    SetPrimaryThumbnail
   }
   
   enum ContextMenuElodyActionEnum {
@@ -981,6 +982,10 @@ export const baseSchema = gql`
       masterEntityId: String
     ): String
     setPrimaryMediafile(
+      entityId: String!
+      mediafileId: String!
+    ): JSON
+    setPrimaryThumbnail(
       entityId: String!
       mediafileId: String!
     ): JSON

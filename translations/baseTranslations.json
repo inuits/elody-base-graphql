@@ -207,7 +207,9 @@
         "followLink": "Open this entity in a new tab"
       },
       "contextMenuGeneralAction": {
-        "setPrimaryMediafile": "Set this as the primary mediafile for the asset"
+        "setPrimaryMediafile": "Set this as the primary mediafile for the asset",
+        "setPrimaryThumbnail": "Set this as the primary thumbnail for the asset"
+
       },
       "contextMenuElodyAction": {
         "delete": "Delete the link between this mediafile and the asset"
@@ -422,7 +424,8 @@
         "followLink": "Open deze entiteit in een nieuw tabblad"
       },
       "contextMenuGeneralAction": {
-        "setPrimaryMediafile": "Stel dit in als de primaire mediafile voor deze asset"
+        "setPrimaryMediafile": "Stel dit in als de primaire mediafile voor deze asset",
+        "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
         "delete": "Verwijder de relatie tussen deze mediafile en de asset"
