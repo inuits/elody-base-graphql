@@ -206,15 +206,16 @@ export const baseSchema = gql`
   enum MenuIcons {
     BookOpen
     Create
+    ExclamationTriangle
     Focus
-    Image
-    Upload
     History
+    Image
+    InfoCircle
     Iot
+    KeyholeSquare
     Police
     Settings
-    KeyholeSquare
-    InfoCircle
+    Upload
   }
 
   type Menu {

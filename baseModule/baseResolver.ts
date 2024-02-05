@@ -115,7 +115,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (type.toLowerCase() === 'mediafile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
-        return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id));
+        return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id), type);
       }
     },
     Entities: async (
@@ -327,7 +327,8 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       if (collection === Collection.Entities)
         return await dataSources.CollectionAPI.getEntity(
-          parseIdToGetMoreData(id)
+          parseIdToGetMoreData(id),
+          "BaseEntity"
         );
       else return await dataSources.CollectionAPI.getMediaFile(id);
     },
@@ -567,7 +568,11 @@ export const baseResolver: Resolvers<ContextValue> = {
           }
           return metadata[0]?.value ?? '';
         } else if (source === KeyValueSource.Root) {
-          return parent?.[key] ?? '';
+          const keyParts = key.split(".");
+          let value = parent;
+          for (const part of keyParts)
+            value = value?.[part]
+          return value ?? '';
         } else if (source === KeyValueSource.Relations) {
           try {
             const relation = parent?.relations
