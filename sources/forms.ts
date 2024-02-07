@@ -31,11 +31,12 @@ export const baseFields: { [key: string]: InputField } = {
   },
   baseFileUploadField: {
     type: InputFieldTypes.FileUpload,
-    fileTypes: [FileType.Csv, FileType.Jpeg, FileType.Jpg],
+    fileTypes: [FileType.Png, FileType.Jpeg, FileType.Jpg, FileType.Tiff],
   },
   baseCsvUploadField: {
     type: InputFieldTypes.CsvUpload,
     fileTypes: [FileType.Csv],
+    maxAmountOfFiles: 1,
   },
 };
 

@@ -4,33 +4,79 @@ import { AuthRESTDataSource, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 
 export const applyUploadEndpoint = (app: Express) => {
-  app.post('/api/upload/batch', async (request: Request, response: Response) => {
-    try {
-      let csv = '';
-      request.on('data', (chunk) => (csv += chunk.toString()));
-      request.on('end', async () => {
-        const uploadUrls = (await __batchEntities(request, csv)).filter(uploadUrl => uploadUrl !== "");
-        response.end(JSON.stringify(uploadUrls));
-      });
-    } catch (exception) {
-      response.status(500).end(String(exception));
+  app.post(
+    '/api/upload/batch',
+    async (request: Request, response: Response) => {
+      try {
+        const isDryRun: boolean = !!request.query['dry_run'];
+        let csv = '';
+        request.on('data', (chunk) => {
+          try {
+            csv += chunk.toString();
+          } catch (e) {
+            console.log('Error while getting csv file:', e);
+            response.status(500).end(e);
+          }
+        });
+        request.on('end', async () => {
+          try {
+            if (isDryRun) {
+              const res = await __batchDryRun(request, csv);
+              const message = await res.json();
+              response.status(res.status).end(JSON.stringify(message));
+            } else {
+              const uploadUrls = (await __batchEntities(request, csv)).filter(
+                (uploadUrl) => uploadUrl !== ''
+              );
+              response.end(JSON.stringify(uploadUrls));
+            }
+          } catch (e) {
+            console.log('Error while parsing response:', e);
+            response.status(500).end(e);
+          }
+        });
+      } catch (exception) {
+        response.status(500).end(String(exception));
+      }
     }
-  });
+  );
 
-  app.post('/api/upload/single', async (request: Request, response: Response) => {
-    try {
-      const uploadUrl = await __createMediafileForEntity(request);
-      response.end(JSON.stringify(uploadUrl));
-    } catch (exception) {
-      response.status(500).end(String(exception));
+  app.post(
+    '/api/upload/single',
+    async (request: Request, response: Response) => {
+      try {
+        const uploadUrl = await __createMediafileForEntity(request);
+        response.end(JSON.stringify(uploadUrl));
+      } catch (exception) {
+        response.status(500).end(String(exception));
+      }
     }
-  });
+  );
 };
 
-const __batchEntities = async (request: Request, csv: string): Promise<string[]> => {
-  const response = await fetch(
-    `${env?.api.collectionApiUrl}/batch`,
-    {
+const __batchDryRun = async (request: Request, csv: string): Promise<any> => {
+  try {
+    return await fetch(`${env?.api.collectionApiUrl}/batch?dry_run=1`, {
+      headers: {
+        'Content-Type': 'text/csv',
+        Accept: 'application/json',
+        Authorization: addJwt(undefined, request, undefined),
+      },
+      method: 'POST',
+      body: csv,
+    });
+  } catch (e) {
+    console.log(e);
+    throw Error('Something went wrong during dry run');
+  }
+};
+
+const __batchEntities = async (
+  request: Request,
+  csv: string
+): Promise<string[]> => {
+  try {
+    const response = await fetch(`${env?.api.collectionApiUrl}/batch`, {
       headers: {
         'Content-Type': 'text/csv',
         Accept: 'text/uri-list',
@@ -38,35 +84,43 @@ const __batchEntities = async (request: Request, csv: string): Promise<string[]>
       },
       method: 'POST',
       body: csv,
-    }
-  );
-
-  let responseBody = '';
-  response.body.on('data', (chunk) => (responseBody += chunk.toString()));
-  return new Promise((resolve) => {
-    response.body.on('end', async () => {
-      const jsonParsableResult = `["${responseBody.split('\n').join('","')}"]`;
-      resolve(JSON.parse(jsonParsableResult));
     });
-  });
+
+    let responseBody = '';
+    response.body.on('data', (chunk) => (responseBody += chunk.toString()));
+    return new Promise((resolve) => {
+      response.body.on('end', async () => {
+        const jsonParsableResult = `["${responseBody.split('\n').join('","')}"]`;
+        resolve(JSON.parse(jsonParsableResult));
+      });
+    });
+  } catch (e) {
+    console.log(e);
+    throw Error('Something went wrong during batchEntities call');
+  }
 };
 
-const __createMediafileForEntity = async (request: Request): Promise<string> => {
+const __createMediafileForEntity = async (
+  request: Request
+): Promise<string> => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   const body = {
-    filename: `${ request.query.filename }`,
+    filename: `${request.query.filename}`,
     metadata: [
-        {
-          key: 'title',
-          value: `${request.query.filename}`,
-        },
+      {
+        key: 'title',
+        value: `${request.query.filename}`,
+      },
     ],
-  }
-  return await datasource.post(`${env?.api.collectionApiUrl}/entities/${request.query.entityId}/mediafiles`, {
-    body,
-    headers: {
-      Accept: 'text/uri-list',
-      'Content-Type': 'application/json',
+  };
+  return await datasource.post(
+    `${env?.api.collectionApiUrl}/entities/${request.query.entityId}/mediafiles`,
+    {
+      body,
+      headers: {
+        Accept: 'text/uri-list',
+        'Content-Type': 'application/json',
+      },
     }
-  });
+  );
 };
