@@ -3,6 +3,11 @@
     "audio":{
       "no-support":"Your browser does not support the audio element."
     },
+    "actions": {
+      "labels": {
+        "upload": "Upload"
+      }
+    },
     "bulk-operations":{
       "undo-selection":"undo selection",
       "select-page":"select page",
@@ -187,10 +192,11 @@
       "upload": "Upload",
       "tenant": "Tenant"
     },
-    "upload":{
-      "upload-files":"Upload files",
-      "import":"Import from external source",
-      "reset":"Reset view"
+    "upload-fields":{
+      "labels": {
+        "csv-upload": "Drop your CSV, here.",
+        "file-upload": "Drag your files, or click here to add your files"
+      }
     },
     "tooltip":{
       "advancedFilterTypes":{
@@ -221,6 +227,11 @@
   "nl": {
     "audio":{
       "no-support":"Uw browser ondersteund het audio element niet"
+    },
+    "actions": {
+      "labels": {
+        "upload": "Uploaden"
+      }
     },
     "bulk-operations":{
       "undo-selection":"selectie ongedaan maken",
@@ -406,10 +417,11 @@
       "upload": "Upload",
       "tenant": "Tenant"
     },
-    "upload":{
-      "upload-files":"Bestanden uploaden",
-      "import":"Importeer van externe bron",
-      "reset":"Reset"
+    "upload-fields": {
+      "labels": {
+        "csv-upload": "Zet hier je CSV neer.",
+        "file-upload": "Sleep je bestanden hierheen of klik hier om je bestanden toe te voegen"
+      }
     },
     "tooltip":{
       "advancedFilterTypes":{

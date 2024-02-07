@@ -12,6 +12,7 @@ import {
 import {
   ActionElement,
   Actions,
+  ActionType,
   BaseEntity,
   BaseRelationValuesInput,
   Collection,
@@ -23,6 +24,8 @@ import {
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
+  Conditional,
+  DamsIcons,
   EditStatus,
   EntitiesResults,
   Entity,
@@ -31,6 +34,8 @@ import {
   Entitytyping,
   EntityViewElements,
   ExpandButtonOptions,
+  FormAction,
+  FormFields,
   GraphElement,
   IntialValues,
   KeyValueSource,
@@ -42,13 +47,12 @@ import {
   MenuIcons,
   MenuTypeLink,
   Metadata,
-  MetadataOrRelationField,
   Orientations,
   PanelInfo,
   PanelLink,
   PanelMetaData,
-  PanelRelationMetaData,
   PanelRelation,
+  PanelRelationMetaData,
   PanelThumbnail,
   Permission,
   Resolvers,
@@ -56,11 +60,13 @@ import {
   SearchInputType,
   SingleMediaFileElement,
   TimeUnit,
+  UploadField,
+  UploadFieldSize,
+  UploadFieldType,
+  Validation,
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  Validation,
-  Conditional,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -236,9 +242,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       { type },
       { dataSources }
     ) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
-        type
-      );
+      let status =
+        await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
       return status == '200';
     },
     PermissionMappingCreate: async (
@@ -246,15 +251,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       { entityType },
       { dataSources }
     ) => {
-      const status = await dataSources.CollectionAPI.postEntitySoftCall(
-        entityType
-      );
+      const status =
+        await dataSources.CollectionAPI.postEntitySoftCall(entityType);
       return status == '200';
     },
     PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
-      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
-        id
-      );
+      const edit =
+        await dataSources.CollectionAPI.patchEntityDetailSoftCall(id);
       const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id);
       return [
         {
@@ -829,6 +832,37 @@ export const baseResolver: Resolvers<ContextValue> = {
       return baseFields[type];
     },
   },
+  UploadField: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+    uploadFieldSize: async (parent: any, { input }, { dataSources }) => {
+      return input || UploadFieldSize.Big;
+    },
+    inputField: async (parent: any, { type }, { dataSources }) => {
+      return baseFields[type];
+    },
+    dryRunUpload: async (parent: any, { input }, { dataSources }) => {
+      return input || false;
+    },
+    uploadFieldType: async (parent: any, { input }, { dataSources }) => {
+      return input || UploadFieldType.Batch;
+    },
+  },
+  FormAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input || DamsIcons.NoIcon;
+    },
+    actionType: async (_source, { input }, { dataSources }) => {
+      return input || ActionType.Submit;
+    },
+    actionQuery: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+  },
   PanelRelationMetaData: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -871,9 +905,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             (mediafile: any) => mediafile.is_primary_thumbnail
           ) || mediafileRelations[0];
         const thumbnailId: string = thumbnailMediafile.key;
-        const mediafile = await dataSources.CollectionAPI.getMediaFile(
-          thumbnailId
-        );
+        const mediafile =
+          await dataSources.CollectionAPI.getMediaFile(thumbnailId);
         return mediafile.transcode_filename || mediafile.filename;
       } catch {
         return undefined;
@@ -1008,9 +1041,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
   },
+  Form: {
+    formFields: async (parent: any, {}, { dataSources }) => {
+      return parent as FormFields;
+    },
+  },
   FormFields: {
     metaData: async (parent: any, {}, { dataSources }) => {
       return parent as PanelMetaData;
+    },
+    uploadField: async (parent: any, {}, { dataSources }) => {
+      return parent as UploadField;
+    },
+    action: async (parent: any, {}, { dataSources }) => {
+      return parent as FormAction;
     },
   },
   InputField: {

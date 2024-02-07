@@ -81,6 +81,9 @@ export const baseSchema = gql`
     jpg
     jpeg
     svg
+    mp3
+    mp4
+    tiff
   }
 
   enum TranscodeType {
@@ -90,10 +93,23 @@ export const baseSchema = gql`
   type FormFields {
     metaData: PanelMetaData!
     uploadField: UploadField
+    action: FormAction
   }
 
   type Form {
     formFields: FormFields!
+  }
+
+  enum ActionType {
+    upload
+    submit
+  }
+
+  type FormAction {
+    label(input: String!): String!
+    icon(input: DamsIcons): DamsIcons
+    actionType(input: ActionType): ActionType
+    actionQuery(input: String): String
   }
 
   type CreateEntityForm {
@@ -131,6 +147,9 @@ export const baseSchema = gql`
     validation: ValidationInput
     options: [DropdownOptionInput]
     relationType: String
+    fileTypes: [FileType]
+    maxFileSize: String
+    maxAmountOfFiles: Int
   }
 
   type InputField {
@@ -141,6 +160,8 @@ export const baseSchema = gql`
     options: [DropdownOption]
     relationType(input: String!): String
     fileTypes: [FileType]
+    maxFileSize: String
+    maxAmountOfFiles: Int
   }
 
   enum ModalState {
@@ -154,10 +175,8 @@ export const baseSchema = gql`
     BulkOperationsEdit
     BulkOperations
     Confirm
-    Create
     EntityPicker
-    OCR
-    Upload
+    DynamicForm
     Search
   }
 
@@ -168,6 +187,8 @@ export const baseSchema = gql`
 
   input MenuTypeLinkInputModal {
     typeModal: TypeModals!
+    formQuery: String
+    neededPermission: Permission
   }
 
   input MenuTypeLinkInputRoute {
@@ -181,6 +202,8 @@ export const baseSchema = gql`
 
   type MenuTypeLinkModal {
     typeModal: TypeModals!
+    formQuery: String
+    neededPermission: Permission
   }
 
   type MenuTypeLinkRoute {
@@ -247,6 +270,7 @@ export const baseSchema = gql`
     ArrowCircleLeft
     ArrowCircleRight
     AudioThumbnail
+    Ban
     BookOpen
     Check
     CheckCircle
@@ -280,6 +304,7 @@ export const baseSchema = gql`
     NoImage
     Plus
     PlusCircle
+    Process
     QuestionCircle
     Redo
     Save
@@ -686,6 +711,17 @@ export const baseSchema = gql`
     mediainfo
   }
 
+  enum UploadFieldSize {
+    small
+    normal
+    big
+  }
+
+  enum UploadFieldType {
+    batch
+    single
+  }
+
   type PanelInfo {
     label(input: String!): String!
     value(input: String!): String!
@@ -694,7 +730,10 @@ export const baseSchema = gql`
 
   type UploadField {
     label(input: String!): String!
+    uploadFieldSize(input: UploadFieldSize): UploadFieldSize!
+    uploadFieldType(input: UploadFieldType!): UploadFieldType!
     inputField(type: BaseFieldType!): InputField!
+    dryRunUpload(input: Boolean): Boolean
   }
 
   type PanelMetaData {
