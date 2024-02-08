@@ -5,7 +5,8 @@
     },
     "actions": {
       "labels": {
-        "upload": "Upload"
+        "upload": "Upload",
+        "create": "Create"
       }
     },
     "bulk-operations":{
@@ -230,7 +231,8 @@
     },
     "actions": {
       "labels": {
-        "upload": "Uploaden"
+        "upload": "Uploaden",
+        "create": "Creëren"
       }
     },
     "bulk-operations":{
