@@ -82,7 +82,9 @@
         "MaxMatcher":"on maximum value (not included)",
         "MinIncludedMatcher":"on minimum value (included)",
         "MinMatcher":"on minimum value (not included)",
-        "NoneMatcher":"has no value"
+        "NoneMatcher":"has no value",
+        "MetadataOnRelationExactMatcher":"is exactly",
+        "MetadataOnRelationContainsMatcher":"contains"
       },
       "matcher-placeholders": {
         "date": "date",
@@ -299,7 +301,9 @@
         "MaxMatcher":"op maximum waarde (exclusief)",
         "MinIncludedMatcher":"op minimum waarde (inclusief)",
         "MinMatcher":"op minimum waarde (exclusief)",
-        "NoneMatcher":"is niet ingevuld"
+        "NoneMatcher":"is niet ingevuld",
+        "MetadataOnRelationExactMatcher":"is gelijk aan",
+        "MetadataOnRelationContainsMatcher":"bevat"
       },
       "matcher-placeholders": {
         "date": "datum",
