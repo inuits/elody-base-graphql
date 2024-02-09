@@ -110,6 +110,7 @@ export const baseSchema = gql`
     icon(input: DamsIcons): DamsIcons
     actionType(input: ActionType): ActionType
     actionQuery(input: String): String
+    showsFormErrors(input: Boolean): Boolean
   }
 
   type CreateEntityForm {

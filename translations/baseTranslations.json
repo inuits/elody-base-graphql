@@ -197,6 +197,10 @@
       "labels": {
         "csv-upload": "Drop your CSV, here.",
         "file-upload": "Drag your files, or click here to add your files"
+      },
+      "errors": {
+        "missing": "{0} is missing",
+        "extraneous": "{0} is extraneous"
       }
     },
     "tooltip":{
@@ -423,7 +427,11 @@
       "labels": {
         "csv-upload": "Zet hier je CSV neer.",
         "file-upload": "Sleep je bestanden hierheen of klik hier om je bestanden toe te voegen"
-      }
+        },
+        "errors": {
+          "missing": "{0} ontbreekt",
+          "extraneous": "{0} is overbodig"
+        }
     },
     "tooltip":{
       "advancedFilterTypes":{

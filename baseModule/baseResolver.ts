@@ -862,6 +862,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     actionQuery: async (_source, { input }, { dataSources }) => {
       return input || '';
     },
+    showsFormErrors: async (_source, { input }, { dataSources }) => {
+      return input || false;
+    },
   },
   PanelRelationMetaData: {
     label: async (_source, { input }, { dataSources }) => {
