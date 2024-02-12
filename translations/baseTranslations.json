@@ -69,7 +69,8 @@
       "create":"Create entity",
       "type":"Type",
       "belongs-to": "Belongs to",
-      "pick": "Pick entity"
+      "pick": "Pick entity",
+      "upload": "Upload"
     },
     "filters":{
       "filter":"Filters",
@@ -299,7 +300,8 @@
       "create":"Maak entiteit",
       "type":"Type",
       "belongs-to": "Behoort tot",
-      "pick": "Selecteer entiteit"
+      "pick": "Selecteer entiteit",
+      "upload": "Uploaden"
     },
     "filters":{
       "filter":"Filters",
