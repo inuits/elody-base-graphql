@@ -565,8 +565,12 @@ export class CollectionAPI extends AuthRESTDataSource {
         }
       }
     );
-
-    if (itemWithParentId && itemWithParentId.parent_key === 'relations') {
+    const isFilterCall = advancedFilterInputs.some(
+        (currentValue: AdvancedFilterInput) => {
+          return ["metadata_on_relation"].includes(currentValue.type);
+        }
+    );
+    if (itemWithParentId && itemWithParentId.parent_key === 'relations' && !isFilterCall) {
       return this.get(
         `${Collection.Entities}/${
           itemWithParentId.value[0]
