@@ -202,7 +202,7 @@
       "errors": {
         "missing": "{0} is missing",
         "extraneous": "{0} is extraneous",
-        "dry-run-failed": "One or more required columns headers aren't defined"
+        "dry-run-failed": "Something went wrong while running CSV validation"
       }
     },
     "tooltip":{
@@ -433,7 +433,8 @@
         },
         "errors": {
           "missing": "{0} ontbreekt",
-          "extraneous": "{0} is overbodig"
+          "extraneous": "{0} is overbodig",
+          "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
         }
     },
     "tooltip":{
