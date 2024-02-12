@@ -683,6 +683,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQuery: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
+    customQueryFilters: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
+    },
     searchInputType: async (parent, { input }, { dataSources }) => {
       return input ? input : 'AdvancedInputType';
     },

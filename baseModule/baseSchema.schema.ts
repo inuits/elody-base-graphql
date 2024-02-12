@@ -628,6 +628,7 @@ export const baseSchema = gql`
     viewMode(input: EntityListViewMode): EntityListViewMode
     customQuery(input: String): String
     customQueryRelationType(input: String): String
+    customQueryFilters(input: String): String
     searchInputType(input: String): String
   }
 
