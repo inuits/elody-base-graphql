@@ -201,7 +201,8 @@
       },
       "errors": {
         "missing": "{0} is missing",
-        "extraneous": "{0} is extraneous"
+        "extraneous": "{0} is extraneous",
+        "dry-run-failed": "One or more required columns headers aren't defined"
       }
     },
     "tooltip":{
