@@ -110,6 +110,7 @@ export const baseSchema = gql`
     icon(input: DamsIcons): DamsIcons
     actionType(input: ActionType): ActionType
     actionQuery(input: String): String
+    creationType(input: Entitytyping): Entitytyping!
     showsFormErrors(input: Boolean): Boolean
   }
 
@@ -995,6 +996,7 @@ export const baseSchema = gql`
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
+    GetDynamicForm: Form!
   }
 
   type Mutation {

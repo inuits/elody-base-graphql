@@ -67,6 +67,7 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  Form,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -269,6 +270,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           hasPermission: del == '200',
         },
       ];
+    },
+    GetDynamicForm: async (_source: any, _args, { dataSources }) => {
+      return {} as Form;
     },
   },
   Mutation: {
@@ -861,6 +865,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     actionQuery: async (_source, { input }, { dataSources }) => {
       return input || '';
+    },
+    creationType: async (_source, { input }, { dataSources }) => {
+      return input || Entitytyping.BaseEntity;
     },
     showsFormErrors: async (_source, { input }, { dataSources }) => {
       return input || false;
