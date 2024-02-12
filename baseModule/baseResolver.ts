@@ -104,14 +104,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   }),
   Query: {
-    CreateEntityForm: async (_source, { type }, { dataSources }) => {
-      return {
-        formFields: {
-          type,
-          createFormFields: {},
-        } as BaseEntity,
-      };
-    },
     Entity: async (
       _source,
       { id, type, preferredLanguage },

@@ -888,7 +888,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
-    createFormFields: FormFields
     bulkOperationOptions: BulkOperationOptions
   }
 
@@ -905,7 +904,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
-    createFormFields: FormFields
     bulkOperationOptions: BulkOperationOptions
   }
 
@@ -922,7 +920,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
-    createFormFields: FormFields
     bulkOperationOptions: BulkOperationOptions
   }
 
@@ -940,7 +937,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
-    createFormFields: FormFields
     bulkOperationOptions: BulkOperationOptions
   }
 
@@ -958,7 +954,6 @@ export const baseSchema = gql`
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
-    createFormFields: FormFields
     bulkOperationOptions: BulkOperationOptions
   }
 
