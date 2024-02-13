@@ -65,7 +65,8 @@ export const getOptionsByEntityType = async (
         return (
           dataItem?.key === 'title' ||
           dataItem?.key === 'name' ||
-          dataItem?.key === 'email'
+          dataItem?.key === 'email' ||
+          option['_id']
         );
       })?.value,
       value: option['_id'],
