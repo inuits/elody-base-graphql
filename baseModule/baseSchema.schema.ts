@@ -97,6 +97,7 @@ export const baseSchema = gql`
   }
 
   type Form {
+    label(input: String): String!
     formFields: FormFields!
   }
 
@@ -840,7 +841,7 @@ export const baseSchema = gql`
     SetPrimaryMediafile
     SetPrimaryThumbnail
   }
-  
+
   enum ContextMenuElodyActionEnum {
     Delete
   }
@@ -850,19 +851,19 @@ export const baseSchema = gql`
     action(input: ContextMenuGeneralActionEnum): ContextMenuGeneralActionEnum!
     icon(input: String): String!
   }
-  
+
   type ContextMenuElodyAction {
     label(input: String): String!
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
     icon(input: String): String!
   }
-  
+
   type ContextMenuLinkAction {
     label(input: String): String!
     action(input: RouteNames): RouteNames!
     icon(input: String): String!
   }
-  
+
   type ContextMenuActions {
     doLinkAction: ContextMenuLinkAction
     doGeneralAction: ContextMenuGeneralAction
@@ -1020,14 +1021,8 @@ export const baseSchema = gql`
       transcodeType: TranscodeType!
       masterEntityId: String
     ): String
-    setPrimaryMediafile(
-      entityId: String!
-      mediafileId: String!
-    ): JSON
-    setPrimaryThumbnail(
-      entityId: String!
-      mediafileId: String!
-    ): JSON
+    setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
+    setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON
   }
 
   enum ViewModes {

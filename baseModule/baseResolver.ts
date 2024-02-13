@@ -114,7 +114,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (type.toLowerCase() === 'mediafile') {
         return await dataSources.CollectionAPI.getMediaFile(id);
       } else {
-        return await dataSources.CollectionAPI.getEntity(parseIdToGetMoreData(id), type);
+        return await dataSources.CollectionAPI.getEntity(
+          parseIdToGetMoreData(id),
+          type
+        );
       }
     },
     Entities: async (
@@ -327,7 +330,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (collection === Collection.Entities)
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id),
-          "BaseEntity"
+          'BaseEntity'
         );
       else return await dataSources.CollectionAPI.getMediaFile(id);
     },
@@ -393,18 +396,24 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
     },
     setPrimaryMediafile: async (
-        _source,
-        { entityId, mediafileId },
-        { dataSources }
+      _source,
+      { entityId, mediafileId },
+      { dataSources }
     ) => {
-      return await dataSources.CollectionAPI.setMediaPrimaire(entityId, mediafileId);
+      return await dataSources.CollectionAPI.setMediaPrimaire(
+        entityId,
+        mediafileId
+      );
     },
     setPrimaryThumbnail: async (
-        _source,
-        { entityId, mediafileId },
-        { dataSources }
+      _source,
+      { entityId, mediafileId },
+      { dataSources }
     ) => {
-      return await dataSources.CollectionAPI.setThumbnailPrimaire(entityId, mediafileId);
+      return await dataSources.CollectionAPI.setThumbnailPrimaire(
+        entityId,
+        mediafileId
+      );
     },
   },
   BaseEntity: {
@@ -554,7 +563,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     id: async (parent: any, {}, { dataSources }) => {
       return parent._id;
     },
-    keyValue: async (parent: any, { key, source, uuid, metadataKeyAsLabel }, { dataSources }) => {
+    keyValue: async (
+      parent: any,
+      { key, source, uuid, metadataKeyAsLabel },
+      { dataSources }
+    ) => {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
@@ -567,20 +580,24 @@ export const baseResolver: Resolvers<ContextValue> = {
           }
           return metadata[0]?.value ?? '';
         } else if (source === KeyValueSource.Root) {
-          const keyParts = key.split(".");
+          const keyParts = key.split('.');
           let value = parent;
-          for (const part of keyParts)
-            value = value?.[part]
+          for (const part of keyParts) value = value?.[part];
           return value ?? '';
         } else if (source === KeyValueSource.Relations) {
           try {
-            const relation = parent?.relations
-              .filter((relation: any) => relation.type === key)?.[0];
+            const relation = parent?.relations.filter(
+              (relation: any) => relation.type === key
+            )?.[0];
             if (relation) {
-              const entity = await dataSources.CollectionAPI.getEntityById(relation.key);
-              return entity.metadata.find(
-                (metadata: any) => metadata.key === metadataKeyAsLabel
-              )?.value ?? '';
+              const entity = await dataSources.CollectionAPI.getEntityById(
+                relation.key
+              );
+              return (
+                entity.metadata.find(
+                  (metadata: any) => metadata.key === metadataKeyAsLabel
+                )?.value ?? ''
+              );
             }
           } catch {
             return parent?.[key] ?? '';
@@ -1047,6 +1064,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   Form: {
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input || '';
+    },
     formFields: async (parent: any, {}, { dataSources }) => {
       return parent as FormFields;
     },
@@ -1120,7 +1140,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     doElodyAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuElodyAction;
-    }
+    },
   },
   ContextMenuLinkAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1154,5 +1174,5 @@ export const baseResolver: Resolvers<ContextValue> = {
     icon: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-  }
+  },
 };

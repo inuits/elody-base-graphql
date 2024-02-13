@@ -45,8 +45,12 @@ export const applyUploadEndpoint = (app: Express) => {
     '/api/upload/single',
     async (request: Request, response: Response) => {
       try {
-        const uploadUrl = await __createMediafileForEntity(request);
-        response.end(JSON.stringify(uploadUrl));
+        if (request.query?.hasRelation) {
+          const uploadUrl = await __createMediafileForEntity(request);
+          response.end(JSON.stringify(uploadUrl));
+        } else {
+          const uploadUrl = await __createStandaloneMediafile(request);
+        }
       } catch (exception) {
         response.status(500).end(String(exception));
       }
@@ -123,4 +127,8 @@ const __createMediafileForEntity = async (
       },
     }
   );
+};
+
+const __createStandaloneMediafile = (request: Request) => {
+  console.log(request);
 };
