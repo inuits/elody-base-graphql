@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { addJwt } from './mediafilesEndpoint';
 import { AuthRESTDataSource, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
+import { EntityInput, Entitytyping } from '../../../generated-types/type-defs';
 
 export const applyUploadEndpoint = (app: Express) => {
   app.post(
@@ -50,6 +51,7 @@ export const applyUploadEndpoint = (app: Express) => {
           response.end(JSON.stringify(uploadUrl));
         } else {
           const uploadUrl = await __createStandaloneMediafile(request);
+          response.end(JSON.stringify(uploadUrl));
         }
       } catch (exception) {
         response.status(500).end(String(exception));
@@ -129,6 +131,19 @@ const __createMediafileForEntity = async (
   );
 };
 
-const __createStandaloneMediafile = (request: Request) => {
-  console.log(request);
+const __createStandaloneMediafile = async (request: Request) => {
+  const datasource = new AuthRESTDataSource({ session: request.session });
+  const body: EntityInput = {
+    type: Entitytyping.Asset,
+  };
+  return await datasource.post(
+    `${env?.api.collectionApiUrl}/entities?create_mediafile=1&mediafile_filename=${request.query.filename}`,
+    {
+      body,
+      headers: {
+        Accept: 'text/uri-list',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 };
