@@ -13,7 +13,6 @@ import {
   ActionElement,
   Actions,
   ActionType,
-  BaseEntity,
   BaseRelationValuesInput,
   Collection,
   Column,
@@ -500,6 +499,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     type: async (parent: any) => 'MediaFile',
     intialValues: async (parent: any, _args) => {
+      console.log(parent);
       return parent;
     },
     allowedViewModes: async (parent: any, _args, { dataSources }) => {

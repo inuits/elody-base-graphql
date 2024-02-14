@@ -134,6 +134,7 @@ const __createMediafileForEntity = async (
 const __createStandaloneMediafile = async (request: Request) => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   const body: EntityInput = {
+    // metadata: [{ key: 'title', value: request.query.filename }],
     type: Entitytyping.Asset,
   };
   return await datasource.post(
