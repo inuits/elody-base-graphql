@@ -135,7 +135,9 @@ const __createStandaloneMediafile = async (request: Request) => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   const body: EntityInput = {
     metadata: [{ key: 'title', value: request.query.filename as string }],
-    type: environment.customization.uploadEntityTypeToCreate,
+    type:
+      environment?.customization?.uploadEntityTypeToCreate ||
+      Entitytyping.Asset,
   };
   return await datasource.post(
     `${env?.api.collectionApiUrl}/entities?create_mediafile=1&mediafile_filename=${request.query.filename}`,
