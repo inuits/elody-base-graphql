@@ -31,7 +31,13 @@ export const baseFields: { [key: string]: InputField } = {
   },
   baseFileUploadField: {
     type: InputFieldTypes.FileUpload,
-    fileTypes: [FileType.Png, FileType.Jpeg, FileType.Jpg, FileType.Tiff],
+    fileTypes: [
+      FileType.Png,
+      FileType.Jpeg,
+      FileType.Jpg,
+      FileType.Tiff,
+      FileType.Mp4,
+    ],
   },
   baseCsvUploadField: {
     type: InputFieldTypes.CsvUpload,

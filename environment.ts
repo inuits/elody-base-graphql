@@ -27,7 +27,7 @@ export interface Environment {
     storageApiUrl: string;
     storageApiUrlExt: string;
     promUrl: 'no-prom' | string;
-    transcodeService?: string
+    transcodeService?: string;
   };
   features: {
     simpleSearch: {
@@ -53,6 +53,7 @@ export interface Environment {
     applicationTitle: string;
     applicationLocale: string;
     hideEmptyFields?: boolean;
+    uploadEntityTypeToCreate?: Entitytyping;
   };
   routerConfig: any;
   damsFrontend: string;

@@ -70,7 +70,8 @@
       "type":"Type",
       "belongs-to": "Belongs to",
       "pick": "Pick entity",
-      "upload": "Upload"
+      "upload": "Upload",
+      "reset-viewer": "Reset"
     },
     "filters":{
       "filter":"Filters",
@@ -302,7 +303,8 @@
       "type":"Type",
       "belongs-to": "Behoort tot",
       "pick": "Selecteer entiteit",
-      "upload": "Uploaden"
+      "upload": "Uploaden",
+      "reset-viewer": "Reset"
     },
     "filters":{
       "filter":"Filters",
