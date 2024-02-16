@@ -24,7 +24,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             hasSimpleSearch: config.features.simpleSearch.hasSimpleSearch,
             simpleSearchEntityTypes:
               config.features.simpleSearch.simpleSearchEntityTypes,
-              itemTypes: config.features.simpleSearch.itemTypes,
+            itemTypes: config.features.simpleSearch.itemTypes,
             simpleSearchMetadataKey:
               config.features.simpleSearch.simpleSearchMetadataKey,
           },
@@ -49,7 +49,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.customization.hideEmptyFields === undefined
               ? false
               : config.customization.hideEmptyFields,
-          entityIdKey: config.customization.entityIdKey
+          entityIdKey: config.customization.entityIdKey || '_id',
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,

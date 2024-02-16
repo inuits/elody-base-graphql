@@ -54,7 +54,7 @@ export interface Environment {
     applicationLocale: string;
     hideEmptyFields?: boolean;
     uploadEntityTypeToCreate?: Entitytyping;
-    entityIdKey: string;
+    entityIdKey?: string;
   };
   routerConfig: any;
   damsFrontend: string;
