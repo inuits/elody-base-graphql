@@ -33,7 +33,7 @@ import { CollectionAPI } from './sources/collection';
 import { ContextValue, DataSources } from './types';
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
-import { getMetadataItemValueByKey } from "./helpers/helpers";
+import { getMetadataItemValueByKey, getEntityId } from "./helpers/helpers";
 import { ImportAPI } from 'import-module';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
@@ -255,5 +255,6 @@ export {
   loadTranslations,
   baseTranslations,
   AuthRESTDataSource,
-  getMetadataItemValueByKey
+  getMetadataItemValueByKey,
+  getEntityId
 };

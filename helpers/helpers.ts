@@ -1,5 +1,6 @@
 import {Metadata, Unit} from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
+import { environment} from "../main";
 
 export const customSort = (
   customSortOrder: string[],
@@ -33,4 +34,11 @@ export const getMetadataItemValueByKey = (
       metadata.find((metadataItem: Metadata) => metadataItem.key === metadataKey)
           ?.value || backupValue
   );
+};
+
+export const getEntityId = (
+    entity: any,
+) => {
+  const key = environment !== undefined ? environment.customization.entityIdKey : "_id";
+  return entity[key];
 };

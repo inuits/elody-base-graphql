@@ -71,7 +71,7 @@ import {
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
-import { setPreferredLanguageForDataSources } from '../helpers/helpers';
+import { setPreferredLanguageForDataSources, getEntityId } from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -467,10 +467,10 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   Tenant: {
     id: async (parent: any, _args, { dataSources }) => {
-      return parent._id;
+      return getEntityId(parent);
     },
     uuid: async (parent: any, _args, { dataSources }) => {
-      return parent._id;
+      return getEntityId(parent);
     },
     permission: async (parent: any, _args, { dataSources }) => {
       // Todo fix permissions
@@ -495,7 +495,10 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   MediaFileEntity: {
     id: async (parent: any) => {
-      return parent._id;
+      return getEntityId(parent);
+    },
+    uuid: async (parent: any) => {
+      return getEntityId(parent);
     },
     type: async (parent: any) => 'MediaFile',
     intialValues: async (parent: any, _args) => {

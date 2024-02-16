@@ -49,6 +49,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.customization.hideEmptyFields === undefined
               ? false
               : config.customization.hideEmptyFields,
+          entityIdKey: config.customization.entityIdKey
         },
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
