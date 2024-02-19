@@ -381,6 +381,13 @@ export const baseSchema = gql`
     AndOrValue: Boolean
   }
 
+  input SearchFilter {
+    value: String
+    isAsc: Boolean
+    key: String
+    order_by: String
+  }
+
   enum SearchInputType {
     AdvancedInputMediaFilesType
     AdvancedInputType
