@@ -631,6 +631,7 @@ export const baseSchema = gql`
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String
     searchInputType(input: String): String
+    basicBaseLibrary(input: Boolean): Boolean
   }
 
   enum EntityListViewMode {
