@@ -795,8 +795,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     relation: async (parent: any, {}, { dataSources }) => {
       try {
         const collection: Collection = parent.uuid.includes(Collection.Entities)
-          ? Collection.Mediafiles
-          : Collection.Entities;
+          ? Collection.Entities
+          : Collection.Mediafiles;
         const relations = (
           await dataSources.CollectionAPI.getRelations(
             removePrefixFromId(parent.uuid),
