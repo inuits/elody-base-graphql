@@ -129,6 +129,10 @@
         "entityUpdated":{
           "title":"Entity successfully Updated",
           "description":"Changes have been saved successfully"
+        },
+        "entityDeleted": {
+          "title": "Entity successfully deleted",
+          "description": "Changes have been saved successfully"
         }
       },
       "errors": {
@@ -362,6 +366,10 @@
         "entityUpdated":{
           "title":"Entiteit succesvol gëupdated",
           "description":"Wijzigingen succesvol opgeslagen"
+        },
+        "entityDeleted": {
+          "title": "Entiteit succesvol verwijderd",
+          "description": "Wijzigingen succesvol opgeslagen"
         }
       },
       "errors": {
