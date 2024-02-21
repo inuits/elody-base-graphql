@@ -161,7 +161,7 @@ export const baseSchema = gql`
     acceptedEntityTypes: [String]
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
-    relationType(input: String!): String
+    relationType: String
     fileTypes: [FileType]
     maxFileSize: String
     maxAmountOfFiles: Int

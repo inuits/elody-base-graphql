@@ -71,7 +71,10 @@ import {
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
-import { setPreferredLanguageForDataSources, getEntityId } from '../helpers/helpers';
+import {
+  setPreferredLanguageForDataSources,
+  getEntityId,
+} from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -1111,8 +1114,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return options;
     },
-    relationType: async (parent, { input }, { dataSources }) => {
-      return input || '';
+    relationType: async (parent, _args, { dataSources }) => {
+      return parent.relationType || '';
     },
   },
   Validation: {
