@@ -106,6 +106,20 @@ export const baseSchema = gql`
     submit
   }
 
+  enum ActionProgressIndicatorType {
+    spinner
+    progressSteps
+  }
+
+  type ActionProgressStep {
+    label(input: String!): String!
+  }
+
+  type ActionProgress {
+    type(input: ActionProgressIndicatorType!): ActionProgressIndicatorType!
+    steps: [ActionProgressStep]
+  }
+
   type FormAction {
     label(input: String!): String!
     icon(input: DamsIcons): DamsIcons
@@ -113,10 +127,7 @@ export const baseSchema = gql`
     actionQuery(input: String): String
     creationType(input: Entitytyping): Entitytyping!
     showsFormErrors(input: Boolean): Boolean
-  }
-
-  type CreateEntityForm {
-    formFields: Entity!
+    actionProgressIndicator: ActionProgress
   }
 
   type Conditional {
@@ -995,7 +1006,6 @@ export const baseSchema = gql`
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations(entityType: String!): Entity!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
-    CreateEntityForm(type: Entitytyping!): CreateEntityForm!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
