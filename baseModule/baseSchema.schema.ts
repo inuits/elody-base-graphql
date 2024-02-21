@@ -117,7 +117,7 @@ export const baseSchema = gql`
 
   type ActionProgress {
     type(input: ActionProgressIndicatorType!): ActionProgressIndicatorType!
-    steps: [ActionProgressStep]
+    step: [ActionProgressStep]
   }
 
   type FormAction {

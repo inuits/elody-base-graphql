@@ -7,6 +7,11 @@
       "labels": {
         "upload": "Upload",
         "create": "Create"
+      },
+      "progress-steps": {
+        "validate": "Validation",
+        "prepare": "Prepare",
+        "upload": "Uploading"
       }
     },
     "bulk-operations":{
@@ -244,6 +249,11 @@
       "labels": {
         "upload": "Uploaden",
         "create": "Creëren"
+      },
+      "progress-steps": {
+        "validate": "Valideren",
+        "prepare": "Voorbereiden",
+        "upload": "Uploaden"
       }
     },
     "bulk-operations":{

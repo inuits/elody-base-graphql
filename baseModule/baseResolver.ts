@@ -11,19 +11,22 @@ import {
 } from '../resolvers/entityResolver';
 import {
   ActionElement,
+  ActionProgress,
+  ActionProgressIndicatorType,
+  ActionProgressStep,
   Actions,
   ActionType,
   BaseRelationValuesInput,
   Collection,
   Column,
   ColumnSizes,
+  Conditional,
   ContextMenuActions,
   ContextMenuElodyAction,
   ContextMenuElodyActionEnum,
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
-  Conditional,
   DamsIcons,
   EditStatus,
   EntitiesResults,
@@ -33,6 +36,7 @@ import {
   Entitytyping,
   EntityViewElements,
   ExpandButtonOptions,
+  Form,
   FormAction,
   FormFields,
   GraphElement,
@@ -66,14 +70,13 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  Form,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
-  setPreferredLanguageForDataSources,
   getEntityId,
+  setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -892,6 +895,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     showsFormErrors: async (_source, { input }, { dataSources }) => {
       return input || false;
+    },
+    actionProgressIndicator: async (_source, _args, { dataSources }) => {
+      return {} as ActionProgress;
+    },
+  },
+  ActionProgress: {
+    type: async (_source, { input }, { dataSources }) => {
+      return input || ActionProgressIndicatorType.Spinner;
+    },
+    step: async (_source, _args, { dataSources }) => {
+      return [{}] as ActionProgressStep[];
+    },
+  },
+  ActionProgressStep: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
     },
   },
   PanelRelationMetaData: {
