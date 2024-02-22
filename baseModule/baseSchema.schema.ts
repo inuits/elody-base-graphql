@@ -111,13 +111,28 @@ export const baseSchema = gql`
     progressSteps
   }
 
+  enum ProgressStepStatus {
+    complete
+    loading
+    empty
+    failed
+  }
+
+  enum ProgressStepType {
+    validate
+    prepare
+    upload
+  }
+
   type ActionProgressStep {
     label(input: String!): String!
+    stepType(input: ProgressStepType!): ProgressStepType!
+    status: ProgressStepStatus!
   }
 
   type ActionProgress {
     type(input: ActionProgressIndicatorType!): ActionProgressIndicatorType!
-    step: [ActionProgressStep]
+    step: ActionProgressStep
   }
 
   type FormAction {
@@ -289,6 +304,7 @@ export const baseSchema = gql`
     Check
     CheckCircle
     CheckSquare
+    Circle
     Close
     Create
     Cross

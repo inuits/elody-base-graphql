@@ -58,6 +58,7 @@ import {
   PanelRelationMetaData,
   PanelThumbnail,
   Permission,
+  ProgressStepStatus,
   Resolvers,
   RouteNames,
   SearchInputType,
@@ -905,12 +906,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || ActionProgressIndicatorType.Spinner;
     },
     step: async (_source, _args, { dataSources }) => {
-      return [{}] as ActionProgressStep[];
+      return {} as ActionProgressStep;
     },
   },
   ActionProgressStep: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    stepType: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    status: async (_source, _args, { dataSources }) => {
+      return ProgressStepStatus.Empty;
     },
   },
   PanelRelationMetaData: {
@@ -957,6 +964,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         const thumbnailId: string = thumbnailMediafile.key;
         const mediafile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
+
         return mediafile.transcode_filename || mediafile.filename;
       } catch {
         return undefined;
