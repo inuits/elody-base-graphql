@@ -51,6 +51,7 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
               : config.customization.hideEmptyFields,
           entityIdKey: config.customization.entityIdKey || '_id',
         },
+        allowAnonymousUsers: config.allowAnonymousUsers,
         routerConfig: config.routerConfig,
         bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
         SENTRY_ENABLED: config.sentryEnabled,

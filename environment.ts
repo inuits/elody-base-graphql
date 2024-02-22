@@ -56,6 +56,7 @@ export interface Environment {
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
   };
+  allowAnonymousUsers: boolean;
   routerConfig: any;
   damsFrontend: string;
   graphqlEndpoint: string;
