@@ -1,12 +1,11 @@
-import { BodyInit, RequestInit } from "apollo-server-env";
 import {
   RESTDataSource,
   WillSendRequestOptions,
 } from "@apollo/datasource-rest";
 import { AuthenticationError } from "apollo-server-errors";
-import { manager } from ".";
-import { envConfig } from "./libConfig";
+import { BodyInit, RequestInit } from "apollo-server-env";
 import { KeyValueCache } from "@apollo/utils.keyvaluecache";
+import { manager } from ".";
 import { RequestWithBody } from "@apollo/datasource-rest/dist/RESTDataSource";
 
 export class AuthRESTDataSource extends RESTDataSource {
@@ -19,10 +18,8 @@ export class AuthRESTDataSource extends RESTDataSource {
 
   async willSendRequest(request: WillSendRequestOptions) {
     const accessToken = this.session?.auth?.accessToken;
-    const JWT_TOKEN = accessToken || envConfig.staticJWT;
-    // request.headers["Content-Type"] = "application/json"
-    if (JWT_TOKEN) {
-      request.headers["Authorization"] = "Bearer " + JWT_TOKEN;
+    if (accessToken) {
+      request.headers["Authorization"] = "Bearer " + accessToken;
     } else {
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== "true")
         throw new AuthenticationError(`AUTH | NO TOKEN`, { statusCode: 401 });
