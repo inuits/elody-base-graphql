@@ -57,6 +57,7 @@ export interface Environment {
     entityIdKey?: string;
   };
   allowAnonymousUsers: boolean;
+  tenantDefiningTypes?: string;
   routerConfig: any;
   damsFrontend: string;
   graphqlEndpoint: string;
