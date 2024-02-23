@@ -248,7 +248,7 @@
     "actions": {
       "labels": {
         "upload": "Uploaden",
-        "create": "Creëren"
+        "create": "Creëer"
       },
       "progress-steps": {
         "validate": "Valideren",
