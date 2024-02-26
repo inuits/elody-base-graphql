@@ -12,6 +12,10 @@
         "validate": "Validation",
         "prepare": "Prepare",
         "upload": "Uploading"
+      },
+      "progress-bar": {
+        "percentage": "Progress: {0}%",
+        "steps": "{0} of {1} completed"
       }
     },
     "bulk-operations":{
@@ -254,6 +258,10 @@
         "validate": "Valideren",
         "prepare": "Voorbereiden",
         "upload": "Uploaden"
+      },
+      "progress-bar": {
+        "percentage": "Vooruitgang: {0}%",
+        "steps": "Stap {0} van {1} compleet"
       }
     },
     "bulk-operations":{
