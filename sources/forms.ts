@@ -67,13 +67,14 @@ export const getOptionsByEntityType = async (
       return { icon: DamsIcons.NoIcon, label: option.id, value: option.id };
     return {
       icon: DamsIcons.NoIcon,
-      label: metadata.find((dataItem: any) => {
-        return (
-          dataItem?.key === 'title' ||
-          dataItem?.key === 'name' ||
-          dataItem?.key === 'email'
-        );
-      })?.value || option['_id'],
+      label:
+        metadata.find((dataItem: any) => {
+          return (
+            dataItem?.key === 'title' ||
+            dataItem?.key === 'name' ||
+            dataItem?.key === 'email'
+          );
+        })?.value || option['_id'],
       value: option['_id'],
     };
   });

@@ -6,7 +6,9 @@
     "actions": {
       "labels": {
         "upload": "Upload",
-        "create": "Create"
+        "create": "Create",
+        "success": "{0} Items imported",
+        "reset-upload": "Import more files"
       },
       "progress-steps": {
         "validate": "Validation",
@@ -252,7 +254,9 @@
     "actions": {
       "labels": {
         "upload": "Uploaden",
-        "create": "Creëer"
+        "create": "Creëer",
+        "success": "{0} Items geïmporteerd",
+        "reset-upload": "Importeer meer bestanden"
       },
       "progress-steps": {
         "validate": "Valideren",

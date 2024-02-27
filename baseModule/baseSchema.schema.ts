@@ -179,6 +179,7 @@ export const baseSchema = gql`
     fileTypes: [FileType]
     maxFileSize: String
     maxAmountOfFiles: Int
+    uploadMultiple: Boolean
   }
 
   type InputField {
@@ -191,6 +192,7 @@ export const baseSchema = gql`
     fileTypes: [FileType]
     maxFileSize: String
     maxAmountOfFiles: Int
+    uploadMultiple: Boolean
   }
 
   enum ModalState {
