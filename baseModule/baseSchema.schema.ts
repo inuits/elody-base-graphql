@@ -169,19 +169,6 @@ export const baseSchema = gql`
     available_if: ConditionalInput
   }
 
-  input InputFieldInput {
-    fieldName: String
-    type: String!
-    acceptedEntityTypes: [String]
-    validation: ValidationInput
-    options: [DropdownOptionInput]
-    relationType: String
-    fileTypes: [FileType]
-    maxFileSize: String
-    maxAmountOfFiles: Int
-    uploadMultiple: Boolean
-  }
-
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -193,6 +180,7 @@ export const baseSchema = gql`
     maxFileSize: String
     maxAmountOfFiles: Int
     uploadMultiple: Boolean
+    fileProgressSteps: ActionProgress
   }
 
   enum ModalState {
