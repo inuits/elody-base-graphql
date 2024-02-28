@@ -130,9 +130,20 @@ export const baseSchema = gql`
     status: ProgressStepStatus!
   }
 
+  type FileProgressStep {
+    label: String!
+    stepType: ProgressStepType!
+    status: ProgressStepStatus!
+  }
+
   type ActionProgress {
     type(input: ActionProgressIndicatorType!): ActionProgressIndicatorType!
     step: ActionProgressStep
+  }
+
+  type FileProgress {
+    type: ActionProgressIndicatorType!
+    steps: [FileProgressStep]
   }
 
   type FormAction {
@@ -180,7 +191,7 @@ export const baseSchema = gql`
     maxFileSize: String
     maxAmountOfFiles: Int
     uploadMultiple: Boolean
-    fileProgressSteps: ActionProgress
+    fileProgressSteps: FileProgress
   }
 
   enum ModalState {

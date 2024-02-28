@@ -1,9 +1,12 @@
 import {
+  ActionProgressIndicatorType,
   DamsIcons,
   DropdownOption,
   FileType,
   InputField,
   InputFieldTypes,
+  ProgressStepStatus,
+  ProgressStepType,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 
@@ -38,11 +41,41 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Tiff,
       FileType.Mp4,
     ],
+    fileProgressSteps: {
+      type: ActionProgressIndicatorType.ProgressSteps,
+      steps: [
+        {
+          label: 'actions.progress-steps.validate',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Validate,
+        },
+        {
+          label: 'actions.progress-steps.prepare',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Prepare,
+        },
+        {
+          label: 'actions.progress-steps.upload',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Upload,
+        },
+      ],
+    },
   },
   baseCsvUploadField: {
     type: InputFieldTypes.CsvUpload,
     fileTypes: [FileType.Csv],
     maxAmountOfFiles: 1,
+    fileProgressSteps: {
+      type: ActionProgressIndicatorType.ProgressSteps,
+      steps: [
+        {
+          label: 'actions.progress-steps.validate',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Validate,
+        },
+      ],
+    },
   },
 };
 
