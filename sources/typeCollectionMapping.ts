@@ -7,4 +7,5 @@ export const baseTypeCollectionMapping: { [test: string]: Collection } = {
   tag: Collection.Entities,
   tenant: Collection.Entities,
   user: Collection.Entities,
+  consists_of: Collection.Entities
 };
