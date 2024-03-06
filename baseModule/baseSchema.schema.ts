@@ -20,6 +20,11 @@ export const baseSchema = gql`
     user
   }
 
+  enum MediaTypeEntities {
+    asset
+    mediafile
+  }
+
   enum Unit {
     DATETIME_DEFAULT
     DATETIME_DMY12
