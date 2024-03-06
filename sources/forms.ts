@@ -96,7 +96,7 @@ export const getOptionsByEntityType = async (
   let options: DropdownOption[] = [];
   options = optionsForField.map((option: any) => {
     const metadata = option?.metadata;
-    if (!metadata.length)
+    if (!metadata || !metadata.length)
       return { icon: DamsIcons.NoIcon, label: option.id, value: option.id };
     return {
       icon: DamsIcons.NoIcon,
