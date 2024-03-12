@@ -724,6 +724,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     basicBaseLibrary: async (parent: any, { input }, { dataSources }) => {
       return input ? input : false;
     },
+    entityListElement: async (parent: any, {}, { dataSources }) => {
+      return parent as EntityListElement;
+    },
   },
   ManifestViewerElement: {
     label: async (_source, { input }, { dataSources }) => {

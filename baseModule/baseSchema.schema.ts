@@ -672,6 +672,7 @@ export const baseSchema = gql`
     customQueryFilters(input: String): String
     searchInputType(input: String): String
     basicBaseLibrary(input: Boolean): Boolean
+    entityListElement: EntityListElement
   }
 
   enum EntityListViewMode {
