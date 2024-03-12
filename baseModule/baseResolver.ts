@@ -623,6 +623,27 @@ export const baseResolver: Resolvers<ContextValue> = {
         return '';
       }
     },
+    keyLabel: async (
+        parent: any,
+        { key, source },
+        { dataSources }
+    ) => {
+      try {
+        if (source === KeyValueSource.Metadata) {
+          const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+          const metadata = await resolveMetadata(parent, [key], undefined);
+          if (metadata.length > 1) {
+            return resolveMetadataItemOfPreferredLanguage(
+                metadata,
+                preferredLanguage
+            )?.label;
+          }
+          return metadata[0]?.label ?? '';
+        }
+      } catch (e) {
+        return '';
+      }
+    },
     relationMetadata: async (parent: any, { type }, { dataSources }) => {
       const relation = parent?.relations.find(
         (relation: any) => relation.type === type
