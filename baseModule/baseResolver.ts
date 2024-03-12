@@ -17,6 +17,7 @@ import {
   Actions,
   ActionType,
   BaseRelationValuesInput,
+  BaseLibraryModes,
   Collection,
   Column,
   ColumnSizes,
@@ -742,8 +743,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     viewMode: async (parent: any, { input }, { dataSources }) => {
       return input || EntityListViewMode.Library;
     },
-    basicBaseLibrary: async (parent: any, { input }, { dataSources }) => {
-      return input ? input : false;
+    baseLibraryMode: async (parent: any, { input }, { dataSources }) => {
+      return input ? input : BaseLibraryModes.NormalBaseLibrary;
     },
     entityListElement: async (parent: any, {}, { dataSources }) => {
       return parent as EntityListElement;

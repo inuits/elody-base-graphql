@@ -662,6 +662,11 @@ export const baseSchema = gql`
     eighty
     ninety
   }
+  
+  enum BaseLibraryModes {
+    normalBaseLibrary
+    basicBaseLibrary
+  }
 
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
@@ -675,7 +680,7 @@ export const baseSchema = gql`
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String
     searchInputType(input: String): String
-    basicBaseLibrary(input: Boolean): Boolean
+    baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
     entityListElement: EntityListElement
   }
 
