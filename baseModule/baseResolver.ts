@@ -233,8 +233,14 @@ export const baseResolver: Resolvers<ContextValue> = {
         }
       });
 
-      for (let i = 0; i < graph.dataset.labels.length; i++) {
-        stats.datasets[i].label = graph.dataset.labels[i];
+      for (let i = 0; i < stats.datasets.length; i++) {
+        if (stats.datasets[i].label) {
+          const label = graph.dataset.labels
+            .filter(label => new RegExp(`.*${stats.datasets[i].label}.*`).test(label));
+          if (label) stats.datasets[i].label = label;
+        } else {
+          stats.datasets[i].label = graph.dataset.labels[i];
+        }
         stats.datasets[i]['borderWidth'] = 1;
       }
 
