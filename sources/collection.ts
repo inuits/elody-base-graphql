@@ -79,7 +79,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data: any;
     try {
       data = await this.get('tenants');
-      console.log(data);
     } catch (e) {
       console.log(e);
     }
@@ -167,7 +166,12 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getEntityById(id: string): Promise<any> {
-    let data = await this.get<any>(`${Collection.Entities}/${id}`);
+    let data: any;
+    try {
+      data = await this.get<any>(`${Collection.Entities}/${id}`);
+    } catch {
+      return undefined;
+    }
     setId(data);
     return data;
   }

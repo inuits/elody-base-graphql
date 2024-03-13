@@ -604,9 +604,9 @@ export const baseResolver: Resolvers<ContextValue> = {
                 relation.key
               );
               return (
-                entity.metadata.find(
+                entity?.metadata?.find(
                   (metadata: any) => metadata.key === metadataKeyAsLabel
-                )?.value ?? ''
+                )?.value || relation.key
               );
             }
           } catch {
