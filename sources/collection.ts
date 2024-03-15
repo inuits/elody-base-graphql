@@ -545,8 +545,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
+    let collection1 = collection[type];
+    console.log(collection1);
+    if (collection1 === undefined ) collection1 = Collection.Entities;
     return await this.post(
-      `${collection[type]}/filter?limit=${limit}&skip=${this.getSkip(
+      `${collection1}/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${
