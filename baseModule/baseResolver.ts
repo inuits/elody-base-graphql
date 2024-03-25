@@ -72,6 +72,7 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  AdvancedFilterTypes
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -1173,6 +1174,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationType: async (parent, _args, { dataSources }) => {
       return parent.relationType || '';
+    },
+    fromRelationType: async (parent, _args, { dataSources }) => {
+      return parent.fromRelationType || '';
+    },
+    advancedFilterInputForSearchingOptions: async (parent, _args, { dataSources }) => {
+      const emptyFilterInput = { type: AdvancedFilterTypes.Text, value: "*" };
+      return parent.advancedFilterInputForSearchingOptions || emptyFilterInput;
     },
   },
   Validation: {

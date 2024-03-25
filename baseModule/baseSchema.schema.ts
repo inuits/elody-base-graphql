@@ -192,6 +192,8 @@ export const baseSchema = gql`
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType: String
+    fromRelationType: String
+    advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]
     maxFileSize: String
     maxAmountOfFiles: Int
@@ -399,6 +401,14 @@ export const baseSchema = gql`
     value: String
   }
 
+  input RelationFieldInput {
+    key: String!
+    label: String
+    type: String!
+    value: String
+    editStatus: EditStatus!
+  }
+
   input MinMaxInput {
     min: Int
     max: Int
@@ -569,6 +579,7 @@ export const baseSchema = gql`
     id: String
     type: String
     metadata: [MetadataFieldInput]
+    relations: [RelationFieldInput]
     identifiers: [String]
   }
 
