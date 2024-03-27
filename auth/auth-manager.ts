@@ -47,13 +47,10 @@ export class AuthManager {
     jwt_decode(data.refresh_token);
     const accessToken = data.access_token;
     const refreshToken = data.refresh_token;
-    let expirationToken: number;
-    expirationToken = new Date().getTime() / 1000 + data.expires_in;
     logToken(accessToken, `auth-manager`, `User Token @authentication`, true);
     return {
       accessToken: accessToken,
       refreshToken: refreshToken,
-      expiresIn: expirationToken,
     };
   }
 
@@ -91,12 +88,9 @@ export class AuthManager {
               `User Token @refresh`,
               true
             );
-            const expirationToken =
-              new Date().getTime() / 1000 + tokenResponse.refresh_expires_in;
             sessionAuthResponse = {
               accessToken: tokenResponse.access_token,
-              refreshToken: tokenResponse.refresh_token,
-              expiresIn: expirationToken,
+              refreshToken: tokenResponse.refresh_token
             } as AuthSessionResponse;
           }
         })

@@ -36,16 +36,7 @@ export class AuthRESTDataSource extends RESTDataSource {
     ...args: T
   ): Promise<S> {
     try {
-      if (this.session.auth) {
-        let time = this.session.auth.expiresIn! - new Date().getTime() / 1000;
-        if (time <= 10) {
-          this.session.auth = await manager?.refresh(
-            this.session.auth.accessToken,
-            this.session.auth.refreshToken
-          );
-        }
-      }
-      return fn(...args);
+      return await fn(...args);
     } catch (error: any) {
       if (this.session.auth) {
         if (error.extensions && error.extensions.response) {

@@ -33,7 +33,6 @@ export type RefreshBody = TokenBody & {
 export type AuthSessionResponse = {
   accessToken: string;
   refreshToken: string;
-  expiresIn: number;
 };
 
 export type EnvConfig = {
