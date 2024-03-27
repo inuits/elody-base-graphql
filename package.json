@@ -36,6 +36,7 @@
     "import-module": "0.0.x",
     "mediafile-module": "0.0.x",
     "advanced-filter-module": "*",
+    "saved-search-module": "0.0.x",
     "graphql": "^16.6.0",
     "graphql-codegen": "^0.4.0",
     "@graphql-codegen/add": "^4.0.1",
