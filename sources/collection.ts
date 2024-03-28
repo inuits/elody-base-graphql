@@ -33,7 +33,7 @@ import { environment as env } from '../main';
 import { setId, setType } from '../parsers/entity';
 
 type EntetiesCallReturn =
-  | { count: number, results: Array<unknown> }
+  | { count: number; results: Array<unknown> }
   | Array<unknown>
   | 'no-call-is-triggerd';
 let sixthCollectionId: string | 'no-id' = 'no-id';
@@ -87,7 +87,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   getCollectionValueForEntityType(entityType: string): string {
     if (!collection.hasOwnProperty(entityType)) {
-      throw new Error(`Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`);
+      throw new Error(
+        `Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`
+      );
     }
     return collection[entityType];
   }
@@ -95,7 +97,9 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
     try {
-      data = await this.get(`${this.getCollectionValueForEntityType(entityType)}?type=${entityType}`);
+      data = await this.get(
+        `${this.getCollectionValueForEntityType(entityType)}?type=${entityType}`
+      );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
       console.log(e);
@@ -124,7 +128,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.post(`entities?soft=1`, {
-        body: { type: entityType }
+        body: { type: entityType },
       });
     } catch (e) {
       return '401';
@@ -137,7 +141,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.patch(`${Collection.Entities}/${id}?soft=1`, {
-        body: {}
+        body: {},
       });
     } catch (e) {
       return '401';
@@ -158,7 +162,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getEntity(id: string, type: string): Promise<any> {
-    const idSplit = id.split("/")
+    const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
     let data = await this.get<any>(`${collection[type]}/${id}`);
     setId(data);
@@ -374,9 +378,12 @@ export class CollectionAPI extends AuthRESTDataSource {
       metadata,
       relations,
     };
-    const newEntity = await this.post(`${collection[entity.type as Entitytyping]}`, {
-      body,
-    });
+    const newEntity = await this.post(
+      `${collection[entity.type as Entitytyping]}`,
+      {
+        body,
+      }
+    );
     return setId(newEntity);
   }
 
@@ -526,7 +533,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (Array.isArray(data)) {
       let count;
       if (data[0].count !== undefined) count = data.shift().count;
-      else count = data.length
+      else count = data.length;
       data.forEach(
         (element: Record<string, unknown>): Record<string, unknown> =>
           setId(element)
@@ -570,11 +577,15 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
     );
     const isFilterCall = advancedFilterInputs.some(
-        (currentValue: AdvancedFilterInput) => {
-          return ["metadata_on_relation"].includes(currentValue.type);
-        }
+      (currentValue: AdvancedFilterInput) => {
+        return ['metadata_on_relation'].includes(currentValue.type);
+      }
     );
-    if (itemWithParentId && itemWithParentId.parent_key === 'relations' && !isFilterCall) {
+    if (
+      itemWithParentId &&
+      itemWithParentId.parent_key === 'relations' &&
+      !isFilterCall
+    ) {
       return this.get(
         `${Collection.Entities}/${
           itemWithParentId.value[0]
@@ -591,6 +602,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       );
     } else {
       const body = advancedFilterInputs;
+      console.log(body);
       return await this.post(
         `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(
           skip,
@@ -612,14 +624,18 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): EntetiesCallReturn {
     //Add mediafile type to the result, is missing from the mediafile endpoint
     if (!Array.isArray(result)) {
-      const finalResult = result.results.map((item: unknown): Record<string, unknown> => {
-        //Todo write typescheker for EntitieResults
-        return { ...(item as Object), type: 'mediafile' } as Record<
-          string,
-          unknown
-        >;
+      const finalResult = result.results.map(
+        (item: unknown): Record<string, unknown> => {
+          //Todo write typescheker for EntitieResults
+          return { ...(item as Object), type: 'mediafile' } as Record<
+            string,
+            unknown
+          >;
+        }
+      );
+      finalResult.unshift({
+        count: result.count ? result.count : result.results.length,
       });
-      finalResult.unshift({ "count": result.count ? result.count : result.results.length});
       return finalResult;
     }
 
