@@ -72,7 +72,8 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  AdvancedFilterTypes
+  AdvancedFilterTypes,
+  SortingDirection
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -1113,6 +1114,9 @@ export const baseResolver: Resolvers<ContextValue> = {
   SortOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
+    },
+    isAsc: async (parent, { input }, { dataSources }) => {
+      return input ? input : SortingDirection.Asc;
     },
   },
   BulkOperationOptions: {

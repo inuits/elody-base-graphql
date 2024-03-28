@@ -525,9 +525,15 @@ export const baseSchema = gql`
   type PaginationLimitOptions {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
+  
+  enum SortingDirection {
+    asc
+    desc
+  }
 
   type SortOptions {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    isAsc(input: SortingDirection!): SortingDirection
   }
 
   type BulkOperationOptions {
