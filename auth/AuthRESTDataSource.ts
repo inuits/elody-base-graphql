@@ -1,6 +1,6 @@
 import {
   RESTDataSource,
-  WillSendRequestOptions,
+  AugmentedRequest,
 } from "@apollo/datasource-rest";
 import { AuthenticationError } from "apollo-server-errors";
 import { BodyInit, RequestInit } from "apollo-server-env";
@@ -16,9 +16,9 @@ export class AuthRESTDataSource extends RESTDataSource {
     this.session = options.session;
   }
 
-  async willSendRequest(request: WillSendRequestOptions) {
+  async willSendRequest(_path: string, request: AugmentedRequest) {
     const accessToken = this.session?.auth?.accessToken;
-    if (accessToken) {
+    if (accessToken && request.headers) {
       request.headers["Authorization"] = "Bearer " + accessToken;
     } else {
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== "true")
@@ -38,23 +38,23 @@ export class AuthRESTDataSource extends RESTDataSource {
     try {
       return await fn(...args);
     } catch (error: any) {
-      if (this.session.auth) {
-        if (error.extensions && error.extensions.response) {
-          const response = error.extensions.response;
-          if (response.status && response.status === 401) {
-            this.session.auth = await manager?.refresh(
-              this.session.auth.accessToken,
-              this.session.auth.refreshToken
-            );
-            console.log(`\n the refresh done now retry call`);
-            // In the frontend the call is not retried...
-          } else {
-            throw Error(error);
-          }
+      if (this.session.auth && error?.extensions?.response?.status === 401) {
+        const response = await manager?.refresh(
+          this.session.auth.accessToken,
+          this.session.auth.refreshToken
+        );
+
+        if (!response) {
+          throw new AuthenticationError(`AUTH | REFRESH FAILED`, { statusCode: 401 })
         }
+
+        this.session.auth = response;
+
+        return await fn(...args);
+      } else {
+        throw Error(error);
       }
     }
-    return new Promise((resolve) => resolve(fn(...args)));
   }
 
   public async get<TResult = any>(
