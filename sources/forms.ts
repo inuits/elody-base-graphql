@@ -41,6 +41,7 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Tiff,
       FileType.Mp4,
     ],
+    maxAmountOfFiles: 999,
     fileProgressSteps: {
       type: ActionProgressIndicatorType.ProgressSteps,
       steps: [
