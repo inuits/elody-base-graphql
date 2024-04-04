@@ -73,7 +73,8 @@ import {
   WindowElement,
   WindowElementPanel,
   AdvancedFilterTypes,
-  SortingDirection
+  SortingDirection,
+  UploadContainer,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -237,8 +238,9 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       for (let i = 0; i < stats.datasets.length; i++) {
         if (stats.datasets[i].label) {
-          const label = graph.dataset.labels
-            .filter(label => new RegExp(`.*${stats.datasets[i].label}.*`).test(label));
+          const label = graph.dataset.labels.filter((label) =>
+            new RegExp(`.*${stats.datasets[i].label}.*`).test(label)
+          );
           if (label) stats.datasets[i].label = label;
         } else {
           stats.datasets[i].label = graph.dataset.labels[i];
@@ -632,19 +634,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         return '';
       }
     },
-    keyLabel: async (
-        parent: any,
-        { key, source },
-        { dataSources }
-    ) => {
+    keyLabel: async (parent: any, { key, source }, { dataSources }) => {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
           const metadata = await resolveMetadata(parent, [key], undefined);
           if (metadata.length > 1) {
             return resolveMetadataItemOfPreferredLanguage(
-                metadata,
-                preferredLanguage
+              metadata,
+              preferredLanguage
             )?.label;
           }
           return metadata[0]?.label ?? '';
@@ -891,6 +889,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
+    },
+  },
+  UploadContainer: {
+    uploadFlow: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    uploadField: async (parent: unknown, {}, { dataSources }) => {
+      return parent as UploadField;
     },
   },
   UploadField: {
@@ -1146,8 +1152,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     metaData: async (parent: any, {}, { dataSources }) => {
       return parent as PanelMetaData;
     },
-    uploadField: async (parent: any, {}, { dataSources }) => {
-      return parent as UploadField;
+    uploadContainer: async (parent: any, {}, { dataSources }) => {
+      return parent as UploadContainer;
     },
     action: async (parent: any, {}, { dataSources }) => {
       return parent as FormAction;
@@ -1182,8 +1188,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     fromRelationType: async (parent, _args, { dataSources }) => {
       return parent.fromRelationType || '';
     },
-    advancedFilterInputForSearchingOptions: async (parent, _args, { dataSources }) => {
-      const emptyFilterInput = { type: AdvancedFilterTypes.Text, value: "*" };
+    advancedFilterInputForSearchingOptions: async (
+      parent,
+      _args,
+      { dataSources }
+    ) => {
+      const emptyFilterInput = { type: AdvancedFilterTypes.Text, value: '*' };
       return parent.advancedFilterInputForSearchingOptions || emptyFilterInput;
     },
   },

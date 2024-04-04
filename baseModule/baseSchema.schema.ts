@@ -97,7 +97,7 @@ export const baseSchema = gql`
 
   type FormFields {
     metaData: PanelMetaData!
-    uploadField: UploadField
+    uploadContainer: UploadContainer
     action: FormAction
   }
 
@@ -525,7 +525,7 @@ export const baseSchema = gql`
   type PaginationLimitOptions {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
-  
+
   enum SortingDirection {
     asc
     desc
@@ -608,10 +608,7 @@ export const baseSchema = gql`
       uuid: String
       metadataKeyAsLabel: String
     ): JSON!
-    keyLabel(
-      key: String!
-      source: KeyValueSource!
-    ): JSON
+    keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
   }
 
@@ -679,7 +676,7 @@ export const baseSchema = gql`
     eighty
     ninety
   }
-  
+
   enum BaseLibraryModes {
     normalBaseLibrary
     basicBaseLibrary
@@ -783,6 +780,12 @@ export const baseSchema = gql`
     mediainfo
   }
 
+  enum UploadFlow {
+    mediafilesOnly
+    mediafilesWithRequiredCsv
+    mediafilesWithOptionalCsv
+  }
+
   enum UploadFieldSize {
     small
     normal
@@ -798,6 +801,11 @@ export const baseSchema = gql`
     label(input: String!): String!
     value(input: String!): String!
     inputField(type: BaseFieldType!): InputField!
+  }
+
+  type UploadContainer {
+    uploadFlow(input: UploadFlow!): UploadFlow!
+    uploadField: UploadField!
   }
 
   type UploadField {
