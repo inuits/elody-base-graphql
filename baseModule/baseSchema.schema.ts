@@ -679,6 +679,7 @@ export const baseSchema = gql`
 
   enum BaseLibraryModes {
     normalBaseLibrary
+    basicBaseLibraryWithBorder
     basicBaseLibrary
   }
 
