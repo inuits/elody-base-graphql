@@ -112,7 +112,7 @@ const __createMediafileForEntity = async (
 ): Promise<string> => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   const body = {
-    filename: `${request.query.filename}`,
+    identifier: `${request.query.filename}`,
     metadata: [
       {
         key: 'title',
