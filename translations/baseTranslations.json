@@ -18,6 +18,10 @@
       "progress-bar": {
         "percentage": "Progress: {0}%",
         "steps": "{0} of {1} completed"
+      },
+      "upload": {
+        "errors": "{0} items failed: ",
+        "missing": "{0} is missing"
       }
     },
     "bulk-operations":{
