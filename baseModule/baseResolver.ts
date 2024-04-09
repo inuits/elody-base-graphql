@@ -344,10 +344,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       }
 
-      if (collection === Collection.Entities)
+      if (collection !== Collection.Mediafiles)
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id),
-          'BaseEntity'
+          'BaseEntity',
+          collection
         );
       else return await dataSources.CollectionAPI.getMediaFile(id);
     },

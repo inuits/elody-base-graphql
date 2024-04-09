@@ -161,10 +161,10 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async getEntity(id: string, type: string): Promise<any> {
+  async getEntity(id: string, type: string, _collection: string | undefined = undefined): Promise<any> {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
-    let data = await this.get<any>(`${collection[type]}/${id}`);
+    let data = await this.get<any>(`${_collection ? _collection : collection[type]}/${id}`);
     setId(data);
     return data;
   }
