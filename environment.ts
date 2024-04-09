@@ -22,6 +22,7 @@ export interface Environment {
     collectionApiUrl: string;
     searchApiUrl: string;
     csvImportServiceUrl: string;
+    fileSystemImporterServiceUrl: string;
     iiifUrl: string;
     iiifUrlFrontend: string;
     storageApiUrl: string;
