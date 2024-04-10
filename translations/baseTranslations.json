@@ -133,7 +133,10 @@
         "email": "Email",
         "firstName": "First name",
         "lastName": "Last name",
-        "identifier": "Identifier"
+        "identifier": "Identifier",
+        "user": "User",
+        "expire-date": "Expire date",
+        "rights": "Rights"
       }
     },
     "notifications":{
@@ -213,7 +216,9 @@
       "users": "Users",
       "settings": "Settings",
       "upload": "Upload",
-      "tenant": "Tenant"
+      "sets": "Sets",
+      "tenant": "Tenant",
+      "create-set": "Set"
     },
     "upload-fields":{
       "labels": {
@@ -383,7 +388,10 @@
         "email": "Email",
         "firstName": "Voornaam",
         "lastName": "Achternaam",
-        "identifier": "Identificatie"
+        "identifier": "Identificatie",
+        "user": "Gebruiker",
+        "expire-date": "Vervaldatum",
+        "rights": "Rechten"
       }
     },
     "notifications":{
@@ -463,7 +471,9 @@
       "users": "Gebruikers",
       "settings": "Instellingen",
       "upload": "Upload",
-      "tenant": "Tenant"
+      "sets": "Sets",
+      "tenant": "Tenant",
+      "create-set": "Set"
     },
     "upload-fields": {
       "labels": {
