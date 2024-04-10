@@ -132,7 +132,8 @@
       "labels": {
         "email": "Email",
         "firstName": "First name",
-        "lastName": "Last name"
+        "lastName": "Last name",
+        "identifier": "Identifier"
       }
     },
     "notifications":{
@@ -381,7 +382,8 @@
       "labels": {
         "email": "Email",
         "firstName": "Voornaam",
-        "lastName": "Achternaam"
+        "lastName": "Achternaam",
+        "identifier": "Identificatie"
       }
     },
     "notifications":{
