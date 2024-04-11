@@ -99,6 +99,15 @@ const __batchEntities = async (
       },
       body: csv,
     });
+
+    let responseBody = '';
+    response.body.on('data', (chunk) => (responseBody += chunk.toString()));
+    return new Promise((resolve) => {
+      response.body.on('end', async () => {
+        const jsonParsableResult = `["${decodeURIComponent(responseBody).split('\n').join('","')}"]`;
+        resolve(JSON.parse(jsonParsableResult));
+      });
+    });
   } catch (exception: any) {
     const errorStatus = exception.extensions?.statusCode || 500;
     response.status(errorStatus).end(JSON.stringify(exception));
