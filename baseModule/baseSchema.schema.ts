@@ -95,6 +95,18 @@ export const baseSchema = gql`
     pdf
   }
 
+  enum ValidationRules {
+    required
+    has_required_relation
+  }
+
+  enum ValidationFields {
+    intialValues
+    relationValues
+    relations
+    relationMetadata
+  }
+
   type FormFields {
     metaData: PanelMetaData!
     uploadContainer: UploadContainer
@@ -173,16 +185,28 @@ export const baseSchema = gql`
     ifAnyValue: Boolean
   }
 
+  type RequiredRelationValidation {
+    relationType: String!
+    amount: Int! 
+  }
+
+  input RequiredRelationValidationInput {
+    relationType: String!
+    amount: Int! 
+  } 
+
   type Validation {
     value: String
     required_if: Conditional
     available_if: Conditional
+    has_required_relation: RequiredRelationValidation
   }
 
   input ValidationInput {
     value: String
     required_if: ConditionalInput
     available_if: ConditionalInput
+    has_required_relation: RequiredRelationValidationInput
   }
 
   type InputField {
