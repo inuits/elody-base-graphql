@@ -1,12 +1,9 @@
-import {
-  RESTDataSource,
-  AugmentedRequest,
-} from "@apollo/datasource-rest";
-import { AuthenticationError } from "apollo-server-errors";
-import { BodyInit, RequestInit } from "apollo-server-env";
-import { KeyValueCache } from "@apollo/utils.keyvaluecache";
-import { manager } from ".";
-import { RequestWithBody } from "@apollo/datasource-rest/dist/RESTDataSource";
+import { RESTDataSource, AugmentedRequest } from '@apollo/datasource-rest';
+import { BodyInit, RequestInit } from 'apollo-server-env';
+import { KeyValueCache } from '@apollo/utils.keyvaluecache';
+import { manager } from '.';
+import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
+import { GraphQLError } from 'graphql/index';
 
 export class AuthRESTDataSource extends RESTDataSource {
   private session: any;
@@ -19,15 +16,15 @@ export class AuthRESTDataSource extends RESTDataSource {
   async willSendRequest(_path: string, request: AugmentedRequest) {
     const accessToken = this.session?.auth?.accessToken;
     if (accessToken && request.headers) {
-      request.headers["Authorization"] = "Bearer " + accessToken;
+      request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
-      if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== "true")
-        throw new AuthenticationError(`AUTH | NO TOKEN`, { statusCode: 401 });
+      if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
+        throw new GraphQLError(`AUTH | NO TOKEN`);
     }
 
     const tenant = this.session.tenant;
     if (request.headers && tenant) {
-      request.headers["X-tenant-id"] = tenant;
+      request.headers['X-tenant-id'] = tenant;
     }
   }
 
@@ -43,16 +40,20 @@ export class AuthRESTDataSource extends RESTDataSource {
           this.session.auth.accessToken,
           this.session.auth.refreshToken
         );
-
+        
         if (!response) {
-          throw new AuthenticationError(`AUTH | REFRESH FAILED`, { statusCode: 401 })
+          throw new GraphQLError(`AUTH | REFRESH FAILED`, {
+            extensions: {
+              statusCode: 401,
+            }
+          });
         }
-
+        
         this.session.auth = response;
 
         return await fn(...args);
       } else {
-        throw Error(error);
+        return error.extensions.response.body;
       }
     }
   }
