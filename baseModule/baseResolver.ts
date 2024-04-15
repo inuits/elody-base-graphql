@@ -586,7 +586,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     keyValue: async (
       parent: any,
-      { key, source, uuid, metadataKeyAsLabel },
+      { key, source, uuid, metadataKeyAsLabel, relationKey },
       { dataSources }
     ) => {
       try {
@@ -626,9 +626,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         } else if (source === KeyValueSource.RelationMetadata) {
           return parent?.relations
             .find(
-              (relation: any) => relation.type === key && relation.key === uuid
+              (relation: any) => relation.type === relationKey && relation.key === uuid
             )
-            .metadata.map((data: Metadata) => data.value)[0];
+            .metadata.find(
+                  (metadata: any) => metadata.key === key
+              ).value
         }
         return '';
       } catch (e) {
