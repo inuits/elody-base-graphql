@@ -653,8 +653,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         body,
       }
     );
-
-    if (data.results && data.results.length > 0) return data.results;
+    if (data.results && data.results.length > 0 && data.results.options?.length > 0) return data.results;
     return [];
   }
 
