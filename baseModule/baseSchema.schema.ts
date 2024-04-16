@@ -290,6 +290,7 @@ export const baseSchema = gql`
   }
 
   enum MenuIcons {
+    ArchiveAlt
     BookOpen
     Create
     ExclamationTriangle
