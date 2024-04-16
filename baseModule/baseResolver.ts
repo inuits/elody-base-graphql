@@ -1199,6 +1199,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       const emptyFilterInput = { type: AdvancedFilterTypes.Text, value: '*' };
       return parent.advancedFilterInputForSearchingOptions || emptyFilterInput;
     },
+    autoSelectable: async (parent, _args, { dataSources }) => {
+      return parent.autoSelectable || false;
+    },
+    disabled: async (_parent, { input }, { dataSources }) => {
+      return input || false;
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

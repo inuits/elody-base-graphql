@@ -223,6 +223,8 @@ export const baseSchema = gql`
     maxAmountOfFiles: Int
     uploadMultiple: Boolean
     fileProgressSteps: FileProgress
+    autoSelectable: Boolean
+    disabled(input: Boolean): Boolean
   }
 
   enum ModalState {
