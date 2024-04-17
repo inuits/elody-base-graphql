@@ -187,13 +187,13 @@ export const baseSchema = gql`
 
   type RequiredRelationValidation {
     relationType: String!
-    amount: Int! 
+    amount: Int!
   }
 
   input RequiredRelationValidationInput {
     relationType: String!
-    amount: Int! 
-  } 
+    amount: Int!
+  }
 
   type Validation {
     value: String
@@ -834,6 +834,7 @@ export const baseSchema = gql`
 
   type UploadContainer {
     uploadFlow(input: UploadFlow!): UploadFlow!
+    uploadMetadata: PanelMetaData
     uploadField: UploadField!
   }
 

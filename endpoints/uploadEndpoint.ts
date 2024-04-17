@@ -20,13 +20,13 @@ export const applyUploadEndpoint = (app: Express) => {
         request.on('end', async () => {
           try {
             if (isDryRun) {
-                const res = await __batchDryRun(request, response, csv);
-                response.end(JSON.stringify(res));
+              const res = await __batchDryRun(request, response, csv);
+              response.end(JSON.stringify(res));
             } else {
-                const uploadUrls = (await __batchEntities(request, response, csv)).filter(
-                  (uploadUrl) => uploadUrl !== ''
-                );
-                response.end(JSON.stringify(uploadUrls));
+              const uploadUrls = (
+                await __batchEntities(request, response, csv)
+              ).filter((uploadUrl) => uploadUrl !== '');
+              response.end(JSON.stringify(uploadUrls));
             }
           } catch (e) {
             console.log('Error while parsing response:', e);
@@ -45,11 +45,11 @@ export const applyUploadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         if (request.query?.hasRelation) {
-            const uploadUrl = await __createMediafileForEntity(request);
-            response.end(JSON.stringify(uploadUrl));
+          const uploadUrl = await __createMediafileForEntity(request);
+          response.end(JSON.stringify(uploadUrl));
         } else {
-            const uploadUrl = await __createStandaloneMediafile(request);
-            response.end(JSON.stringify(uploadUrl));
+          const uploadUrl = await __createStandaloneMediafile(request);
+          response.end(JSON.stringify(uploadUrl));
         }
       } catch (exception: any) {
         const errorStatus = exception.extensions?.statusCode || 500;
@@ -106,10 +106,7 @@ const __batchEntities = async (
 
   let responseBody = '';
   if (result.body) {
-    result.body.on(
-      'data',
-      (chunk: any) => (responseBody += chunk.toString())
-    );
+    result.body.on('data', (chunk: any) => (responseBody += chunk.toString()));
     return new Promise((resolve) => {
       result.body.on('end', async () => {
         const jsonParsableResult = `["${responseBody
@@ -154,6 +151,7 @@ const __createStandaloneMediafile = async (request: Request) => {
   const body: EntityInput = {
     metadata: [{ key: 'title', value: request.query.filename as string }],
     type:
+      (request.query.type as string) ||
       environment?.customization?.uploadEntityTypeToCreate ||
       Entitytyping.Asset,
   };

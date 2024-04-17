@@ -255,8 +255,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       { type },
       { dataSources }
     ) => {
-      let status =
-        await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
+      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
+        type
+      );
       return status == '200';
     },
     PermissionMappingCreate: async (
@@ -264,13 +265,15 @@ export const baseResolver: Resolvers<ContextValue> = {
       { entityType },
       { dataSources }
     ) => {
-      const status =
-        await dataSources.CollectionAPI.postEntitySoftCall(entityType);
+      const status = await dataSources.CollectionAPI.postEntitySoftCall(
+        entityType
+      );
       return status == '200';
     },
     PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
-      const edit =
-        await dataSources.CollectionAPI.patchEntityDetailSoftCall(id);
+      const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
+        id
+      );
       const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id);
       return [
         {
@@ -626,11 +629,10 @@ export const baseResolver: Resolvers<ContextValue> = {
         } else if (source === KeyValueSource.RelationMetadata) {
           return parent?.relations
             .find(
-              (relation: any) => relation.type === relationKey && relation.key === uuid
+              (relation: any) =>
+                relation.type === relationKey && relation.key === uuid
             )
-            .metadata.find(
-                  (metadata: any) => metadata.key === key
-              ).value
+            .metadata.find((metadata: any) => metadata.key === key).value;
         }
         return '';
       } catch (e) {
@@ -898,6 +900,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     uploadFlow: async (_source, { input }, { dataSources }) => {
       return input;
     },
+    uploadMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
     uploadField: async (parent: unknown, {}, { dataSources }) => {
       return parent as UploadField;
     },
@@ -1003,8 +1008,9 @@ export const baseResolver: Resolvers<ContextValue> = {
             (mediafile: any) => mediafile.is_primary_thumbnail
           ) || mediafileRelations[0];
         const thumbnailId: string = thumbnailMediafile.key;
-        const mediafile =
-          await dataSources.CollectionAPI.getMediaFile(thumbnailId);
+        const mediafile = await dataSources.CollectionAPI.getMediaFile(
+          thumbnailId
+        );
 
         return mediafile.transcode_filename || mediafile.filename;
       } catch {
