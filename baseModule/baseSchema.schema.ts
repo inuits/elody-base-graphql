@@ -1005,7 +1005,6 @@ export const baseSchema = gql`
     type: String!
     teaserMetadata: teaserMetadata
     media: Media
-    permission: [Permission]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: RelationValues
@@ -1021,7 +1020,6 @@ export const baseSchema = gql`
     type: String!
     media: Media
     teaserMetadata: teaserMetadata
-    permission: [Permission]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: RelationValues
@@ -1038,7 +1036,6 @@ export const baseSchema = gql`
     media: Media
     teaserMetadata: teaserMetadata
     title: [MetadataAndRelation]
-    permission: [Permission]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: RelationValues
@@ -1055,7 +1052,6 @@ export const baseSchema = gql`
     media: Media
     teaserMetadata: teaserMetadata
     title: [MetadataAndRelation]
-    permission: [Permission]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: RelationValues

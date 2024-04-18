@@ -444,9 +444,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     intialValues: async (parent: any, _args) => {
       return parent;
     },
-    permission: async (parent: any, _args, { dataSources }) => {
-      return resolvePermission(dataSources, parent.id);
-    },
   },
   teaserMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
@@ -466,11 +463,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   User: {
-    permission: async (parent: any, _args, { dataSources }) => {
-      // Todo fix permissions
-      // return resolvePermission(dataSources, parent.id);
-      return [Permission.Canupdate];
-    },
     intialValues: async (parent: any, _args, { dataSources }) => {
       return parent;
     },
@@ -493,11 +485,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     uuid: async (parent: any, _args, { dataSources }) => {
       return getEntityId(parent);
-    },
-    permission: async (parent: any, _args, { dataSources }) => {
-      // Todo fix permissions
-      // return resolvePermission(dataSources, parent.id);
-      return [Permission.Canupdate];
     },
     intialValues: async (parent: any, _args, { dataSources }) => {
       return parent;
@@ -534,13 +521,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     entityView: async (parent: any, _args, { dataSources }) => {
       return parent;
-    },
-    permission: async (parent: any, _args, { dataSources }) => {
-      return resolvePermission(
-        dataSources,
-        parent['_id'].replace('mediafiles/', ''),
-        Collection.Mediafiles
-      );
     },
     teaserMetadata: async (parent: any, _args, { dataSources }) => {
       return parent;
