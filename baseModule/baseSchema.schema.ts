@@ -989,7 +989,6 @@ export const baseSchema = gql`
     uuid: String!
     type: String!
     teaserMetadata: teaserMetadata
-    permission: [Permission]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: RelationValues
