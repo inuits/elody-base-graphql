@@ -61,7 +61,7 @@
         "cancel":"Cancel"
       },
       "discard-update": {
-        "message": "Are you certain you wish to stop editting? Any unsaved changes will be discarded",
+        "message": "Are you certain you wish to stop editing? Any unsaved changes will be discarded",
         "confirm": "Leave",
         "cancel":"Cancel"
       }

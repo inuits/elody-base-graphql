@@ -251,6 +251,7 @@ export const baseSchema = gql`
   input MenuTypeLinkInputModal {
     typeModal: TypeModals!
     formQuery: String
+    askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
 
@@ -266,6 +267,7 @@ export const baseSchema = gql`
   type MenuTypeLinkModal {
     typeModal: TypeModals!
     formQuery: String
+    askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
 
