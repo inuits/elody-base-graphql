@@ -73,7 +73,7 @@ import {
   WindowElementPanel,
   AdvancedFilterTypes,
   SortingDirection,
-  UploadContainer,
+  UploadContainer, FormTab, ImportContainer,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1128,12 +1128,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
   },
+  FormTab: {
+    formFields: async (parent: any, {}, { dataSources }) => {
+      return parent as FormFields;
+    },
+  },
   Form: {
     label: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
-    formFields: async (parent: any, {}, { dataSources }) => {
-      return parent as FormFields;
+    formTab: async (parent: any, {}, { dataSources }) => {
+      return parent as FormTab;
     },
   },
   FormFields: {
@@ -1145,6 +1150,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     action: async (parent: any, {}, { dataSources }) => {
       return parent as FormAction;
+    },
+    importContainer: async (parent: any, {}, { dataSources }) => {
+      return parent as ImportContainer;
     },
   },
   InputField: {

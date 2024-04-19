@@ -94,6 +94,9 @@ export const baseSchema = gql`
   enum TranscodeType {
     pdf
   }
+  type FormTab {
+    formFields: FormFields!
+  }
 
   enum ValidationRules {
     required
@@ -110,11 +113,13 @@ export const baseSchema = gql`
   type FormFields {
     metaData: PanelMetaData!
     uploadContainer: UploadContainer
+    importContainer:ImportContainer
     action: FormAction
   }
 
   type Form {
     label(input: String): String!
+    formTab: FormTab
     formFields: FormFields!
   }
 
@@ -855,7 +860,9 @@ export const baseSchema = gql`
     uploadMetadata: PanelMetaData
     uploadField: UploadField!
   }
-
+  type ImportContainer {
+    showsImportTab: Boolean
+  }
   type UploadField {
     label(input: String!): String!
     uploadFieldSize(input: UploadFieldSize): UploadFieldSize!
