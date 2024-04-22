@@ -115,17 +115,5 @@ export const resolvePermission = async (
   id: string,
   collection: Collection = Collection.Entities
 ): Promise<Permission[]> => {
-  let permissionsFromApi: any = [];
-  try {
-    permissionsFromApi = await dataSources.CollectionAPI.getPermission(
-      id,
-      collection
-    );
-  } catch (error) {
-    // throw new Error('No permissions found');
-  }
-
-  return permissionsFromApi.map((item: string) =>
-    item.replace('-', '')
-  ) as Permission[];
+  return [] as Permission[];
 };

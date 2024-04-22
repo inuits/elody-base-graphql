@@ -1,10 +1,41 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { Express } from 'express';
 import { AuthRESTDataSource } from '../auth';
+import { manager } from '../auth/index';
 import { environment as env } from '../main';
 import { Collection } from '../../../generated-types/type-defs';
+import { GraphQLError } from 'graphql/index';
 
 let staticToken: string | undefined | null = undefined;
+
+const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any) => {
+  try {
+    const token = req.session?.auth?.accessToken;
+    options.headers = { Authorization: `Bearer ${token}`}
+    const response = await fetch(url, options);
+
+    if (response.status === 401) {
+      const refreshTokenResponse = await manager?.refresh(req?.session?.auth?.accessToken, req?.session?.auth?.accessToken);
+      if (!refreshTokenResponse) {
+        return Promise.reject(new GraphQLError(`AUTH | REFRESH FAILED`, {
+          extensions: {
+            statusCode: 401,
+          }
+        }));
+      }
+      req.session.auth = refreshTokenResponse;
+
+      options.headers.Authorization = `Bearer ${refreshTokenResponse.accessToken}`;
+      const retryResponse = await fetch(url, options);
+
+      return retryResponse;
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // Proxy for storage API
 export const addJwt = (proxyReq: any, req: any, res: any) => {
@@ -35,6 +66,22 @@ export const addHeader = (proxyReq: any, req: any, res: any) => {
   );
 };
 
+// pump the stream data
+const pump = (reader: any, res: any) => {
+  reader.read().then(({ done, value }: {done: any, value: any}) => {
+    if (done) {
+      reader.releaseLock();
+      res.end();
+      return;
+    }
+    res.write(value);
+    pump(reader, res);
+  }).catch((error: any) => {
+    console.error('Error:', error);
+    res.status(500).end(JSON.stringify({ error: 'Internal Server Error' }));
+  });
+}
+
 const applyMediaFileEndpoint = (
   app: Express,
   storageApiUrl: string,
@@ -42,18 +89,30 @@ const applyMediaFileEndpoint = (
   staticTokenInput: string | undefined | null
 ) => {
   staticToken = staticTokenInput;
+
   app.use(
-    '/api/mediafile',
-    createProxyMiddleware({
-      target: storageApiUrl + '/download/',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api/mediafile': '/',
-      },
-      onProxyReq: addJwt,
-      onProxyRes: addHeader,
-    })
+    '/api/mediafile/:filename', async (req: any, res: any) => {
+      try {
+        const filename = req.params.filename;
+        const response = await fetchWithTokenRefresh(`${storageApiUrl}/download/${filename}`, { method: "GET" }, req);
+        
+        if (!response.ok) {
+          throw response;
+        }
+    
+        addHeader(null, req, res);
+        const blob = await response.blob();    
+        res.setHeader('Content-Type', blob.type);
+        const reader = blob.stream().getReader();
+
+        pump(reader, res);
+      } catch (error: any) {
+        const errorStatus = error.extensions?.statusCode || 500;
+        res.status(errorStatus).end(JSON.stringify(error));
+      }
+    }
   );
+
 
   app.use('/api/iiif*.json', async (req, res) => {
     try {
@@ -69,25 +128,32 @@ const applyMediaFileEndpoint = (
           )
         )
       );
-    } catch (error) {
-      // Handle the error here. For example, send a 500 Internal Server Error response.
-      res
-        .status(500)
-        .send({ error: 'An error occurred while processing your request.' });
+    } catch (error: any) {
+      const errorStatus = error.extensions?.statusCode || 500;
+      res.status(errorStatus).end(JSON.stringify(error));
     }
   });
 
-  app.use(
-    '/api/iiif',
-    createProxyMiddleware({
-      target: iiifUrlFrontend,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': '/',
-      },
-      onProxyReq: addJwt,
-    })
-  );
+  app.use('/api/iiif', async (req, res) => {
+    try {
+      const response = await fetchWithTokenRefresh(
+        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`, { method: "GET", }, req
+      );
+
+      if (!response.ok) {
+        throw response;
+      }
+  
+      const blob = await response.blob();    
+      res.setHeader('Content-Type', blob.type);
+      const reader = blob.stream().getReader();
+  
+      pump(reader, res);
+    } catch (error: any) {
+      const errorStatus = error.extensions?.statusCode || 500;
+      res.status(errorStatus).end(JSON.stringify(error));
+    }
+  });
 };
 
 export default applyMediaFileEndpoint;

@@ -7,7 +7,6 @@ import {
   resolveMedia,
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
-  resolvePermission,
 } from '../resolvers/entityResolver';
 import {
   ActionElement,
