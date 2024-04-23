@@ -1187,8 +1187,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     autoSelectable: async (parent, _args, { dataSources }) => {
       return parent.autoSelectable || false;
     },
-    disabled: async (_parent, { input }, { dataSources }) => {
-      return input || false;
+    disabled: async (parent, _args, { dataSources }) => {
+      return parent.disabled || false;
     },
   },
   Validation: {
