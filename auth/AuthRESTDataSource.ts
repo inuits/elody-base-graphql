@@ -53,7 +53,7 @@ export class AuthRESTDataSource extends RESTDataSource {
 
         return await fn(...args);
       } else {
-        return error.extensions.response.body;
+        return error.extensions.response?.body;
       }
     }
   }
