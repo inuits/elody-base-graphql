@@ -116,7 +116,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       },
     ];
     try {
-      data = await this.post(`entities/${env?.features?.useFiltersV2 ? "filter_v2" : "filter"}?soft=1`, { body });
+      data = await this.post(`entities/filter?soft=1`, { body });
     } catch (e) {
       return '401';
     }
