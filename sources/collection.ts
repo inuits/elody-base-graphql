@@ -526,7 +526,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
 
     if (!Array.isArray(data)) {
-      data.results?.forEach((element: unknown): unknown => setId(element));
+      data?.results?.forEach((element: unknown): unknown => setId(element));
       //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
     }
