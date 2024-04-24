@@ -48,7 +48,6 @@ export interface Environment {
         image: string;
       };
     };
-    useFiltersV2?: boolean;
   };
   customization: {
     applicationTitle: string;
