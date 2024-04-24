@@ -64,6 +64,11 @@
         "message": "Are you certain you wish to stop editing? Any unsaved changes will be discarded",
         "confirm": "Leave",
         "cancel":"Cancel"
+      },
+      "discard-modal": {
+        "message": "Are you certain you wish to stop? Any unsaved changes will be discarded",
+        "confirm": "Leave",
+        "cancel":"Cancel"
       }
     },
     "dropdown":{
@@ -317,6 +322,11 @@
       },
       "discard-update": {
         "message": "Ben je zeker dat je wilt stoppen met bewerken? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
+        "confirm": "Verlaten",
+        "cancel":"Annuleren"
+      },
+      "discard-modal": {
+        "message": "Ben je zeker dat je wilt stoppen? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
         "cancel":"Annuleren"
       }
