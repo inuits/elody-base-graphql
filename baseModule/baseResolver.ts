@@ -76,7 +76,7 @@ import {
   UploadContainer,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
-import { baseFields, getOptionsByEntityType } from '../sources/forms';
+import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   getEntityId,
@@ -1161,14 +1161,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
-      if (parent['options'] && parent['options'].length > 0)
-        return parent['options'];
-
-      const options = getOptionsByEntityType(
-        (parent.acceptedEntityTypes as string[]) || undefined,
-        dataSources
-      );
-      return options;
+      return parent['options'] || [];
     },
     relationType: async (parent, _args, { dataSources }) => {
       return parent.relationType || '';
