@@ -4,10 +4,8 @@ import {
 } from '../parsers/entity';
 import {
   Collection,
-  Entity,
   Maybe,
   MediaFile,
-  Metadata,
   Permission,
   TeaserMetadataOptions,
 } from '../../../generated-types/type-defs';
@@ -84,11 +82,11 @@ export const resolveMetadataItemOfPreferredLanguage = (
     metadata.forEach((item) => {
       let itemLanguageMetadata = { value: item.lang };
       if (!itemLanguageMetadata.value)
-        itemLanguageMetadata = item.metadataOnRelation.find(
+        itemLanguageMetadata = item.metadataOnRelation?.find(
           (item: { [key: string]: string }) => item.key === 'lang'
         );
 
-      if (itemLanguageMetadata.value === preferredLanguage) {
+      if (itemLanguageMetadata?.value === preferredLanguage) {
         preferredLanguageMetadataItem = item;
       }
     });
