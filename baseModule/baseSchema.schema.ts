@@ -121,6 +121,7 @@ export const baseSchema = gql`
   enum ActionType {
     upload
     submit
+    download
   }
 
   enum ActionProgressIndicatorType {
@@ -393,17 +394,32 @@ export const baseSchema = gql`
     Iiif
   }
 
+  input BulkOperationInputModal {
+    typeModal: TypeModals!
+    formQuery: String
+    askForCloseConfirmation: Boolean
+    neededPermission: Permission
+  }
+  type BulkOperationModal {
+    typeModal: TypeModals!
+    formQuery: String
+    askForCloseConfirmation: Boolean
+    neededPermission: Permission
+  }
+
   scalar StringOrInt
   type DropdownOption {
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
   }
 
   input DropdownOptionInput {
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    bulkOperationModal: BulkOperationInputModal
   }
 
   type DropzoneEntityToCreate {
