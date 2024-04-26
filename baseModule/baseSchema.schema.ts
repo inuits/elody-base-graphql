@@ -63,6 +63,7 @@ export const baseSchema = gql`
     dropdownSingleselect
     fileUpload
     csvUpload
+    fileSystemImport
   }
 
   enum BaseFieldType {
@@ -75,6 +76,7 @@ export const baseSchema = gql`
     baseTextareaField
     baseFileUploadField
     baseCsvUploadField
+    baseFileSystemImportField
   }
 
   enum FileType {
@@ -113,7 +115,6 @@ export const baseSchema = gql`
   type FormFields {
     metaData: PanelMetaData!
     uploadContainer: UploadContainer
-    importContainer:ImportContainer
     action: FormAction
   }
 
@@ -877,6 +878,7 @@ export const baseSchema = gql`
     unit(input: Unit!): Unit!
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
+    showOnlyInEditMode(input: Boolean): Boolean
   }
 
   type PanelRelationMetaData {

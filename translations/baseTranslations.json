@@ -91,6 +91,7 @@
       "belongs-to": "Belongs to",
       "pick": "Pick entity",
       "upload": "Upload",
+      "import": "Import",
       "reset-viewer": "Reset"
     },
     "filters":{
@@ -351,6 +352,7 @@
       "belongs-to": "Behoort tot",
       "pick": "Selecteer entiteit",
       "upload": "Uploaden",
+      "import": "Importeren",
       "reset-viewer": "Reset"
     },
     "filters":{
