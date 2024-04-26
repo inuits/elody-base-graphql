@@ -17,14 +17,18 @@ const PROTECTED_METADATA_RELATION_KEY: string[] = [
 ];
 
 export const setId = (entityRaw: any) => {
-  if (!entityRaw.id)
-    entityRaw.id = entityRaw.object_id
-      ? entityRaw.object_id
-      : entityRaw._id
-      ? entityRaw._id
-      : entityRaw.identifiers[0];
-  entityRaw.uuid = entityRaw._id;
-  return entityRaw;
+  try {
+    if (!entityRaw.id)
+      entityRaw.id = entityRaw.object_id
+        ? entityRaw.object_id
+        : entityRaw._id
+        ? entityRaw._id
+        : entityRaw.identifiers[0];
+    entityRaw.uuid = entityRaw._id;
+    return entityRaw;
+  } catch (e) {
+    console.log('No id found for entity');
+  }
 };
 
 export const setType = (entityRaw: any, type: string) => {
