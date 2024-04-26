@@ -100,9 +100,9 @@ export class CollectionAPI extends AuthRESTDataSource {
       data = await this.get(
         `${this.getCollectionValueForEntityType(entityType)}?type=${entityType}`
       );
-      data.results.forEach((element: any) => setId(element));
+      if (data.results) data.results.forEach((element: any) => setId(element));
     } catch (e) {
-      console.log(e);
+      return [];
     }
     return data?.results;
   }
@@ -112,7 +112,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const body = [
       {
         type: 'type',
-        value: entityType !== "IotDeviceTracker" ? entityType : "IotDevice",
+        value: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
       },
     ];
     try {
@@ -128,7 +128,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.post(`entities?soft=1`, {
-        body: { type: entityType !== "IotDeviceTracker" ? entityType : "IotDevice" },
+        body: {
+          type: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
+        },
       });
     } catch (e) {
       return '401';
@@ -161,10 +163,16 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async getEntity(id: string, type: string, _collection: string | undefined = undefined): Promise<any> {
+  async getEntity(
+    id: string,
+    type: string,
+    _collection: string | undefined = undefined
+  ): Promise<any> {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
-    let data = await this.get<any>(`${_collection ? _collection : collection[type]}/${id}`);
+    let data = await this.get<any>(
+      `${_collection ? _collection : collection[type]}/${id}`
+    );
     setId(data);
     return data;
   }
@@ -374,7 +382,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     relations: any[] = []
   ): Promise<any> {
     const body: any = {
-      type: entity.type !== "IotDeviceTracker" ? entity.type : "IotDevice",
+      type: entity.type !== 'IotDeviceTracker' ? entity.type : 'IotDevice',
       metadata,
       relations,
     };
