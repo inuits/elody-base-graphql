@@ -288,6 +288,19 @@ export const baseResolver: Resolvers<ContextValue> = {
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
       return {} as Form;
     },
+    DownloadItemsInZip: async (
+      _source,
+      {
+        downloadEntity,
+        entities,
+        mediafiles,
+        includeCsv
+      },
+      { dataSources }
+    ) => {
+      const createdEntity = await dataSources.CollectionAPI.createEntity(downloadEntity, (downloadEntity.metadata as Metadata[]) || []);
+      return createdEntity as Entity;
+    }
   },
   Mutation: {
     linkMediafileToEntity: async (

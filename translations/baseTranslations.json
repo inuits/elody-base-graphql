@@ -6,6 +6,7 @@
     "actions": {
       "labels": {
         "upload": "Upload",
+        "download": "Download",
         "create": "Create",
         "success": "{0} Items imported",
         "reset-upload": "Import more files"
@@ -270,6 +271,7 @@
     "actions": {
       "labels": {
         "upload": "Uploaden",
+        "download": "Downloaden",
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
         "reset-upload": "Importeer meer bestanden"

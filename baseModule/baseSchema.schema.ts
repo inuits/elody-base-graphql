@@ -1112,6 +1112,12 @@ export const baseSchema = gql`
     PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
     GetDynamicForm: Form!
+    DownloadItemsInZip(
+      downloadEntity: EntityInput!
+      entities: [String]
+      mediafiles: [String]
+      includeCsv: Boolean!
+    ): Entity
   }
 
   type Mutation {
