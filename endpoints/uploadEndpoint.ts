@@ -103,22 +103,8 @@ const __batchEntities = async (
     const errorStatus = exception.extensions?.statusCode || 500;
     response.status(errorStatus).end(JSON.stringify(exception));
   }
-
-  let responseBody = '';
-  if (result.body) {
-    result.body.on('data', (chunk: any) => (responseBody += chunk.toString()));
-    return new Promise((resolve) => {
-      result.body.on('end', async () => {
-        const jsonParsableResult = `["${responseBody
-          .split('\n')
-          .join('","')}"]`;
-        resolve(JSON.parse(jsonParsableResult));
-      });
-    });
-  } else {
-    // Handle the case where response.body is not available
-    throw new Error('Response body not available');
-  }
+  const jsonParsableResult = `["${result.split('\n').join('","')}"]`;
+  return JSON.parse(jsonParsableResult);
 };
 
 const __createMediafileForEntity = async (
