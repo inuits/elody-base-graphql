@@ -610,7 +610,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       );
     } else {
       const body = advancedFilterInputs;
-      console.log(body);
       return await this.post(
         `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(
           skip,
