@@ -291,14 +291,33 @@ export const baseResolver: Resolvers<ContextValue> = {
     DownloadItemsInZip: async (
       _source,
       {
-        downloadEntity,
         entities,
         mediafiles,
-        includeCsv
+        includeCsv,
+        includeAssetCsv,
+        downloadEntity
       },
       { dataSources }
     ) => {
+      if (!dataSources.TranscodeService)
+        throw new GraphQLError(
+            'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
+        );
+      let mediafilesCsv: string[] = [];
+      let assetsCsv: string[] = [];
       const createdEntity = await dataSources.CollectionAPI.createEntity(downloadEntity, (downloadEntity.metadata as Metadata[]) || []);
+      if (includeCsv) {
+        const config = await dataSources.CollectionAPI.getConfig();
+        mediafilesCsv = config.mediafile_fields;
+        if(includeAssetCsv) assetsCsv = config.asset_fields;
+      }
+      await dataSources.TranscodeService.DownloadItemsInZip({
+        entities: entities,
+        mediafiles: mediafiles,
+        csv_mediafile_columns: mediafilesCsv,
+        csv_asset_columns: assetsCsv,
+        download_entity: downloadEntity,
+      });
       return createdEntity as Entity;
     }
   },

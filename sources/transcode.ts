@@ -9,4 +9,13 @@ export class TranscodeService extends AuthRESTDataSource {
         const mediafileObject = {'mediafiles': mediafiles}
         return await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`,  {body: mediafileObject, headers: {'Content-Type': 'application/json'}})
     }
+
+    async DownloadItemsInZip(body: any): Promise<void> {
+        return await this.post(
+            `/transcode/zip`,
+            {
+                body
+            }
+        );
+    }
 }

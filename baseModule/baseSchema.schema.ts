@@ -1113,10 +1113,11 @@ export const baseSchema = gql`
     PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
     GetDynamicForm: Form!
     DownloadItemsInZip(
-      downloadEntity: EntityInput!
-      entities: [String]
-      mediafiles: [String]
+      entities: [String]!
+      mediafiles: [String]!
       includeCsv: Boolean!
+      includeAssetCsv: Boolean!
+      downloadEntity: EntityInput!
     ): Entity
   }
 
