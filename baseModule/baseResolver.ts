@@ -315,13 +315,17 @@ export const baseResolver: Resolvers<ContextValue> = {
         mediafilesCsv = config.mediafile_fields;
         if(includeAssetCsv) assetsCsv = config.asset_fields;
       }
-      await dataSources.TranscodeService.DownloadItemsInZip({
-        entities: entities,
-        mediafiles: mediafiles,
-        csv_mediafile_columns: mediafilesCsv,
-        csv_entity_columns: assetsCsv,
-        download_entity: downloadEntity,
-      });
+      try {
+        await dataSources.TranscodeService.DownloadItemsInZip({
+          entities: entities,
+          mediafiles: mediafiles,
+          csv_mediafile_columns: mediafilesCsv,
+          csv_entity_columns: assetsCsv,
+          download_entity: createdEntity.id,
+        });
+      } catch (e) {
+        console.log(`Error whilst making zip for mediafiles: ${e}`);
+      }
       return createdEntity as Entity;
     }
   },
