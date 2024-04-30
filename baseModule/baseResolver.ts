@@ -305,7 +305,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       let mediafilesCsv: string[] = [];
       let assetsCsv: string[] = [];
-      const createdEntity = await dataSources.CollectionAPI.createEntity(downloadEntity, (downloadEntity.metadata as Metadata[]) || []);
+      const createdEntity = await dataSources.CollectionAPI.createEntity(
+          downloadEntity,
+          (downloadEntity.metadata as Metadata[]) || [],
+          downloadEntity.relations as []
+      );
       if (includeCsv) {
         const config = await dataSources.CollectionAPI.getConfig();
         mediafilesCsv = config.mediafile_fields;
