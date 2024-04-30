@@ -142,7 +142,8 @@
         "identifier": "Identifier",
         "user": "User",
         "expire-date": "Expire date",
-        "rights": "Rights"
+        "rights": "Rights",
+        "status": "Status"
       }
     },
     "notifications":{
@@ -403,7 +404,8 @@
         "identifier": "Identificatie",
         "user": "Gebruiker",
         "expire-date": "Vervaldatum",
-        "rights": "Rechten"
+        "rights": "Rechten",
+        "status": "Status"
       }
     },
     "notifications":{
