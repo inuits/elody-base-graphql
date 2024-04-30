@@ -315,7 +315,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         entities: entities,
         mediafiles: mediafiles,
         csv_mediafile_columns: mediafilesCsv,
-        csv_asset_columns: assetsCsv,
+        csv_entity_columns: assetsCsv,
         download_entity: downloadEntity,
       });
       return createdEntity as Entity;
