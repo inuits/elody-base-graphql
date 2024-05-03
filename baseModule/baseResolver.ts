@@ -604,7 +604,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     keyValue: async (
       parent: any,
-      { key, source, uuid, metadataKeyAsLabel, relationKey },
+      { key, source, uuid, metadataKeyAsLabel, rootKeyAsLabel, containsRelationProperty, relationKey },
       { dataSources }
     ) => {
       try {
@@ -625,15 +625,28 @@ export const baseResolver: Resolvers<ContextValue> = {
           return value ?? '';
         } else if (source === KeyValueSource.Relations) {
           try {
-            const relation = parent?.relations.filter(
+            let relation: any;
+            const relations = parent?.relations.filter(
               (relation: any) => relation.type === key
-            )?.[0];
+            )
+            if (containsRelationProperty)
+              relations.forEach((rel: any) => {
+                if (rel[containsRelationProperty]) relation = rel;
+              });
+            else relation = relations?.[0];
             if (relation) {
-              const entity = await dataSources.CollectionAPI.getEntityById(
-                relation.key
-              );
+              let type;
+              if (relation.type === "hasMediafile")
+                type = await dataSources.CollectionAPI.getMediaFile(
+                    relation.key
+                );
+              else
+                type = await dataSources.CollectionAPI.getEntityById(
+                    relation.key
+                );
+              if (rootKeyAsLabel) return type[rootKeyAsLabel];
               return (
-                entity?.metadata?.find(
+                type?.metadata?.find(
                   (metadata: any) => metadata.key === metadataKeyAsLabel
                 )?.value || relation.key
               );

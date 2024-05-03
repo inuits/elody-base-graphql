@@ -654,6 +654,8 @@ export const baseSchema = gql`
       source: KeyValueSource!
       uuid: String
       metadataKeyAsLabel: String
+      rootKeyAsLabel: String
+      containsRelationProperty: String
       relationKey: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
