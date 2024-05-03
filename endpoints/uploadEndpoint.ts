@@ -103,7 +103,7 @@ const __batchEntities = async (
     const errorStatus = exception.extensions?.statusCode || 500;
     response.status(errorStatus).end(JSON.stringify(exception));
   }
-  const jsonParsableResult = `["${decodeURIComponent(result)
+  const jsonParsableResult = `["${result
     .split('\n')
     .join('","')}"]`;
   return JSON.parse(jsonParsableResult);
