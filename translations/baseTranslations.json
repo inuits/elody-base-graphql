@@ -142,8 +142,10 @@
         "identifier": "Identifier",
         "user": "User",
         "expire-date": "Expire date",
+        "status": "Status",
         "rights": "Rights",
-        "status": "Status"
+        "date_updated": "Date updated",
+        "last_editor": "Last editor"
       }
     },
     "notifications":{
@@ -405,7 +407,9 @@
         "user": "Gebruiker",
         "expire-date": "Vervaldatum",
         "rights": "Rechten",
-        "status": "Status"
+        "status": "Status",
+        "date-updated": "Update datum",
+        "last-editor": "Laatst bewerkt door"
       }
     },
     "notifications":{

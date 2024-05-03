@@ -74,6 +74,7 @@ import {
   AdvancedFilterTypes,
   SortingDirection,
   UploadContainer,
+  DropdownOption,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -290,30 +291,25 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     DownloadItemsInZip: async (
       _source,
-      {
-        entities,
-        mediafiles,
-        includeCsv,
-        includeAssetCsv,
-        downloadEntity
-      },
+      { entities, mediafiles, includeCsv, includeAssetCsv, downloadEntity },
       { dataSources }
     ) => {
       if (!dataSources.TranscodeService)
         throw new GraphQLError(
-            'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
+          'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
       let mediafilesCsv: string[] = [];
       let assetsCsv: string[] = [];
       const createdEntity = await dataSources.CollectionAPI.createEntity(
-          downloadEntity,
-          (downloadEntity.metadata as Metadata[]) || [],
+        downloadEntity,
+        (downloadEntity.metadata as Metadata[]) || []
+      ,
           downloadEntity.relations as []
       );
       if (includeCsv) {
         const config = await dataSources.CollectionAPI.getConfig();
         mediafilesCsv = config.mediafile_fields;
-        if(includeAssetCsv) assetsCsv = config.asset_fields;
+        if (includeAssetCsv) assetsCsv = config.asset_fields;
       }
       try {
         await dataSources.TranscodeService.DownloadItemsInZip({
@@ -327,7 +323,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         console.log(`Error whilst making zip for mediafiles: ${e}`);
       }
       return createdEntity as Entity;
-    }
+    },
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -1147,7 +1143,19 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   SortOptions: {
     options: async (parent, { input }, { dataSources }) => {
-      return input;
+      const baseSortOptions: DropdownOption[] = [
+        {
+          icon: DamsIcons.NoIcon,
+          label: 'metadata.labels.date-updated',
+          value: 'date_updated',
+        },
+        {
+          icon: DamsIcons.NoIcon,
+          label: 'metadata.labels.last-editor',
+          value: 'last_editor',
+        },
+      ];
+      return [...input, ...baseSortOptions];
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
