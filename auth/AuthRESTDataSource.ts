@@ -71,6 +71,7 @@ export class AuthRESTDataSource extends RESTDataSource {
     body?: BodyInit | object,
     init?: RequestInit
   ): Promise<TResult> {
+    console.log(`Executing post with ${path}`);
     return this.withRetry(super.post.bind(this) as any, path, body, init);
   }
 
