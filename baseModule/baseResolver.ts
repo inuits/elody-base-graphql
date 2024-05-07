@@ -298,21 +298,23 @@ export const baseResolver: Resolvers<ContextValue> = {
         throw new GraphQLError(
           'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
-      let mediafilesCsv: string[] = [];
-      let assetsCsv: string[] = [];
-      const createdEntity = await dataSources.CollectionAPI.createEntity(
-        downloadEntity,
-        (downloadEntity.metadata as Metadata[]) || []
-      ,
-          downloadEntity.relations as []
-      );
-      if (includeCsv) {
-        const config = await dataSources.CollectionAPI.getConfig();
-        mediafilesCsv = config.mediafile_fields;
-        if (includeAssetCsv) assetsCsv = config.asset_fields;
-      }
+      let createdEntity;
       try {
-        await dataSources.TranscodeService.DownloadItemsInZip({
+        let mediafilesCsv: string[] = [];
+        let assetsCsv: string[] = [];
+        createdEntity = await dataSources.CollectionAPI.createEntity(
+          downloadEntity,
+          (downloadEntity.metadata as Metadata[]) || []
+        ,
+            downloadEntity.relations as []
+        );
+        if (includeCsv) {
+          const config = await dataSources.CollectionAPI.getConfig();
+          mediafilesCsv = config.mediafile_fields;
+          if (includeAssetCsv) assetsCsv = config.asset_fields;
+        }
+        console.log("Going to download items");
+        const result = await dataSources.TranscodeService.downloadItemsInZip({
           entities: entities,
           mediafiles: mediafiles,
           csv_mediafile_columns: mediafilesCsv,

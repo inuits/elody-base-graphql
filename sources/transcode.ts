@@ -10,7 +10,8 @@ export class TranscodeService extends AuthRESTDataSource {
         return await this.post(`transcode/${transcodeType}${masterEntityId ? '?master_entity_id='+ masterEntityId : ''}`,  {body: mediafileObject, headers: {'Content-Type': 'application/json'}})
     }
 
-    async DownloadItemsInZip(body: any): Promise<void> {
+    async downloadItemsInZip(body: any): Promise<any> {
+        console.log(`Calling endpoint ${this.baseURL}/transcode/zip`);
         return await this.post(
             `/transcode/zip`,
             {
