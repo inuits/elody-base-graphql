@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.0.218",
+  "version": "0.0.219",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {

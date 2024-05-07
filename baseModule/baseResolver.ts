@@ -313,7 +313,6 @@ export const baseResolver: Resolvers<ContextValue> = {
           mediafilesCsv = config.mediafile_fields;
           if (includeAssetCsv) assetsCsv = config.asset_fields;
         }
-        console.log("Going to download items");
         const result = await dataSources.TranscodeService.downloadItemsInZip({
           entities: entities,
           mediafiles: mediafiles,
