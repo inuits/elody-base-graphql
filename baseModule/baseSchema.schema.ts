@@ -1119,7 +1119,7 @@ export const baseSchema = gql`
     DownloadItemsInZip(
       entities: [String]!
       mediafiles: [String]!
-      includeCsv: Boolean!
+      basicCsv: Boolean!
       includeAssetCsv: Boolean!
       downloadEntity: EntityInput!
     ): Entity

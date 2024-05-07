@@ -291,7 +291,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     DownloadItemsInZip: async (
       _source,
-      { entities, mediafiles, includeCsv, includeAssetCsv, downloadEntity },
+      { entities, mediafiles, basicCsv, includeAssetCsv, downloadEntity },
       { dataSources }
     ) => {
       if (!dataSources.TranscodeService)
@@ -308,7 +308,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         ,
             downloadEntity.relations as []
         );
-        if (includeCsv) {
+        if (basicCsv) {
           const config = await dataSources.CollectionAPI.getConfig();
           mediafilesCsv = config.mediafile_fields;
           if (includeAssetCsv) assetsCsv = config.asset_fields;
