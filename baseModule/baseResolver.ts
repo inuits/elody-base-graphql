@@ -304,9 +304,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         let assetsCsv: string[] = [];
         createdEntity = await dataSources.CollectionAPI.createEntity(
           downloadEntity,
-          (downloadEntity.metadata as Metadata[]) || []
-        ,
-            downloadEntity.relations as []
+          (downloadEntity.metadata as Metadata[]) || [],
+          downloadEntity.relations as []
         );
         if (basicCsv) {
           const config = await dataSources.CollectionAPI.getConfig();
@@ -383,13 +382,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       }
 
-      if (collection !== Collection.Mediafiles)
+      if (collection !== Collection.Mediafiles) {
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id),
           'BaseEntity',
           collection
         );
-      else return await dataSources.CollectionAPI.getMediaFile(id);
+      } else return await dataSources.CollectionAPI.getMediaFile(id);
     },
     deleteData: async (
       _source,
@@ -605,7 +604,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     keyValue: async (
       parent: any,
-      { key, source, uuid, metadataKeyAsLabel, rootKeyAsLabel, containsRelationProperty, relationKey },
+      {
+        key,
+        source,
+        uuid,
+        metadataKeyAsLabel,
+        rootKeyAsLabel,
+        containsRelationProperty,
+        relationKey,
+      },
       { dataSources }
     ) => {
       try {
@@ -629,7 +636,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             let relation: any;
             const relations = parent?.relations.filter(
               (relation: any) => relation.type === key
-            )
+            );
             if (containsRelationProperty)
               relations.forEach((rel: any) => {
                 if (rel[containsRelationProperty]) relation = rel;
@@ -637,13 +644,13 @@ export const baseResolver: Resolvers<ContextValue> = {
             else relation = relations?.[0];
             if (relation) {
               let type;
-              if (relation.type === "hasMediafile")
+              if (relation.type === 'hasMediafile')
                 type = await dataSources.CollectionAPI.getMediaFile(
-                    relation.key
+                  relation.key
                 );
               else
                 type = await dataSources.CollectionAPI.getEntityById(
-                    relation.key
+                  relation.key
                 );
               if (rootKeyAsLabel) return type[rootKeyAsLabel];
               return (
