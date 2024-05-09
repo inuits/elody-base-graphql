@@ -100,6 +100,7 @@
       "active":"active",
       "clear":"Clear all",
       "apply":"Apply filter(s)",
+      "minDropdownSearchCharacters": "Type at least 3 characters",
       "matcher-labels":{
         "select-filter-type":"Select filter type",
         "AnyMatcher":"has a value",
@@ -364,6 +365,7 @@
       "active":"actief",
       "clear":"Alles wissen",
       "apply":"Filter(s) toepassen",
+      "minDropdownSearchCharacters": "Typ ten minste 3 karakters",
       "matcher-labels":{
         "select-filter-type":"Selecteer filter type",
         "AnyMatcher":"is ingevuld",
