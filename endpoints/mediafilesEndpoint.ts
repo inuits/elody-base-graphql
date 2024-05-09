@@ -1,21 +1,25 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import { Express } from 'express';
 import { AuthRESTDataSource } from '../auth';
 import { manager } from '../auth/index';
 import { environment as env } from '../main';
 import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
+import jwt_decode from "jwt-decode";
 
 let staticToken: string | undefined | null = undefined;
 
-const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any) => {
+const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, checkToken: boolean = false) => {
   try {
     const token = req.session?.auth?.accessToken;
     options.headers = { Authorization: `Bearer ${token}`}
-    const response = await fetch(url, options);
+    let response: any;
+    const isExpired = isTokenExpired(token);
+    if (!checkToken || (checkToken && !isExpired)) {
+      response = await fetch(url, options);
+    } 
 
-    if (response.status === 401) {
-      const refreshTokenResponse = await manager?.refresh(req?.session?.auth?.accessToken, req?.session?.auth?.accessToken);
+    if (response?.status === 401 || (checkToken && isExpired)) {
+      const refreshTokenResponse = await manager?.refresh(req?.session?.auth?.accessToken, req?.session?.auth?.refreshToken);
       if (!refreshTokenResponse) {
         return Promise.reject(new GraphQLError(`AUTH | REFRESH FAILED`, {
           extensions: {
@@ -56,6 +60,12 @@ function extractIdFromMediafilePath(path: string): string | null {
   const match = path.match(regex);
 
   return match ? match[1] : null;
+}
+
+function isTokenExpired (token: string) {
+  const decodedToken: any = jwt_decode(token);
+  console.log(Date.now() >= decodedToken.exp * 1000 ? false : true);
+  return Date.now() >= decodedToken.exp * 1000 ? true : false;
 }
 
 export const addHeader = (proxyReq: any, req: any, res: any) => {
@@ -99,6 +109,7 @@ const applyMediaFileEndpoint = (
         if (!response.ok) {
           throw response;
         }
+
     
         addHeader(null, req, res);
         const blob = await response.blob();    
@@ -137,7 +148,7 @@ const applyMediaFileEndpoint = (
   app.use('/api/iiif', async (req, res) => {
     try {
       const response = await fetchWithTokenRefresh(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`, { method: "GET", }, req
+        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`, { method: "GET", }, req, true
       );
 
       if (!response.ok) {
