@@ -64,7 +64,6 @@ function extractIdFromMediafilePath(path: string): string | null {
 
 function isTokenExpired (token: string) {
   const decodedToken: any = jwt_decode(token);
-  console.log(Date.now() >= decodedToken.exp * 1000 ? false : true);
   return Date.now() >= decodedToken.exp * 1000 ? true : false;
 }
 

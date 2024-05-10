@@ -109,7 +109,7 @@ const start = (
   const configureMiddleware = (app: any) => {
     applyAuthSession(app, appConfig.sessionSecret);
     applyEnvironmentConfig({
-      tokenLogging: 'true',
+      tokenLogging: appConfig.apollo.tokenLogging,
       staticJWT: appConfig.staticToken,
     });
   };
