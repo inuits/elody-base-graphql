@@ -1297,9 +1297,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    action: async (_source, { input }, { dataSources }) => {
-      return input ? input : RouteNames.SingleEntity;
-    },
     icon: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
