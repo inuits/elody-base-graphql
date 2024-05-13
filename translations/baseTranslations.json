@@ -264,7 +264,7 @@
 
       },
       "contextMenuElodyAction": {
-        "delete": "Delete the link between this mediafile and the asset"
+        "delete": "Delete the relational link between these two entities"
       }
     }
   },
@@ -528,7 +528,7 @@
         "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
-        "delete": "Verwijder de relatie tussen deze mediafile en de asset"
+        "delete": "Verwijder de relatie tussen deze twee entiteiten"
       }
     }
   }
