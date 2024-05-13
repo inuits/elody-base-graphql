@@ -100,10 +100,11 @@ const applyMediaFileEndpoint = (
   staticToken = staticTokenInput;
 
   app.use(
-    '/api/mediafile/:filename', async (req: any, res: any) => {
+    '/api/mediafile', async (req: any, res: any) => {
       try {
-        const filename = req.params.filename;
-        const response = await fetchWithTokenRefresh(`${storageApiUrl}/download/${filename}`, { method: "GET" }, req);
+        const response = await fetchWithTokenRefresh(
+          `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`, { method: "GET" }, req
+        );
         
         if (!response.ok) {
           throw response;
