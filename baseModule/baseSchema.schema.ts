@@ -988,7 +988,6 @@ export const baseSchema = gql`
 
   type ContextMenuLinkAction {
     label(input: String): String!
-    action(input: RouteNames): RouteNames!
     icon(input: String): String!
   }
 
