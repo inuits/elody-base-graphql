@@ -120,6 +120,7 @@ export const baseSchema = gql`
 
   enum ActionType {
     upload
+    update
     submit
     download
   }
@@ -306,6 +307,7 @@ export const baseSchema = gql`
     Police
     Settings
     Upload
+    Update
   }
 
   type Menu {
@@ -385,6 +387,7 @@ export const baseSchema = gql`
     SquareFull
     Text
     Trash
+    Update
     Upload
     User
     UserCircle
@@ -832,6 +835,7 @@ export const baseSchema = gql`
   }
 
   enum UploadFlow {
+    updateMetadata
     mediafilesOnly
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
