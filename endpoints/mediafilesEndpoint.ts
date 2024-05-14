@@ -100,6 +100,12 @@ const applyMediaFileEndpoint = (
   staticToken = staticTokenInput;
 
   app.use(
+       '/api/mediafile/download-with-ticket', async (req: any, res: any) => {
+         res.redirect(302, `${env?.api.storageApiUrlExt}${req.originalUrl.replace('/api/mediafile/', '')}`);
+       }
+  )
+
+  app.use(
     '/api/mediafile', async (req: any, res: any) => {
       try {
         const response = await fetchWithTokenRefresh(
@@ -109,7 +115,6 @@ const applyMediaFileEndpoint = (
         if (!response.ok) {
           throw response;
         }
-
     
         addHeader(null, req, res);
         const blob = await response.blob();    
