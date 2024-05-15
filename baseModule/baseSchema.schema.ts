@@ -686,11 +686,6 @@ export const baseSchema = gql`
     viewModes(input: [ViewModes]): [ViewModes]
   }
 
-  type RelationValues {
-    label(input: String): String!
-    relations: [IntialValues!]!
-  }
-
   enum EditStatus {
     new
     changed
@@ -1034,7 +1029,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
-    relationValues: RelationValues
+    relationValues: JSON
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -1049,7 +1044,7 @@ export const baseSchema = gql`
     media: Media
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
-    relationValues: RelationValues
+    relationValues: JSON
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -1064,7 +1059,7 @@ export const baseSchema = gql`
     teaserMetadata: teaserMetadata
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
-    relationValues: RelationValues
+    relationValues: JSON
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -1080,7 +1075,7 @@ export const baseSchema = gql`
     title: [MetadataAndRelation]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
-    relationValues: RelationValues
+    relationValues: JSON
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
@@ -1096,7 +1091,7 @@ export const baseSchema = gql`
     title: [MetadataAndRelation]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
-    relationValues: RelationValues
+    relationValues: JSON
     entityView: ColumnList!
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions

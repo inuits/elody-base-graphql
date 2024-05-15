@@ -1,12 +1,10 @@
 import {
   Collection,
-  Maybe,
-  MediaFileMetadata,
   Metadata,
   MetadataAndRelation,
-  MetadataFormInput,
   MetadataRelation,
   KeyAndValue,
+  RelationFieldInput,
 } from '../../../generated-types/type-defs';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
@@ -65,6 +63,28 @@ export const parseMetaData = (input: any): Metadata => {
   };
 };
 
+export const parseRelations = (
+  relations: RelationFieldInput[]
+): { [key: string]: RelationFieldInput[] } => {
+  const groupedRelations: { [key: string]: RelationFieldInput[] } = {};
+  const relationTypes: string[] = [];
+
+  relations.forEach((relation: RelationFieldInput) => {
+    if (!relationTypes.includes(relation.type))
+      relationTypes.push(relation.type);
+  });
+
+  relationTypes.forEach((relationType: string) => {
+    groupedRelations[relationType] = relations.filter(
+      (relation: RelationFieldInput) => relation.type === relationType
+    );
+  });
+
+  console.log(groupedRelations);
+
+  return groupedRelations;
+};
+
 export const parseMetaDataRelation = (input: any): MetadataRelation => {
   return {
     key: input.key as string,
@@ -114,88 +134,6 @@ export const parseMedia = (input: {
     parentId: input?.id,
     primary_transcode: input?.primary_transcode,
   };
-};
-
-export const MediaFileToMedia = (input: {
-  _id: string;
-  original_file_location: string;
-  thumbnail_file_location: string;
-  transcode_filename: string;
-  filename: string;
-  entities: [string];
-  metadata: [MediaFileMetadata];
-  mimetype: string;
-  is_primary: boolean;
-  is_primary_thumbnail: boolean;
-}) => {
-  const x = {
-    primaryMediafile: input.transcode_filename,
-    primaryMediafileLocation: input.transcode_filename,
-    primaryThumbnailLocation: input.transcode_filename,
-    mediafiles: [input],
-  };
-  return x;
-};
-
-export type relationInputOld = Record<string, string>[];
-
-export const FormInputToRelations = (
-  form: Maybe<MetadataFormInput> | undefined
-): relationInputOld | undefined => {
-  let input: relationInputOld | undefined = undefined;
-  if (form?.relations) {
-    //REFACTOR NEEDED NO OBJECT IN METADATA
-    input = form?.relations.map((relation) => {
-      let returnObject: any = {};
-      if (relation?.metadata) {
-        returnObject = {
-          key: relation?.linkedEntityId,
-          label: relation.label,
-          type: relation?.relationType,
-          value: relation?.value ? relation?.value : undefined,
-        };
-
-        relation.metadata.forEach((value) => {
-          if (value && value.key) {
-            returnObject[value?.key] = value?.value;
-          }
-        });
-
-        return returnObject;
-      }
-    });
-  }
-
-  return input;
-};
-
-export const FormInputToMetadata = (
-  form: Maybe<MetadataFormInput> | undefined
-): relationInputOld | undefined => {
-  let input: relationInputOld | undefined = undefined;
-  if (form?.relations) {
-    //REFACTOR NEEDED NO OBJECT IN METADATA
-    input = form?.relations.map((relation) => {
-      let returnObject: any = {};
-      if (relation?.metadata) {
-        returnObject = {
-          key: relation?.linkedEntityId,
-          label: relation.label,
-          type: relation?.relationType,
-        };
-
-        relation.metadata.forEach((value) => {
-          if (value && value.key) {
-            returnObject[value?.key] = value?.value;
-          }
-        });
-
-        return returnObject;
-      }
-    });
-  }
-
-  return input;
 };
 
 export const parseIdToGetMoreData = (id: string): string => {

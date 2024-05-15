@@ -1,6 +1,7 @@
 import {
   parseMedia,
   parseMetaDataAndMetaDataRelation,
+  parseRelations,
 } from '../parsers/entity';
 import {
   Collection,
@@ -10,7 +11,7 @@ import {
   TeaserMetadataOptions,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
-import { customSort } from '../helpers/helpers';
+import { customSort, getEntityId } from '../helpers/helpers';
 
 export const resolveMedia = async (dataSources: DataSources, parent: any) => {
   // TODO: Load media inside of initialValues
@@ -98,20 +99,14 @@ export const resolveMetadataItemOfPreferredLanguage = (
   return preferredLanguageMetadataItem;
 };
 
-export const resolveRelations = async (parent: any) => {
-  let relations: string[] = [];
-  if (parent.relations)
-    relations = parent.relations.filter(
-      (relation: any) => relation.type === 'belongsTo'
-    );
-
-  return relations;
+export const resolveId = (parent: any) => {
+  return getEntityId(parent);
 };
 
-export const resolvePermission = async (
-  dataSources: DataSources,
-  id: string,
-  collection: Collection = Collection.Entities
-): Promise<Permission[]> => {
-  return [] as Permission[];
+export const resolveRelations = async (parent: any) => {
+  return parseRelations(parent.relations);
+};
+
+export const simpleReturn = (parent: any) => {
+  return parent;
 };

@@ -7,7 +7,9 @@ import {
 import {
   resolveMedia,
   resolveMetadata,
-  resolvePermission,
+  resolveId,
+  resolveRelations,
+  simpleReturn,
 } from './resolvers/entityResolver';
 import * as Sentry from '@sentry/node';
 import applyConfigEndpoint from './endpoints/configEndpoint';
@@ -33,13 +35,13 @@ import { CollectionAPI } from './sources/collection';
 import { ContextValue, DataSources } from './types';
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
-import { getMetadataItemValueByKey, getEntityId } from "./helpers/helpers";
+import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { ImportAPI } from 'import-module';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { SearchAPI } from './sources/search';
 import { StorageAPI } from './sources/storage';
-import { TranscodeService } from "./sources/transcode";
+import { TranscodeService } from './sources/transcode';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -83,7 +85,9 @@ const start = (
   appTranslations: Object,
   customEndpoints: Function[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
-  customTypeCollectionMapping: { [key: string]: Collection } | undefined = undefined
+  customTypeCollectionMapping:
+    | { [key: string]: Collection }
+    | undefined = undefined
 ) => {
   environment = appConfig;
 
@@ -147,13 +151,16 @@ const start = (
           const { cache } = server;
           const session = { ...req.session };
           const dataSources = {
-              CollectionAPI: new CollectionAPI({ session, cache }),
-              SearchAPI: new SearchAPI({ session, cache }),
-              ImportAPI: new ImportAPI({ session, cache }),
-              StorageAPI: new StorageAPI({ session, cache }),
-        }
-        if (environment?.api.transcodeService) Object.assign(dataSources, {TranscodeService: new TranscodeService({session, cache})})
-          return {dataSources}
+            CollectionAPI: new CollectionAPI({ session, cache }),
+            SearchAPI: new SearchAPI({ session, cache }),
+            ImportAPI: new ImportAPI({ session, cache }),
+            StorageAPI: new StorageAPI({ session, cache }),
+          };
+          if (environment?.api.transcodeService)
+            Object.assign(dataSources, {
+              TranscodeService: new TranscodeService({ session, cache }),
+            });
+          return { dataSources };
         },
       })
     );
@@ -241,11 +248,13 @@ export {
   resolveMedia,
   resolveMetadata,
   parseIdToGetMoreData,
-  resolvePermission,
   applyPromEndpoint,
   loadTranslations,
   baseTranslations,
   AuthRESTDataSource,
   getMetadataItemValueByKey,
-  getEntityId
+  getEntityId,
+  resolveId,
+  resolveRelations,
+  simpleReturn,
 };
