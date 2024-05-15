@@ -11,6 +11,14 @@ let staticToken: string | undefined | null = undefined;
 const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, checkToken: boolean = false) => {
   try {
     const token = req.session?.auth?.accessToken;
+    if (!token) {
+      return Promise.reject(new GraphQLError(`AUTH | NO TOKEN PROVIDED`, {
+        extensions: {
+          statusCode: 401,
+        }
+      }));
+    }
+
     options.headers = { Authorization: `Bearer ${token}`}
     let response: any;
     const isExpired = isTokenExpired(token);
