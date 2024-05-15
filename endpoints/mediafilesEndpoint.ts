@@ -10,7 +10,7 @@ let staticToken: string | undefined | null = undefined;
 
 const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, checkToken: boolean = false) => {
   try {
-    const token = req.session?.auth?.accessToken2;
+    const token = req.session?.auth?.accessToken;
     options.headers = { Authorization: `Bearer ${token}`}
     let response: any;
     const isExpired = checkToken && isTokenExpired(token);
