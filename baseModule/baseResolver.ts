@@ -1,7 +1,6 @@
 import {
   isMetaDataRelation,
   parseIdToGetMoreData,
-  parseRelations,
   removePrefixFromId,
 } from '../parsers/entity';
 import {
