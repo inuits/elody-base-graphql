@@ -63,7 +63,7 @@ export const resolveMetadata = async (
 
   if (keys.includes('type')) {
     //Add type
-    metadataArray.unshift({
+    metadataArray.push({
       key: 'type',
       label: 'type',
       value: parent.type,
