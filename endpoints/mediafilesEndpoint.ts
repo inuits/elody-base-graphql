@@ -10,18 +10,10 @@ let staticToken: string | undefined | null = undefined;
 
 const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, checkToken: boolean = false) => {
   try {
-    const token = req.session?.auth?.accessToken;
-    if (!token) {
-      return Promise.reject(new GraphQLError(`AUTH | NO TOKEN PROVIDED`, {
-        extensions: {
-          statusCode: 401,
-        }
-      }));
-    }
-
+    const token = req.session?.auth?.accessToken2;
     options.headers = { Authorization: `Bearer ${token}`}
     let response: any;
-    const isExpired = isTokenExpired(token);
+    const isExpired = checkToken && isTokenExpired(token);
     if (!checkToken || (checkToken && !isExpired)) {
       response = await fetch(url, options);
     } 
@@ -71,8 +63,17 @@ function extractIdFromMediafilePath(path: string): string | null {
 }
 
 function isTokenExpired (token: string) {
-  const decodedToken: any = jwt_decode(token);
-  return Date.now() >= decodedToken.exp * 1000 ? true : false;
+  try {
+    const decodedToken: any = jwt_decode(token);
+    return Date.now() >= decodedToken.exp * 1000 ? true : false;
+  } catch (error: any) {
+    console.error(`message: ${error?.message}, token: ${token}`);
+    throw new GraphQLError(`TOKEN IS NOT SPECIFIED`, {
+      extensions: {
+        statusCode: 401,
+      }
+    });
+  }
 }
 
 export const addHeader = (proxyReq: any, req: any, res: any) => {
