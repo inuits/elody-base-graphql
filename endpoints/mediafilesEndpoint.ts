@@ -13,7 +13,7 @@ const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, c
     const token = req.session?.auth?.accessToken;
     options.headers = { Authorization: `Bearer ${token}`}
     let response: any;
-    const isExpired = checkToken && isTokenExpired(token);
+    const isExpired = checkToken && token && isTokenExpired(token);
     if (!checkToken || (checkToken && !isExpired)) {
       response = await fetch(url, options);
     } 
