@@ -1,12 +1,14 @@
 import {
   isMetaDataRelation,
   parseIdToGetMoreData,
+  parseRelations,
   removePrefixFromId,
 } from '../parsers/entity';
 import {
   resolveMedia,
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
+  resolveRelations,
 } from '../resolvers/entityResolver';
 import {
   ActionElement,
@@ -506,7 +508,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent;
     },
     relationValues: async (parent: any, _args, { dataSources }) => {
-      return parent.relations ?? [];
+      return resolveRelations(parent);
     },
     entityView: async (parent: any, _args, { dataSources }) => {
       return parent;
@@ -529,7 +531,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent;
     },
     relationValues: async (parent: any, _args, { dataSources }) => {
-      return parent.relations ?? [];
+      return resolveRelations(parent);
     },
     entityView: async (parent: any, _args, { dataSources }) => {
       return parent;
@@ -553,7 +555,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent;
     },
     relationValues: async (parent: any, _args, { dataSources }) => {
-      return parent.relations ?? [];
+      return resolveRelations(parent);
     },
     entityView: async (parent: any, _args, { dataSources }) => {
       return parent;
@@ -705,14 +707,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {
       return input ? input : [ViewModes.ViewModesList];
-    },
-  },
-  RelationValues: {
-    label: async (parent: any, { input }, { dataSources }) => {
-      return input ?? '';
-    },
-    relations: async (parent: any, {}, { dataSources }) => {
-      return parent;
     },
   },
   MediaFileElement: {
