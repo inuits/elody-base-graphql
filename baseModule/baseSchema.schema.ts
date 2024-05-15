@@ -308,6 +308,9 @@ export const baseSchema = gql`
     Settings
     Upload
     Update
+    CloudBookmark
+    Database
+    Compass
   }
 
   type Menu {
