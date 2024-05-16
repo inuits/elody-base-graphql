@@ -296,6 +296,7 @@ export const baseSchema = gql`
   enum MenuIcons {
     ArchiveAlt
     BookOpen
+    BrightnessPlus
     Create
     ExclamationTriangle
     Focus
