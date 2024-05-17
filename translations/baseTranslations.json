@@ -70,6 +70,11 @@
         "message": "Are you certain you wish to stop? Any unsaved changes will be discarded",
         "confirm": "Leave",
         "cancel":"Cancel"
+      },
+      "logout-modal": {
+        "message": "Are you certain you wish to log out?",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
       }
     },
     "dropdown":{
@@ -335,6 +340,11 @@
         "message": "Ben je zeker dat je wilt stoppen? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
         "cancel":"Annuleren"
+      },
+       "logout-modal": {
+        "message": "Ben je zeker dat je wilt uitloggen?",
+        "confirm": "Log uit",
+        "cancel": "Annuleren"
       }
     },
     "dropdown":{
