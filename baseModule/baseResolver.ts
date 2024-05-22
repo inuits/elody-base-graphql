@@ -1259,6 +1259,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     disabled: async (parent, _args, { dataSources }) => {
       return parent.disabled || false;
     },
+    canCreateEntityFromOption: async (parent, _args, { dataSources }) => {
+      return parent.canCreateEntityFromOption || false;
+    },
+    metadataKeyToCreateEntityFromOption: async (parent, _args, { dataSources }) => {
+      return parent.metadataKeyToCreateEntityFromOption || '';
+    }
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {
