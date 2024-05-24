@@ -63,6 +63,7 @@ export const baseSchema = gql`
     dropdownSingleselect
     fileUpload
     csvUpload
+    fileSystemImport
   }
 
   enum BaseFieldType {
@@ -75,6 +76,7 @@ export const baseSchema = gql`
     baseTextareaField
     baseFileUploadField
     baseCsvUploadField
+    baseFileSystemImportField
   }
 
   enum FileType {
@@ -93,6 +95,9 @@ export const baseSchema = gql`
 
   enum TranscodeType {
     pdf
+  }
+  type FormTab {
+    formFields: FormFields!
   }
 
   enum ValidationRules {
@@ -115,6 +120,7 @@ export const baseSchema = gql`
 
   type Form {
     label(input: String): String!
+    formTab: FormTab
     formFields: FormFields!
   }
 
@@ -884,6 +890,7 @@ export const baseSchema = gql`
     unit(input: Unit!): Unit!
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
+    showOnlyInEditMode(input: Boolean): Boolean
   }
 
   type PanelRelationMetaData {

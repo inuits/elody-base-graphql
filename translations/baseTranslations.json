@@ -91,12 +91,18 @@
         "description":"All files were succesfully uploaded"
       }
     },
+    "import": {
+      "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}",
+      "import-error": "Import failed",
+      "import-success": "Import successful"
+    },
     "entity":{
       "create":"Create entity",
       "type":"Type",
       "belongs-to": "Belongs to",
       "pick": "Pick entity",
       "upload": "Upload",
+      "import": "Import",
       "reset-viewer": "Reset"
     },
     "filters":{
@@ -361,12 +367,18 @@
         "description":"Alle bestanden werden succesvol gëuploaded"
       }
     },
+    "import": {
+      "error-csv-count": "Exact 1 CSV-bestand verwacht in {folder}, {count} gevonden",
+      "import-error": "Import mislukt",
+      "import-success": "Import successful"
+    },
     "entity":{
       "create":"Maak entiteit",
       "type":"Type",
       "belongs-to": "Behoort tot",
       "pick": "Selecteer entiteit",
       "upload": "Uploaden",
+      "import": "Importeren",
       "reset-viewer": "Reset"
     },
     "filters":{

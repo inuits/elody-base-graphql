@@ -75,6 +75,7 @@ import {
   SortingDirection,
   UploadContainer,
   DropdownOption,
+  FormTab,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields, getOptionsByEntityType } from '../sources/forms';
@@ -931,6 +932,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
     },
+    showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
+      return input != undefined ? input : false;
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
@@ -1197,12 +1201,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
   },
+  FormTab: {
+    formFields: async (parent: any, {}, { dataSources }) => {
+      return parent as FormFields;
+    },
+  },
   Form: {
     label: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
-    formFields: async (parent: any, {}, { dataSources }) => {
-      return parent as FormFields;
+    formTab: async (parent: any, {}, { dataSources }) => {
+      return parent as FormTab;
     },
   },
   FormFields: {
