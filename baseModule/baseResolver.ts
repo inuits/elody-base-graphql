@@ -932,6 +932,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
     inputField: async (parent: any, { type }, { dataSources }) => {
+      if (type === 'baseFileSystemImportField') {
+        return {
+          type: type,
+        };
+      }
       return baseFields[type];
     },
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
