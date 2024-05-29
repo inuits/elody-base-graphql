@@ -80,7 +80,7 @@ export const baseFields: { [key: string]: InputField } = {
     },
   },
   baseFileSystemImportField: {
-    type: InputFieldTypes.FileSystemImport,
+    type: InputFieldTypes.BaseFileSystemImportField,
   },
 };
 

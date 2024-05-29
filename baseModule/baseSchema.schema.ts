@@ -63,7 +63,7 @@ export const baseSchema = gql`
     dropdownSingleselect
     fileUpload
     csvUpload
-    fileSystemImport
+    baseFileSystemImportField
   }
 
   enum BaseFieldType {
