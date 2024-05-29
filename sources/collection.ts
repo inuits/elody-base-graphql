@@ -561,7 +561,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `${collection[type]}/filter?limit=${limit}&skip=${this.getSkip(
+      `${collection[type]}/filter_v2?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -611,7 +611,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } else {
       const body = advancedFilterInputs;
       return await this.post(
-        `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(
+        `${Collection.Mediafiles}/filter_v2?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
         )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -655,7 +655,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<DropdownOption[]> {
     const body = [input];
     const data = await this.post(
-      `${Collection.Entities}/filter?limit=${limit}&skip=0`,
+      `${Collection.Entities}/filter_v2?limit=${limit}&skip=0`,
       {
         body,
       }
