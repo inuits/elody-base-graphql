@@ -305,21 +305,23 @@ export const baseSchema = gql`
     ArchiveAlt
     BookOpen
     BrightnessPlus
+    CloudBookmark
+    Compass
     Create
+    Database
     ExclamationTriangle
     Focus
+    FocusTarget
     History
     Image
     InfoCircle
     Iot
     KeyholeSquare
+    LocationArrowAlt
     Police
     Settings
-    Upload
     Update
-    CloudBookmark
-    Database
-    Compass
+    Upload
   }
 
   type Menu {
@@ -341,6 +343,7 @@ export const baseSchema = gql`
   # DropdownOption
   enum DamsIcons {
     NoIcon
+    FocusTarget
     AngleDoubleLeft
     AngleDoubleRight
     AngleDown
@@ -348,6 +351,7 @@ export const baseSchema = gql`
     AngleRight
     AngleUp
     Apps
+    ArchiveAlt
     ArrowCircleLeft
     ArrowCircleRight
     AudioThumbnail
@@ -367,8 +371,8 @@ export const baseSchema = gql`
     DownloadAlt
     Edit
     EditAlt
-    EllipsisV
     EllipsisH
+    EllipsisV
     ExclamationTriangle
     Export
     Eye
@@ -376,11 +380,13 @@ export const baseSchema = gql`
     Filter
     Focus
     History
+    Iiif
     Image
     InfoCircle
     KeyholeSquare
     Link
     ListUl
+    LocationArrowAlt
     Minus
     Music
     NoImage
@@ -393,6 +399,7 @@ export const baseSchema = gql`
     SearchGlass
     SearchMinus
     SearchPlus
+    Settings
     SignOut
     SortDown
     SortUp
@@ -405,8 +412,6 @@ export const baseSchema = gql`
     UserCircle
     WindowGrid
     WindowMaximize
-    Settings
-    Iiif
   }
 
   input BulkOperationInputModal {
