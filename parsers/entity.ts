@@ -80,8 +80,6 @@ export const parseRelations = (
     );
   });
 
-  console.log(groupedRelations);
-
   return groupedRelations;
 };
 

@@ -110,6 +110,7 @@ export const baseSchema = gql`
     relationValues
     relations
     relationMetadata
+    relatedEntityData
   }
 
   type FormFields {
@@ -701,6 +702,9 @@ export const baseSchema = gql`
     editStatus: EditStatus!
     teaserMetadata: [MetadataInput]
     metadata: [MetadataInput]
+    sort: JSON
+    is_primary_thumbnail: Boolean
+    is_primary: Boolean
   }
 
   input MetadataValuesInput {
