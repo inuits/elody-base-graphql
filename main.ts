@@ -66,18 +66,9 @@ const addCustomFieldsToBaseFields = (customInputFields: {
 const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
   [key: string]: Collection;
 }) => {
-  try {
-    Object.keys(customTypeCollectionMapping).forEach((key: string) => {
-      if (baseTypeCollectionMapping[key]) {
-        throw Error(
-          `The key ${key} does already exist in baseTypeCollectionMapping, please choose another one`
-        );
-      }
-      baseTypeCollectionMapping[key] = customTypeCollectionMapping[key];
-    });
-  } catch (e) {
-    console.log(e);
-  }
+  Object.keys(customTypeCollectionMapping).forEach((key: string) => {
+    baseTypeCollectionMapping[key] = customTypeCollectionMapping[key];
+  });
 };
 
 const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
