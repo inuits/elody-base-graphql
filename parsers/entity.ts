@@ -118,22 +118,6 @@ export const getMetaDataOnRelation = (
   return metadataOnRelation;
 };
 
-export const parseMedia = (input: {
-  primary_mediafile: string;
-  primary_mediafile_location: string;
-  primary_thumbnail_location: string;
-  primary_transcode: string;
-  id: string;
-}) => {
-  return {
-    primaryMediafile: input?.primary_mediafile,
-    primaryMediafileLocation: input?.primary_mediafile_location,
-    primaryThumbnailLocation: input?.primary_thumbnail_location,
-    parentId: input?.id,
-    primary_transcode: input?.primary_transcode,
-  };
-};
-
 export const parseIdToGetMoreData = (id: string): string => {
   if (id.includes('entities/') || id.includes('mediafiles/')) {
     return id;

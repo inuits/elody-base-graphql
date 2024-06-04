@@ -554,14 +554,6 @@ export const baseSchema = gql`
     payload: [String]
   }
 
-  type Media {
-    primaryMediafile: String
-    primary_transcode: String
-    primaryMediafileLocation: String
-    primaryThumbnailLocation: String
-    mediafiles: [MediaFile]
-  }
-
   enum RelationType {
     frames
     stories
@@ -1045,7 +1037,6 @@ export const baseSchema = gql`
     uuid: String!
     type: String!
     teaserMetadata: teaserMetadata
-    media: Media
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: JSON
@@ -1059,7 +1050,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    media: Media
     teaserMetadata: teaserMetadata
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
@@ -1074,7 +1064,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    media: Media
     teaserMetadata: teaserMetadata
     title: [MetadataAndRelation]
     intialValues: IntialValues!
@@ -1090,7 +1079,6 @@ export const baseSchema = gql`
     id: String!
     uuid: String!
     type: String!
-    media: Media
     teaserMetadata: teaserMetadata
     title: [MetadataAndRelation]
     intialValues: IntialValues!

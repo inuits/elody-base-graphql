@@ -4,7 +4,6 @@ import {
   removePrefixFromId,
 } from '../parsers/entity';
 import {
-  resolveMedia,
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
   resolveRelations,
@@ -475,9 +474,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   BaseEntity: {
-    media: async (parent: any, _args, { dataSources }) => {
-      return resolveMedia(dataSources, parent);
-    },
     intialValues: async (parent: any, _args) => {
       return parent;
     },
@@ -591,13 +587,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   MetadataOrRelationField: {
     __resolveType(obj: any) {
       return obj.relationType ? 'RelationField' : 'MetadataField';
-    },
-  },
-  Media: {
-    mediafiles: async (parent: any, _args, { dataSources }) => {
-      return parent.parentId
-        ? dataSources.CollectionAPI.getMediafiles(parent.parentId)
-        : parent.mediafiles;
     },
   },
   IntialValues: {
@@ -1267,9 +1256,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     canCreateEntityFromOption: async (parent, _args, { dataSources }) => {
       return parent.canCreateEntityFromOption || false;
     },
-    metadataKeyToCreateEntityFromOption: async (parent, _args, { dataSources }) => {
+    metadataKeyToCreateEntityFromOption: async (
+      parent,
+      _args,
+      { dataSources }
+    ) => {
       return parent.metadataKeyToCreateEntityFromOption || '';
-    }
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

@@ -5,7 +5,6 @@ import {
   AuthRESTDataSource,
 } from './auth';
 import {
-  resolveMedia,
   resolveMetadata,
   resolveId,
   resolveRelations,
@@ -245,7 +244,6 @@ export {
   environment,
   baseModule,
   baseSchema,
-  resolveMedia,
   resolveMetadata,
   parseIdToGetMoreData,
   applyPromEndpoint,
