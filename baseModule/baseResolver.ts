@@ -271,11 +271,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
-    PermissionMappingEntityDetail: async (_source, { id }, { dataSources }) => {
+    PermissionMappingEntityDetail: async (_source, { id, entityType }, { dataSources }) => {
       const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
-        id
+        id, entityType
       );
-      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id);
+      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id, entityType);
       return [
         {
           permission: Permission.Canupdate,

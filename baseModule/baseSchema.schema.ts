@@ -1122,7 +1122,7 @@ export const baseSchema = gql`
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
-    PermissionMappingEntityDetail(id: String!): [PermissionMapping!]!
+    PermissionMappingEntityDetail(id: String!, entityType: String!): [PermissionMapping!]!
     GetDynamicForm: Form!
     DownloadItemsInZip(
       entities: [String]!
