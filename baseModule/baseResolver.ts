@@ -365,23 +365,21 @@ export const baseResolver: Resolvers<ContextValue> = {
         formInput.metadata,
         collection
       );
-      if (collection !== Collection.Mediafiles) {
-        await dataSources.CollectionAPI.postRelations(
-          id,
-          filterEditStatus(EditStatus.New),
-          collection
-        );
-        await dataSources.CollectionAPI.patchRelations(
-          id,
-          filterEditStatus(EditStatus.Changed),
-          collection
-        );
-        await dataSources.CollectionAPI.deleteRelations(
-          id,
-          filterEditStatus(EditStatus.Deleted),
-          collection
-        );
-      }
+      await dataSources.CollectionAPI.postRelations(
+        id,
+        filterEditStatus(EditStatus.New),
+        collection
+      );
+      await dataSources.CollectionAPI.patchRelations(
+        id,
+        filterEditStatus(EditStatus.Changed),
+        collection
+      );
+      await dataSources.CollectionAPI.deleteRelations(
+        id,
+        filterEditStatus(EditStatus.Deleted),
+        collection
+      );
 
       if (collection !== Collection.Mediafiles) {
         return await dataSources.CollectionAPI.getEntity(
