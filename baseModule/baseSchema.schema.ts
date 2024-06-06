@@ -91,6 +91,7 @@ export const baseSchema = gql`
     mp3
     mp4
     tiff
+    tif
   }
 
   enum TranscodeType {

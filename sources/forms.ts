@@ -38,6 +38,7 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Png,
       FileType.Jpeg,
       FileType.Jpg,
+      FileType.Tif,
       FileType.Tiff,
       FileType.Mp4,
     ],
