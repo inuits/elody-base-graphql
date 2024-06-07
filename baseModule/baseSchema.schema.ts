@@ -467,7 +467,7 @@ export const baseSchema = gql`
 
   input MetadataFieldInput {
     key: String!
-    value: String
+    value: JSON
   }
 
   input RelationFieldInput {

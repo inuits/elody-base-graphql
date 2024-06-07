@@ -171,7 +171,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
     let data = await this.get<any>(
-      `${_collection ? _collection : collection[type]}/${id}`
+      `${_collection ? _collection : this.getCollectionValueForEntityType(type)}/${id}`
     );
     setId(data);
     return data;
@@ -382,7 +382,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     relations: any[] = []
   ): Promise<any> {
     const body: any = {
-      type: entity.type !== 'IotDeviceTracker' ? entity.type : 'IotDevice',
+      type: entity.type,
       metadata,
       relations,
     };
