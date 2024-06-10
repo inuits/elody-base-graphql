@@ -48,6 +48,7 @@
       "discard-edit": {
         "message": "Are you certain you wish leave the entity editor? Any unsaved changes will be discarded.",
         "confirm": "Leave editor",
+        "secondary-confirm": "Save changes and leave editor",
         "cancel": "Cancel"
       },
       "delete-entity": {
@@ -324,6 +325,7 @@
       "discard-edit": {
         "message": "Ben je zeker dat je de entiteit-editor wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaat editor",
+        "secondary-confirm": "Bewaar aanpassingen en verlaat editor",
         "cancel": "Annuleren"
       },
       "delete-entity": {
