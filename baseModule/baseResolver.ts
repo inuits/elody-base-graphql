@@ -1,6 +1,7 @@
 import {
   isMetaDataRelation,
   parseIdToGetMoreData,
+  parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
 import {
@@ -76,14 +77,16 @@ import {
   UploadContainer,
   DropdownOption,
   FormTab,
+  AdvancedFilterInputType,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
-import { baseFields, getOptionsByEntityType } from '../sources/forms';
+import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   getEntityId,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
+import { parseItemTypesFromInputField } from '../parsers/inputField';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -271,11 +274,19 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
-    PermissionMappingEntityDetail: async (_source, { id, entityType }, { dataSources }) => {
+    PermissionMappingEntityDetail: async (
+      _source,
+      { id, entityType },
+      { dataSources }
+    ) => {
       const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
-        id, entityType
+        id,
+        entityType
       );
-      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(id, entityType);
+      const del = await dataSources.CollectionAPI.delEntityDetailSoftCall(
+        id,
+        entityType
+      );
       return [
         {
           permission: Permission.Canupdate,
@@ -580,11 +591,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   MetadataAndRelation: {
     __resolveType(obj: any) {
       return isMetaDataRelation(obj);
-    },
-  },
-  MetadataOrRelationField: {
-    __resolveType(obj: any) {
-      return obj.relationType ? 'RelationField' : 'MetadataField';
     },
   },
   IntialValues: {
@@ -1215,27 +1221,25 @@ export const baseResolver: Resolvers<ContextValue> = {
     type: async (parent, _args, { dataSources }) => {
       return parent.type;
     },
-    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
-      return parent.acceptedEntityTypes || [];
-    },
     validation: async (parent, { input }, { dataSources }) => {
       return input as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
-      if (parent['options'] && parent['options'].length > 0)
-        return parent['options'];
-
-      const options = getOptionsByEntityType(
-        (parent.acceptedEntityTypes as string[]) || undefined,
-        dataSources
-      );
-      return options;
+      return parent['options'] || [];
     },
     relationType: async (parent, _args, { dataSources }) => {
-      return parent.relationType || '';
+      const entityType: Entitytyping[] = parseItemTypesFromInputField(
+        parent
+      ) as Entitytyping[];
+      if (!entityType) return '';
+      return parseRelationTypesForEntityType(entityType[0]).relationType;
     },
     fromRelationType: async (parent, _args, { dataSources }) => {
-      return parent.fromRelationType || '';
+      const entityType: Entitytyping[] = parseItemTypesFromInputField(
+        parent
+      ) as Entitytyping[];
+      if (!entityType) return '';
+      return parseRelationTypesForEntityType(entityType[0]).fromRelationType;
     },
     advancedFilterInputForSearchingOptions: async (
       parent,

@@ -222,7 +222,6 @@ export const baseSchema = gql`
   type InputField {
     fieldName(input: String): String
     type: String!
-    acceptedEntityTypes: [String]
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType: String
@@ -637,8 +636,6 @@ export const baseSchema = gql`
   }
 
   union MetadataAndRelation = Metadata | MetadataRelation
-
-  union MetadataOrRelationField = MetadataField | RelationField
 
   # EntityTypes
   input EntityInput {
@@ -1066,7 +1063,6 @@ export const baseSchema = gql`
     uuid: String!
     type: String!
     teaserMetadata: teaserMetadata
-    title: [MetadataAndRelation]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: JSON
@@ -1081,7 +1077,6 @@ export const baseSchema = gql`
     uuid: String!
     type: String!
     teaserMetadata: teaserMetadata
-    title: [MetadataAndRelation]
     intialValues: IntialValues!
     allowedViewModes: AllowedViewModes
     relationValues: JSON
@@ -1123,7 +1118,10 @@ export const baseSchema = gql`
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
-    PermissionMappingEntityDetail(id: String!, entityType: String!): [PermissionMapping!]!
+    PermissionMappingEntityDetail(
+      id: String!
+      entityType: String!
+    ): [PermissionMapping!]!
     GetDynamicForm: Form!
     DownloadItemsInZip(
       entities: [String]!

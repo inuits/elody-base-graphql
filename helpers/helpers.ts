@@ -40,3 +40,7 @@ export const getEntityId = (entity: any) => {
   const key: string = environment?.customization?.entityIdKey || '_id';
   return entity[key];
 };
+
+export const capitalizeString = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

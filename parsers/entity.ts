@@ -1,11 +1,13 @@
 import {
   Collection,
   Metadata,
-  MetadataAndRelation,
   MetadataRelation,
   KeyAndValue,
   RelationFieldInput,
+  MetadataAndRelation,
+  Entitytyping,
 } from '../../../generated-types/type-defs';
+import { capitalizeString } from '../helpers/helpers';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
   'key',
@@ -136,4 +138,13 @@ export const removePrefixFromId = (id: string) => {
     }
   });
   return id;
+};
+
+export const parseRelationTypesForEntityType = (entityType: Entitytyping) => {
+  const normalizedEntityType: string = entityType as string;
+  const relationType: string = `has${capitalizeString(normalizedEntityType)}`;
+  const fromRelationType: string = `is${capitalizeString(
+    normalizedEntityType
+  )}For`;
+  return { relationType, fromRelationType };
 };
