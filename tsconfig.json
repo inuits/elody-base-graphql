@@ -20,5 +20,5 @@
   },
   "exclude": ["node_modules"],
   "include": ["./**/*.ts", "./**/*.json"],
-  "files": ["../../generated-types/type-defs.ts"]
+  "files": ["../../generated-types/type-defs.ts"],
 }
