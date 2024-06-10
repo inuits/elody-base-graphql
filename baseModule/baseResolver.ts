@@ -332,7 +332,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           download_entity: createdEntity.id,
         });
       } catch (e) {
-        console.log(`Error whilst making zip for mediafiles: ${e}`);
+        throw new GraphQLError(
+            `Error whilst making zip for mediafiles: ${e}`
+        );
       }
       return createdEntity as Entity;
     },
