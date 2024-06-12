@@ -609,6 +609,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         rootKeyAsLabel,
         containsRelationProperty,
         relationKey,
+        relationEntityType
       },
       { dataSources }
     ) => {
@@ -639,16 +640,28 @@ export const baseResolver: Resolvers<ContextValue> = {
                 if (rel[containsRelationProperty]) relation = rel;
               });
             else relation = relations?.[0];
+
             if (relation) {
               let type;
-              if (relation.type === 'hasMediafile')
+              if (relation.type === 'hasMediafile') {
                 type = await dataSources.CollectionAPI.getMediaFile(
                   relation.key
                 );
-              else
-                type = await dataSources.CollectionAPI.getEntityById(
-                  relation.key
-                );
+              }
+              else {
+                if (relationEntityType)
+                  type = await dataSources.CollectionAPI.getEntity(
+                    relation.key,
+                    relationEntityType
+                  );
+                else
+                  type = await dataSources.CollectionAPI.getEntity(
+                    relation.key,
+                    "",
+                    "entities"
+                  );
+              }
+
               if (rootKeyAsLabel) return type[rootKeyAsLabel];
               return (
                 type?.metadata?.find(

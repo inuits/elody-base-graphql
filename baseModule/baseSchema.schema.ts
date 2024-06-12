@@ -668,6 +668,7 @@ export const baseSchema = gql`
       rootKeyAsLabel: String
       containsRelationProperty: String
       relationKey: String
+      relationEntityType: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
