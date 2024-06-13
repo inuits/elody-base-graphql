@@ -16,8 +16,9 @@ import {
   ActionProgressStep,
   Actions,
   ActionType,
-  BaseRelationValuesInput,
+  AdvancedFilterTypes,
   BaseLibraryModes,
+  BaseRelationValuesInput,
   Collection,
   Column,
   ColumnSizes,
@@ -29,6 +30,7 @@ import {
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
   DamsIcons,
+  DropdownOption,
   EditStatus,
   EntitiesResults,
   Entity,
@@ -40,6 +42,7 @@ import {
   Form,
   FormAction,
   FormFields,
+  FormTab,
   GraphElement,
   IntialValues,
   KeyValueSource,
@@ -61,10 +64,11 @@ import {
   Permission,
   ProgressStepStatus,
   Resolvers,
-  RouteNames,
   SearchInputType,
   SingleMediaFileElement,
+  SortingDirection,
   TimeUnit,
+  UploadContainer,
   UploadField,
   UploadFieldSize,
   UploadFieldType,
@@ -73,12 +77,6 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  AdvancedFilterTypes,
-  SortingDirection,
-  UploadContainer,
-  DropdownOption,
-  FormTab,
-  AdvancedFilterInputType,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -88,6 +86,7 @@ import {
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
+import { baseTypeCollectionMapping } from '../sources/typeCollectionMapping';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -280,6 +279,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       { id, entityType },
       { dataSources }
     ) => {
+      const collection =
+        baseTypeCollectionMapping[entityType as Entitytyping] ||
+        Collection.Entities;
       const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
         id,
         entityType
@@ -333,9 +335,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           download_entity: createdEntity.id,
         });
       } catch (e) {
-        throw new GraphQLError(
-            `Error whilst making zip for mediafiles: ${e}`
-        );
+        throw new GraphQLError(`Error whilst making zip for mediafiles: ${e}`);
       }
       return createdEntity as Entity;
     },

@@ -116,7 +116,10 @@ export class CollectionAPI extends AuthRESTDataSource {
       },
     ];
     try {
-      data = await this.post(`entities/filter?soft=1`, { body });
+      data = await this.post(
+        `${this.getCollectionValueForEntityType(entityType)}/filter?soft=1`,
+        { body }
+      );
     } catch (e) {
       return '401';
     }
@@ -127,11 +130,14 @@ export class CollectionAPI extends AuthRESTDataSource {
   async postEntitySoftCall(entityType: string): Promise<string> {
     let data;
     try {
-      data = await this.post(`entities?soft=1`, {
-        body: {
-          type: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
-        },
-      });
+      data = await this.post(
+        `${this.getCollectionValueForEntityType(entityType)}?soft=1`,
+        {
+          body: {
+            type: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
+          },
+        }
+      );
     } catch (e) {
       return '401';
     }
@@ -139,12 +145,19 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async patchEntityDetailSoftCall(id: String, entityType: string): Promise<string> {
+  async patchEntityDetailSoftCall(
+    id: String,
+    entityType: string,
+    collection: Collection = Collection.Entities
+  ): Promise<string> {
     let data;
     try {
-      data = await this.patch(`${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`, {
-        body: {},
-      });
+      data = await this.patch(
+        `${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
+        {
+          body: {},
+        }
+      );
     } catch (e) {
       return '401';
     }
@@ -152,10 +165,16 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async delEntityDetailSoftCall(id: String, entityType: string): Promise<string> {
+  async delEntityDetailSoftCall(
+    id: String,
+    entityType: string,
+    collection: Collection = Collection.Entities
+  ): Promise<string> {
     let data;
     try {
-      data = await this.delete(`${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`);
+      data = await this.delete(
+        `${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`
+      );
     } catch (e) {
       return '401';
     }
@@ -171,7 +190,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
     let data = await this.get<any>(
-      `${_collection ? _collection : this.getCollectionValueForEntityType(type)}/${id}`
+      `${
+        _collection ? _collection : this.getCollectionValueForEntityType(type)
+      }/${id}`
     );
     setId(data);
     return data;
@@ -393,10 +414,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
     );
     return setId(newEntity);
-  }
-
-  async getPermission(id: string, collection: Collection): Promise<string[]> {
-    return this.get(`${collection}/${id}/permissions`);
   }
 
   async getSixthCollectionId(): Promise<string> {
@@ -656,7 +673,9 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<DropdownOption[]> {
     const body = [input];
     const data = await this.post(
-      `${this.getCollectionValueForEntityType(entityType)}/filter?limit=${limit}&skip=0`,
+      `${this.getCollectionValueForEntityType(
+        entityType
+      )}/filter?limit=${limit}&skip=0`,
       {
         body,
       }
