@@ -104,6 +104,7 @@ export const baseSchema = gql`
   enum ValidationRules {
     required
     has_required_relation
+    has_one_of_required_relations
   }
 
   enum ValidationFields {
@@ -199,24 +200,34 @@ export const baseSchema = gql`
     relationType: String!
     amount: Int!
   }
-
   input RequiredRelationValidationInput {
     relationType: String!
     amount: Int!
   }
 
+  type RequiredOneOfRelationValidation {
+    relationTypes: [String!]!
+    amount: Int!
+  }
+  input RequiredOneOfRelationValidationInput {
+    relationTypes: [String!]!
+    amount: Int!
+  }
+
   type Validation {
-    value: String
+    value: [ValidationRules]
     required_if: Conditional
     available_if: Conditional
     has_required_relation: RequiredRelationValidation
+    has_one_of_required_relations: RequiredOneOfRelationValidation
   }
 
   input ValidationInput {
-    value: String
+    value: [ValidationRules]
     required_if: ConditionalInput
     available_if: ConditionalInput
     has_required_relation: RequiredRelationValidationInput
+    has_one_of_required_relations: RequiredOneOfRelationValidationInput
   }
 
   type InputField {

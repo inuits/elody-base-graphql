@@ -69,6 +69,7 @@ import {
   UploadFieldSize,
   UploadFieldType,
   Validation,
+  ValidationRules,
   ViewModes,
   WindowElement,
   WindowElementPanel,
@@ -1283,7 +1284,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {
-      return parent.value || '';
+      return parent.value as ValidationRules[];
     },
     required_if: async (parent, _args, { dataSources }) => {
       return parent.required_if as Conditional;
