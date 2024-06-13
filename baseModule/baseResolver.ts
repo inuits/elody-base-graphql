@@ -79,7 +79,7 @@ import {
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
-import { baseFields } from '../sources/forms';
+import { baseFields, getOptionsByEntityType } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   getEntityId,
@@ -1234,6 +1234,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     fieldName: async (parent, { input }, { dataSources }) => {
       return input || '';
     },
+    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
+      return parent.acceptedEntityTypes || [];
+    },
     type: async (parent, _args, { dataSources }) => {
       return parent.type;
     },
@@ -1241,7 +1244,14 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
-      return parent['options'] || [];
+      if (parent['options'] && parent['options'].length > 0)
+        return parent['options'];
+
+      const options = getOptionsByEntityType(
+        (parent.acceptedEntityTypes as string[]) || undefined,
+        dataSources
+      );
+      return options;
     },
     relationType: async (parent, _args, { dataSources }) => {
       const entityType: Entitytyping[] = parseItemTypesFromInputField(
