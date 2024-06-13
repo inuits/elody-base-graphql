@@ -105,6 +105,7 @@ export const baseSchema = gql`
     customValue
     required
     alpha_num
+    alpha_dash
     has_required_relation
     has_one_of_required_relations
   }
