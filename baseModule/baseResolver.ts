@@ -1291,6 +1291,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return parent.metadataKeyToCreateEntityFromOption || '';
     },
+    fieldKeyToSave: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

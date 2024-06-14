@@ -253,6 +253,7 @@ export const baseSchema = gql`
     fileProgressSteps: FileProgress
     autoSelectable: Boolean
     disabled: Boolean
+    fieldKeyToSave(input: String): String
   }
 
   enum ModalState {
