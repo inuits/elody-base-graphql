@@ -420,6 +420,7 @@ export const baseSchema = gql`
     SearchPlus
     Settings
     SignOut
+    Sort
     SortDown
     SortUp
     SquareFull
@@ -447,12 +448,32 @@ export const baseSchema = gql`
     askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
+  
+  enum ActionContextEntitiesSelectionType {
+    allEntities
+    selectionOfEntities
+  }  
+  
+  enum ActionContextViewModeTypes {
+    readMode
+    editMode
+  }
+  
+  type ActionContext {
+    entitiesSelectionType: ActionContextEntitiesSelectionType
+    activeViewMode: ActionContextViewModeTypes
+  }  
+  input ActionContextInput {
+    entitiesSelectionType: ActionContextEntitiesSelectionType
+    activeViewMode: ActionContextViewModeTypes
+  }
 
   scalar StringOrInt
   type DropdownOption {
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
   }
 
@@ -460,6 +481,7 @@ export const baseSchema = gql`
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
   }
 
