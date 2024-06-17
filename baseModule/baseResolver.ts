@@ -64,6 +64,7 @@ import {
   Permission,
   ProgressStepStatus,
   Resolvers,
+  RelationActions,
   SearchInputType,
   SingleMediaFileElement,
   SortingDirection,
@@ -799,6 +800,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     entityListElement: async (parent: any, {}, { dataSources }) => {
       return parent as EntityListElement;
+    },
+    allowedActionsOnRelations: async (parent: any, { input }, { dataSources }) => {
+      return input ? input : [];
     },
   },
   ManifestViewerElement: {

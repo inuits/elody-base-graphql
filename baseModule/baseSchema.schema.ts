@@ -760,6 +760,11 @@ export const baseSchema = gql`
     basicBaseLibraryWithBorder
     basicBaseLibrary
   }
+  
+  enum RelationActions {
+      addRelation
+      removeRelation
+  }
 
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
@@ -775,6 +780,7 @@ export const baseSchema = gql`
     searchInputType(input: String): String
     baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
     entityListElement: EntityListElement
+    allowedActionsOnRelations(input: [RelationActions]): [RelationActions]
   }
 
   enum EntityListViewMode {
