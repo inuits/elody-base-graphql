@@ -93,6 +93,8 @@
       }
     },
     "import": {
+      "start-import": "Import",
+      "no-directories": "No import directories available",
       "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}",
       "import-error": "Import failed",
       "import-success": "Import successful"
@@ -370,6 +372,8 @@
       }
     },
     "import": {
+      "start-import": "Importeren",
+      "no-directories": "Er konden geen import mappen gevonden worden",
       "error-csv-count": "Exact 1 CSV-bestand verwacht in {folder}, {count} gevonden",
       "import-error": "Import mislukt",
       "import-success": "Import successful"
