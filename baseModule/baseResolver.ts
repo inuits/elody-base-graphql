@@ -619,10 +619,11 @@ export const baseResolver: Resolvers<ContextValue> = {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
           const metadata = await resolveMetadata(parent, [key], undefined);
           if (metadata.length > 1) {
-            return resolveMetadataItemOfPreferredLanguage(
-              metadata,
-              preferredLanguage
-            )?.value;
+            const hasLanguage = metadata.some((item: Metadata) => item.lang);
+            const metadataValues = hasLanguage
+              ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)?.value
+              : metadata.map((item: Metadata) => item.value).join(", ");
+            return metadataValues;
           }
           return metadata[0]?.value ?? '';
         } else if (source === KeyValueSource.Root) {
