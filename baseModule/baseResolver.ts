@@ -32,6 +32,7 @@ import {
   DamsIcons,
   DropdownOption,
   EditStatus,
+  EndpointInformation,
   EntitiesResults,
   Entity,
   EntityListElement,
@@ -983,6 +984,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     actionQuery: async (_source, { input }, { dataSources }) => {
       return input || '';
+    },
+    endpointInformation: async (_source, { input }, { dataSources }) => {
+      return input as EndpointInformation;
     },
     creationType: async (_source, { input }, { dataSources }) => {
       return input || Entitytyping.BaseEntity;

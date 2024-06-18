@@ -135,6 +135,7 @@ export const baseSchema = gql`
     update
     submit
     download
+    endpoint
   }
 
   enum ActionProgressIndicatorType {
@@ -177,11 +178,23 @@ export const baseSchema = gql`
     steps: [FileProgressStep]
   }
 
+  input EndpointInformationInput {
+    method: String
+    endpointName: String
+    variables: [String]
+  }
+  type EndpointInformation {
+    method: String
+    endpointName: String
+    variables: [String]
+  }
+  
   type FormAction {
     label(input: String!): String!
     icon(input: DamsIcons): DamsIcons
     actionType(input: ActionType): ActionType
     actionQuery(input: String): String
+    endpointInformation(input: EndpointInformationInput!): EndpointInformation!
     creationType(input: Entitytyping): Entitytyping!
     showsFormErrors(input: Boolean): Boolean
     actionProgressIndicator: ActionProgress
@@ -491,6 +504,7 @@ export const baseSchema = gql`
 
   enum BulkOperationTypes {
     downloadMediafiles
+    reorderEntities
     exportCsv
     edit
     transcodePDF
