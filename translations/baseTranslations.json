@@ -7,6 +7,7 @@
       "labels": {
         "upload": "Upload",
         "download": "Download",
+        "download-csv-ordering": "Download a csv to order mediafiles",
         "create": "Create",
         "success": "{0} Items imported",
         "reset-upload": "Import more files"
@@ -42,6 +43,7 @@
         }
       },
       "download-mediafiles":"Download mediafiles",
+      "reorder-entities-with-csv": "Re-order entities with csv",
       "export-to-csv":"Export to CSV"
     },
     "confirm": {
@@ -290,6 +292,7 @@
       "labels": {
         "upload": "Uploaden",
         "download": "Downloaden",
+        "download-csv-ordering": "Download een csv voor mediafiles te ordenen",
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
         "reset-upload": "Importeer meer bestanden"
