@@ -1,4 +1,3 @@
-import { SearchAPI } from './sources/search';
 import { ImportAPI } from 'import-module';
 import { CollectionAPI } from './sources/collection';
 import { StorageAPI } from './sources/storage';
@@ -7,11 +6,10 @@ import {
   Maybe,
   MetadataFieldOption,
 } from '../../generated-types/type-defs';
-import {TranscodeService} from "./sources/transcode";
+import { TranscodeService } from './sources/transcode';
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
-  SearchAPI: SearchAPI;
   ImportAPI: ImportAPI;
   StorageAPI: StorageAPI;
   TranscodeService?: TranscodeService;

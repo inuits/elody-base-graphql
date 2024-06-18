@@ -38,7 +38,6 @@ import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { ImportAPI } from 'import-module';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
-import { SearchAPI } from './sources/search';
 import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
 
@@ -151,7 +150,6 @@ const start = (
           const session = { ...req.session };
           const dataSources = {
             CollectionAPI: new CollectionAPI({ session, cache }),
-            SearchAPI: new SearchAPI({ session, cache }),
             ImportAPI: new ImportAPI({ session, cache }),
             StorageAPI: new StorageAPI({ session, cache }),
           };
