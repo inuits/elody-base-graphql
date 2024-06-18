@@ -2,8 +2,8 @@ import {
   applyAuthEndpoints,
   applyAuthSession,
   applyEnvironmentConfig,
-  AuthRESTDataSource,
 } from './auth';
+import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 import {
   resolveMetadata,
   resolveId,
