@@ -1,31 +1,41 @@
 import { Express } from 'express';
-import { AuthRESTDataSource } from '../auth';
+import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { manager } from '../auth/index';
 import { environment as env } from '../main';
 import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
 let staticToken: string | undefined | null = undefined;
 
-const fetchWithTokenRefresh = async (url: string, options: any = {}, req: any, checkToken: boolean = false) => {
+const fetchWithTokenRefresh = async (
+  url: string,
+  options: any = {},
+  req: any,
+  checkToken: boolean = false
+) => {
   try {
     const token = req.session?.auth?.accessToken;
-    options.headers = { Authorization: `Bearer ${token}`}
+    options.headers = { Authorization: `Bearer ${token}` };
     let response: any;
     const isExpired = checkToken && token && isTokenExpired(token);
     if (!checkToken || (checkToken && !isExpired)) {
       response = await fetch(url, options);
-    } 
+    }
 
     if (response?.status === 401 || (checkToken && isExpired)) {
-      const refreshTokenResponse = await manager?.refresh(req?.session?.auth?.accessToken, req?.session?.auth?.refreshToken);
+      const refreshTokenResponse = await manager?.refresh(
+        req?.session?.auth?.accessToken,
+        req?.session?.auth?.refreshToken
+      );
       if (!refreshTokenResponse) {
-        return Promise.reject(new GraphQLError(`AUTH | REFRESH FAILED`, {
-          extensions: {
-            statusCode: 401,
-          }
-        }));
+        return Promise.reject(
+          new GraphQLError(`AUTH | REFRESH FAILED`, {
+            extensions: {
+              statusCode: 401,
+            },
+          })
+        );
       }
       req.session.auth = refreshTokenResponse;
 
@@ -62,7 +72,7 @@ function extractIdFromMediafilePath(path: string): string | null {
   return match ? match[1] : null;
 }
 
-function isTokenExpired (token: string) {
+function isTokenExpired(token: string) {
   try {
     const decodedToken: any = jwt_decode(token);
     return Date.now() >= decodedToken.exp * 1000 ? true : false;
@@ -71,7 +81,7 @@ function isTokenExpired (token: string) {
     throw new GraphQLError(`TOKEN IS NOT SPECIFIED`, {
       extensions: {
         statusCode: 401,
-      }
+      },
     });
   }
 }
@@ -86,19 +96,22 @@ export const addHeader = (proxyReq: any, req: any, res: any) => {
 
 // pump the stream data
 const pump = (reader: any, res: any) => {
-  reader.read().then(({ done, value }: {done: any, value: any}) => {
-    if (done) {
-      reader.releaseLock();
-      res.end();
-      return;
-    }
-    res.write(value);
-    pump(reader, res);
-  }).catch((error: any) => {
-    console.error('Error:', error);
-    res.status(500).end(JSON.stringify({ error: 'Internal Server Error' }));
-  });
-}
+  reader
+    .read()
+    .then(({ done, value }: { done: any; value: any }) => {
+      if (done) {
+        reader.releaseLock();
+        res.end();
+        return;
+      }
+      res.write(value);
+      pump(reader, res);
+    })
+    .catch((error: any) => {
+      console.error('Error:', error);
+      res.status(500).end(JSON.stringify({ error: 'Internal Server Error' }));
+    });
+};
 
 const applyMediaFileEndpoint = (
   app: Express,
@@ -108,36 +121,39 @@ const applyMediaFileEndpoint = (
 ) => {
   staticToken = staticTokenInput;
 
-  app.use(
-       '/api/mediafile/download-with-ticket', async (req: any, res: any) => {
-         res.redirect(302, `${env?.api.storageApiUrlExt}${req.originalUrl.replace('/api/mediafile/', '')}`);
-       }
-  )
+  app.use('/api/mediafile/download-with-ticket', async (req: any, res: any) => {
+    res.redirect(
+      302,
+      `${env?.api.storageApiUrlExt}${req.originalUrl.replace(
+        '/api/mediafile/',
+        ''
+      )}`
+    );
+  });
 
-  app.use(
-    '/api/mediafile', async (req: any, res: any) => {
-      try {
-        const response = await fetchWithTokenRefresh(
-          `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`, { method: "GET" }, req
-        );
-        
-        if (!response.ok) {
-          throw response;
-        }
-    
-        addHeader(null, req, res);
-        const blob = await response.blob();    
-        res.setHeader('Content-Type', blob.type);
-        const reader = blob.stream().getReader();
+  app.use('/api/mediafile', async (req: any, res: any) => {
+    try {
+      const response = await fetchWithTokenRefresh(
+        `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`,
+        { method: 'GET' },
+        req
+      );
 
-        pump(reader, res);
-      } catch (error: any) {
-        const errorStatus = error.extensions?.statusCode || 500;
-        res.status(errorStatus).end(JSON.stringify(error));
+      if (!response.ok) {
+        throw response;
       }
-    }
-  );
 
+      addHeader(null, req, res);
+      const blob = await response.blob();
+      res.setHeader('Content-Type', blob.type);
+      const reader = blob.stream().getReader();
+
+      pump(reader, res);
+    } catch (error: any) {
+      const errorStatus = error.extensions?.statusCode || 500;
+      res.status(errorStatus).end(JSON.stringify(error));
+    }
+  });
 
   app.use('/api/iiif*.json', async (req, res) => {
     try {
@@ -162,17 +178,20 @@ const applyMediaFileEndpoint = (
   app.use('/api/iiif', async (req, res) => {
     try {
       const response = await fetchWithTokenRefresh(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`, { method: "GET", }, req, true
+        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
+        { method: 'GET' },
+        req,
+        true
       );
 
       if (!response.ok) {
         throw response;
       }
-  
-      const blob = await response.blob();    
+
+      const blob = await response.blob();
       res.setHeader('Content-Type', blob.type);
       const reader = blob.stream().getReader();
-  
+
       pump(reader, res);
     } catch (error: any) {
       const errorStatus = error.extensions?.statusCode || 500;
