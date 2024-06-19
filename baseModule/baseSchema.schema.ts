@@ -917,6 +917,7 @@ export const baseSchema = gql`
   enum UploadFieldType {
     batch
     single
+    reorderEntities
   }
 
   type PanelInfo {
