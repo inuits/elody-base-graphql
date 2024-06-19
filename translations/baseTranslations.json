@@ -48,7 +48,7 @@
     },
     "confirm": {
       "discard-edit": {
-        "message": "Are you certain you wish leave the entity editor? Any unsaved changes will be discarded.",
+        "message": "Are you certain you wish to leave the entity editor? Any unsaved changes will be discarded.",
         "confirm": "Leave editor",
         "secondary-confirm": "Save changes and leave editor",
         "cancel": "Cancel"
