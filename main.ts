@@ -26,6 +26,8 @@ import { applySEOEndpoint } from './endpoints/seoEndpoint';
 import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
 import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
+import { applyDownloadEndpoint } from './endpoints/downloadEndpoint';
+
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
@@ -173,6 +175,9 @@ const start = (
         },
         function () {
           applyConfigEndpoint(app, appConfig);
+        },
+        function () {
+          applyDownloadEndpoint(app);
         },
         function () {
           applyUploadEndpoint(app);
