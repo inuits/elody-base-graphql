@@ -1,8 +1,9 @@
 {
   "name": "base-graphql",
-  "version": "0.0.244",
+  "version": "0.0.245",
   "license": "MIT",
   "main": "./main.ts",
+  ""
   "scripts": {
     "build": "tsc",
     "test:unit": "vitest run"
@@ -90,6 +91,7 @@
   },
   "publishConfig": {
     "main": "./dist/dams/inuits-dams-base-graphql/main.js",
+    "types": "./types/dams/inuits-dams-base-graphql/main.d.ts",
     "registry": "https://nexus.inuits.io/repository/npm-private"
   }
 }
