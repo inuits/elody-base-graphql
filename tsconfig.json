@@ -20,6 +20,6 @@
     }
   },
   "exclude": ["node_modules", "./test/**/*.test.ts"],
-  "include": ["./**/*.ts", "./**/*.json", "./**/*.d.ts"],
+  "include": ["./**/*.ts", "./**/*.json"],
   "files": ["../../generated-types/type-defs.ts"],
 }
