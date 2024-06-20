@@ -3,7 +3,6 @@
   "version": "0.0.245",
   "license": "MIT",
   "main": "./main.ts",
-  ""
   "scripts": {
     "build": "tsc",
     "test:unit": "vitest run"
