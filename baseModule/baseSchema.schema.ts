@@ -817,6 +817,7 @@ export const baseSchema = gql`
     baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
     entityListElement: EntityListElement
     allowedActionsOnRelations(input: [RelationActions]): [RelationActions]
+    customBulkOperations(input: String): String
   }
 
   enum EntityListViewMode {
@@ -1175,6 +1176,7 @@ export const baseSchema = gql`
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations(entityType: String!): Entity!
+    CustomBulkOperations: Entity!
     BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!

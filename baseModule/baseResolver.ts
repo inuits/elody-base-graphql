@@ -223,6 +223,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         bulkOperationOptions: {},
       } as Entity;
     },
+    CustomBulkOperations: async (_source, {}, { dataSources }) => {
+      return {
+        bulkOperationOptions: {},
+      } as Entity;
+    },
     BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
       return { options: [] };
     },
@@ -804,6 +809,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     allowedActionsOnRelations: async (parent: any, { input }, { dataSources }) => {
       return input ? input : [];
+    },
+    customBulkOperations: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
     },
   },
   ManifestViewerElement: {
