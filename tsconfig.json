@@ -11,6 +11,7 @@
     "outDir": "./dist",
     "removeComments": true,
     "rootDir": "../../",
+    "declarationDir": "./types",
     "target": "es6",
     "skipLibCheck": true,
     "baseUrl": "./",
