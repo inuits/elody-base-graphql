@@ -97,6 +97,14 @@ export const baseSchema = gql`
   enum TranscodeType {
     pdf
   }
+  
+  enum OcrType {
+    pdf
+    txt
+    alto
+    manualUpload
+  }
+  
   type FormTab {
     formFields: FormFields!
   }
@@ -131,10 +139,11 @@ export const baseSchema = gql`
   }
 
   enum ActionType {
-    upload
-    update
     submit
+    update
+    upload
     download
+    ocr
     endpoint
   }
 
@@ -1194,6 +1203,11 @@ export const baseSchema = gql`
       includeAssetCsv: Boolean!
       downloadEntity: EntityInput!
     ): Entity
+    GenerateOcrWithAsset(
+      assetId: String!
+      operation: [String!]!
+      language: String!
+    ): JSON
   }
 
   type Mutation {

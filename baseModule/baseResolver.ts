@@ -346,6 +346,25 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
       return createdEntity as Entity;
     },
+    GenerateOcrWithAsset: async (
+      _source,
+      { assetId, operation, language },
+      { dataSources }
+    ) => {
+      if (!dataSources.OcrService)
+        throw new GraphQLError(
+            'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
+        );
+      try {
+        return await dataSources.OcrService.generateOcrWithAsset(
+          assetId,
+          operation,
+          language
+        );
+      } catch (e) {
+        throw new GraphQLError(`Error whilst making transcoding mediafiles: ${e}`);
+      }
+    }
   },
   Mutation: {
     linkMediafileToEntity: async (

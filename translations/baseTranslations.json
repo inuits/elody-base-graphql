@@ -10,7 +10,8 @@
         "download-csv-ordering": "Download a csv to order mediafiles",
         "create": "Create",
         "success": "{0} Items imported",
-        "reset-upload": "Import more files"
+        "reset-upload": "Import more files",
+        "start-ocr": "Start OCR"
       },
       "progress-steps": {
         "validate": "Validation",
@@ -222,7 +223,8 @@
     },
     "language":{
       "nl":"Dutch",
-      "en":"English"
+      "en":"English",
+      "fr": "French"
     },
     "library":{
       "search":"Search",
@@ -295,7 +297,8 @@
         "download-csv-ordering": "Download een csv voor mediafiles te ordenen",
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
-        "reset-upload": "Importeer meer bestanden"
+        "reset-upload": "Importeer meer bestanden",
+        "start-ocr": "Start OCR"
       },
       "progress-steps": {
         "validate": "Valideren",
@@ -502,7 +505,8 @@
     },
     "language":{
       "nl":"Nederlands",
-      "en":"Engels"
+      "en":"Engels",
+      "fr": "Frans"
     },
     "library":{
       "search":"Zoeken",
