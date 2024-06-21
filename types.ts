@@ -7,12 +7,14 @@ import {
   MetadataFieldOption,
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
+import {OcrService} from "./sources/ocr";
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
   ImportAPI: ImportAPI;
   StorageAPI: StorageAPI;
   TranscodeService?: TranscodeService;
+  OcrService?: OcrService;
 }
 
 export interface ContextValue {

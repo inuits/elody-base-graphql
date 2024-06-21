@@ -42,6 +42,7 @@ import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
+import {OcrService} from "./sources/ocr";
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -159,6 +160,11 @@ const start = (
             Object.assign(dataSources, {
               TranscodeService: new TranscodeService({ session, cache }),
             });
+          if (environment?.api.ocrService)
+            Object.assign(dataSources, {
+              OcrService: new OcrService({ session, cache }),
+            });
+
           return { dataSources };
         },
       })
