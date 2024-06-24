@@ -356,13 +356,17 @@ export const baseResolver: Resolvers<ContextValue> = {
             'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
       try {
-        return await dataSources.OcrService.generateOcrWithAsset(
+        const response = await dataSources.OcrService.generateOcrWithAsset(
           assetId,
           operation,
           language
         );
+        return {
+          status: 200,
+          message: response,
+        }
       } catch (e) {
-        throw new GraphQLError(`Error whilst making transcoding mediafiles: ${e}`);
+        throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
       }
     }
   },

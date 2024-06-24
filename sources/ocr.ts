@@ -1,5 +1,5 @@
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
-import { environment as env } from '../main';
+import start, { environment as env } from '../main';
 
 export class OcrService extends AuthRESTDataSource {
     public baseURL = `${env?.api.ocrService}/`;
@@ -14,14 +14,19 @@ export class OcrService extends AuthRESTDataSource {
             operation: ""
         };
         const resultsArray: any[] = [];
-        operation.forEach( async (currentOperation) => {
+        for (let currentOperation of operation) {
             body["operation"] = currentOperation;
-            const result = await this.post(
+            await this.post(
                 `ocr?language=${language}`,
                 { body: body, headers: { 'Content-Type': 'application/json' } }
-            );
-            resultsArray.push(result);
-        });
+            ).then((result) => {
+                if (typeof result === "object")
+                    throw new Error(
+                        `${result.message ? result.message : result}`
+                    );
+                else resultsArray.push(result);
+            });
+        }
         return resultsArray;
     }
 }
