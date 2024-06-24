@@ -34,7 +34,6 @@ export interface Environment {
   features: {
     simpleSearch: {
       hasSimpleSearch: boolean;
-      simpleSearchEntityTypes?: Entitytyping[];
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey?: string[];
     };
