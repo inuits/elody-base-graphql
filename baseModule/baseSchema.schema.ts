@@ -822,6 +822,8 @@ export const baseSchema = gql`
     customQuery(input: String): String
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String
+    customQueryEntityPickerList(input: String): String
+    customQueryEntityPickerListFilters(input: String): String
     searchInputType(input: String): String
     baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
     entityListElement: EntityListElement

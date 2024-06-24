@@ -811,6 +811,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQueryFilters: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
+    customQueryEntityPickerList: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
+    },
+    customQueryEntityPickerListFilters: async (parent, { input }, { dataSources }) => {
+      return input ? input : 'undefined';
+    },
     searchInputType: async (parent, { input }, { dataSources }) => {
       return input ? input : 'AdvancedInputType';
     },
