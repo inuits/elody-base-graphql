@@ -5,6 +5,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "declaration": true,
+    "composite": true,
+    "declarationMap": true,
     "lib": ["es6", "esnext", "es2015"],
     "module": "CommonJS",
     "moduleResolution": "node",
