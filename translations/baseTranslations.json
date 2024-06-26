@@ -11,7 +11,8 @@
         "create": "Create",
         "success": "{0} Items imported",
         "reset-upload": "Import more files",
-        "start-ocr": "Start OCR"
+        "start-ocr": "Start OCR",
+        "delete-relation-entities": "Do you want to delete these items as well?"
       },
       "progress-steps": {
         "validate": "Validation",
@@ -246,7 +247,8 @@
       "upload": "Upload",
       "sets": "Sets",
       "tenant": "Tenant",
-      "create-set": "Set"
+      "create-set": "Set",
+      "delete-entity-window": "Delete entity window"
     },
     "upload-fields":{
       "labels": {
@@ -298,7 +300,8 @@
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
         "reset-upload": "Importeer meer bestanden",
-        "start-ocr": "Start OCR"
+        "start-ocr": "Start OCR",
+        "delete-relation-entities": "Wil je volgende items ook verwijderen?"
       },
       "progress-steps": {
         "validate": "Valideren",
@@ -528,7 +531,8 @@
       "upload": "Upload",
       "sets": "Sets",
       "tenant": "Tenant",
-      "create-set": "Set"
+      "create-set": "Set",
+      "delete-entity-window": "Verwijder entiteit window"
     },
     "upload-fields": {
       "labels": {

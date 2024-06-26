@@ -289,6 +289,7 @@ export const baseSchema = gql`
     BulkOperationsEdit
     BulkOperations
     Confirm
+    Delete
     EntityPicker
     DynamicForm
     Search
@@ -662,6 +663,14 @@ export const baseSchema = gql`
   type BulkOperationOptions {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
+  
+  type DeleteQueryOptions {
+    customQueryDeleteRelations(input: String): String
+    customQueryDeleteRelationsFilters(input: String): String
+    customQueryRelationType(input: [String]): [String]
+    customQueryBlockingRelations(input: String): String
+    customQueryBlockingRelationsFilters(input: String): String
+  }
 
   type MetadataFieldOption {
     label: String
@@ -759,6 +768,9 @@ export const baseSchema = gql`
     sort: JSON
     is_primary_thumbnail: Boolean
     is_primary: Boolean
+    is_ocr: Boolean
+    operation: String
+    lang: String
   }
 
   input MetadataValuesInput {
@@ -1116,6 +1128,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
   }
 
   type MediaFileEntity implements Entity {
@@ -1130,6 +1143,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
   }
 
   type Tenant implements Entity {

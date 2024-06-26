@@ -1239,6 +1239,23 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
   },
+  DeleteQueryOptions: {
+    customQueryDeleteRelations: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+    customQueryDeleteRelationsFilters: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+    customQueryRelationType: async (parent, { input }, { dataSources }) => {
+      return input as string[];
+    },
+    customQueryBlockingRelations: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+    customQueryBlockingRelationsFilters: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+  },
   PaginationLimitOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
