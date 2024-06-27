@@ -14,7 +14,7 @@ export const baseSchema = gql`
     mediafiles
   }
 
-  enum BaseEntitytyping {
+  enum Entitytyping {
     BaseEntity
     tenant
     user
@@ -669,7 +669,7 @@ export const baseSchema = gql`
   type BulkOperationOptions {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
-  
+
   type DeleteQueryOptions {
     customQueryDeleteRelations(input: String): String
     customQueryDeleteRelationsFilters(input: String): String
