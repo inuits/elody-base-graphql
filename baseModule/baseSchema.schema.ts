@@ -14,7 +14,7 @@ export const baseSchema = gql`
     mediafiles
   }
 
-  enum Entitytyping {
+  enum BaseEntitytyping {
     BaseEntity
     tenant
     user
@@ -23,6 +23,12 @@ export const baseSchema = gql`
   enum MediaTypeEntities {
     asset
     mediafile
+  }
+
+  enum VisibilityLevels {
+    public
+    not_public
+    private
   }
 
   enum Unit {
@@ -97,14 +103,14 @@ export const baseSchema = gql`
   enum TranscodeType {
     pdf
   }
-  
+
   enum OcrType {
     pdf
     txt
     alto
     manualUpload
   }
-  
+
   type FormTab {
     formFields: FormFields!
   }
@@ -197,7 +203,7 @@ export const baseSchema = gql`
     endpointName: String
     variables: [String]
   }
-  
+
   type FormAction {
     label(input: String!): String!
     icon(input: DamsIcons): DamsIcons
@@ -241,7 +247,7 @@ export const baseSchema = gql`
 
   type Validation {
     value: [ValidationRules]
-    customValue: String 
+    customValue: String
     required_if: Conditional
     available_if: Conditional
     has_required_relation: RequiredRelationValidation
@@ -471,21 +477,21 @@ export const baseSchema = gql`
     askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
-  
+
   enum ActionContextEntitiesSelectionType {
     allEntities
     selectionOfEntities
-  }  
-  
+  }
+
   enum ActionContextViewModeTypes {
     readMode
     editMode
   }
-  
+
   type ActionContext {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: ActionContextViewModeTypes
-  }  
+  }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: ActionContextViewModeTypes
@@ -817,10 +823,10 @@ export const baseSchema = gql`
     basicBaseLibraryWithBorder
     basicBaseLibrary
   }
-  
+
   enum RelationActions {
-      addRelation
-      removeRelation
+    addRelation
+    removeRelation
   }
 
   type EntityListElement {
