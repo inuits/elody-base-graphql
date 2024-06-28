@@ -112,7 +112,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const body = [
       {
         type: 'type',
-        value: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
+        value: entityType,
       },
     ];
     try {
@@ -133,9 +133,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       data = await this.post(
         `${this.getCollectionValueForEntityType(entityType)}?soft=1`,
         {
-          body: {
-            type: entityType !== 'IotDeviceTracker' ? entityType : 'IotDevice',
-          },
+          body: { type: entityType },
         }
       );
     } catch (e) {
