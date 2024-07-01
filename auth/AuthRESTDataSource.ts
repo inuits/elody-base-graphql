@@ -40,7 +40,7 @@ export class AuthRESTDataSource extends RESTDataSource {
           this.session.auth.accessToken,
           this.session.auth.refreshToken
         );
-        
+
         if (!response) {
           throw new GraphQLError(`AUTH | REFRESH FAILED`, {
             extensions: {
@@ -48,12 +48,12 @@ export class AuthRESTDataSource extends RESTDataSource {
             }
           });
         }
-        
+
         this.session.auth = response;
 
         return await fn(...args);
       } else {
-        return error.extensions.response?.body;
+        throw error;
       }
     }
   }
