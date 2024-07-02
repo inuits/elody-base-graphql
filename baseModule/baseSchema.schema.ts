@@ -116,12 +116,13 @@ export const baseSchema = gql`
   }
 
   enum ValidationRules {
-    customValue
-    required
-    alpha_num
     alpha_dash
-    has_required_relation
+    alpha_num
+    alpha_spaces
+    customValue
     has_one_of_required_relations
+    has_required_relation
+    required
   }
 
   enum ValidationFields {
