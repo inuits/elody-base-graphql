@@ -674,9 +674,10 @@ export const baseSchema = gql`
   type DeleteQueryOptions {
     customQueryDeleteRelations(input: String): String
     customQueryDeleteRelationsFilters(input: String): String
-    customQueryRelationType(input: [String]): [String]
+    customQueryEntityTypes(input: [Entitytyping]): [Entitytyping]
     customQueryBlockingRelations(input: String): String
     customQueryBlockingRelationsFilters(input: String): String
+    customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
   }
 
   type MetadataFieldOption {
