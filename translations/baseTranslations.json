@@ -12,7 +12,8 @@
         "success": "{0} Items imported",
         "reset-upload": "Import more files",
         "start-ocr": "Start OCR",
-        "delete-relation-entities": "Do you want to delete these items as well?"
+        "delete-relation-entities": "Do you want to delete these items as well?",
+        "blocking-relations": "There are blocking relations. You can't delete this entity because of these relations."
       },
       "progress-steps": {
         "validate": "Validation",
@@ -301,7 +302,8 @@
         "success": "{0} Items geïmporteerd",
         "reset-upload": "Importeer meer bestanden",
         "start-ocr": "Start OCR",
-        "delete-relation-entities": "Wil je volgende items ook verwijderen?"
+        "delete-relation-entities": "Wil je volgende items ook verwijderen?",
+        "blocking-relations": "Er zijn blokkerende relaties. Deze entiteit kan niet verwijderd worden wegens deze relaties."
       },
       "progress-steps": {
         "validate": "Valideren",
