@@ -27,10 +27,6 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
               config.features.simpleSearch.simpleSearchMetadataKey,
           },
           hasTenantSelect: config.features.hasTenantSelect,
-          hasDirectoryImport:
-            config.features.hasDirectoryImport === undefined
-              ? true
-              : config.features.hasDirectoryImport,
           hasBulkSelect:
             config.features.hasBulkSelect === undefined
               ? true

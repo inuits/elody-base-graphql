@@ -37,7 +37,6 @@ export interface Environment {
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey?: string[];
     };
-    hasDirectoryImport?: boolean;
     hasTenantSelect?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
