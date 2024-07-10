@@ -4,11 +4,7 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {
-  resolveMetadata,
-  resolveMetadataItemOfPreferredLanguage,
-  resolveRelations,
-} from '../resolvers/entityResolver';
+import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -16,6 +12,7 @@ import {
   ActionProgressStep,
   Actions,
   ActionType,
+  AdvancedFilterInput,
   AdvancedFilterTypes,
   BaseLibraryModes,
   BaseRelationValuesInput,
@@ -49,6 +46,7 @@ import {
   KeyValueSource,
   ManifestViewerElement,
   MarkdownViewerElement,
+  Maybe,
   MediaFile,
   MediaFileElement,
   MediaFileElementTypes,
@@ -65,7 +63,6 @@ import {
   Permission,
   ProgressStepStatus,
   Resolvers,
-  RelationActions,
   SearchInputType,
   SingleMediaFileElement,
   SortingDirection,
@@ -80,15 +77,16 @@ import {
   WindowElement,
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
-import { ContextValue } from '../types';
-import { baseFields, getOptionsByEntityType } from '../sources/forms';
-import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
+import {ContextValue} from '../types';
+import {baseFields, getOptionsByEntityType} from '../sources/forms';
+import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
 import {
+  determineAdvancedFiltersForIteration,
   getEntityId,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
-import { parseItemTypesFromInputField } from '../parsers/inputField';
-import { baseTypeCollectionMapping } from '../sources/typeCollectionMapping';
+import {parseItemTypesFromInputField} from '../parsers/inputField';
+import {baseTypeCollectionMapping} from '../sources/typeCollectionMapping';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -148,47 +146,63 @@ export const baseResolver: Resolvers<ContextValue> = {
         searchInputType,
       },
       { dataSources }
-    ) => {
-      let entities: EntitiesResults = { results: [] };
-      const entityType: Entitytyping = type || Entitytyping.Asset;
+    ):  Promise<Maybe<EntitiesResults>> => {
+      let entities: EntitiesResults = { results: [], sortKeys: [], count: 0, limit: 0 };
 
       if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
         entities = await dataSources.CollectionAPI.getSavedSearches(
-          limit || 20,
-          skip || 0,
-          searchValue
+            limit || 20,
+            skip || 0,
+            searchValue
         );
-      } else if (
-        searchInputType === SearchInputType.AdvancedInputMediaFilesType &&
-        advancedFilterInputs?.length >= 0
-      ) {
-        entities = await dataSources.CollectionAPI.GetAdvancedEntities(
-          Entitytyping.Mediafile,
-          limit || 20,
-          skip || 0,
-          advancedFilterInputs,
-          searchValue || { value: '' }
-        );
-      } else if (
-        searchInputType === SearchInputType.AdvancedInputType &&
-        advancedFilterInputs?.length
-      ) {
-        entities = await dataSources.CollectionAPI.GetAdvancedEntities(
-          entityType,
-          limit || 20,
-          skip || 0,
-          advancedFilterInputs,
-          searchValue || { value: '' }
-        );
-      } else if (searchInputType === SearchInputType.AdvancedInputType) {
-        entities = await dataSources.CollectionAPI.getEntities(
-          limit || 20,
-          skip || 0,
-          searchValue || { value: '' },
-          entityType
-        );
+        return entities;
       }
-      return entities;
+
+      let entityTypes: Entitytyping[];
+      const typeFilters = advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type);
+      entityTypes = typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
+
+      for (const entityType of entityTypes as Entitytyping[]) {
+        let entitiesIteration: EntitiesResults = { results: [], sortKeys: [], count: 0, limit: 0 };
+        const filtersIteration = entityTypes.length <= 1 ? advancedFilterInputs : determineAdvancedFiltersForIteration(entityType, advancedFilterInputs);
+
+        if (advancedFilterInputs?.length >= 0 &&
+            (
+                searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
+                entityType === Entitytyping.Mediafile
+            )
+        ) {
+          entitiesIteration = await dataSources.CollectionAPI.GetAdvancedEntities(
+              Entitytyping.Mediafile,
+              limit || 20,
+              skip || 0,
+              filtersIteration,
+              searchValue || { value: '' }
+          );
+        }
+        else if (searchInputType === SearchInputType.AdvancedInputType && advancedFilterInputs?.length) {
+          entitiesIteration = await dataSources.CollectionAPI.GetAdvancedEntities(
+              entityType,
+              limit || 20,
+              skip || 0,
+              filtersIteration,
+              searchValue || { value: '' }
+          );
+        }
+        else if (searchInputType === SearchInputType.AdvancedInputType) {
+          entitiesIteration = await dataSources.CollectionAPI.getEntities(
+              limit || 20,
+              skip || 0,
+              searchValue || { value: '' },
+              entityType
+          );
+        }
+        entities.results!!.push(...entitiesIteration.results!!);
+        entities.sortKeys!!.push(...entitiesIteration.sortKeys || []);
+        entities.count!! += entitiesIteration.count!!;
+        entities.limit!! += entitiesIteration.limit!!;
+      }
+      return entities!!;
     },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();

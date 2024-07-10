@@ -1192,7 +1192,7 @@ export const baseSchema = gql`
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
-      type: Entitytyping!
+      type: Entitytyping
       limit: Int
       skip: Int
       searchInputType: SearchInputType
