@@ -158,14 +158,16 @@ export const baseResolver: Resolvers<ContextValue> = {
         return entities;
       }
 
-      let entityTypes: Entitytyping[];
       const typeFilters = advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type);
-      entityTypes = typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
+      let entityTypes = typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
+      if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
 
       for (const entityType of entityTypes as Entitytyping[]) {
         let entitiesIteration: EntitiesResults = { results: [], sortKeys: [], count: 0, limit: 0 };
-        const filtersIteration = entityTypes.length <= 1 ? advancedFilterInputs : determineAdvancedFiltersForIteration(entityType, advancedFilterInputs);
-
+        const filtersIteration =
+            entityTypes.length <= 1 ?
+              advancedFilterInputs :
+              determineAdvancedFiltersForIteration(entityType, advancedFilterInputs);
         if (advancedFilterInputs?.length >= 0 &&
             (
                 searchInputType === SearchInputType.AdvancedInputMediaFilesType ||

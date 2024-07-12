@@ -57,10 +57,10 @@ export const determineAdvancedFiltersForIteration = (entityType: Entitytyping, a
   let filtersIteration = advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type);
   if (filtersIteration.length > 0) {
     filtersIteration = JSON.parse(JSON.stringify(filtersIteration));
-    filtersIteration[0].value = filtersIteration[0].value.filter((value) => value === entityType);
+    filtersIteration[0].value = filtersIteration[0].value.filter((value: string) => value === entityType)[0];
   }
   advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection).forEach((filter: AdvancedFilterInput) => {
-    if (filter.key instanceof Array) {
+    if (Array.isArray(filter.key)) {
       if (compareRelationsFilterKey(filter.key[0], relations.relationType) || compareRelationsFilterKey(filter.key[0], relations.fromRelationType))
         filtersIteration.push(filter);
     }
