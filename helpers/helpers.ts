@@ -61,7 +61,7 @@ export const determineAdvancedFiltersForIteration = (entityType: Entitytyping, a
   }
   advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection).forEach((filter: AdvancedFilterInput) => {
     if (filter.key instanceof Array) {
-      if (filter.key[0].includes(relations.relationType) || filter.key[0].includes(relations.fromRelationType))
+      if (compareRelationsFilterKey(filter.key[0], relations.relationType) || compareRelationsFilterKey(filter.key[0], relations.fromRelationType))
         filtersIteration.push(filter);
     }
     else {
@@ -72,3 +72,10 @@ export const determineAdvancedFiltersForIteration = (entityType: Entitytyping, a
   });
   return filtersIteration;
 };
+
+function compareRelationsFilterKey(key: string, comparison: string): boolean {
+  const match = key.match(/relations\.(.*?)\.key/);
+  if (!match || match.length < 2)
+    return false;
+  return match[1] === comparison;
+}
