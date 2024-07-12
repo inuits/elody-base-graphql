@@ -480,8 +480,8 @@ export const baseSchema = gql`
   }
 
   enum ActionContextEntitiesSelectionType {
-    allEntities
-    selectionOfEntities
+    noneSelected
+    someSelected
   }
 
   enum ActionContextViewModeTypes {
@@ -520,6 +520,7 @@ export const baseSchema = gql`
   }
 
   enum BulkOperationTypes {
+    createEntity
     downloadMediafiles
     reorderEntities
     exportCsv
