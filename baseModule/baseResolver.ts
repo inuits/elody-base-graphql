@@ -1024,6 +1024,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     uploadFieldType: async (parent: any, { input }, { dataSources }) => {
       return input || UploadFieldType.Batch;
     },
+    entityTypesForUpload: async (parent: any, { input }, { dataSources }) => {
+      return input as Entitytyping[];
+    },
   },
   FormAction: {
     label: async (_source, { input }, { dataSources }) => {

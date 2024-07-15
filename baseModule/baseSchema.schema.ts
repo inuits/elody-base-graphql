@@ -971,6 +971,7 @@ export const baseSchema = gql`
     uploadFieldType(input: UploadFieldType!): UploadFieldType!
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
+    entityTypesForUpload(input: [Entitytyping]): [Entitytyping]
   }
 
   type PanelMetaData {

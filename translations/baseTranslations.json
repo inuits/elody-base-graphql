@@ -261,7 +261,7 @@
         "extraneous": "{0} is extraneous",
         "dry-run-failed": "Something went wrong while running CSV validation"
       },
-      "csv-template-link": "Download example with instructions"
+      "csv-template-link": "Download example with instructions for"
     },
     "tooltip":{
       "advancedFilterTypes":{
@@ -546,7 +546,7 @@
           "extraneous": "{0} is overbodig",
           "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
         },
-      "csv-template-link": "Download voorbeeld met instructies"
+      "csv-template-link": "Download voorbeeld met instructies voor"
     },
     "tooltip":{
       "advancedFilterTypes":{
