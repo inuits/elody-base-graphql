@@ -274,7 +274,8 @@
         "type": "This filter can search for different types of this field that are in the system."
       },
       "buttons": {
-        "disabled-submit-button": "The submit button is disabled because some fields are not correctly filled in."
+        "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
+        "disabled-submit-button": "This button is disabled because some fields are not correctly filled in."
       },
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
     },
@@ -562,7 +563,8 @@
         "type": "Deze filter kan gaan zoeken naar verschillende types van dit veld die in het systeem zitten."
       },
       "buttons": {
-        "disabled-submit-button": "Enkele velden zijn niet correct ingevuld waardoor de submit knop gedeactiveerd is."
+        "disabled-upload-button": "De knop is gedeactiveerd omdat er nog velden voor de upload ontbreken.",
+        "disabled-submit-button": "De knop is gedeactiveerd omdat enkele velden niet correct zijn ingevuld."
       },
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
     },
