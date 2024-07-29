@@ -1370,6 +1370,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     type: async (parent, _args, { dataSources }) => {
       return parent.type;
     },
+    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
+      return parent.acceptedEntityTypes || [];
+    },
+
     validation: async (parent, { input }, { dataSources }) => {
       return input as Validation;
     },
@@ -1377,12 +1381,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (parent['options'] && parent['options'].length > 0)
         return parent['options'];
 
-      return [];
-      // const options = getOptionsByEntityType(
-      //   (parent.acceptedEntityTypes as string[]) || undefined,
-      //   dataSources
-      // );
-      // return options;
+      const options = getOptionsByEntityType(
+        (parent.acceptedEntityTypes as string[]) || undefined,
+        dataSources
+      );
+      return options;
     },
     relationType: async (parent, _args, { dataSources }) => {
       const entityType: Entitytyping[] = parseItemTypesFromInputField(

@@ -266,6 +266,7 @@ export const baseSchema = gql`
   type InputField {
     fieldName(input: String): String
     type: String!
+    acceptedEntityTypes: [String]
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType: String
