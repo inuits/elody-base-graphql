@@ -4,7 +4,11 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
+import {
+  resolveMetadata,
+  resolveMetadataItemOfPreferredLanguage,
+  resolveRelations,
+} from '../resolvers/entityResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -77,16 +81,16 @@ import {
   WindowElement,
   WindowElementPanel,
 } from '../../../generated-types/type-defs';
-import {ContextValue} from '../types';
-import {baseFields, getOptionsByEntityType} from '../sources/forms';
-import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
+import { ContextValue } from '../types';
+import { baseFields, getOptionsByEntityType } from '../sources/forms';
+import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   determineAdvancedFiltersForIteration,
   getEntityId,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
-import {parseItemTypesFromInputField} from '../parsers/inputField';
-import {baseTypeCollectionMapping} from '../sources/typeCollectionMapping';
+import { parseItemTypesFromInputField } from '../parsers/inputField';
+import { baseTypeCollectionMapping } from '../sources/typeCollectionMapping';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -146,61 +150,79 @@ export const baseResolver: Resolvers<ContextValue> = {
         searchInputType,
       },
       { dataSources }
-    ):  Promise<Maybe<EntitiesResults>> => {
-      let entities: EntitiesResults = { results: [], sortKeys: [], count: 0, limit: 0 };
+    ): Promise<Maybe<EntitiesResults>> => {
+      let entities: EntitiesResults = {
+        results: [],
+        sortKeys: [],
+        count: 0,
+        limit: 0,
+      };
 
       if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
         entities = await dataSources.CollectionAPI.getSavedSearches(
-            limit || 20,
-            skip || 0,
-            searchValue
+          limit || 20,
+          skip || 0,
+          searchValue
         );
         return entities;
       }
 
-      const typeFilters = advancedFilterInputs.filter((advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type);
-      let entityTypes = typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
+      const typeFilters = advancedFilterInputs.filter(
+        (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+      );
+      let entityTypes =
+        typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
       if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
 
       for (const entityType of entityTypes as Entitytyping[]) {
-        let entitiesIteration: EntitiesResults = { results: [], sortKeys: [], count: 0, limit: 0 };
+        let entitiesIteration: EntitiesResults = {
+          results: [],
+          sortKeys: [],
+          count: 0,
+          limit: 0,
+        };
         const filtersIteration =
-            entityTypes.length <= 1 ?
-              advancedFilterInputs :
-              determineAdvancedFiltersForIteration(entityType, advancedFilterInputs);
-        if (advancedFilterInputs?.length >= 0 &&
-            (
-                searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
-                entityType === Entitytyping.Mediafile
-            )
+          entityTypes.length <= 1
+            ? advancedFilterInputs
+            : determineAdvancedFiltersForIteration(
+                entityType,
+                advancedFilterInputs
+              );
+        if (
+          advancedFilterInputs?.length >= 0 &&
+          (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
+            entityType === Entitytyping.Mediafile)
         ) {
-          entitiesIteration = await dataSources.CollectionAPI.GetAdvancedEntities(
+          entitiesIteration =
+            await dataSources.CollectionAPI.GetAdvancedEntities(
               Entitytyping.Mediafile,
               limit || 20,
               skip || 0,
               filtersIteration,
               searchValue || { value: '' }
-          );
-        }
-        else if (searchInputType === SearchInputType.AdvancedInputType && advancedFilterInputs?.length) {
-          entitiesIteration = await dataSources.CollectionAPI.GetAdvancedEntities(
+            );
+        } else if (
+          searchInputType === SearchInputType.AdvancedInputType &&
+          advancedFilterInputs?.length
+        ) {
+          entitiesIteration =
+            await dataSources.CollectionAPI.GetAdvancedEntities(
               entityType,
               limit || 20,
               skip || 0,
               filtersIteration,
               searchValue || { value: '' }
-          );
-        }
-        else if (searchInputType === SearchInputType.AdvancedInputType) {
+            );
+        } else if (searchInputType === SearchInputType.AdvancedInputType) {
           entitiesIteration = await dataSources.CollectionAPI.getEntities(
-              limit || 20,
-              skip || 0,
-              searchValue || { value: '' },
-              entityType
+            limit || 20,
+            skip || 0,
+            searchValue || { value: '' },
+            entityType
           );
         }
         entities.results!!.push(...entitiesIteration.results!!);
-        entities.sortKeys!!.push(...entitiesIteration.sortKeys || []);
+        entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
         entities.count!! += entitiesIteration.count!!;
         entities.limit!! += entitiesIteration.limit!!;
       }
@@ -369,7 +391,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (!dataSources.OcrService)
         throw new GraphQLError(
-            'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
+          'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
       try {
         const response = await dataSources.OcrService.generateOcrWithAsset(
@@ -380,11 +402,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         return {
           status: 200,
           message: response,
-        }
+        };
       } catch (e) {
         throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
       }
-    }
+    },
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -656,7 +678,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         rootKeyAsLabel,
         containsRelationProperty,
         relationKey,
-        relationEntityType
+        relationEntityType,
       },
       { dataSources }
     ) => {
@@ -667,8 +689,11 @@ export const baseResolver: Resolvers<ContextValue> = {
           if (metadata.length > 1) {
             const hasLanguage = metadata.some((item: Metadata) => item.lang);
             const metadataValues = hasLanguage
-              ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)?.value
-              : metadata.map((item: Metadata) => item.value).join(", ");
+              ? resolveMetadataItemOfPreferredLanguage(
+                  metadata,
+                  preferredLanguage
+                )?.value
+              : metadata.map((item: Metadata) => item.value).join(', ');
             return metadataValues;
           }
           return metadata[0]?.value ?? '';
@@ -695,8 +720,7 @@ export const baseResolver: Resolvers<ContextValue> = {
                 type = await dataSources.CollectionAPI.getMediaFile(
                   relation.key
                 );
-              }
-              else {
+              } else {
                 if (relationEntityType)
                   type = await dataSources.CollectionAPI.getEntity(
                     relation.key,
@@ -705,8 +729,8 @@ export const baseResolver: Resolvers<ContextValue> = {
                 else
                   type = await dataSources.CollectionAPI.getEntity(
                     relation.key,
-                    "",
-                    "entities"
+                    '',
+                    'entities'
                   );
               }
 
@@ -834,7 +858,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQueryEntityPickerList: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
-    customQueryEntityPickerListFilters: async (parent, { input }, { dataSources }) => {
+    customQueryEntityPickerListFilters: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input ? input : 'undefined';
     },
     searchInputType: async (parent, { input }, { dataSources }) => {
@@ -852,7 +880,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityListElement: async (parent: any, {}, { dataSources }) => {
       return parent as EntityListElement;
     },
-    allowedActionsOnRelations: async (parent: any, { input }, { dataSources }) => {
+    allowedActionsOnRelations: async (
+      parent: any,
+      { input },
+      { dataSources }
+    ) => {
       return input ? input : [];
     },
     customBulkOperations: async (parent, { input }, { dataSources }) => {
@@ -925,6 +957,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
+    },
+    canBeMultipleColumns: async (_source, { input }, { dataSources }) => {
+      return input;
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
@@ -1262,19 +1297,35 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQueryDeleteRelations: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
-    customQueryDeleteRelationsFilters: async (parent, { input }, { dataSources }) => {
+    customQueryDeleteRelationsFilters: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input as string;
     },
     customQueryEntityTypes: async (parent, { input }, { dataSources }) => {
       return input as Entitytyping[];
     },
-    customQueryBlockingRelations: async (parent, { input }, { dataSources }) => {
+    customQueryBlockingRelations: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input as string;
     },
-    customQueryBlockingRelationsFilters: async (parent, { input }, { dataSources }) => {
+    customQueryBlockingRelationsFilters: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input as string;
     },
-    customQueryBlockingEntityTypes: async (parent, { input }, { dataSources }) => {
+    customQueryBlockingEntityTypes: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input as Entitytyping[];
     },
   },
@@ -1319,9 +1370,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     fieldName: async (parent, { input }, { dataSources }) => {
       return input || '';
     },
-    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
-      return parent.acceptedEntityTypes || [];
-    },
     type: async (parent, _args, { dataSources }) => {
       return parent.type;
     },
@@ -1332,11 +1380,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (parent['options'] && parent['options'].length > 0)
         return parent['options'];
 
-      const options = getOptionsByEntityType(
-        (parent.acceptedEntityTypes as string[]) || undefined,
-        dataSources
-      );
-      return options;
+      return [];
+      // const options = getOptionsByEntityType(
+      //   (parent.acceptedEntityTypes as string[]) || undefined,
+      //   dataSources
+      // );
+      // return options;
     },
     relationType: async (parent, _args, { dataSources }) => {
       const entityType: Entitytyping[] = parseItemTypesFromInputField(

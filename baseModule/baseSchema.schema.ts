@@ -267,7 +267,6 @@ export const baseSchema = gql`
   type InputField {
     fieldName(input: String): String
     type: String!
-    acceptedEntityTypes: [String]
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     relationType: String
@@ -1017,6 +1016,7 @@ export const baseSchema = gql`
     panelType(input: PanelType!): PanelType!
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
+    canBeMultipleColumns(input: Boolean!): Boolean!
     info: PanelInfo!
     metaData: PanelMetaData!
     relation: [PanelRelation]
