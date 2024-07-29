@@ -1348,9 +1348,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
-    formFields: async (parent: any, {}, { dataSources }) => {
-      return parent as FormFields;
-    },
     formTab: async (parent: any, {}, { dataSources }) => {
       return parent as FormTab;
     },
