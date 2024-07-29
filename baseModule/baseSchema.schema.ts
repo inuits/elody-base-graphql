@@ -111,6 +111,11 @@ export const baseSchema = gql`
     manualUpload
   }
 
+  type Form {
+    label(input: String): String!
+    formTab: FormTab!
+  }
+
   type FormTab {
     formFields: FormFields!
   }
@@ -137,12 +142,6 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
     uploadContainer: UploadContainer
     action: FormAction
-  }
-
-  type Form {
-    label(input: String): String!
-    formTab: FormTab
-    formFields: FormFields!
   }
 
   enum ActionType {
