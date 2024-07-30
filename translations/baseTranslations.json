@@ -215,6 +215,7 @@
       "delete":"Delete",
       "all-filters":"All filters",
       "search-title":"Search title",
+      "search-modal-title": "Search filter",
       "edit":"Edit",
       "search-saved-searches":"Search Saved Searches"
     },

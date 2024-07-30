@@ -40,6 +40,7 @@ export interface Environment {
     hasTenantSelect?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
+    hasSavedSearch?: boolean;
     SEO: {
       hasSEO: boolean;
       seoMetadataKeys?: {

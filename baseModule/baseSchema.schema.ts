@@ -151,6 +151,7 @@ export const baseSchema = gql`
     download
     ocr
     endpoint
+    submitWithExtraMetadata
   }
 
   enum ActionProgressIndicatorType {
@@ -299,6 +300,8 @@ export const baseSchema = gql`
     EntityPicker
     DynamicForm
     Search
+    SaveSearch
+    SaveSearchPicker
   }
 
   enum ModalChoices {

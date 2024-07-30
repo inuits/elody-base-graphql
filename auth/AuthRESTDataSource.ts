@@ -19,7 +19,11 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
-        throw new GraphQLError(`AUTH | NO TOKEN`);
+        throw new GraphQLError(`AUTH | NO TOKEN`, {
+          extensions: {
+            statusCode: 401,
+          }
+        });
     }
 
     const tenant = this.session.tenant;
