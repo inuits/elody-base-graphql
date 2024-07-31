@@ -21,8 +21,6 @@ import {
   MetadataFieldInput,
   MetadataValuesInput,
   PaginationInfo,
-  SavedSearchedEntity,
-  SavedSearchInput,
   SearchFilter,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
@@ -441,82 +439,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
     });
   };
-
-  async getSavedSearches(
-    limit: number = 5,
-    skip: number = 0,
-    searchValue: Maybe<SearchFilter> | undefined
-  ): Promise<EntitiesResults> {
-    if (!searchValue) {
-      searchValue = { value: '', isAsc: false, key: '' };
-    }
-    var response = await this.get(
-      `saved_searches?title=${
-        searchValue.value
-      }&limit=${limit}&skip=${this.getSkip(skip, limit)}`
-    );
-    response.results.forEach((res: SavedSearchedEntity) => {
-      setId(res);
-      this.setLabels(res);
-    });
-    return response;
-  }
-
-  async createSavedSearch(
-    savedSearchInput: SavedSearchInput
-  ): Promise<SavedSearchedEntity> {
-    const response = await this.post(`saved_searches`, {
-      body: savedSearchInput,
-    });
-    this.setLabels(response);
-    return response;
-  }
-
-  async deleteSavedSearch(uuid: String): Promise<string> {
-    await this.delete(`saved_searches/${uuid}`);
-    return `saved search with uuid ${uuid} has been deleted.`;
-  }
-
-  async patchSavedSearchTitle(
-    uuid: String,
-    title: String
-  ): Promise<SavedSearchedEntity> {
-    const patchedTitle = {
-      metadata: [
-        {
-          lang: 'nl',
-          value: title,
-          key: 'title',
-        },
-      ],
-    };
-
-    const response = await this.patch(`saved_searches/${uuid}`, {
-      body: patchedTitle,
-    });
-    this.setLabels(response);
-    return response;
-  }
-
-  async patchSavedSearchDefinition(
-    uuid: String,
-    definition: FilterInput[]
-  ): Promise<SavedSearchedEntity> {
-    const patchedDefinition = {
-      definition: definition,
-    };
-    const response = await this.patch(`saved_searches/${uuid}`, {
-      body: patchedDefinition,
-    });
-    this.setLabels(response);
-    return response;
-  }
-
-  async getSavedSearchById(uuid: String): Promise<SavedSearchedEntity> {
-    const response = await this.get(`saved_searches/${uuid}`);
-    this.setLabels(response);
-    return response;
-  }
 
   async GetAdvancedEntities(
     type: Entitytyping,
