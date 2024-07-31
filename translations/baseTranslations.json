@@ -165,7 +165,8 @@
         "status": "Status",
         "rights": "Rights",
         "date_updated": "Date updated",
-        "last_editor": "Last editor"
+        "last_editor": "Last editor",
+        "privacy": "Privacy"
       }
     },
     "notifications":{
@@ -455,7 +456,8 @@
         "rights": "Rechten",
         "status": "Status",
         "date-updated": "Update datum",
-        "last-editor": "Laatst bewerkt door"
+        "last-editor": "Laatst bewerkt door",
+        "privacy": "Privacy"
       }
     },
     "notifications":{
