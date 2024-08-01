@@ -158,15 +158,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         limit: 0,
       };
 
-      if (searchInputType === SearchInputType.AdvancedSavedSearchType) {
-        entities = await dataSources.CollectionAPI.getSavedSearches(
-          limit || 20,
-          skip || 0,
-          searchValue
-        );
-        return entities;
-      }
-
       const typeFilters = advancedFilterInputs.filter(
         (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
       );
