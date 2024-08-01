@@ -285,13 +285,6 @@ export const baseSchema = gql`
     fieldKeyToSave(input: String): String
   }
 
-  enum ModalState {
-    Initial
-    Show
-    Hide
-    Loading
-  }
-
   enum TypeModals {
     BulkOperationsEdit
     BulkOperations
