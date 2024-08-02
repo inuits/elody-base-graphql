@@ -166,6 +166,9 @@
         "rights": "Rights",
         "date_updated": "Date updated",
         "last_editor": "Last editor",
+        "title-zip": "Title zip file",
+        "basic-csv": "Basic csv file",
+        "expire-date-zip": "Expire date zip file",
         "privacy": "Privacy"
       }
     },
@@ -251,6 +254,7 @@
       "sets": "Sets",
       "tenant": "Tenant",
       "create-set": "Set",
+      "make-download": "Make a download of files",
       "delete-entity-window": "Delete entity window"
     },
     "upload-fields":{
@@ -462,6 +466,9 @@
         "status": "Status",
         "date-updated": "Update datum",
         "last-editor": "Laatst bewerkt door",
+        "title-zip": "Titel zip bestand",
+        "basic-csv": "Basis csv bestand",
+        "expire-date-zip": "Vervaldatum zip bestand",
         "privacy": "Privacy"
       }
     },
@@ -546,6 +553,7 @@
       "sets": "Sets",
       "tenant": "Tenant",
       "create-set": "Set",
+      "make-download": "Maak een download van bestanden",
       "delete-entity-window": "Verwijder entiteit window"
     },
     "upload-fields": {
