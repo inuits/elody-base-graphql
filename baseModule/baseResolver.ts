@@ -1379,6 +1379,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return options;
     },
     relationType: async (parent, _args, { dataSources }) => {
+      if (parent.relationType) return parent.relationType;
       const entityType: Entitytyping[] = parseItemTypesFromInputField(
         parent
       ) as Entitytyping[];
@@ -1386,6 +1387,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parseRelationTypesForEntityType(entityType[0]).relationType;
     },
     fromRelationType: async (parent, _args, { dataSources }) => {
+      if (parent.fromRelationType) return parent.fromRelationType;
       const entityType: Entitytyping[] = parseItemTypesFromInputField(
         parent
       ) as Entitytyping[];
