@@ -7,7 +7,6 @@ import {
   Entity,
   EntityInput,
   Entitytyping,
-  FilterInput,
   FilterMatcherMap,
   Filters,
   GraphElementInput,
@@ -28,6 +27,7 @@ import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { baseTypeCollectionMapping as collection } from './typeCollectionMapping';
 import { Config } from '../types';
 import { environment as env } from '../main';
+import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
 
 type EntetiesCallReturn =
@@ -75,11 +75,9 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getTenants(): Promise<EntitiesResults> {
     let data: any;
-    try {
-      data = await this.get('tenants');
-    } catch (e) {
-      console.log(e);
-    }
+    data = await this.get('tenants');
+    if (!data?.results)
+      throw new GraphQLError("Failed to fetch data. Please try again later.");
     return data as EntitiesResults;
   }
 
