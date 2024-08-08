@@ -346,6 +346,7 @@ export const baseSchema = gql`
   }
 
   enum MenuIcons {
+    Anpr
     ArchiveAlt
     BookOpen
     BrightnessPlus
