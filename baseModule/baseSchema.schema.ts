@@ -193,16 +193,23 @@ export const baseSchema = gql`
     type: ActionProgressIndicatorType!
     steps: [FileProgressStep]
   }
+  
+  enum EndpointResponseActions {
+    downloadResponse
+    notification
+  }
 
   input EndpointInformationInput {
     method: String
     endpointName: String
     variables: [String]
+    responseAction: EndpointResponseActions
   }
   type EndpointInformation {
     method: String
     endpointName: String
     variables: [String]
+    responseAction: EndpointResponseActions
   }
 
   type FormAction {
