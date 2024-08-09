@@ -1,6 +1,7 @@
 import { AuthRESTDataSource, environment, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 import { EntityInput, Entitytyping } from '../../../generated-types/type-defs';
+import {addJwt} from "./mediafilesEndpoint";
 
 export const applyUploadEndpoint = (app: Express) => {
   app.post(
@@ -57,6 +58,29 @@ export const applyUploadEndpoint = (app: Express) => {
       }
     }
   );
+
+  app.post(
+      `/api/upload/csv`,
+      async (request: Request, response: Response) => {
+        try {
+          const datasource = new AuthRESTDataSource({ session: request.session });
+          const result = await datasource.post(
+              `${env?.api.collectionApiUrl}/entities/${request.body.parentId}/order`,
+              {
+                method: 'POST',
+                headers: {
+                  ContentType: 'text/csv"',
+                  Authorization: addJwt(undefined, request, undefined),
+                },
+                body: request.body.csv,
+              }
+          );
+          response.status(200).setHeader('Content-Type', 'text/csv');
+          response.end(result);
+        } catch (exception) {
+          response.status(500).end(String(exception));
+      }
+  });
 };
 
 const __batchDryRun = async (
