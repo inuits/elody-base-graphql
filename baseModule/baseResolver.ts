@@ -736,12 +736,22 @@ export const baseResolver: Resolvers<ContextValue> = {
             return parent?.[key] ?? '';
           }
         } else if (source === KeyValueSource.RelationMetadata) {
-          return parent?.relations
-            .find(
-              (relation: any) =>
-                relation.type === relationKey && relation.key === uuid
-            )
-            .metadata.find((metadata: any) => metadata.key === key).value;
+          if (relationKey === "hasTenant" && key === "roles") {
+            if (uuid && !uuid.startsWith("tenant:")) uuid = `tenant:${uuid}`
+            return parent?.relations
+              .find(
+                (relation: any) =>
+                  relation.type === relationKey &&
+                    (relation.key === uuid || relation.key === "tenant:super")
+              )[key];
+          } else {
+            return parent?.relations
+              .find(
+                (relation: any) =>
+                  relation.type === relationKey && relation.key === uuid
+              )
+              .metadata.find((metadata: any) => metadata.key === key).value;
+          }
         }
         return '';
       } catch (e) {
