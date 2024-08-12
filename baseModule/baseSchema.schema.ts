@@ -172,6 +172,11 @@ export const baseSchema = gql`
     upload
   }
 
+  enum ContextMenuDirection {
+    left
+    right
+  }
+
   type ActionProgressStep {
     label(input: String!): String!
     stepType(input: ProgressStepType!): ProgressStepType!
@@ -508,6 +513,7 @@ export const baseSchema = gql`
     value: StringOrInt!
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
+    primary: Boolean
   }
 
   input DropdownOptionInput {
@@ -516,6 +522,7 @@ export const baseSchema = gql`
     value: StringOrInt!
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
+    primary: Boolean
   }
 
   type DropzoneEntityToCreate {
