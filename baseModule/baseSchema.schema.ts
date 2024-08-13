@@ -151,6 +151,7 @@ export const baseSchema = gql`
     download
     ocr
     endpoint
+    uploadCsvForReordening
     submitWithExtraMetadata
   }
 
@@ -949,6 +950,7 @@ export const baseSchema = gql`
     mediafilesOnly
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
+    uploadCsvForReordening
   }
 
   enum UploadFieldSize {

@@ -60,26 +60,39 @@ export const applyUploadEndpoint = (app: Express) => {
   );
 
   app.post(
-      `/api/upload/csv`,
-      async (request: Request, response: Response) => {
+    `/api/upload/csv`,
+    async (request: Request, response: Response) => {
+      let csv = '';
+      request.on('data', (chunk: any) => {
         try {
-          const datasource = new AuthRESTDataSource({ session: request.session });
+          csv += chunk.toString();
+        } catch (e) {
+          console.log('Error while getting csv file:', e);
+          response.status(500).end(JSON.stringify(e));
+        }
+      });
+
+      request.on('end', async () => {
+        try {
+          const datasource = new AuthRESTDataSource({session: request.session});
           const result = await datasource.post(
-              `${env?.api.collectionApiUrl}/entities/${request.body.parentId}/order`,
+              `${env?.api.collectionApiUrl}/entities/${request.query.parentId}/order`,
               {
                 method: 'POST',
                 headers: {
-                  ContentType: 'text/csv"',
-                  Authorization: addJwt(undefined, request, undefined),
+                  'Content-Type': 'text/csv',
                 },
-                body: request.body.csv,
+                body: csv,
               }
           );
           response.status(200).setHeader('Content-Type', 'text/csv');
-          response.end(result);
-        } catch (exception) {
-          response.status(500).end(String(exception));
-      }
+          response.end();
+        } catch (exception: any) {
+          const status = exception.extensions.response.status || 500;
+          response.status(status).end(JSON.stringify(exception));
+          response.end(JSON.stringify(exception));
+        }
+      });
   });
 };
 

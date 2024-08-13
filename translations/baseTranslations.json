@@ -47,7 +47,7 @@
         }
       },
       "download-mediafiles":"Download mediafiles",
-      "reorder-entities-with-csv": "Re-order entities with csv",
+      "reorder-entities-with-csv": "Reorder entities with csv",
       "export-to-csv":"Export to CSV"
     },
     "confirm": {
@@ -186,6 +186,10 @@
         "entityDeleted": {
           "title": "Entity successfully deleted",
           "description": "Changes have been saved successfully"
+        },
+        "csvReordering": {
+          "title": "Reordering successful",
+          "description": "The mediafiles are successfully reordered"
         }
       },
       "errors": {
@@ -487,6 +491,10 @@
         "entityDeleted": {
           "title": "Entiteit succesvol verwijderd",
           "description": "Wijzigingen succesvol opgeslagen"
+        },
+        "csvReordering": {
+          "title": "Opnieuw orderen succesvol",
+          "description": "De mediafiles zijn succesvol geordend"
         }
       },
       "errors": {
