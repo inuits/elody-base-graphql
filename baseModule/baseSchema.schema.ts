@@ -510,10 +510,12 @@ export const baseSchema = gql`
   type ActionContext {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: ActionContextViewModeTypes
+    labelForTooltip: String
   }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: ActionContextViewModeTypes
+    labelForTooltip: String
   }
 
   scalar StringOrInt
@@ -521,6 +523,7 @@ export const baseSchema = gql`
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    active: Boolean
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
     primary: Boolean
@@ -530,6 +533,7 @@ export const baseSchema = gql`
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    active: Boolean
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
     primary: Boolean

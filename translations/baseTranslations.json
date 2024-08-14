@@ -284,6 +284,12 @@
         "boolean": "This filter allows you to find fields based on two opposite values. For example: yes / no.",
         "type": "This filter can search for different types of this field that are in the system."
       },
+      "bulkOperationsActionBar":{
+        "readmode-noneselected": "To use this action, you have to be in readmode and you may not select items.",
+        "readmode-someselected": "To use this action, you have to be in readmode and you have to select at least one item.",
+        "editmode-noneselected": "To use this action, you have to be in editmode and you may not select items.",
+        "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item."
+      },
       "buttons": {
         "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
         "disabled-submit-button": "This button is disabled because some fields are not correctly filled in or there was an error during creation.",
@@ -587,6 +593,12 @@
         "selection": "Deze filter kan een lijst met mogelijke selecties opbouwen van je zoekopdracht: !met het filtertype 'exact'!. Ook kan er naar gedeeltelijke, lege en niet lege velden gezocht worden.",
         "boolean": "Met deze filter kan je velden vinden op basis van twee tegenovergestelde waarden. Bijvoorbeeld: ja / nee.",
         "type": "Deze filter kan gaan zoeken naar verschillende types van dit veld die in het systeem zitten."
+      },
+      "bulkOperationsActionBar":{
+        "readmode-noneselected": "Om deze actie te gebruiken moet je in de leesmode zijn en mag je geen items geselecteerd hebben.",
+        "readmode-someselected": "Om deze actie te gebruiken moet je in de leesmode zijn en moet je minstens één item geselecteerd hebben.",
+        "editmode-noneselected": "Om deze actie te gebruiken moet je in de editmode zijn en mag je geen items geselecteerd hebben.",
+        "editmode-someselected": "Om deze actie te gebruiken moet je in de editmode zijn en moet je minstens één item geselecteerd hebben."
       },
       "buttons": {
         "disabled-upload-button": "De knop is gedeactiveerd omdat er nog velden voor de upload ontbreken.",
