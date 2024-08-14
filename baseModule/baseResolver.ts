@@ -1349,6 +1349,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
+    modalStyle: async (parent: any, { input }, { dataSources }) => {
+      return input;
+    },
     formTab: async (parent: any, {}, { dataSources }) => {
       return parent as FormTab;
     },

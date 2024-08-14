@@ -82,8 +82,10 @@ export const baseFields: { [key: string]: InputField } = {
   baseFileSystemImportField: {
     type: InputFieldTypes.BaseFileSystemImportField,
   },
+  baseEntityPickerField: {
+    type: InputFieldTypes.BaseEntityPickerField,
+  },
 };
-
 
 export const getOptionsByEntityType = async (
   acceptedEntityTypes: string[] | undefined,

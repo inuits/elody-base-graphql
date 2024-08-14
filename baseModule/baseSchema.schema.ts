@@ -70,6 +70,7 @@ export const baseSchema = gql`
     fileUpload
     csvUpload
     baseFileSystemImportField
+    baseEntityPickerField
   }
 
   enum BaseFieldType {
@@ -83,6 +84,7 @@ export const baseSchema = gql`
     baseFileUploadField
     baseCsvUploadField
     baseFileSystemImportField
+    baseEntityPickerField
   }
 
   enum FileType {
@@ -113,6 +115,7 @@ export const baseSchema = gql`
 
   type Form {
     label(input: String): String!
+    modalStyle(input: ModalStyle!): ModalStyle!
     formTab: FormTab!
   }
 
@@ -171,6 +174,11 @@ export const baseSchema = gql`
     validate
     prepare
     upload
+  }
+
+  enum EntityPickerMode {
+    save
+    emit
   }
 
   enum ContextMenuDirection {
@@ -303,16 +311,17 @@ export const baseSchema = gql`
     BulkOperations
     Confirm
     Delete
-    EntityPicker
     DynamicForm
     Search
     SaveSearch
     SaveSearchPicker
   }
 
-  enum ModalChoices {
-    Import
-    Dropzone
+  enum ModalStyle {
+    left
+    right
+    center
+    rightWide
   }
 
   input MenuTypeLinkInputModal {
