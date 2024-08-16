@@ -3,4 +3,4 @@
 *.ts
 !*.d.ts
 !*.schema.ts
-!.queries.ts
+!*.queries.ts
