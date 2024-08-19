@@ -207,7 +207,7 @@ export const baseSchema = gql`
     type: ActionProgressIndicatorType!
     steps: [FileProgressStep]
   }
-  
+
   enum EndpointResponseActions {
     downloadResponse
     notification
@@ -323,6 +323,7 @@ export const baseSchema = gql`
     left
     right
     center
+    centerWide
     rightWide
   }
 
