@@ -105,4 +105,11 @@ export const baseFragments = gql`
     askForCloseConfirmation
     neededPermission
   }
+
+  fragment actionContext on ActionContext {
+    entitiesSelectionType
+    activeViewMode
+    labelForTooltip
+  }
+
 `;
