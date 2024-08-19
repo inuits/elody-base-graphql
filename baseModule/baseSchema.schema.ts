@@ -485,14 +485,14 @@ export const baseSchema = gql`
   input BulkOperationInputModal {
     typeModal: TypeModals!
     formQuery: String
-    formRelationType: String!
+    formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
   type BulkOperationModal {
     typeModal: TypeModals!
     formQuery: String
-    formRelationType: String!
+    formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
   }
