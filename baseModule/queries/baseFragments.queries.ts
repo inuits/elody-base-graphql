@@ -1,4 +1,4 @@
-import { gql } from "graphql-modules";
+import { gql } from 'graphql-modules';
 export const baseFragments = gql`
   fragment metadata on Metadata {
     key
@@ -70,6 +70,12 @@ export const baseFragments = gql`
     id
     uuid
     type
+  }
+
+  fragment actionContext on ActionContext {
+    entitiesSelectionType
+    activeViewMode
+    labelForTooltip
   }
 
   fragment job on Job {
