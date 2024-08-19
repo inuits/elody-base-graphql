@@ -32,15 +32,6 @@ export const resolveMetadata = async (
     }
     return metadataItem;
   });
-
-  if (keys.includes('type')) {
-    //Add type
-    metadataArray.push({
-      key: 'type',
-      label: 'type',
-      value: parent.type,
-    });
-  }
   metadataArray = customSort(keys as string[], metadataArray, 'key');
   return metadataArray;
 };

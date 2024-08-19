@@ -386,6 +386,7 @@ export const baseSchema = gql`
     KeyholeSquare
     LocationArrowAlt
     Police
+    Process
     Settings
     Update
     Upload
