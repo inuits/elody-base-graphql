@@ -528,6 +528,7 @@ export const baseSchema = gql`
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
     primary: Boolean
+    requiresAuth: Boolean
   }
 
   input DropdownOptionInput {
@@ -538,6 +539,7 @@ export const baseSchema = gql`
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
     primary: Boolean
+    requiresAuth: Boolean
   }
 
   type DropzoneEntityToCreate {
