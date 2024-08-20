@@ -10,6 +10,8 @@ export const baseFragments = gql`
 
   fragment validation on Validation {
     value
+    customValue
+    fastValidationMessage
     required_if {
       field
       value

@@ -270,6 +270,7 @@ export const baseSchema = gql`
   type Validation {
     value: [ValidationRules]
     customValue: String
+    fastValidationMessage: String
     required_if: Conditional
     available_if: Conditional
     has_required_relation: RequiredRelationValidation
@@ -279,6 +280,7 @@ export const baseSchema = gql`
   input ValidationInput {
     value: [ValidationRules]
     customValue: String
+    fastValidationMessage: String
     required_if: ConditionalInput
     available_if: ConditionalInput
     has_required_relation: RequiredRelationValidationInput
