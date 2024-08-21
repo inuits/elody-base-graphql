@@ -554,7 +554,7 @@ export const baseSchema = gql`
     reorderEntities
     exportCsv
     edit
-    transcodePDF
+    startOcr
   }
 
   type BulkOperations {
