@@ -886,8 +886,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    panels: async (parent: unknown, {}, { dataSources }, info) => {
-      console.log(info);
+    panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
     },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
