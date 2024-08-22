@@ -16,7 +16,6 @@ import {
   ActionProgressStep,
   Actions,
   ActionType,
-  AdvancedFilterInput,
   AdvancedFilterTypes,
   BaseLibraryModes,
   BaseRelationValuesInput,
@@ -91,6 +90,13 @@ import {
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import { baseTypeCollectionMapping } from '../sources/typeCollectionMapping';
+import {
+  resolveIntialValueMetadata,
+  resolveIntialValueRelationMetadata,
+  resolveIntialValueRelations,
+  resolveIntialValueRoot,
+  resolveIntialValueTechnicalMetadata,
+} from '../resolvers/intialValueResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -674,87 +680,33 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       try {
-        if (source === KeyValueSource.Metadata) {
-          const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
-          const metadata = await resolveMetadata(parent, [key], undefined);
-          if (metadata.length > 1) {
-            const hasLanguage = metadata.some((item: Metadata) => item.lang);
-            const metadataValues = hasLanguage
-              ? resolveMetadataItemOfPreferredLanguage(
-                  metadata,
-                  preferredLanguage
-                )?.value
-              : metadata.map((item: Metadata) => item.value).join(', ');
-            return metadataValues;
-          }
-          return metadata[0]?.value ?? '';
-        } else if (source === KeyValueSource.Root) {
-          const keyParts = key.split('.');
-          let value = parent;
-          for (const part of keyParts) value = value?.[part];
-          return value ?? '';
-        } else if (source === KeyValueSource.Relations) {
-          try {
-            let relation: any;
-            const relations = parent?.relations.filter(
-              (relation: any) => relation.type === key
-            );
-            if (containsRelationProperty)
-              relations.forEach((rel: any) => {
-                if (rel[containsRelationProperty]) relation = rel;
-              });
-            else relation = relations?.[0];
+        const resolveObject: { [key: string]: Function } = {
+          metadata: () => resolveIntialValueMetadata(dataSources, parent, key),
+          root: () => resolveIntialValueRoot(parent, key),
+          relations: () =>
+            resolveIntialValueRelations(
+              dataSources,
+              parent,
+              key,
+              metadataKeyAsLabel as string,
+              rootKeyAsLabel as string,
+              containsRelationProperty as string,
+              relationEntityType as string
+            ),
+          relationMetadata: () =>
+            resolveIntialValueRelationMetadata(
+              parent,
+              key,
+              uuid as string,
+              relationKey as string
+            ),
+          technicalMetadata: () =>
+            resolveIntialValueTechnicalMetadata(parent, key),
+        };
 
-            if (relation) {
-              let type;
-              if (relation.type === 'hasMediafile') {
-                type = await dataSources.CollectionAPI.getMediaFile(
-                  relation.key
-                );
-              } else {
-                if (relationEntityType)
-                  type = await dataSources.CollectionAPI.getEntity(
-                    relation.key,
-                    relationEntityType
-                  );
-                else
-                  type = await dataSources.CollectionAPI.getEntity(
-                    relation.key,
-                    '',
-                    'entities'
-                  );
-              }
-
-              if (rootKeyAsLabel) return type[rootKeyAsLabel];
-              return (
-                type?.metadata?.find(
-                  (metadata: any) => metadata.key === metadataKeyAsLabel
-                )?.value || relation.key
-              );
-            }
-          } catch {
-            return parent?.[key] ?? '';
-          }
-        } else if (source === KeyValueSource.RelationMetadata) {
-          if (relationKey === "hasTenant" && key === "roles") {
-            if (uuid && !uuid.startsWith("tenant:")) uuid = `tenant:${uuid}`
-            return parent?.relations
-              .find(
-                (relation: any) =>
-                  relation.type === relationKey &&
-                    (relation.key === uuid || relation.key === "tenant:super")
-              )[key];
-          } else {
-            return parent?.relations
-              .find(
-                (relation: any) =>
-                  relation.type === relationKey && relation.key === uuid
-              )
-              .metadata.find((metadata: any) => metadata.key === key).value;
-          }
-        }
-        return '';
+        return resolveObject[source]() || '';
       } catch (e) {
+        console.log(e);
         return '';
       }
     },
@@ -934,7 +886,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    panels: async (parent: unknown, {}, { dataSources }) => {
+    panels: async (parent: unknown, {}, { dataSources }, info) => {
+      console.log(info);
       return parent as WindowElementPanel;
     },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
@@ -964,6 +917,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     panelType: async (_source, { input }, { dataSources }) => {
       return input;
+    },
+    bulkData: async (
+      _source: { [key: string]: any },
+      { bulkDataSource },
+      { dataSources }
+    ) => {
+      return _source[bulkDataSource];
     },
     info: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelInfo;

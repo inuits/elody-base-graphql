@@ -765,6 +765,7 @@ export const baseSchema = gql`
   enum KeyValueSource {
     root
     metadata
+    technicalMetadata
     relations
     relationMetadata
   }
@@ -959,6 +960,7 @@ export const baseSchema = gql`
   }
 
   enum PanelType {
+    bulkData
     metadata
     relation
     mediainfo
@@ -1049,10 +1051,16 @@ export const baseSchema = gql`
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
     canBeMultipleColumns(input: Boolean!): Boolean!
+    bulkData(bulkDataSource: String!): JSON
     info: PanelInfo!
     metaData: PanelMetaData!
     relation: [PanelRelation]
     entityListElement: EntityListElement
+  }
+
+  type WindowElementBulkDataPanel {
+    label(input: String!): String!
+    intialValueKey(input: String!): String!
   }
 
   type WindowElement {
