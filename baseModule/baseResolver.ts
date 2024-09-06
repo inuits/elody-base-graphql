@@ -1333,10 +1333,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     type: async (parent, _args, { dataSources }) => {
       return parent.type;
     },
-    acceptedEntityTypes: async (parent, _args, { dataSources }) => {
-      return parent.acceptedEntityTypes || [];
-    },
-
     validation: async (parent, { input }, { dataSources }) => {
       return input as Validation;
     },
