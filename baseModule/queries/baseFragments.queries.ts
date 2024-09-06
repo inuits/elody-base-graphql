@@ -43,6 +43,13 @@ export const baseFragments = gql`
     fromRelationType
     canCreateEntityFromOption
     metadataKeyToCreateEntityFromOption
+    advancedFilterInputForRetrievingOptions {
+      type
+      key
+      value
+      match_exact
+      item_types
+    }
     advancedFilterInputForSearchingOptions {
       type
       parent_key

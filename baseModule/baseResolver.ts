@@ -1366,6 +1366,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (!entityType) return '';
       return parseRelationTypesForEntityType(entityType[0]).fromRelationType;
     },
+    advancedFilterInputForRetrievingOptions: async (parent, _args, { dataSources }) => {
+      return parent.advancedFilterInputForRetrievingOptions || [];
+    },
     advancedFilterInputForSearchingOptions: async (
       parent,
       _args,

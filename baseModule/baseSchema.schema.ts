@@ -297,6 +297,7 @@ export const baseSchema = gql`
     fromRelationType: String
     canCreateEntityFromOption: Boolean
     metadataKeyToCreateEntityFromOption: String
+    advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]
     maxFileSize: String
