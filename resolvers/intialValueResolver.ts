@@ -91,9 +91,11 @@ export const resolveIntialValueRelationMetadata = (
     if (!uuid || uuid === "undefined")
       return parent?.relations
         .filter((relation: any) => relation.type === relationKey)
-        .flatMap(
-          (relation: any) => `${relation?.["zone"].split("BE-")?.[1]}:${relation[key]}`
-        );
+        .flatMap((relation: any) => {
+          const zone = relation?.["zone"].split("BE-")?.[1];
+          if (zone) return `${zone}:${relation[key]}`;
+          else return relation[key];
+        });
 
     if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
     return parent?.relations.find(
