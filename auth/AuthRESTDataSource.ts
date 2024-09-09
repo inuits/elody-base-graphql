@@ -15,7 +15,7 @@ export class AuthRESTDataSource extends RESTDataSource {
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
     const accessToken = this.session?.auth?.accessToken;
-    if (accessToken && request.headers) {
+    if (accessToken && accessToken !== "undefined" && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
