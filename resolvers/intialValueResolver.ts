@@ -88,6 +88,13 @@ export const resolveIntialValueRelationMetadata = (
   relationKey: string
 ): string => {
   if (relationKey === 'hasTenant' && key === 'roles') {
+    if (!uuid || uuid === "undefined")
+      return parent?.relations
+        .filter((relation: any) => relation.type === relationKey)
+        .flatMap(
+          (relation: any) => `${relation?.["zone"].split("BE-")?.[1]}:${relation[key]}`
+        );
+
     if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
     return parent?.relations.find(
       (relation: any) =>
