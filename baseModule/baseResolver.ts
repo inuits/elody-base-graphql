@@ -218,10 +218,12 @@ export const baseResolver: Resolvers<ContextValue> = {
             entityType
           );
         }
-        entities.results!!.push(...entitiesIteration.results!!);
-        entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
-        entities.count!! += entitiesIteration.count!!;
-        entities.limit!! += entitiesIteration.limit!!;
+        if (entities && entitiesIteration) {
+          entities.results!!.push(...entitiesIteration.results!!);
+          entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
+          entities.count!! += entitiesIteration.count!!;
+          entities.limit!! += entitiesIteration.limit!!;
+        }
       }
       return entities!!;
     },
