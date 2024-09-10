@@ -87,29 +87,33 @@ export const resolveIntialValueRelationMetadata = (
   uuid: string,
   relationKey: string
 ): string => {
-  if (relationKey === 'hasTenant' && key === 'roles') {
-    if (!uuid || uuid === "undefined")
-      return parent?.relations
-        .filter((relation: any) => relation.type === relationKey)
-        .flatMap((relation: any) => {
-          const zone = relation?.["zone"].split("BE-")?.[1];
-          if (zone) return `${zone}:${relation[key]}`;
-          else return relation[key];
-        });
+  try {
+    if (relationKey === 'hasTenant' && key === 'roles') {
+      if (!uuid || uuid === 'undefined')
+        return parent?.relations
+          .filter((relation: any) => relation.type === relationKey)
+          .flatMap((relation: any) => {
+            const zone = relation?.['zone'].split('BE-')?.[1];
+            if (zone) return `${zone}:${relation[key]}`;
+            else return relation[key];
+          });
 
-    if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
-    return parent?.relations.find(
-      (relation: any) =>
-        relation.type === relationKey &&
-        (relation.key === uuid || relation.key === 'tenant:super')
-    )[key];
-  } else {
-    return parent?.relations
-      .find(
+      if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
+      return parent?.relations.find(
         (relation: any) =>
-          relation.type === relationKey && relation.key === uuid
-      )
-      .metadata.find((metadata: any) => metadata.key === key).value;
+          relation.type === relationKey &&
+          (relation.key === uuid || relation.key === 'tenant:super')
+      )[key];
+    } else {
+      return parent?.relations
+        .find(
+          (relation: any) =>
+            relation.type === relationKey && relation.key === uuid
+        )
+        .metadata.find((metadata: any) => metadata.key === key).value;
+    }
+  } catch (e) {
+    return '';
   }
 };
 
