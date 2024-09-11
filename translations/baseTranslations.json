@@ -55,33 +55,39 @@
         "message": "Are you certain you wish to leave the entity editor? Any unsaved changes will be discarded.",
         "confirm": "Leave editor",
         "secondary-confirm": "Save changes and leave editor",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "title": "Discard edit"
       },
       "delete-entity": {
         "message": "Are you certain you wish to delete this entity?",
         "confirm": "Delete entity",
         "secondary-confirm": "Delete entity and mediafiles",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "title": "Delete entity"
       },
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
         "confirm": "Leave",
-        "cancel":"Cancel"
+        "cancel":"Cancel",
+        "title": "Discard create"
       },
       "discard-update": {
         "message": "Are you certain you wish to stop editing? Any unsaved changes will be discarded",
         "confirm": "Leave",
-        "cancel":"Cancel"
+        "cancel":"Cancel",
+        "title": "Discard update"
       },
       "discard-modal": {
         "message": "Are you certain you wish to stop? Any unsaved changes will be discarded",
         "confirm": "Leave",
-        "cancel":"Cancel"
+        "cancel":"Cancel",
+        "title": "Leave form"
       },
       "logout-modal": {
         "message": "Are you certain you wish to log out?",
         "confirm": "Confirm",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "title": "Logout"
       }
     },
     "dropdown":{
@@ -366,33 +372,39 @@
         "message": "Ben je zeker dat je de entiteit-editor wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaat editor",
         "secondary-confirm": "Bewaar aanpassingen en verlaat editor",
-        "cancel": "Annuleren"
+        "cancel": "Annuleren",
+        "title": "Editor verlaten"
       },
       "delete-entity": {
         "message": "Ben je zeker dat je deze entiteit wilt verwijderen?",
         "confirm": "Verwijder entiteit",
         "secondary-confirm": "Verwijder entiteit en media bestanden",
-        "cancel": "Annuleren"
+        "cancel": "Annuleren",
+        "title": "Entity verwijderen"
       },
       "discard-create": {
         "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren"
+        "cancel":"Annuleren",
+        "title": "Creatieformulier verlaten"
       },
       "discard-update": {
         "message": "Ben je zeker dat je wilt stoppen met bewerken? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren"
+        "cancel":"Annuleren",
+        "title": "Bewerkingen annuleren"
       },
       "discard-modal": {
         "message": "Ben je zeker dat je wilt stoppen? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren"
+        "cancel":"Annuleren",
+        "title": "Formulier verlaten"
       },
        "logout-modal": {
         "message": "Ben je zeker dat je wilt uitloggen?",
         "confirm": "Log uit",
-        "cancel": "Annuleren"
+        "cancel": "Annuleren",
+        "title": "Afmelden"
       }
     },
     "dropdown":{
