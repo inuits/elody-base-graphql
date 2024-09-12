@@ -75,7 +75,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getTenants(): Promise<EntitiesResults> {
     let data: any;
-    data = await this.get('tenants');
+    data = await this.get('tenants?limit=100');
     if (!data?.results)
       throw new GraphQLError("Failed to fetch data. Please try again later.");
     return data as EntitiesResults;
