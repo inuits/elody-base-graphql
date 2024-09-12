@@ -6,6 +6,7 @@
     "actions": {
       "labels": {
         "upload": "Upload",
+        "update": "Update",
         "download": "Download",
         "download-csv-ordering": "Download a csv to reorder mediafiles",
         "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
@@ -323,6 +324,7 @@
     },
     "actions": {
       "labels": {
+        "update": "Update",
         "upload": "Uploaden",
         "download": "Downloaden",
         "download-csv-ordering": "Download een csv voor mediafiles opnieuw te ordenen",
