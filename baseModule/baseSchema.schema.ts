@@ -7,6 +7,8 @@ export const baseSchema = gql`
     Home
     SingleEntity
     NotFound
+    Unauthorized
+    AccessDenied
   }
 
   enum Collection {
