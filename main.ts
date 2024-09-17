@@ -28,6 +28,7 @@ import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
 import { applyDownloadEndpoint } from './endpoints/downloadEndpoint';
 
+import { mergeRoutes } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
@@ -42,7 +43,7 @@ import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
-import {OcrService} from "./sources/ocr";
+import { OcrService } from './sources/ocr';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -264,4 +265,5 @@ export {
   resolveId,
   resolveRelations,
   simpleReturn,
+  mergeRoutes,
 };
