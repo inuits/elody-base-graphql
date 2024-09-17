@@ -14,8 +14,6 @@ export class AuthRESTDataSource extends RESTDataSource {
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
-    console.log(_path);
-    console.log(request.body);
     const accessToken = this.session?.auth?.accessToken;
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
