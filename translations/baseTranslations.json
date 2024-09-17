@@ -191,7 +191,9 @@
         "title-zip": "Title zip file",
         "basic-csv": "Basic csv file",
         "expire-date-zip": "Expire date zip file",
-        "privacy": "Privacy"
+        "privacy": "Privacy",
+        "started-at": "Started at",
+        "started-by": "Started by"
       }
     },
     "notifications":{
@@ -274,6 +276,7 @@
       "log-in":"Log in",
       "go-home":"Go back home",
       "users": "Users",
+      "jobs": "Jobs",
       "settings": "Settings",
       "upload": "Upload",
       "sets": "Sets",
@@ -522,7 +525,9 @@
         "title-zip": "Titel zip bestand",
         "basic-csv": "Basis csv bestand",
         "expire-date-zip": "Vervaldatum zip bestand",
-        "privacy": "Privacy"
+        "privacy": "Privacy",
+        "started-at": "Gestart op",
+        "started-by": "Gestart door"
       }
     },
     "notifications":{
@@ -604,6 +609,7 @@
       "log-in":"Inloggen",
       "go-home":"Ga terug naar het startscherm",
       "users": "Gebruikers",
+      "jobs": "Jobs",
       "settings": "Instellingen",
       "upload": "Upload",
       "sets": "Sets",

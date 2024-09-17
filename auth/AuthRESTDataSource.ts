@@ -14,15 +14,17 @@ export class AuthRESTDataSource extends RESTDataSource {
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
+    console.log(_path);
+    console.log(request.body);
     const accessToken = this.session?.auth?.accessToken;
-    if (accessToken && accessToken !== "undefined" && request.headers) {
+    if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
       if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
         throw new GraphQLError(`AUTH | NO TOKEN`, {
           extensions: {
             statusCode: 401,
-          }
+          },
         });
     }
 
@@ -49,7 +51,7 @@ export class AuthRESTDataSource extends RESTDataSource {
           throw new GraphQLError(`AUTH | REFRESH FAILED`, {
             extensions: {
               statusCode: 401,
-            }
+            },
           });
         }
 

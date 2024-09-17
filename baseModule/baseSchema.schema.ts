@@ -9,17 +9,20 @@ export const baseSchema = gql`
     NotFound
     Unauthorized
     AccessDenied
+    Jobs
   }
 
   enum Collection {
     entities
     mediafiles
+    jobs
   }
 
   enum Entitytyping {
     BaseEntity
     tenant
     user
+    job
   }
 
   enum MediaTypeEntities {
@@ -1211,6 +1214,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
   }
 
   type User implements Entity {
@@ -1225,6 +1229,22 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
+  }
+
+  type Job implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    teaserMetadata: teaserMetadata
+    intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
+    relationValues: JSON
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
   }
 
   type EntitiesResults {

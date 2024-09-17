@@ -87,25 +87,6 @@ export const baseFragments = gql`
     labelForTooltip
   }
 
-  fragment job on Job {
-    job_type
-    job_type
-    job_info
-    status
-    user
-    asset_id
-    mediafile_id
-    parent_job_id
-    end_time
-    start_time
-    amount_of_jobs
-    completed_jobs
-    _id
-    _key
-    _rev
-    message
-  }
-
   fragment menuModalLink on MenuTypeLinkModal {
     typeModal
     formQuery
@@ -126,5 +107,4 @@ export const baseFragments = gql`
     activeViewMode
     labelForTooltip
   }
-
 `;

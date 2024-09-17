@@ -8,10 +8,7 @@ import {
   EntityInput,
   Entitytyping,
   FilterMatcherMap,
-  Filters,
   GraphElementInput,
-  Job,
-  JobsResults,
   Maybe,
   MediaFile,
   MediaFileInput,
@@ -19,7 +16,6 @@ import {
   Metadata,
   MetadataFieldInput,
   MetadataValuesInput,
-  PaginationInfo,
   SearchFilter,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
@@ -77,7 +73,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data: any;
     data = await this.get('tenants?limit=100');
     if (!data?.results)
-      throw new GraphQLError("Failed to fetch data. Please try again later.");
+      throw new GraphQLError('Failed to fetch data. Please try again later.');
     return data as EntitiesResults;
   }
 
@@ -359,26 +355,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return await this.delete(`${collection}/${id}/relations`, {
       body: relations,
     });
-  }
-
-  async getJobs(
-    paginationInfo: PaginationInfo,
-    filters: Filters,
-    failed: Boolean
-  ): Promise<JobsResults> {
-    let url: string = `jobs?limit=${paginationInfo.limit}&skip=${
-      paginationInfo.skip
-    }${failed ? '&status=failed' : ''}`;
-    if (filters.type) {
-      url = `${url}&type=dams.${filters.type}`;
-    }
-    const data = await this.get(url);
-    return data;
-  }
-
-  async getJob(id: String, failed: Boolean): Promise<Job> {
-    const data = await this.get(`jobs/${id}?${failed ? '?status=failed' : ''}`);
-    return data;
   }
 
   async deleteData(
