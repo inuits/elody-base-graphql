@@ -49,7 +49,8 @@
       },
       "download-mediafiles":"Download mediafiles",
       "reorder-entities-with-csv": "Reorder entities with csv",
-      "export-to-csv":"Export to CSV"
+      "export-to-csv":"Export to CSV",
+      "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}"
     },
     "confirm": {
       "discard-edit": {
@@ -383,7 +384,8 @@
         }
       },
       "download-mediafiles":"Download media bestanden",
-      "export-to-csv":"Exporteer naar CSV"
+      "export-to-csv":"Exporteer naar CSV",
+      "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is"
     },
     "confirm": {
       "discard-edit": {
