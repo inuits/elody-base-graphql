@@ -8,6 +8,10 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
+    "saved-search-module": "0.0.x",
+    "mediafile-module": "0.0.x",
+    "import-module": "0.0.x",
+    "advanced-filter-module": "0.0.x",
     "@apollo/datasource-rest": "^6.2.2",
     "@apollo/server": "^4.2.1",
     "@apollo/utils.keyvaluecache": "^3.1.0",
