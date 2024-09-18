@@ -28,7 +28,7 @@ import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
 import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
 import { applyDownloadEndpoint } from './endpoints/downloadEndpoint';
 
-import { mergeRoutes } from './routes/routesHelper';
+import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
@@ -265,5 +265,5 @@ export {
   resolveId,
   resolveRelations,
   simpleReturn,
-  mergeRoutes,
+  getRoutesObject,
 };

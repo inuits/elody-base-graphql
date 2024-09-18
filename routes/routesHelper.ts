@@ -1,5 +1,5 @@
 import { baseRoutes } from './baseRoutes';
 
-export const mergeRoutes = (customRoutesObject: object[]) => {
+export const getRoutesObject = (customRoutesObject: object[]) => {
   return [...baseRoutes, ...customRoutesObject];
 };
