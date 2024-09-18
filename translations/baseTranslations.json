@@ -9,6 +9,8 @@
         "update": "Update",
         "download": "Download",
         "download-csv-ordering": "Download a csv to reorder mediafiles",
+        "download-csv-assets": "Download a csv containing the assets",
+        "download-csv-mediafiles": "Download a csv containing the mediafiles",
         "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
         "create": "Create",
         "success": "{0} Items imported",
@@ -43,6 +45,7 @@
       "delete":"delete",
       "confirm-selection":"confirm selection",
       "csv-export":{
+        "label": "Export a csv file of assets or mediafiles",
         "error":{
           "title":"Export failed"
         }
@@ -345,6 +348,8 @@
         "upload": "Uploaden",
         "download": "Downloaden",
         "download-csv-ordering": "Download een csv voor mediafiles opnieuw te ordenen",
+        "download-csv-assets": "Download een csv met de assets",
+        "download-csv-mediafiles": "Download een csv met de mediafiles",
         "upload-csv-ordering": "Upload de aangepaste csv voor mediafiles opnieuw te ordenen",
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
@@ -379,6 +384,7 @@
       "delete":"verwijderen",
       "confirm-selection":"selectie bevestigen",
       "csv-export":{
+        "label": "Export a csv file of assets or mediafiles",
         "error":{
           "title":"Export mislukt"
         }
