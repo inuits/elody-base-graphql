@@ -1,7 +1,9 @@
 import {
   AdvancedFilterInput,
   BaseRelationValuesInput,
+  BulkOperationCsvExportKeys,
   Collection,
+  DamsIcons,
   DropdownOption,
   EntitiesResults,
   Entity,
@@ -20,11 +22,11 @@ import {
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
-import { baseTypeCollectionMapping as collection } from './typeCollectionMapping';
-import { Config } from '../types';
-import { environment as env } from '../main';
-import { GraphQLError } from 'graphql/index';
-import { setId, setType } from '../parsers/entity';
+import {baseTypeCollectionMapping as collection} from './typeCollectionMapping';
+import {Config} from '../types';
+import {environment as env} from '../main';
+import {GraphQLError} from 'graphql/index';
+import {setId, setType} from '../parsers/entity';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -563,6 +565,36 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
 
     return 'no-call-is-triggerd';
+  }
+
+  async GetCsvExportKeysPerEntityType(
+      entityType: string
+  ): Promise<BulkOperationCsvExportKeys> {
+    const options = {
+      headers: {
+        'Accept': 'text/csv',
+      },
+    };
+    const csvData = await this.get(
+        `${this.getCollectionValueForEntityType(
+            entityType
+        )}?type=${entityType}&exclude_non_editable_fields=1`,
+        options
+    );
+    const lines = csvData.split('\n');
+    const headers = lines[0].split(',');
+
+    const dropdownOptions: BulkOperationCsvExportKeys = {
+      options: []
+    }
+    headers.forEach((item: string) => {
+      dropdownOptions.options.push({
+        icon: DamsIcons.NoIcon,
+        label: item,
+        value: item,
+      })
+    })
+    return dropdownOptions;
   }
 
   async GetFilterOptions(

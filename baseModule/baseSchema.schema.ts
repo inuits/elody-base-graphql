@@ -454,6 +454,7 @@ export const baseSchema = gql`
     Export
     Eye
     FileAlt
+    FileExport
     Filter
     Focus
     History
@@ -569,7 +570,7 @@ export const baseSchema = gql`
   }
 
   type BulkOperationCsvExportKeys {
-    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    options: [DropdownOption!]!
   }
 
   input MetadataFieldInput {
@@ -1275,7 +1276,7 @@ export const baseSchema = gql`
     PaginationLimitOptions: PaginationLimitOptions!
     BulkOperations(entityType: String!): Entity!
     CustomBulkOperations: Entity!
-    BulkOperationCsvExportKeys: BulkOperationCsvExportKeys!
+    BulkOperationCsvExportKeys(entityType: String!): BulkOperationCsvExportKeys!
     BulkOperationsRelationForm: WindowElement!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

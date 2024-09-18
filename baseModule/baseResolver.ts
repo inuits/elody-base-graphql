@@ -265,8 +265,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         bulkOperationOptions: {},
       } as Entity;
     },
-    BulkOperationCsvExportKeys: async (_source, {}, { dataSources }) => {
-      return { options: [] };
+    BulkOperationCsvExportKeys: async (_source, { entityType }, { dataSources }) => {
+      const result = await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(entityType);
+      return result;
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
       const stats = await dataSources.CollectionAPI.GetStats(id, graph);
@@ -1292,11 +1293,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   PaginationLimitOptions: {
-    options: async (parent, { input }, { dataSources }) => {
-      return input;
-    },
-  },
-  BulkOperationCsvExportKeys: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
     },
