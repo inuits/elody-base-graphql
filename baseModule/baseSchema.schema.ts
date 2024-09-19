@@ -187,6 +187,14 @@ export const baseSchema = gql`
     emit
   }
 
+  enum ElodyViewers {
+    iiif
+    video
+    audio
+    pdf
+    text
+  }
+
   enum ContextMenuDirection {
     left
     right
