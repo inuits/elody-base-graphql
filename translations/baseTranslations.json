@@ -287,6 +287,7 @@
       "tenant": "Tenant",
       "create-set": "Set",
       "make-download": "Make a download of files",
+      "edit-csv": "Update metadata with CSV",
       "delete-entity-window": "Delete entity window"
     },
     "upload-fields":{
@@ -624,6 +625,7 @@
       "tenant": "Tenant",
       "create-set": "Set",
       "make-download": "Maak een download van bestanden",
+      "edit-csv": "Update metadata met CSV",
       "delete-entity-window": "Verwijder entiteit window"
     },
     "upload-fields": {

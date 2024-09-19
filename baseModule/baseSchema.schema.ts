@@ -161,6 +161,7 @@ export const baseSchema = gql`
     ocr
     endpoint
     uploadCsvForReordening
+    updateMetadata
     submitWithExtraMetadata
   }
 
@@ -999,6 +1000,7 @@ export const baseSchema = gql`
     batch
     single
     reorderEntities
+    editMetadataWithCsv
   }
 
   type PanelInfo {
@@ -1332,6 +1334,9 @@ export const baseSchema = gql`
       mediafileIds: [String!]!
       transcodeType: TranscodeType!
       masterEntityId: String
+    ): String
+    updateMetadataWithCsv(
+      csv: String!
     ): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON

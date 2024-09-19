@@ -266,8 +266,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       } as Entity;
     },
     BulkOperationCsvExportKeys: async (_source, { entityType }, { dataSources }) => {
-      const result = await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(entityType);
-      return result;
+      return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(entityType);
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
       const stats = await dataSources.CollectionAPI.GetStats(id, graph);
@@ -531,6 +530,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           `Unable to transcode mediafiles to ${transcodeType}`
         );
       }
+    },
+    updateMetadataWithCsv: async (_source, { csv }, { dataSources }) => {
+      return await dataSources.CollectionAPI.updateMetadataWithCsv(csv);
     },
     setPrimaryMediafile: async (
       _source,

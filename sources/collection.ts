@@ -567,6 +567,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return 'no-call-is-triggerd';
   }
 
+  async updateMetadataWithCsv(
+    csv: any
+  ): Promise<any> {
+    await this.put( `entities`, {
+      headers: {
+        'Content-Type': 'text/csv',
+      },
+      body: csv,
+    });
+  }
+
   async GetCsvExportKeysPerEntityType(
       entityType: string
   ): Promise<BulkOperationCsvExportKeys> {
