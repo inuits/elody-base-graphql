@@ -90,6 +90,7 @@ export const baseSchema = gql`
     baseCsvUploadField
     baseFileSystemImportField
     baseEntityPickerField
+    csvEntityTypeTypeField
   }
 
   enum FileType {
@@ -1337,6 +1338,7 @@ export const baseSchema = gql`
       masterEntityId: String
     ): String
     updateMetadataWithCsv(
+      entityType: String!
       csv: String!
     ): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON

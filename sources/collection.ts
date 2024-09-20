@@ -560,9 +560,10 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async updateMetadataWithCsv(
+    entityType: string,
     csv: any
   ): Promise<any> {
-    await this.put( `entities`, {
+    await this.put(`${getCollectionValueForEntityType(entityType)}`, {
       headers: {
         'Content-Type': 'text/csv',
       },

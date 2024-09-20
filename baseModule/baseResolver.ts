@@ -531,8 +531,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       }
     },
-    updateMetadataWithCsv: async (_source, { csv }, { dataSources }) => {
-      return await dataSources.CollectionAPI.updateMetadataWithCsv(csv);
+    updateMetadataWithCsv: async (_source, { entityType, csv }, { dataSources }) => {
+      return await dataSources.CollectionAPI.updateMetadataWithCsv(entityType, csv);
     },
     setPrimaryMediafile: async (
       _source,
