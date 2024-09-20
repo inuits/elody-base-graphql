@@ -27,6 +27,7 @@ import {Config} from '../types';
 import {environment as env} from '../main';
 import {GraphQLError} from 'graphql/index';
 import {setId, setType} from '../parsers/entity';
+import { getCollectionValueForEntityType } from '../helpers/helpers';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -79,20 +80,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data as EntitiesResults;
   }
 
-  getCollectionValueForEntityType(entityType: string): string {
-    if (!collection.hasOwnProperty(entityType)) {
-      throw new Error(
-        `Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`
-      );
-    }
-    return collection[entityType];
-  }
-
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
     try {
       data = await this.get(
-        `${this.getCollectionValueForEntityType(entityType)}?type=${entityType}`
+        `${getCollectionValueForEntityType(entityType)}?type=${entityType}`
       );
       if (data.results) data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -111,7 +103,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     ];
     try {
       data = await this.post(
-        `${this.getCollectionValueForEntityType(entityType)}/filter?soft=1`,
+        `${getCollectionValueForEntityType(entityType)}/filter?soft=1`,
         { body }
       );
     } catch (e) {
@@ -125,7 +117,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.post(
-        `${this.getCollectionValueForEntityType(entityType)}?soft=1`,
+        `${getCollectionValueForEntityType(entityType)}?soft=1`,
         {
           body: { type: entityType },
         }
@@ -145,7 +137,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.patch(
-        `${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
+        `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
         {
           body: {},
         }
@@ -165,7 +157,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       data = await this.delete(
-        `${this.getCollectionValueForEntityType(entityType)}/${id}?soft=1`
+        `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
       );
     } catch (e) {
       return '401';
@@ -185,7 +177,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       data = await this.get<any>(
         `${
-          _collection ? _collection : this.getCollectionValueForEntityType(type)
+          _collection ? _collection : getCollectionValueForEntityType(type)
         }/${id}`
       );
     } catch {
@@ -587,7 +579,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       },
     };
     const csvData = await this.get(
-        `${this.getCollectionValueForEntityType(
+        `${getCollectionValueForEntityType(
             entityType
         )}?type=${entityType}&exclude_non_editable_fields=1`,
         options
@@ -614,7 +606,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     entityType: string
   ): Promise<DropdownOption[]> {
     const data = await this.post(
-      `${this.getCollectionValueForEntityType(
+      `${getCollectionValueForEntityType(
         entityType
       )}/filter?limit=${limit}&skip=0`,
       {

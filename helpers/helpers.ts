@@ -8,6 +8,17 @@ import {
 import { DataSources } from '../types';
 import { environment } from '../main';
 import {parseRelationTypesForEntityType} from "../parsers/entity";
+import {baseTypeCollectionMapping as collection} from "../sources/typeCollectionMapping";
+
+
+export const getCollectionValueForEntityType = (entityType: string): string => {
+  if (!collection.hasOwnProperty(entityType)) {
+    throw new Error(
+        `Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`
+    );
+  }
+  return collection[entityType];
+}
 
 export const customSort = (
   customSortOrder: string[],
