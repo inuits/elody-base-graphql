@@ -595,7 +595,8 @@ export class CollectionAPI extends AuthRESTDataSource {
         icon: DamsIcons.NoIcon,
         label: item,
         value: item,
-      })
+        required: item === "identifiers",
+      });
     })
     return dropdownOptions;
   }

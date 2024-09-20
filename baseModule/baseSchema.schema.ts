@@ -544,6 +544,7 @@ export const baseSchema = gql`
     label: String!
     value: StringOrInt!
     active: Boolean
+    required: Boolean
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
     primary: Boolean
