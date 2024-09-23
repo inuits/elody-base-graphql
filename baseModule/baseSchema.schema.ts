@@ -530,12 +530,12 @@ export const baseSchema = gql`
 
   type ActionContext {
     entitiesSelectionType: ActionContextEntitiesSelectionType
-    activeViewMode: ActionContextViewModeTypes
+    activeViewMode: [ActionContextViewModeTypes]
     labelForTooltip: String
   }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
-    activeViewMode: ActionContextViewModeTypes
+    activeViewMode: [ActionContextViewModeTypes]
     labelForTooltip: String
   }
 
