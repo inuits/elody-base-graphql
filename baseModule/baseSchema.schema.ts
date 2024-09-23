@@ -574,6 +574,7 @@ export const baseSchema = gql`
     exportCsv
     edit
     startOcr
+    addRelation
   }
 
   type BulkOperations {

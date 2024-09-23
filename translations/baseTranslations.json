@@ -44,6 +44,7 @@
       "cancel":"cancel",
       "delete":"delete",
       "confirm-selection":"confirm selection",
+      "add-relation": "Voeg een relatie toe",
       "csv-export":{
         "label": "Export a csv file of assets or mediafiles",
         "error":{
@@ -316,7 +317,9 @@
         "readmode-noneselected": "To use this action, you have to be in readmode and you may not select items.",
         "readmode-someselected": "To use this action, you have to be in readmode and you have to select at least one item.",
         "editmode-noneselected": "To use this action, you have to be in editmode and you may not select items.",
-        "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item."
+        "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item.",
+        "noneselected": "To use this action, you may not select items.",
+        "someselected": "To use this action, you have to select at least one item."
       },
       "buttons": {
         "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
@@ -384,6 +387,7 @@
       "cancel":"annuleren",
       "delete":"verwijderen",
       "confirm-selection":"selectie bevestigen",
+      "add-relation": "Add a relation",
       "csv-export":{
         "label": "Export a csv file of assets or mediafiles",
         "error":{
