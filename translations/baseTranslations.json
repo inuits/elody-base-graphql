@@ -44,7 +44,7 @@
       "cancel":"cancel",
       "delete":"delete",
       "confirm-selection":"confirm selection",
-      "add-relation": "Voeg een relatie toe",
+      "add-relation": "Voeg een bestaand item toe",
       "csv-export":{
         "label": "Export a csv file of assets or mediafiles",
         "error":{
@@ -387,7 +387,7 @@
       "cancel":"annuleren",
       "delete":"verwijderen",
       "confirm-selection":"selectie bevestigen",
-      "add-relation": "Add a relation",
+      "add-relation": "Add an existing item",
       "csv-export":{
         "label": "Export a csv file of assets or mediafiles",
         "error":{
