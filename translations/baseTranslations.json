@@ -12,6 +12,7 @@
         "download-csv-assets": "Download a csv containing the assets",
         "download-csv-mediafiles": "Download a csv containing the mediafiles",
         "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
+        "upload-csv-metadata": "Upload the modified csv to adjust metadata",
         "create": "Create",
         "success": "{0} Items imported",
         "reset-upload": "Import more files",
@@ -218,6 +219,10 @@
         "csvReordering": {
           "title": "Reordering successful",
           "description": "The mediafiles are successfully reordered"
+        },
+        "updataMetdataCsv": {
+          "title": "Update through CSV successful",
+          "description": "The entities/mediafiles are successfully updated"
         }
       },
       "errors": {
@@ -355,6 +360,7 @@
         "download-csv-assets": "Download een csv met de assets",
         "download-csv-mediafiles": "Download een csv met de mediafiles",
         "upload-csv-ordering": "Upload de aangepaste csv voor mediafiles opnieuw te ordenen",
+        "upload-csv-metadata": "Upload de aangepaste csv voor metadata aan te passen",
         "create": "Creëer",
         "success": "{0} Items geïmporteerd",
         "reset-upload": "Importeer meer bestanden",
@@ -560,6 +566,10 @@
         "csvReordering": {
           "title": "Opnieuw orderen succesvol",
           "description": "De mediafiles zijn succesvol geordend"
+        },
+        "updataMetdataCsv": {
+          "title": "Update met CSV succesvol",
+          "description": "De entities/mediafiles zijn succesvol aangepast"
         }
       },
       "errors": {
