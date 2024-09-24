@@ -1295,6 +1295,7 @@ export const baseSchema = gql`
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
+    PermissionMapping(entities: [String]!): JSON!
     PermissionMappingEntityDetail(
       id: String!
       entityType: String!

@@ -298,6 +298,38 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return { labels: stats.labels, datasets: stats.datasets };
     },
+    PermissionMapping: async (
+      _source,
+      { entities = [] },
+      { dataSources, customPermissions = [] }
+    ) => {
+      let permissionsMappings: { [key: string]: { [permission: string]: boolean } } = {};
+      let promises: Promise<void>[] = [];
+
+      for (const entity of [...entities, ...customPermissions] as string[]) {
+        const permissions: { [permission: string]: boolean } = {
+          [Permission.Canread]: false,
+          [Permission.Cancreate]: false,
+        };
+        permissionsMappings[entity] = permissions;
+
+        const canReadPermission: any = dataSources.CollectionAPI.postEntitiesFilterSoftCall(entity)
+        .then((result) => {
+          permissionsMappings[entity][Permission.Canread] = result == '200'
+        });
+
+        const canCreatePermission: any = dataSources.CollectionAPI.postEntitySoftCall(entity)
+        .then((result) => {
+          permissionsMappings[entity][Permission.Cancreate] = result == '200';
+        });
+
+        promises.push(canReadPermission);
+        promises.push(canCreatePermission);
+      }
+
+      await Promise.all(promises);
+      return permissionsMappings;
+    },
     PermissionMappingPerEntityType: async (
       _source,
       { type },

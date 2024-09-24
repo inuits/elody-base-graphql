@@ -89,7 +89,8 @@ const start = (
   customInputFields: { [key: string]: InputField } | undefined = undefined,
   customTypeCollectionMapping:
     | { [key: string]: Collection }
-    | undefined = undefined
+    | undefined = undefined,
+  customPermissions: string[] = []
 ) => {
   environment = appConfig;
 
@@ -166,7 +167,7 @@ const start = (
               OcrService: new OcrService({ session, cache }),
             });
 
-          return { dataSources };
+          return { dataSources, customPermissions };
         },
       })
     );

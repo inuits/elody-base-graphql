@@ -19,6 +19,7 @@ export interface DataSources {
 
 export interface ContextValue {
   dataSources: DataSources;
+  customPermissions: string[];
 }
 // TODO: Remove if unused
 export type filter = {
