@@ -830,6 +830,7 @@ export const baseSchema = gql`
     is_ocr: Boolean
     operation: String
     lang: String
+    roles: [String]
   }
 
   input MetadataValuesInput {
