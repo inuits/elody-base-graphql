@@ -47,7 +47,9 @@
       "confirm-selection":"confirm selection",
       "add-relation": "Add an existing {0}",
       "csv-export":{
-        "label": "Export a csv file of assets or mediafiles",
+        "assets": "Export a csv file of assets",
+        "mediafiles": "Export a csv file of mediafiles",
+        "mediafiles-of-asset": "Export a csv file of the mediafiles of these assets",
         "error":{
           "title":"Export failed"
         }
@@ -223,6 +225,10 @@
         "updataMetdataCsv": {
           "title": "Update through CSV successful",
           "description": "The entities/mediafiles are successfully updated"
+        },
+        "downloadEntityCreated": {
+          "title": "Download entity created",
+          "description": "The download entity that includes the download link is succesfully created"
         }
       },
       "errors": {
@@ -395,7 +401,9 @@
       "confirm-selection":"selectie bevestigen",
       "add-relation": "Voeg een bestaande {0} toe",
       "csv-export":{
-        "label": "Export a csv file of assets or mediafiles",
+        "assets": "Exporteer een csv bestand van assets",
+        "mediafiles": "Exporteer een csv bestand van mediafiles",
+        "mediafiles-of-asset": "Exporteer een csv bestand van de mediafiles van deze asset(s)",
         "error":{
           "title":"Export mislukt"
         }
@@ -570,6 +578,10 @@
         "updataMetdataCsv": {
           "title": "Update met CSV succesvol",
           "description": "De entities/mediafiles zijn succesvol aangepast"
+        },
+        "downloadEntityCreated": {
+          "title": "Download entiteit aangemaakt",
+          "description": "De download entiteit die de download link bevat is succesvol aangemaakt"
         }
       },
       "errors": {
