@@ -306,7 +306,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       let permissionsMappings: { [key: string]: { [permission: string]: boolean } } = {};
       let promises: Promise<void>[] = [];
 
-      for (const entity of [...entities, ...customPermissions] as string[]) {
+      for (const entity of entities as Entitytyping[]) {
         const permissions: { [permission: string]: boolean } = {
           [Permission.Canread]: false,
           [Permission.Cancreate]: false,
