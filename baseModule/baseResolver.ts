@@ -53,6 +53,7 @@ import {
   MediaFile,
   MediaFileElement,
   MediaFileElementTypes,
+  MediaFileEntity,
   MenuIcons,
   MenuTypeLink,
   Metadata,
@@ -436,6 +437,22 @@ export const baseResolver: Resolvers<ContextValue> = {
         };
       } catch (e) {
         throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
+      }
+    },
+    FetchMediafilesOfAssets: async (
+      _source,
+      { assetIds },
+      { dataSources }
+    ) => {
+      try {
+        const mediafiles: MediaFileEntity[] = [];
+        for (const index in assetIds) {
+          const response = await dataSources.CollectionAPI.getMediafiles(assetIds[index]);
+          mediafiles.push(...response.results);
+        }
+        return mediafiles;
+      } catch (e) {
+        return [];
       }
     },
   },

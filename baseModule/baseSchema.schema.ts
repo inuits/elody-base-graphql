@@ -572,6 +572,7 @@ export const baseSchema = gql`
     downloadMediafiles
     reorderEntities
     exportCsv
+    exportCsvOfMediafilesFromAsset
     edit
     startOcr
     addRelation
@@ -1313,6 +1314,7 @@ export const baseSchema = gql`
       operation: [String!]!
       language: String!
     ): JSON
+    FetchMediafilesOfAssets(assetIds: [String!]!): [MediaFileEntity]!
   }
 
   type Mutation {

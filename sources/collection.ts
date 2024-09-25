@@ -12,7 +12,6 @@ import {
   FilterMatcherMap,
   GraphElementInput,
   Maybe,
-  MediaFile,
   MediaFileInput,
   MediaFileMetadataInput,
   Metadata,
@@ -223,7 +222,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async getMediafiles(id: string): Promise<MediaFile[]> {
+  async getMediafiles(id: string): Promise<any> {
     if (id !== 'noid') {
       return await this.get(
         `${Collection.Entities}/${id}/mediafiles?non_public=1`
