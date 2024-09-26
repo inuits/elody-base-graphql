@@ -1296,7 +1296,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           value: 'last_editor',
         },
       ];
-      return [...input, ...baseSortOptions];
+      return [...baseSortOptions, ...input];
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
