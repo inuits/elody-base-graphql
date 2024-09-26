@@ -1314,7 +1314,7 @@ export const baseSchema = gql`
       operation: [String!]!
       language: String!
     ): JSON
-    FetchMediafilesOfAssets(assetIds: [String!]!): [MediaFileEntity]!
+    FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
   }
 
   type Mutation {

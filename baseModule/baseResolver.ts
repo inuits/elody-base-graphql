@@ -439,15 +439,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
       }
     },
-    FetchMediafilesOfAssets: async (
+    FetchMediafilesOfEntity: async (
       _source,
-      { assetIds },
+      { entityIds },
       { dataSources }
     ) => {
       try {
         const mediafiles: MediaFileEntity[] = [];
-        for (const index in assetIds) {
-          const response = await dataSources.CollectionAPI.getMediafiles(assetIds[index]);
+        for (const index in entityIds) {
+          const response = await dataSources.CollectionAPI.getMediafiles(entityIds[index]);
           mediafiles.push(...response.results);
         }
         return mediafiles;
