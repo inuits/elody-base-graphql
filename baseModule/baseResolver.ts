@@ -444,16 +444,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       { entityIds },
       { dataSources }
     ) => {
-      try {
-        const mediafiles: MediaFileEntity[] = [];
+      const mediafiles: MediaFileEntity[] = [];
         for (const index in entityIds) {
           const response = await dataSources.CollectionAPI.getMediafiles(entityIds[index]);
           mediafiles.push(...response.results);
         }
-        return mediafiles;
-      } catch (e) {
-        return [];
-      }
+      return mediafiles;
     },
   },
   Mutation: {

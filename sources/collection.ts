@@ -223,12 +223,13 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getMediafiles(id: string): Promise<any> {
-    if (id !== 'noid') {
+    try {
       return await this.get(
-        `${Collection.Entities}/${id}/mediafiles?non_public=1`
+          `${Collection.Entities}/${id}/mediafiles?non_public=1`
       );
-    } else {
-      return [];
+    }
+    catch (e) {
+      return { results: [] };
     }
   }
 
