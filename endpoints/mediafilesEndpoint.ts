@@ -16,7 +16,7 @@ const fetchWithTokenRefresh = async (
 ) => {
   try {
     const token = req.session?.auth?.accessToken;
-    if (token && token !== "undefined") {
+    if (token && token !== 'undefined') {
       options.headers = { Authorization: `Bearer ${token}` };
     }
     let response: any;
@@ -195,6 +195,20 @@ const applyMediaFileEndpoint = (
       const reader = blob.stream().getReader();
 
       pump(reader, res);
+    } catch (error: any) {
+      const errorStatus = error.extensions?.statusCode || 500;
+      res.status(errorStatus).end(JSON.stringify(error));
+    }
+  });
+
+  app.use('/api/mediafiles/*/download', async (req, res) => {
+    try {
+      const datasource = new AuthRESTDataSource({ session: req.session });
+      const url: string = `${
+        env?.api.collectionApiUrl
+      }${req.originalUrl.replace('/api/', '')}`;
+      const response = await datasource.get(url);
+      res.status(200).end(response);
     } catch (error: any) {
       const errorStatus = error.extensions?.statusCode || 500;
       res.status(errorStatus).end(JSON.stringify(error));
