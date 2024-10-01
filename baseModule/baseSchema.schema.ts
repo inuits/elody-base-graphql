@@ -23,6 +23,7 @@ export const baseSchema = gql`
     tenant
     user
     job
+    shareLink
   }
 
   enum MediaTypeEntities {
@@ -1141,6 +1142,7 @@ export const baseSchema = gql`
 
   enum ContextMenuElodyActionEnum {
     Delete
+    Share
   }
 
   type ContextMenuGeneralAction {
@@ -1263,6 +1265,21 @@ export const baseSchema = gql`
     deleteQueryOptions: DeleteQueryOptions
   }
 
+  type ShareLink implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    teaserMetadata: teaserMetadata
+    intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
+    relationValues: JSON
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    bulkOperationOptions: BulkOperationOptions
+    deleteQueryOptions: DeleteQueryOptions
+  }
+
   type EntitiesResults {
     results: [Entity]
     sortKeys(sortItems: [String]): [String]
@@ -1315,6 +1332,7 @@ export const baseSchema = gql`
       language: String!
     ): JSON
     FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
+    GetEntityDetailContextMenuActions: ContextMenuActions!
   }
 
   type Mutation {
@@ -1342,10 +1360,7 @@ export const baseSchema = gql`
       transcodeType: TranscodeType!
       masterEntityId: String
     ): String
-    updateMetadataWithCsv(
-      entityType: String!
-      csv: String!
-    ): String
+    updateMetadataWithCsv(entityType: String!, csv: String!): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON
   }

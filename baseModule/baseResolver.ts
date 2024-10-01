@@ -266,8 +266,14 @@ export const baseResolver: Resolvers<ContextValue> = {
         bulkOperationOptions: {},
       } as Entity;
     },
-    BulkOperationCsvExportKeys: async (_source, { entityType }, { dataSources }) => {
-      return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(entityType);
+    BulkOperationCsvExportKeys: async (
+      _source,
+      { entityType },
+      { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(
+        entityType
+      );
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
       const stats = await dataSources.CollectionAPI.GetStats(id, graph);
@@ -304,7 +310,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       { entities = [] },
       { dataSources, customPermissions = [] }
     ) => {
-      let permissionsMappings: { [key: string]: { [permission: string]: boolean } } = {};
+      let permissionsMappings: {
+        [key: string]: { [permission: string]: boolean };
+      } = {};
       let promises: Promise<void>[] = [];
 
       for (const entity of entities as Entitytyping[]) {
@@ -314,15 +322,20 @@ export const baseResolver: Resolvers<ContextValue> = {
         };
         permissionsMappings[entity] = permissions;
 
-        const canReadPermission: any = dataSources.CollectionAPI.postEntitiesFilterSoftCall(entity)
-        .then((result) => {
-          permissionsMappings[entity][Permission.Canread] = result == '200'
-        });
+        const canReadPermission: any =
+          dataSources.CollectionAPI.postEntitiesFilterSoftCall(entity).then(
+            (result) => {
+              permissionsMappings[entity][Permission.Canread] = result == '200';
+            }
+          );
 
-        const canCreatePermission: any = dataSources.CollectionAPI.postEntitySoftCall(entity)
-        .then((result) => {
-          permissionsMappings[entity][Permission.Cancreate] = result == '200';
-        });
+        const canCreatePermission: any =
+          dataSources.CollectionAPI.postEntitySoftCall(entity).then(
+            (result) => {
+              permissionsMappings[entity][Permission.Cancreate] =
+                result == '200';
+            }
+          );
 
         promises.push(canReadPermission);
         promises.push(canCreatePermission);
@@ -412,7 +425,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           download_entity: createdEntity.id,
         });
       } catch (e) {
-        throw new GraphQLError(`Error while making a downloadable zip for mediafiles: ${e}`);
+        throw new GraphQLError(
+          `Error while making a downloadable zip for mediafiles: ${e}`
+        );
       }
       return createdEntity as Entity;
     },
@@ -445,11 +460,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       const mediafiles: MediaFileEntity[] = [];
-        for (const index in entityIds) {
-          const response = await dataSources.CollectionAPI.getMediafiles(entityIds[index]);
-          mediafiles.push(...response.results);
-        }
+      for (const index in entityIds) {
+        const response = await dataSources.CollectionAPI.getMediafiles(
+          entityIds[index]
+        );
+        mediafiles.push(...response.results);
+      }
       return mediafiles;
+    },
+    GetEntityDetailContextMenuActions: async (
+      _source,
+      _args,
+      { dataSources }
+    ) => {
+      return {} as ContextMenuActions;
     },
   },
   Mutation: {
@@ -576,8 +600,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         );
       }
     },
-    updateMetadataWithCsv: async (_source, { entityType, csv }, { dataSources }) => {
-      return await dataSources.CollectionAPI.updateMetadataWithCsv(entityType, csv);
+    updateMetadataWithCsv: async (
+      _source,
+      { entityType, csv },
+      { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.updateMetadataWithCsv(
+        entityType,
+        csv
+      );
     },
     setPrimaryMediafile: async (
       _source,
@@ -1400,7 +1431,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (!entityType) return '';
       return parseRelationTypesForEntityType(entityType[0]).fromRelationType;
     },
-    advancedFilterInputForRetrievingOptions: async (parent, _args, { dataSources }) => {
+    advancedFilterInputForRetrievingOptions: async (
+      parent,
+      _args,
+      { dataSources }
+    ) => {
       return parent.advancedFilterInputForRetrievingOptions || [];
     },
     advancedFilterInputForSearchingOptions: async (

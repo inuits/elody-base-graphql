@@ -57,7 +57,8 @@
       "download-mediafiles":"Download mediafiles",
       "reorder-entities-with-csv": "Reorder entities with csv",
       "export-to-csv":"Export to CSV",
-      "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}"
+      "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
+      "create-share-link": "Create share link"
     },
     "confirm": {
       "discard-edit": {
@@ -201,7 +202,8 @@
         "expire-date-zip": "Expire date zip file",
         "privacy": "Privacy",
         "started-at": "Started at",
-        "started-by": "Started by"
+        "started-by": "Started by",
+        "ttl": "Time to live"
       }
     },
     "notifications":{
@@ -300,7 +302,8 @@
       "create-set": "Set",
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
-      "delete-entity-window": "Delete entity window"
+      "delete-entity-window": "Delete entity window",
+      "create-share-link": "Create share link"
     },
     "upload-fields":{
       "labels": {
@@ -349,7 +352,8 @@
 
       },
       "contextMenuElodyAction": {
-        "delete": "Delete the relational link between these two entities"
+        "delete": "Delete the relational link between these two entities",
+        "share": "Share link"
       }
     }
   },
@@ -410,7 +414,8 @@
       },
       "download-mediafiles":"Download media bestanden",
       "export-to-csv":"Exporteer naar CSV",
-      "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is"
+      "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
+      "create-share-link": "Maak share link aan"
     },
     "confirm": {
       "discard-edit": {
@@ -554,7 +559,8 @@
         "expire-date-zip": "Vervaldatum zip bestand",
         "privacy": "Privacy",
         "started-at": "Gestart op",
-        "started-by": "Gestart door"
+        "started-by": "Gestart door",
+        "ttl": "Vervaltijd"
       }
     },
     "notifications":{
@@ -652,7 +658,8 @@
       "create-set": "Set",
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
-      "delete-entity-window": "Verwijder entiteit window"
+      "delete-entity-window": "Verwijder entiteit window",
+      "create-share-link": "Maak share link"
     },
     "upload-fields": {
       "labels": {
@@ -698,7 +705,8 @@
         "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
-        "delete": "Verwijder de relatie tussen deze twee entiteiten"
+        "delete": "Verwijder de relatie tussen deze twee entiteiten",
+        "share": "Deel link"
       }
     }
   }
