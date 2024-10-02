@@ -408,6 +408,7 @@ export const baseSchema = gql`
     Police
     Process
     Settings
+    Swatchbook
     Update
     Upload
   }
@@ -494,6 +495,7 @@ export const baseSchema = gql`
     SortDown
     SortUp
     SquareFull
+    Swatchbook
     Text
     Trash
     Update
