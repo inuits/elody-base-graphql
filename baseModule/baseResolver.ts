@@ -1488,6 +1488,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     fieldKeyToSave: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
+    isMetadataField: async (parent, { input }, { dataSources }) => {
+      return parent.isMetadataField || false;
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

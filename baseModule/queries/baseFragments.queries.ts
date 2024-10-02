@@ -62,6 +62,7 @@ export const baseFragments = gql`
     maxFileSize
     maxAmountOfFiles
     uploadMultiple
+    isMetadataField
   }
 
   fragment metadataRelation on MetadataRelation {

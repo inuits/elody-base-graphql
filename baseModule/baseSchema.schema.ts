@@ -323,6 +323,7 @@ export const baseSchema = gql`
     autoSelectable: Boolean
     disabled: Boolean
     fieldKeyToSave(input: String): String
+    isMetadataField(input: Boolean): Boolean
   }
 
   enum TypeModals {
