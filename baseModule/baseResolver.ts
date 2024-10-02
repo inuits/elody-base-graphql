@@ -49,6 +49,7 @@ import {
   KeyValueSource,
   ManifestViewerElement,
   MarkdownViewerElement,
+  EntityViewerElement,
   Maybe,
   MediaFile,
   MediaFileElement,
@@ -87,6 +88,7 @@ import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   determineAdvancedFiltersForIteration,
   getEntityId,
+  getRelationsByType,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
@@ -945,6 +947,24 @@ export const baseResolver: Resolvers<ContextValue> = {
       return value || 3;
     },
   },
+  EntityViewerElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    entityId: async (
+      _source: any,
+      { relationType, metadataKey },
+      { dataSources }
+    ) => {
+      try {
+        if (relationType)
+          return getRelationsByType(relationType, _source.relations)[0].key;
+        return '';
+      } catch {
+        return '';
+      }
+    },
+  },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -1235,6 +1255,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   EntityViewElements: {
+    entityViewerElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as EntityViewerElement;
+    },
     entityListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as EntityListElement;
     },

@@ -23,8 +23,17 @@ export const shareLinkQueries = gql`
     }
     relationValues
     entityView {
-      column {
+      viewerColumn: column {
         size(size: seventy)
+        elements {
+          entityViewerElement {
+            label(input: "Shared entity")
+            entityId(relationType: "isShareLinkFor")
+          }
+        }
+      }
+      metadataColumn: column {
+        size(size: thirty)
         elements {
           windowElement {
             label(input: "Metadata")

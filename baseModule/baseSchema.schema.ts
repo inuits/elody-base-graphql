@@ -1112,11 +1112,17 @@ export const baseSchema = gql`
     markdownContent(metadataKey: String!): String!
   }
 
+  type EntityViewerElement {
+    label(input: String): String!
+    entityId(relationType: String, metadataKey: String): String!
+  }
+
   type ColumnList {
     column: Column!
   }
 
   type EntityViewElements {
+    entityViewerElement: EntityViewerElement
     markdownViewerElement: MarkdownViewerElement
     manifestViewerElement: ManifestViewerElement
     entityListElement: EntityListElement
