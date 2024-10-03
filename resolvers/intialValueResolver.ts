@@ -8,7 +8,8 @@ import { Metadata } from '../../../generated-types/type-defs';
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
   parent: any,
-  key: string
+  key: string,
+  keyOnMetadata: string | undefined | null
 ): Promise<string> => {
   const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
   const metadata = await resolveMetadata(parent, [key], undefined);
@@ -20,13 +21,15 @@ export const resolveIntialValueMetadata = async (
       : metadata.map((item: Metadata) => item.value).join(', ');
     return metadataValues;
   }
+  if (keyOnMetadata)
+    return metadata[0]?.[keyOnMetadata] ?? '';
   return metadata[0]?.value ?? '';
 };
 
 export const resolveIntialValueRoot = (parent: any, key: string): string => {
-  const keyParts = key.split('.');
+  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
   let value = parent;
-  for (const part of keyParts) value = value?.[part];
+  for (const part of keyParts || []) value = value?.[part];
   return value ?? '';
 };
 

@@ -759,12 +759,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         containsRelationProperty,
         relationKey,
         relationEntityType,
+        keyOnMetadata,
       },
       { dataSources }
     ) => {
       try {
         const resolveObject: { [key: string]: Function } = {
-          metadata: () => resolveIntialValueMetadata(dataSources, parent, key),
+          metadata: () => resolveIntialValueMetadata(dataSources, parent, key, keyOnMetadata),
           root: () => resolveIntialValueRoot(parent, key),
           relations: () =>
             resolveIntialValueRelations(

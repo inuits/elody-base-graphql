@@ -805,6 +805,7 @@ export const baseSchema = gql`
       containsRelationProperty: String
       relationKey: String
       relationEntityType: String
+      keyOnMetadata: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
