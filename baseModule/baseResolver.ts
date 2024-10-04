@@ -81,6 +81,9 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  FetchDeepRelations,
+  DeepRelationsFetchStrategy,
+  BreadCrumbRoute,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -927,6 +930,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
+    fetchDeepRelations: async (parent, { }, { dataSources }) => {
+      return parent as FetchDeepRelations;
+    },
   },
   ManifestViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1392,6 +1398,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return input as Entitytyping[];
+    },
+  },
+  FetchDeepRelations: {
+    deepRelationsFetchStrategy: async (parent, { input }, { dataSources }) => {
+      return input as DeepRelationsFetchStrategy;
+    },
+    entityType: async (parent, { input }, { dataSources }) => {
+      return input as Entitytyping;
+    },
+    routeConfig: async (parent, { input }, { dataSources }) => {
+      return input as BreadCrumbRoute[];
+    },
+    amountOfRecursions: async (parent, { input }, { dataSources }) => {
+      return input as number;
     },
   },
   PaginationLimitOptions: {

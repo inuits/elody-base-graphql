@@ -735,6 +735,27 @@ export const baseSchema = gql`
     customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
   }
 
+  enum DeepRelationsFetchStrategy {
+    useExistingBreadcrumbsInfo
+    useMethodsAndFetch
+  }
+  input BreadCrumbRouteInput {
+    relation: String,
+    entityType: Entitytyping,
+    overviewPage: RouteNames,
+  }
+  type BreadCrumbRoute {
+    relation: String,
+    entityType: Entitytyping,
+    overviewPage: RouteNames,
+  }
+  type FetchDeepRelations {
+    deepRelationsFetchStrategy(input: DeepRelationsFetchStrategy): DeepRelationsFetchStrategy
+    entityType(input: Entitytyping): Entitytyping
+    routeConfig(input: [BreadCrumbRouteInput]): [BreadCrumbRoute]
+    amountOfRecursions(input: Int): Int
+  }
+  
   type MetadataFieldOption {
     label: String
     value: String!
@@ -907,6 +928,7 @@ export const baseSchema = gql`
     entityListElement: EntityListElement
     allowedActionsOnRelations(input: [RelationActions]): [RelationActions]
     customBulkOperations(input: String): String
+    fetchDeepRelations: FetchDeepRelations
   }
 
   enum EntityListViewMode {
