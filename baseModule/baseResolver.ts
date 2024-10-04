@@ -931,7 +931,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'undefined';
     },
     fetchDeepRelations: async (parent, { }, { dataSources }) => {
-      return parent as FetchDeepRelations;
+      return parent.fetchDeepRelations;
     },
   },
   ManifestViewerElement: {
