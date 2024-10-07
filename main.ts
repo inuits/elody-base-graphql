@@ -32,7 +32,7 @@ import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
-import { Collection, InputField } from '../../generated-types/type-defs';
+import { Collection, InputField, PermissionRequestInfo } from '../../generated-types/type-defs';
 import { CollectionAPI } from './sources/collection';
 import { ContextValue, DataSources } from './types';
 import { Environment } from './environment';
@@ -90,7 +90,7 @@ const start = (
   customTypeCollectionMapping:
     | { [key: string]: Collection }
     | undefined = undefined,
-  customPermissions: string[] = []
+  customPermissions: { [key: string]: PermissionRequestInfo } = {}
 ) => {
   environment = appConfig;
 

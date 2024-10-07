@@ -18,6 +18,7 @@ import {
   MetadataFieldInput,
   MetadataValuesInput,
   SearchFilter,
+  PermissionRequestInfo,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 
@@ -33,6 +34,7 @@ type EntetiesCallReturn =
   | Array<unknown>
   | 'no-call-is-triggerd';
 let sixthCollectionId: string | 'no-id' = 'no-id';
+type CRUDMethod = 'get' | 'post' | 'put' | 'delete';
 
 export class CollectionAPI extends AuthRESTDataSource {
   public baseURL = `${env?.api.collectionApiUrl}/`;
@@ -78,6 +80,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       throw new GraphQLError('Failed to fetch data. Please try again later.');
     return data as EntitiesResults;
   }
+  
 
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
@@ -90,6 +93,25 @@ export class CollectionAPI extends AuthRESTDataSource {
       return [];
     }
     return data?.results;
+  }
+
+  
+  async checkAdvancedPermission(permissionRequestInfo: PermissionRequestInfo): Promise<boolean> {
+    try {
+      let uri = permissionRequestInfo.uri;
+      const hasNoSoftParam = !uri.includes('soft=1');
+      if (hasNoSoftParam) {
+        uri += uri.includes('?') ? '&soft=1' : '?soft=1';
+      }
+
+      const data = await this[permissionRequestInfo.crud as CRUDMethod](
+        uri,
+        { body: permissionRequestInfo.body }
+      );
+      return data === 'good';
+    } catch (e) {
+      return false;
+    }
   }
 
   async postEntitiesFilterSoftCall(entityType: string): Promise<string> {
@@ -108,7 +130,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     } catch (e) {
       return '401';
     }
-    if (data === 'good') return '200';
+    if (data) return '200';
     return data;
   }
 

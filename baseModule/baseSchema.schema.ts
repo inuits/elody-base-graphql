@@ -386,6 +386,7 @@ export const baseSchema = gql`
     isLoggedIn: Boolean
     typeLink: MenuTypeLink
     requiresAuth: Boolean
+    can: [String!]
   }
 
   enum MenuIcons {
@@ -423,6 +424,7 @@ export const baseSchema = gql`
       isLoggedIn: Boolean
       typeLink: MenuTypeLinkInput
       requiresAuth: Boolean
+      can: [String!]
     ): MenuItem
   }
 
@@ -678,6 +680,12 @@ export const baseSchema = gql`
 
   type userPermissions {
     payload: [String]
+  }
+
+  type PermissionRequestInfo {
+    crud: String!
+    uri: String!
+    body: JSON!
   }
 
   enum RelationType {
@@ -1346,6 +1354,7 @@ export const baseSchema = gql`
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMapping(entities: [String]!): JSON!
+    AdvancedPermission(permission: String!): JSON!
     PermissionMappingEntityDetail(
       id: String!
       entityType: String!

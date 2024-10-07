@@ -84,6 +84,7 @@ import {
   FetchDeepRelations,
   DeepRelationsFetchStrategy,
   BreadCrumbRoute,
+  PermissionRequestInfo,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -348,6 +349,17 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       await Promise.all(promises);
       return permissionsMappings;
+    },
+    AdvancedPermission: async (
+      _source,
+      { permission },
+      { dataSources, customPermissions }
+    ) => {
+      const permissionConfig: PermissionRequestInfo = customPermissions[permission]
+      if (!permissionConfig) return false;
+
+      let response = await dataSources.CollectionAPI.checkAdvancedPermission(permissionConfig);
+      return response;
     },
     PermissionMappingPerEntityType: async (
       _source,
@@ -1298,7 +1310,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, entityType, icon, isLoggedIn, typeLink, requiresAuth },
+      { label, entityType, icon, isLoggedIn, typeLink, requiresAuth, can },
       { dataSources }
     ) => {
       return {
@@ -1308,6 +1320,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         isLoggedIn,
         typeLink,
         requiresAuth,
+        can
       };
     },
   },
@@ -1332,6 +1345,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     requiresAuth: async (parent, {}, { dataSources }) => {
       return parent.requiresAuth as boolean;
+    },
+    can: async (parent, {}, { dataSources }) => {
+      return parent.can as string[];
     },
   },
   DropzoneEntityToCreate: {
