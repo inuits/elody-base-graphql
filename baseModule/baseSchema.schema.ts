@@ -556,6 +556,7 @@ export const baseSchema = gql`
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
     primary: Boolean
     requiresAuth: Boolean
+    can: [String!]
   }
 
   input DropdownOptionInput {
@@ -567,6 +568,7 @@ export const baseSchema = gql`
     bulkOperationModal: BulkOperationInputModal
     primary: Boolean
     requiresAuth: Boolean
+    can: [String!]
   }
 
   type DropzoneEntityToCreate {
