@@ -1569,6 +1569,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     icon: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
   },
   ContextMenuElodyAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1580,6 +1583,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     icon: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
   },
   ContextMenuGeneralAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1590,6 +1596,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     icon: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
     },
   },
 };

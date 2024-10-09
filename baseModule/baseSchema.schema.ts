@@ -1191,17 +1191,20 @@ export const baseSchema = gql`
     label(input: String): String!
     action(input: ContextMenuGeneralActionEnum): ContextMenuGeneralActionEnum!
     icon(input: String): String!
+    can(input: [String]): [String]
   }
 
   type ContextMenuElodyAction {
     label(input: String): String!
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
     icon(input: String): String!
+    can(input: [String]): [String]
   }
 
   type ContextMenuLinkAction {
     label(input: String): String!
     icon(input: String): String!
+    can(input: [String]): [String]
   }
 
   type ContextMenuActions {
