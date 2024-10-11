@@ -195,15 +195,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
     let data;
-    try {
-      data = await this.get<any>(
-        `${
-          _collection ? _collection : getCollectionValueForEntityType(type)
-        }/${id}`
-      );
-    } catch {
-      return undefined;
-    }
+    data = await this.get<any>(
+      `${
+        _collection ? _collection : getCollectionValueForEntityType(type)
+      }/${id}`
+    );
     setId(data);
     return data;
   }
