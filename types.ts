@@ -6,6 +6,7 @@ import {
   Maybe,
   MetadataFieldOption,
   PermissionRequestInfo,
+  Formatters,
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
 import {OcrService} from "./sources/ocr";
@@ -21,6 +22,11 @@ export interface DataSources {
 export interface ContextValue {
   dataSources: DataSources;
   customPermissions: { [key: string]: PermissionRequestInfo };
+  customFormatters: {
+    [formatterType: string]: {
+      [key: string]: Formatters
+    }
+  };
 }
 // TODO: Remove if unused
 export type filter = {

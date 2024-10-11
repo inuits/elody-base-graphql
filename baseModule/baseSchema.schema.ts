@@ -838,6 +838,7 @@ export const baseSchema = gql`
       relationKey: String
       relationEntityType: String
       keyOnMetadata: String
+      formatter: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
@@ -1361,6 +1362,7 @@ export const baseSchema = gql`
     PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMapping(entities: [String]!): JSON!
     AdvancedPermission(permission: String!): JSON!
+    CustomFormattersSettings: JSON!
     PermissionMappingEntityDetail(
       id: String!
       entityType: String!
@@ -1422,4 +1424,22 @@ export const baseSchema = gql`
     permission: Permission!
     hasPermission: Boolean!
   }
+
+  enum CustomFormatterTypes {
+    link
+    pill
+  }
+
+  type LinkFormatter {
+    link: String!
+    label: String!
+    value: String!
+  }
+
+  type PillFormatter {
+    background: String!
+    text: String!
+  }
+
+  union Formatters = LinkFormatter | PillFormatter
 `;

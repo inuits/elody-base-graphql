@@ -3,14 +3,16 @@ import {
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
 import { DataSources } from '../types';
-import { Metadata } from '../../../generated-types/type-defs';
+import { BaseEntity, Metadata, CustomFormatterTypes } from '../../../generated-types/type-defs';
+import { formatterFactory, ResolverFormatters } from './formatters';
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
   parent: any,
   key: string,
-  keyOnMetadata: string | undefined | null
-): Promise<string> => {
+  keyOnMetadata: string | undefined | null,
+  formatter: string | null
+): Promise<string | { label: string, formatter: string }> => {
   const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
   const metadata = await resolveMetadata(parent, [key], undefined);
   if (metadata.length > 1) {
@@ -23,7 +25,8 @@ export const resolveIntialValueMetadata = async (
   }
   if (keyOnMetadata)
     return metadata[0]?.[keyOnMetadata] ?? '';
-  return metadata[0]?.value ?? '';
+
+  return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value ?? '', formatter });
 };
 
 export const resolveIntialValueRoot = (parent: any, key: string): string => {
@@ -40,8 +43,10 @@ export const resolveIntialValueRelations = async (
   metadataKeyAsLabel: string,
   rootKeyAsLabel: string,
   containsRelationProperty: string,
-  relationEntityType: string
-): Promise<string> => {
+  relationEntityType: string,
+  formatter: string = '',
+  formatterSettings?: any
+): Promise<string | any> => {
   try {
     let relation: any;
     const relations = parent?.relations.filter(
@@ -72,11 +77,13 @@ export const resolveIntialValueRelations = async (
       }
 
       if (rootKeyAsLabel) return type[rootKeyAsLabel];
-      return (
-        type?.metadata?.find(
-          (metadata: any) => metadata.key === metadataKeyAsLabel
-        )?.value || relation.key
-      );
+      const result = type?.metadata?.find(
+        (metadata: any) => metadata.key === metadataKeyAsLabel
+      )?.value || relation.key
+
+      if (!formatter) return result;
+      const relationsFormatters = formatterFactory(ResolverFormatters.Relations);
+      return { ...relationsFormatters(formatter, formatterSettings)({ entity: type }), formatter };
     }
   } catch {
     return parent?.[key] ?? '';
@@ -88,12 +95,14 @@ export const resolveIntialValueRelationMetadata = (
   parent: any,
   key: string,
   uuid: string,
-  relationKey: string
-): string => {
+  relationKey: string,
+  formatter: string
+): string | {label: string, formatter: string } => {
   try {
+    let label = '';
     if (relationKey === 'hasTenant' && key === 'roles') {
       if (!uuid || uuid === 'undefined')
-        return parent?.relations
+        label = parent?.relations
           .filter((relation: any) => relation.type === relationKey)
           .flatMap((relation: any) => {
             const zone = relation?.['zone'].split('BE-')?.[1];
@@ -102,19 +111,21 @@ export const resolveIntialValueRelationMetadata = (
           });
 
       if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
-      return parent?.relations.find(
+      label = parent?.relations.find(
         (relation: any) =>
           relation.type === relationKey &&
           (relation.key === uuid || relation.key === 'tenant:super')
       )[key];
     } else {
-      return parent?.relations
+      label = parent?.relations
         .find(
           (relation: any) =>
             relation.type === relationKey && relation.key === uuid
         )
         .metadata.find((metadata: any) => metadata.key === key).value;
     }
+
+    return formatterFactory(ResolverFormatters.RelationMetadata)({ label, formatter });
   } catch (e) {
     return '';
   }
@@ -134,3 +145,4 @@ export const resolveIntialValueTechnicalMetadata = (
     return '';
   }
 };
+

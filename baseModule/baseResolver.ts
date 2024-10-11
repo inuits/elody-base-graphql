@@ -381,6 +381,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
+    CustomFormattersSettings: async (
+      _source,
+      _,
+      { customFormatters }
+    ) => {
+      return customFormatters;
+    },
     PermissionMappingEntityDetail: async (
       _source,
       { id, entityType },
@@ -775,12 +782,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationKey,
         relationEntityType,
         keyOnMetadata,
+        formatter = '',
       },
-      { dataSources }
+      { dataSources, customFormatters }
     ) => {
       try {
         const resolveObject: { [key: string]: Function } = {
-          metadata: () => resolveIntialValueMetadata(dataSources, parent, key, keyOnMetadata),
+          metadata: () => resolveIntialValueMetadata(dataSources, parent, key, keyOnMetadata, formatter),
           root: () => resolveIntialValueRoot(parent, key),
           relations: () =>
             resolveIntialValueRelations(
@@ -790,14 +798,17 @@ export const baseResolver: Resolvers<ContextValue> = {
               metadataKeyAsLabel as string,
               rootKeyAsLabel as string,
               containsRelationProperty as string,
-              relationEntityType as string
+              relationEntityType as string,
+              formatter as string,
+              customFormatters
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(
               parent,
               key,
               uuid as string,
-              relationKey as string
+              relationKey as string,
+              formatter as string
             ),
           technicalMetadata: () =>
             resolveIntialValueTechnicalMetadata(parent, key),
