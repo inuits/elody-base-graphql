@@ -201,8 +201,8 @@ export class CollectionAPI extends AuthRESTDataSource {
           _collection ? _collection : getCollectionValueForEntityType(type)
         }/${id}`
       );
-    } catch {
-      return undefined;
+    } catch (error) {
+      throw error;
     }
     setId(data);
     return data;
