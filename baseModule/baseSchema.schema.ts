@@ -123,6 +123,7 @@ export const baseSchema = gql`
 
   type Form {
     label(input: String): String!
+    infoLabel(input: String): String
     modalStyle(input: ModalStyle!): ModalStyle!
     formTab: FormTab!
   }
