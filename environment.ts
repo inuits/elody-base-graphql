@@ -38,6 +38,7 @@ export interface Environment {
       simpleSearchMetadataKey?: string[];
     };
     hasTenantSelect?: boolean;
+    hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;

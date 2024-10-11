@@ -27,6 +27,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
               config.features.simpleSearch.simpleSearchMetadataKey,
           },
           hasTenantSelect: config.features.hasTenantSelect,
+          hasBulkOperations:
+            config.features.hasBulkSelect === undefined
+              ? true
+              : config.features.hasBulkOperations,
           hasBulkSelect:
             config.features.hasBulkSelect === undefined
               ? true
@@ -35,8 +39,8 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
             config.features.hideSuperTenant === undefined
               ? false
               : config.features.hideSuperTenant,
-          hasSavedSearch: config.features.hasSavedSearch === undefined 
-              ? false 
+          hasSavedSearch: config.features.hasSavedSearch === undefined
+              ? false
               : config.features.hasSavedSearch,
         },
         customization: {
