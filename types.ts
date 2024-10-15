@@ -22,11 +22,7 @@ export interface DataSources {
 export interface ContextValue {
   dataSources: DataSources;
   customPermissions: { [key: string]: PermissionRequestInfo };
-  customFormatters: {
-    [formatterType: string]: {
-      [key: string]: Formatters
-    }
-  };
+  customFormatters: FormattersConfig;
 }
 // TODO: Remove if unused
 export type filter = {
@@ -40,5 +36,11 @@ export type filter = {
 type Filters = {
   filters: Record<string, Array<AdvancedFilter>>;
 };
+
+export type FormattersConfig = {
+  [formatterType: string]: {
+    [key: string]: Formatters
+  }
+}
 
 export type Config = Record<string, Array<string>> & Filters;

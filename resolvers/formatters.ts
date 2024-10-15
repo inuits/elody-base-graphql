@@ -1,55 +1,110 @@
-import { Metadata, LinkFormatter, CustomFormatterTypes, BaseEntity, Formatters } from '../../../generated-types/type-defs';
+import {
+  Metadata,
+  LinkFormatter,
+  CustomFormatterTypes,
+  BaseEntity,
+  Formatters,
+  RegexpMatchFormatter
+} from "../../../generated-types/type-defs";
+import { type FormattersConfig } from "../types";
 
 export enum ResolverFormatters {
-  Relations = 'relations',
-  Metadata = 'metadata',
-  RelationMetadata = 'relationMetadata'
+  Relations = "relations",
+  Metadata = "metadata",
+  RelationMetadata = "relationMetadata",
+  Root = "root",
 }
 
 export const formatterFactory = (resolverType: string) => {
-  const formattersByResolver: {[key: string]: Function} = {
+  const formattersByResolver: { [key: string]: Function } = {
     [ResolverFormatters.Relations]: applyRelationsFormatter,
     [ResolverFormatters.Metadata]: applyPillFormatter,
     [ResolverFormatters.RelationMetadata]: applyPillFormatter,
-  }
+    [ResolverFormatters.Root]: applyRootFormatter,
+  };
 
   return formattersByResolver[resolverType];
 };
 
 const handleLinkFormatterForRelations = ({
   entity,
-  formatterSettings
+  formatterSettings,
 }: {
-  entity: BaseEntity & {metadata: Metadata[]};
+  entity: BaseEntity & { metadata: Metadata[] };
   formatterSettings: LinkFormatter;
 }): { label: string; link: string } => {
   const value: string = entity[formatterSettings.value as keyof BaseEntity];
-  const label = entity.metadata?.find(
-    (metadata: Metadata) => metadata.key === formatterSettings.label
-  )?.value
+  const label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value;
   return { label, link: formatterSettings.link.replace("$value", value) };
 };
 
-const handlePillFormatter = ({label, formatter}: {label: string, formatter: string}): {label: string, formatter: string} => {
-  return { label, formatter }
-}
+const handlePillFormatter = ({
+  label,
+  formatter,
+}: {
+  label: string;
+  formatter: string;
+}): { label: string; formatter: string } => {
+  return { label, formatter };
+};
 
-const applyRelationsFormatter = (formatter: string, formattorSettings: {
-  [formatterType: string]: {
-    [key: string]: Formatters
-  }
-}) => {
-  const [formatterType, formatterTypeOption] = formatter.split('|');
+const handleRegexpFormatter = ({
+  value,
+  formatter,
+  formatterSettings,
+}: {
+  value: unknown;
+  formatter: string;
+  formatterSettings: FormattersConfig;
+}): { label: unknown; formatter: string } => {
+  const [formatterType, type] = formatter.split("|");
+
+  const currentFormatter: Formatters = formatterSettings[formatterType][type] as RegexpMatchFormatter;
+
+  const regexp = new RegExp(`"${currentFormatter.value}"\\s*:\\s*"([^"]+)"`, "g");
+  const matches = JSON.stringify(value).match(regexp) || [];
+
+  const labels = matches.map((match: string) => {
+    const valueMatch = match.match(/"([^"]+)"$/);
+    return valueMatch ? valueMatch[1] : "";
+  });
+
+  return { label: labels, formatter };
+};
+
+const applyRelationsFormatter = (
+  formatter: string,
+  formattorSettings: FormattersConfig,
+) => {
+  const [formatterType, formatterTypeOption] = formatter.split("|");
   const currentFormatter: Formatters = formattorSettings[formatterType][formatterTypeOption];
 
-  return ({entity}: {entity: BaseEntity & {metadata: Metadata[]}}) => {
-    if (formatterType === CustomFormatterTypes.Link) return handleLinkFormatterForRelations({entity, formatterSettings: currentFormatter as LinkFormatter});
-  }
-}
+  return ({ entity }: { entity: BaseEntity & { metadata: Metadata[] } }) => {
+    if (formatterType === CustomFormatterTypes.Link)
+      return handleLinkFormatterForRelations({ entity, formatterSettings: currentFormatter as LinkFormatter });
+  };
+};
 
-// TODO: Should be splitted up to separate types like applyMetadataFormatters, applyRelationMetadata  
-const applyPillFormatter = ({ label, formatter }: { label: string, formatter: string }) => {
+const applyRootFormatter = ({
+  value,
+  formatter,
+  formatterSettings,
+}: {
+  value: string;
+  formatter: string;
+  formatterSettings: FormattersConfig;
+}) => {
+  if (!formatter) return value;
+
+  return handleRegexpFormatter({ value, formatter, formatterSettings });
+};
+
+// TODO: Should be splitted up to separate types like applyMetadataFormatters, applyRelationMetadata
+const applyPillFormatter = ({ label, formatter }: { label: string; formatter: string }) => {
   if (!formatter) return label;
 
-  return handlePillFormatter({label, formatter});
+  return handlePillFormatter({ label, formatter });
 };
+
+
+export { handleRegexpFormatter }

@@ -32,9 +32,9 @@ import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
-import { Collection, InputField, PermissionRequestInfo, Formatters } from '../../generated-types/type-defs';
+import { Collection, InputField, PermissionRequestInfo } from '../../generated-types/type-defs';
 import { CollectionAPI } from './sources/collection';
-import { ContextValue, DataSources } from './types';
+import { ContextValue, DataSources, FormattersConfig } from './types';
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
@@ -91,7 +91,7 @@ const start = (
     | { [key: string]: Collection }
     | undefined = undefined,
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
-  customFormatters: {[formatterType: string]: { [key: string]: Formatters }} = {}
+  customFormatters: FormattersConfig = {}
 ) => {
   environment = appConfig;
 
@@ -251,7 +251,7 @@ const start = (
 };
 
 export default start;
-export type { ContextValue, DataSources, Environment };
+export type { ContextValue, DataSources, Environment, FormattersConfig };
 export {
   environment,
   baseModule,

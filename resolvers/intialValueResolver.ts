@@ -2,8 +2,8 @@ import {
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
-import { DataSources } from '../types';
-import { BaseEntity, Metadata, CustomFormatterTypes } from '../../../generated-types/type-defs';
+import { DataSources, type FormattersConfig } from '../types';
+import { Metadata } from '../../../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
 
 export const resolveIntialValueMetadata = async (
@@ -29,11 +29,11 @@ export const resolveIntialValueMetadata = async (
   return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value ?? '', formatter });
 };
 
-export const resolveIntialValueRoot = (parent: any, key: string): string => {
+export const resolveIntialValueRoot = (parent: any, key: string, formatter: string | null, formatterSettings: any): string => {
   const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
   let value = parent;
   for (const part of keyParts || []) value = value?.[part];
-  return value ?? '';
+  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings })
 };
 
 export const resolveIntialValueRelations = async (
@@ -45,7 +45,7 @@ export const resolveIntialValueRelations = async (
   containsRelationProperty: string,
   relationEntityType: string,
   formatter: string = '',
-  formatterSettings?: any
+  formatterSettings?: FormattersConfig
 ): Promise<string | any> => {
   try {
     let relation: any;

@@ -789,7 +789,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         const resolveObject: { [key: string]: Function } = {
           metadata: () => resolveIntialValueMetadata(dataSources, parent, key, keyOnMetadata, formatter),
-          root: () => resolveIntialValueRoot(parent, key),
+          root: () => resolveIntialValueRoot(parent, key, formatter, customFormatters),
           relations: () =>
             resolveIntialValueRelations(
               dataSources,
