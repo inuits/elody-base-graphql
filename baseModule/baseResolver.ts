@@ -814,7 +814,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             resolveIntialValueTechnicalMetadata(parent, key),
         };
 
-        return resolveObject[source]() || '';
+        return await resolveObject[source]() || '';
       } catch (e) {
         console.log(e);
         return '';
