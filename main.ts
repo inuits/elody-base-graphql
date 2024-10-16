@@ -16,6 +16,7 @@ import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
 import applyPromEndpoint from './endpoints/promEndpoint';
 import cors from 'cors';
 import express from 'express';
+import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
 import { ApolloServer } from '@apollo/server';
@@ -32,7 +33,11 @@ import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
-import { Collection, InputField, PermissionRequestInfo } from '../../generated-types/type-defs';
+import {
+  Collection,
+  InputField,
+  PermissionRequestInfo,
+} from '../../generated-types/type-defs';
 import { CollectionAPI } from './sources/collection';
 import { ContextValue, DataSources, FormattersConfig } from './types';
 import { Environment } from './environment';
@@ -239,9 +244,10 @@ const start = (
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
 
-    await new Promise<void>((resolve) =>
-      httpServer.listen({ port: appConfig.port }, resolve)
-    );
+    await new Promise<void>((resolve) => {
+      const server = httpServer.listen({ port: appConfig.port }, resolve);
+      ViteExpress.bind(app, server);
+    });
     console.log(`Server is running on port ${appConfig.port}`);
 
     return { app };
