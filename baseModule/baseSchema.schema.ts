@@ -951,6 +951,7 @@ export const baseSchema = gql`
     allowedActionsOnRelations(input: [RelationActions]): [RelationActions]
     customBulkOperations(input: String): String
     fetchDeepRelations: FetchDeepRelations
+    can(input: [String!]): [String!]
   }
 
   enum EntityListViewMode {
