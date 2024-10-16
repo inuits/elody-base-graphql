@@ -550,6 +550,7 @@ export const baseSchema = gql`
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    availableInPages(input: [RouteMatchingInput]): [RouteMatching]
     active: Boolean
     required: Boolean
     actionContext(input: ActionContextInput): ActionContext
@@ -559,10 +560,20 @@ export const baseSchema = gql`
     can: [String!]
   }
 
+  type RouteMatching {
+    routeName: RouteNames
+    entityType: Entitytyping
+  }
+  input RouteMatchingInput {
+    routeName: RouteNames
+    entityType: Entitytyping
+  }
+  
   input DropdownOptionInput {
     icon: DamsIcons
     label: String!
     value: StringOrInt!
+    availableInPages: [RouteMatchingInput]
     active: Boolean
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal

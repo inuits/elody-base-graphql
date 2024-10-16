@@ -1380,7 +1380,8 @@ export const baseResolver: Resolvers<ContextValue> = {
           value: 'last_editor',
         },
       ];
-      return [...baseSortOptions, ...input];
+      const default_sorting = input.filter((option) => option.primary);
+      return [...default_sorting, ...baseSortOptions, ...input.filter((option) => !option.primary)];
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
