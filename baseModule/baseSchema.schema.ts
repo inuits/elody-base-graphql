@@ -493,6 +493,7 @@ export const baseSchema = gql`
     Link
     ListUl
     LocationArrowAlt
+    Map
     Minus
     Music
     NoImage
@@ -1048,6 +1049,7 @@ export const baseSchema = gql`
     metadata
     relation
     mediainfo
+    map
   }
 
   enum UploadFlow {
@@ -1446,6 +1448,7 @@ export const baseSchema = gql`
     ViewModesList
     ViewModesGrid
     ViewModesMedia
+    ViewModesMap
   }
 
   type PermissionMapping {
