@@ -7,6 +7,7 @@ export interface Environment {
     tokenLogging: string;
   };
   port: number | string;
+  environment: string;
   sessionSecret: string;
   clientSecret: string;
   oauth: {

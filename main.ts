@@ -49,6 +49,7 @@ import { parseIdToGetMoreData } from './parsers/entity';
 import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
+import { serveFrontendThroughExpress } from './endpoints/frontendEndpoint';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -243,6 +244,9 @@ const start = (
     if (customTypeCollectionMapping) {
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
+
+    // Ensure this is always the last endpoint to be applied
+    if (appConfig.environment === 'production') serveFrontendThroughExpress();
 
     await new Promise<void>((resolve) => {
       const server = httpServer.listen({ port: appConfig.port }, resolve);
