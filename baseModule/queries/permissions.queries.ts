@@ -6,7 +6,15 @@ export const permissionsQuery = gql`
     PermissionMapping(entities: $entities)
   }
 
-  query GetAdvancedPermission($permission: String!) {
-    AdvancedPermission(permission: $permission)
+  query GetAdvancedPermission(
+    $permission: String!
+    $parentEntityId: String
+    $childEntityId: String
+  ) {
+    AdvancedPermission(
+      permission: $permission,
+      parentEntityId: $parentEntityId,
+      childEntityId: $childEntityId
+    )
   }
 `;

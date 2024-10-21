@@ -1372,7 +1372,11 @@ export const baseSchema = gql`
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
     PermissionMapping(entities: [String]!): JSON!
-    AdvancedPermission(permission: String!): JSON!
+    AdvancedPermission(
+      permission: String!
+      parentEntityId: String
+      childEntityId: String
+    ): JSON!
     CustomFormattersSettings: JSON!
     PermissionMappingEntityDetail(
       id: String!

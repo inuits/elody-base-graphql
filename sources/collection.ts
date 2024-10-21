@@ -96,17 +96,25 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   
-  async checkAdvancedPermission(permissionRequestInfo: PermissionRequestInfo): Promise<boolean> {
+  async checkAdvancedPermission(
+    permissionRequestInfo: PermissionRequestInfo, 
+    parentEntityId: Maybe<string> | undefined, 
+    childEntityId: Maybe<string> | undefined
+  ): Promise<boolean> {
     try {
-      let uri = permissionRequestInfo.uri;
-      const hasNoSoftParam = !uri.includes('soft=1');
-      if (hasNoSoftParam) {
-        uri += uri.includes('?') ? '&soft=1' : '?soft=1';
-      }
+      let parsedRequestInfo = JSON.stringify(permissionRequestInfo);
+      if (parentEntityId) parsedRequestInfo = parsedRequestInfo.replace(/\$parentEntityId/g, parentEntityId);
+      if (childEntityId) parsedRequestInfo = parsedRequestInfo.replace(/\$childEntityId/g, childEntityId);
+      const config = JSON.parse(parsedRequestInfo);
 
-      const data = await this[permissionRequestInfo.crud as CRUDMethod](
-        uri,
-        { body: permissionRequestInfo.body }
+      const hasNoSoftParam = !config.uri.includes('soft=1');
+      if (hasNoSoftParam) {
+        config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
+      }
+    
+      const data = await this[config.crud as CRUDMethod](
+        config.uri,
+        { body: config.body }
       );
       return data === 'good';
     } catch (e) {

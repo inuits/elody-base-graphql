@@ -352,13 +352,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     AdvancedPermission: async (
       _source,
-      { permission },
+      { permission, parentEntityId, childEntityId },
       { dataSources, customPermissions }
     ) => {
       const permissionConfig: PermissionRequestInfo = customPermissions[permission]
       if (!permissionConfig) return false;
 
-      let response = await dataSources.CollectionAPI.checkAdvancedPermission(permissionConfig);
+      let response = await dataSources.CollectionAPI.checkAdvancedPermission(permissionConfig, parentEntityId, childEntityId);
       return response;
     },
     PermissionMappingPerEntityType: async (
