@@ -246,7 +246,8 @@ const start = (
     }
 
     // Ensure this is always the last endpoint to be applied
-    if (appConfig.environment === 'production') serveFrontendThroughExpress();
+    if (appConfig.environment === 'production')
+      serveFrontendThroughExpress(app);
 
     await new Promise<void>((resolve) => {
       const server = httpServer.listen({ port: appConfig.port }, resolve);
