@@ -164,6 +164,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
+    const idSplit = id.split('/');
+    if (idSplit.length > 1) id = idSplit[1];
     try {
       data = await this.patch(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
@@ -184,6 +186,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
+    const idSplit = id.split('/');
+    if (idSplit.length > 1) id = idSplit[1];
     try {
       data = await this.delete(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
