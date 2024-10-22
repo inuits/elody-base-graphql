@@ -3,7 +3,7 @@ import path from 'path';
 
 export const serveFrontendThroughExpress = (app: any) => {
   const __dirname: string = path.resolve();
-  const frontendPath: string = path.join(__dirname, 'dist');
+  const frontendPath: string = path.join(__dirname, 'dashboard/dist');
 
   app.use(express.static(frontendPath));
 
