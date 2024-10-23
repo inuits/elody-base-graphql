@@ -111,3 +111,7 @@ function compareRelationsFilterKey(key: string, comparison: string): boolean {
   if (!match || match.length < 2) return false;
   return match[1] === comparison;
 }
+
+export const extractErrorCode = (error: any): number => {
+  return  error.extensions?.statusCode || error.extensions?.response?.status || 500;
+}

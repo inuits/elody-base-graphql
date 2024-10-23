@@ -2,6 +2,7 @@ import { AuthRESTDataSource, environment, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 import { EntityInput, Entitytyping } from '../../../generated-types/type-defs';
 import {addJwt} from "./mediafilesEndpoint";
+import { extractErrorCode } from '../helpers/helpers';
 
 export const applyUploadEndpoint = (app: Express) => {
   app.post(
@@ -35,8 +36,7 @@ export const applyUploadEndpoint = (app: Express) => {
           }
         });
       } catch (exception: any) {
-        const errorStatus = exception.extensions?.statusCode || 500;
-        response.status(errorStatus).end(JSON.stringify(exception));
+        response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
       }
     }
   );
@@ -53,8 +53,7 @@ export const applyUploadEndpoint = (app: Express) => {
           response.end(JSON.stringify(uploadUrl));
         }
       } catch (exception: any) {
-        const errorStatus = exception.extensions?.statusCode || 500;
-        response.status(errorStatus).end(JSON.stringify(exception));
+        response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
       }
     }
   );
@@ -88,8 +87,7 @@ export const applyUploadEndpoint = (app: Express) => {
           response.status(200).setHeader('Content-Type', 'text/csv');
           response.end();
         } catch (exception: any) {
-          const status = exception.extensions.response.status || 500;
-          response.status(status).end(JSON.stringify(exception));
+          response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
           response.end(JSON.stringify(exception));
         }
       });
@@ -116,8 +114,7 @@ const __batchDryRun = async (
     );
     return result;
   } catch (exception: any) {
-    const errorStatus = exception.extensions?.statusCode || 500;
-    response.status(errorStatus).end(JSON.stringify(exception));
+    response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
   }
 };
 
@@ -137,8 +134,7 @@ const __batchEntities = async (
       body: csv,
     });
   } catch (exception: any) {
-    const errorStatus = exception.extensions?.statusCode || 500;
-    response.status(errorStatus).end(JSON.stringify(exception));
+    response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
   }
   const jsonParsableResult = `["${result
     .split('\n')

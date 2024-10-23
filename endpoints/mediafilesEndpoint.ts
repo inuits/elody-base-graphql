@@ -5,6 +5,7 @@ import { environment as env } from '../main';
 import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
+import { extractErrorCode } from '../helpers/helpers';
 
 let staticToken: string | undefined | null = undefined;
 
@@ -152,8 +153,7 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      const errorStatus = error.extensions?.statusCode || 500;
-      res.status(errorStatus).end(JSON.stringify(error));
+      res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
 
@@ -172,8 +172,7 @@ const applyMediaFileEndpoint = (
         )
       );
     } catch (error: any) {
-      const errorStatus = error.extensions?.statusCode || 500;
-      res.status(errorStatus).end(JSON.stringify(error));
+      res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
 
@@ -196,8 +195,7 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      const errorStatus = error.extensions?.statusCode || 500;
-      res.status(errorStatus).end(JSON.stringify(error));
+      res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
 
@@ -210,8 +208,7 @@ const applyMediaFileEndpoint = (
       const response = await datasource.get(url);
       res.status(200).end(response);
     } catch (error: any) {
-      const errorStatus = error.extensions?.statusCode || 500;
-      res.status(errorStatus).end(JSON.stringify(error));
+      res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
 };
