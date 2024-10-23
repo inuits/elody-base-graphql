@@ -66,13 +66,16 @@ export const resolveIntialValueRelations = async (
         if (relationEntityType)
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
-            relationEntityType
+            relationEntityType,
+            undefined,
+            true
           );
         else
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             '',
-            'entities'
+            'entities',
+            true
           );
       }
 

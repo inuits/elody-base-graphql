@@ -202,7 +202,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getEntity(
     id: string,
     type: string,
-    _collection: string | undefined = undefined
+    _collection: string | undefined = undefined,
+    returnIdIfFails: boolean = false
   ): Promise<any> {
     const idSplit = id.split('/');
     if (idSplit.length > 1) id = idSplit[1];
@@ -214,6 +215,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         }/${id}`
       );
     } catch (error) {
+      if (returnIdIfFails) return id;
       throw error;
     }
     setId(data);
