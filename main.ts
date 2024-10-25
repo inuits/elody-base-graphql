@@ -81,9 +81,12 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
   });
 };
 
-const addApplicationEndpoints = (applicationEndpoints: Function[]) => {
+const addApplicationEndpoints = (
+  applicationEndpoints: Function[],
+  app: any
+) => {
   applicationEndpoints.forEach((endpoint: Function) => {
-    endpoint();
+    endpoint(app);
   });
 };
 
@@ -91,7 +94,7 @@ const start = (
   application: Application,
   appConfig: Environment,
   appTranslations: Object,
-  customEndpoints: Function[] = [],
+  customEndpoints: ((app: any) => void)[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
   customTypeCollectionMapping:
     | { [key: string]: Collection }
@@ -234,7 +237,7 @@ const start = (
     }
 
     if (applicationEndpoints) {
-      addApplicationEndpoints(applicationEndpoints);
+      addApplicationEndpoints(applicationEndpoints, app);
     }
 
     if (customInputFields) {
