@@ -151,6 +151,8 @@
       "clear":"Clear all",
       "apply":"Apply filter(s)",
       "minDropdownSearchCharacters": "Type at least 3 characters",
+      "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
+      "rangeFilterToInputError": "'To' cannot be less than 'from'",
       "matcher-labels":{
         "select-filter-type":"Select filter type",
         "AnyMatcher":"has a value",
@@ -509,6 +511,8 @@
       "clear":"Alles wissen",
       "apply":"Filter(s) toepassen",
       "minDropdownSearchCharacters": "Typ ten minste 3 karakters",
+      "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
+      "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
       "matcher-labels":{
         "select-filter-type":"Selecteer filter type",
         "AnyMatcher":"is ingevuld",
