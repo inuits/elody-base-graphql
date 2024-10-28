@@ -32,9 +32,13 @@ const handleLinkFormatterForRelations = ({
 }: {
   entity: BaseEntity & { metadata: Metadata[] };
   formatterSettings: LinkFormatter;
-}): { label: string; link: string } => {
-  const value: string = entity[formatterSettings.value as keyof BaseEntity];
-  const label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value;
+}): { label: string; link: string } | string => {
+  let value: string = entity[formatterSettings.value as keyof BaseEntity];
+  let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value;
+  if (!label) {
+    label = entity;
+    value = entity as unknown as string;
+  };
   return { label, link: formatterSettings.link.replace("$value", value) };
 };
 
