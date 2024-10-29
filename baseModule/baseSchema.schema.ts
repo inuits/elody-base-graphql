@@ -1086,6 +1086,7 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
+    width(input: String!): String!
   }
 
   type PanelRelationMetaData {
@@ -1444,6 +1445,8 @@ export const baseSchema = gql`
     link
     pill
     regexpMatch
+    teaserStyles
+    styles
   }
 
   type LinkFormatter {
@@ -1461,5 +1464,9 @@ export const baseSchema = gql`
     value: String!
   }
 
-  union Formatters = LinkFormatter | PillFormatter | RegexpMatchFormatter
+  type StylesFormatter {
+    value: JSON!
+  }
+
+  union Formatters = LinkFormatter | PillFormatter | RegexpMatchFormatter | StylesFormatter
 `;
