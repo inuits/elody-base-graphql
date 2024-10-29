@@ -770,6 +770,31 @@ export const baseSchema = gql`
     customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
   }
 
+  input SplitRegexInput {
+    separator: String!
+    retrieveSection: Int!
+  }
+  type SplitRegex {
+    separator: String!
+    retrieveSection: Int!
+  }
+
+  type MapMetadata {
+    value(
+      key: String!
+      source: KeyValueSource!
+      relationKey: String
+      splitRegex: SplitRegexInput
+    ): JSON!
+  }
+  type MapComponent {
+    center(input: [Float]!): [Float]!
+    zoom(input: Int!): Int!
+    blur(input: Int!): Int!
+    radius(input: Int!): Int!
+    mapMetadata: MapMetadata
+  }
+
   enum DeepRelationsFetchStrategy {
     useExistingBreadcrumbsInfo
     useMethodsAndFetch
@@ -1276,6 +1301,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type MediaFileEntity implements Entity {
@@ -1291,6 +1317,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type Tenant implements Entity {
@@ -1306,6 +1333,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type User implements Entity {
@@ -1321,6 +1349,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type Job implements Entity {
@@ -1336,6 +1365,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type ShareLink implements Entity {
@@ -1351,6 +1381,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
+    mapComponent: MapComponent
   }
 
   type EntitiesResults {

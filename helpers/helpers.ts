@@ -3,7 +3,6 @@ import {
   AdvancedFilterTypes,
   Entitytyping,
   Metadata,
-  RelationInput,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 import { environment } from '../main';
@@ -106,7 +105,7 @@ export const determineAdvancedFiltersForIteration = (
   return filtersIteration;
 };
 
-function compareRelationsFilterKey(key: string, comparison: string): boolean {
+export const compareRelationsFilterKey = (key: string, comparison: string): boolean  => {
   const match = key.match(/relations\.(.*?)\.key/);
   if (!match || match.length < 2) return false;
   return match[1] === comparison;

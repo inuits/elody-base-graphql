@@ -85,6 +85,8 @@ import {
   DeepRelationsFetchStrategy,
   BreadCrumbRoute,
   PermissionRequestInfo,
+  SplitRegex,
+  MapMetadata
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -104,6 +106,10 @@ import {
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
 } from '../resolvers/intialValueResolver';
+import {
+  prepareRelationFieldForMapData,
+  prepareMetadataFieldForMapData
+} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -1452,6 +1458,32 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return input as Entitytyping[];
+    },
+  },
+  MapMetadata: {
+    value: async (parent: any, { key, source, relationKey, splitRegex }, { dataSources }) => {
+      const resolveObject: { [key: string]: Function } = {
+        metadata: () => prepareMetadataFieldForMapData(parent.metadata, key, splitRegex as SplitRegex),
+        relations: () => prepareRelationFieldForMapData(dataSources, parent.relations, key, relationKey)
+      };
+      return await resolveObject[source]() || '';
+    },
+  },
+  MapComponent: {
+    center: async (parent: unknown, { input }, { dataSources }) => {
+      return input as [number];
+    },
+    zoom: async (parent: unknown, { input }, { dataSources }) => {
+      return input as number;
+    },
+    blur: async (parent: unknown, { input }, { dataSources }) => {
+      return input as number;
+    },
+    radius: async (parent: unknown, { input }, { dataSources }) => {
+      return input as number;
+    },
+    mapMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapMetadata;
     },
   },
   FetchDeepRelations: {
