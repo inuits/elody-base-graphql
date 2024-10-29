@@ -187,6 +187,10 @@
       "failed":"failed",
       "pending":"pending"
     },
+    "element-labels": {
+      "has-parent-job": "Child jobs of this job",
+      "has-job": "Entities created by this job"
+    },
     "metadata": {
       "labels": {
         "email": "Email",
@@ -205,7 +209,9 @@
         "privacy": "Privacy",
         "started-at": "Started at",
         "started-by": "Started by",
-        "ttl": "Time to live"
+        "ttl": "Time to live",
+        "info": "Info",
+        "status-updated-at": "Status updated at"
       }
     },
     "notifications":{
@@ -547,6 +553,10 @@
       "failed":"mislukt",
       "pending":"pending"
     },
+    "element-labels": {
+      "has-parent-job": "Child jobs van deze job",
+      "has-job": "Entiteiten aangemaakt door deze job"
+    },
     "metadata": {
       "labels": {
         "email": "Email",
@@ -565,7 +575,9 @@
         "privacy": "Privacy",
         "started-at": "Gestart op",
         "started-by": "Gestart door",
-        "ttl": "Vervaltijd"
+        "ttl": "Vervaltijd",
+        "info": "Info",
+        "status-updated-at": "Status updated at"
       }
     },
     "notifications":{

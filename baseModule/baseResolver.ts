@@ -677,6 +677,29 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as ContextMenuActions;
     },
   },
+  Job: {
+    id: async (parent: any, _args, { dataSources }) => {
+      return getEntityId(parent);
+    },
+    uuid: async (parent: any, _args, { dataSources }) => {
+      return getEntityId(parent);
+    },
+    intialValues: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    allowedViewModes: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    relationValues: async (parent: any, _args, { dataSources }) => {
+      return resolveRelations(parent);
+    },
+    entityView: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+    teaserMetadata: async (parent: any, _args, { dataSources }) => {
+      return parent;
+    },
+  },
   User: {
     intialValues: async (parent: any, _args, { dataSources }) => {
       return parent;

@@ -8,7 +8,7 @@ export const jobQueries = gql`
       created_by: keyValue(key: "computed_values.created_by", source: root)
       info: keyValue(key: "info", source: metadata)
       name: keyValue(key: "name", source: metadata)
-      slug: keyValue(key: "_key", source: root)
+      slug: keyValue(key: "_id", source: root)
       status: keyValue(key: "status", source: metadata)
       title: keyValue(key: "name", source: metadata)
       type: keyValue(key: "type", source: metadata)
@@ -61,7 +61,7 @@ export const jobQueries = gql`
       info: keyValue(key: "info", source: metadata)
       modified_at: keyValue(key: "computed_values.modified_at", source: root)
       name: keyValue(key: "name", source: metadata)
-      slug: keyValue(key: "_key", source: root)
+      slug: keyValue(key: "_id", source: root)
       status: keyValue(key: "status", source: metadata)
       title: keyValue(key: "name", source: metadata)
       type: keyValue(key: "type", source: metadata)
@@ -78,6 +78,7 @@ export const jobQueries = gql`
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
             customQueryFilters(input: "GetHasParentJobFilters")
+            customBulkOperations(input: "GetJobsBulkOperations")
           }
           hasJob: entityListElement {
             label(input: "element-labels.has-job")
@@ -86,6 +87,7 @@ export const jobQueries = gql`
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
             customQueryFilters(input: "GetHasJobFilters")
+            customBulkOperations(input: "GetJobsBulkOperations")
           }
         }
       }
@@ -138,15 +140,41 @@ export const jobQueries = gql`
 
   fragment jobFilters on Job {
     advancedFilters {
+      job_type: advancedFilter(
+        type: selection
+        key: ["elody:1|metadata.type.value"]
+        label: "metadata.labels.type"
+        isDisplayedByDefault: true
+        advancedFilterInputForRetrievingOptions: [
+          {
+            type: text
+            key: ["elody:1|metadata.type.value"]
+            value: "*"
+            item_types: ["job"]
+          }
+        ]
+      ) {
+        type
+        key
+        label
+        isDisplayedByDefault
+        advancedFilterInputForRetrievingOptions {
+          type
+          key
+          value
+          item_types
+        }
+        tooltip(value: true)
+      }
       name: advancedFilter(
-        type: text
-        key: "metadata.name.value"
+        type: selection
+        key: ["elody:1|metadata.name.value"]
         label: "metadata.labels.name"
         isDisplayedByDefault: true
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
-            key: "metadata.name.value"
+            key: ["elody:1|metadata.name.value"]
             value: "*"
             item_types: ["job"]
           }
@@ -166,13 +194,13 @@ export const jobQueries = gql`
       }
       status: advancedFilter(
         type: selection
-        key: "metadata.status.value"
+        key: ["elody:1|metadata.status.value"]
         label: "metadata.labels.status"
         isDisplayedByDefault: true
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
-            key: "metadata.status.value"
+            key: ["elody:1|metadata.status.value"]
             value: "*"
             item_types: ["job"]
           }
@@ -192,7 +220,7 @@ export const jobQueries = gql`
       }
       created_at: advancedFilter(
         type: date
-        key: "computed_values.created_at"
+        key: ["elody:1|computed_values.created_at"]
         label: "metadata.labels.started-at"
         isDisplayedByDefault: true
         showTimeForDateFilter: true
@@ -206,7 +234,7 @@ export const jobQueries = gql`
       }
       created_by: advancedFilter(
         type: text
-        key: "computed_values.created_by"
+        key: ["elody:1|computed_values.created_by"]
         label: "metadata.labels.started-by"
         isDisplayedByDefault: true
       ) {
@@ -221,15 +249,9 @@ export const jobQueries = gql`
         defaultValue(value: "job")
         hidden(value: true)
       }
-      job_type: advancedFilter(type: text, key: "metadata.type.value") {
-        type
-        key
-        defaultValue(value: "csv import")
-        hidden(value: true)
-      }
       hasParentJob: advancedFilter(
         type: text
-        key: "relations.hasParentJob._to"
+        key: "relations.hasParentJob.key"
       ) {
         type
         key
@@ -268,7 +290,7 @@ export const jobQueries = gql`
         }
         hasParentJob: advancedFilter(
           type: selection
-          key: "relations.hasParentJob._to"
+          key: "relations.hasParentJob.key"
         ) {
           type
           key
@@ -282,11 +304,33 @@ export const jobQueries = gql`
   query GetHasJobFilters($entityType: String!) {
     EntityTypeFilters(type: $entityType) {
       advancedFilters {
-        hasJob: advancedFilter(type: selection, key: "relations.hasJob._to") {
+        hasJob: advancedFilter(type: selection, key: "relations.hasJob.key") {
           type
           key
           defaultValue(value: [])
           hidden(value: true)
+        }
+      }
+    }
+  }
+
+  query GetJobsBulkOperations {
+    CustomBulkOperations {
+      bulkOperationOptions {
+        options(
+          input: []
+        ) {
+          icon
+          label
+          value
+          primary
+          can
+          actionContext {
+            ...actionContext
+          }
+          bulkOperationModal {
+            ...bulkOperationModal
+          }
         }
       }
     }
