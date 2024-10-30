@@ -1444,6 +1444,7 @@ export const baseSchema = gql`
   enum CustomFormatterTypes {
     link
     pill
+    regexpMatch
   }
 
   type LinkFormatter {
@@ -1462,4 +1463,3 @@ export const baseSchema = gql`
   }
 
   union Formatters = LinkFormatter | PillFormatter | RegexpMatchFormatter
-`;
