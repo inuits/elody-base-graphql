@@ -1463,3 +1463,4 @@ export const baseSchema = gql`
   }
 
   union Formatters = LinkFormatter | PillFormatter | RegexpMatchFormatter
+`
