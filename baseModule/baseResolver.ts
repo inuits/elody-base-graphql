@@ -878,7 +878,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {
-      return input ? input : [ViewModes.ViewModesList];
+      return input ? input : [{viewMode: ViewModes.ViewModesList}];
     },
   },
   MediaFileElement: {

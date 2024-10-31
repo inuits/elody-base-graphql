@@ -113,4 +113,12 @@ export const baseFragments = gql`
     activeViewMode
     labelForTooltip
   }
+  
+  fragment viewModes on ViewModesWithConfig {
+    viewMode
+    config {
+      key
+      value
+    }
+  }
 `;

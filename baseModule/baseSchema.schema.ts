@@ -899,8 +899,26 @@ export const baseSchema = gql`
     relationMetadata(type: String!): IntialValues
   }
 
+  input ViewModesWithConfigInput {
+    viewMode: ViewModes
+    config: [ConfigItemInput]
+  }
+  input ConfigItemInput {
+    key: String!
+    value: JSON!
+  }
+  
+  type ViewModesWithConfig {
+    viewMode: ViewModes
+    config: [ConfigItem]
+  }
+  type ConfigItem {
+    key: String!
+    value: JSON!
+  }
+
   type AllowedViewModes {
-    viewModes(input: [ViewModes]): [ViewModes]
+    viewModes(input: [ViewModesWithConfigInput]): [ViewModesWithConfig]
   }
 
   enum EditStatus {

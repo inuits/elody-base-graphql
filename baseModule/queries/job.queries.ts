@@ -14,7 +14,12 @@ export const jobQueries = gql`
       type: keyValue(key: "type", source: metadata)
     }
     allowedViewModes {
-      viewModes(input: [ViewModesList, ViewModesGrid])
+      viewModes(input: [
+        { viewMode: ViewModesList }
+        { viewMode: ViewModesGrid }
+      ]) {
+        ...viewModes
+      }
     }
     teaserMetadata {
       type: metaData {

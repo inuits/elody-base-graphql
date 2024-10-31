@@ -7,7 +7,11 @@ export const shareLinkQueries = gql`
       ttl: keyValue(key: "ttl", source: metadata)
     }
     allowedViewModes {
-      viewModes(input: [ViewModesList])
+      viewModes(input: [
+        { viewMode: ViewModesList }
+      ]) {
+        ...viewModes
+      }
     }
     teaserMetadata {
       ttl: metaData {
