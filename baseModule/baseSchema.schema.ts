@@ -770,10 +770,15 @@ export const baseSchema = gql`
     customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
   }
 
+  enum MapTypes {
+    heatMap
+  }
+
   input SplitRegexInput {
     separator: String!
     retrieveSection: Int!
   }
+  
   type SplitRegex {
     separator: String!
     retrieveSection: Int!
@@ -788,6 +793,7 @@ export const baseSchema = gql`
     ): JSON!
   }
   type MapComponent {
+    mapType(input: MapTypes!): MapTypes!
     center(input: [Float]!): [Float]!
     zoom(input: Int!): Int!
     blur(input: Int!): Int!

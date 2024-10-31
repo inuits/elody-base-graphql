@@ -86,7 +86,8 @@ import {
   BreadCrumbRoute,
   PermissionRequestInfo,
   SplitRegex,
-  MapMetadata
+  MapMetadata,
+  MapTypes
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1470,6 +1471,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   MapComponent: {
+    mapType: async (parent: unknown, { input }, { dataSources }) => {
+      return input as MapTypes;
+    },
     center: async (parent: unknown, { input }, { dataSources }) => {
       return input as [number];
     },
