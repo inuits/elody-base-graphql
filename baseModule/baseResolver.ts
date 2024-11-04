@@ -1556,6 +1556,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     canCreateEntityFromOption: async (parent, _args, { dataSources }) => {
       return parent.canCreateEntityFromOption || false;
     },
+    dependsOn: async (parent, _args, { dataSources }) => {
+      return parent.dependsOn || '';
+    },
     metadataKeyToCreateEntityFromOption: async (
       parent,
       _args,

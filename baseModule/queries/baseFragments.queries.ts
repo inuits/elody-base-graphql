@@ -63,6 +63,7 @@ export const baseFragments = gql`
     maxAmountOfFiles
     uploadMultiple
     isMetadataField
+    dependsOn
   }
 
   fragment metadataRelation on MetadataRelation {
