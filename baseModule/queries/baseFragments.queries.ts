@@ -30,6 +30,10 @@ export const baseFragments = gql`
       relationTypes
       amount
     }
+    has_one_of_required_metadata {
+      includedMetadataFields
+      amount
+    }
   }
 
   fragment inputfield on InputField {

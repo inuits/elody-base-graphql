@@ -140,6 +140,7 @@ export const baseSchema = gql`
     has_one_of_required_relations
     has_required_relation
     required
+    has_one_of_required_metadata
   }
 
   enum ValidationFields {
@@ -284,6 +285,15 @@ export const baseSchema = gql`
     amount: Int!
   }
 
+  type RequiredOneOfMetadataValidation {
+    includedMetadataFields: [String!]!
+    amount: Int!
+  }
+  input RequiredOneOfMetadataValidationInput {
+    includedMetadataFields: [String!]!
+    amount: Int!
+  }
+
   type Validation {
     value: [ValidationRules]
     customValue: String
@@ -292,6 +302,7 @@ export const baseSchema = gql`
     available_if: Conditional
     has_required_relation: RequiredRelationValidation
     has_one_of_required_relations: RequiredOneOfRelationValidation
+    has_one_of_required_metadata: RequiredOneOfMetadataValidation
   }
 
   input ValidationInput {
@@ -302,6 +313,7 @@ export const baseSchema = gql`
     available_if: ConditionalInput
     has_required_relation: RequiredRelationValidationInput
     has_one_of_required_relations: RequiredOneOfRelationValidationInput
+    has_one_of_required_metadata: RequiredOneOfMetadataValidationInput
   }
 
   type InputField {

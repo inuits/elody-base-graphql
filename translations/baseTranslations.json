@@ -211,7 +211,9 @@
         "started-by": "Started by",
         "ttl": "Time to live",
         "info": "Info",
-        "status-updated-at": "Status updated at"
+        "status-updated-at": "Status updated at",
+        "optional": "optional",
+        "one-of-required": "1 of these fields are required"
       }
     },
     "notifications":{
@@ -577,7 +579,9 @@
         "started-by": "Gestart door",
         "ttl": "Vervaltijd",
         "info": "Info",
-        "status-updated-at": "Status updated at"
+        "status-updated-at": "Status updated at",
+        "optional": "optioneel",
+        "one-of-required": "1 van deze velden zijn verplicht"
       }
     },
     "notifications":{
