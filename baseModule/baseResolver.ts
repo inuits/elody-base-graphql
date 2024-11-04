@@ -977,7 +977,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'undefined';
     },
     fetchDeepRelations: async (parent, { }, { dataSources }) => {
-      return parent.fetchDeepRelations as FetchDeepRelations;
+      return parent as FetchDeepRelations;
     },
     can: async (parent, { input }, { dataSources }) => {
       return input || [];
@@ -1456,6 +1456,8 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   FetchDeepRelations: {
     deepRelationsFetchStrategy: async (parent, { input }, { dataSources }) => {
+      console.log("Deep relations fetch strategy")
+      console.log(input)
       return input as DeepRelationsFetchStrategy;
     },
     entityType: async (parent, { input }, { dataSources }) => {
