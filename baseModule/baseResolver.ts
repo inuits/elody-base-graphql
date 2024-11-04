@@ -983,7 +983,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
-    fetchDeepRelations: async (parent, { }, { dataSources }) => {
+    fetchDeepRelations: async (parent: unknown, { }, { dataSources }) => {
       return parent as FetchDeepRelations;
     },
     can: async (parent, { input }, { dataSources }) => {
