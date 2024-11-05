@@ -5,9 +5,14 @@ import {
   Metadata,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
-import { environment } from '../main';
+import {
+  CollectionAPIEntity,
+  environment,
+  CollectionAPIRelation,
+} from '../main';
 import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
+import { CollectionAPI } from '../sources/collection';
 
 export const getCollectionValueForEntityType = (entityType: string): string => {
   if (!collection.hasOwnProperty(entityType)) {
@@ -54,9 +59,28 @@ export const getMetadataItemValueByKey = (
 
 export const getRelationsByType = (
   relationType: string,
-  relations: [{ key: string; type: string; metadata: Object[] }]
-): { key: string; type: string; metadata: Object[] }[] => {
-  return relations.filter((relation) => relation.type === relationType);
+  relations: CollectionAPIRelation[]
+): CollectionAPIRelation[] => {
+  return relations.filter(
+    (relation: CollectionAPIRelation) => relation.type === relationType
+  );
+};
+
+export const getPrimaryMediaFileIDOfEntity = (
+  entity: CollectionAPIEntity
+): string | undefined => {
+  const mediaFileRelations = getRelationsByType(
+    'hasMediafile',
+    entity.relations
+  );
+  let primaryMediaFile: CollectionAPIRelation | undefined =
+    mediaFileRelations.find(
+      (mediaFile: CollectionAPIRelation) => mediaFile.is_primary
+    );
+
+  if (!primaryMediaFile) primaryMediaFile = mediaFileRelations[0];
+
+  return primaryMediaFile.key || undefined;
 };
 
 export const getEntityId = (entity: any) => {
@@ -105,12 +129,17 @@ export const determineAdvancedFiltersForIteration = (
   return filtersIteration;
 };
 
-export const compareRelationsFilterKey = (key: string, comparison: string): boolean  => {
+export const compareRelationsFilterKey = (
+  key: string,
+  comparison: string
+): boolean => {
   const match = key.match(/relations\.(.*?)\.key/);
   if (!match || match.length < 2) return false;
   return match[1] === comparison;
-}
+};
 
 export const extractErrorCode = (error: any): number => {
-  return  error.extensions?.statusCode || error.extensions?.response?.status || 500;
-}
+  return (
+    error.extensions?.statusCode || error.extensions?.response?.status || 500
+  );
+};
