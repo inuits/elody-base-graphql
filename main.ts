@@ -34,6 +34,10 @@ import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
 import {
+  getRelationsByType,
+  getPrimaryMediaFileIDOfEntity,
+} from './helpers/helpers';
+import {
   Collection,
   InputField,
   PermissionRequestInfo,
@@ -50,6 +54,12 @@ import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
 import { serveFrontendThroughExpress } from './endpoints/frontendEndpoint';
+import type {
+  CollectionAPIEntity,
+  CollectionAPIMediaFile,
+  CollectionAPIMetadata,
+  CollectionAPIRelation,
+} from './types/collectionAPITypes';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -265,12 +275,23 @@ const start = (
 };
 
 export default start;
-export type { ContextValue, DataSources, Environment, FormattersConfig };
+export type {
+  ContextValue,
+  DataSources,
+  Environment,
+  FormattersConfig,
+  CollectionAPIEntity,
+  CollectionAPIMediaFile,
+  CollectionAPIMetadata,
+  CollectionAPIRelation,
+};
 export {
   environment,
   baseModule,
   baseSchema,
   resolveMetadata,
+  getRelationsByType,
+  getPrimaryMediaFileIDOfEntity,
   parseIdToGetMoreData,
   applyPromEndpoint,
   loadTranslations,
