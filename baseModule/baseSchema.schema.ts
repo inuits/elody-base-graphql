@@ -1142,10 +1142,20 @@ export const baseSchema = gql`
     dryRunUpload(input: Boolean): Boolean
     entityTypesForUpload(input: [Entitytyping]): [Entitytyping]
   }
+  
+  type HiddenField {
+    hidden: Boolean!
+    searchValueForFilter: String!
+  }  
+  input HiddenFieldInput {
+    hidden: Boolean!
+    searchValueForFilter: String!
+  }
 
   type PanelMetaData {
     label(input: String!): String!
     key(input: String!): String!
+    hiddenField(input: HiddenFieldInput!): HiddenField
     unit(input: Unit!): Unit!
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!

@@ -121,4 +121,9 @@ export const baseFragments = gql`
       value
     }
   }
+  
+  fragment hiddenField on HiddenField {
+    hidden
+    searchValueForFilter
+  }
 `;

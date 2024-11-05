@@ -87,7 +87,8 @@ import {
   PermissionRequestInfo,
   SplitRegex,
   MapMetadata,
-  MapTypes
+  MapTypes,
+  HiddenField
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1142,6 +1143,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     key: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    hiddenField: async (_source, { input }, { dataSources }) => {
+      return input as HiddenField;
     },
     unit: async (_source, { input }, { dataSources }) => {
       return input;
