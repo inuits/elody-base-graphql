@@ -62,6 +62,7 @@ export const getRelationsByType = (
   relationType: string,
   relations: CollectionAPIRelation[]
 ): CollectionAPIRelation[] => {
+  if (!relations) return [];
   return relations.filter(
     (relation: CollectionAPIRelation) => relation.type === relationType
   );
@@ -74,6 +75,9 @@ export const getPrimaryMediaFileIDOfEntity = (
     'hasMediafile',
     entity.relations
   );
+
+  if (!mediaFileRelations) return undefined;
+
   let primaryMediaFile: CollectionAPIRelation | undefined =
     mediaFileRelations.find(
       (mediaFile: CollectionAPIRelation) => mediaFile.is_primary
