@@ -13,6 +13,7 @@ import {
 import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
 import { CollectionAPI } from '../sources/collection';
+import * as console from 'node:console';
 
 export const getCollectionValueForEntityType = (entityType: string): string => {
   if (!collection.hasOwnProperty(entityType)) {
@@ -81,6 +82,18 @@ export const getPrimaryMediaFileIDOfEntity = (
   if (!primaryMediaFile) primaryMediaFile = mediaFileRelations[0];
 
   return primaryMediaFile.key || undefined;
+};
+
+export const alterDimensionsOfIIIFUrl = (
+  IIIFUrl: string,
+  height: number | undefined,
+  width: number | undefined
+): string => {
+  const regex = /\/full\/,\d+\/\d+\//;
+  const stringHeight = height ? height.toString() : '';
+  const stringWidth = width ? width.toString() : '';
+
+  return IIIFUrl.replace(regex, `/full/${stringHeight},${stringWidth}/0/`);
 };
 
 export const getEntityId = (entity: any) => {

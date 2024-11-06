@@ -36,6 +36,7 @@ import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
 import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
+  alterDimensionsOfIIIFUrl,
 } from './helpers/helpers';
 import {
   Collection,
@@ -292,6 +293,7 @@ export {
   resolveMetadata,
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
+  alterDimensionsOfIIIFUrl,
   parseIdToGetMoreData,
   applyPromEndpoint,
   loadTranslations,
