@@ -54,7 +54,10 @@ import { parseIdToGetMoreData } from './parsers/entity';
 import { StorageAPI } from './sources/storage';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
-import { serveFrontendThroughExpress } from './endpoints/frontendEndpoint';
+import {
+  serveFrontendThroughExpress,
+  serveFrontend,
+} from './endpoints/frontendEndpoint';
 import type {
   CollectionAPIEntity,
   CollectionAPIMediaFile,
@@ -305,4 +308,5 @@ export {
   resolveRelations,
   simpleReturn,
   getRoutesObject,
+  serveFrontend,
 };
