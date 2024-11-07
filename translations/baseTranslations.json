@@ -343,7 +343,8 @@
         "editmode-noneselected": "To use this action, you have to be in editmode and you may not select items.",
         "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item.",
         "noneselected": "To use this action, you may not select items.",
-        "someselected": "To use this action, you have to select at least one item."
+        "someselected": "To use this action, you have to select at least one item.",
+        "readmode": "To use this action you have to be in readmode"
       },
       "buttons": {
         "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
@@ -708,7 +709,8 @@
         "readmode-noneselected": "Om deze actie te gebruiken moet je in de leesmode zijn en mag je geen items geselecteerd hebben.",
         "readmode-someselected": "Om deze actie te gebruiken moet je in de leesmode zijn en moet je minstens één item geselecteerd hebben.",
         "editmode-noneselected": "Om deze actie te gebruiken moet je in de editmode zijn en mag je geen items geselecteerd hebben.",
-        "editmode-someselected": "Om deze actie te gebruiken moet je in de editmode zijn en moet je minstens één item geselecteerd hebben."
+        "editmode-someselected": "Om deze actie te gebruiken moet je in de editmode zijn en moet je minstens één item geselecteerd hebben.",
+        "readmode": "Om deze actie te gebruiken moet je in de leesmode zijn"
       },
       "buttons": {
         "disabled-upload-button": "De knop is gedeactiveerd omdat er nog velden voor de upload ontbreken.",
