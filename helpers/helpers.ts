@@ -87,6 +87,8 @@ export const getPrimaryMediaFileIDOfEntity = (
     if (!primaryMediaFile && mediaFileRelations)
       primaryMediaFile = mediaFileRelations[0];
 
+    if (!primaryMediaFile) return undefined;
+
     return primaryMediaFile.key;
   } catch {
     return undefined;
