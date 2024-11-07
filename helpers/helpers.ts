@@ -71,21 +71,26 @@ export const getRelationsByType = (
 export const getPrimaryMediaFileIDOfEntity = (
   entity: CollectionAPIEntity
 ): string | undefined => {
-  const mediaFileRelations = getRelationsByType(
-    'hasMediafile',
-    entity.relations
-  );
-
-  if (!mediaFileRelations) return undefined;
-
-  let primaryMediaFile: CollectionAPIRelation | undefined =
-    mediaFileRelations.find(
-      (mediaFile: CollectionAPIRelation) => mediaFile.is_primary
+  try {
+    const mediaFileRelations = getRelationsByType(
+      'hasMediafile',
+      entity.relations
     );
 
-  if (!primaryMediaFile) primaryMediaFile = mediaFileRelations[0];
+    if (!mediaFileRelations) return undefined;
 
-  return primaryMediaFile.key || undefined;
+    let primaryMediaFile: CollectionAPIRelation | undefined =
+      mediaFileRelations.find(
+        (mediaFile: CollectionAPIRelation) => mediaFile.is_primary
+      );
+
+    if (!primaryMediaFile && mediaFileRelations)
+      primaryMediaFile = mediaFileRelations[0];
+
+    return primaryMediaFile.key;
+  } catch {
+    return undefined;
+  }
 };
 
 export const alterDimensionsOfIIIFUrl = (
