@@ -890,7 +890,8 @@ export const baseSchema = gql`
       uuid: String
       metadataKeyAsLabel: String
       rootKeyAsLabel: String
-      containsRelationProperty: String
+      containsRelationPropertyKey: String
+      containsRelationPropertyValue: String
       relationKey: String
       relationEntityType: String
       keyOnMetadata: String

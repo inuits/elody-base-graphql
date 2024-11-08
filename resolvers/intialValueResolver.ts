@@ -42,7 +42,8 @@ export const resolveIntialValueRelations = async (
   key: string,
   metadataKeyAsLabel: string,
   rootKeyAsLabel: string,
-  containsRelationProperty: string,
+  containsRelationPropertyKey: string,
+  containsRelationPropertyValue: string,
   relationEntityType: string,
   formatter: string = '',
   formatterSettings?: FormattersConfig
@@ -52,9 +53,11 @@ export const resolveIntialValueRelations = async (
     const relations = parent?.relations.filter(
       (relation: any) => relation.type === key
     );
-    if (containsRelationProperty)
+    if (containsRelationPropertyKey)
       relations.forEach((rel: any) => {
-        if (rel[containsRelationProperty]) relation = rel;
+        if (String(rel[containsRelationPropertyKey]) == containsRelationPropertyValue) {
+          relation = rel;
+        }
       });
     else relation = relations?.[0];
 
