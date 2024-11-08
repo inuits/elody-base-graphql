@@ -1614,6 +1614,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isMetadataField: async (parent, { input }, { dataSources }) => {
       return parent.isMetadataField || false;
     },
+    multiple: async (parent, _args, { dataSources }) => {
+      return parent.multiple || false;
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

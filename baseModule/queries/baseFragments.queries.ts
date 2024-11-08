@@ -68,6 +68,7 @@ export const baseFragments = gql`
     uploadMultiple
     isMetadataField
     dependsOn
+    multiple
   }
 
   fragment metadataRelation on MetadataRelation {

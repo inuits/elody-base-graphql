@@ -337,6 +337,7 @@ export const baseSchema = gql`
     fieldKeyToSave(input: String): String
     isMetadataField(input: Boolean): Boolean
     dependsOn: String
+    multiple: Boolean
   }
 
   enum TypeModals {
