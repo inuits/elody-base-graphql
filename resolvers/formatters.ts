@@ -35,11 +35,13 @@ const handleLinkFormatterForRelations = ({
 }): { label: string; link: string } | string => {
   let value: string = entity[formatterSettings.value as keyof BaseEntity];
   let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value;
+  let link = formatterSettings.link;
   if (!label) {
     label = entity;
     value = entity as unknown as string;
+    link = "/not-found";
   };
-  return { label, link: formatterSettings.link.replace("$value", value) };
+  return { label, link: link.replace("$value", value) };
 };
 
 const handlePillFormatter = ({
