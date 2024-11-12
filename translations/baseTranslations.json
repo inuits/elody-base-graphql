@@ -263,6 +263,11 @@
         }
       }
     },
+    "error-codes": {
+      "R0002": "An unknown error occurred",
+      "R0004": "Item not found",
+      "W0004": "Item not found"
+    },
     "pagination":{
       "page":"page",
       "of":"of"

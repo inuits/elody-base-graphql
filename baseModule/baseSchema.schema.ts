@@ -583,7 +583,7 @@ export const baseSchema = gql`
     routeName: RouteNames
     entityType: Entitytyping
   }
-  
+
   input DropdownOptionInput {
     icon: DamsIcons
     label: String!
@@ -779,7 +779,7 @@ export const baseSchema = gql`
     separator: String!
     retrieveSection: Int!
   }
-  
+
   type SplitRegex {
     separator: String!
     retrieveSection: Int!
@@ -807,22 +807,24 @@ export const baseSchema = gql`
     useMethodsAndFetch
   }
   input BreadCrumbRouteInput {
-    relation: String,
-    entityType: Entitytyping,
-    overviewPage: RouteNames,
+    relation: String
+    entityType: Entitytyping
+    overviewPage: RouteNames
   }
   type BreadCrumbRoute {
-    relation: String,
-    entityType: Entitytyping,
-    overviewPage: RouteNames,
+    relation: String
+    entityType: Entitytyping
+    overviewPage: RouteNames
   }
   type FetchDeepRelations {
-    deepRelationsFetchStrategy(input: DeepRelationsFetchStrategy): DeepRelationsFetchStrategy
+    deepRelationsFetchStrategy(
+      input: DeepRelationsFetchStrategy
+    ): DeepRelationsFetchStrategy
     entityType(input: Entitytyping): Entitytyping
     routeConfig(input: [BreadCrumbRouteInput]): [BreadCrumbRoute]
     amountOfRecursions(input: Int): Int
   }
-  
+
   type MetadataFieldOption {
     label: String
     value: String!
@@ -909,7 +911,7 @@ export const baseSchema = gql`
     key: String!
     value: JSON!
   }
-  
+
   type ViewModesWithConfig {
     viewMode: ViewModes
     config: [ConfigItem]
@@ -1144,11 +1146,11 @@ export const baseSchema = gql`
     dryRunUpload(input: Boolean): Boolean
     entityTypesForUpload(input: [Entitytyping]): [Entitytyping]
   }
-  
+
   type HiddenField {
     hidden: Boolean!
     searchValueForFilter: String!
-  }  
+  }
   input HiddenFieldInput {
     hidden: Boolean!
     searchValueForFilter: String!
