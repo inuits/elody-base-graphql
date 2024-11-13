@@ -37,6 +37,11 @@ export const baseSchema = gql`
     private
   }
 
+  enum ErrorCodeType {
+    read
+    write
+  }
+
   enum Unit {
     DATETIME_DEFAULT
     DATETIME_DMY12
