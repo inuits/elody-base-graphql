@@ -88,6 +88,8 @@ export const resolveIntialValueRelations = async (
       )?.value || relation.key
 
       if (!formatter) return result;
+      if (formatter === "pill")
+        return formatterFactory(ResolverFormatters.Metadata)({label: result ?? '', formatter });
       const relationsFormatters = formatterFactory(ResolverFormatters.Relations);
       return { ...relationsFormatters(formatter, formatterSettings)({ entity: type }), formatter };
     }
