@@ -357,6 +357,7 @@
         "disabled-save-button": "This button is disabled because some fields are not correctly filled in.",
         "disabled-updateMetadata-button": "This button is disabled because the type or csv fields are not correctly filled in."
       },
+      "required": "This checkbox is required",
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
     },
     "contextMenu": {
@@ -723,6 +724,7 @@
         "disabled-save-button": "De knop is gedeactiveerd omdat enkele velden niet correct zijn ingevuld.",
         "disabled-updateMetadata-button": "De knop is gedeactiveerd omdat het type of een csv niet is ingevuld."
       },
+      "required": "Deze checkbox is verplicht",
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
     },
     "contextMenu": {
