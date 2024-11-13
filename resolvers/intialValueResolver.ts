@@ -88,7 +88,7 @@ export const resolveIntialValueRelations = async (
       )?.value || relation.key
 
       if (!formatter) return result;
-      if (formatter === "pill")
+      if (formatter === 'pill')
         return formatterFactory(ResolverFormatters.Metadata)({label: result ?? '', formatter });
       const relationsFormatters = formatterFactory(ResolverFormatters.Relations);
       return { ...relationsFormatters(formatter, formatterSettings)({ entity: type }), formatter };
@@ -105,25 +105,31 @@ export const resolveIntialValueRelationMetadata = (
   uuid: string,
   relationKey: string,
   formatter: string
-): string | {label: string, formatter: string } => {
+): string | string[] | {label: string, formatter: string } => {
   try {
-    let label = '';
+    let label: string | string[] = '';
     if (relationKey === 'hasTenant' && key === 'roles') {
-      if (!uuid || uuid === 'undefined')
+      const roles: string[] = [];
+      if (!uuid || uuid === 'undefined') {
         label = parent?.relations
           .filter((relation: any) => relation.type === relationKey)
-          .flatMap((relation: any) => {
+          .forEach((relation: any) => {
             const zone = relation?.['zone'].split('BE-')?.[1];
-            if (zone) return `${zone}:${relation[key]}`;
-            else return relation[key];
+            for (const role of relation[key]) {
+              if (zone) roles.push(`${zone}:${role}`);
+              else roles.push(role);
+            }
           });
-
-      if (uuid && !uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
-      label = parent?.relations.find(
-        (relation: any) =>
-          relation.type === relationKey &&
-          (relation.key === uuid || relation.key === 'tenant:super')
-      )[key];
+      } else {
+        if (!uuid.startsWith('tenant:')) uuid = `tenant:${uuid}`;
+        const tenantRoles = parent?.relations.find(
+          (relation: any) =>
+            relation.type === relationKey &&
+            (relation.key === uuid || relation.key === 'tenant:super')
+        )[key];
+        roles.push(...tenantRoles)
+      }
+      label = roles;
     } else {
       label = parent?.relations
         .find(
