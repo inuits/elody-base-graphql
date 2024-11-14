@@ -266,7 +266,8 @@
     "error-codes": {
       "R0002": "An unknown error occurred",
       "R0004": "Item not found",
-      "W0004": "Item not found"
+      "W0004": "Item not found",
+      "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded"
     },
     "pagination":{
       "page":"page",
@@ -637,6 +638,12 @@
           "description":"Je hebt geen toegang tot deze pagina/actie"
         }
       }
+    },
+    "error-codes": {
+      "R0002": "Er is een onbekende fout opgetreden",
+      "R0004": "Item niet gevonden",
+      "W0004": "Item niet gevonden",
+      "W4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload"
     },
     "pagination":{
       "page":"pagina",
