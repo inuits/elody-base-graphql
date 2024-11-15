@@ -396,6 +396,21 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return customFormatters;
     },
+    CustomTypeUrlMapping: async (
+      _source,
+      _,
+      { customTypeUrlMapping }
+    ) => {
+      const reverseMapping: { [type: string]: string } = Object.entries(customTypeUrlMapping).reduce(
+        (acc, [key, value]) => {
+          acc[value] = key;
+          return acc;
+        },
+        {} as { [type: string]: string }
+      );
+
+      return { mapping: customTypeUrlMapping, reverseMapping };
+    },
     PermissionMappingEntityDetail: async (
       _source,
       { id, entityType },

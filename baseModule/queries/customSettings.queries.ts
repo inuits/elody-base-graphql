@@ -5,3 +5,9 @@ export const customFormattersSettings = gql`
     CustomFormattersSettings
   }
 `;
+
+export const customTypeToUrlMapping = gql`
+  query GetCustomTypeUrlMapping {
+    CustomTypeUrlMapping
+  }
+`;

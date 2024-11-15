@@ -23,6 +23,7 @@ export interface ContextValue {
   dataSources: DataSources;
   customPermissions: { [key: string]: PermissionRequestInfo };
   customFormatters: FormattersConfig;
+  customTypeUrlMapping: TypeUrlMapping;
 }
 // TODO: Remove if unused
 export type filter = {
@@ -42,5 +43,7 @@ export type FormattersConfig = {
     [key: string]: Formatters
   }
 }
+
+export type TypeUrlMapping = { [type: string]: string };
 
 export type Config = Record<string, Array<string>> & Filters;

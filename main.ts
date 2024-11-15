@@ -44,7 +44,7 @@ import {
   PermissionRequestInfo,
 } from '../../generated-types/type-defs';
 import { CollectionAPI } from './sources/collection';
-import { ContextValue, DataSources, FormattersConfig } from './types';
+import { ContextValue, DataSources, FormattersConfig, TypeUrlMapping } from './types';
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
@@ -114,7 +114,8 @@ const start = (
     | { [key: string]: Collection }
     | undefined = undefined,
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
-  customFormatters: FormattersConfig = {}
+  customFormatters: FormattersConfig = {},
+  customTypeUrlMapping: TypeUrlMapping = {}
 ) => {
   environment = appConfig;
 
@@ -191,7 +192,7 @@ const start = (
               OcrService: new OcrService({ session, cache }),
             });
 
-          return { dataSources, customPermissions, customFormatters };
+          return { dataSources, customPermissions, customFormatters, customTypeUrlMapping };
         },
       })
     );
