@@ -1280,7 +1280,8 @@ export const baseSchema = gql`
   }
 
   enum ContextMenuElodyActionEnum {
-    Delete
+    DeleteRelation
+    DeleteEntity
     Share
   }
 

@@ -371,7 +371,8 @@
 
       },
       "contextMenuElodyAction": {
-        "delete": "Delete the relational link between these two entities",
+        "delete-relation": "Delete the relational link between these two entities",
+        "delete-entity": "Delete this entity",
         "share": "Share link"
       }
     }
@@ -743,7 +744,8 @@
         "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
-        "delete": "Verwijder de relatie tussen deze twee entiteiten",
+        "delete-relation": "Verwijder de relatie tussen deze twee entiteiten",
+        "delete-entity": "Verwijder deze entiteit",
         "share": "Deel link"
       }
     }
