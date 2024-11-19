@@ -397,12 +397,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return customFormatters;
     },
     CustomTypeUrlMapping: async (
-      _source,
-      _,
-      { customTypeUrlMapping }
+      _source: any,
+      _: any,
+      { customTypeUrlMapping }: any
     ) => {
       const reverseMapping: { [type: string]: string } = Object.entries(customTypeUrlMapping).reduce(
-        (acc, [key, value]) => {
+        (acc, [key, value]: any) => {
           acc[value] = key;
           return acc;
         },
