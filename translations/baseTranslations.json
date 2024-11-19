@@ -434,6 +434,7 @@
         }
       },
       "download-mediafiles":"Download media bestanden",
+      "reorder-entities-with-csv": "Opnieuw orderen van entiteiten met csv",
       "export-to-csv":"Exporteer naar CSV",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan"
