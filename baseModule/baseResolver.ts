@@ -1513,8 +1513,6 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   FetchDeepRelations: {
     deepRelationsFetchStrategy: async (parent, { input }, { dataSources }) => {
-      console.log("Deep relations fetch strategy")
-      console.log(input)
       return input as DeepRelationsFetchStrategy;
     },
     entityType: async (parent, { input }, { dataSources }) => {
