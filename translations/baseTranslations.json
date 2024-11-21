@@ -45,7 +45,7 @@
       "cancel":"cancel",
       "delete":"delete",
       "confirm-selection":"confirm selection",
-      "add-relation": "Add an existing {0}",
+      "add-relation": "Add a {0}",
       "csv-export":{
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
@@ -267,6 +267,8 @@
       "R0002": "An unknown error occurred",
       "R0004": "Item not found",
       "W0004": "Item not found",
+      "R1004": "You have no permission to see this",
+      "W1004": "You have no permission to update this",
       "W11000": "The institute for this record doesn't exist yet. Please first create the institute before creating this asset.",
       "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded"
     },
@@ -646,6 +648,8 @@
       "R0002": "Er is een onbekende fout opgetreden",
       "R0004": "Item niet gevonden",
       "W0004": "Item niet gevonden",
+      "R1004": "Je hebt geen permissie om dit te bekijken",
+      "W1004": "Je hebt geen permissie om dit te updaten",
       "W11000": "Het instituut voor dit record bestaat nog niet. Gelieve eerst het instituut aan te maken vooraleer deze asset aan te maken",
       "W4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload"
     },
