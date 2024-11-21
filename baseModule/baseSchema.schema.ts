@@ -419,6 +419,7 @@ export const baseSchema = gql`
     Compass
     Create
     Database
+    Download
     ExclamationTriangle
     Focus
     FocusTarget
