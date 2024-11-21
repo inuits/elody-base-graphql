@@ -244,8 +244,14 @@
         }
       },
       "errors": {
+        "construct-date-error": {
+          "title": "Date must be an exiting date"
+        },
+        "future-date-error": {
+          "title": "Date can not be in the future"
+        },
         "validation-error": {
-          "title": "Something's missing or incorrect"
+          "title": "Something went wrong"
         }
       },
       "graphql-errors":{
@@ -625,6 +631,12 @@
         }
       },
       "errors": {
+        "construct-date-error": {
+          "title": "Datum moet bestaan"
+        },
+        "future-date-error": {
+          "title": "Datum mag niet in de toekomst zijn"
+        },
         "validation-error": {
           "title": "Iets ontbreekt of is niet juist."
         }

@@ -147,6 +147,7 @@ export const baseSchema = gql`
     required
     has_one_of_required_metadata
     max_date_today
+    existing_date
   }
 
   enum ValidationFields {
