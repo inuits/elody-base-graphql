@@ -1176,6 +1176,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
     },
+    tooltip: async (_source, { input }, { dataSources }) => {
+      return input ?? "";
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {

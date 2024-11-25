@@ -1173,6 +1173,7 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
+    tooltip(input: String!): String!
   }
 
   type PanelRelationMetaData {
