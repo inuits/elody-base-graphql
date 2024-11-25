@@ -149,6 +149,7 @@ export const baseSchema = gql`
     has_one_of_required_metadata
     max_date_today
     existing_date
+    regex
   }
 
   enum ValidationFields {
@@ -311,6 +312,7 @@ export const baseSchema = gql`
     has_required_relation: RequiredRelationValidation
     has_one_of_required_relations: RequiredOneOfRelationValidation
     has_one_of_required_metadata: RequiredOneOfMetadataValidation
+    regex: String
   }
 
   input ValidationInput {
@@ -322,6 +324,7 @@ export const baseSchema = gql`
     has_required_relation: RequiredRelationValidationInput
     has_one_of_required_relations: RequiredOneOfRelationValidationInput
     has_one_of_required_metadata: RequiredOneOfMetadataValidationInput
+    regex: String
   }
 
   type InputField {

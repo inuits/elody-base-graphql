@@ -34,6 +34,7 @@ export const baseFragments = gql`
       includedMetadataFields
       amount
     }
+    regex
   }
 
   fragment inputfield on InputField {
