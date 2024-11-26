@@ -77,8 +77,10 @@ export const baseSchema = gql`
     color
     dropdown
     textarea
-    dropdownMultiselect
-    dropdownSingleselect
+    dropdownMultiselectRelations
+    dropdownMultiselectMetadata
+    dropdownSingleselectRelations
+    dropdownSingleselectMetadata
     fileUpload
     csvUpload
     baseFileSystemImportField
