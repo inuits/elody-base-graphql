@@ -337,7 +337,7 @@
       },
       "errors": {
         "missing": "{0} is missing",
-        "extraneous": "{0} is extraneous",
+        "extraneous": "{0} not found in CSV",
         "dry-run-failed": "Something went wrong while running CSV validation"
       },
       "csv-template-link": "Download example with instructions for"
@@ -723,7 +723,7 @@
         },
         "errors": {
           "missing": "{0} ontbreekt",
-          "extraneous": "{0} is overbodig",
+          "extraneous": "{0} niet gevonden in CSV",
           "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
         },
       "csv-template-link": "Download voorbeeld met instructies voor"
