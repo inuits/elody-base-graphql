@@ -163,11 +163,12 @@ const applyMediaFileEndpoint = (
       const response = await datasource.get(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
       );
+      const urlWithoutProtocol: string = new URL(iiifUrlFrontend).host;
       res.send(
         JSON.parse(
           JSON.stringify(response).replace(
-            iiifUrlFrontend,
-            `//${req.headers.host}/api`
+            urlWithoutProtocol,
+            `${req.headers.host}/api`
           )
         )
       );
