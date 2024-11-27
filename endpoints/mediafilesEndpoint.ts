@@ -170,7 +170,7 @@ const applyMediaFileEndpoint = (
         JSON.parse(
           JSON.stringify(response).replace(
             urlWithoutProtocol,
-            `${req.headers.host}/api`
+            `${req.headers.host}/api/`
           )
         )
       );
