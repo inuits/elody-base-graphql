@@ -6,7 +6,6 @@ import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
-import { req } from 'agent-base';
 
 let staticToken: string | undefined | null = undefined;
 
