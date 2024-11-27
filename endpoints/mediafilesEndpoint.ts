@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import { Express, response } from 'express';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { manager } from '../auth/index';
 import { environment as env } from '../main';
@@ -6,6 +6,7 @@ import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
+import { req } from 'agent-base';
 
 let staticToken: string | undefined | null = undefined;
 
@@ -163,7 +164,9 @@ const applyMediaFileEndpoint = (
       const response = await datasource.get(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
       );
-      const urlWithoutProtocol: string = new URL(iiifUrlFrontend).host;
+      const iiifUrlObject: URL = new URL(iiifUrlFrontend);
+      const urlWithoutProtocol: string =
+        iiifUrlObject.host + iiifUrlObject.pathname;
       res.send(
         JSON.parse(
           JSON.stringify(response).replace(
