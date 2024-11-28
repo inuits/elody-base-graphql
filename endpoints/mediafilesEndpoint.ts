@@ -189,7 +189,7 @@ const applyMediaFileEndpoint = (
       );
 
       if (!response.ok) {
-        res.status(500).end(JSON.stringify(response));
+        throw response;
       }
 
       const blob = await response.blob();
@@ -198,10 +198,7 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      const errorCode: number = extractErrorCode(error);
-      if (errorCode === 403)
-        res.status(200).end('Not authorized to access this image');
-      else res.status(errorCode).end(JSON.stringify(error));
+      res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
 
