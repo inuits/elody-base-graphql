@@ -174,9 +174,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedSearchValue,
         advancedFilterInputs,
         searchInputType,
+        preferredLanguage
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
       let entities: EntitiesResults = {
         results: [],
         sortKeys: [],
@@ -910,7 +913,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
-          const metadata = await resolveMetadata(parent, [key], undefined);
+          const metadata = await resolveMetadata(parent, [key], undefined, 'keyLabel');
           if (metadata.length > 1) {
             return resolveMetadataItemOfPreferredLanguage(
               metadata,
