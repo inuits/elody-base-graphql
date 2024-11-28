@@ -913,7 +913,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         if (source === KeyValueSource.Metadata) {
           const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
-          const metadata = await resolveMetadata(parent, [key], undefined, 'keyLabel');
+          const metadata = await resolveMetadata(parent, [key], undefined);
           if (metadata.length > 1) {
             return resolveMetadataItemOfPreferredLanguage(
               metadata,
