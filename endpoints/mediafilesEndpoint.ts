@@ -187,9 +187,7 @@ const applyMediaFileEndpoint = (
       );
 
       if (!response.ok) {
-        res
-          .status(500)
-          .end(JSON.stringify('A problem occurred while fetching mediafile'));
+        res.status(500).end(JSON.stringify(response));
       }
 
       const blob = await response.blob();
