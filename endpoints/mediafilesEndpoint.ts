@@ -181,15 +181,15 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/iiif', async (req, res) => {
     try {
-      const response = await fetchWithTokenRefresh(
+      const response = await fetch(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
-        { method: 'GET' },
-        req,
-        true
+        { headers: req.headers as any }
       );
 
       if (!response.ok) {
-        throw response;
+        res
+          .status(500)
+          .end(JSON.stringify('A problem occurred while fetching mediafile'));
       }
 
       const blob = await response.blob();
@@ -198,7 +198,10 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
+      const errorCode: number = extractErrorCode(error);
+      if (errorCode === 403)
+        res.status(200).end('Not authorized to access this image');
+      else res.status(errorCode).end(JSON.stringify(error));
     }
   });
 

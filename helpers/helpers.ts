@@ -12,8 +12,6 @@ import {
 } from '../main';
 import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
-import { CollectionAPI } from '../sources/collection';
-import * as console from 'node:console';
 
 export const getCollectionValueForEntityType = (entityType: string): string => {
   if (!collection.hasOwnProperty(entityType)) {
@@ -164,6 +162,9 @@ export const compareRelationsFilterKey = (
 
 export const extractErrorCode = (error: any): number => {
   return (
-    error.extensions?.statusCode || error.extensions?.response?.status || 500
+    error.extensions?.statusCode ||
+    error.extensions?.response?.status ||
+    error.status ||
+    500
   );
 };
