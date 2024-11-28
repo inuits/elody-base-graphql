@@ -181,9 +181,11 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/iiif', async (req, res) => {
     try {
-      const response = await fetch(
+      const response = await fetchWithTokenRefresh(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
-        { headers: req.headers as any }
+        { method: 'GET' },
+        req,
+        true
       );
 
       if (!response.ok) {
