@@ -327,7 +327,7 @@
       "create-set": "Set",
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
-      "delete-entity-window": "Delete entity window",
+      "delete-entity-window": "Delete entity",
       "create-share-link": "Create share link"
     },
     "upload-fields":{
@@ -713,7 +713,7 @@
       "create-set": "Set",
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
-      "delete-entity-window": "Verwijder entiteit window",
+      "delete-entity-window": "Verwijder entiteit",
       "create-share-link": "Maak share link"
     },
     "upload-fields": {
