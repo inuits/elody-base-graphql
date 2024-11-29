@@ -488,6 +488,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
       try {
+        operation.push("txt");
         const response = await dataSources.OcrService.generateOcrWithAsset(
           assetId,
           operation,
