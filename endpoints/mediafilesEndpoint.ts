@@ -160,12 +160,17 @@ const applyMediaFileEndpoint = (
   app.use('/api/iiif*.json', async (req, res) => {
     try {
       const datasource = new AuthRESTDataSource({ session: req.session });
-      const response = await datasource.get(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
-      );
+      const cantaloupeUrl: string = `${iiifUrlFrontend}${req.originalUrl.replace(
+        '/api',
+        ''
+      )}`;
+      console.log({ cantaloupeUrl });
+      const response = await datasource.get(cantaloupeUrl);
+      console.log(response);
       const iiifUrlObject: URL = new URL(iiifUrlFrontend);
       const urlWithoutProtocol: string =
         iiifUrlObject.host + iiifUrlObject.pathname;
+      console.log({ urlWithoutProtocol });
       res.send(
         JSON.parse(
           JSON.stringify(response).replace(
