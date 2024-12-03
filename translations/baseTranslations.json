@@ -46,6 +46,8 @@
       "delete":"delete",
       "confirm-selection":"confirm selection",
       "add-relation": "Add a {0}",
+      "add-new-relation": "Add new {0}",
+      "add-existing-relation": "Add existing {0}",
       "csv-export":{
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
@@ -434,6 +436,8 @@
       "delete":"verwijderen",
       "confirm-selection":"selectie bevestigen",
       "add-relation": "Voeg een bestaande {0} toe",
+      "add-new-relation": "Voeg nieuwe {0} toe",
+      "add-existing-relation": "Voeg bestaande {0} toe",
       "csv-export":{
         "assets": "Exporteer een csv bestand van assets",
         "mediafiles": "Exporteer een csv bestand van mediafiles",
