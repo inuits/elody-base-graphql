@@ -92,6 +92,10 @@ export const baseFragments = gql`
   fragment actionContext on ActionContext {
     entitiesSelectionType
     activeViewMode
+    matchMetadataValue {
+      matchKey
+      matchValue
+    }
     labelForTooltip
   }
 
@@ -108,12 +112,6 @@ export const baseFragments = gql`
     formRelationType
     askForCloseConfirmation
     neededPermission
-  }
-
-  fragment actionContext on ActionContext {
-    entitiesSelectionType
-    activeViewMode
-    labelForTooltip
   }
   
   fragment viewModes on ViewModesWithConfig {

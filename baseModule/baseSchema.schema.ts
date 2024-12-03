@@ -562,15 +562,27 @@ export const baseSchema = gql`
     readMode
     editMode
   }
+  
+  type ActionContextConditions {
+    matchKey: String
+    matchValue: String
+  }  
+  
+  input ActionContextConditionsInput {
+    matchKey: String
+    matchValue: String
+  }
 
   type ActionContext {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: [ActionContextViewModeTypes]
+    matchMetadataValue: [ActionContextConditions]
     labelForTooltip: String
   }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: [ActionContextViewModeTypes]
+    matchMetadataValue: [ActionContextConditionsInput]
     labelForTooltip: String
   }
 
