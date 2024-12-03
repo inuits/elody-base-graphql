@@ -359,7 +359,8 @@
         "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item.",
         "noneselected": "To use this action, you may not select items.",
         "someselected": "To use this action, you have to select at least one item.",
-        "readmode": "To use this action you have to be in readmode"
+        "readmode": "To use this action you have to be in readmode",
+        "ocr-locked": "The OCR option is not available when the 'Ocr locked' Asset metadata field has a value of 'true'. The action is also not available in editmode or when an item is selected."
       },
       "buttons": {
         "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
@@ -743,7 +744,8 @@
         "readmode-someselected": "Om deze actie te gebruiken moet je in de leesmode zijn en moet je minstens één item geselecteerd hebben.",
         "editmode-noneselected": "Om deze actie te gebruiken moet je in de editmode zijn en mag je geen items geselecteerd hebben.",
         "editmode-someselected": "Om deze actie te gebruiken moet je in de editmode zijn en moet je minstens één item geselecteerd hebben.",
-        "readmode": "Om deze actie te gebruiken moet je in de leesmode zijn"
+        "readmode": "Om deze actie te gebruiken moet je in de leesmode zijn",
+        "ocr-locked": "De OCR optie is niet beschikbaar wanneer het 'Ocr locked' asset metadata veld de waarde 'true' heeft. Deze actie is ook niet beschikbaar in editmode of wanneer een item geselecteerd is."
       },
       "buttons": {
         "disabled-upload-button": "De knop is gedeactiveerd omdat er nog velden voor de upload ontbreken.",
