@@ -563,12 +563,12 @@ export const baseSchema = gql`
     editMode
   }
   
-  type ActionContextConditions {
+  type MatchMetadataValue {
     matchKey: String
     matchValue: String
   }  
   
-  input ActionContextConditionsInput {
+  input MatchMetadataValueInput {
     matchKey: String
     matchValue: String
   }
@@ -576,13 +576,13 @@ export const baseSchema = gql`
   type ActionContext {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: [ActionContextViewModeTypes]
-    matchMetadataValue: [ActionContextConditions]
+    matchMetadataValue: [MatchMetadataValue]
     labelForTooltip: String
   }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: [ActionContextViewModeTypes]
-    matchMetadataValue: [ActionContextConditionsInput]
+    matchMetadataValue: [MatchMetadataValueInput]
     labelForTooltip: String
   }
 
