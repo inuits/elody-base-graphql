@@ -215,7 +215,10 @@
         "info": "Info",
         "status-updated-at": "Status updated at",
         "optional": "optional",
-        "one-of-required": "1 of these fields are required"
+        "one-of-required": "1 of these fields are required",
+        "edit-metadata": "Edit metadata",
+        "editing-metadata": "Editing metadata",
+        "delete-entity": "Delete entity"
       }
     },
     "notifications":{
@@ -605,7 +608,10 @@
         "info": "Info",
         "status-updated-at": "Status updated at",
         "optional": "optioneel",
-        "one-of-required": "1 van deze velden zijn verplicht"
+        "one-of-required": "1 van deze velden zijn verplicht",
+        "edit-metadata": "Edit metadata",
+        "editing-metadata": "Editing metadata",
+        "delete-entity": "Verwijder entiteit"
       }
     },
     "notifications":{
