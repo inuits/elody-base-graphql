@@ -16,6 +16,7 @@ import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
 import applyPromEndpoint from './endpoints/promEndpoint';
 import cors from 'cors';
 import express from 'express';
+import compression from 'compression';
 import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
@@ -154,6 +155,8 @@ const start = (
         async stop() {},
       },
     });
+
+    app.use(compression());
 
     app.use(
       cors({
