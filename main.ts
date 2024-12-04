@@ -157,6 +157,7 @@ const start = (
     });
 
     app.use(compression());
+    app.use(express.static(path.join(__dirname, 'dist')));
 
     app.use(
       cors({
