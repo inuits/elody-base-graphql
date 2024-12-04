@@ -395,6 +395,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (id == null) {
       return 'no id was specified';
     } else {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       await this.delete(
         `${path}/${id}?delete_mediafiles=${deleteMediafiles ? 1 : 0}`
       );
