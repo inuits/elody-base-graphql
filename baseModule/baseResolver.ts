@@ -32,6 +32,7 @@ import {
   DamsIcons,
   DropdownOption,
   EditStatus,
+  EditMetadataButton,
   EndpointInformation,
   EntitiesResults,
   Entity,
@@ -1074,6 +1075,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ExpandButtonOptions;
+    },
+    editMetadataButton: async (_source, { input }, { dataSources }) => {
+      return input as EditMetadataButton;
     },
   },
   ActionElement: {

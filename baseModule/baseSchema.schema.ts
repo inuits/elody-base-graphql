@@ -1222,6 +1222,17 @@ export const baseSchema = gql`
     label: String
   }
 
+  input EditMetadataButtonInput {
+    hasButton: Boolean!
+    originalLabel: String
+    clickedLabel: String
+  }  
+  type EditMetadataButton {
+    hasButton: Boolean!
+    originalLabel: String
+    clickedLabel: String
+  }
+
   type WindowElementPanel {
     label(input: String!): String!
     panelType(input: PanelType!): PanelType!
@@ -1244,6 +1255,7 @@ export const baseSchema = gql`
     label(input: String): String!
     panels: WindowElementPanel!
     expandButtonOptions: ExpandButtonOptions
+    editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
   }
 
   type ActionElement {

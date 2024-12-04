@@ -122,6 +122,12 @@ export const baseFragments = gql`
     }
   }
   
+  fragment editMetadataButton on EditMetadataButton {
+    hasButton
+    originalLabel
+    clickedLabel
+  }
+  
   fragment hiddenField on HiddenField {
     hidden
     searchValueForFilter
