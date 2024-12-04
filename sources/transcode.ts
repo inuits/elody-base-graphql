@@ -20,6 +20,10 @@ export class TranscodeService extends AuthRESTDataSource {
   }
 
   async downloadItemsInZip(body: any): Promise<any> {
+    let downloadEntity = body["download_entity"];
+    const idSplit = downloadEntity.split('/');
+    if (idSplit.length > 1) downloadEntity = idSplit[1];
+    body["download_entity"] = downloadEntity;
     return await this.post(`transcode/zip`, {
       body,
     });
