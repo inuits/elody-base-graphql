@@ -45,7 +45,12 @@ import {
   PermissionRequestInfo,
 } from '../../generated-types/type-defs';
 import { CollectionAPI } from './sources/collection';
-import { ContextValue, DataSources, FormattersConfig, TypeUrlMapping } from './types';
+import {
+  ContextValue,
+  DataSources,
+  FormattersConfig,
+  TypeUrlMapping,
+} from './types';
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
@@ -65,6 +70,7 @@ import type {
   CollectionAPIMetadata,
   CollectionAPIRelation,
 } from './types/collectionAPITypes';
+import { applyVersionEndpoint } from './endpoints/versionEndpoint';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -196,7 +202,12 @@ const start = (
               OcrService: new OcrService({ session, cache }),
             });
 
-          return { dataSources, customPermissions, customFormatters, customTypeUrlMapping };
+          return {
+            dataSources,
+            customPermissions,
+            customFormatters,
+            customTypeUrlMapping,
+          };
         },
       })
     );
@@ -212,6 +223,9 @@ const start = (
         },
         function () {
           applyConfigEndpoint(app, appConfig);
+        },
+        function () {
+          applyVersionEndpoint(app, appConfig);
         },
         function () {
           applyDownloadEndpoint(app);

@@ -10,6 +10,7 @@ export interface Environment {
   environment: string;
   sessionSecret: string;
   clientSecret: string;
+  version: string;
   oauth: {
     baseUrl: string;
     baseUrlFrontend: string;

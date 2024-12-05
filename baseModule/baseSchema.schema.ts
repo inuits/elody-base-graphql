@@ -26,6 +26,11 @@ export const baseSchema = gql`
     shareLink
   }
 
+  enum ElodyServices {
+    pwa
+    apolloGraphql
+  }
+
   enum MediaTypeEntities {
     asset
     mediafile
@@ -562,12 +567,12 @@ export const baseSchema = gql`
     readMode
     editMode
   }
-  
+
   type MatchMetadataValue {
     matchKey: String
     matchValue: String
-  }  
-  
+  }
+
   input MatchMetadataValueInput {
     matchKey: String
     matchValue: String

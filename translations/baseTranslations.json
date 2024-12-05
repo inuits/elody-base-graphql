@@ -222,6 +222,12 @@
       }
     },
     "notifications":{
+      "default": {
+        "new-version-available": {
+          "title": "New version available",
+          "description": "There is a new version available refresh the page to update"
+        }
+      },
       "success":{
         "entityCreated":{
           "title":"Entity successfully created",
@@ -615,6 +621,12 @@
       }
     },
     "notifications":{
+      "default": {
+        "new-version-available": {
+          "title": "Nieuwe versie beschikbaar",
+          "description": "Er is een nieuwe versie beschikbaar, refresh de pagina om bij te werken"
+        }
+      },
       "success":{
         "entityCreated":{
           "title":"Entiteit succesvol gecreëerd",
