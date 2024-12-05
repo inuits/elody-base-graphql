@@ -987,6 +987,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     viewMode: async (parent: any, { input }, { dataSources }) => {
       return input || EntityListViewMode.Library;
     },
+    enableNavigation: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : true;
+    },
     baseLibraryMode: async (parent: any, { input }, { dataSources }) => {
       return input ? input : BaseLibraryModes.NormalBaseLibrary;
     },
