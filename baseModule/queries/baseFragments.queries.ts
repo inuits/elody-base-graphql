@@ -124,8 +124,8 @@ export const baseFragments = gql`
   
   fragment editMetadataButton on EditMetadataButton {
     hasButton
-    originalLabel
-    clickedLabel
+    readmodeLabel
+    editmodeLabel
   }
   
   fragment hiddenField on HiddenField {

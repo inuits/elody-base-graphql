@@ -1224,13 +1224,13 @@ export const baseSchema = gql`
 
   input EditMetadataButtonInput {
     hasButton: Boolean!
-    originalLabel: String
-    clickedLabel: String
+    readmodeLabel: String
+    editmodeLabel: String
   }  
   type EditMetadataButton {
     hasButton: Boolean!
-    originalLabel: String
-    clickedLabel: String
+    readmodeLabel: String
+    editmodeLabel: String
   }
 
   type WindowElementPanel {
