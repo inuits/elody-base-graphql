@@ -1,10 +1,10 @@
-import { AuthRESTDataSource } from './AuthRESTDataSource';
 import session, { SessionData } from 'express-session';
 import jwt_decode from 'jwt-decode';
 import { AuthManager } from './auth-manager';
 import { logToken } from './debug';
 import { AuthSessionResponse, EnvConfig } from './types';
 import { applyConfig } from './libConfig';
+import MongoStore from 'connect-mongo';
 
 declare module 'express-session' {
   interface SessionData {
@@ -12,10 +12,15 @@ declare module 'express-session' {
   }
 }
 
-export function applyAuthSession(app: any, clientSecret: string) {
+export async function applyAuthSession(
+  app: any,
+  clientSecret: string,
+  mongoUrl: string
+) {
   app.use(
     session({
       secret: clientSecret,
+      store: MongoStore.create({ mongoUrl: mongoUrl }),
       saveUninitialized: true,
       resave: false,
       cookie: {

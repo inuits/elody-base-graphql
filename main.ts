@@ -1,8 +1,4 @@
-import {
-  applyAuthEndpoints,
-  applyAuthSession,
-  applyEnvironmentConfig,
-} from './auth';
+import { applyAuthSession, applyEnvironmentConfig } from './auth';
 import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 import {
   resolveMetadata,
@@ -11,25 +7,16 @@ import {
   simpleReturn,
 } from './resolvers/entityResolver';
 import * as Sentry from '@sentry/node';
-import applyConfigEndpoint from './endpoints/configEndpoint';
-import applyMediaFileEndpoint from './endpoints/mediafilesEndpoint';
 import applyPromEndpoint from './endpoints/promEndpoint';
 import cors from 'cors';
-import express from 'express';
+import express, { Express } from 'express';
 import compression from 'compression';
 import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
 import { ApolloServer } from '@apollo/server';
 import { Application } from 'graphql-modules';
-import { applyExportEndpoint } from './endpoints/exportEndpoint';
-import { applyHealthEndpoint } from './endpoints/healthEndpoint';
 import { applySEOEndpoint } from './endpoints/seoEndpoint';
-import { applyTenantEndpoint } from './endpoints/tenantEndpoint';
-import { applyTranslationEndpoint } from './endpoints/translationEndpoint';
-import { applyUploadEndpoint } from './endpoints/uploadEndpoint';
-import { applyDownloadEndpoint } from './endpoints/downloadEndpoint';
-
 import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
@@ -70,12 +57,22 @@ import type {
   CollectionAPIMetadata,
   CollectionAPIRelation,
 } from './types/collectionAPITypes';
-import { applyVersionEndpoint } from './endpoints/versionEndpoint';
+import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
+import { createMongoConnectionString } from './sources/mongo';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
   path.join(__dirname, './translations/baseTranslations.json')
 );
+
+const applyCustomEndpoints = (
+  app: Express,
+  customEndpoints: ((app: any) => void)[] = []
+) => {
+  customEndpoints.forEach((customEndpoint: Function) => {
+    customEndpoint(app);
+  });
+};
 
 const addCustomFieldsToBaseFields = (customInputFields: {
   [key: string]: InputField;
@@ -102,15 +99,6 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
   });
 };
 
-const addApplicationEndpoints = (
-  applicationEndpoints: Function[],
-  app: any
-) => {
-  applicationEndpoints.forEach((endpoint: Function) => {
-    endpoint(app);
-  });
-};
-
 const start = (
   application: Application,
   appConfig: Environment,
@@ -126,8 +114,6 @@ const start = (
 ) => {
   environment = appConfig;
 
-  const applicationEndpoints: Function[] = [];
-
   if (appConfig.sentryEnabled) {
     Sentry.init({
       dsn: appConfig.sentryDsn,
@@ -136,8 +122,12 @@ const start = (
     });
   }
 
-  const configureMiddleware = (app: any) => {
-    applyAuthSession(app, appConfig.sessionSecret);
+  const configureMiddleware = (app: any, appConfig: Environment) => {
+    applyAuthSession(
+      app,
+      appConfig.sessionSecret,
+      createMongoConnectionString(appConfig)
+    );
     applyEnvironmentConfig({
       tokenLogging: appConfig.apollo.tokenLogging,
       staticJWT: appConfig.staticToken,
@@ -148,6 +138,7 @@ const start = (
     const app = express();
     const httpServer = http.createServer(app);
     httpServer.setTimeout(120000);
+
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
       gateway: {
@@ -180,7 +171,7 @@ const start = (
 
     await server.start();
 
-    configureMiddleware(app);
+    configureMiddleware(app, appConfig);
 
     app.use(
       appConfig.apollo.graphqlPath,
@@ -212,65 +203,47 @@ const start = (
       })
     );
 
-    applicationEndpoints.push(
-      ...[
-        function () {
-          applyAuthEndpoints(
-            app,
-            appConfig.oauth.baseUrl,
-            appConfig.clientSecret
-          );
-        },
-        function () {
-          applyConfigEndpoint(app, appConfig);
-        },
-        function () {
-          applyVersionEndpoint(app, appConfig);
-        },
-        function () {
-          applyDownloadEndpoint(app);
-        },
-        function () {
-          applyUploadEndpoint(app);
-        },
-        function () {
-          applyExportEndpoint(app);
-        },
-        function () {
-          applyMediaFileEndpoint(
-            app,
-            appConfig.api.storageApiUrl,
-            appConfig.api.iiifUrl,
-            appConfig.staticToken
-          );
-        },
-        function () {
-          applyTranslationEndpoint(app, appTranslations);
-        },
-        function () {
-          applyTenantEndpoint(app);
-        },
-        function () {
-          applyHealthEndpoint(app);
-        },
-      ]
-    );
-    applicationEndpoints.push(...customEndpoints);
+    const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
+      authEndpoint: [app, appConfig.oauth.baseUrl, appConfig.clientSecret],
+      configEndpoint: [app, appConfig],
+      versionEndpoint: [app, appConfig],
+      downloadEndpoint: [app],
+      uploadEndpoint: [app],
+      exportEndpoint: [app],
+      mediafileEndpoint: [
+        app,
+        appConfig.api.storageApiUrl,
+        appConfig.api.iiifUrl,
+        appConfig.staticToken,
+      ],
+      translationEndpoint: [app, appTranslations],
+      tenantEndpoint: [app],
+      healthEndpoint: [app],
+    };
+
+    Object.keys(defaultElodyEndpointMapping).forEach((key: string) => {
+      const applyEndpointFunction: Function = defaultElodyEndpointMapping[key];
+      const endpointVariables: any[] = defaultElodyEndpointVariableMapping[key];
+      if (!endpointVariables) {
+        console.warn(
+          `Variables for endpoint with key ${key} not found, please add them to the defaultElodyEndpointVariableMapping`
+        );
+      }
+      applyEndpointFunction(...endpointVariables);
+    });
 
     app.set('views', path.join(__dirname + '/views'));
     app.set('view engine', 'pug');
 
     if (appConfig.features.SEO.hasSEO)
-      applicationEndpoints.push(function () {
-        applySEOEndpoint(app, environment as Environment);
-      });
+      applySEOEndpoint(app, environment as Environment);
 
     if (appConfig.api.promUrl !== 'no-prom') {
       applyPromEndpoint(app, appConfig.api.promUrl);
     }
 
-    if (applicationEndpoints) {
-      addApplicationEndpoints(applicationEndpoints, app);
+    if (customEndpoints) {
+      applyCustomEndpoints(app, customEndpoints);
     }
 
     if (customInputFields) {

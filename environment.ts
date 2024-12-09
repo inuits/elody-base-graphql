@@ -33,6 +33,15 @@ export interface Environment {
     transcodeService?: string;
     ocrService?: string;
   };
+  db: {
+    mongodb: {
+      username?: string;
+      password?: string;
+      port: string;
+      hostname: string;
+      dbName: string;
+    };
+  };
   features: {
     simpleSearch: {
       hasSimpleSearch: boolean;
