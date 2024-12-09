@@ -83,8 +83,12 @@ export const resolveIntialValueRelations = async (
       }
 
       if (rootKeyAsLabel) return type[rootKeyAsLabel];
+
       const result = type?.metadata?.find(
-        (metadata: any) => metadata.key === metadataKeyAsLabel
+        (metadata: any) => {
+          const keys =  metadataKeyAsLabel.split('|');
+          return keys.includes(metadata.key)
+        }
       )?.value || relation.key
 
       if (!formatter) return result;
