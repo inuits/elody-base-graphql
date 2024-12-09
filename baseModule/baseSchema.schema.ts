@@ -929,6 +929,7 @@ export const baseSchema = gql`
       relationEntityType: String
       keyOnMetadata: String
       formatter: String
+      relationsIdReturner: Boolean
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues

@@ -832,6 +832,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationEntityType,
         keyOnMetadata,
         formatter = '',
+        relationsIdReturner,
       },
       { dataSources, customFormatters }
     ) => {
@@ -850,7 +851,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               containsRelationPropertyValue as string,
               relationEntityType as string,
               formatter as string,
-              customFormatters
+              customFormatters,
+              relationsIdReturner as boolean
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(

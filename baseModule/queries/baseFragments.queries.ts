@@ -54,6 +54,7 @@ export const baseFragments = gql`
       value
       match_exact
       item_types
+      returnIdAtIndex
     }
     advancedFilterInputForSearchingOptions {
       type
