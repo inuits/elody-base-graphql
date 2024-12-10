@@ -9,7 +9,7 @@ export const createMongoConnectionString = (appConfig: Environment): string => {
   if (mongoConfig.username && mongoConfig.password) {
     connectionString += `${quotePlus(mongoConfig.username)}:${quotePlus(
       mongoConfig.password
-    )}`;
+    )}@`;
   }
   const mongoHostsArray: string[] = mongoConfig.hostname.split(',');
   mongoHostsArray.forEach((hostname, index) => {
