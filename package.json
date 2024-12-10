@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.0.375",
+  "version": "0.0.376",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -63,7 +63,7 @@
     "jwt-decode": "^3.1.2",
     "lint-staged": "^11.2.6",
     "mediafile-module": "0.0.19",
-    "mongodb": "^6.11.0",
+    "mongodb": "^6.9.0",
     "node-fetch": "^2.7.0",
     "nodemon": "^2.0.22",
     "npm": "^8.19.4",
