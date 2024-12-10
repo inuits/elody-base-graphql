@@ -40,6 +40,7 @@ export interface Environment {
       port: string;
       hostname: string;
       dbName: string;
+      replicaSet?: string;
     };
   };
   features: {
