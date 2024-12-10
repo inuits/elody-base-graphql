@@ -5,6 +5,8 @@ import { logToken } from './debug';
 import { AuthSessionResponse, EnvConfig } from './types';
 import { applyConfig } from './libConfig';
 import MongoStore from 'connect-mongo';
+import { isMongoConfigAvailable } from '../sources/mongo';
+import { Environment } from '../environment';
 
 declare module 'express-session' {
   interface SessionData {
@@ -16,8 +18,11 @@ export async function applyAuthSession(
   app: any,
   clientSecret: string,
   mongoUrl: string,
-  hasPersistentSessions: boolean = true
+  appConfig: Environment
 ) {
+  const hasPersistentSessions =
+    appConfig.features.hasPersistentSessions || true;
+
   const sessionOptions: SessionOptions = {
     secret: clientSecret,
     saveUninitialized: true,
@@ -29,7 +34,7 @@ export async function applyAuthSession(
     },
   };
 
-  if (hasPersistentSessions) {
+  if (hasPersistentSessions && isMongoConfigAvailable(appConfig)) {
     Object.assign(sessionOptions, {
       store: MongoStore.create({ mongoUrl: mongoUrl }),
     });

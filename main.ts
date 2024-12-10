@@ -127,7 +127,7 @@ const start = (
       app,
       appConfig.sessionSecret,
       createMongoConnectionString(appConfig),
-      appConfig.features.hasPersistentSessions
+      appConfig
     );
     applyEnvironmentConfig({
       tokenLogging: appConfig.apollo.tokenLogging,
