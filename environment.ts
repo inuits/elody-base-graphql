@@ -62,6 +62,7 @@ export interface Environment {
         image: string;
       };
     };
+    hasPersistentSessions?: boolean;
   };
   customization: {
     applicationTitle: string;

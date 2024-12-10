@@ -1,4 +1,4 @@
-import session, { SessionData } from 'express-session';
+import session, { SessionOptions } from 'express-session';
 import jwt_decode from 'jwt-decode';
 import { AuthManager } from './auth-manager';
 import { logToken } from './debug';
@@ -15,21 +15,27 @@ declare module 'express-session' {
 export async function applyAuthSession(
   app: any,
   clientSecret: string,
-  mongoUrl: string
+  mongoUrl: string,
+  hasPersistentSessions: boolean = true
 ) {
-  app.use(
-    session({
-      secret: clientSecret,
+  const sessionOptions: SessionOptions = {
+    secret: clientSecret,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'strict',
+    },
+  };
+
+  if (hasPersistentSessions) {
+    Object.assign(sessionOptions, {
       store: MongoStore.create({ mongoUrl: mongoUrl }),
-      saveUninitialized: true,
-      resave: false,
-      cookie: {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'strict',
-      },
-    })
-  );
+    });
+  }
+
+  app.use(session(sessionOptions));
 }
 
 export let manager: AuthManager | null = null;
