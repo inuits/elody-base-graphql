@@ -34,7 +34,7 @@ export async function applyAuthSession(
     },
   };
 
-  if (hasPersistentSessions && isMongoConfigAvailable(appConfig)) {
+  if (hasPersistentSessions && isMongoConfigAvailable()) {
     Object.assign(sessionOptions, {
       store: MongoStore.create({ mongoUrl: mongoUrl }),
     });

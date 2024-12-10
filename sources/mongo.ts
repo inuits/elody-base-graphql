@@ -3,9 +3,12 @@ import { Environment } from '../environment';
 const quotePlus = (str: string): string =>
   encodeURIComponent(str).replace(/%20/g, '+');
 
-export const isMongoConfigAvailable = (appConfig: Environment) => {
-  const mongoSettings = appConfig.db.mongodb;
-  return mongoSettings.hostname && mongoSettings.dbName && mongoSettings.port;
+export const isMongoConfigAvailable = (): boolean => {
+  return !!(
+    process.env.MONGODB_DB_NAME &&
+    process.env.MONGODB_HOSTS &&
+    process.env.MONGODB_PORT
+  );
 };
 
 export const createMongoConnectionString = (appConfig: Environment): string => {
