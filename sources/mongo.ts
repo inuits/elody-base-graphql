@@ -29,6 +29,5 @@ export const createMongoConnectionString = (appConfig: Environment): string => {
       connectionString += `&replicaSet=${mongoConfig.replicaSet}`;
     }
   }
-  console.log(connectionString);
   return connectionString;
 };
