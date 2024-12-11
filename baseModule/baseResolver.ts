@@ -832,7 +832,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationEntityType,
         keyOnMetadata,
         formatter = '',
-        relationsIdReturner,
       },
       { dataSources, customFormatters }
     ) => {
@@ -852,7 +851,6 @@ export const baseResolver: Resolvers<ContextValue> = {
               relationEntityType as string,
               formatter as string,
               customFormatters,
-              relationsIdReturner as boolean
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(
@@ -1608,6 +1606,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return parent.advancedFilterInputForRetrievingOptions || [];
+    },
+    advancedFilterInputForRetrievingRelatedOptions: async (
+      parent,
+      _args,
+      { dataSources }
+    ) => {
+      return parent.advancedFilterInputForRetrievingRelatedOptions || [];
+    },
+    advancedFilterInputForRetrievingAllOptions: async (
+      parent,
+      _args,
+      { dataSources }
+    ) => {
+      return parent.advancedFilterInputForRetrievingAllOptions || [];
     },
     advancedFilterInputForSearchingOptions: async (
       parent,

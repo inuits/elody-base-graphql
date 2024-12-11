@@ -344,6 +344,8 @@ export const baseSchema = gql`
     canCreateEntityFromOption: Boolean
     metadataKeyToCreateEntityFromOption: String
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
+    advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]
+    advancedFilterInputForRetrievingAllOptions: [AdvancedFilterInputType!]
     advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]
     maxFileSize: String
@@ -929,7 +931,6 @@ export const baseSchema = gql`
       relationEntityType: String
       keyOnMetadata: String
       formatter: String
-      relationsIdReturner: Boolean
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues

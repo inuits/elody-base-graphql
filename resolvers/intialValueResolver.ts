@@ -47,15 +47,12 @@ export const resolveIntialValueRelations = async (
   relationEntityType: string,
   formatter: string = '',
   formatterSettings?: FormattersConfig,
-  relationsIdReturner?: boolean
 ): Promise<string | any> => {
   try {
     let relation: any;
     const relations = parent?.relations.filter(
       (relation: any) => relation.type === key
     );
-    if (relationsIdReturner)
-     return relations.map((relation: any) => relation.key);
     if (containsRelationPropertyKey)
       relations.forEach((rel: any) => {
         if (String(rel[containsRelationPropertyKey]) == containsRelationPropertyValue) {
