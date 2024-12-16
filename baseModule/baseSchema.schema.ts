@@ -448,6 +448,7 @@ export const baseSchema = gql`
     Swatchbook
     Update
     Upload
+    UserSquare
   }
 
   type Menu {
