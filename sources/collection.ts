@@ -43,8 +43,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   public preferredLanguage: string =
     env?.customization?.applicationLocale || 'en';
 
-  async getSessionInfo(key: string): Promise<any> {
-    const user = jwtDecode(this.session.auth.accessToken!) as any;
+  async getSessionInfo(key: string): Promise<string> {
+    const user = jwtDecode(this.session.auth.accessToken!) as { [key: string]: string };
     return user[key];
   }
 
