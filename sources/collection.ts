@@ -21,6 +21,7 @@ import {
   PermissionRequestInfo,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
+import jwtDecode from 'jwt-decode'
 
 import {baseTypeCollectionMapping as collection} from './typeCollectionMapping';
 import {Config} from '../types';
@@ -41,6 +42,11 @@ export class CollectionAPI extends AuthRESTDataSource {
   public config: Config | 'no-config' = 'no-config';
   public preferredLanguage: string =
     env?.customization?.applicationLocale || 'en';
+
+  async getSessionInfo(key: string): Promise<any> {
+    const user = jwtDecode(this.session.auth.accessToken!) as any;
+    return user[key];
+  }
 
   async getFilterMatcherMapping(): Promise<FilterMatcherMap> {
     return await this.get(`filter/matchers`);

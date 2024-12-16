@@ -6,7 +6,7 @@ import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 
 export class AuthRESTDataSource extends RESTDataSource {
-  private session: any;
+  protected session: any;
 
   constructor(options: { session: any; cache?: KeyValueCache }) {
     super(options);
