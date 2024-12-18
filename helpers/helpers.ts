@@ -3,6 +3,7 @@ import {
   AdvancedFilterTypes,
   Entitytyping,
   Metadata,
+  Collection,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
 import {
@@ -15,9 +16,10 @@ import { baseTypeCollectionMapping as collection } from '../sources/typeCollecti
 
 export const getCollectionValueForEntityType = (entityType: string): string => {
   if (!collection.hasOwnProperty(entityType)) {
-    throw new Error(
-      `Type "${entityType}" does not exist inside the collection dictionary. Please add it or check if the type is written incorrectly.`
+    console.info(
+      `The default collection Entities was used for entity with type '${entityType}', add it to the collectionMapping to use another collection`
     );
+    return Collection.Entities;
   }
   return collection[entityType];
 };
