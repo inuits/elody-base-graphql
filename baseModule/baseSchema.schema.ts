@@ -1144,6 +1144,7 @@ export const baseSchema = gql`
 
   enum UploadFlow {
     updateMetadata
+    csvOnly
     mediafilesOnly
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
