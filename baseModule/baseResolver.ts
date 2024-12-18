@@ -89,19 +89,19 @@ import {
   SplitRegex,
   MapMetadata,
   MapTypes,
-  HiddenField
+  HiddenField,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
   determineAdvancedFiltersForIteration,
+  getCollectionValueForEntityType,
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
-import { baseTypeCollectionMapping } from '../sources/typeCollectionMapping';
 import {
   resolveIntialValueMetadata,
   resolveIntialValueRelationMetadata,
@@ -111,7 +111,7 @@ import {
 } from '../resolvers/intialValueResolver';
 import {
   prepareRelationFieldForMapData,
-  prepareMetadataFieldForMapData
+  prepareMetadataFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -364,10 +364,15 @@ export const baseResolver: Resolvers<ContextValue> = {
       { permission, parentEntityId, childEntityId },
       { dataSources, customPermissions }
     ) => {
-      const permissionConfig: PermissionRequestInfo = customPermissions[permission]
+      const permissionConfig: PermissionRequestInfo =
+        customPermissions[permission];
       if (!permissionConfig) return false;
 
-      let response = await dataSources.CollectionAPI.checkAdvancedPermission(permissionConfig, parentEntityId, childEntityId);
+      let response = await dataSources.CollectionAPI.checkAdvancedPermission(
+        permissionConfig,
+        parentEntityId,
+        childEntityId
+      );
       return response;
     },
     PermissionMappingPerEntityType: async (
@@ -390,11 +395,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return status == '200';
     },
-    CustomFormattersSettings: async (
-      _source,
-      _,
-      { customFormatters }
-    ) => {
+    CustomFormattersSettings: async (_source, _, { customFormatters }) => {
       return customFormatters;
     },
     CustomTypeUrlMapping: async (
@@ -402,13 +403,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       _: any,
       { customTypeUrlMapping }: any
     ) => {
-      const reverseMapping: { [type: string]: string } = Object.entries(customTypeUrlMapping).reduce(
-        (acc, [key, value]: any) => {
-          acc[value] = key;
-          return acc;
-        },
-        {} as { [type: string]: string }
-      );
+      const reverseMapping: { [type: string]: string } = Object.entries(
+        customTypeUrlMapping
+      ).reduce((acc, [key, value]: any) => {
+        acc[value] = key;
+        return acc;
+      }, {} as { [type: string]: string });
 
       return { mapping: customTypeUrlMapping, reverseMapping };
     },
@@ -417,9 +417,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       { id, entityType },
       { dataSources }
     ) => {
-      const collection =
-        baseTypeCollectionMapping[entityType as Entitytyping] ||
-        Collection.Entities;
       const edit = await dataSources.CollectionAPI.patchEntityDetailSoftCall(
         id,
         entityType
@@ -489,7 +486,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
         );
       try {
-        operation.push("txt");
+        operation.push('txt');
         const response = await dataSources.OcrService.generateOcrWithAsset(
           assetId,
           operation,
@@ -837,8 +834,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       try {
         const resolveObject: { [key: string]: Function } = {
-          metadata: () => resolveIntialValueMetadata(dataSources, parent, key, keyOnMetadata, formatter),
-          root: () => resolveIntialValueRoot(parent, key, formatter, customFormatters),
+          metadata: () =>
+            resolveIntialValueMetadata(
+              dataSources,
+              parent,
+              key,
+              keyOnMetadata,
+              formatter
+            ),
+          root: () =>
+            resolveIntialValueRoot(parent, key, formatter, customFormatters),
           relations: () =>
             resolveIntialValueRelations(
               dataSources,
@@ -850,7 +855,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               containsRelationPropertyValue as string,
               relationEntityType as string,
               formatter as string,
-              customFormatters,
+              customFormatters
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(
@@ -864,7 +869,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             resolveIntialValueTechnicalMetadata(parent, key),
         };
 
-        return await resolveObject[source]() || '';
+        return (await resolveObject[source]()) || '';
       } catch (e) {
         console.log(e);
         return '';
@@ -898,7 +903,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {
-      return input ? input : [{viewMode: ViewModes.ViewModesList}];
+      return input ? input : [{ viewMode: ViewModes.ViewModesList }];
     },
   },
   MediaFileElement: {
@@ -1006,7 +1011,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
-    fetchDeepRelations: async (parent: unknown, { }, { dataSources }) => {
+    fetchDeepRelations: async (parent: unknown, {}, { dataSources }) => {
       return parent as FetchDeepRelations;
     },
     can: async (parent, { input }, { dataSources }) => {
@@ -1185,7 +1190,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input != undefined ? input : false;
     },
     tooltip: async (_source, { input }, { dataSources }) => {
-      return input ?? "";
+      return input ?? '';
     },
   },
   UploadContainer: {
@@ -1396,7 +1401,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         isLoggedIn,
         typeLink,
         requiresAuth,
-        can
+        can,
       };
     },
   },
@@ -1446,7 +1451,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         },
       ];
       const default_sorting = input.filter((option) => option.primary);
-      return [...default_sorting, ...baseSortOptions, ...input.filter((option) => !option.primary)];
+      return [
+        ...default_sorting,
+        ...baseSortOptions,
+        ...input.filter((option) => !option.primary),
+      ];
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
@@ -1494,12 +1503,27 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   MapMetadata: {
-    value: async (parent: any, { key, source, relationKey, splitRegex }, { dataSources }) => {
+    value: async (
+      parent: any,
+      { key, source, relationKey, splitRegex },
+      { dataSources }
+    ) => {
       const resolveObject: { [key: string]: Function } = {
-        metadata: () => prepareMetadataFieldForMapData(parent.metadata, key, splitRegex as SplitRegex),
-        relations: () => prepareRelationFieldForMapData(dataSources, parent.relations, key, relationKey)
+        metadata: () =>
+          prepareMetadataFieldForMapData(
+            parent.metadata,
+            key,
+            splitRegex as SplitRegex
+          ),
+        relations: () =>
+          prepareRelationFieldForMapData(
+            dataSources,
+            parent.relations,
+            key,
+            relationKey
+          ),
       };
-      return await resolveObject[source]() || '';
+      return (await resolveObject[source]()) || '';
     },
   },
   MapComponent: {

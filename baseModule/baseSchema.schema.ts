@@ -436,6 +436,7 @@ export const baseSchema = gql`
     ExclamationTriangle
     Focus
     FocusTarget
+    Hdd
     History
     Image
     InfoCircle
@@ -508,6 +509,7 @@ export const baseSchema = gql`
     FileExport
     Filter
     Focus
+    Hdd
     History
     Iiif
     Image
@@ -1235,7 +1237,7 @@ export const baseSchema = gql`
     hasButton: Boolean!
     readmodeLabel: String
     editmodeLabel: String
-  }  
+  }
   type EditMetadataButton {
     hasButton: Boolean!
     readmodeLabel: String
