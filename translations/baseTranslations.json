@@ -80,12 +80,6 @@
         "cancel": "Cancel",
         "title": "Delete entity"
       },
-      "delete-entities": {
-        "message": "Are you certain you wish to delete this entities?",
-        "confirm": "Delete entities",
-        "cancel": "Cancel",
-        "title": "Delete entities"
-      },
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
         "confirm": "Leave",
