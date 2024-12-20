@@ -19,6 +19,7 @@ import {
   MetadataValuesInput,
   SearchFilter,
   PermissionRequestInfo,
+  DeleteEntitiesInput,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode'
@@ -408,6 +409,23 @@ export class CollectionAPI extends AuthRESTDataSource {
       );
       return 'data has been successfully deleted';
     }
+  }
+
+  async bulkDeleteEntities(
+    ids: string[] = [],
+    path: Collection,
+    deleteEntities: DeleteEntitiesInput
+  ): Promise<string> {
+    if (ids.length === 0) return 'no ids were specified';
+
+    const queryParams = new URLSearchParams({
+      delete_mediafiles: deleteEntities.deleteMediafiles ? "1" : "0",
+    }).toString();
+
+    await this.delete(`${path}?${queryParams}`, {
+      body: { identifiers: ids }
+    });
+    return 'data has been successfully deleted';
   }
 
   async createEntity(

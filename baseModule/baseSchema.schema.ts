@@ -363,6 +363,7 @@ export const baseSchema = gql`
   enum TypeModals {
     BulkOperationsEdit
     BulkOperations
+    BulkOperationsDeleteEntities
     Confirm
     Delete
     DynamicForm
@@ -646,6 +647,7 @@ export const baseSchema = gql`
     edit
     startOcr
     addRelation
+    deleteEntities
   }
 
   type BulkOperations {
@@ -1481,6 +1483,10 @@ export const baseSchema = gql`
     limit: Int
   }
 
+  input DeleteEntitiesInput {
+    deleteMediafiles: Boolean
+  }
+
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
@@ -1546,6 +1552,11 @@ export const baseSchema = gql`
       id: String!
       path: Collection!
       deleteMediafiles: Boolean!
+    ): String
+    bulkDeleteEntities(
+      ids: [String!]!
+      path: Collection!
+      deleteEntities: DeleteEntitiesInput
     ): String
     linkMediafileToEntity(
       entityId: String!

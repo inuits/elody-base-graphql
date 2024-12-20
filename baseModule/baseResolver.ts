@@ -592,6 +592,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return dataSources.CollectionAPI.deleteData(id, path, deleteMediafiles);
     },
+    bulkDeleteEntities: async (
+      _source,
+      { ids, path, deleteEntities },
+      { dataSources }
+    ) => {
+      return dataSources.CollectionAPI.bulkDeleteEntities(ids, path, deleteEntities ?? {});
+    },
     bulkAddRelations: async (
       _source,
       { entityIds, relationEntityId, relationType },

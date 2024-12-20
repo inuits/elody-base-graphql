@@ -62,7 +62,8 @@
       "reorder-entities-with-csv": "Reorder entities with csv",
       "export-to-csv":"Export to CSV",
       "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
-      "create-share-link": "Create share link"
+      "create-share-link": "Create share link",
+      "delete-selected": "Delete selected entities"
     },
     "confirm": {
       "discard-edit": {
@@ -78,6 +79,12 @@
         "secondary-confirm": "Delete entity and mediafiles",
         "cancel": "Cancel",
         "title": "Delete entity"
+      },
+      "delete-entities": {
+        "message": "Are you certain you wish to delete this entities?",
+        "confirm": "Delete entities",
+        "cancel": "Cancel",
+        "title": "Delete entities"
       },
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
@@ -241,6 +248,10 @@
         },
         "entityDeleted": {
           "title": "Entity successfully deleted",
+          "description": "Changes have been saved successfully"
+        },
+        "entitiesDeleted": {
+          "title": "Entities successfully deleted",
           "description": "Changes have been saved successfully"
         },
         "csvReordering": {
@@ -470,7 +481,8 @@
       "reorder-entities-with-csv": "Opnieuw orderen van entiteiten met csv",
       "export-to-csv":"Exporteer naar CSV",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
-      "create-share-link": "Maak share link aan"
+      "create-share-link": "Maak share link aan",
+      "delete-selected": "Geselecteerde entiteiten verwijderen"
     },
     "confirm": {
       "discard-edit": {
@@ -648,6 +660,10 @@
           "description":"Wijzigingen succesvol opgeslagen"
         },
         "entityDeleted": {
+          "title": "Entiteiten succesvol verwijderd",
+          "description": "Wijzigingen succesvol opgeslagen"
+        },
+        "entitiesDeleted": {
           "title": "Entiteit succesvol verwijderd",
           "description": "Wijzigingen succesvol opgeslagen"
         },
