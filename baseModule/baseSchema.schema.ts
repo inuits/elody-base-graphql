@@ -438,6 +438,7 @@ export const baseSchema = gql`
     ExclamationTriangle
     Focus
     FocusTarget
+    Font
     Globe
     Hdd
     History
