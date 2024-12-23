@@ -438,6 +438,7 @@ export const baseSchema = gql`
     ExclamationTriangle
     Focus
     FocusTarget
+    Globe
     Hdd
     History
     Image
@@ -445,6 +446,9 @@ export const baseSchema = gql`
     Iot
     KeyholeSquare
     LocationArrowAlt
+    LocationPoint
+    MapMarker
+    MapMarkerInfo
     Police
     Process
     Settings
