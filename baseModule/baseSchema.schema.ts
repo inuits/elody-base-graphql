@@ -449,6 +449,7 @@ export const baseSchema = gql`
     LocationPoint
     MapMarker
     MapMarkerInfo
+    MapPin
     Police
     Process
     Settings
