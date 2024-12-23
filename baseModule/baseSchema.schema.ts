@@ -157,6 +157,7 @@ export const baseSchema = gql`
     max_date_today
     existing_date
     regex
+    email
   }
 
   enum ValidationFields {
