@@ -19,8 +19,8 @@
         "csv-errors": "Errors during CSV import",
         "reset-upload": "Import more files",
         "start-ocr": "Start OCR",
-        "delete-relation-entities": "Do you want to delete these items as well?",
-        "blocking-relations": "There are blocking relations. You can't delete this entity because of these relations."
+        "delete-relation-entities": "Do you want to delete following {0} as well?",
+        "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}."
       },
       "progress-steps": {
         "validate": "Validation",
@@ -352,7 +352,7 @@
       "create-set": "Set",
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
-      "delete-entity-window": "Delete entity",
+      "delete-entity-window": "Delete {0}",
       "create-share-link": "Create share link"
     },
     "upload-fields":{
@@ -432,8 +432,8 @@
         "csv-errors": "Errors tijdens CSV import",
         "reset-upload": "Importeer meer bestanden",
         "start-ocr": "Start OCR",
-        "delete-relation-entities": "Wil je volgende items ook verwijderen?",
-        "blocking-relations": "Er zijn blokkerende relaties. Deze entiteit kan niet verwijderd worden wegens deze relaties."
+        "delete-relation-entities": "Wil je volgende {0} ook verwijderen?",
+        "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}."
       },
       "progress-steps": {
         "validate": "Valideren",
@@ -764,7 +764,7 @@
       "create-set": "Set",
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
-      "delete-entity-window": "Verwijder entiteit",
+      "delete-entity-window": "Verwijder {0}",
       "create-share-link": "Maak share link"
     },
     "upload-fields": {

@@ -1474,6 +1474,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   DeleteQueryOptions: {
+    deleteEntityLabel: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
     customQueryDeleteRelations: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
@@ -1486,6 +1489,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     customQueryEntityTypes: async (parent, { input }, { dataSources }) => {
       return input as Entitytyping[];
+    },
+    deleteRelationsLabel: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
     customQueryBlockingRelations: async (
       parent,
@@ -1507,6 +1513,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return input as Entitytyping[];
+    },
+    blockingRelationsLabel: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   MapMetadata: {

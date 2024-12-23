@@ -807,12 +807,15 @@ export const baseSchema = gql`
   }
 
   type DeleteQueryOptions {
+    deleteEntityLabel(input: String): String!
     customQueryDeleteRelations(input: String): String
     customQueryDeleteRelationsFilters(input: String): String
     customQueryEntityTypes(input: [Entitytyping]): [Entitytyping]
+    deleteRelationsLabel(input: String): String
     customQueryBlockingRelations(input: String): String
     customQueryBlockingRelationsFilters(input: String): String
     customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
+    blockingRelationsLabel(input: String): String
   }
 
   enum MapTypes {
