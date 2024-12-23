@@ -74,11 +74,11 @@
         "title": "Discard edit"
       },
       "delete-entity": {
-        "message": "Are you certain you wish to delete this entity?",
-        "confirm": "Delete entity",
+        "message": "Are you certain you wish to delete this {0}?",
+        "confirm": "Delete {0}",
         "secondary-confirm": "Delete entity and mediafiles",
         "cancel": "Cancel",
-        "title": "Delete entity"
+        "title": "Delete {0}"
       },
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
@@ -487,11 +487,11 @@
         "title": "Editor verlaten"
       },
       "delete-entity": {
-        "message": "Ben je zeker dat je deze entiteit wilt verwijderen?",
-        "confirm": "Verwijder entiteit",
+        "message": "Ben je zeker dat je de {0} wilt verwijderen?",
+        "confirm": "Verwijder {0}",
         "secondary-confirm": "Verwijder entiteit en media bestanden",
         "cancel": "Annuleren",
-        "title": "Entity verwijderen"
+        "title": "Verwijder {0}"
       },
       "discard-create": {
         "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",

@@ -807,7 +807,7 @@ export const baseSchema = gql`
   }
 
   type DeleteQueryOptions {
-    deleteEntityLabel(input: String): String!
+    deleteEntityLabel(input: String!): String!
     customQueryDeleteRelations(input: String): String
     customQueryDeleteRelationsFilters(input: String): String
     customQueryEntityTypes(input: [Entitytyping]): [Entitytyping]
