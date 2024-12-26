@@ -128,7 +128,7 @@ export const baseFragments = gql`
     askForCloseConfirmation
     neededPermission
   }
-  
+
   fragment viewModes on ViewModesWithConfig {
     viewMode
     config {
@@ -136,15 +136,112 @@ export const baseFragments = gql`
       value
     }
   }
-  
+
   fragment editMetadataButton on EditMetadataButton {
     hasButton
     readmodeLabel
     editmodeLabel
   }
-  
+
   fragment hiddenField on HiddenField {
     hidden
     searchValueForFilter
+  }
+
+  fragment mediafileInEntity on MediaFileEntity {
+    ...minimalBaseEntity
+    intialValues {
+      id
+      filename: keyValue(key: "filename", source: root)
+      original_filename: keyValue(key: "original_filename", source: root)
+      original_file_location: keyValue(
+        key: "original_file_location"
+        source: root
+      )
+      publicationStatus: keyValue(key: "publication_status", source: metadata)
+      thumbnail: keyValue(key: "filename", source: root)
+      mimetype: keyValue(key: "mimetype", source: root)
+      copyrightColor: keyValue(key: "copyright_color", source: metadata)
+      order: keyValue(
+        key: "order"
+        source: relationMetadata
+        uuid: $userUuid
+        relationKey: "belongsTo"
+      )
+      __typename
+    }
+    teaserMetadata {
+      order: relationMetaData {
+        label(input: "metadata.labels.order")
+        key(input: "order")
+        inputField(type: baseNumberField) {
+          ...inputfield
+        }
+        showOnlyInEditMode(input: true)
+        __typename
+      }
+      thumbnail: thumbnail {
+        key(input: "thumbnail")
+        __typename
+      }
+      original_filename: metaData {
+        label(input: "metadata.labels.filename")
+        key(input: "original_filename")
+        __typename
+      }
+      publicationStatus: metaData {
+        label(input: "metadata.labels.publication-status")
+        key(input: "publicationStatus")
+        __typename
+      }
+      contextMenuActions {
+        doLinkAction {
+          label(input: "contextMenu.contextMenuLinkAction.followLink")
+          icon(input: "AngleRight")
+          __typename
+        }
+        primaryMediafile: doGeneralAction {
+          label(
+            input: "contextMenu.contextMenuGeneralAction.setPrimaryMediafile"
+          )
+          action(input: SetPrimaryMediafile)
+          icon(input: "Link")
+          __typename
+        }
+        primaryThumbnail: doGeneralAction {
+          label(
+            input: "contextMenu.contextMenuGeneralAction.setPrimaryThumbnail"
+          )
+          action(input: SetPrimaryThumbnail)
+          icon(input: "ImageCheck")
+          __typename
+        }
+        deleteRelation: doElodyAction {
+          label(input: "contextMenu.contextMenuElodyAction.delete-relation")
+          action(input: DeleteRelation)
+          icon(input: "Trash")
+          __typename
+        }
+        deleteEntity: doElodyAction {
+          label(input: "contextMenu.contextMenuElodyAction.delete-entity")
+          action(input: DeleteEntity)
+          icon(input: "Trash")
+          __typename
+        }
+        __typename
+      }
+    }
+    allowedViewModes {
+      viewModes(
+        input: [
+          { viewMode: ViewModesList }
+          { viewMode: ViewModesGrid }
+          { viewMode: ViewModesMedia }
+        ]
+      ) {
+        ...viewModes
+      }
+    }
+    __typename
   }
 `;
