@@ -436,6 +436,7 @@ export const baseSchema = gql`
     Database
     Download
     ExclamationTriangle
+    FileInfoAlt
     Focus
     FocusTarget
     Font
