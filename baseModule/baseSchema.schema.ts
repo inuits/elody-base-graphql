@@ -58,6 +58,7 @@ export const baseSchema = gql`
     LIST_DEFAULT
     PERCENT
     SECONDS_DEFAULT
+    VOLT
   }
 
   enum Permission {
