@@ -22,13 +22,13 @@ import {
   DeleteEntitiesInput,
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
 
-import {baseTypeCollectionMapping as collection} from './typeCollectionMapping';
-import {Config} from '../types';
-import {environment as env} from '../main';
-import {GraphQLError} from 'graphql/index';
-import {setId, setType} from '../parsers/entity';
+import { baseTypeCollectionMapping as collection } from './typeCollectionMapping';
+import { Config } from '../types';
+import { environment as env } from '../main';
+import { GraphQLError } from 'graphql/index';
+import { setId, setType } from '../parsers/entity';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
 
 type EntetiesCallReturn =
@@ -45,7 +45,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     env?.customization?.applicationLocale || 'en';
 
   async getSessionInfo(key: string): Promise<string> {
-    const user = jwtDecode(this.session.auth.accessToken!) as { [key: string]: string };
+    const user = jwtDecode(this.session.auth.accessToken!) as {
+      [key: string]: string;
+    };
     return user[key];
   }
 
@@ -87,7 +89,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       throw new GraphQLError('Failed to fetch data. Please try again later.');
     return data as EntitiesResults;
   }
-  
 
   async getEntitiesByType(entityType: string): Promise<Entity[]> {
     let data;
@@ -102,27 +103,33 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data?.results;
   }
 
-  
   async checkAdvancedPermission(
-    permissionRequestInfo: PermissionRequestInfo, 
-    parentEntityId: Maybe<string> | undefined, 
+    permissionRequestInfo: PermissionRequestInfo,
+    parentEntityId: Maybe<string> | undefined,
     childEntityId: Maybe<string> | undefined
   ): Promise<boolean> {
     try {
       let parsedRequestInfo = JSON.stringify(permissionRequestInfo);
-      if (parentEntityId) parsedRequestInfo = parsedRequestInfo.replace(/\$parentEntityId/g, parentEntityId);
-      if (childEntityId) parsedRequestInfo = parsedRequestInfo.replace(/\$childEntityId/g, childEntityId);
+      if (parentEntityId)
+        parsedRequestInfo = parsedRequestInfo.replace(
+          /\$parentEntityId/g,
+          parentEntityId
+        );
+      if (childEntityId)
+        parsedRequestInfo = parsedRequestInfo.replace(
+          /\$childEntityId/g,
+          childEntityId
+        );
       const config = JSON.parse(parsedRequestInfo);
 
       const hasNoSoftParam = !config.uri.includes('soft=1');
       if (hasNoSoftParam) {
         config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
       }
-    
-      const data = await this[config.crud as CRUDMethod](
-        config.uri,
-        { body: config.body }
-      );
+
+      const data = await this[config.crud as CRUDMethod](config.uri, {
+        body: config.body,
+      });
       return data === 'good';
     } catch (e) {
       return false;
@@ -268,10 +275,9 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getMediafiles(id: string): Promise<any> {
     try {
       return await this.get(
-          `${Collection.Entities}/${id}/mediafiles?non_public=1`
+        `${Collection.Entities}/${id}/mediafiles?non_public=1`
       );
-    }
-    catch (e) {
+    } catch (e) {
       return { results: [] };
     }
   }
@@ -419,11 +425,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (ids.length === 0) return 'no ids were specified';
 
     const queryParams = new URLSearchParams({
-      delete_mediafiles: deleteEntities.deleteMediafiles ? "1" : "0",
+      delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
     }).toString();
 
     await this.delete(`${path}?${queryParams}`, {
-      body: { identifiers: ids }
+      body: { identifiers: ids },
     });
     return 'data has been successfully deleted';
   }
@@ -622,10 +628,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     return 'no-call-is-triggerd';
   }
 
-  async updateMetadataWithCsv(
-    entityType: string,
-    csv: any
-  ): Promise<any> {
+  async updateMetadataWithCsv(entityType: string, csv: any): Promise<any> {
     await this.put(`${getCollectionValueForEntityType(entityType)}`, {
       headers: {
         'Content-Type': 'text/csv',
@@ -635,33 +638,33 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async GetCsvExportKeysPerEntityType(
-      entityType: string
+    entityType: string
   ): Promise<BulkOperationCsvExportKeys> {
     const options = {
       headers: {
-        'Accept': 'text/csv',
+        Accept: 'text/csv',
       },
     };
     const csvData = await this.get(
-        `${getCollectionValueForEntityType(
-            entityType
-        )}?type=${entityType}&exclude_non_editable_fields=1`,
-        options
+      `${getCollectionValueForEntityType(
+        entityType
+      )}?type=${entityType}&exclude_non_editable_fields=1`,
+      options
     );
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
 
     const dropdownOptions: BulkOperationCsvExportKeys = {
-      options: []
-    }
+      options: [],
+    };
     headers.forEach((item: string) => {
       dropdownOptions.options.push({
         icon: DamsIcons.NoIcon,
         label: item,
         value: item,
-        required: item === "identifiers",
+        required: item === 'identifiers',
       });
-    })
+    });
     return dropdownOptions;
   }
 
