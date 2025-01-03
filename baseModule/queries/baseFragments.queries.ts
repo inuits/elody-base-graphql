@@ -158,10 +158,8 @@ export const baseFragments = gql`
         key: "original_file_location"
         source: root
       )
-      publicationStatus: keyValue(key: "publication_status", source: metadata)
       thumbnail: keyValue(key: "filename", source: root)
       mimetype: keyValue(key: "mimetype", source: root)
-      copyrightColor: keyValue(key: "copyright_color", source: metadata)
       order: keyValue(
         key: "order"
         source: relationMetadata
@@ -187,11 +185,6 @@ export const baseFragments = gql`
       original_filename: metaData {
         label(input: "metadata.labels.filename")
         key(input: "original_filename")
-        __typename
-      }
-      publicationStatus: metaData {
-        label(input: "metadata.labels.publication-status")
-        key(input: "publicationStatus")
         __typename
       }
       contextMenuActions {
