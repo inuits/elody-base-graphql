@@ -192,6 +192,7 @@ export const baseSchema = gql`
 
   enum ProgressStepStatus {
     complete
+    incomplete
     loading
     empty
     failed
@@ -522,6 +523,7 @@ export const baseSchema = gql`
     History
     Iiif
     Image
+    ImagePlus
     InfoCircle
     KeyholeSquare
     Link

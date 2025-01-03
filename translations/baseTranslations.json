@@ -23,9 +23,28 @@
         "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}."
       },
       "progress-steps": {
-        "validate": "Validation",
-        "prepare": "Prepare",
-        "upload": "Uploading"
+        "validate": "CSV",
+        "validate-labels": {
+          "empty": "No CSV",
+          "complete": "OK",
+          "loading":"Validating CSV",
+          "failed": "Error in CSV"
+        },
+        "prepare": "Mediafiles",
+        "prepare-labels": {
+          "empty": "No mediafiles",
+          "complete": "OK",
+          "incomplete": "Missing mediafiles in uploadzone",
+          "loading": "Loading mediafiles",
+          "failed": "Mismatch between mediafiles and CSV"
+        },
+        "upload": "Upload",
+        "upload-labels": {
+          "empty": "Not uploading",
+          "complete": "Uploaded",
+          "loading": "Uploading",
+          "failed": "Something went wrong while uploading"
+        }
       },
       "progress-bar": {
         "percentage": "Progress: {0}%",
@@ -437,9 +456,32 @@
         "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}."
       },
       "progress-steps": {
-        "validate": "Valideren",
-        "prepare": "Voorbereiden",
-        "upload": "Uploaden"
+        "actions": {
+          "progress-steps": {
+            "validate": "CSV",
+            "validate-labels": {
+              "empty": "Geen CSV",
+              "complete": "OK",
+              "loading": "CSV valideren",
+              "failed": "Fout in CSV"
+            },
+            "prepare": "Mediabestanden",
+            "prepare-labels": {
+              "empty": "Geen mediabestanden",
+              "complete": "OK",
+              "incomplete": "Ontbrekende mediabestanden in uploadzone",
+              "loading": "Mediabestanden laden",
+              "failed": "Mismatch tussen mediabestanden en CSV"
+            },
+            "upload": "Upload",
+            "upload-labels": {
+              "empty": "Niet aan het uploaden",
+              "complete": "Alle bestanden geupload",
+              "loading": "Uploaden",
+              "failed": "Er ging iets verkeerd tijdens het uploaden"
+            }
+          }
+        }
       },
       "progress-bar": {
         "percentage": "Vooruitgang: {0}%",
