@@ -63,6 +63,7 @@ import {
   PanelInfo,
   PanelLink,
   PanelMetaData,
+  PanelMetadataValueTooltipInput,
   PanelRelation,
   PanelRelationMetaData,
   PanelThumbnail,
@@ -1211,6 +1212,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     tooltip: async (_source, { input }, { dataSources }) => {
       return input ?? '';
+    },
+    valueTooltip: async (_source, { input }, { dataSources }) => {
+      return (input ?? {}) as PanelMetadataValueTooltipInput;
     },
   },
   UploadContainer: {
