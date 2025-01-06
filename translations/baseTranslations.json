@@ -51,7 +51,7 @@
         "steps": "{0} of {1} completed"
       },
       "upload": {
-        "errors": "{0} items failed: ",
+        "errors": "No items failed | {0} item failed:  | {0} items failed:",
         "missing": "{0} is missing"
       }
     },
@@ -488,7 +488,7 @@
         "steps": "Stap {0} van {1} compleet"
       },
       "upload": {
-        "errors": "{0} items mislukt: ",
+        "errors": "Geen items mislukt | {0} item mislukt:  | {0} items mislukt:",
         "missing": "{0} ontbreekt"
       }
     },
