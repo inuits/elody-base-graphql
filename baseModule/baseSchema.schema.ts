@@ -90,8 +90,11 @@ export const baseSchema = gql`
     dropdownSingleselectMetadata
     fileUpload
     csvUpload
-    baseFileSystemImportField
     baseEntityPickerField
+    baseFileSystemImportField
+    baseMagazineWithMetsImportField
+    baseMagazineWithCsvImportField
+    baseOcrImportField
   }
 
   enum BaseFieldType {
@@ -104,9 +107,12 @@ export const baseSchema = gql`
     baseTextareaField
     baseFileUploadField
     baseCsvUploadField
-    baseFileSystemImportField
     baseEntityPickerField
     csvEntityTypeTypeField
+    baseFileSystemImportField
+    baseMagazineWithMetsImportField
+    baseMagazineWithCsvImportField
+    baseOcrImportField
   }
 
   enum FileType {

@@ -153,8 +153,10 @@
       }
     },
     "import": {
-      "start-import": "Import started",
+      "start-import": "Start import",
+      "import-started": "Importer started",
       "no-directories": "No import directories available",
+      "no-magazines": "No import magazines available",
       "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}",
       "import-error": "Import failed",
       "import-success": "Import successful"
@@ -590,8 +592,10 @@
       }
     },
     "import": {
-      "start-import": "Importeren gestart",
+      "start-import": "Start importeren",
+      "import-started": "Importeren gestart",
       "no-directories": "Er konden geen import mappen gevonden worden",
+      "no-magazines": "Er konden geen import magazines gevonden worden",
       "error-csv-count": "Exact 1 CSV-bestand verwacht in {folder}, {count} gevonden",
       "import-error": "Import mislukt",
       "import-success": "Import successful"
