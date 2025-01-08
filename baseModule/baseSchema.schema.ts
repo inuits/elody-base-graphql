@@ -1050,6 +1050,11 @@ export const baseSchema = gql`
     addRelation
     removeRelation
   }
+  
+  enum EntitySubelement {
+    intialValues
+    relationValues
+  }
 
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
@@ -1063,6 +1068,7 @@ export const baseSchema = gql`
     customQuery(input: String): String
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String
+    filtersNeedContext(input: [EntitySubelement]): [EntitySubelement]
     customQueryEntityPickerList(input: String): String
     customQueryEntityPickerListFilters(input: String): String
     searchInputType(input: String): String
