@@ -934,6 +934,7 @@ export const baseSchema = gql`
     technicalMetadata
     relations
     relationMetadata
+    metadataOrRelation
   }
 
   type IntialValues {
@@ -1211,9 +1212,24 @@ export const baseSchema = gql`
     hidden: Boolean!
     searchValueForFilter: String!
   }
+
   input HiddenFieldInput {
     hidden: Boolean!
     searchValueForFilter: String!
+  }
+
+  enum PanelMetadataValueTooltipTypes {
+    plane
+    preview
+  }
+
+  type PanelMetadataValueTooltip {
+    type: PanelMetadataValueTooltipTypes!
+    value: String
+  }
+
+  input PanelMetadataValueTooltipInput {
+    type: PanelMetadataValueTooltipTypes!
   }
 
   type PanelMetaData {
@@ -1225,6 +1241,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
     tooltip(input: String!): String!
+    valueTooltip(input: PanelMetadataValueTooltipInput): PanelMetadataValueTooltip
   }
 
   type PanelRelationMetaData {
