@@ -164,3 +164,32 @@ export const resolveIntialValueTechnicalMetadata = (
   }
 };
 
+export const resolveIntialValueMetadataOrRelation = async (
+  dataSources: DataSources,
+  parent: any,
+  key: string,
+  relationKey: string,
+  formatter: string = '',
+  formatterSettings?: FormattersConfig,
+): Promise<string | any> => {
+  try {
+    const [metadataKey, relationKeyAsLabel] = key.split("|");
+    const metadata  = await resolveIntialValueMetadata(dataSources, parent, metadataKey, undefined, '');
+    if (metadata) return metadata as string;
+    return await resolveIntialValueRelations(
+      dataSources,
+      parent,
+      relationKey,
+      relationKeyAsLabel as string,
+      '',
+      '',
+      '',
+      '',
+      formatter as string,
+      formatterSettings
+    );
+  } catch {
+    return '';
+  }
+};
+

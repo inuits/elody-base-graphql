@@ -63,6 +63,7 @@ import {
   PanelInfo,
   PanelLink,
   PanelMetaData,
+  PanelMetadataValueTooltipInput,
   PanelRelation,
   PanelRelationMetaData,
   PanelThumbnail,
@@ -108,6 +109,7 @@ import {
   resolveIntialValueRelations,
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
+  resolveIntialValueMetadataOrRelation,
 } from '../resolvers/intialValueResolver';
 import {
   prepareRelationFieldForMapData,
@@ -874,6 +876,15 @@ export const baseResolver: Resolvers<ContextValue> = {
             ),
           technicalMetadata: () =>
             resolveIntialValueTechnicalMetadata(parent, key),
+          metadataOrRelation: () =>
+            resolveIntialValueMetadataOrRelation(
+              dataSources,
+              parent,
+              key,
+              relationKey as string,
+              formatter as string,
+              customFormatters
+            )
         };
 
         return (await resolveObject[source]()) || '';
@@ -1201,6 +1212,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     tooltip: async (_source, { input }, { dataSources }) => {
       return input ?? '';
+    },
+    valueTooltip: async (_source, { input }, { dataSources }) => {
+      return (input ?? {}) as PanelMetadataValueTooltipInput;
     },
   },
   UploadContainer: {
