@@ -612,7 +612,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): EntetiesCallReturn {
     //Add mediafile type to the result, is missing from the mediafile endpoint
     if (!Array.isArray(result)) {
-      const finalResult = result.results.map(
+      const finalResult = result.results?.map(
         (item: unknown): Record<string, unknown> => {
           //Todo write typescheker for EntitieResults
           return { ...(item as Object), type: 'mediafile' } as Record<
@@ -621,7 +621,7 @@ export class CollectionAPI extends AuthRESTDataSource {
           >;
         }
       );
-      finalResult.unshift({
+      finalResult?.unshift({
         count: result.count ? result.count : result.results.length,
       });
       return finalResult;
