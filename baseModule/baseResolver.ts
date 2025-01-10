@@ -66,6 +66,7 @@ import {
   PanelMetadataValueTooltipInput,
   PanelRelation,
   PanelRelationMetaData,
+  PanelRelationRootData,
   PanelThumbnail,
   Permission,
   ProgressStepStatus,
@@ -106,6 +107,7 @@ import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
   resolveIntialValueMetadata,
   resolveIntialValueRelationMetadata,
+  resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
@@ -698,6 +700,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     relationMetaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelRelationMetaData;
     },
+    relationRootData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelRelationRootData;
+    },
     thumbnail: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelThumbnail;
     },
@@ -868,6 +873,14 @@ export const baseResolver: Resolvers<ContextValue> = {
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(
+              parent,
+              key,
+              uuid as string,
+              relationKey as string,
+              formatter as string
+            ),
+          relationRootdata: () =>
+              resolveIntialValueRelationRootdata(
               parent,
               key,
               uuid as string,
@@ -1294,6 +1307,26 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   PanelRelationMetaData: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    key: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    unit: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    linkText: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    inputField: async (parent: any, { type }, { dataSources }) => {
+      return baseFields[type];
+    },
+    showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
+      return input ? input : false;
+    },
+  },
+  PanelRelationRootData: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },

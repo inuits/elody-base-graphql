@@ -166,6 +166,7 @@ export const baseSchema = gql`
     relationValues
     relations
     relationMetadata
+    relationRootdata
     relatedEntityData
   }
 
@@ -934,6 +935,7 @@ export const baseSchema = gql`
     technicalMetadata
     relations
     relationMetadata
+    relationRootdata
     metadataOrRelation
   }
 
@@ -1252,6 +1254,15 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
   }
+  
+  type PanelRelationRootData {
+    label(input: String!): String!
+    key(input: String!): String!
+    unit(input: Unit!): Unit!
+    linkText(input: String!): String
+    inputField(type: BaseFieldType!): InputField!
+    showOnlyInEditMode(input: Boolean): Boolean
+  }
 
   type PanelThumbnail {
     key(input: String!): String
@@ -1398,6 +1409,7 @@ export const baseSchema = gql`
   type teaserMetadata {
     metaData: PanelMetaData
     relationMetaData: PanelRelationMetaData
+    relationRootData: PanelRelationRootData
     thumbnail: PanelThumbnail
     link: PanelLink
     contextMenuActions: ContextMenuActions

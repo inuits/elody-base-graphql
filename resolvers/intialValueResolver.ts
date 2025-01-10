@@ -149,6 +149,26 @@ export const resolveIntialValueRelationMetadata = (
   }
 };
 
+export const resolveIntialValueRelationRootdata = (
+  parent: any,
+  key: string,
+  uuid: string,
+  relationKey: string,
+  formatter: string
+): string | string[] | {label: string, formatter: string } => {
+  try {
+    let label: string | string[] = '';
+    label = parent?.relations
+      .find(
+        (relation: any) =>
+          relation.type === relationKey && relation.key === uuid
+      )[key];
+    return formatterFactory(ResolverFormatters.RelationMetadata)({ label, formatter });
+  } catch (e) {
+    return '';
+  }
+};
+
 export const resolveIntialValueTechnicalMetadata = (
   parent: any,
   key: string
