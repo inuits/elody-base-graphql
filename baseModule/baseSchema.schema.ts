@@ -49,6 +49,7 @@ export const baseSchema = gql`
 
   enum Unit {
     COORDINATES_DEFAULT
+    DATE_DEFAULT
     DATETIME_DEFAULT
     DATETIME_DMY12
     DATETIME_DMY24

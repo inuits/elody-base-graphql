@@ -34,7 +34,7 @@ const handleLinkFormatterForRelations = ({
   formatterSettings: LinkFormatter;
 }): { label: string; link: string, entity: BaseEntity & { metadata: Metadata[] } } | string => {
   let value: string = entity[formatterSettings.value as keyof BaseEntity];
-  let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value;
+  let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value || entity?.id;
   let link = formatterSettings.link;
   if (!label) {
     label = entity;

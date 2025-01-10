@@ -66,27 +66,29 @@ export const resolveIntialValueRelations = async (
       if (relation.type === 'hasMediafile') {
         type = await dataSources.CollectionAPI.getMediaFile(relation.key);
       } else {
-        if (relationEntityType)
+        if (relationEntityType) {
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             relationEntityType,
             undefined,
             true
           );
-        else
+        }
+        else if (metadataKeyAsLabel || String(formatter).startsWith("link|")) {
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             '',
             'entities',
             true
           );
+        }
       }
 
       if (rootKeyAsLabel) return type[rootKeyAsLabel];
 
       const result = type?.metadata?.find(
         (metadata: any) => {
-          const keys =  metadataKeyAsLabel.split('|');
+          const keys =  String(metadataKeyAsLabel).split('|');
           return keys.includes(metadata.key)
         }
       )?.value || relation.key

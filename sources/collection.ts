@@ -70,7 +70,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       let search = searchValue;
       data = await this.get(
-        `${collection[type]}?limit=${limit}&skip=${this.getSkip(
+        `${getCollectionValueForEntityType(type)}?limit=${limit}&skip=${this.getSkip(
           skip,
           limit
         )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
@@ -445,7 +445,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       relations,
     };
     const newEntity = await this.post(
-      `${collection[entity.type as Entitytyping]}`,
+      `${getCollectionValueForEntityType(entity.type as Entitytyping)}`,
       {
         body,
       }
@@ -492,6 +492,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
     if (Entitytyping.Mediafile === type) {
       data = await this.doAdvancedMediaCall(
+        type,
         limit,
         skip,
         advancedFilterInputs,
@@ -540,7 +541,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `${collection[type]}/filter?limit=${limit}&skip=${this.getSkip(
+      `${getCollectionValueForEntityType(type)}/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -551,6 +552,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   private async doAdvancedMediaCall(
+    type: Entitytyping,
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
