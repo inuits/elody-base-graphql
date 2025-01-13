@@ -544,9 +544,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mutateEntityValues: async (
       _source,
-      { id, formInput, collection },
+      { id, formInput, collection, preferredLanguage },
       { dataSources }
     ) => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
+      console.log('langyage: ', preferredLanguage)
       const filterEditStatus = (
         editStatus: EditStatus
       ): BaseRelationValuesInput[] => {

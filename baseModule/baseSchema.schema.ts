@@ -1599,6 +1599,7 @@ export const baseSchema = gql`
       id: String!
       formInput: EntityFormInput!
       collection: Collection!
+      preferredLanguage: String
     ): Entity
     deleteData(
       id: String!

@@ -684,6 +684,13 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
     );
 
+    console.log('to: ', )
+    console.log(data.results)
+    console.log({
+      body: input
+    })
+
+
     if (data.results && data.results.length > 0) return data.results;
     return [];
   }
