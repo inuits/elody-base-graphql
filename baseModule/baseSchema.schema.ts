@@ -94,7 +94,7 @@ export const baseSchema = gql`
     baseFileSystemImportField
     baseMagazineWithMetsImportField
     baseMagazineWithCsvImportField
-    baseOcrImportField
+    baseMediafilesWithOcrImportField
   }
 
   enum BaseFieldType {
@@ -112,7 +112,7 @@ export const baseSchema = gql`
     baseFileSystemImportField
     baseMagazineWithMetsImportField
     baseMagazineWithCsvImportField
-    baseOcrImportField
+    baseMediafilesWithOcrImportField
   }
 
   enum FileType {
@@ -186,6 +186,7 @@ export const baseSchema = gql`
   enum ActionType {
     submit
     upload
+    uploadWithOcr
     download
     ocr
     endpoint
@@ -1183,6 +1184,7 @@ export const baseSchema = gql`
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
     uploadCsvForReordening
+    mediafilesWithOcr
   }
 
   enum UploadFieldSize {
@@ -1217,6 +1219,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
     templateCsvs(input: [String!]!): [String]
+    extraMediafileType(input: String): String
   }
 
   type HiddenField {

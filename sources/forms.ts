@@ -89,7 +89,7 @@ export const baseFields: { [key: string]: InputField } = {
   baseMagazineWithCsvImportField: {
     type: InputFieldTypes.BaseMagazineWithCsvImportField,
   },
-  baseOcrImportField: {
-    type: InputFieldTypes.BaseOcrImportField,
+  baseMediafilesWithOcrImportField: {
+    type: InputFieldTypes.BaseMediafilesWithOcrImportField,
   },
 };

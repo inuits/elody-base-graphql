@@ -1254,6 +1254,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     dryRunUpload: async (parent: any, { input }, { dataSources }) => {
       return input || false;
     },
+    extraMediafileType: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
     uploadFieldType: async (parent: any, { input }, { dataSources }) => {
       return input || UploadFieldType.Batch;
     },
