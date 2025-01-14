@@ -42,6 +42,10 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           hasSavedSearch: config.features.hasSavedSearch === undefined
               ? false
               : config.features.hasSavedSearch,
+          multilanguage: {
+            hasMultilanguage: config.features.multilanguage?.hasMultilanguage || false,
+            metadataKeys: config.features.multilanguage?.metadataKeys
+          },
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,

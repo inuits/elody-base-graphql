@@ -1008,6 +1008,7 @@ export const baseSchema = gql`
   input MetadataValuesInput {
     key: String!
     value: JSON!
+    lang: String
   }
 
   input EntityFormInput {
@@ -1548,6 +1549,7 @@ export const baseSchema = gql`
       advancedSearchValue: [FilterInput]
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
+      preferredLanguage: String
     ): EntitiesResults
     Tenants: EntitiesResults
     User: User
@@ -1597,6 +1599,7 @@ export const baseSchema = gql`
       id: String!
       formInput: EntityFormInput!
       collection: Collection!
+      preferredLanguage: String
     ): Entity
     deleteData(
       id: String!
