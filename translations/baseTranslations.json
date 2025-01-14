@@ -99,6 +99,12 @@
         "cancel": "Cancel",
         "title": "Delete {0}"
       },
+      "delete-entities": {
+        "message": "Are you certain you wish to delete selected entities?",
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "title": "Delete selected entities"
+      },
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
         "confirm": "Leave",
@@ -537,6 +543,12 @@
         "secondary-confirm": "Verwijder entiteit en media bestanden",
         "cancel": "Annuleren",
         "title": "Verwijder {0}"
+      },
+      "delete-entities": {
+        "message": "Are you certain you wish to delete selected entities?",
+        "confirm": "Delete",
+        "cancel": "Cancel",
+        "title": "Delete selected entities"
       },
       "discard-create": {
         "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
