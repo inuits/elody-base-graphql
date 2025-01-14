@@ -545,10 +545,10 @@
         "title": "Verwijder {0}"
       },
       "delete-entities": {
-        "message": "Are you certain you wish to delete selected entities?",
-        "confirm": "Delete",
-        "cancel": "Cancel",
-        "title": "Delete selected entities"
+        "message": "Ben je er zeker van dat je geselecteerde entiteiten wilt verwijderen?",
+        "confirm": "Verwijder",
+        "cancel": "Annuleren",
+        "title": "Verwijder geselecteerde entiteiten"
       },
       "discard-create": {
         "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
