@@ -10,6 +10,7 @@ export const applyUploadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         const isDryRun: boolean = !!request.query['dry_run'];
+        const extraMediafileType: string | undefined = request.query['extra_mediafile_type'] as string;
         let csv = '';
         request.on('data', (chunk: any) => {
           try {
@@ -22,11 +23,11 @@ export const applyUploadEndpoint = (app: Express) => {
         request.on('end', async () => {
           try {
             if (isDryRun) {
-              const res = await __batchDryRun(request, response, csv);
+              const res = await __batchDryRun(request, response, csv, extraMediafileType);
               response.end(JSON.stringify(res));
             } else {
               const uploadUrls = (
-                await __batchEntities(request, response, csv)
+                await __batchEntities(request, response, csv, extraMediafileType)
               ).filter((uploadUrl) => uploadUrl !== '');
               response.end(JSON.stringify(uploadUrls));
             }
@@ -97,13 +98,14 @@ export const applyUploadEndpoint = (app: Express) => {
 const __batchDryRun = async (
   request: Request,
   response: Response,
-  csv: string
+  csv: string,
+  extraMediafileType: string | undefined,
 ): Promise<any> => {
   let result = undefined;
   try {
     const datasource = new AuthRESTDataSource({ session: request.session });
     result = await datasource.post(
-      `${env?.api.collectionApiUrl}/batch?dry_run=1`,
+      `${env?.api.collectionApiUrl}/batch?dry_run=1${!!extraMediafileType ? `&extra_mediafile_type=${extraMediafileType}` : ""}`,
       {
         headers: {
           'Content-Type': 'text/csv',
@@ -121,12 +123,13 @@ const __batchDryRun = async (
 const __batchEntities = async (
   request: Request,
   response: Response,
-  csv: string
+  csv: string,
+  extraMediafileType: string | undefined,
 ): Promise<string[]> => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   let result: any;
   try {
-    result = await datasource.post(`${env?.api.collectionApiUrl}/batch`, {
+    result = await datasource.post(`${env?.api.collectionApiUrl}/batch${!!extraMediafileType ? `?extra_mediafile_type=${extraMediafileType}` : ""}`, {
       headers: {
         'Content-Type': 'text/csv',
         Accept: 'text/uri-list',

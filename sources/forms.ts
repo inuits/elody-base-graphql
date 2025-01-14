@@ -77,10 +77,19 @@ export const baseFields: { [key: string]: InputField } = {
       ],
     },
   },
+  baseEntityPickerField: {
+    type: InputFieldTypes.BaseEntityPickerField,
+  },
   baseFileSystemImportField: {
     type: InputFieldTypes.BaseFileSystemImportField,
   },
-  baseEntityPickerField: {
-    type: InputFieldTypes.BaseEntityPickerField,
+  baseMagazineWithMetsImportField: {
+    type: InputFieldTypes.BaseMagazineWithMetsImportField,
+  },
+  baseMagazineWithCsvImportField: {
+    type: InputFieldTypes.BaseMagazineWithCsvImportField,
+  },
+  baseMediafilesWithOcrImportField: {
+    type: InputFieldTypes.BaseMediafilesWithOcrImportField,
   },
 };
