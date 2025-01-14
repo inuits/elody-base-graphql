@@ -291,10 +291,12 @@ export const baseSchema = gql`
   type RequiredRelationValidation {
     relationType: String!
     amount: Int!
+    exact: Boolean
   }
   input RequiredRelationValidationInput {
     relationType: String!
     amount: Int!
+    exact: Boolean
   }
 
   type RequiredOneOfRelationValidation {

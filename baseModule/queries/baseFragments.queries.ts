@@ -25,6 +25,7 @@ export const baseFragments = gql`
     has_required_relation {
       relationType
       amount
+      exact
     }
     has_one_of_required_relations {
       relationTypes
