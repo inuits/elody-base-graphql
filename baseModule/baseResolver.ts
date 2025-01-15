@@ -247,6 +247,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
       return entities!!;
     },
+    EntitiesByAdvancedSearch: async (
+      _source,
+      {
+        q = "*",
+        filter_by = "",
+        query_by = "",
+      },
+      { dataSources }
+    ): Promise<EntitiesResults> => {
+      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(q as string, filter_by as string, query_by as string);
+    },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();
     },
@@ -439,6 +450,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           hasPermission: del == '200',
         },
       ];
+    },
+    BulkOperationsRelationForm:  async (_source: any, _args, { dataSources }) => {
+      return {} as WindowElement;
     },
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
       return {} as Form;

@@ -1571,6 +1571,11 @@ export const baseSchema = gql`
     CustomBulkOperations: Entity!
     BulkOperationCsvExportKeys(entityType: String!): BulkOperationCsvExportKeys!
     BulkOperationsRelationForm: WindowElement!
+    EntitiesByAdvancedSearch(
+      q: String!
+      filter_by: String! 
+      query_by: String!
+    ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
