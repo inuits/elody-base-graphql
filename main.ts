@@ -15,7 +15,7 @@ import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
 import { ApolloServer } from '@apollo/server';
-import { Application } from 'graphql-modules';
+import { createApplication } from 'graphql-modules';
 import { applySEOEndpoint } from './endpoints/seoEndpoint';
 import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
@@ -31,7 +31,6 @@ import {
   InputField,
   PermissionRequestInfo,
 } from '../../generated-types/type-defs';
-import { CollectionAPI } from './sources/collection';
 import {
   ContextValue,
   DataSources,
@@ -41,12 +40,8 @@ import {
 import { Environment } from './environment';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
-import { ImportAPI } from 'import-module';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
-import { StorageAPI } from './sources/storage';
-import { TranscodeService } from './sources/transcode';
-import { OcrService } from './sources/ocr';
 import {
   serveFrontendThroughExpress,
   serveFrontend,
@@ -59,6 +54,14 @@ import type {
 } from './types/collectionAPITypes';
 import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
 import { createMongoConnectionString } from './sources/mongo';
+import {
+  isRequiredDataSources,
+  createFullElodyModuleDataSourceMapping,
+  getDataSourcesFromMapping,
+  getModulesFromMapping,
+  ModuleDataSourceMapping,
+  addAdditionalOptionalDataSources,
+} from './helpers/elodyModuleHelpers';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -100,7 +103,7 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
 };
 
 const start = (
-  application: Application,
+  moduleDataSourceMapping: ModuleDataSourceMapping[],
   appConfig: Environment,
   appTranslations: Object,
   customEndpoints: ((app: any) => void)[] = [],
@@ -111,7 +114,15 @@ const start = (
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
   customTypeUrlMapping: TypeUrlMapping = {}
-) => {
+): void => {
+  const fullElodyModuleDataSourceMapping: ModuleDataSourceMapping[] =
+    createFullElodyModuleDataSourceMapping(moduleDataSourceMapping);
+
+  addAdditionalOptionalDataSources(appConfig);
+
+  const application = createApplication({
+    modules: getModulesFromMapping(fullElodyModuleDataSourceMapping),
+  });
   environment = appConfig;
 
   if (appConfig.sentryEnabled) {
@@ -180,19 +191,14 @@ const start = (
         context: async ({ req }) => {
           const { cache } = server;
           const session = { ...req.session };
-          const dataSources = {
-            CollectionAPI: new CollectionAPI({ session, cache }),
-            ImportAPI: new ImportAPI({ session, cache }),
-            StorageAPI: new StorageAPI({ session, cache }),
-          };
-          if (environment?.api.transcodeService)
-            Object.assign(dataSources, {
-              TranscodeService: new TranscodeService({ session, cache }),
-            });
-          if (environment?.api.ocrService)
-            Object.assign(dataSources, {
-              OcrService: new OcrService({ session, cache }),
-            });
+          const dataSources = getDataSourcesFromMapping(
+            fullElodyModuleDataSourceMapping,
+            session,
+            cache
+          );
+          if (!isRequiredDataSources(dataSources)) {
+            throw new Error('All DataSources properties must be defined');
+          }
 
           return {
             dataSources,
@@ -281,6 +287,7 @@ export type {
   CollectionAPIMediaFile,
   CollectionAPIMetadata,
   CollectionAPIRelation,
+  ModuleDataSourceMapping,
 };
 export {
   environment,

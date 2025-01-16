@@ -9,15 +9,23 @@ import {
   Formatters,
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
-import {OcrService} from "./sources/ocr";
+import { OcrService } from './sources/ocr';
 
-export interface DataSources {
-  CollectionAPI: CollectionAPI;
-  ImportAPI: ImportAPI;
-  StorageAPI: StorageAPI;
+export interface OptionalDataSources {
+  CollectionAPI?: CollectionAPI;
+  ImportAPI?: ImportAPI;
+  StorageAPI?: StorageAPI;
   TranscodeService?: TranscodeService;
   OcrService?: OcrService;
 }
+
+export type DataSources = {
+  CollectionAPI: CollectionAPI;
+  ImportAPI: ImportAPI;
+  StorageAPI: StorageAPI;
+  TranscodeService: TranscodeService;
+  OcrService: OcrService;
+};
 
 export interface ContextValue {
   dataSources: DataSources;
@@ -40,9 +48,9 @@ type Filters = {
 
 export type FormattersConfig = {
   [formatterType: string]: {
-    [key: string]: Formatters
-  }
-}
+    [key: string]: Formatters;
+  };
+};
 
 export type TypeUrlMapping = { [type: string]: string };
 
