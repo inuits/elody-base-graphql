@@ -63,6 +63,7 @@ export interface Environment {
       };
     };
     hasPersistentSessions?: boolean;
+    hasAdvancedSearch?: boolean;
   };
   customization: {
     applicationTitle: string;
