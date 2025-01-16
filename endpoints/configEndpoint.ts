@@ -42,6 +42,9 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           hasSavedSearch: config.features.hasSavedSearch === undefined
               ? false
               : config.features.hasSavedSearch,
+          hasAdvancedSearch: config.features.hasAdvancedSearch === undefined
+              ? false
+              : config.features.hasAdvancedSearch,
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
