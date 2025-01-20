@@ -329,6 +329,8 @@
       "W5008": "The value {value} is not a valid datetime",
       "W5009": "{type} is not a valid type",
       "W5013": "The format is invalid for type {type}",
+      "W5016": "The value {value} is invalid, these are the valid values: {options}",
+      "W5017": "Item for key {key} with value {value} doesn't exist.",
       "R5014": "There is no metadata available for item with id {id}"
     },
     "pagination":{
@@ -774,6 +776,8 @@
       "W5008": "De waarde {value} is geen geldige datum/tijd",
       "W5009": "{type} is geen geldig type",
       "W5013": "Het formaat is ongeldig voor type {type}",
+      "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
+      "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
       "R5014": "Er zijn geen metadata beschikbaar voor item met id {id}"
     },
     "pagination":{
