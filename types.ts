@@ -10,6 +10,7 @@ import {
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
+import { AuthRESTDataSource } from "./auth/AuthRESTDataSource";
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
@@ -17,6 +18,7 @@ export interface OptionalDataSources {
   StorageAPI?: StorageAPI;
   TranscodeService?: TranscodeService;
   OcrService?: OcrService;
+  [key: string]: AuthRESTDataSource;
 }
 
 export type DataSources = {
@@ -25,6 +27,7 @@ export type DataSources = {
   StorageAPI: StorageAPI;
   TranscodeService: TranscodeService;
   OcrService: OcrService;
+  [key: string]: AuthRESTDataSource;
 };
 
 export interface ContextValue {

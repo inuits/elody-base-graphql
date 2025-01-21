@@ -1606,6 +1606,8 @@ export const baseSchema = gql`
     ): JSON
     FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
     GetEntityDetailContextMenuActions: ContextMenuActions!
+    UploadMagazinesWithMets: [String]
+    UploadMagazinesWithCsv: [String]
   }
 
   type Mutation {
@@ -1641,6 +1643,8 @@ export const baseSchema = gql`
     updateMetadataWithCsv(entityType: String!, csv: String!): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON
+    startUploadMagazinesWithMets(magazine: String!): [String]
+    startUploadMagazinesWithCsv(folder: String!): String
   }
 
   enum ViewModes {
