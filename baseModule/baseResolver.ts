@@ -50,6 +50,7 @@ import {
   KeyValueSource,
   ManifestViewerElement,
   MarkdownViewerElement,
+  WysiwygElement,
   EntityViewerElement,
   Maybe,
   MediaFile,
@@ -249,14 +250,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     EntitiesByAdvancedSearch: async (
       _source,
-      {
-        q = "*",
-        filter_by = "",
-        query_by = "",
-      },
+      { q = '*', filter_by = '', query_by = '' },
       { dataSources }
     ): Promise<EntitiesResults> => {
-      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(q as string, filter_by as string, query_by as string);
+      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(
+        q as string,
+        filter_by as string,
+        query_by as string
+      );
     },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();
@@ -451,7 +452,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         },
       ];
     },
-    BulkOperationsRelationForm:  async (_source: any, _args, { dataSources }) => {
+    BulkOperationsRelationForm: async (
+      _source: any,
+      _args,
+      { dataSources }
+    ) => {
       return {} as WindowElement;
     },
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
@@ -615,7 +620,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       { ids, path, deleteEntities },
       { dataSources }
     ) => {
-      return dataSources.CollectionAPI.bulkDeleteEntities(ids, path, deleteEntities ?? {});
+      return dataSources.CollectionAPI.bulkDeleteEntities(
+        ids,
+        path,
+        deleteEntities ?? {}
+      );
     },
     bulkAddRelations: async (
       _source,
@@ -894,7 +903,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter as string
             ),
           relationRootdata: () =>
-              resolveIntialValueRelationRootdata(
+            resolveIntialValueRelationRootdata(
               parent,
               key,
               uuid as string,
@@ -911,7 +920,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               relationKey as string,
               formatter as string,
               customFormatters
-            )
+            ),
         };
 
         return (await resolveObject[source]()) || '';
@@ -1102,6 +1111,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       } catch {
         return '';
       }
+    },
+  },
+  WysiwygElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    metadataKey: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    extensions: async (_source, { input }, { dataSources }) => {
+      return input;
     },
   },
   MarkdownViewerElement: {
@@ -1455,6 +1475,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     markdownViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MarkdownViewerElement;
+    },
+    wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
     },
   },
   MenuWrapper: {

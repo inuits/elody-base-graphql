@@ -1063,7 +1063,7 @@ export const baseSchema = gql`
     addRelation
     removeRelation
   }
-  
+
   enum EntitySubelement {
     intialValues
     relationValues
@@ -1200,6 +1200,13 @@ export const baseSchema = gql`
     editMetadataWithCsv
   }
 
+  enum WysiwygExtensions {
+    color
+    listItem
+    textStyle
+    starterKit
+  }
+
   type PanelInfo {
     label(input: String!): String!
     value(input: String!): String!
@@ -1255,7 +1262,9 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
     tooltip(input: String!): String!
-    valueTooltip(input: PanelMetadataValueTooltipInput): PanelMetadataValueTooltip
+    valueTooltip(
+      input: PanelMetadataValueTooltipInput
+    ): PanelMetadataValueTooltip
   }
 
   type PanelRelationMetaData {
@@ -1266,7 +1275,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
   }
-  
+
   type PanelRelationRootData {
     label(input: String!): String!
     key(input: String!): String!
@@ -1355,6 +1364,12 @@ export const baseSchema = gql`
     entityId(relationType: String, metadataKey: String): String!
   }
 
+  type WysiwygElement {
+    label(input: String!): String!
+    metadataKey(input: String!): String!
+    extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
+  }
+
   type ColumnList {
     column: Column!
   }
@@ -1369,6 +1384,7 @@ export const baseSchema = gql`
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
+    wysiwygElement: WysiwygElement
   }
 
   type Column {
@@ -1573,7 +1589,7 @@ export const baseSchema = gql`
     BulkOperationsRelationForm: WindowElement!
     EntitiesByAdvancedSearch(
       q: String!
-      filter_by: String! 
+      filter_by: String!
       query_by: String!
     ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
