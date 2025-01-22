@@ -21,14 +21,14 @@ export interface OptionalDataSources {
   [key: string]: AuthRESTDataSource;
 }
 
-export type DataSources = {
+export interface DataSources {
   CollectionAPI: CollectionAPI;
   ImportAPI: ImportAPI;
   StorageAPI: StorageAPI;
   TranscodeService: TranscodeService;
   OcrService: OcrService;
   [key: string]: AuthRESTDataSource;
-};
+}
 
 export interface ContextValue {
   dataSources: DataSources;

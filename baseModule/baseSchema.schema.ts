@@ -1063,7 +1063,7 @@ export const baseSchema = gql`
     addRelation
     removeRelation
   }
-  
+
   enum EntitySubelement {
     intialValues
     relationValues
@@ -1255,7 +1255,9 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
     tooltip(input: String!): String!
-    valueTooltip(input: PanelMetadataValueTooltipInput): PanelMetadataValueTooltip
+    valueTooltip(
+      input: PanelMetadataValueTooltipInput
+    ): PanelMetadataValueTooltip
   }
 
   type PanelRelationMetaData {
@@ -1266,7 +1268,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
   }
-  
+
   type PanelRelationRootData {
     label(input: String!): String!
     key(input: String!): String!
@@ -1573,7 +1575,7 @@ export const baseSchema = gql`
     BulkOperationsRelationForm: WindowElement!
     EntitiesByAdvancedSearch(
       q: String!
-      filter_by: String! 
+      filter_by: String!
       query_by: String!
     ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
@@ -1643,8 +1645,6 @@ export const baseSchema = gql`
     updateMetadataWithCsv(entityType: String!, csv: String!): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON
-    startUploadMagazinesWithMets(magazine: String!): [String]
-    startUploadMagazinesWithCsv(folder: String!): String
   }
 
   enum ViewModes {

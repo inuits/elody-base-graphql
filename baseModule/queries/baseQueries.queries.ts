@@ -130,12 +130,4 @@ export const baseQueries = gql`
   query getUploadMagazinesWithCsv {
     UploadMagazinesWithCsv
   }
-
-  mutation startUploadMagazinesWithMets($magazine: String!) {
-    startUploadMagazinesWithMets(magazine: $magazine)
-  }
-
-  mutation startUploadMagazinesWithCsv($folder: String!) {
-    startUploadMagazinesWithCsv(folder: $folder)
-  }
 `;

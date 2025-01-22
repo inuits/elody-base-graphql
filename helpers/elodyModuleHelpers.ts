@@ -3,17 +3,17 @@ import { baseModule } from '../baseModule/baseModule';
 import { StorageAPI } from '../sources/storage';
 import { CollectionAPI } from '../sources/collection';
 import { DataSources, OptionalDataSources } from '../types';
-import { Environment, environment } from '../main';
+import { AuthRESTDataSource, Environment, environment } from '../main';
 import { TranscodeService } from '../sources/transcode';
 import { OcrService } from '../sources/ocr';
 
-export type ModuleDataSourceMapping = {
-  module: Module;
+export type ElodyConfig = {
+  modules: Module[];
   dataSources: ((session: any, cache: any) => OptionalDataSources)[];
 };
 
-const baseElodyModuleDataSourceMapping: ModuleDataSourceMapping = {
-  module: baseModule,
+const baseElodyElodyConfig: ElodyConfig = {
+  modules: [baseModule],
   dataSources: [
     (session: any, cache: any) => {
       return { CollectionAPI: new CollectionAPI({ session, cache }) };
@@ -26,43 +26,35 @@ const baseElodyModuleDataSourceMapping: ModuleDataSourceMapping = {
 
 export const addAdditionalOptionalDataSources = (environment: Environment) => {
   if (environment?.api.fileSystemImporterServiceUrl) {
-    baseElodyModuleDataSourceMapping.dataSources.push(
-      (session: any, cache: any) => {
-        return { TranscodeService: new TranscodeService({ session, cache }) };
-      }
-    );
+    baseElodyElodyConfig.dataSources.push((session: any, cache: any) => {
+      return { TranscodeService: new TranscodeService({ session, cache }) };
+    });
   }
   if (environment?.api.ocrService) {
-    baseElodyModuleDataSourceMapping.dataSources.push(
-      (session: any, cache: any) => {
-        return { OcrService: new OcrService({ session, cache }) };
-      }
-    );
+    baseElodyElodyConfig.dataSources.push((session: any, cache: any) => {
+      return { OcrService: new OcrService({ session, cache }) };
+    });
   }
 };
 
-export const createFullElodyModuleDataSourceMapping = (
-  customModuleDataSourceMapping: ModuleDataSourceMapping[]
-): ModuleDataSourceMapping[] => {
-  return [baseElodyModuleDataSourceMapping, ...customModuleDataSourceMapping];
-};
-
-export const getModulesFromMapping = (
-  moduleDataSourceMapping: ModuleDataSourceMapping[]
-): Module[] => {
-  return moduleDataSourceMapping.map((mappingItem) => mappingItem.module);
+export const createFullElodyConfig = (
+  customElodyConfig: ElodyConfig
+): ElodyConfig => {
+  const fullConfig = baseElodyElodyConfig;
+  fullConfig.modules.push(...customElodyConfig.modules);
+  fullConfig.dataSources.push(...customElodyConfig.dataSources);
+  return fullConfig;
 };
 
 export const getDataSourcesFromMapping = (
-  moduleDataSourceMapping: ModuleDataSourceMapping[],
+  ElodyConfig: ElodyConfig,
   session: any,
   cache: any
 ): DataSources => {
-  const dataSourceArrays: Array<OptionalDataSources[]> =
-    moduleDataSourceMapping.map((mappingItem) =>
-      mappingItem.dataSources.map((factory) => factory(session, cache))
-    );
-  return dataSourceArrays.flat().reduce((acc, curr) => {
+  const dataSourceArray = ElodyConfig.dataSources.map((mappingItem) =>
+    mappingItem(session, cache)
+  );
+  return dataSourceArray.reduce((acc, curr) => {
     return { ...acc, ...curr };
   }, {}) as DataSources;
 };
@@ -74,4 +66,30 @@ export const isRequiredDataSources = (
     dataSources.CollectionAPI !== undefined &&
     dataSources.StorageAPI !== undefined
   );
+};
+
+export const generateElodyConfig = (
+  modules: Module[],
+  dataSources: {
+    [key: string]: new ({
+      session,
+      cache,
+    }: {
+      session: any;
+      cache: any;
+    }) => AuthRESTDataSource;
+  }
+): ElodyConfig => {
+  const dataSourceKeys = Object.keys(dataSources);
+  const dataSourcesToInitialize = dataSourceKeys.map(
+    (dataSourceKey: string) => {
+      return (session: any, cache: any) => {
+        return {
+          [dataSourceKey]: new dataSources[dataSourceKey]({ session, cache }),
+        };
+      };
+    }
+  );
+
+  return { modules, dataSources: dataSourcesToInitialize };
 };

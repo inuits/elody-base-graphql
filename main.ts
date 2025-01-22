@@ -56,11 +56,11 @@ import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMappi
 import { createMongoConnectionString } from './sources/mongo';
 import {
   isRequiredDataSources,
-  createFullElodyModuleDataSourceMapping,
+  createFullElodyConfig,
   getDataSourcesFromMapping,
-  getModulesFromMapping,
-  ModuleDataSourceMapping,
+  ElodyConfig,
   addAdditionalOptionalDataSources,
+  generateElodyConfig,
 } from './helpers/elodyModuleHelpers';
 
 let environment: Environment | undefined = undefined;
@@ -103,7 +103,7 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
 };
 
 const start = (
-  moduleDataSourceMapping: ModuleDataSourceMapping[],
+  elodyConfig: ElodyConfig,
   appConfig: Environment,
   appTranslations: Object,
   customEndpoints: ((app: any) => void)[] = [],
@@ -115,13 +115,11 @@ const start = (
   customFormatters: FormattersConfig = {},
   customTypeUrlMapping: TypeUrlMapping = {}
 ): void => {
-  const fullElodyModuleDataSourceMapping: ModuleDataSourceMapping[] =
-    createFullElodyModuleDataSourceMapping(moduleDataSourceMapping);
-
+  const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
 
   const application = createApplication({
-    modules: getModulesFromMapping(fullElodyModuleDataSourceMapping),
+    modules: fullElodyConfig.modules,
   });
   environment = appConfig;
 
@@ -192,7 +190,7 @@ const start = (
           const { cache } = server;
           const session = { ...req.session };
           const dataSources = getDataSourcesFromMapping(
-            fullElodyModuleDataSourceMapping,
+            fullElodyConfig,
             session,
             cache
           );
@@ -287,7 +285,7 @@ export type {
   CollectionAPIMediaFile,
   CollectionAPIMetadata,
   CollectionAPIRelation,
-  ModuleDataSourceMapping,
+  ElodyConfig,
 };
 export {
   environment,
@@ -309,4 +307,5 @@ export {
   simpleReturn,
   getRoutesObject,
   serveFrontend,
+  generateElodyConfig,
 };
