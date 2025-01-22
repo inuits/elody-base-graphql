@@ -122,12 +122,4 @@ export const baseQueries = gql`
       }
     }
   }
-
-  query getUploadMagazinesWithMets {
-    UploadMagazinesWithMets
-  }
-
-  query getUploadMagazinesWithCsv {
-    UploadMagazinesWithCsv
-  }
 `;

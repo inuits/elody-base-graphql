@@ -1608,8 +1608,6 @@ export const baseSchema = gql`
     ): JSON
     FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
     GetEntityDetailContextMenuActions: ContextMenuActions!
-    UploadMagazinesWithMets: [String]
-    UploadMagazinesWithCsv: [String]
   }
 
   type Mutation {
