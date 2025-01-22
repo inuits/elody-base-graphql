@@ -70,16 +70,19 @@ export const isRequiredDataSources = (
 
 export const generateElodyConfig = (
   modules: Module[],
-  dataSources: {
-    [key: string]: new ({
-      session,
-      cache,
-    }: {
-      session: any;
-      cache: any;
-    }) => AuthRESTDataSource;
-  }
+  dataSources:
+    | {
+        [key: string]: new ({
+          session,
+          cache,
+        }: {
+          session: any;
+          cache: any;
+        }) => AuthRESTDataSource;
+      }
+    | undefined = undefined
 ): ElodyConfig => {
+  if (!dataSources) return { modules, dataSources: [] };
   const dataSourceKeys = Object.keys(dataSources);
   const dataSourcesToInitialize = dataSourceKeys.map(
     (dataSourceKey: string) => {
