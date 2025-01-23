@@ -574,26 +574,38 @@ export const baseResolver: Resolvers<ContextValue> = {
           });
       };
 
-      await dataSources.CollectionAPI.patchMetadata(
-        id,
-        formInput.metadata,
-        collection
-      );
-      await dataSources.CollectionAPI.postRelations(
-        id,
-        filterEditStatus(EditStatus.New),
-        collection
-      );
-      await dataSources.CollectionAPI.patchRelations(
-        id,
-        filterEditStatus(EditStatus.Changed),
-        collection
-      );
-      await dataSources.CollectionAPI.deleteRelations(
-        id,
-        filterEditStatus(EditStatus.Deleted),
-        collection
-      );
+      const mutateRelations = async () => {
+        await dataSources.CollectionAPI.deleteRelations(
+          id,
+          filterEditStatus(EditStatus.Deleted),
+          collection
+        )
+        await dataSources.CollectionAPI.postRelations(
+          id,
+          filterEditStatus(EditStatus.New),
+          collection
+        ),
+         await dataSources.CollectionAPI.patchRelations(
+          id,
+          filterEditStatus(EditStatus.Changed),
+          collection
+        )
+      }
+
+      const mutateMetadata = async () => {
+        await dataSources.CollectionAPI.patchMetadata(
+          id,
+          formInput.metadata,
+          collection
+        )
+      }
+
+      if (formInput.updateOnlyRelations) {
+        await mutateRelations();
+      } else {
+        await mutateMetadata();
+        await mutateRelations();
+      }
 
       if (collection !== Collection.Mediafiles) {
         return await dataSources.CollectionAPI.getEntity(
