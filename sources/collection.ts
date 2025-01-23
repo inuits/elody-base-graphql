@@ -90,7 +90,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     const filters = { q, filter_by, query_by };
     try {
-      data = await this.post('/filter_typesense', {
+      data = await this.post('filter_typesense', {
         body: filters
       });
       data.results.forEach((element: any) => setId(element));
