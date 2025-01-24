@@ -6,9 +6,10 @@ export const applyDownloadEndpoint = (app: Express) => {
         `/api/download/csv`,
         async (request: Request, response: Response) => {
             try {
+                const returnType = request.query['return_type'];
                 const datasource = new AuthRESTDataSource({ session: request.session });
                 const result = await datasource.post(
-                    `${env?.api.collectionApiUrl}/entities/${request.body.parentId}/order`,
+                    `${env?.api.collectionApiUrl}/entities/${request.body.parentId}/order?${ returnType ? `return_type=${returnType}` : '' }`,
                     {
                         method: 'GET',
                     }
