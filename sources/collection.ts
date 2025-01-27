@@ -144,6 +144,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (hasNoSoftParam) {
         config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
       }
+      if (config.uri.startsWith("/"))
+        config.uri = config.uri.slice(1);
 
       const data = await this[config.crud as CRUDMethod](config.uri, {
         body: config.body,
