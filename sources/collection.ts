@@ -150,6 +150,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       });
       return data === 'good';
     } catch (e) {
+      console.log(e);
       return false;
     }
   }
