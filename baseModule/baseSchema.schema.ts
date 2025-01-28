@@ -118,6 +118,7 @@ export const baseSchema = gql`
   enum FileType {
     pdf
     alto
+    xml
     txt
     csv
     png

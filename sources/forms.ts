@@ -91,5 +91,17 @@ export const baseFields: { [key: string]: InputField } = {
   },
   baseMediafilesWithOcrImportField: {
     type: InputFieldTypes.BaseMediafilesWithOcrImportField,
+    fileTypes: [
+      FileType.Png,
+      FileType.Jpeg,
+      FileType.Jpg,
+      FileType.Tif,
+      FileType.Tiff,
+      FileType.Mp4,
+      FileType.Gif,
+      FileType.Alto,
+      FileType.Txt,
+      FileType.Xml,
+    ],
   },
 };
