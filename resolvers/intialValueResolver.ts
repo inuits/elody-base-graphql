@@ -64,7 +64,7 @@ export const resolveIntialValueRelations = async (
     if (relation) {
       let type;
       if (relation.type === 'hasMediafile') {
-        type = await dataSources.CollectionAPI.getMediaFile(relation.key);
+        type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
       } else {
         if (relationEntityType) {
           type = await dataSources.CollectionAPI.getEntity(
