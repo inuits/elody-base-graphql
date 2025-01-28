@@ -372,6 +372,7 @@ export const baseSchema = gql`
     isMetadataField(input: Boolean): Boolean
     dependsOn: String
     multiple: Boolean
+    lineClamp: String
   }
 
   enum TypeModals {
@@ -836,6 +837,7 @@ export const baseSchema = gql`
 
   enum MapTypes {
     heatMap
+    wktMap
   }
 
   input SplitRegexInput {
@@ -1030,6 +1032,11 @@ export const baseSchema = gql`
     media
   }
 
+  enum MapElementTypes {
+    heat
+    wkt
+  }
+
   enum Orientations {
     top
     right
@@ -1103,6 +1110,14 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MediaFileElementTypes): String!
+    metaData: PanelMetaData!
+  }
+
+  type MapElement {
+    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String!
+    type(input: MapTypes): String!
+    center(input: String): String!
     metaData: PanelMetaData!
   }
 
@@ -1260,6 +1275,7 @@ export const baseSchema = gql`
     valueTooltip(
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
+    lineClamp(input: String): String!
   }
 
   type PanelRelationMetaData {
@@ -1334,6 +1350,7 @@ export const baseSchema = gql`
     panels: WindowElementPanel!
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
+    lineClamp(input: String): String!
   }
 
   type ActionElement {
@@ -1373,6 +1390,7 @@ export const baseSchema = gql`
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
+    mapElement: MapElement
   }
 
   type Column {

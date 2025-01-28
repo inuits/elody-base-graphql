@@ -92,6 +92,7 @@ import {
   MapMetadata,
   MapTypes,
   HiddenField,
+  MapElement,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -974,6 +975,23 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || MediaFileElementTypes.Media;
     },
   },
+  MapElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    center:  async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input as string : "";
+    },
+    type: async (_source, { input }, { dataSources }) => {
+      return input as string;
+    },
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
+  },
   SingleMediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -1147,6 +1165,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     editMetadataButton: async (_source, { input }, { dataSources }) => {
       return input as EditMetadataButton;
     },
+    lineClamp: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
   },
   ActionElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1254,6 +1275,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     valueTooltip: async (_source, { input }, { dataSources }) => {
       return (input ?? {}) as PanelMetadataValueTooltipInput;
+    },
+    lineClamp: async (_source, { input }, { dataSources }) => {
+      return input ?? '';
     },
   },
   UploadContainer: {
@@ -1470,6 +1494,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     markdownViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MarkdownViewerElement;
+    },
+    mapElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapElement;
     },
   },
   MenuWrapper: {
