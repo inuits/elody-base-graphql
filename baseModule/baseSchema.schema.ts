@@ -1220,6 +1220,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
     templateCsvs(input: [String!]!): [String]
+    infoLabelUrl(input: String): String
     extraMediafileType(input: String): String
   }
 

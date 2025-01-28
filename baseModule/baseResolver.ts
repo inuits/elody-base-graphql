@@ -1289,6 +1289,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     templateCsvs: async (parent: any, { input }, { dataSources }) => {
       return input as string[];
     },
+    infoLabelUrl: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
   },
   FormAction: {
     label: async (_source, { input }, { dataSources }) => {
