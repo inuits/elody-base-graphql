@@ -1032,11 +1032,6 @@ export const baseSchema = gql`
     media
   }
 
-  enum MapElementTypes {
-    heat
-    wkt
-  }
-
   enum Orientations {
     top
     right
