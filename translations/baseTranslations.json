@@ -222,7 +222,8 @@
     "element-labels": {
       "has-parent-job": "Child jobs of this job",
       "has-job": "Entities created by this job",
-      "media-element": "Media viewer"
+      "media-element": "Media viewer",
+      "map-element": "Map"
     },
     "metadata": {
       "labels": {
@@ -670,7 +671,8 @@
     "element-labels": {
       "has-parent-job": "Child jobs van deze job",
       "has-job": "Entiteiten aangemaakt door deze job",
-      "media-element": "Media weergave"
+      "media-element": "Media weergave",
+      "map-element": "Map"
     },
     "metadata": {
       "labels": {
