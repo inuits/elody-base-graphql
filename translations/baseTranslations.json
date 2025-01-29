@@ -326,14 +326,16 @@
       "W0004": "Item not found",
       "W0011": "Item with id {id} doesn't exist in the collection {collection} in the uploaded csv.",
       "W1004": "You have no permission to update this",
+      "W11000": "The institute for this record doesn't exist yet. Please first create the institute before creating this asset.",
+      "W2003": "Following entry must be unique: {duplicate_entry}",
       "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded",
       "W5005": "The CSV file has missing columns: {missing_columns}",
       "W5008": "The value {value} is not a valid datetime",
       "W5009": "{type} is not a valid type",
+      "W5011": "Validation failed: {message}",
       "W5013": "The format is invalid for type {type}",
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
-      "W5017": "Item for key {key} with value {value} doesn't exist.",
-      "W11000": "The institute for this record doesn't exist yet. Please first create the institute before creating this asset."
+      "W5017": "Item for key {key} with value {value} doesn't exist."
     },
     "pagination":{
       "page":"page",
@@ -775,14 +777,16 @@
       "W0004": "Item niet gevonden",
       "W0011": "Item met {id} bestaat niet in de collectie {collection} in de geüploade csv.",
       "W1004": "Je hebt geen rechten om dit te updaten",
+      "W11000": "Het instituut voor dit record bestaat nog niet. Gelieve eerst het instituut aan te maken vooraleer deze asset aan te maken",
+      "W2003": "De volgende waarde moet uniek zijn: {duplicate_entry}",
       "W4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload",
       "W5005": "Er zijn ontbrekende kolommen in het CSV bestand: {missing_columns}",
       "W5008": "De waarde {value} is geen geldige datum/tijd",
       "W5009": "{type} is geen geldig type",
+      "W5011": "Validatie is gefaald: {message}",
       "W5013": "Het formaat is ongeldig voor type {type}",
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
-      "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
-      "W11000": "Het instituut voor dit record bestaat nog niet. Gelieve eerst het instituut aan te maken vooraleer deze asset aan te maken"
+      "W5017": "Item voor key {key} met waarde {value} bestaat niet."
     },
     "pagination":{
       "page":"pagina",
