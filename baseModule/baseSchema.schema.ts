@@ -1025,7 +1025,7 @@ export const baseSchema = gql`
   input EntityFormInput {
     metadata: [MetadataValuesInput!]!
     relations: [BaseRelationValuesInput!]!
-    updateOnlyRelations: Boolean!
+    updateOnlyRelations: Boolean
   }
 
   enum MediaFileElementTypes {
