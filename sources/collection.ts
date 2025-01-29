@@ -484,7 +484,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getConfig(): Promise<Config> {
     if (this.config === 'no-config') {
-      this.config = await this.get('config');
+      this.config = await this.get('/config');
     }
     return this.config as Config;
   }
