@@ -19,7 +19,6 @@ export const baseQueries = gql`
     $advancedSearchValue: [FilterInput]
     $advancedFilterInputs: [AdvancedFilterInput!]!
     $searchInputType: SearchInputType
-    $userUuid: String!
   ) {
     Entities(
       type: $type
