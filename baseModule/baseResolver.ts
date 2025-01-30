@@ -4,11 +4,7 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {
-  resolveMetadata,
-  resolveMetadataItemOfPreferredLanguage,
-  resolveRelations,
-} from '../resolvers/entityResolver';
+import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -19,6 +15,7 @@ import {
   AdvancedFilterTypes,
   BaseLibraryModes,
   BaseRelationValuesInput,
+  BreadCrumbRoute,
   Collection,
   Column,
   ColumnSizes,
@@ -30,9 +27,10 @@ import {
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
   DamsIcons,
+  DeepRelationsFetchStrategy,
   DropdownOption,
-  EditStatus,
   EditMetadataButton,
+  EditStatus,
   EndpointInformation,
   EntitiesResults,
   Entity,
@@ -40,17 +38,22 @@ import {
   EntityListViewMode,
   Entitytyping,
   EntityViewElements,
+  EntityViewerElement,
   ExpandButtonOptions,
+  FetchDeepRelations,
   Form,
   FormAction,
   FormFields,
   FormTab,
   GraphElement,
+  HiddenField,
   IntialValues,
   KeyValueSource,
   ManifestViewerElement,
+  MapElement,
+  MapMetadata,
+  MapTypes,
   MarkdownViewerElement,
-  EntityViewerElement,
   Maybe,
   MediaFile,
   MediaFileElement,
@@ -69,11 +72,13 @@ import {
   PanelRelationRootData,
   PanelThumbnail,
   Permission,
+  PermissionRequestInfo,
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
   SingleMediaFileElement,
   SortingDirection,
+  SplitRegex,
   TimeUnit,
   UploadContainer,
   UploadField,
@@ -84,40 +89,27 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  FetchDeepRelations,
-  DeepRelationsFetchStrategy,
-  BreadCrumbRoute,
-  PermissionRequestInfo,
-  SplitRegex,
-  MapMetadata,
-  MapTypes,
-  HiddenField,
-  MapElement,
 } from '../../../generated-types/type-defs';
-import { ContextValue } from '../types';
-import { baseFields } from '../sources/forms';
-import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
+import {ContextValue} from '../types';
+import {baseFields} from '../sources/forms';
+import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
 import {
   determineAdvancedFiltersForIteration,
-  getCollectionValueForEntityType,
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
-import { parseItemTypesFromInputField } from '../parsers/inputField';
+import {parseItemTypesFromInputField} from '../parsers/inputField';
 import {
   resolveIntialValueMetadata,
+  resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
-  resolveIntialValueMetadataOrRelation,
 } from '../resolvers/intialValueResolver';
-import {
-  prepareRelationFieldForMapData,
-  prepareMetadataFieldForMapData,
-} from '../resolvers/mapComponentResolver';
+import {prepareMetadataFieldForMapData, prepareRelationFieldForMapData,} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -560,10 +552,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       const filterEditStatus = (
-        editStatus: EditStatus
+        excludeEditStatus: EditStatus
       ): BaseRelationValuesInput[] => {
         return formInput.relations
-          .filter((relationInput) => relationInput.editStatus === editStatus)
+          .filter((relationInput) => relationInput.editStatus !== excludeEditStatus)
           .map((relationInput) => {
             const relation: any = {};
             Object.keys(relationInput)
@@ -576,21 +568,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       const mutateRelations = async () => {
-        await dataSources.CollectionAPI.deleteRelations(
+        await dataSources.CollectionAPI.putRelations(
           id,
           filterEditStatus(EditStatus.Deleted),
           collection
-        )
-        await dataSources.CollectionAPI.postRelations(
-          id,
-          filterEditStatus(EditStatus.New),
-          collection
-        ),
-         await dataSources.CollectionAPI.patchRelations(
-          id,
-          filterEditStatus(EditStatus.Changed),
-          collection
-        )
+        );
       }
 
       const mutateMetadata = async () => {
