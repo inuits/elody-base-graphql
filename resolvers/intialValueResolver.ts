@@ -176,7 +176,6 @@ export const resolveIntialValueRelationRootdata = (
         (relation: any) =>
           relation.type === relationKey && relation.key === uuid
       )[key];
-    console.log(key, label, formatter)
     return formatterFactory(ResolverFormatters.RelationMetadata)({ label, formatter });
   } catch (e) {
     return '';
