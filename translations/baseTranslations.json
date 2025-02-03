@@ -69,6 +69,7 @@
       "add-relation": "Add a {0}",
       "add-new-relation": "Add new {0}",
       "add-existing-relation": "Add existing {0}",
+      "delete-relations": "Delete relation links with selected items",
       "csv-export":{
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
@@ -128,6 +129,12 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "title": "Logout"
+      },
+      "delete-relations": {
+        "message": "Are you sure you want to delete relation links with the selected items?",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "title": "Delete relation links with selected items"
       }
     },
     "dropdown":{
@@ -520,6 +527,7 @@
       "add-relation": "Voeg een bestaande {0} toe",
       "add-new-relation": "Voeg nieuwe {0} toe",
       "add-existing-relation": "Voeg bestaande {0} toe",
+      "delete-relations": "Verwijder relatielinks met geselecteerde items",
       "csv-export":{
         "assets": "Exporteer een csv bestand van assets",
         "mediafiles": "Exporteer een csv bestand van mediafiles",
@@ -579,6 +587,12 @@
         "confirm": "Log uit",
         "cancel": "Annuleren",
         "title": "Afmelden"
+      },
+      "delete-relations": {
+        "message": "Weet je zeker dat je de relatielinks met de geselecteerde items wilt verwijderen?",
+        "confirm": "Bevestigen",
+        "cancel": "Annuleren",
+        "title": "Verwijder relatielinks met geselecteerde items"
       }
     },
     "dropdown":{

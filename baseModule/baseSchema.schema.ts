@@ -380,6 +380,7 @@ export const baseSchema = gql`
     BulkOperationsEdit
     BulkOperations
     BulkOperationsDeleteEntities
+    BulkOperationsDeleteRelations
     Confirm
     Delete
     DynamicForm
@@ -672,6 +673,7 @@ export const baseSchema = gql`
     startOcr
     addRelation
     deleteEntities
+    deleteRelations
   }
 
   type BulkOperations {
