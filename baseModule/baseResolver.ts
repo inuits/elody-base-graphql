@@ -866,7 +866,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter
             ),
           root: () =>
-            resolveIntialValueRoot(parent, key, formatter, customFormatters),
+            resolveIntialValueRoot(dataSources, parent, key, formatter, customFormatters),
           relations: () =>
             resolveIntialValueRelations(
               dataSources,

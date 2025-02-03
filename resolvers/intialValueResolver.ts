@@ -29,11 +29,22 @@ export const resolveIntialValueMetadata = async (
   return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value ?? '', formatter });
 };
 
-export const resolveIntialValueRoot = (parent: any, key: string, formatter: string | null, formatterSettings: any): string => {
+export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
   const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
   let value = parent;
   for (const part of keyParts || []) value = value?.[part];
-  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings })
+
+  let entity;
+  if (String(formatter).startsWith("link|")) {
+    entity = await dataSources.CollectionAPI.getEntity(
+      value,
+      '',
+      'entities',
+      true
+    );
+  }
+
+  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
 };
 
 export const resolveIntialValueRelations = async (
@@ -165,6 +176,7 @@ export const resolveIntialValueRelationRootdata = (
         (relation: any) =>
           relation.type === relationKey && relation.key === uuid
       )[key];
+    console.log(key, label, formatter)
     return formatterFactory(ResolverFormatters.RelationMetadata)({ label, formatter });
   } catch (e) {
     return '';
