@@ -257,7 +257,8 @@
         "one-of-required": "1 of these fields are required",
         "edit-metadata": "Edit metadata",
         "editing-metadata": "Editing metadata",
-        "delete-entity": "Delete entity"
+        "delete-entity": "Delete entity",
+        "no-label": "No label"
       }
     },
     "notifications":{
@@ -406,7 +407,8 @@
         "extraneous": "{0} not found in CSV",
         "dry-run-failed": "Something went wrong while running CSV validation"
       },
-      "csv-template-link": "Download example with instructions for"
+      "csv-template-link": "Download example with instructions for",
+      "link-to-documentation": "Link to Elody CSV documentation"
     },
     "tooltip":{
       "advancedFilterTypes":{
@@ -682,7 +684,7 @@
     "jobs":{
       "finished":"klaar",
       "failed":"mislukt",
-      "pending":"pending"
+      "pending":"in behandeling"
     },
     "element-labels": {
       "has-parent-job": "Child jobs van deze job",
@@ -710,12 +712,13 @@
         "started-by": "Gestart door",
         "ttl": "Vervaltijd",
         "info": "Info",
-        "status-updated-at": "Status updated at",
+        "status-updated-at": "Status bijgewerkt op",
         "optional": "optioneel",
         "one-of-required": "1 van deze velden zijn verplicht",
-        "edit-metadata": "Edit metadata",
-        "editing-metadata": "Editing metadata",
-        "delete-entity": "Verwijder entiteit"
+        "edit-metadata": "Bewerk metadata",
+        "editing-metadata": "Bewerken van metadata",
+        "delete-entity": "Verwijder entiteit",
+        "no-label": "Geen label"
       }
     },
     "notifications":{
@@ -863,7 +866,8 @@
           "extraneous": "{0} niet gevonden in CSV",
           "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
         },
-      "csv-template-link": "Download voorbeeld met instructies voor"
+      "csv-template-link": "Download voorbeeld met instructies voor",
+      "link-to-documentation": "Link naar de Elody CSV documentatie"
     },
     "tooltip":{
       "advancedFilterTypes":{
