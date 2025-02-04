@@ -10,6 +10,7 @@ export const applyUploadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         const isDryRun: boolean = !!request.query['dry_run'];
+        const mainJobId: string = request.query['main_job_id'] as string;
         const extraMediafileType: string | undefined = request.query['extra_mediafile_type'] as string;
         let csv = '';
         request.on('data', (chunk: any) => {
@@ -26,15 +27,15 @@ export const applyUploadEndpoint = (app: Express) => {
               const res = await __batchDryRun(request, response, csv, extraMediafileType);
               response.end(JSON.stringify(res));
             } else {
-              const result = await __batchEntities(request, response, csv, extraMediafileType);
+              const result = await __batchEntities(request, response, csv, mainJobId, extraMediafileType);
               const uploadUrls =
                   result.links
                       .filter((uploadUrl: string) => uploadUrl !== '')
-                      .map((line: string) => `${line}&parent_job_id=${result.job_id_with_dry_run}`);
+                      .map((line: string) => `${line}&parent_job_id=${result.parent_job_id}`);
               response.end(
                   JSON.stringify({
                     links: uploadUrls,
-                    jobIdWithDryRun: result.job_id_with_dry_run
+                    parent_job_id: result.parent_job_id
                   })
               );
             }
@@ -131,12 +132,13 @@ const __batchEntities = async (
   request: Request,
   response: Response,
   csv: string,
+  mainJobId: string,
   extraMediafileType: string | undefined,
 ): Promise<any> => {
   const datasource = new AuthRESTDataSource({ session: request.session });
   let result: any;
   try {
-    result = await datasource.post(`${env?.api.collectionApiUrl}/batch${!!extraMediafileType ? `?extra_mediafile_type=${extraMediafileType}` : ""}`, {
+    result = await datasource.post(`${env?.api.collectionApiUrl}/batch?${!!extraMediafileType ? `extra_mediafile_type=${extraMediafileType}` : ""}${mainJobId ? `&main_job_id=${mainJobId}` : ""}`, {
       headers: {
         'Content-Type': 'text/csv',
         Accept: 'application/json',
