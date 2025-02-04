@@ -27,8 +27,10 @@ export const applyUploadEndpoint = (app: Express) => {
               response.end(JSON.stringify(res));
             } else {
               const result = await __batchEntities(request, response, csv, extraMediafileType);
-              const uploadUrls = result.links.filter((uploadUrl: string) => uploadUrl !== '');
-
+              const uploadUrls =
+                  result.links
+                      .filter((uploadUrl: string) => uploadUrl !== '')
+                      .map((line: string) => `${line}&parent_job_id=${result.job_id_with_dry_run}`);
               response.end(
                   JSON.stringify({
                     links: uploadUrls,
