@@ -138,7 +138,7 @@ const __batchEntities = async (
   const datasource = new AuthRESTDataSource({ session: request.session });
   let result: any;
   try {
-    result = await datasource.post(`${env?.api.collectionApiUrl}/batch?${!!extraMediafileType ? `extra_mediafile_type=${extraMediafileType}` : ""}${mainJobId ? `&main_job_id=${mainJobId}` : ""}`, {
+    result = await datasource.post(`${env?.api.collectionApiUrl}/batch?${!!extraMediafileType ? `extra_mediafile_type=${extraMediafileType}&` : ""}${mainJobId ? `main_job_id=${mainJobId}` : ""}`, {
       headers: {
         'Content-Type': 'text/csv',
         Accept: 'application/json',
