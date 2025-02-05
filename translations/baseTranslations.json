@@ -20,7 +20,8 @@
         "reset-upload": "Import more files",
         "start-ocr": "Start OCR",
         "delete-relation-entities": "Do you want to delete following {0} as well?",
-        "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}."
+        "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}.",
+        "complete": "Complete"
       },
       "progress-steps": {
         "validate": "CSV",
@@ -476,7 +477,8 @@
         "reset-upload": "Importeer meer bestanden",
         "start-ocr": "Start OCR",
         "delete-relation-entities": "Wil je volgende {0} ook verwijderen?",
-        "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}."
+        "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}.",
+        "complete": "Voltooien"
       },
       "progress-steps": {
         "actions": {
