@@ -84,6 +84,7 @@ export const baseSchema = gql`
     color
     dropdown
     textarea
+    resizableTextarea
     dropdownMultiselectRelations
     dropdownMultiselectMetadata
     dropdownSingleselectRelations
@@ -105,6 +106,7 @@ export const baseSchema = gql`
     baseDateField
     baseDateTimeField
     baseTextareaField
+    baseResizableTextareaField
     baseFileUploadField
     baseCsvUploadField
     baseEntityPickerField

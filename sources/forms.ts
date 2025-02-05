@@ -29,6 +29,9 @@ export const baseFields: { [key: string]: InputField } = {
   baseTextareaField: {
     type: InputFieldTypes.Textarea,
   },
+  baseResizableTextareaField: {
+    type: InputFieldTypes.ResizableTextarea
+  },
   baseFileUploadField: {
     type: InputFieldTypes.FileUpload,
     fileTypes: [
