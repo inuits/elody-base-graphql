@@ -228,8 +228,8 @@
       "pending":"pending"
     },
     "element-labels": {
-      "has-parent-job": "Child jobs of this job",
-      "has-job": "Entities created by this job",
+      "sub-job": "Sub jobs",
+      "has-job": "Items created and modified by this job",
       "media-element": "Media viewer",
       "map-element": "Map"
     },
@@ -689,8 +689,8 @@
       "pending":"in behandeling"
     },
     "element-labels": {
-      "has-parent-job": "Child jobs van deze job",
-      "has-job": "Entiteiten aangemaakt door deze job",
+      "sub-job": "Onderliggende jobs",
+      "has-job": "Items aangemaakt en gewijzigd door deze job",
       "media-element": "Media weergave",
       "map-element": "Map"
     },

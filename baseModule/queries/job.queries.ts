@@ -76,22 +76,22 @@ export const jobQueries = gql`
       column {
         size(size: seventy)
         elements {
-          hasParentJob: entityListElement {
-            label(input: "element-labels.has-parent-job")
+          subJobs: entityListElement {
+            label(input: "element-labels.sub-job")
             isCollapsed(input: false)
             entityTypes(input: [job])
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
-            customQueryFilters(input: "GetHasParentJobFilters")
+            customQueryFilters(input: "GetSubJobsFilters")
             customBulkOperations(input: "GetJobsBulkOperations")
           }
-          hasJob: entityListElement {
+          EntitiesModifiedFromJob: entityListElement {
             label(input: "element-labels.has-job")
             isCollapsed(input: false)
             entityTypes(input: [asset, mediafile])
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
-            customQueryFilters(input: "GetHasJobFilters")
+            customQueryFilters(input: "GetEntitiesModifiedFromJobFilters")
             customBulkOperations(input: "GetJobsBulkOperations")
           }
         }
@@ -285,7 +285,7 @@ export const jobQueries = gql`
     }
   }
 
-  query GetHasParentJobFilters($entityType: String!) {
+  query GetSubJobsFilters($entityType: String!) {
     EntityTypeFilters(type: $entityType) {
       advancedFilters {
         type: advancedFilter(type: type) {
@@ -306,7 +306,7 @@ export const jobQueries = gql`
     }
   }
 
-  query GetHasJobFilters($entityType: String!) {
+  query GetEntitiesModifiedFromJobFilters($entityType: String!) {
     EntityTypeFilters(type: $entityType) {
       advancedFilters {
         hasJob: advancedFilter(type: selection, key: "relations.hasJob.key") {
