@@ -113,7 +113,7 @@ const start = (
     | undefined = undefined,
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
-  customTypeUrlMapping: TypeUrlMapping = {}
+  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {}}
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
@@ -202,7 +202,6 @@ const start = (
             dataSources,
             customPermissions,
             customFormatters,
-            customTypeUrlMapping,
           };
         },
       })
@@ -211,6 +210,7 @@ const start = (
     const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
       authEndpoint: [app, appConfig.oauth.baseUrl, appConfig.clientSecret],
       configEndpoint: [app, appConfig],
+      urlMappingEndpoint: [app, customTypeUrlMapping],
       versionEndpoint: [app, appConfig],
       downloadEndpoint: [app],
       uploadEndpoint: [app],

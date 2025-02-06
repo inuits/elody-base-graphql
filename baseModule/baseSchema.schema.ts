@@ -1608,7 +1608,6 @@ export const baseSchema = gql`
       childEntityId: String
     ): JSON!
     CustomFormattersSettings: JSON!
-    CustomTypeUrlMapping: JSON!
     PermissionMappingEntityDetail(
       id: String!
       entityType: String!
