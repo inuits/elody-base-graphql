@@ -895,7 +895,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             )
         };
 
-        return (await resolveObject[source]()) || '';
+        const returnObject = await resolveObject[source]();
+        return (returnObject !== undefined) ? returnObject : '';
       } catch (e) {
         console.log(e);
         return '';

@@ -26,7 +26,7 @@ export const resolveIntialValueMetadata = async (
   if (keyOnMetadata)
     return metadata[0]?.[keyOnMetadata] ?? '';
 
-  return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value ?? '', formatter });
+  return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value, formatter });
 };
 
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {

@@ -48,7 +48,7 @@ export const isMetaDataRelation = (input: {
 export const parseMetaDataAndMetaDataRelation = (
   input: any
 ): Metadata | MetadataAndRelation => {
-  if (isMetaDataRelation(input)) {
+  if (isMetaDataRelation(input) === "MetadataRelation") {
     return parseMetaDataRelation(input);
   } else {
     return parseMetaData(input);
@@ -58,7 +58,7 @@ export const parseMetaDataAndMetaDataRelation = (
 export const parseMetaData = (input: any): Metadata => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ('' as string),
+    value: input.value !== undefined ? input.value : ('' as string),
     lang: input.lang as string,
     label: input.label ? input.label : (input.key as string),
     immutable: input.immutable ? input.immutable : (false as boolean),
@@ -88,7 +88,7 @@ export const parseRelations = (
 export const parseMetaDataRelation = (input: any): MetadataRelation => {
   return {
     key: input.key as string,
-    value: input.value ? input.value : ('' as string),
+    value: input.value !== undefined ? input.value : ('' as string),
     label: input.label ? input.label : (input.key as string),
     type: input.type as string,
     metadataOnRelation: getMetaDataOnRelation(input),
