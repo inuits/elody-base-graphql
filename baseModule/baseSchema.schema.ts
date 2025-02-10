@@ -84,6 +84,7 @@ export const baseSchema = gql`
     color
     dropdown
     textarea
+    resizableTextarea
     dropdownMultiselectRelations
     dropdownMultiselectMetadata
     dropdownSingleselectRelations
@@ -105,6 +106,7 @@ export const baseSchema = gql`
     baseDateField
     baseDateTimeField
     baseTextareaField
+    baseResizableTextareaField
     baseFileUploadField
     baseCsvUploadField
     baseEntityPickerField
@@ -118,6 +120,7 @@ export const baseSchema = gql`
   enum FileType {
     pdf
     alto
+    xml
     txt
     csv
     png
@@ -185,6 +188,7 @@ export const baseSchema = gql`
 
   enum ActionType {
     submit
+    submitWithUpload
     upload
     uploadWithOcr
     download
@@ -372,12 +376,14 @@ export const baseSchema = gql`
     isMetadataField(input: Boolean): Boolean
     dependsOn: String
     multiple: Boolean
+    lineClamp: String
   }
 
   enum TypeModals {
     BulkOperationsEdit
     BulkOperations
     BulkOperationsDeleteEntities
+    BulkOperationsDeleteRelations
     Confirm
     Delete
     DynamicForm
@@ -670,6 +676,7 @@ export const baseSchema = gql`
     startOcr
     addRelation
     deleteEntities
+    deleteRelations
   }
 
   type BulkOperations {
@@ -836,6 +843,7 @@ export const baseSchema = gql`
 
   enum MapTypes {
     heatMap
+    wktMap
   }
 
   input SplitRegexInput {
@@ -1022,7 +1030,7 @@ export const baseSchema = gql`
   input EntityFormInput {
     metadata: [MetadataValuesInput!]!
     relations: [BaseRelationValuesInput!]!
-    updateOnlyRelations: Boolean!
+    updateOnlyRelations: Boolean
   }
 
   enum MediaFileElementTypes {
@@ -1103,6 +1111,14 @@ export const baseSchema = gql`
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MediaFileElementTypes): String!
+    metaData: PanelMetaData!
+  }
+
+  type MapElement {
+    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String!
+    type(input: MapTypes): String!
+    center(input: String): String!
     metaData: PanelMetaData!
   }
 
@@ -1220,6 +1236,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
     templateCsvs(input: [String!]!): [String]
+    infoLabelUrl(input: String): String
     extraMediafileType(input: String): String
   }
 
@@ -1259,6 +1276,7 @@ export const baseSchema = gql`
     valueTooltip(
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
+    lineClamp(input: String): String!
   }
 
   type PanelRelationMetaData {
@@ -1333,6 +1351,7 @@ export const baseSchema = gql`
     panels: WindowElementPanel!
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
+    lineClamp(input: String): String!
   }
 
   type ActionElement {
@@ -1372,6 +1391,7 @@ export const baseSchema = gql`
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
+    mapElement: MapElement
   }
 
   type Column {
@@ -1589,7 +1609,6 @@ export const baseSchema = gql`
       childEntityId: String
     ): JSON!
     CustomFormattersSettings: JSON!
-    CustomTypeUrlMapping: JSON!
     PermissionMappingEntityDetail(
       id: String!
       entityType: String!

@@ -90,7 +90,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     const filters = { q, filter_by, query_by };
     try {
-      data = await this.post('/filter_typesense', {
+      data = await this.post('filter_typesense', {
         body: filters
       });
       data.results.forEach((element: any) => setId(element));
@@ -144,6 +144,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (hasNoSoftParam) {
         config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
       }
+      if (config.uri.startsWith("/"))
+        config.uri = config.uri.slice(1);
 
       const data = await this[config.crud as CRUDMethod](config.uri, {
         body: config.body,
@@ -418,6 +420,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
+  async putRelations(
+    id: string,
+    relations: BaseRelationValuesInput[],
+    collection: Collection = Collection.Entities
+  ): Promise<any> {
+    if (relations.length <= 0) return [];
+    return await this.put(`${collection}/${id}/relations`, {
+      body: relations,
+    });
+  }
+
   async deleteData(
     id: string,
     path: Collection,
@@ -482,7 +495,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getConfig(): Promise<Config> {
     if (this.config === 'no-config') {
-      this.config = await this.get('/config');
+      this.config = await this.get('config');
     }
     return this.config as Config;
   }

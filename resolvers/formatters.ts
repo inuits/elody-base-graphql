@@ -26,13 +26,13 @@ export const formatterFactory = (resolverType: string) => {
   return formattersByResolver[resolverType];
 };
 
-const handleLinkFormatterForRelations = ({
+const handleLinkFormatterFromEntity = ({
   entity,
   formatterSettings,
 }: {
   entity: BaseEntity & { metadata: Metadata[] };
   formatterSettings: LinkFormatter;
-}): { label: string; link: string, entity: BaseEntity & { metadata: Metadata[] } } | string => {
+}): { label: string; link: string, entity: BaseEntity & { metadata: Metadata[] } | string } => {
   let value: string = entity[formatterSettings.value as keyof BaseEntity];
   let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value || entity?.id;
   let link = formatterSettings.link;
@@ -87,7 +87,7 @@ const applyRelationsFormatter = (
 
   return ({ entity }: { entity: BaseEntity & { metadata: Metadata[] } }) => {
     if (formatterType === CustomFormatterTypes.Link)
-      return handleLinkFormatterForRelations({ entity, formatterSettings: currentFormatter as LinkFormatter });
+      return handleLinkFormatterFromEntity({ entity, formatterSettings: currentFormatter as LinkFormatter });
   };
 };
 
@@ -95,13 +95,20 @@ const applyRootFormatter = ({
   value,
   formatter,
   formatterSettings,
+  entity,
 }: {
   value: string;
   formatter: string;
   formatterSettings: FormattersConfig;
+  entity: BaseEntity & { metadata: Metadata[] }
 }) => {
   if (!formatter) return value;
+  const [formatterType, formatterTypeOption] = formatter.split("|");
 
+  if (formatterType === CustomFormatterTypes.Link) {
+    const currentFormatter: Formatters = formatterSettings[formatterType][formatterTypeOption];
+    return { ...handleLinkFormatterFromEntity({ entity, formatterSettings: currentFormatter as LinkFormatter }), formatter };
+  }
   return handleRegexpFormatter({ value, formatter, formatterSettings });
 };
 

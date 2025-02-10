@@ -26,14 +26,25 @@ export const resolveIntialValueMetadata = async (
   if (keyOnMetadata)
     return metadata[0]?.[keyOnMetadata] ?? '';
 
-  return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value ?? '', formatter });
+  return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value, formatter });
 };
 
-export const resolveIntialValueRoot = (parent: any, key: string, formatter: string | null, formatterSettings: any): string => {
+export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
   const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
   let value = parent;
   for (const part of keyParts || []) value = value?.[part];
-  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings })
+
+  let entity;
+  if (String(formatter).startsWith("link|")) {
+    entity = await dataSources.CollectionAPI.getEntity(
+      value,
+      '',
+      'entities',
+      true
+    );
+  }
+
+  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
 };
 
 export const resolveIntialValueRelations = async (
@@ -64,7 +75,7 @@ export const resolveIntialValueRelations = async (
     if (relation) {
       let type;
       if (relation.type === 'hasMediafile') {
-        type = await dataSources.CollectionAPI.getMediaFile(relation.key);
+        type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
       } else {
         if (relationEntityType) {
           type = await dataSources.CollectionAPI.getEntity(

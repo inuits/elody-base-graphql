@@ -34,7 +34,6 @@ export interface ContextValue {
   dataSources: DataSources;
   customPermissions: { [key: string]: PermissionRequestInfo };
   customFormatters: FormattersConfig;
-  customTypeUrlMapping: TypeUrlMapping;
 }
 // TODO: Remove if unused
 export type filter = {
@@ -55,6 +54,9 @@ export type FormattersConfig = {
   };
 };
 
-export type TypeUrlMapping = { [type: string]: string };
+export type TypeUrlMapping = {
+  mapping: { [key: string]: string }, 
+  reverseMapping: { [key: string]: string }
+}
 
 export type Config = Record<string, Array<string>> & Filters;

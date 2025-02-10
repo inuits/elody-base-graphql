@@ -86,6 +86,7 @@ export const baseFragments = gql`
     isMetadataField
     dependsOn
     multiple
+    lineClamp
   }
 
   fragment metadataRelation on MetadataRelation {
@@ -161,24 +162,9 @@ export const baseFragments = gql`
       )
       thumbnail: keyValue(key: "filename", source: root)
       mimetype: keyValue(key: "mimetype", source: root)
-      order: keyValue(
-        key: "order"
-        source: relationMetadata
-        uuid: $userUuid
-        relationKey: "belongsTo"
-      )
       __typename
     }
     teaserMetadata {
-      order: relationMetaData {
-        label(input: "metadata.labels.order")
-        key(input: "order")
-        inputField(type: baseNumberField) {
-          ...inputfield
-        }
-        showOnlyInEditMode(input: true)
-        __typename
-      }
       thumbnail: thumbnail {
         key(input: "thumbnail")
         __typename

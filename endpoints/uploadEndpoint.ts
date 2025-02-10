@@ -10,6 +10,7 @@ export const applyUploadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         const isDryRun: boolean = !!request.query['dry_run'];
+        const mainJobId: string = request.query['main_job_id'] as string;
         const extraMediafileType: string | undefined = request.query[
           'extra_mediafile_type'
         ] as string;
@@ -33,15 +34,23 @@ export const applyUploadEndpoint = (app: Express) => {
               );
               response.end(JSON.stringify(res));
             } else {
-              const uploadUrls = (
+              const result =
                 await __batchEntities(
                   request,
                   response,
                   csv,
-                  extraMediafileType
-                )
-              ).filter((uploadUrl) => uploadUrl !== '');
-              response.end(JSON.stringify(uploadUrls));
+                 mainJobId, extraMediafileType
+                );
+              const uploadUrls =
+                  result.links
+                      .filter((uploadUrl: string) => uploadUrl !== '')
+                      .map((line: string) => `${line}&parent_job_id=${result.parent_job_id}`);
+              response.end(
+                  JSON.stringify({
+                    links: uploadUrls,
+                    parent_job_id: result.parent_job_id
+                  })
+              );
             }
           } catch (e) {
             console.log('Error while parsing response:', e);
@@ -152,8 +161,9 @@ const __batchEntities = async (
   request: Request,
   response: Response,
   csv: string,
+  mainJobId: string,
   extraMediafileType: string | undefined
-): Promise<string[]> => {
+): Promise<any> => {
   const clientIp: string = request.headers['x-forwarded-for'] as string;
   const datasource = new AuthRESTDataSource({
     session: request.session,
@@ -162,15 +172,15 @@ const __batchEntities = async (
   let result: any;
   try {
     result = await datasource.post(
-      `${env?.api.collectionApiUrl}/batch${
+      `${env?.api.collectionApiUrl}/batch?${
         !!extraMediafileType
-          ? `?extra_mediafile_type=${extraMediafileType}`
+          ? `extra_mediafile_type=${extraMediafileType}&` : ""}${mainJobId ? `main_job_id=${mainJobId}`
           : ''
       }`,
       {
         headers: {
           'Content-Type': 'text/csv',
-          Accept: 'text/uri-list',
+          Accept: 'application/json',
         },
         body: csv,
       }
@@ -178,8 +188,7 @@ const __batchEntities = async (
   } catch (exception: any) {
     response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
   }
-  const jsonParsableResult = `["${result.split('\n').join('","')}"]`;
-  return JSON.parse(jsonParsableResult);
+  return result;
 };
 
 const __createMediafileForEntity = async (

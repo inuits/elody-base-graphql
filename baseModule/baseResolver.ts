@@ -4,11 +4,7 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {
-  resolveMetadata,
-  resolveMetadataItemOfPreferredLanguage,
-  resolveRelations,
-} from '../resolvers/entityResolver';
+import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -19,6 +15,7 @@ import {
   AdvancedFilterTypes,
   BaseLibraryModes,
   BaseRelationValuesInput,
+  BreadCrumbRoute,
   Collection,
   Column,
   ColumnSizes,
@@ -30,9 +27,10 @@ import {
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
   DamsIcons,
+  DeepRelationsFetchStrategy,
   DropdownOption,
-  EditStatus,
   EditMetadataButton,
+  EditStatus,
   EndpointInformation,
   EntitiesResults,
   Entity,
@@ -40,17 +38,22 @@ import {
   EntityListViewMode,
   Entitytyping,
   EntityViewElements,
+  EntityViewerElement,
   ExpandButtonOptions,
+  FetchDeepRelations,
   Form,
   FormAction,
   FormFields,
   FormTab,
   GraphElement,
+  HiddenField,
   IntialValues,
   KeyValueSource,
   ManifestViewerElement,
+  MapElement,
+  MapMetadata,
+  MapTypes,
   MarkdownViewerElement,
-  EntityViewerElement,
   Maybe,
   MediaFile,
   MediaFileElement,
@@ -69,11 +72,13 @@ import {
   PanelRelationRootData,
   PanelThumbnail,
   Permission,
+  PermissionRequestInfo,
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
   SingleMediaFileElement,
   SortingDirection,
+  SplitRegex,
   TimeUnit,
   UploadContainer,
   UploadField,
@@ -84,39 +89,27 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
-  FetchDeepRelations,
-  DeepRelationsFetchStrategy,
-  BreadCrumbRoute,
-  PermissionRequestInfo,
-  SplitRegex,
-  MapMetadata,
-  MapTypes,
-  HiddenField,
 } from '../../../generated-types/type-defs';
-import { ContextValue } from '../types';
-import { baseFields } from '../sources/forms';
-import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
+import {ContextValue} from '../types';
+import {baseFields} from '../sources/forms';
+import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
 import {
   determineAdvancedFiltersForIteration,
-  getCollectionValueForEntityType,
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
-import { parseItemTypesFromInputField } from '../parsers/inputField';
+import {parseItemTypesFromInputField} from '../parsers/inputField';
 import {
   resolveIntialValueMetadata,
+  resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
-  resolveIntialValueMetadataOrRelation,
 } from '../resolvers/intialValueResolver';
-import {
-  prepareRelationFieldForMapData,
-  prepareMetadataFieldForMapData,
-} from '../resolvers/mapComponentResolver';
+import {prepareMetadataFieldForMapData, prepareRelationFieldForMapData,} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -413,20 +406,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     CustomFormattersSettings: async (_source, _, { customFormatters }) => {
       return customFormatters;
     },
-    CustomTypeUrlMapping: async (
-      _source: any,
-      _: any,
-      { customTypeUrlMapping }: any
-    ) => {
-      const reverseMapping: { [type: string]: string } = Object.entries(
-        customTypeUrlMapping
-      ).reduce((acc, [key, value]: any) => {
-        acc[value] = key;
-        return acc;
-      }, {} as { [type: string]: string });
-
-      return { mapping: customTypeUrlMapping, reverseMapping };
-    },
     PermissionMappingEntityDetail: async (
       _source,
       { id, entityType },
@@ -559,10 +538,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       const filterEditStatus = (
-        editStatus: EditStatus
+        excludeEditStatus: EditStatus
       ): BaseRelationValuesInput[] => {
         return formInput.relations
-          .filter((relationInput) => relationInput.editStatus === editStatus)
+          .filter((relationInput) => relationInput.editStatus !== excludeEditStatus)
           .map((relationInput) => {
             const relation: any = {};
             Object.keys(relationInput)
@@ -575,21 +554,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       const mutateRelations = async () => {
-        await dataSources.CollectionAPI.deleteRelations(
+        await dataSources.CollectionAPI.putRelations(
           id,
           filterEditStatus(EditStatus.Deleted),
           collection
-        )
-        await dataSources.CollectionAPI.postRelations(
-          id,
-          filterEditStatus(EditStatus.New),
-          collection
-        ),
-         await dataSources.CollectionAPI.patchRelations(
-          id,
-          filterEditStatus(EditStatus.Changed),
-          collection
-        )
+        );
       }
 
       const mutateMetadata = async () => {
@@ -883,7 +852,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter
             ),
           root: () =>
-            resolveIntialValueRoot(parent, key, formatter, customFormatters),
+            resolveIntialValueRoot(dataSources, parent, key, formatter, customFormatters),
           relations: () =>
             resolveIntialValueRelations(
               dataSources,
@@ -926,7 +895,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             )
         };
 
-        return (await resolveObject[source]()) || '';
+        const returnObject = await resolveObject[source]();
+        return (returnObject !== undefined) ? returnObject : '';
       } catch (e) {
         console.log(e);
         return '';
@@ -972,6 +942,23 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     type: async (_source, { input }, { dataSources }) => {
       return input || MediaFileElementTypes.Media;
+    },
+  },
+  MapElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    center:  async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input as string : "";
+    },
+    type: async (_source, { input }, { dataSources }) => {
+      return input as string;
+    },
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
     },
   },
   SingleMediaFileElement: {
@@ -1147,6 +1134,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     editMetadataButton: async (_source, { input }, { dataSources }) => {
       return input as EditMetadataButton;
     },
+    lineClamp: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
   },
   ActionElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1255,6 +1245,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     valueTooltip: async (_source, { input }, { dataSources }) => {
       return (input ?? {}) as PanelMetadataValueTooltipInput;
     },
+    lineClamp: async (_source, { input }, { dataSources }) => {
+      return input ?? '';
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
@@ -1288,6 +1281,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     templateCsvs: async (parent: any, { input }, { dataSources }) => {
       return input as string[];
+    },
+    infoLabelUrl: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   FormAction: {
@@ -1467,6 +1463,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     markdownViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MarkdownViewerElement;
+    },
+    mapElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapElement;
     },
   },
   MenuWrapper: {

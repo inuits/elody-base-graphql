@@ -20,7 +20,8 @@
         "reset-upload": "Import more files",
         "start-ocr": "Start OCR",
         "delete-relation-entities": "Do you want to delete following {0} as well?",
-        "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}."
+        "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}.",
+        "complete": "Complete"
       },
       "progress-steps": {
         "validate": "CSV",
@@ -69,6 +70,7 @@
       "add-relation": "Add a {0}",
       "add-new-relation": "Add new {0}",
       "add-existing-relation": "Add existing {0}",
+      "delete-relations": "Delete relation links with selected items",
       "csv-export":{
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
@@ -128,6 +130,12 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "title": "Logout"
+      },
+      "delete-relations": {
+        "message": "Are you sure you want to delete relation links with the selected items?",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "title": "Delete relation links with selected items"
       }
     },
     "dropdown":{
@@ -220,9 +228,10 @@
       "pending":"pending"
     },
     "element-labels": {
-      "has-parent-job": "Child jobs of this job",
-      "has-job": "Entities created by this job",
-      "media-element": "Media viewer"
+      "sub-job": "Sub jobs",
+      "has-job": "Items created and modified by this job",
+      "media-element": "Media viewer",
+      "map-element": "Map"
     },
     "metadata": {
       "labels": {
@@ -249,7 +258,8 @@
         "one-of-required": "1 of these fields are required",
         "edit-metadata": "Edit metadata",
         "editing-metadata": "Editing metadata",
-        "delete-entity": "Delete entity"
+        "delete-entity": "Delete entity",
+        "no-label": "No label"
       }
     },
     "notifications":{
@@ -318,20 +328,23 @@
     "error-codes": {
       "R0002": "An unknown error occurred",
       "R0004": "Item not found",
-      "W0004": "Item not found",
       "R0009": "Entity has no tenant",
       "R1004": "You have no permission to see this",
-      "W1004": "You have no permission to update this",
       "R1008": "You don't have the permission to create/update/delete this resource.",
+      "R5014": "There is no metadata available for item with id {id}",
+      "W0004": "Item not found",
+      "W0011": "Item with id {id} doesn't exist in the collection {collection} in the uploaded csv.",
+      "W1004": "You have no permission to update this",
       "W11000": "The institute for this record doesn't exist yet. Please first create the institute before creating this asset.",
+      "W2003": "Following entry must be unique: {duplicate_entry}",
       "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded",
       "W5005": "The CSV file has missing columns: {missing_columns}",
       "W5008": "The value {value} is not a valid datetime",
       "W5009": "{type} is not a valid type",
+      "W5011": "Validation failed: {message}",
       "W5013": "The format is invalid for type {type}",
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
-      "W5017": "Item for key {key} with value {value} doesn't exist.",
-      "R5014": "There is no metadata available for item with id {id}"
+      "W5017": "Item for key {key} with value {value} doesn't exist."
     },
     "pagination":{
       "page":"page",
@@ -395,7 +408,8 @@
         "extraneous": "{0} not found in CSV",
         "dry-run-failed": "Something went wrong while running CSV validation"
       },
-      "csv-template-link": "Download example with instructions for"
+      "csv-template-link": "Download example with instructions for",
+      "link-to-documentation": "Link to Elody CSV documentation"
     },
     "tooltip":{
       "advancedFilterTypes":{
@@ -463,7 +477,8 @@
         "reset-upload": "Importeer meer bestanden",
         "start-ocr": "Start OCR",
         "delete-relation-entities": "Wil je volgende {0} ook verwijderen?",
-        "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}."
+        "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}.",
+        "complete": "Voltooien"
       },
       "progress-steps": {
         "actions": {
@@ -516,6 +531,7 @@
       "add-relation": "Voeg een bestaande {0} toe",
       "add-new-relation": "Voeg nieuwe {0} toe",
       "add-existing-relation": "Voeg bestaande {0} toe",
+      "delete-relations": "Verwijder relatielinks met geselecteerde items",
       "csv-export":{
         "assets": "Exporteer een csv bestand van assets",
         "mediafiles": "Exporteer een csv bestand van mediafiles",
@@ -575,6 +591,12 @@
         "confirm": "Log uit",
         "cancel": "Annuleren",
         "title": "Afmelden"
+      },
+      "delete-relations": {
+        "message": "Weet je zeker dat je de relatielinks met de geselecteerde items wilt verwijderen?",
+        "confirm": "Bevestigen",
+        "cancel": "Annuleren",
+        "title": "Verwijder relatielinks met geselecteerde items"
       }
     },
     "dropdown":{
@@ -664,12 +686,13 @@
     "jobs":{
       "finished":"klaar",
       "failed":"mislukt",
-      "pending":"pending"
+      "pending":"in behandeling"
     },
     "element-labels": {
-      "has-parent-job": "Child jobs van deze job",
-      "has-job": "Entiteiten aangemaakt door deze job",
-      "media-element": "Media weergave"
+      "sub-job": "Onderliggende jobs",
+      "has-job": "Items aangemaakt en gewijzigd door deze job",
+      "media-element": "Media weergave",
+      "map-element": "Map"
     },
     "metadata": {
       "labels": {
@@ -691,12 +714,13 @@
         "started-by": "Gestart door",
         "ttl": "Vervaltijd",
         "info": "Info",
-        "status-updated-at": "Status updated at",
+        "status-updated-at": "Status bijgewerkt op",
         "optional": "optioneel",
         "one-of-required": "1 van deze velden zijn verplicht",
-        "edit-metadata": "Edit metadata",
-        "editing-metadata": "Editing metadata",
-        "delete-entity": "Verwijder entiteit"
+        "edit-metadata": "Bewerk metadata",
+        "editing-metadata": "Bewerken van metadata",
+        "delete-entity": "Verwijder entiteit",
+        "no-label": "Geen label"
       }
     },
     "notifications":{
@@ -765,20 +789,23 @@
     "error-codes": {
       "R0002": "Er is een onbekende fout opgetreden",
       "R0004": "Item niet gevonden",
-      "W0004": "Item niet gevonden",
       "R0009": "Entiteit heeft geen tenant",
       "R1004": "Je hebt geen rechten om dit te bekijken",
-      "W1004": "Je hebt geen rechten om dit te updaten",
       "R1008": "Je hebt geen toestemming om deze bron te creëren/bij te werken/verwijderen.",
+      "R5014": "Er zijn geen metadata beschikbaar voor item met id {id}",
+      "W0004": "Item niet gevonden",
+      "W0011": "Item met {id} bestaat niet in de collectie {collection} in de geüploade csv.",
+      "W1004": "Je hebt geen rechten om dit te updaten",
       "W11000": "Het instituut voor dit record bestaat nog niet. Gelieve eerst het instituut aan te maken vooraleer deze asset aan te maken",
+      "W2003": "De volgende waarde moet uniek zijn: {duplicate_entry}",
       "W4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload",
       "W5005": "Er zijn ontbrekende kolommen in het CSV bestand: {missing_columns}",
       "W5008": "De waarde {value} is geen geldige datum/tijd",
       "W5009": "{type} is geen geldig type",
+      "W5011": "Validatie is gefaald: {message}",
       "W5013": "Het formaat is ongeldig voor type {type}",
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
-      "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
-      "R5014": "Er zijn geen metadata beschikbaar voor item met id {id}"
+      "W5017": "Item voor key {key} met waarde {value} bestaat niet."
     },
     "pagination":{
       "page":"pagina",
@@ -841,7 +868,8 @@
           "extraneous": "{0} niet gevonden in CSV",
           "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
         },
-      "csv-template-link": "Download voorbeeld met instructies voor"
+      "csv-template-link": "Download voorbeeld met instructies voor",
+      "link-to-documentation": "Link naar de Elody CSV documentatie"
     },
     "tooltip":{
       "advancedFilterTypes":{
