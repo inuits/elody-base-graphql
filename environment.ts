@@ -49,6 +49,10 @@ export interface Environment {
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey?: string[];
     };
+    ipWhiteListing?: {
+      whiteListedIpAddresses: string[];
+      tokenToUseForWhiteListedIpAddresses: string;
+    };
     hasTenantSelect?: boolean;
     hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;

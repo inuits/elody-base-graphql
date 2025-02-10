@@ -4,6 +4,7 @@ import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
+import { environment } from '../main';
 
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
@@ -20,12 +21,18 @@ export class AuthRESTDataSource extends RESTDataSource {
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
-    console.log(this.clientIp);
     const accessToken = this.session?.auth?.accessToken;
+
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
-      if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
+      if (environment && environment.features.ipWhiteListing) {
+        if (this.hasWhiteListingFeature() && this.isIpAddressWhiteListed())
+          request.headers['Authorization'] =
+            'Bearer ' +
+            environment.features.ipWhiteListing
+              .tokenToUseForWhiteListedIpAddresses;
+      } else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
         throw new GraphQLError(`AUTH | NO TOKEN`, {
           extensions: {
             statusCode: 401,
@@ -38,6 +45,21 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-tenant-id'] = tenant;
     }
   }
+
+  private hasWhiteListingFeature = (): boolean => {
+    return !(!environment || !environment.features.ipWhiteListing);
+  };
+
+  private isIpAddressWhiteListed = (): boolean => {
+    return !(
+      !environment ||
+      !this.clientIp ||
+      !this.hasWhiteListingFeature() ||
+      !environment!.features.ipWhiteListing!.whiteListedIpAddresses.includes(
+        this.clientIp
+      )
+    );
+  };
 
   private async withRetry<T extends any[], S, F extends (...args: T) => S>(
     fn: F,
