@@ -159,7 +159,11 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/iiif*.json', async (req, res) => {
     try {
-      const datasource = new AuthRESTDataSource({ session: req.session });
+      const clientIp: string = req.headers['x-forwarded-for'] as string;
+      const datasource = new AuthRESTDataSource({
+        session: req.session,
+        clientIp,
+      });
       const response = await datasource.get(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
       );
@@ -207,7 +211,11 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/mediafiles/*/download', async (req, res) => {
     try {
-      const datasource = new AuthRESTDataSource({ session: req.session });
+      const clientIp: string = req.headers['x-forwarded-for'] as string;
+      const datasource = new AuthRESTDataSource({
+        session: req.session,
+        clientIp,
+      });
       const url: string = `${
         env?.api.collectionApiUrl
       }${req.originalUrl.replace('/api/', '')}`;

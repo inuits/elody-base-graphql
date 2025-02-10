@@ -9,31 +9,41 @@ import { OcrService } from '../sources/ocr';
 
 export type ElodyConfig = {
   modules: Module[];
-  dataSources: ((session: any, cache: any) => OptionalDataSources)[];
+  dataSources: ((
+    session: any,
+    cache: any,
+    clientIp: string
+  ) => OptionalDataSources)[];
 };
 
 const baseElodyElodyConfig: ElodyConfig = {
   modules: [baseModule],
   dataSources: [
-    (session: any, cache: any) => {
-      return { CollectionAPI: new CollectionAPI({ session, cache }) };
+    (session: any, cache: any, clientIp: string) => {
+      return { CollectionAPI: new CollectionAPI({ session, cache, clientIp }) };
     },
-    (session: any, cache: any) => {
-      return { StorageAPI: new StorageAPI({ session, cache }) };
+    (session: any, cache: any, clientIp: string) => {
+      return { StorageAPI: new StorageAPI({ session, cache, clientIp }) };
     },
   ],
 };
 
 export const addAdditionalOptionalDataSources = (environment: Environment) => {
   if (environment?.api.fileSystemImporterServiceUrl) {
-    baseElodyElodyConfig.dataSources.push((session: any, cache: any) => {
-      return { TranscodeService: new TranscodeService({ session, cache }) };
-    });
+    baseElodyElodyConfig.dataSources.push(
+      (session: any, cache: any, clientIp: string) => {
+        return {
+          TranscodeService: new TranscodeService({ session, cache, clientIp }),
+        };
+      }
+    );
   }
   if (environment?.api.ocrService) {
-    baseElodyElodyConfig.dataSources.push((session: any, cache: any) => {
-      return { OcrService: new OcrService({ session, cache }) };
-    });
+    baseElodyElodyConfig.dataSources.push(
+      (session: any, cache: any, clientIp: string) => {
+        return { OcrService: new OcrService({ session, cache, clientIp }) };
+      }
+    );
   }
 };
 
@@ -49,10 +59,11 @@ export const createFullElodyConfig = (
 export const getDataSourcesFromMapping = (
   ElodyConfig: ElodyConfig,
   session: any,
-  cache: any
+  cache: any,
+  clientIp: string
 ): DataSources => {
   const dataSourceArray = ElodyConfig.dataSources.map((mappingItem) =>
-    mappingItem(session, cache)
+    mappingItem(session, cache, clientIp)
   );
   return dataSourceArray.reduce((acc, curr) => {
     return { ...acc, ...curr };
@@ -78,6 +89,7 @@ export const generateElodyConfig = (
         }: {
           session: any;
           cache: any;
+          clientIp: string;
         }) => AuthRESTDataSource;
       }
     | undefined = undefined
@@ -86,9 +98,13 @@ export const generateElodyConfig = (
   const dataSourceKeys = Object.keys(dataSources);
   const dataSourcesToInitialize = dataSourceKeys.map(
     (dataSourceKey: string) => {
-      return (session: any, cache: any) => {
+      return (session: any, cache: any, clientIp: string) => {
         return {
-          [dataSourceKey]: new dataSources[dataSourceKey]({ session, cache }),
+          [dataSourceKey]: new dataSources[dataSourceKey]({
+            session,
+            cache,
+            clientIp,
+          }),
         };
       };
     }

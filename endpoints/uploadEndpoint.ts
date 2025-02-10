@@ -1,7 +1,7 @@
 import { AuthRESTDataSource, environment, environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 import { EntityInput, Entitytyping } from '../../../generated-types/type-defs';
-import {addJwt} from "./mediafilesEndpoint";
+import { addJwt } from './mediafilesEndpoint';
 import { extractErrorCode } from '../helpers/helpers';
 
 export const applyUploadEndpoint = (app: Express) => {
@@ -10,7 +10,9 @@ export const applyUploadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         const isDryRun: boolean = !!request.query['dry_run'];
-        const extraMediafileType: string | undefined = request.query['extra_mediafile_type'] as string;
+        const extraMediafileType: string | undefined = request.query[
+          'extra_mediafile_type'
+        ] as string;
         let csv = '';
         request.on('data', (chunk: any) => {
           try {
@@ -23,11 +25,21 @@ export const applyUploadEndpoint = (app: Express) => {
         request.on('end', async () => {
           try {
             if (isDryRun) {
-              const res = await __batchDryRun(request, response, csv, extraMediafileType);
+              const res = await __batchDryRun(
+                request,
+                response,
+                csv,
+                extraMediafileType
+              );
               response.end(JSON.stringify(res));
             } else {
               const uploadUrls = (
-                await __batchEntities(request, response, csv, extraMediafileType)
+                await __batchEntities(
+                  request,
+                  response,
+                  csv,
+                  extraMediafileType
+                )
               ).filter((uploadUrl) => uploadUrl !== '');
               response.end(JSON.stringify(uploadUrls));
             }
@@ -37,7 +49,9 @@ export const applyUploadEndpoint = (app: Express) => {
           }
         });
       } catch (exception: any) {
-        response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
+        response
+          .status(extractErrorCode(exception))
+          .end(JSON.stringify(exception));
       }
     }
   );
@@ -54,44 +68,50 @@ export const applyUploadEndpoint = (app: Express) => {
           response.end(JSON.stringify(uploadUrl));
         }
       } catch (exception: any) {
-        response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
+        response
+          .status(extractErrorCode(exception))
+          .end(JSON.stringify(exception));
       }
     }
   );
 
-  app.post(
-    `/api/upload/csv`,
-    async (request: Request, response: Response) => {
-      let csv = '';
-      request.on('data', (chunk: any) => {
-        try {
-          csv += chunk.toString();
-        } catch (e) {
-          console.log('Error while getting csv file:', e);
-          response.status(500).end(JSON.stringify(e));
-        }
-      });
+  app.post(`/api/upload/csv`, async (request: Request, response: Response) => {
+    let csv = '';
+    request.on('data', (chunk: any) => {
+      try {
+        csv += chunk.toString();
+      } catch (e) {
+        console.log('Error while getting csv file:', e);
+        response.status(500).end(JSON.stringify(e));
+      }
+    });
 
-      request.on('end', async () => {
-        try {
-          const datasource = new AuthRESTDataSource({session: request.session});
-          const result = await datasource.post(
-              `${env?.api.collectionApiUrl}/entities/${request.query.parentId}/order`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'text/csv',
-                },
-                body: csv,
-              }
-          );
-          response.status(200).setHeader('Content-Type', 'text/csv');
-          response.end();
-        } catch (exception: any) {
-          response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
-          response.end(JSON.stringify(exception));
-        }
-      });
+    request.on('end', async () => {
+      try {
+        const clientIp: string = request.headers['x-forwarded-for'] as string;
+        const datasource = new AuthRESTDataSource({
+          session: request.session,
+          clientIp,
+        });
+        const result = await datasource.post(
+          `${env?.api.collectionApiUrl}/entities/${request.query.parentId}/order`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/csv',
+            },
+            body: csv,
+          }
+        );
+        response.status(200).setHeader('Content-Type', 'text/csv');
+        response.end();
+      } catch (exception: any) {
+        response
+          .status(extractErrorCode(exception))
+          .end(JSON.stringify(exception));
+        response.end(JSON.stringify(exception));
+      }
+    });
   });
 };
 
@@ -99,13 +119,21 @@ const __batchDryRun = async (
   request: Request,
   response: Response,
   csv: string,
-  extraMediafileType: string | undefined,
+  extraMediafileType: string | undefined
 ): Promise<any> => {
   let result = undefined;
   try {
-    const datasource = new AuthRESTDataSource({ session: request.session });
+    const clientIp: string = request.headers['x-forwarded-for'] as string;
+    const datasource = new AuthRESTDataSource({
+      session: request.session,
+      clientIp,
+    });
     result = await datasource.post(
-      `${env?.api.collectionApiUrl}/batch?dry_run=1${!!extraMediafileType ? `&extra_mediafile_type=${extraMediafileType}` : ""}`,
+      `${env?.api.collectionApiUrl}/batch?dry_run=1${
+        !!extraMediafileType
+          ? `&extra_mediafile_type=${extraMediafileType}`
+          : ''
+      }`,
       {
         headers: {
           'Content-Type': 'text/csv',
@@ -124,31 +152,44 @@ const __batchEntities = async (
   request: Request,
   response: Response,
   csv: string,
-  extraMediafileType: string | undefined,
+  extraMediafileType: string | undefined
 ): Promise<string[]> => {
-  const datasource = new AuthRESTDataSource({ session: request.session });
+  const clientIp: string = request.headers['x-forwarded-for'] as string;
+  const datasource = new AuthRESTDataSource({
+    session: request.session,
+    clientIp,
+  });
   let result: any;
   try {
-    result = await datasource.post(`${env?.api.collectionApiUrl}/batch${!!extraMediafileType ? `?extra_mediafile_type=${extraMediafileType}` : ""}`, {
-      headers: {
-        'Content-Type': 'text/csv',
-        Accept: 'text/uri-list',
-      },
-      body: csv,
-    });
+    result = await datasource.post(
+      `${env?.api.collectionApiUrl}/batch${
+        !!extraMediafileType
+          ? `?extra_mediafile_type=${extraMediafileType}`
+          : ''
+      }`,
+      {
+        headers: {
+          'Content-Type': 'text/csv',
+          Accept: 'text/uri-list',
+        },
+        body: csv,
+      }
+    );
   } catch (exception: any) {
     response.status(extractErrorCode(exception)).end(JSON.stringify(exception));
   }
-  const jsonParsableResult = `["${result
-    .split('\n')
-    .join('","')}"]`;
+  const jsonParsableResult = `["${result.split('\n').join('","')}"]`;
   return JSON.parse(jsonParsableResult);
 };
 
 const __createMediafileForEntity = async (
   request: Request
 ): Promise<string> => {
-  const datasource = new AuthRESTDataSource({ session: request.session });
+  const clientIp: string = request.headers['x-forwarded-for'] as string;
+  const datasource = new AuthRESTDataSource({
+    session: request.session,
+    clientIp,
+  });
   const body = {
     filename: `${request.query.filename}`,
     metadata: [
@@ -171,7 +212,11 @@ const __createMediafileForEntity = async (
 };
 
 const __createStandaloneMediafile = async (request: Request) => {
-  const datasource = new AuthRESTDataSource({ session: request.session });
+  const clientIp: string = request.headers['x-forwarded-for'] as string;
+  const datasource = new AuthRESTDataSource({
+    session: request.session,
+    clientIp,
+  });
   const body: EntityInput = {
     metadata: [{ key: 'title', value: request.query.filename as string }],
     type:

@@ -7,13 +7,20 @@ import { GraphQLError } from 'graphql/index';
 
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
+  protected clientIp: string | undefined;
 
-  constructor(options: { session: any; cache?: KeyValueCache }) {
+  constructor(options: {
+    session: any;
+    cache?: KeyValueCache;
+    clientIp?: string;
+  }) {
     super(options);
     this.session = options.session;
+    this.clientIp = options.clientIp;
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
+    console.log(this.clientIp);
     const accessToken = this.session?.auth?.accessToken;
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;

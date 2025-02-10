@@ -189,10 +189,12 @@ const start = (
         context: async ({ req }) => {
           const { cache } = server;
           const session = { ...req.session };
+          const clientIp: string = req.headers['x-forwarded-for'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
             session,
-            cache
+            cache,
+            clientIp
           );
           if (!isRequiredDataSources(dataSources)) {
             throw new Error('All DataSources properties must be defined');
