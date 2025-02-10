@@ -188,6 +188,7 @@ export const baseSchema = gql`
 
   enum ActionType {
     submit
+    submitWithUpload
     upload
     uploadWithOcr
     download
