@@ -51,6 +51,7 @@ import {
   KeyValueSource,
   ManifestViewerElement,
   MapElement,
+  HierarchyListElement,
   MapMetadata,
   MapTypes,
   MarkdownViewerElement,
@@ -961,6 +962,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as PanelMetaData;
     },
   },
+  HierarchyListElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    hierarchyRelationList: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
+    customQuery: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+  },
   SingleMediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -1466,6 +1481,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mapElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MapElement;
+    },
+    hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as HierarchyListElement;
     },
   },
   MenuWrapper: {

@@ -1122,6 +1122,23 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
+  input HierarchyRelationListInput {
+    key: String!
+    entityType: Entitytyping!
+  }
+
+  type HierarchyRelationList {
+    key: String!
+    entityType: Entitytyping!
+  }
+
+  type HierarchyListElement {
+    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String!
+    hierarchyRelationList(input: [HierarchyRelationListInput]): [HierarchyRelationList]!
+    customQuery(input: String): String!
+  }
+
   type SingleMediaFileElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
@@ -1392,6 +1409,7 @@ export const baseSchema = gql`
     windowElement: WindowElement
     actionElement: ActionElement
     mapElement: MapElement
+    hierarchyListElement: HierarchyListElement
   }
 
   type Column {
