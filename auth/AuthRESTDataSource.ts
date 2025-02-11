@@ -26,13 +26,12 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
-      if (environment && environment.features.ipWhiteListing) {
-        if (this.hasWhiteListingFeature() && this.isIpAddressWhiteListed())
-          request.headers['Authorization'] =
-            'Bearer ' +
-            environment.features.ipWhiteListing
-              .tokenToUseForWhiteListedIpAddresses;
-      } else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
+      if (this.hasWhiteListingFeature() && this.isIpAddressWhiteListed())
+        request.headers['Authorization'] =
+          'Bearer ' +
+          environment.features.ipWhiteListing
+            .tokenToUseForWhiteListedIpAddresses;
+      else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
         throw new GraphQLError(`AUTH | NO TOKEN`, {
           extensions: {
             statusCode: 401,
@@ -47,15 +46,15 @@ export class AuthRESTDataSource extends RESTDataSource {
   }
 
   private hasWhiteListingFeature = (): boolean => {
-    return !(!environment || !environment.features.ipWhiteListing);
+    return !!(environment && environment.features.ipWhiteListing);
   };
 
   private isIpAddressWhiteListed = (): boolean => {
-    return !(
-      !environment ||
-      !this.clientIp ||
-      !this.hasWhiteListingFeature() ||
-      !environment!.features.ipWhiteListing!.whiteListedIpAddresses.includes(
+    return (
+      environment &&
+      this.clientIp &&
+      this.hasWhiteListingFeature() &&
+      environment!.features.ipWhiteListing!.whiteListedIpAddresses.includes(
         this.clientIp
       )
     );
