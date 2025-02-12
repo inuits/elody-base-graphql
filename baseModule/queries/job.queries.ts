@@ -247,6 +247,7 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
+        defaultValue(value: "session-$email")
         tooltip(value: true)
       }
       type: advancedFilter(type: type) {
