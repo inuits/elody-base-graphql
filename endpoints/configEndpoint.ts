@@ -42,9 +42,30 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
           hasSavedSearch: config.features.hasSavedSearch === undefined
               ? false
               : config.features.hasSavedSearch,
-          hasAdvancedSearch: config.features.hasAdvancedSearch === undefined
-              ? false
-              : config.features.hasAdvancedSearch,
+          advancedSearch: {
+              hasAdvancedSearch: config.features.advancedSearch.hasAdvancedSearch === undefined
+                  ? false
+                  : config.features.advancedSearch.hasAdvancedSearch,
+              queryBy: config.features.advancedSearch.queryBy === undefined
+                  ? ""
+                  : config.features.advancedSearch.queryBy,
+              queryByWeights: config.features.advancedSearch.queryByWeights === undefined
+                  ? ""
+                  : config.features.advancedSearch.queryByWeights,
+              filterBy: config.features.advancedSearch.filterBy === undefined
+                  ? ""
+                  : config.features.advancedSearch.filterBy,
+              sortBy: config.features.advancedSearch.sortBy === undefined
+                  ? ""
+                  : config.features.advancedSearch.sortBy,
+              limit: config.features.advancedSearch.limit === undefined
+                  ? 10
+                  : config.features.advancedSearch.limit,
+              perPage: config.features.advancedSearch.perPage === undefined
+                  ? 10
+                  : config.features.advancedSearch.perPage,
+          },
+              
         },
         customization: {
           applicationTitle: config.customization.applicationTitle,
