@@ -54,8 +54,7 @@ export interface Environment {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
-    advancedSearch: {
-        hasAdvancedSearch?: boolean;
+    advancedSearch?: {
         queryBy: string;
         queryByWeights?: string;
         filterBy: string;

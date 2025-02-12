@@ -43,27 +43,24 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
               ? false
               : config.features.hasSavedSearch,
           advancedSearch: {
-              hasAdvancedSearch: config.features.advancedSearch.hasAdvancedSearch === undefined
-                  ? false
-                  : config.features.advancedSearch.hasAdvancedSearch,
-              queryBy: config.features.advancedSearch.queryBy === undefined
+              queryBy: config.features.advancedSearch?.queryBy === undefined
                   ? ""
                   : config.features.advancedSearch.queryBy,
-              queryByWeights: config.features.advancedSearch.queryByWeights === undefined
+              queryByWeights: config.features.advancedSearch?.queryByWeights === undefined
                   ? ""
                   : config.features.advancedSearch.queryByWeights,
-              filterBy: config.features.advancedSearch.filterBy === undefined
+              filterBy: config.features.advancedSearch?.filterBy === undefined
                   ? ""
-                  : config.features.advancedSearch.filterBy,
+                  : config.features.advancedSearch?.filterBy,
               sortBy: config.features.advancedSearch.sortBy === undefined
                   ? ""
-                  : config.features.advancedSearch.sortBy,
+                  : config.features.advancedSearch?.sortBy,
               limit: config.features.advancedSearch.limit === undefined
                   ? 10
                   : config.features.advancedSearch.limit,
-              perPage: config.features.advancedSearch.perPage === undefined
+              perPage: config.features.advancedSearch?.perPage === undefined
                   ? 10
-                  : config.features.advancedSearch.perPage,
+                  : config.features.advancedSearch?.perPage,
           },
               
         },
