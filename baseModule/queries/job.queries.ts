@@ -275,7 +275,8 @@ export const jobQueries = gql`
             label: "metadata.labels.started-at"
             value: "computed_values.created_at"
           }
-        ]
+        ],
+        excludeBaseSortOptions: true
       ) {
         icon
         label

@@ -1540,19 +1540,21 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   SortOptions: {
-    options: async (parent, { input }, { dataSources }) => {
-      const baseSortOptions: DropdownOption[] = [
-        {
-          icon: DamsIcons.NoIcon,
-          label: 'metadata.labels.date-updated',
-          value: 'date_updated',
-        },
-        {
-          icon: DamsIcons.NoIcon,
-          label: 'metadata.labels.last-editor',
-          value: 'last_editor',
-        },
-      ];
+    options: async (parent, { input, excludeBaseSortOptions }, { dataSources }) => {
+      let baseSortOptions: DropdownOption[] = [];
+      if (!excludeBaseSortOptions)
+        baseSortOptions = [
+          {
+            icon: DamsIcons.NoIcon,
+            label: 'metadata.labels.date-updated',
+            value: 'date_updated',
+          },
+          {
+            icon: DamsIcons.NoIcon,
+            label: 'metadata.labels.last-editor',
+            value: 'last_editor',
+          },
+        ];
       const default_sorting = input.filter((option) => option.primary);
       return [
         ...default_sorting,

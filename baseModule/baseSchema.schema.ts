@@ -821,7 +821,7 @@ export const baseSchema = gql`
   }
 
   type SortOptions {
-    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    options(input: [DropdownOptionInput!]!, excludeBaseSortOptions: Boolean): [DropdownOption!]!
     isAsc(input: SortingDirection!): SortingDirection
   }
 
