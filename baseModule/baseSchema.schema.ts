@@ -1617,6 +1617,10 @@ export const baseSchema = gql`
       q: String!
       filter_by: String!
       query_by: String!
+      query_by_weights: String!
+      sort_by: String!
+      limit: Int
+      per_page: Int
     ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

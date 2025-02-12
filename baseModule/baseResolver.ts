@@ -251,7 +251,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         sort_by = "",
         limit = 25,
         per_page = 25,
-        
       },
       { dataSources }
     ): Promise<EntitiesResults> => {
