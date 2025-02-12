@@ -54,8 +54,8 @@ const applyConfigEndpoint = (app: Express, config: Environment) => {
                   : config.features.advancedSearch?.filterBy,
               sortBy: config.features.advancedSearch.sortBy === undefined
                   ? ""
-                  : config.features.advancedSearch?.sortBy,
-              limit: config.features.advancedSearch.limit === undefined
+                  : config.features.advancedSearch.sortBy,
+              limit: config.features.advancedSearch?.limit === undefined
                   ? 10
                   : config.features.advancedSearch.limit,
               perPage: config.features.advancedSearch?.perPage === undefined
