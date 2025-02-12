@@ -778,6 +778,7 @@ export const baseSchema = gql`
   }
 
   type PermissionRequestInfo {
+    datasource: String!
     crud: String!
     uri: String!
     body: JSON!

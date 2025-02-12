@@ -377,11 +377,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         customPermissions[permission];
       if (!permissionConfig) return false;
 
-      let response = await dataSources.CollectionAPI.checkAdvancedPermission(
-        permissionConfig,
-        parentEntityId,
-        childEntityId
-      );
+      let response: any;
+      if (permissionConfig.datasource === "CollectionAPI")
+        response = await dataSources.CollectionAPI.checkAdvancedPermission(
+            permissionConfig,
+            parentEntityId,
+            childEntityId
+        );
+      if (permissionConfig.datasource === "GraphqlAPI")
+        response = await dataSources.GraphqlAPI.checkAdvancedPermission(permissionConfig);
       return response;
     },
     PermissionMappingPerEntityType: async (
