@@ -2,6 +2,7 @@ import { Module } from 'graphql-modules';
 import { baseModule } from '../baseModule/baseModule';
 import { StorageAPI } from '../sources/storage';
 import { CollectionAPI } from '../sources/collection';
+import { GraphqlAPI } from '../sources/graphql';
 import { DataSources, OptionalDataSources } from '../types';
 import { AuthRESTDataSource, Environment, environment } from '../main';
 import { TranscodeService } from '../sources/transcode';
@@ -20,6 +21,9 @@ const baseElodyElodyConfig: ElodyConfig = {
     },
     (session: any, cache: any) => {
       return { StorageAPI: new StorageAPI({ session, cache }) };
+    },
+    (session: any, cache: any) => {
+      return { GraphqlAPI: new GraphqlAPI({ session, cache }) };
     },
   ],
 };
