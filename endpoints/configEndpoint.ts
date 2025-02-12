@@ -2,7 +2,7 @@ import { Express } from 'express';
 import { Environment } from '../environment';
 
 const getConfig = (config: Environment) => {
-  const baseConfg = {
+  const baseConfig = {
     graphQlLink: config.graphqlEndpoint,
     iiifLink: config.api.iiifUrlFrontend,
     oidc: {
@@ -62,7 +62,7 @@ const getConfig = (config: Environment) => {
   };
 
   if (config.features.advancedSearch)
-    Object.assign(config.features.advancedSearch, {
+    Object.assign(baseConfig.features, {
       advancedSearch: {
         queryBy: config.features.advancedSearch.queryBy || '',
         queryByWeights: config.features.advancedSearch.queryByWeights || '',
@@ -73,7 +73,7 @@ const getConfig = (config: Environment) => {
       },
     });
 
-  return baseConfg;
+  return baseConfig;
 };
 
 const applyConfigEndpoint = (app: Express, config: Environment) => {
