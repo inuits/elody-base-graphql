@@ -19,13 +19,13 @@ export class GraphqlAPI extends AuthRESTDataSource {
             const config = JSON.parse(parsedRequestInfo);
 
             const method = `${config.crud}${config.uri}`;
-            if (method === "getUserLoggedIn") return this.getUserLoggedIn();
+            if (method === "getUserIsAnonymousUser") return !this.getUserIsAnonymousUser();
         } catch (e) {
             return false;
         }
     }
 
-    async getUserLoggedIn(): Promise<boolean> {
-        return this.session.auth?.accessToken ? true : false;
+    getUserIsAnonymousUser(): boolean {
+        return this.session.auth?.accessToken ? false : true;
     }
 }
