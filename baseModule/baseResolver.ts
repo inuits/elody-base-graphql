@@ -245,12 +245,25 @@ export const baseResolver: Resolvers<ContextValue> = {
       _source,
       {
         q = "*",
-        filter_by = "",
         query_by = "",
+        filter_by = "",
+        query_by_weights = "",
+        sort_by = "",
+        limit = 25,
+        per_page = 25,
+        
       },
       { dataSources }
     ): Promise<EntitiesResults> => {
-      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(q as string, filter_by as string, query_by as string);
+      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(
+        q as string,
+        query_by as string,
+        filter_by as string,
+        query_by_weights as string,
+        sort_by as string,
+        limit as number,
+        per_page as number
+      );
     },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();

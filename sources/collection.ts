@@ -84,11 +84,15 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getEntitiesByAdvancedSearch(
     q: string,
-    filter_by: string,
     query_by: string,
+    filter_by: string,
+    query_by_weights?: string,
+    sort_by?: string,
+    limit?: number,
+    per_page?: number,
   ): Promise<EntitiesResults> {
     let data;
-    const filters = { q, filter_by, query_by };
+    const filters = { q, filter_by, query_by, sort_by, per_page, limit, query_by_weights };
     try {
       data = await this.post('filter_typesense', {
         body: filters
