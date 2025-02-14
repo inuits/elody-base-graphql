@@ -1220,6 +1220,7 @@ export const baseSchema = gql`
     mediafilesWithOptionalCsv
     uploadCsvForReordening
     mediafilesWithOcr
+    optionalMediafiles
   }
 
   enum UploadFieldSize {
