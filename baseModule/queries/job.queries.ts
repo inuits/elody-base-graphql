@@ -238,15 +238,31 @@ export const jobQueries = gql`
         tooltip(value: true)
       }
       created_by: advancedFilter(
-        type: text
+        type: selection
         key: ["elody:1|computed_values.created_by"]
         label: "metadata.labels.started-by"
         isDisplayedByDefault: true
+        advancedFilterInputForRetrievingOptions: [
+          {
+            type: text
+            key: ["elody:1|computed_values.created_by"]
+            value: "*"
+            metadata_key_as_label: "metadata.email.value"
+            item_types: ["job"]
+          }
+        ]
       ) {
         type
         key
         label
         isDisplayedByDefault
+        advancedFilterInputForRetrievingOptions {
+          type
+          key
+          value
+          metadata_key_as_label
+          item_types
+        }
         defaultValue(value: "session-$email")
         tooltip(value: true)
       }
