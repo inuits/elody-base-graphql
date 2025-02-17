@@ -1,5 +1,29 @@
 {
   "en": {
+    "entity-translations": {
+      "singular": {
+        "baseEntity": "base entity",
+        "tenant": "tenant",
+        "user": "user",
+        "job": "job",
+        "shareLink": "share link",
+        "asset": "asset",
+        "mediafile": "mediafile",
+        "mediaFile": "mediafile",
+        "MediaFile": "mediafile"
+      },
+      "plural": {
+        "baseEntity": "base entities",
+        "tenant": "tenants",
+        "user": "users",
+        "job": "jobs",
+        "shareLink": "share links",
+        "asset": "assets",
+        "mediafile": "mediafiles",
+        "mediaFile": "mediafiles",
+        "MediaFile": "mediafiles"
+      }
+    },
     "audio":{
       "no-support":"Your browser does not support the audio element."
     },
@@ -84,7 +108,7 @@
       "export-to-csv":"Export to CSV",
       "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
       "create-share-link": "Create share link",
-      "delete-selected": "Delete selected entities"
+      "delete-selected": "Delete selected {0}"
     },
     "confirm": {
       "discard-edit": {
@@ -442,7 +466,7 @@
     },
     "contextMenu": {
       "contextMenuLinkAction": {
-        "followLink": "Open this entity in a new tab"
+        "followLink": "Open this {0} in a new tab"
       },
       "contextMenuGeneralAction": {
         "setPrimaryMediafile": "Set this as the primary mediafile for the asset",
@@ -450,13 +474,35 @@
 
       },
       "contextMenuElodyAction": {
-        "delete-relation": "Delete the relational link between these two entities",
-        "delete-entity": "Delete this entity",
+        "delete-relation": "Delete the link with this {0}",
+        "delete-entity": "Delete this {0}",
         "share": "Share link"
       }
     }
   },
   "nl": {
+    "entity-translations": {
+      "singular": {
+        "BaseEntity": "basis entiteit",
+        "Tenant": "tenant",
+        "User": "gebruiker",
+        "Job": "job",
+        "ShareLink": "deel link",
+        "Asset": "asset",
+        "Mediafile": "mediafile",
+        "MediaFile": "mediafile"
+      },
+      "plural": {
+        "BaseEntity": "basis entiteiten",
+        "Tenant": "tenants",
+        "User": "gebruikers",
+        "Job": "jobs",
+        "ShareLink": "deel linken",
+        "Asset": "assets",
+        "Mediafile": "mediafiles",
+        "MediaFile": "mediafiles"
+      }
+    },
     "audio":{
       "no-support":"Uw browser ondersteund het audio element niet"
     },
@@ -545,7 +591,7 @@
       "export-to-csv":"Exporteer naar CSV",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan",
-      "delete-selected": "Geselecteerde entiteiten verwijderen"
+      "delete-selected": "Geselecteerde {0} verwijderen"
     },
     "confirm": {
       "discard-edit": {
@@ -900,15 +946,15 @@
     },
     "contextMenu": {
       "contextMenuLinkAction": {
-        "followLink": "Open deze entiteit in een nieuw tabblad"
+        "followLink": "Open deze {0} in een nieuw tabblad"
       },
       "contextMenuGeneralAction": {
         "setPrimaryMediafile": "Stel dit in als de primaire mediafile voor deze asset",
         "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
-        "delete-relation": "Verwijder de relatie tussen deze twee entiteiten",
-        "delete-entity": "Verwijder deze entiteit",
+        "delete-relation": "Verwijder de koppeling met deze {0}",
+        "delete-entity": "Verwijder deze {0}",
         "share": "Deel link"
       }
     }
