@@ -481,7 +481,8 @@ export const baseResolver: Resolvers<ContextValue> = {
           mediafiles: mediafiles,
           csv_mediafile_columns: mediafilesCsv,
           csv_entity_columns: assetsCsv,
-          download_entity: createdEntity.id,
+          download_entity_id: createdEntity.id,
+          download_entity_title: createdEntity.metadata.filter((metadata: Metadata) => metadata.key === "title")[0].value,
         });
       } catch (e) {
         throw new GraphQLError(
