@@ -61,6 +61,7 @@ export interface Environment {
         sortBy?: string;
         limit?: number;
         perPage?: number;
+        facetBy?: string;
     };
     SEO: {
       hasSEO: boolean;

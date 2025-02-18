@@ -74,6 +74,7 @@ const getConfig = (config: Environment) => {
         sortBy: config.features.advancedSearch.sortBy || '',
         limit: config.features.advancedSearch.limit || 10,
         perPage: config.features.advancedSearch.perPage || 10,
+        facetBy: config.features.advancedSearch.facetBy || '',
       },
     });
 
