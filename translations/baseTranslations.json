@@ -466,7 +466,7 @@
     },
     "contextMenu": {
       "contextMenuLinkAction": {
-        "followLink": "Open this {0} in a new tab"
+        "followLink": "Open {0} in a new tab"
       },
       "contextMenuGeneralAction": {
         "setPrimaryMediafile": "Set this as the primary mediafile for the asset",
@@ -474,8 +474,8 @@
 
       },
       "contextMenuElodyAction": {
-        "delete-relation": "Delete the link with this {0}",
-        "delete-entity": "Delete this {0}",
+        "delete-relation": "Delete link with {0}",
+        "delete-entity": "Delete {0}",
         "share": "Share link"
       }
     }
@@ -946,15 +946,15 @@
     },
     "contextMenu": {
       "contextMenuLinkAction": {
-        "followLink": "Open deze {0} in een nieuw tabblad"
+        "followLink": "Open {0} in een nieuw tabblad"
       },
       "contextMenuGeneralAction": {
         "setPrimaryMediafile": "Stel dit in als de primaire mediafile voor deze asset",
         "setPrimaryThumbnail": "Stel dit in als de primaire thumbnail voor deze asset"
       },
       "contextMenuElodyAction": {
-        "delete-relation": "Verwijder de koppeling met deze {0}",
-        "delete-entity": "Verwijder deze {0}",
+        "delete-relation": "Verwijder koppeling met {0}",
+        "delete-entity": "Verwijder {0}",
         "share": "Deel link"
       }
     }
