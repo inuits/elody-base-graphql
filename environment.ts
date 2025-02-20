@@ -71,6 +71,7 @@ export interface Environment {
       };
     };
     hasPersistentSessions?: boolean;
+    contentIsMultiLanguage?: boolean;
   };
   customization: {
     applicationTitle: string;

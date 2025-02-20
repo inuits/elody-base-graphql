@@ -41,6 +41,10 @@ const getConfig = (config: Environment) => {
         config.features.hasSavedSearch === undefined
           ? false
           : config.features.hasSavedSearch,
+      contentIsMultiLanguage:
+        config.features.contentIsMultiLanguage === undefined
+          ? false
+          : config.features.contentIsMultiLanguage,
     },
     customization: {
       applicationTitle: config.customization.applicationTitle,
