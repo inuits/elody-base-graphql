@@ -374,6 +374,7 @@ export const baseSchema = gql`
     disabled: Boolean
     fieldKeyToSave(input: String): String
     isMetadataField(input: Boolean): Boolean
+    relationFilter: AdvancedFilterInputType
     dependsOn: String
     multiple: Boolean
     lineClamp: String

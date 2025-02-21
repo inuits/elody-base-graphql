@@ -73,7 +73,6 @@ export const baseFragments = gql`
     }
     advancedFilterInputForSearchingOptions {
       type
-      parent_key
       key
       value
       match_exact
@@ -84,6 +83,19 @@ export const baseFragments = gql`
     maxAmountOfFiles
     uploadMultiple
     isMetadataField
+    relationFilter {
+      lookup {
+        as
+        foreign_field
+        from
+        local_field
+      }
+      type
+      key
+      value
+      match_exact
+      item_types
+    }
     dependsOn
     multiple
     lineClamp
