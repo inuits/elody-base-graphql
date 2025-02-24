@@ -1622,7 +1622,7 @@ export const baseSchema = gql`
       sort_by: String!
       limit: Int
       per_page: Int
-      # facet_by: String!
+      facet_by: String!
     ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

@@ -251,7 +251,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         sort_by = "",
         limit = 25,
         per_page = 25,
-        // facet_by = "",
+        facet_by = "",
       },
       { dataSources }
     ): Promise<EntitiesResults> => {
@@ -263,7 +263,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         sort_by as string,
         limit as number,
         per_page as number,
-        // facet_by as string,
+        facet_by as string,
       );
     },
     Tenants: async (_source, _args, { dataSources }) => {

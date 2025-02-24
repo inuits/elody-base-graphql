@@ -90,11 +90,10 @@ export class CollectionAPI extends AuthRESTDataSource {
     sort_by?: string,
     limit?: number,
     per_page?: number,
-    // facet_by?: string,
+    facet_by?: string,
   ): Promise<EntitiesResults> {
     let data;
-    const filters = { q, filter_by, query_by, sort_by, per_page, limit, query_by_weights};
-    // const filters = { q, filter_by, query_by, sort_by, per_page, limit, query_by_weights, facet_by };
+    const filters = { q, filter_by, query_by, sort_by, per_page, limit, query_by_weights, facet_by };
     try {
       data = await this.post('filter_typesense', {
         body: filters
