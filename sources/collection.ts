@@ -430,7 +430,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     relations: BaseRelationValuesInput[],
     collection: Collection = Collection.Entities
   ): Promise<any> {
-    if (relations.length <= 0) return [];
     return await this.put(`${collection}/${id}/relations`, {
       body: relations,
     });
