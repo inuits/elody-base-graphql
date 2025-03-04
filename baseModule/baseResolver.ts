@@ -574,6 +574,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       const mutateRelations = async () => {
+        if (formInput.relations.length <= 0) return;
         await dataSources.CollectionAPI.putRelations(
           id,
           filterEditStatus(EditStatus.Deleted),
