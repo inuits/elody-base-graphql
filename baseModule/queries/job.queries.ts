@@ -4,8 +4,8 @@ import { gql } from 'graphql-modules';
 export const jobQueries = gql`
   fragment minimalJob on Job {
     intialValues {
-      created_at: keyValue(key: "computed_values.created_at", source: root)
-      created_by: keyValue(key: "computed_values.created_by", source: root)
+      created_at: keyValue(key: "created_at", source: root)
+      created_by: keyValue(key: "created_by", source: root)
       info: keyValue(key: "info", source: metadata)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
@@ -290,7 +290,7 @@ export const jobQueries = gql`
           {
             icon: NoIcon
             label: "metadata.labels.started-at"
-            value: "computed_values.created_at"
+            value: "created_at"
           }
         ],
         excludeBaseSortOptions: true
