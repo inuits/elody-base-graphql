@@ -5,7 +5,7 @@ export const jobQueries = gql`
   fragment minimalJob on Job {
     intialValues {
       created_at: keyValue(key: "created_at", source: root)
-      created_by: keyValue(key: "created_by", source: root)
+      created_by: keyValue(key: "computed_values.created_by", source: root)
       info: keyValue(key: "info", source: metadata)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
@@ -61,10 +61,10 @@ export const jobQueries = gql`
 
   fragment fullJob on Job {
     intialValues {
-      created_at: keyValue(key: "computed_values.created_at", source: root)
+      created_at: keyValue(key: "created_at", source: root)
       created_by: keyValue(key: "computed_values.created_by", source: root)
-      info: keyValue(key: "info", source: metadata)
       modified_at: keyValue(key: "computed_values.modified_at", source: root)
+      info: keyValue(key: "info", source: metadata)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
       status: keyValue(key: "status", source: metadata)
@@ -225,7 +225,7 @@ export const jobQueries = gql`
       }
       created_at: advancedFilter(
         type: date
-        key: ["elody:1|computed_values.created_at"]
+        key: ["elody:1|created_at"]
         label: "metadata.labels.started-at"
         isDisplayedByDefault: true
         showTimeForDateFilter: true
