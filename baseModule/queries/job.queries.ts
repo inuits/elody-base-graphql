@@ -4,9 +4,9 @@ import { gql } from 'graphql-modules';
 export const jobQueries = gql`
   fragment minimalJob on Job {
     intialValues {
-      created_at: keyValue(key: "created_at", source: root)
-      created_by: keyValue(key: "computed_values.created_by", source: root)
+      date_created: keyValue(key: "date_created", source: root)
       info: keyValue(key: "info", source: metadata)
+      last_editor: keyValue(key: "last_editor", source: root)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
       status: keyValue(key: "status", source: metadata)
@@ -16,7 +16,6 @@ export const jobQueries = gql`
     allowedViewModes {
       viewModes(input: [
         { viewMode: ViewModesList }
-        { viewMode: ViewModesGrid }
       ]) {
         ...viewModes
       }
@@ -38,22 +37,14 @@ export const jobQueries = gql`
         label(input: "metadata.labels.info")
         key(input: "info")
       }
-      created_at: metaData {
+      date_created: metaData {
         label(input: "metadata.labels.started-at")
-        key(input: "created_at")
+        key(input: "date_created")
         unit(input: DATETIME_DEFAULT)
       }
-      created_by: metaData {
+      last_editor: metaData {
         label(input: "metadata.labels.started-by")
-        key(input: "created_by")
-      }
-      contextMenuActions {
-        doLinkAction {
-          label(input: "contextMenu.contextMenuLinkAction.followLink")
-          icon(input: "AngleRight")
-          __typename
-        }
-        __typename
+        key(input: "last_editor")
       }
     }
     ...minimalBaseEntity
@@ -61,10 +52,10 @@ export const jobQueries = gql`
 
   fragment fullJob on Job {
     intialValues {
-      created_at: keyValue(key: "created_at", source: root)
-      created_by: keyValue(key: "computed_values.created_by", source: root)
-      modified_at: keyValue(key: "computed_values.modified_at", source: root)
+      date_created: keyValue(key: "date_created", source: root)
+      date_updated: keyValue(key: "date_updated", source: root)
       info: keyValue(key: "info", source: metadata)
+      last_editor: keyValue(key: "last_editor", source: root)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
       status: keyValue(key: "status", source: metadata)
@@ -81,7 +72,7 @@ export const jobQueries = gql`
             isCollapsed(input: false)
             entityTypes(input: [job])
             searchInputType(input: "AdvancedInputType")
-            customQuery(input: "GetEntities")
+            customQuery(input: "GetSubJobs")
             customQueryFilters(input: "GetSubJobsFilters")
             customBulkOperations(input: "GetJobsBulkOperations")
           }
@@ -122,18 +113,18 @@ export const jobQueries = gql`
                 label(input: "metadata.labels.info")
                 key(input: "info")
               }
-              created_at: metaData {
+              date_created: metaData {
                 label(input: "metadata.labels.started-at")
-                key(input: "created_at")
+                key(input: "date_created")
                 unit(input: DATETIME_DEFAULT)
               }
-              created_by: metaData {
+              last_editor: metaData {
                 label(input: "metadata.labels.started-by")
-                key(input: "created_by")
+                key(input: "last_editor")
               }
-              modified_at: metaData {
+              date_updated: metaData {
                 label(input: "metadata.labels.status-updated-at")
-                key(input: "modified_at")
+                key(input: "date_updated")
                 unit(input: DATETIME_DEFAULT)
               }
             }
@@ -155,7 +146,10 @@ export const jobQueries = gql`
             type: text
             key: ["elody:1|metadata.type.value"]
             value: "*"
-            item_types: ["job"]
+          },
+          {
+            type: type
+            value: "job"
           }
         ]
       ) {
@@ -181,7 +175,10 @@ export const jobQueries = gql`
             type: text
             key: ["elody:1|metadata.name.value"]
             value: "*"
-            item_types: ["job"]
+          },
+          {
+            type: type
+            value: "job"
           }
         ]
       ) {
@@ -207,7 +204,10 @@ export const jobQueries = gql`
             type: text
             key: ["elody:1|metadata.status.value"]
             value: "*"
-            item_types: ["job"]
+          },
+          {
+            type: type
+            value: "job"
           }
         ]
       ) {
@@ -223,9 +223,9 @@ export const jobQueries = gql`
         }
         tooltip(value: true)
       }
-      created_at: advancedFilter(
+      date_created: advancedFilter(
         type: date
-        key: ["elody:1|created_at"]
+        key: ["elody:1|date_created"]
         label: "metadata.labels.started-at"
         isDisplayedByDefault: true
         showTimeForDateFilter: true
@@ -237,18 +237,21 @@ export const jobQueries = gql`
         showTimeForDateFilter
         tooltip(value: true)
       }
-      created_by: advancedFilter(
+      last_editor: advancedFilter(
         type: selection
-        key: ["elody:1|computed_values.created_by"]
+        key: ["elody:1|last_editor"]
         label: "metadata.labels.started-by"
         isDisplayedByDefault: true
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
-            key: ["elody:1|computed_values.created_by"]
+            key: ["elody:1|last_editor"]
             value: "*"
             metadata_key_as_label: "metadata.email.value"
-            item_types: ["job"]
+          },
+          {
+            type: type
+            value: "job"
           }
         ]
       ) {
@@ -290,7 +293,12 @@ export const jobQueries = gql`
           {
             icon: NoIcon
             label: "metadata.labels.started-at"
-            value: "created_at"
+            value: "date_created"
+          },
+          {
+            icon: NoIcon
+            label: "metadata.labels.status"
+            value: "status"
           }
         ],
         excludeBaseSortOptions: true
@@ -333,6 +341,15 @@ export const jobQueries = gql`
           defaultValue(value: [])
           hidden(value: true)
         }
+        type: advancedFilter(
+          type: selection
+          key: "type"
+        ) {
+          type
+          key
+          defaultValue(value: [asset, mediafile])
+          hidden(value: true)
+        }
       }
     }
   }
@@ -354,6 +371,79 @@ export const jobQueries = gql`
           bulkOperationModal {
             ...bulkOperationModal
           }
+        }
+      }
+    }
+  }
+
+  query GetSubJobs(
+    $type: Entitytyping!
+    $limit: Int
+    $skip: Int
+    $searchValue: SearchFilter!
+    $advancedSearchValue: [FilterInput]
+    $advancedFilterInputs: [AdvancedFilterInput!]!
+    $searchInputType: SearchInputType
+  ) {
+    Entities(
+      type: $type
+      limit: $limit
+      skip: $skip
+      searchValue: $searchValue
+      advancedSearchValue: $advancedSearchValue
+      advancedFilterInputs: $advancedFilterInputs
+      searchInputType: $searchInputType
+    ) {
+      count
+      limit
+      results {
+        id
+        uuid
+        type
+        ... on Job {
+          intialValues {
+            date_created: keyValue(key: "date_created", source: root)
+            info: keyValue(key: "info", source: metadata)
+            name: keyValue(key: "name", source: metadata)
+            slug: keyValue(key: "_id", source: root)
+            status: keyValue(key: "status", source: metadata)
+            title: keyValue(key: "name", source: metadata)
+          }
+          allowedViewModes {
+            viewModes(input: [
+              { viewMode: ViewModesList }
+            ]) {
+              ...viewModes
+            }
+          }
+          teaserMetadata {
+            name: metaData {
+              label(input: "metadata.labels.name")
+              key(input: "name")
+            }
+            status: metaData {
+              label(input: "metadata.labels.status")
+              key(input: "status")
+            }
+            info: metaData {
+              label(input: "metadata.labels.info")
+              key(input: "info")
+            }
+            date_created: metaData {
+              label(input: "metadata.labels.started-at")
+              key(input: "date_created")
+              unit(input: DATETIME_DEFAULT)
+            }
+            contextMenuActions {
+              doLinkAction {
+                label(input: "contextMenu.contextMenuLinkAction.followLink")
+                icon(input: "AngleRight")
+                __typename
+              }
+              __typename
+            }
+          }
+          ...minimalBaseEntity
         }
       }
     }

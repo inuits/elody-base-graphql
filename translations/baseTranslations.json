@@ -254,8 +254,12 @@
     "element-labels": {
       "sub-job": "Sub jobs",
       "has-job": "Items created and modified by this job",
+      "metadata-element": "Metadata",
       "media-element": "Media viewer",
       "map-element": "Map"
+    },
+    "panel-labels": {
+      "description": "Description"
     },
     "metadata": {
       "labels": {
@@ -738,8 +742,12 @@
     "element-labels": {
       "sub-job": "Onderliggende jobs",
       "has-job": "Items aangemaakt en gewijzigd door deze job",
+      "metadata-element": "Metadata",
       "media-element": "Media weergave",
       "map-element": "Map"
+    },
+    "panel-labels": {
+      "description": "Omschrijving"
     },
     "metadata": {
       "labels": {
