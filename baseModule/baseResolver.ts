@@ -1283,6 +1283,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     lineClamp: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },
+    copyToClipboard: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
+    },
+    customValue: async (_source, { input }, { dataSources }) => {
+      return input ?? "";
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {

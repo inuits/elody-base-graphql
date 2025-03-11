@@ -1296,6 +1296,8 @@ export const baseSchema = gql`
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
     lineClamp(input: String): String!
+    copyToClipboard(input: Boolean): Boolean
+    customValue(input: String): String
   }
 
   type PanelRelationMetaData {

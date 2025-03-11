@@ -325,6 +325,10 @@
         "downloadEntityCreated": {
           "title": "Download entity created",
           "description": "The download entity that includes the download link is succesfully created"
+        },
+        "copiedToClipboard": {
+          "title": "Copied to clipboard",
+          "description": "The text has been successfully copied"
         }
       },
       "errors": {
@@ -813,6 +817,10 @@
         "downloadEntityCreated": {
           "title": "Download entiteit aangemaakt",
           "description": "De download entiteit die de download link bevat is succesvol aangemaakt"
+        },
+        "copiedToClipboard": {
+          "title": "Gekopieerd naar klembord",
+          "description": "De tekst is succesvol gekopieerd"
         }
       },
       "errors": {
