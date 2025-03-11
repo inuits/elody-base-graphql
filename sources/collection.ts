@@ -203,9 +203,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.patch(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
         {
@@ -225,9 +225,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.delete(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
       );
@@ -244,10 +244,10 @@ export class CollectionAPI extends AuthRESTDataSource {
     _collection: string | undefined = undefined,
     returnIdIfFails: boolean = false
   ): Promise<any> {
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     let data;
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.get<any>(
         `${
           _collection ? _collection : getCollectionValueForEntityType(type)
