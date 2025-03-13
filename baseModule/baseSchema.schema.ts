@@ -389,6 +389,7 @@ export const baseSchema = gql`
     Delete
     DynamicForm
     Search
+    SearchAi
     SaveSearch
     SaveSearchPicker
   }
@@ -1626,6 +1627,9 @@ export const baseSchema = gql`
       limit: Int
       per_page: Int
       facet_by: String!
+    ): EntitiesResults!
+    EntitiesByAiSearch(
+      input: String!
     ): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

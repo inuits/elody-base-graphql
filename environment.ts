@@ -63,6 +63,9 @@ export interface Environment {
         perPage?: number;
         facetBy?: string;
     };
+    aiSearch?: {
+      hasAiSearch: boolean;
+    };
     SEO: {
       hasSEO: boolean;
       seoMetadataKeys?: {

@@ -77,6 +77,12 @@ const getConfig = (config: Environment) => {
         facetBy: config.features.advancedSearch.facetBy || '',
       },
     });
+  if (config.features.aiSearch)
+    Object.assign(baseConfig.features, {
+      aiSearch: {
+        hasAiSearch: config.features.aiSearch.hasAiSearch,
+      },
+    });
 
   return baseConfig;
 };
