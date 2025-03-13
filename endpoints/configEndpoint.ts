@@ -24,6 +24,12 @@ const getConfig = (config: Environment) => {
         simpleSearchMetadataKey:
           config.features.simpleSearch.simpleSearchMetadataKey,
       },
+      aiSearch: {
+        hasAiSearch:
+          config.features.aiSearch?.hasAiSearch === undefined
+            ? false
+            : config.features.hasBulkOperations,
+      },
       hasTenantSelect: config.features.hasTenantSelect,
       hasBulkOperations:
         config.features.hasBulkSelect === undefined

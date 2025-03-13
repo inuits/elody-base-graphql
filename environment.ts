@@ -64,7 +64,7 @@ export interface Environment {
         facetBy?: string;
     };
     aiSearch?: {
-      hasAiSearch: boolean;
+      hasAiSearch?: boolean;
     };
     SEO: {
       hasSEO: boolean;
