@@ -1140,6 +1140,7 @@ export const baseSchema = gql`
     label(input: String): String!
     hierarchyRelationList(input: [HierarchyRelationListInput]): [HierarchyRelationList]!
     customQuery(input: String): String!
+    can(input: [String]): [String]
   }
 
   type SingleMediaFileElement {
@@ -1300,6 +1301,7 @@ export const baseSchema = gql`
     lineClamp(input: String): String!
     copyToClipboard(input: Boolean): Boolean
     customValue(input: String): String
+    can(input: [String!]): [String]
   }
 
   type PanelRelationMetaData {

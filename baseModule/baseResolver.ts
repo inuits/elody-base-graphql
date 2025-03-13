@@ -1006,6 +1006,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQuery: async (_source, { input }, { dataSources }) => {
       return input || '';
     },
+    can: async (_source, { input }, { dataSources }) => {
+      return input as string[];
+    },
   },
   SingleMediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1299,6 +1302,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     customValue: async (_source, { input }, { dataSources }) => {
       return input ?? "";
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input ?? [];
     },
   },
   UploadContainer: {
