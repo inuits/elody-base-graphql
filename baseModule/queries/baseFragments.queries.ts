@@ -141,6 +141,7 @@ export const baseFragments = gql`
     formRelationType
     askForCloseConfirmation
     neededPermission
+    skipItemsWithRelationDuringBulkDelete
   }
 
   fragment viewModes on ViewModesWithConfig {

@@ -585,6 +585,7 @@ export const baseSchema = gql`
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
+    skipItemsWithRelationDuringBulkDelete: [String]
   }
   type BulkOperationModal {
     typeModal: TypeModals!
@@ -592,6 +593,7 @@ export const baseSchema = gql`
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
+    skipItemsWithRelationDuringBulkDelete: [String]
   }
 
   enum ActionContextEntitiesSelectionType {
@@ -1679,6 +1681,7 @@ export const baseSchema = gql`
       ids: [String!]!
       path: Collection!
       deleteEntities: DeleteEntitiesInput
+      skipItemsWithRelationDuringBulkDelete: [String!]
     ): String
     linkMediafileToEntity(
       entityId: String!

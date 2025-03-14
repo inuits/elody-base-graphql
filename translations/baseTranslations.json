@@ -340,6 +340,10 @@
         },
         "validation-error": {
           "title": "Something went wrong"
+        },
+        "entityDeleted": {
+          "title": "Entities not deleted",
+          "description": "Error occured during changes"
         }
       },
       "graphql-errors":{
@@ -832,6 +836,10 @@
         },
         "validation-error": {
           "title": "Iets ontbreekt of is niet juist."
+        },
+        "entityDeleted": {
+          "title": "Entiteiten zijn niet verwijderd",
+          "description": "Er zijn een fout opgetreden tijdens de wijzigingen"
         }
       },
       "graphql-errors":{

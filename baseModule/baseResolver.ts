@@ -625,10 +625,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     bulkDeleteEntities: async (
       _source,
-      { ids, path, deleteEntities },
+      { ids, path, deleteEntities, skipItemsWithRelationDuringBulkDelete },
       { dataSources }
     ) => {
-      return dataSources.CollectionAPI.bulkDeleteEntities(ids, path, deleteEntities ?? {});
+      return dataSources.CollectionAPI.bulkDeleteEntities(
+          ids,
+          path,
+          deleteEntities ?? {},
+          skipItemsWithRelationDuringBulkDelete as string[] ?? []
+      );
     },
     bulkAddRelations: async (
       _source,

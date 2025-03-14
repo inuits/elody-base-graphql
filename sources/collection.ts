@@ -470,18 +470,24 @@ export class CollectionAPI extends AuthRESTDataSource {
   async bulkDeleteEntities(
     ids: string[] = [],
     path: Collection,
-    deleteEntities: DeleteEntitiesInput
+    deleteEntities: DeleteEntitiesInput,
+    skipItemsWithRelationDuringBulkDelete: string[]
   ): Promise<string> {
     if (ids.length === 0) return 'no ids were specified';
 
-    const queryParams = new URLSearchParams({
-      delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
-    }).toString();
+    try {
+      const queryParams = new URLSearchParams({
+        delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
+        skip_items_with_relation: skipItemsWithRelationDuringBulkDelete[0] ?? "",
+      }).toString();
 
-    await this.delete(`${path}?${queryParams}`, {
-      body: { identifiers: ids },
-    });
-    return 'data has been successfully deleted';
+      const result = await this.delete(`${path}?${queryParams}`, {
+        body: { identifiers: ids },
+      });
+      return result.parent_job_id;
+    } catch (error) {
+      return "";
+    }
   }
 
   async createEntity(
