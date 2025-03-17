@@ -5,6 +5,7 @@ export const jobQueries = gql`
   fragment minimalJob on Job {
     intialValues {
       date_created: keyValue(key: "date_created", source: root)
+      started_at: keyValue(key: "started_at", source: root)
       info: keyValue(key: "info", source: metadata)
       last_editor: keyValue(key: "last_editor", source: root)
       name: keyValue(key: "name", source: metadata)
@@ -38,8 +39,13 @@ export const jobQueries = gql`
         key(input: "info")
       }
       date_created: metaData {
-        label(input: "metadata.labels.started-at")
+        label(input: "metadata.labels.created-at")
         key(input: "date_created")
+        unit(input: DATETIME_DEFAULT)
+      }
+      started_at: metaData {
+        label(input: "metadata.labels.started-at")
+        key(input: "started_at")
         unit(input: DATETIME_DEFAULT)
       }
       last_editor: metaData {
@@ -53,6 +59,7 @@ export const jobQueries = gql`
   fragment fullJob on Job {
     intialValues {
       date_created: keyValue(key: "date_created", source: root)
+      started_at: keyValue(key: "started_at", source: root)
       date_updated: keyValue(key: "date_updated", source: root)
       info: keyValue(key: "info", source: metadata)
       last_editor: keyValue(key: "last_editor", source: root)
@@ -114,8 +121,13 @@ export const jobQueries = gql`
                 key(input: "info")
               }
               date_created: metaData {
-                label(input: "metadata.labels.started-at")
+                label(input: "metadata.labels.created-at")
                 key(input: "date_created")
+                unit(input: DATETIME_DEFAULT)
+              }
+              started_at: metaData {
+                label(input: "metadata.labels.created-at")
+                key(input: "started_at")
                 unit(input: DATETIME_DEFAULT)
               }
               last_editor: metaData {
@@ -226,6 +238,20 @@ export const jobQueries = gql`
       date_created: advancedFilter(
         type: date
         key: ["elody:1|date_created"]
+        label: "metadata.labels.created-at"
+        isDisplayedByDefault: true
+        showTimeForDateFilter: true
+      ) {
+        type
+        key
+        label
+        isDisplayedByDefault
+        showTimeForDateFilter
+        tooltip(value: true)
+      }
+      started_at: advancedFilter(
+        type: date
+        key: ["elody:1|started_at"]
         label: "metadata.labels.started-at"
         isDisplayedByDefault: true
         showTimeForDateFilter: true
@@ -292,8 +318,13 @@ export const jobQueries = gql`
         input: [
           {
             icon: NoIcon
-            label: "metadata.labels.started-at"
+            label: "metadata.labels.created-at"
             value: "date_created"
+          },
+          {
+            icon: NoIcon
+            label: "metadata.labels.started-at"
+            value: "started_at"
           },
           {
             icon: NoIcon
@@ -403,6 +434,7 @@ export const jobQueries = gql`
         ... on Job {
           intialValues {
             date_created: keyValue(key: "date_created", source: root)
+            started_at: keyValue(key: "started_at", source: root)
             info: keyValue(key: "info", source: metadata)
             name: keyValue(key: "name", source: metadata)
             slug: keyValue(key: "_id", source: root)
@@ -430,8 +462,13 @@ export const jobQueries = gql`
               key(input: "info")
             }
             date_created: metaData {
-              label(input: "metadata.labels.started-at")
+              label(input: "metadata.labels.created-at")
               key(input: "date_created")
+              unit(input: DATETIME_DEFAULT)
+            }
+            started_at: metaData {
+              label(input: "metadata.labels.started-at")
+              key(input: "started_at")
               unit(input: DATETIME_DEFAULT)
             }
             contextMenuActions {
