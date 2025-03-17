@@ -167,9 +167,14 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (config.uri.startsWith("/"))
         config.uri = config.uri.slice(1);
 
-      const data = await this[config.crud as CRUDMethod](config.uri, {
-        body: config.body,
-      });
+      let data;
+      if ((config.crud as CRUDMethod) == "get") {
+        data = await this[config.crud as CRUDMethod](config.uri);
+      } else {
+        data = await this[config.crud as CRUDMethod](config.uri, {
+          body: config.body,
+        });
+      }
       return data === 'good';
     } catch (e) {
       return false;
