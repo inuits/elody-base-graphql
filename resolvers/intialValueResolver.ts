@@ -113,7 +113,7 @@ export const resolveIntialValueRelations = async (
   } catch {
     return parent?.[key] ?? '';
   }
-  return '';
+  return [];
 };
 
 export const resolveIntialValueRelationMetadata = (
