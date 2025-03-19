@@ -594,6 +594,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
 
       const mutateMetadata = async () => {
+        for (const metadata of formInput.metadata)
+          if (Array.isArray(metadata.value) && metadata.value.length === 0)
+            metadata.value = "";
+
         await dataSources.CollectionAPI.patchMetadata(
           id,
           formInput.metadata,
