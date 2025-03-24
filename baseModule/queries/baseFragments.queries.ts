@@ -169,6 +169,7 @@ export const baseFragments = gql`
       id
       filename: keyValue(key: "filename", source: root)
       original_filename: keyValue(key: "original_filename", source: root)
+      transcode_filename: keyValue(key: "transcode_filename", source: root)
       original_file_location: keyValue(
         key: "original_file_location"
         source: root
