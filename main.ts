@@ -130,7 +130,7 @@ const start = (
       environment: appConfig.nomadNamespace,
     });
   }
-
+  
   const configureMiddleware = (app: any, appConfig: Environment) => {
     applyAuthSession(
       app,

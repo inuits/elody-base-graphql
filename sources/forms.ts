@@ -42,6 +42,7 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Tiff,
       FileType.Mp4,
       FileType.Gif,
+      FileType.Xml
     ],
     maxAmountOfFiles: 999,
     fileProgressSteps: {
@@ -68,6 +69,21 @@ export const baseFields: { [key: string]: InputField } = {
   baseCsvUploadField: {
     type: InputFieldTypes.CsvUpload,
     fileTypes: [FileType.Csv],
+    maxAmountOfFiles: 1,
+    fileProgressSteps: {
+      type: ActionProgressIndicatorType.ProgressSteps,
+      steps: [
+        {
+          label: 'actions.progress-steps.validate',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Validate,
+        },
+      ],
+    },
+  },
+  baseXmlUploadField: {
+    type: InputFieldTypes.XmlUpload,
+    fileTypes: [FileType.Xml, FileType.Json],
     maxAmountOfFiles: 1,
     fileProgressSteps: {
       type: ActionProgressIndicatorType.ProgressSteps,

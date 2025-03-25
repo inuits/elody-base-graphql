@@ -91,6 +91,7 @@ export const baseSchema = gql`
     dropdownSingleselectMetadata
     fileUpload
     csvUpload
+    xmlUpload
     baseEntityPickerField
     baseFileSystemImportField
     baseMagazineWithMetsImportField
@@ -115,6 +116,7 @@ export const baseSchema = gql`
     baseMagazineWithMetsImportField
     baseMagazineWithCsvImportField
     baseMediafilesWithOcrImportField
+    baseXmlUploadField
   }
 
   enum FileType {
@@ -132,6 +134,7 @@ export const baseSchema = gql`
     tiff
     tif
     gif
+    json
   }
 
   enum TranscodeType {
@@ -1226,6 +1229,7 @@ export const baseSchema = gql`
     uploadCsvForReordening
     mediafilesWithOcr
     optionalMediafiles
+    xmlMarc
   }
 
   enum UploadFieldSize {
