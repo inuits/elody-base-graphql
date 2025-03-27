@@ -564,7 +564,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         type,
         1000,
         skip,
-        advancedFilterInputs,
+        [],
         advancedSearchValue
       );
     } else {
