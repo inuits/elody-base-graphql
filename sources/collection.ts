@@ -559,7 +559,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         advancedFilterInputs,
         advancedSearchValue
       );
-    } else if ("history" === type) {
+    } else if (Entitytyping.History === type) {
       data = await this.doAdvancedHistoryEntitiesCall(
         type,
         1000,

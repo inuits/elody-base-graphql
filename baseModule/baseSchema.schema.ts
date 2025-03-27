@@ -24,6 +24,7 @@ export const baseSchema = gql`
     user
     job
     shareLink
+    history
   }
 
   enum ElodyServices {
