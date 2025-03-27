@@ -559,6 +559,14 @@ export class CollectionAPI extends AuthRESTDataSource {
         advancedFilterInputs,
         advancedSearchValue
       );
+    } else if ("history" === type) {
+      data = await this.doAdvancedHistoryEntitiesCall(
+        type,
+        1000,
+        skip,
+        advancedFilterInputs,
+        advancedSearchValue
+      );
     } else {
       data = await this.doAdvancedEntitiesCall(
         type,
@@ -610,6 +618,28 @@ export class CollectionAPI extends AuthRESTDataSource {
       }`,
       { body }
     );
+  }
+
+  // TODO: redo or remove after the demo #139636
+  private async doAdvancedHistoryEntitiesCall(
+    type: Entitytyping,
+    limit: number,
+    skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
+    advancedSearchValue: SearchFilter
+  ): Promise<EntetiesCallReturn> {
+    const body = advancedFilterInputs;
+    const data = await this.post(
+      `history/filter?limit=${limit}&skip=${this.getSkip(
+        skip,
+        limit
+      )}&order_by=${advancedSearchValue.order_by}&asc=${
+        advancedSearchValue.isAsc ? 1 : 0
+      }`,
+      { body }
+    );
+
+    return { ...data, results: data.results.map((item: any) => item.object), limit };
   }
 
   private async doAdvancedMediaCall(
