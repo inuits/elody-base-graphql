@@ -183,11 +183,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       const typeFilters = advancedFilterInputs.filter(
         (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
       );
-      console.log(typeFilters)
       let entityTypes =
         typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
       if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
-      console.log(entityTypes)
       for (const entityType of entityTypes as Entitytyping[]) {
         let entitiesIteration: EntitiesResults = {
           results: [],
