@@ -70,10 +70,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       let search = searchValue;
       data = await this.get(
-        `${getCollectionValueForEntityType(type)}?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
+        `${getCollectionValueForEntityType(
+          type
+        )}?limit=${limit}&skip=${this.getSkip(skip, limit)}&asc=${
+          search.isAsc ? 1 : 0
+        }&order_by=${search.order_by}`
       );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -90,13 +91,22 @@ export class CollectionAPI extends AuthRESTDataSource {
     sort_by?: string,
     limit?: number,
     per_page?: number,
-    facet_by?: string,
+    facet_by?: string
   ): Promise<EntitiesResults> {
     let data;
-    const filters = { q, filter_by, query_by, sort_by, per_page, limit, query_by_weights, facet_by };
+    const filters = {
+      q,
+      filter_by,
+      query_by,
+      sort_by,
+      per_page,
+      limit,
+      query_by_weights,
+      facet_by,
+    };
     try {
       data = await this.post('filter_typesense', {
-        body: filters
+        body: filters,
       });
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -164,8 +174,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (hasNoSoftParam) {
         config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
       }
-      if (config.uri.startsWith("/"))
-        config.uri = config.uri.slice(1);
+      if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
       let data;
       if ((config.crud as CRUDMethod) == "get") {
@@ -273,7 +282,7 @@ export class CollectionAPI extends AuthRESTDataSource {
           _collection ? _collection : getCollectionValueForEntityType(type)
         }/${id}`
       );
-    } catch (error) {
+    } catch (error: any) {
       if (returnIdIfFails) return id;
       throw error;
     }
@@ -610,12 +619,11 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `${getCollectionValueForEntityType(type)}/filter?limit=${limit}&skip=${this.getSkip(
-        skip,
-        limit
-      )}&order_by=${advancedSearchValue.order_by}&asc=${
-        advancedSearchValue.isAsc ? 1 : 0
-      }`,
+      `${getCollectionValueForEntityType(
+        type
+      )}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}&order_by=${
+        advancedSearchValue.order_by
+      }&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
       { body }
     );
   }

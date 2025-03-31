@@ -30,21 +30,25 @@ export const resolveIntialValueMetadata = async (
 };
 
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
-  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
-  let value = parent;
-  for (const part of keyParts || []) value = value?.[part];
+  try {
+    const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
+    let value = parent;
+    for (const part of keyParts || []) value = value?.[part];
 
-  let entity;
-  if (String(formatter).startsWith("link|")) {
-    entity = await dataSources.CollectionAPI.getEntity(
-      value,
-      '',
-      'entities',
-      true
-    );
+    let entity;
+    if (String(formatter).startsWith("link|")) {
+      entity = await dataSources.CollectionAPI.getEntity(
+        value,
+        '',
+        'entities',
+        true
+      );
+    }
+
+    return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
+  } catch (e) {
+    return ''
   }
-
-  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
 };
 
 export const resolveIntialValueRelations = async (
@@ -78,6 +82,7 @@ export const resolveIntialValueRelations = async (
         type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
       } else {
         if (relationEntityType) {
+          if (!relation.key) console.log(relation, "IntialValueResolver")
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             relationEntityType,
@@ -86,6 +91,7 @@ export const resolveIntialValueRelations = async (
           );
         }
         else if (metadataKeyAsLabel || String(formatter).startsWith("link|")) {
+          if (!relation.key) console.log(relation, "IntialValueResolver2")
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             '',

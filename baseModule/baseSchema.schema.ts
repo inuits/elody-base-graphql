@@ -396,6 +396,8 @@ export const baseSchema = gql`
     SearchAi
     SaveSearch
     SaveSearchPicker
+    ElodyEntityTaggingModal
+    EntityDetailModal
   }
 
   enum ModalStyle {
@@ -830,7 +832,10 @@ export const baseSchema = gql`
   }
 
   type SortOptions {
-    options(input: [DropdownOptionInput!]!, excludeBaseSortOptions: Boolean): [DropdownOption!]!
+    options(
+      input: [DropdownOptionInput!]!
+      excludeBaseSortOptions: Boolean
+    ): [DropdownOption!]!
     isAsc(input: SortingDirection!): SortingDirection
   }
 
@@ -1144,7 +1149,9 @@ export const baseSchema = gql`
   type HierarchyListElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
-    hierarchyRelationList(input: [HierarchyRelationListInput]): [HierarchyRelationList]!
+    hierarchyRelationList(
+      input: [HierarchyRelationListInput]
+    ): [HierarchyRelationList]!
     customQuery(input: String): String!
     can(input: [String]): [String]
   }
@@ -1244,6 +1251,19 @@ export const baseSchema = gql`
     single
     reorderEntities
     editMetadataWithCsv
+  }
+
+  enum WysiwygExtensions {
+    color
+    listItem
+    textStyle
+    starterKit
+    bold
+    italic
+    paragraph
+    doc
+    text
+    elodyTaggingExtension
   }
 
   type PanelInfo {
@@ -1409,6 +1429,58 @@ export const baseSchema = gql`
     entityId(relationType: String, metadataKey: String): String!
   }
 
+  input TagConfigurationByEntityInput {
+    configurationEntityType: Entitytyping!
+    configurationEntityRelationType: String!
+    tagMetadataKey: String!
+    colorMetadataKey: String!
+    metadataKeysToSetAsAttribute: [String]
+    secondaryAttributeToDetermineTagConfig: String # This is needed when entities can have the same tag
+  }
+
+  type TagConfigurationByEntity {
+    configurationEntityType: Entitytyping!
+    configurationEntityRelationType: String!
+    tagMetadataKey: String!
+    colorMetadataKey: String!
+    metadataKeysToSetAsAttribute: [String]
+    secondaryAttributeToDetermineTagConfig: String # This is needed when entities can have the same tag
+  }
+
+  input TaggableEntityConfigurationInput {
+    taggableEntityType: Entitytyping!
+    createNewEntityFormQuery: String!
+    relationType: String!
+    metadataFilterForTagContent: String!
+    metadataKeysToSetAsAttribute: [String]
+    tag: String
+    tagConfigurationByEntity: TagConfigurationByEntityInput
+  }
+
+  type TaggableEntityConfiguration {
+    taggableEntityType: Entitytyping!
+    createNewEntityFormQuery: String!
+    relationType: String!
+    metadataFilterForTagContent: String!
+    metadataKeysToSetAsAttribute: [String]
+    tag: String
+    tagConfigurationByEntity: TagConfigurationByEntity
+  }
+
+  type TaggingExtensionConfiguration {
+    customQuery(input: String!): String!
+    taggableEntityConfiguration(
+      configuration: [TaggableEntityConfigurationInput!]!
+    ): [TaggableEntityConfiguration!]!
+  }
+
+  type WysiwygElement {
+    label(input: String!): String!
+    metadataKey(input: String!): String!
+    extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
+    taggingConfiguration: TaggingExtensionConfiguration
+  }
+
   type ColumnList {
     column: Column!
   }
@@ -1423,6 +1495,7 @@ export const baseSchema = gql`
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
+    wysiwygElement: WysiwygElement
     mapElement: MapElement
     hierarchyListElement: HierarchyListElement
   }
@@ -1637,9 +1710,7 @@ export const baseSchema = gql`
       per_page: Int
       facet_by: String!
     ): EntitiesResults!
-    EntitiesByAiSearch(
-      input: String!
-    ): EntitiesResults!
+    EntitiesByAiSearch(input: String!): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!

@@ -238,4 +238,21 @@ export const baseFragments = gql`
     }
     __typename
   }
+
+  fragment taggableEntityConfiguration on TaggableEntityConfiguration {
+    taggableEntityType
+    createNewEntityFormQuery
+    relationType
+    metadataFilterForTagContent
+    metadataKeysToSetAsAttribute
+    tag
+    tagConfigurationByEntity {
+      configurationEntityType
+      configurationEntityRelationType
+      tagMetadataKey
+      colorMetadataKey
+      metadataKeysToSetAsAttribute
+      secondaryAttributeToDetermineTagConfig
+    }
+  }
 `;

@@ -381,6 +381,7 @@
       "W5009": "{type} is not a valid type",
       "W5011": "Validation failed: {message}",
       "W5013": "The format is invalid for type {type}",
+      "W5014": "No metadata available for item with id {id}",
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
       "W5017": "Item for key {key} with value {value} doesn't exist."
     },
@@ -448,6 +449,11 @@
       },
       "csv-template-link": "Download example with instructions for",
       "link-to-documentation": "Link to Elody CSV documentation"
+    },
+    "tagging": {
+      "tag-entity": "Tag {entityType}",
+      "tag-existing": "Select existing {entityType}",
+      "tag-new": "Create new {entityType}"
     },
     "tooltip":{
       "advancedFilterTypes":{
@@ -878,6 +884,7 @@
       "W5009": "{type} is geen geldig type",
       "W5011": "Validatie is gefaald: {message}",
       "W5013": "Het formaat is ongeldig voor type {type}",
+      "W5014": "Er werd geen metadata gevonden voor item met id {id}",
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
       "W5017": "Item voor key {key} met waarde {value} bestaat niet."
     },
@@ -944,6 +951,11 @@
         },
       "csv-template-link": "Download voorbeeld met instructies voor",
       "link-to-documentation": "Link naar de Elody CSV documentatie"
+    },
+    "tagging": {
+      "tag-entity": "Tag {entityType}",
+      "tag-existing": "Selecteer bestaand {entityType}",
+      "tag-new": "Maak een nieuw {entityType}"
     },
     "tooltip":{
       "advancedFilterTypes":{

@@ -109,6 +109,7 @@ const applyRootFormatter = ({
     const currentFormatter: Formatters = formatterSettings[formatterType][formatterTypeOption];
     return { ...handleLinkFormatterFromEntity({ entity, formatterSettings: currentFormatter as LinkFormatter }), formatter };
   }
+
   return handleRegexpFormatter({ value, formatter, formatterSettings });
 };
 

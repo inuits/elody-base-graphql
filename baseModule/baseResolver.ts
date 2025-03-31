@@ -90,6 +90,8 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  WysiwygElement,
+  type TaggingExtensionConfiguration
 } from '../../../generated-types/type-defs';
 import {ContextValue} from '../types';
 import {baseFields} from '../sources/forms';
@@ -181,10 +183,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       const typeFilters = advancedFilterInputs.filter(
         (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
       );
+      console.log(typeFilters)
       let entityTypes =
-        typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
+        typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
       if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
-
+      console.log(entityTypes)
       for (const entityType of entityTypes as Entitytyping[]) {
         let entitiesIteration: EntitiesResults = {
           results: [],
@@ -1161,6 +1164,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
     },
   },
+  WysiwygElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    metadataKey: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    extensions: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    taggingConfiguration: async (_source, {}, { dataSources }) => {
+      return {} as TaggingExtensionConfiguration;
+    },
+  },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -1533,6 +1550,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mapElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MapElement;
+    },
+    wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
     },
     hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as HierarchyListElement;
@@ -1920,4 +1940,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || [];
     },
   },
+  TaggingExtensionConfiguration: {
+    customQuery: async (_source, { input }, { dataSources }) => {
+      return input
+    },
+    taggableEntityConfiguration: async (_source, { configuration }, { dataSources }) => {
+      return configuration
+    }
+  }
 };
