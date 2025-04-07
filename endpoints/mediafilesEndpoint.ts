@@ -89,12 +89,20 @@ function isTokenExpired(token: string) {
   }
 }
 
-export const addHeader = (proxyReq: any, req: any, res: any) => {
+export const addHeaders = (
+  proxyReq: any,
+  req: Request,
+  res: Response,
+  additionalHeaders?: Headers
+) => {
   const mediafileId = extractIdFromMediafilePath(req.originalUrl);
-  res.setHeader(
-    'Link',
-    `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
-  );
+  if (additionalHeaders) res.setHeaders(additionalHeaders);
+  if (mediafileId)
+    res.setHeader(
+      'Link',
+      `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
+    );
+  console.log(res.getHeaders());
 };
 
 // pump the stream data
@@ -124,15 +132,13 @@ const applyMediaFileEndpoint = (
 ) => {
   staticToken = staticTokenInput;
 
-  const streamMediafileResult = async (
+  const streamMediafileResult = (
     mediafileResponse: any,
     req: Request,
     res: Response
   ) => {
-    addHeader(null, req, res);
-    const blob = await mediafileResponse.blob();
-    res.setHeader('Content-Type', blob.type);
-    const reader = blob.stream().getReader();
+    addHeaders(null, req, res, mediafileResponse.headers);
+    const reader = mediafileResponse.body.getReader();
 
     pump(reader, res);
   };
@@ -149,7 +155,7 @@ const applyMediaFileEndpoint = (
         throw response;
       }
 
-      await streamMediafileResult(response, req, res);
+      streamMediafileResult(response, req, res);
     } catch (error: any) {
       res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
