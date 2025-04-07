@@ -1,4 +1,4 @@
-import { Express, response } from 'express';
+import { Express, Response, Request } from 'express';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { manager } from '../auth/index';
 import { environment as env } from '../main';
@@ -124,17 +124,20 @@ const applyMediaFileEndpoint = (
 ) => {
   staticToken = staticTokenInput;
 
-  app.use('/api/mediafile/download-with-ticket', async (req: any, res: any) => {
-    res.redirect(
-      302,
-      `${env?.api.storageApiUrlExt}${req.originalUrl.replace(
-        '/api/mediafile/',
-        ''
-      )}`
-    );
-  });
+  const streamMediafileResult = async (
+    mediafileResponse: any,
+    req: Request,
+    res: Response
+  ) => {
+    addHeader(null, req, res);
+    const blob = await mediafileResponse.blob();
+    res.setHeader('Content-Type', blob.type);
+    const reader = blob.stream().getReader();
 
-  app.use('/api/mediafile', async (req: any, res: any) => {
+    pump(reader, res);
+  };
+
+  const getMediafileFromStorageAPI = async (req: Request, res: Response) => {
     try {
       const response = await fetchWithTokenRefresh(
         `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`,
@@ -146,16 +149,18 @@ const applyMediaFileEndpoint = (
         throw response;
       }
 
-      addHeader(null, req, res);
-      const blob = await response.blob();
-      res.setHeader('Content-Type', blob.type);
-      const reader = blob.stream().getReader();
-
-      pump(reader, res);
+      await streamMediafileResult(response, req, res);
     } catch (error: any) {
       res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
-  });
+  };
+
+  app.use(
+    ['/api/mediafile', '/api/mediafile/download-with-ticket'],
+    async (req: any, res: any) => {
+      await getMediafileFromStorageAPI(req, res);
+    }
+  );
 
   app.use('/api/iiif*.json', async (req, res) => {
     try {
