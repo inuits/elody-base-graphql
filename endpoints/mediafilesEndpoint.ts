@@ -102,7 +102,6 @@ export const addHeaders = (
       'Link',
       `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
     );
-  console.log(res.getHeaders());
 };
 
 // pump the stream data
