@@ -474,6 +474,7 @@ export const baseSchema = gql`
     InfoCircle
     Iot
     KeyholeSquare
+    ListUl
     LocationArrowAlt
     LocationPoint
     MapMarker
