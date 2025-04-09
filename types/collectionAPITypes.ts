@@ -28,6 +28,18 @@ export type CollectionAPIMediaFile = {
   img_width: number;
 };
 
+export type CollectionAPIDerivative = {
+  _id: string;
+  filename: string;
+  md5sum: string;
+  transcode_file_location: string;
+  thumbnail_file_location: string;
+  original_filename: string;
+  technical_origin: string;
+  identifiers: string[];
+  relations: [CollectionAPIRelation];
+};
+
 export type CollectionAPIMetadata = {
   key: string;
   value: string | Object | number;

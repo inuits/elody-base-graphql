@@ -6,6 +6,7 @@ import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 let staticToken: string | undefined | null = undefined;
 
@@ -18,7 +19,7 @@ const fetchWithTokenRefresh = async (
   try {
     const token = req.session?.auth?.accessToken;
     if (token && token !== 'undefined') {
-      options.headers = { Authorization: `Bearer ${token}` };
+      Object.assign(options.headers, { Authorization: `Bearer ${token}` });
     }
     let response: any;
     const isExpired = checkToken && token && isTokenExpired(token);
@@ -89,14 +90,8 @@ function isTokenExpired(token: string) {
   }
 }
 
-export const addHeaders = (
-  proxyReq: any,
-  req: Request,
-  res: Response,
-  additionalHeaders?: Headers
-) => {
+export const addHeaders = (proxyReq: any, req: Request, res: Response) => {
   const mediafileId = extractIdFromMediafilePath(req.originalUrl);
-  if (additionalHeaders) res.setHeaders(additionalHeaders);
   if (mediafileId)
     res.setHeader(
       'Link',
@@ -131,40 +126,38 @@ const applyMediaFileEndpoint = (
 ) => {
   staticToken = staticTokenInput;
 
-  const streamMediafileResult = (
-    mediafileResponse: any,
-    req: Request,
-    res: Response
-  ) => {
-    addHeaders(null, req, res, mediafileResponse.headers);
-    const reader = mediafileResponse.body.getReader();
-
-    pump(reader, res);
-  };
-
-  const getMediafileFromStorageAPI = async (req: Request, res: Response) => {
-    try {
-      const response = await fetchWithTokenRefresh(
-        `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`,
-        { method: 'GET' },
-        req
-      );
-
-      if (!response.ok) {
-        throw response;
-      }
-
-      streamMediafileResult(response, req, res);
-    } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
-    }
-  };
-
   app.use(
     ['/api/mediafile', '/api/mediafile/download-with-ticket'],
-    async (req: any, res: any) => {
-      await getMediafileFromStorageAPI(req, res);
-    }
+    createProxyMiddleware({
+      target: storageApiUrl,
+      changeOrigin: true,
+      pathRewrite: (path: string, req: Request) => {
+        return `${req.originalUrl.replace('/api/mediafile', '')}`;
+      },
+      onProxyReq: (proxyReq, req, res) => {
+        addHeaders(proxyReq, req, res);
+        if (req.headers.range) {
+          proxyReq.setHeader('Range', req.headers.range);
+        }
+      },
+      onProxyRes: (proxyRes, req, res) => {
+        if (proxyRes.statusCode === 206) {
+          res.setHeader('Accept-Ranges', 'bytes');
+          res.setHeader(
+            'Content-Range',
+            proxyRes.headers['Content-Range'] || ''
+          );
+          res.setHeader(
+            'Content-Length',
+            proxyRes.headers['Content-Length'] || ''
+          );
+        }
+      },
+      onError: (err, req, res) => {
+        console.error('Proxy error:', err);
+        res.status(500).send('Proxy error');
+      },
+    })
   );
 
   app.use('/api/iiif*.json', async (req, res) => {

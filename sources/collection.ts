@@ -115,14 +115,12 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data as EntitiesResults;
   }
 
-  async getEntitiesByAiSearch(
-    input: string,
-  ): Promise<EntitiesResults> {
+  async getEntitiesByAiSearch(input: string): Promise<EntitiesResults> {
     let data;
     const filters = { input };
     try {
       data = await this.post('ai_search', {
-        body: filters
+        body: filters,
       });
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -177,7 +175,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
       let data;
-      if ((config.crud as CRUDMethod) == "get") {
+      if ((config.crud as CRUDMethod) == 'get') {
         data = await this[config.crud as CRUDMethod](config.uri);
       } else {
         data = await this[config.crud as CRUDMethod](config.uri, {
@@ -492,7 +490,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       const queryParams = new URLSearchParams({
         delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
-        skip_items_with_relation: skipItemsWithRelationDuringBulkDelete[0] ?? "",
+        skip_items_with_relation:
+          skipItemsWithRelationDuringBulkDelete[0] ?? '',
       }).toString();
 
       const result = await this.delete(`${path}?${queryParams}`, {
@@ -500,7 +499,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       });
       return result.parent_job_id;
     } catch (error) {
-      return "";
+      return '';
     }
   }
 
@@ -647,7 +646,11 @@ export class CollectionAPI extends AuthRESTDataSource {
       { body }
     );
 
-    return { ...data, results: data.results.map((item: any) => item.object), limit };
+    return {
+      ...data,
+      results: data.results.map((item: any) => item.object),
+      limit,
+    };
   }
 
   private async doAdvancedMediaCall(
@@ -801,5 +804,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     );
     if (data.results && data.results.length > 0) return data.results[0];
     return undefined;
+  }
+
+  async getDerivatives(mediafileId: string): Promise<any> {
+    return this.get(`mediafiles/${mediafileId}/derivatives`);
   }
 }

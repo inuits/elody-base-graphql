@@ -970,6 +970,7 @@ export const baseSchema = gql`
     relationMetadata
     relationRootdata
     metadataOrRelation
+    derivatives
   }
 
   type IntialValues {
@@ -986,6 +987,7 @@ export const baseSchema = gql`
       relationEntityType: String
       keyOnMetadata: String
       formatter: String
+      technicalOrigin: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues

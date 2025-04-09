@@ -104,14 +104,15 @@ import {
 } from '../helpers/helpers';
 import {parseItemTypesFromInputField} from '../parsers/inputField';
 import {
+  resolveIntialValueDerivatives,
   resolveIntialValueMetadata,
   resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
-  resolveIntialValueTechnicalMetadata,
-} from '../resolvers/intialValueResolver';
+  resolveIntialValueTechnicalMetadata
+} from "../resolvers/intialValueResolver";
 import {prepareMetadataFieldForMapData, prepareRelationFieldForMapData,} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -880,6 +881,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationEntityType,
         keyOnMetadata,
         formatter = '',
+        technicalOrigin
       },
       { dataSources, customFormatters }
     ) => {
@@ -934,7 +936,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               relationKey as string,
               formatter as string,
               customFormatters
-            )
+            ),
+          derivatives: () => resolveIntialValueDerivatives(parent, key, technicalOrigin as string, dataSources)
         };
 
         const returnObject = await resolveObject[source]();

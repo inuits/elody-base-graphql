@@ -3,8 +3,10 @@ import {
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
 import { DataSources, type FormattersConfig } from '../types';
-import { Metadata } from '../../../generated-types/type-defs';
+import { Metadata  } from '../../../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
+import { GraphQLError } from "graphql";
+import { CollectionAPIDerivative, CollectionAPIEntity } from "../types/collectionAPITypes";
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
@@ -231,4 +233,14 @@ export const resolveIntialValueMetadataOrRelation = async (
     return '';
   }
 };
+
+export const resolveIntialValueDerivatives = async (parent: CollectionAPIEntity, key: string, technicalOrigin: string, dataSources: DataSources): Promise<string> => {
+  if (parent.type !== 'mediafile') throw new GraphQLError('The derivatives source can only be used on mediafiles')
+  const derivativesResult = await dataSources.CollectionAPI.getDerivatives(parent._id)
+  const derivatives: CollectionAPIDerivative[] = derivativesResult.results
+  console.log(derivatives, key)
+  const derivativeFromTechnicalOrigin: {[key: string]: any} | undefined = derivatives.find((derivative: CollectionAPIDerivative) => derivative.technical_origin === technicalOrigin)
+  if (!derivativeFromTechnicalOrigin) return ''
+  return derivativeFromTechnicalOrigin[key] as string
+}
 
