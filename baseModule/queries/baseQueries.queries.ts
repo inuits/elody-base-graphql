@@ -52,6 +52,15 @@ export const baseQueries = gql`
           defaultValue(value: "mediafile")
           hidden(value: true)
         }
+        technical_origin: advancedFilter(
+          type: text
+          key: ["elody:1|technical_origin"]
+        ) {
+          type
+          key
+          hidden(value: true)
+          defaultValue(value: "original")
+        }
         relation: advancedFilter(
           type: selection
           parentKey: "relations"
