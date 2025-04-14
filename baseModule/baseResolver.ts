@@ -1273,6 +1273,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as EntityListElement;
     },
+    wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
+    },
   },
   ExpandButtonOptions: {
     shown: async (_source, { input }, { dataSources }) => {

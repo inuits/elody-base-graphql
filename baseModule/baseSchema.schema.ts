@@ -1394,6 +1394,7 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
     relation: [PanelRelation]
     entityListElement: EntityListElement
+    wysiwygElement: WysiwygElement
   }
 
   type WindowElementBulkDataPanel {
