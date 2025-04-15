@@ -1005,6 +1005,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
     },
+    mapMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapMetadata;
+    },
   },
   HierarchyListElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1695,7 +1698,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   MapMetadata: {
     value: async (
       parent: any,
-      { key, source, relationKey, splitRegex },
+      { key, source, defaultValue, relationKey, splitRegex },
       { dataSources }
     ) => {
       const resolveObject: { [key: string]: Function } = {
@@ -1703,7 +1706,8 @@ export const baseResolver: Resolvers<ContextValue> = {
           prepareMetadataFieldForMapData(
             parent.metadata,
             key,
-            splitRegex as SplitRegex
+            splitRegex as SplitRegex,
+            defaultValue
           ),
         relations: () =>
           prepareRelationFieldForMapData(
@@ -1714,26 +1718,6 @@ export const baseResolver: Resolvers<ContextValue> = {
           ),
       };
       return (await resolveObject[source]()) || '';
-    },
-  },
-  MapComponent: {
-    mapType: async (parent: unknown, { input }, { dataSources }) => {
-      return input as MapTypes;
-    },
-    center: async (parent: unknown, { input }, { dataSources }) => {
-      return input as [number];
-    },
-    zoom: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    blur: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    radius: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    mapMetadata: async (parent: unknown, {}, { dataSources }) => {
-      return parent as MapMetadata;
     },
   },
   FetchDeepRelations: {

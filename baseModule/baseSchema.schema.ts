@@ -856,38 +856,6 @@ export const baseSchema = gql`
     blockingRelationsLabel(input: String): String
   }
 
-  enum MapTypes {
-    heatMap
-    wktMap
-  }
-
-  input SplitRegexInput {
-    separator: String!
-    retrieveSection: Int!
-  }
-
-  type SplitRegex {
-    separator: String!
-    retrieveSection: Int!
-  }
-
-  type MapMetadata {
-    value(
-      key: String!
-      source: KeyValueSource!
-      relationKey: String
-      splitRegex: SplitRegexInput
-    ): JSON!
-  }
-  type MapComponent {
-    mapType(input: MapTypes!): MapTypes!
-    center(input: [Float]!): [Float]!
-    zoom(input: Int!): Int!
-    blur(input: Int!): Int!
-    radius(input: Int!): Int!
-    mapMetadata: MapMetadata
-  }
-
   enum DeepRelationsFetchStrategy {
     useExistingBreadcrumbsInfo
     useMethodsAndFetch
@@ -1131,12 +1099,38 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
+  enum MapTypes {
+    heatMap
+    wktMap
+  }
+
+  input SplitRegexInput {
+    separator: String!
+    retrieveSection: Int!
+  }
+
+  type SplitRegex {
+    separator: String!
+    retrieveSection: Int!
+  }
+
+  type MapMetadata {
+    value(
+      key: String!
+      source: KeyValueSource!
+      defaultValue: JSON
+      relationKey: String
+      splitRegex: SplitRegexInput
+    ): JSON!
+  }
+
   type MapElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MapTypes): String!
     center(input: String): String!
     metaData: PanelMetaData!
+    mapMetadata: MapMetadata
   }
 
   input HierarchyRelationListInput {
@@ -1587,7 +1581,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type MediaFileEntity implements Entity {
@@ -1603,7 +1597,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type Tenant implements Entity {
@@ -1619,7 +1613,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type User implements Entity {
@@ -1635,7 +1629,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type Job implements Entity {
@@ -1651,7 +1645,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type ShareLink implements Entity {
@@ -1667,7 +1661,7 @@ export const baseSchema = gql`
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type EntitiesResults {
