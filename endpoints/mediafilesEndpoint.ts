@@ -18,9 +18,8 @@ const fetchWithTokenRefresh = async (
 ) => {
   try {
     const token = req.session?.auth?.accessToken;
-    if (!options.headers) options['headers'] = {};
     if (token && token !== 'undefined') {
-      Object.assign(options.headers, { Authorization: `Bearer ${token}` });
+      Object.assign(options, { headers: { Authorization: `Bearer ${token}` } });
     }
     let response: any;
     const isExpired = checkToken && token && isTokenExpired(token);
