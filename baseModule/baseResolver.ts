@@ -91,7 +91,8 @@ import {
   WindowElement,
   WindowElementPanel,
   WysiwygElement,
-  type TaggingExtensionConfiguration
+  type TaggingExtensionConfiguration,
+  ConfigItem,
 } from '../../../generated-types/type-defs';
 import {ContextValue} from '../types';
 import {baseFields} from '../sources/forms';
@@ -1007,6 +1008,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mapMetadata: async (parent: unknown, {}, { dataSources }) => {
       return parent as MapMetadata;
+    },
+    config: async (_source, { input }, { dataSources }) => {
+      return input as ConfigItem[];
     },
   },
   HierarchyListElement: {

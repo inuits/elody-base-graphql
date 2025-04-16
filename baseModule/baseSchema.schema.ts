@@ -1131,6 +1131,7 @@ export const baseSchema = gql`
     center(input: String): String!
     metaData: PanelMetaData!
     mapMetadata: MapMetadata
+    config(input: [ConfigItemInput]): [ConfigItem]
   }
 
   input HierarchyRelationListInput {
