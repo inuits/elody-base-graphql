@@ -12,12 +12,13 @@ let staticToken: string | undefined | null = undefined;
 
 const fetchWithTokenRefresh = async (
   url: string,
-  options: any = {},
+  options: any = { headers: {} },
   req: any,
   checkToken: boolean = false
 ) => {
   try {
     const token = req.session?.auth?.accessToken;
+    if (!options.headers) options['headers'] = {};
     if (token && token !== 'undefined') {
       Object.assign(options.headers, { Authorization: `Bearer ${token}` });
     }
@@ -204,6 +205,7 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
+      console.log(error);
       res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
   });
