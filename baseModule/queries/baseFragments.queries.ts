@@ -178,6 +178,11 @@ export const baseFragments = gql`
         key: "original_file_location"
         source: root
       )
+      transcode_file_location: keyValue(
+        key: "transcode_file_location"
+        source: derivatives
+        technicalOrigin: "transcode"
+      )
       thumbnail: keyValue(key: "filename", source: root)
       mimetype: keyValue(key: "mimetype", source: root)
       __typename
