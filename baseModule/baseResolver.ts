@@ -4,7 +4,8 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
+import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations} from '../resolvers/entityResolver';
+import {resolveAdvancedEntities, resolveSimpleEntities} from '../resolvers/entitiesResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -175,74 +176,75 @@ export const baseResolver: Resolvers<ContextValue> = {
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
-      let entities: EntitiesResults = {
-        results: [],
-        sortKeys: [],
-        count: 0,
-        limit: 0,
-      };
 
-      const typeFilters = advancedFilterInputs.filter(
-        (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
-      );
-      let entityTypes =
-        typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
-      if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
-      for (const entityType of entityTypes as Entitytyping[]) {
-        let entitiesIteration: EntitiesResults = {
-          results: [],
-          sortKeys: [],
-          count: 0,
-          limit: 0,
-        };
-        const filtersIteration =
-          entityTypes.length <= 1
-            ? advancedFilterInputs
-            : determineAdvancedFiltersForIteration(
-                entityType,
-                advancedFilterInputs
-              );
-        if (
-          advancedFilterInputs?.length >= 0 &&
-          (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
-            entityType === Entitytyping.Mediafile)
-        ) {
-          entitiesIteration =
-            await dataSources.CollectionAPI.GetAdvancedEntities(
-              Entitytyping.Mediafile,
-              limit || 20,
-              skip || 0,
-              filtersIteration,
-              searchValue || { value: '' }
-            );
-        } else if (
-          searchInputType === SearchInputType.AdvancedInputType &&
-          advancedFilterInputs?.length
-        ) {
-          entitiesIteration =
-            await dataSources.CollectionAPI.GetAdvancedEntities(
-              entityType,
-              limit || 20,
-              skip || 0,
-              filtersIteration,
-              searchValue || { value: '' }
-            );
-        } else if (searchInputType === SearchInputType.AdvancedInputType) {
-          entitiesIteration = await dataSources.CollectionAPI.getEntities(
-            limit || 20,
-            skip || 0,
-            searchValue || { value: '' },
-            entityType
-          );
-        }
-        if (entities && entitiesIteration) {
-          entities.results!!.push(...entitiesIteration.results!!);
-          entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
-          entities.count!! += entitiesIteration.count!!;
-          entities.limit!! += entitiesIteration.limit!!;
-        }
+      const entitiesResolverMapping: Partial<Record<SearchInputType, () => Promise<EntitiesResults>>> = {
+        [SearchInputType.AdvancedInputType]: async () => await resolveAdvancedEntities(dataSources,type as Entitytyping | undefined, advancedFilterInputs, limit as number | undefined, skip as number | undefined, searchValue),
+        [SearchInputType.SimpleInputtype]: async () => await resolveSimpleEntities(dataSources)
       }
-      return entities!!;
+
+      return entitiesResolverMapping[searchInputType!!]!!()
+
+      // const typeFilters = advancedFilterInputs.filter(
+      //   (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+      // );
+      // let entityTypes =
+      //   typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
+      // if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
+      // for (const entityType of entityTypes as Entitytyping[]) {
+      //   let entitiesIteration: EntitiesResults = {
+      //     results: [],
+      //     sortKeys: [],
+      //     count: 0,
+      //     limit: 0,
+      //   };
+      //   const filtersIteration =
+      //     entityTypes.length <= 1
+      //       ? advancedFilterInputs
+      //       : determineAdvancedFiltersForIteration(
+      //           entityType,
+      //           advancedFilterInputs
+      //         );
+      //   if (
+      //     advancedFilterInputs?.length >= 0 &&
+      //     (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
+      //       entityType === Entitytyping.Mediafile)
+      //   ) {
+      //     entitiesIteration =
+      //       await dataSources.CollectionAPI.GetAdvancedEntities(
+      //         Entitytyping.Mediafile,
+      //         limit || 20,
+      //         skip || 0,
+      //         filtersIteration,
+      //         searchValue || { value: '' }
+      //       );
+      //   } else if (
+      //     searchInputType === SearchInputType.AdvancedInputType &&
+      //     advancedFilterInputs?.length
+      //   ) {
+      //     entitiesIteration =
+      //       await dataSources.CollectionAPI.GetAdvancedEntities(
+      //         entityType,
+      //         limit || 20,
+      //         skip || 0,
+      //         filtersIteration,
+      //         searchValue || { value: '' }
+      //       );
+      //   } else if (searchInputType === SearchInputType.AdvancedInputType) {
+      //     entitiesIteration = await dataSources.CollectionAPI.getEntities(
+      //       limit || 20,
+      //       skip || 0,
+      //       searchValue || { value: '' },
+      //       entityType
+      //     );
+      //   }
+      //   if (entities && entitiesIteration) {
+      //     entities.results!!.push(...entitiesIteration.results!!);
+      //     entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
+      //     entities.count!! += entitiesIteration.count!!;
+      //     entities.limit!! += entitiesIteration.limit!!;
+      //   }
+      // }
+      // return entities!!;
     },
     EntitiesByAdvancedSearch: async (
       _source,

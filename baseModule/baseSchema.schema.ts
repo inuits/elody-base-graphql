@@ -734,7 +734,6 @@ export const baseSchema = gql`
   }
 
   enum SearchInputType {
-    AdvancedInputMediaFilesType
     AdvancedInputType
     SimpleInputtype
   }

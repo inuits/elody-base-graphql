@@ -126,14 +126,10 @@ export const determineAdvancedFiltersForIteration = (
 ) => {
   const relations = parseRelationTypesForEntityType(entityType);
   let filtersIteration = advancedFilterInputs.filter(
-    (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+    (advancedFilter) =>
+      advancedFilter.type === AdvancedFilterTypes.Type &&
+      advancedFilter.value === entityType
   );
-  if (filtersIteration.length > 0) {
-    filtersIteration = JSON.parse(JSON.stringify(filtersIteration));
-    filtersIteration[0].value = filtersIteration[0].value.filter(
-      (value: string) => value === entityType
-    )[0];
-  }
   advancedFilterInputs
     .filter(
       (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection
@@ -154,6 +150,12 @@ export const determineAdvancedFiltersForIteration = (
         }
       }
     });
+  const aditionalFilters = advancedFilterInputs.filter(
+    (advancedFilter: AdvancedFilterInput) =>
+      advancedFilter.type !== AdvancedFilterTypes.Type &&
+      advancedFilter.type !== AdvancedFilterTypes.Selection
+  );
+  filtersIteration.push(...aditionalFilters);
   return filtersIteration;
 };
 
