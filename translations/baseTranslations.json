@@ -24,8 +24,8 @@
         "MediaFile": "mediafiles"
       }
     },
-    "audio":{
-      "no-support":"Your browser does not support the audio element."
+    "audio": {
+      "no-support": "Your browser does not support the audio element."
     },
     "actions": {
       "labels": {
@@ -52,7 +52,7 @@
         "validate-labels": {
           "empty": "No CSV",
           "complete": "OK",
-          "loading":"Validating CSV",
+          "loading": "Validating CSV",
           "failed": "Error in CSV"
         },
         "prepare": "Mediafiles",
@@ -80,32 +80,32 @@
         "missing": "{0} is missing"
       }
     },
-    "bulk-operations":{
-      "undo-selection":"undo selection",
-      "select-page":"select page",
-      "select-all":"select all",
-      "edit":"Edit",
-      "items":"items",
-      "selected":"selected",
-      "save":"save",
-      "cancel":"cancel",
-      "delete":"delete",
-      "confirm-selection":"confirm selection",
+    "bulk-operations": {
+      "undo-selection": "undo selection",
+      "select-page": "select page",
+      "select-all": "select all",
+      "edit": "Edit",
+      "items": "items",
+      "selected": "selected",
+      "save": "save",
+      "cancel": "cancel",
+      "delete": "delete",
+      "confirm-selection": "confirm selection",
       "add-relation": "Add {0}",
       "add-new-relation": "Add new {0}",
       "add-existing-relation": "Add existing {0}",
       "delete-relations": "Delete relation links with selected items",
-      "csv-export":{
+      "csv-export": {
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
         "mediafiles-of-asset": "Export a csv file of the mediafiles of these assets",
-        "error":{
-          "title":"Export failed"
+        "error": {
+          "title": "Export failed"
         }
       },
-      "download-mediafiles":"Download mediafiles",
+      "download-mediafiles": "Download mediafiles",
       "reorder-entities-with-csv": "Reorder entities with csv",
-      "export-to-csv":"Export to CSV",
+      "export-to-csv": "Export to CSV",
       "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
       "create-share-link": "Create share link",
       "delete-selected": "Delete selected {0}"
@@ -134,19 +134,19 @@
       "discard-create": {
         "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
         "confirm": "Leave",
-        "cancel":"Cancel",
+        "cancel": "Cancel",
         "title": "Discard create"
       },
       "discard-update": {
         "message": "Are you certain you wish to stop editing? Any unsaved changes will be discarded",
         "confirm": "Leave",
-        "cancel":"Cancel",
+        "cancel": "Cancel",
         "title": "Discard update"
       },
       "discard-modal": {
         "message": "Are you certain you wish to stop? Any unsaved changes will be discarded",
         "confirm": "Leave",
-        "cancel":"Cancel",
+        "cancel": "Cancel",
         "title": "Leave form"
       },
       "logout-modal": {
@@ -162,18 +162,18 @@
         "title": "Delete relation links with selected items"
       }
     },
-    "dropdown":{
-      "select-option":"select option"
+    "dropdown": {
+      "select-option": "select option"
     },
-    "dropzone":{
-      "drag-add":"Drag your files, or click here to add your files",
-      "failed":"File(s) failed to upload.",
-      "success":"File(s) successfully uploaded.",
-      "uploading":"Uploading...",
-      "upload":"Upload",
-      "successNotification":{
-        "title":"Upload finished",
-        "description":"All files were succesfully uploaded"
+    "dropzone": {
+      "drag-add": "Drag your files, or click here to add your files",
+      "failed": "File(s) failed to upload.",
+      "success": "File(s) successfully uploaded.",
+      "uploading": "Uploading...",
+      "upload": "Upload",
+      "successNotification": {
+        "title": "Upload finished",
+        "description": "All files were succesfully uploaded"
       }
     },
     "error-pages": {
@@ -181,11 +181,11 @@
         "title": "Oops, we couldn't find the item or page you are looking for",
         "description": "The item or page you are looking for might have been removed, had its name changed or is temporarily unavailable. "
       },
-      "access-denied":{
+      "access-denied": {
         "title": "Sorry, but access is denied",
         "description": "It seems that the account you logged in with doesn't have the necessary permissions to view this page. If you believe an error has occurred, please contact your administrator."
       },
-      "unauthorized":{
+      "unauthorized": {
         "title": "Unauthorized",
         "description": "It seems like you are not logged in, please log back in to continue"
       }
@@ -199,38 +199,38 @@
       "import-error": "Import failed",
       "import-success": "Import successful"
     },
-    "entity":{
-      "create":"Create entity",
-      "type":"Type",
+    "entity": {
+      "create": "Create entity",
+      "type": "Type",
       "belongs-to": "Belongs to",
       "pick": "Pick entity",
       "upload": "Upload",
       "import": "Import",
       "reset-viewer": "Reset"
     },
-    "filters":{
-      "filter":"Filters",
-      "add-filter":"Add filter",
-      "active":"active",
-      "clear":"Clear all",
-      "apply":"Apply filter(s)",
+    "filters": {
+      "filter": "Filters",
+      "add-filter": "Add filter",
+      "active": "active",
+      "clear": "Clear all",
+      "apply": "Apply filter(s)",
       "minDropdownSearchCharacters": "Type at least 3 characters",
       "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
       "rangeFilterToInputError": "'To' cannot be less than 'from'",
-      "matcher-labels":{
-        "select-filter-type":"Select filter type",
-        "AnyMatcher":"has a value",
-        "ContainsMatcher":"contains",
-        "ExactMatcher":"is exactly",
-        "IdMatcher":"ID",
-        "InBetweenMatcher":"between two values",
-        "MaxIncludedMatcher":"on maximum value",
-        "MaxMatcher":"on maximum value (not included)",
-        "MinIncludedMatcher":"on minimum value",
-        "MinMatcher":"on minimum value (not included)",
-        "NoneMatcher":"has no value",
-        "MetadataOnRelationExactMatcher":"is exactly",
-        "MetadataOnRelationContainsMatcher":"contains"
+      "matcher-labels": {
+        "select-filter-type": "Select filter type",
+        "AnyMatcher": "has a value",
+        "ContainsMatcher": "contains",
+        "ExactMatcher": "is exactly",
+        "IdMatcher": "ID",
+        "InBetweenMatcher": "between two values",
+        "MaxIncludedMatcher": "on maximum value",
+        "MaxMatcher": "on maximum value (not included)",
+        "MinIncludedMatcher": "on minimum value",
+        "MinMatcher": "on minimum value (not included)",
+        "NoneMatcher": "has no value",
+        "MetadataOnRelationExactMatcher": "is exactly",
+        "MetadataOnRelationContainsMatcher": "contains"
       },
       "matcher-placeholders": {
         "date": "date",
@@ -243,13 +243,13 @@
     "form": {
       "create": "Create"
     },
-    "history-view":{
-      "search":"Search History"
+    "history-view": {
+      "search": "Search History"
     },
-    "jobs":{
-      "finished":"finished",
-      "failed":"failed",
-      "pending":"pending"
+    "jobs": {
+      "finished": "finished",
+      "failed": "failed",
+      "pending": "pending"
     },
     "element-labels": {
       "sub-job": "Sub jobs",
@@ -291,21 +291,21 @@
         "no-label": "No label"
       }
     },
-    "notifications":{
+    "notifications": {
       "default": {
         "new-version-available": {
           "title": "New version available",
           "description": "There is a new version available refresh the page to update"
         }
       },
-      "success":{
-        "entityCreated":{
-          "title":"Entity successfully created",
-          "description":"Changes have been saved successfully"
+      "success": {
+        "entityCreated": {
+          "title": "Entity successfully created",
+          "description": "Changes have been saved successfully"
         },
-        "entityUpdated":{
-          "title":"Entity successfully Updated",
-          "description":"Changes have been saved successfully"
+        "entityUpdated": {
+          "title": "Entity successfully Updated",
+          "description": "Changes have been saved successfully"
         },
         "entityDeleted": {
           "title": "Entity successfully deleted",
@@ -347,18 +347,18 @@
           "description": "Error occured during changes"
         }
       },
-      "graphql-errors":{
-        "duplicate-entity":{
-          "title":"Duplicate",
-          "description":"Creation failed, duplicate identifier detected"
+      "graphql-errors": {
+        "duplicate-entity": {
+          "title": "Duplicate",
+          "description": "Creation failed, duplicate identifier detected"
         },
-        "duplicate-upload":{
-          "title":"Duplicate",
-          "description":"Duplicate file detected, upload reverted"
+        "duplicate-upload": {
+          "title": "Duplicate",
+          "description": "Duplicate file detected, upload reverted"
         },
-        "forbidden":{
-          "title":"Forbidden",
-          "description":"You don't have access to this page/action"
+        "forbidden": {
+          "title": "Forbidden",
+          "description": "You don't have access to this page/action"
         }
       }
     },
@@ -385,46 +385,46 @@
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
       "W5017": "Item for key {key} with value {value} doesn't exist."
     },
-    "pagination":{
-      "page":"page",
-      "of":"of"
+    "pagination": {
+      "page": "page",
+      "of": "of"
     },
-    "saved-searches":{
-      "new":"Save as new",
-      "save-changes":"Save changes",
-      "edit-label":"Edit label",
-      "reset":"Reset",
-      "delete":"Delete",
-      "all-filters":"All filters",
-      "search-title":"Search title",
+    "saved-searches": {
+      "new": "Save as new",
+      "save-changes": "Save changes",
+      "edit-label": "Edit label",
+      "reset": "Reset",
+      "delete": "Delete",
+      "all-filters": "All filters",
+      "search-title": "Search title",
       "search-modal-title": "Search filter",
-      "edit":"Edit",
-      "search-saved-searches":"Search Saved Searches"
+      "edit": "Edit",
+      "search-saved-searches": "Search Saved Searches"
     },
-    "search":{
-      "noresult":"No results",
-      "asset-library":"Search Asset Library...",
-      "mediafile-library":"Search Mediafiles..."
+    "search": {
+      "noresult": "No results",
+      "asset-library": "Search Asset Library...",
+      "mediafile-library": "Search Mediafiles..."
     },
-    "language":{
-      "nl":"Dutch",
-      "en":"English",
+    "language": {
+      "nl": "Dutch",
+      "en": "English",
       "fr": "French"
     },
-    "library":{
-      "search":"Search",
-      "items":"items",
-      "sort":"order by",
-      "loading":"Loading",
-      "add":"Add"
+    "library": {
+      "search": "Search",
+      "items": "items",
+      "sort": "order by",
+      "loading": "Loading",
+      "add": "Add"
     },
-    "navigation":{
-      "title":"Elody",
-      "entities":"Entities",
-      "new":"New",
-      "log-out":"Log out",
-      "log-in":"Log in",
-      "go-home":"Go back home",
+    "navigation": {
+      "title": "Elody",
+      "entities": "Entities",
+      "new": "New",
+      "log-out": "Log out",
+      "log-in": "Log in",
+      "go-home": "Go back home",
       "users": "Users",
       "jobs": "Jobs",
       "settings": "Settings",
@@ -437,7 +437,7 @@
       "delete-entity-window": "Delete {0}",
       "create-share-link": "Create share link"
     },
-    "upload-fields":{
+    "upload-fields": {
       "labels": {
         "csv-upload": "Drop your CSV, here.",
         "file-upload": "Drag your files, or click here to add your files"
@@ -453,10 +453,11 @@
     "tagging": {
       "tag-entity": "Tag {entityType}",
       "tag-existing": "Select existing {entityType}",
+      "tag-selected-button": "Tag selected {entityType}",
       "tag-new": "Create new {entityType}"
     },
-    "tooltip":{
-      "advancedFilterTypes":{
+    "tooltip": {
+      "advancedFilterTypes": {
         "id": "This filter allows you to search based on an id. An exact / partial search can be performed on an id. In addition, you can search for empty / non-empty id's on this field.",
         "text": "This filter allows you to search based on text in the field. You can search for the exact text or find partial text. You can also search for fields that are empty / not empty.",
         "date": "This filter allows searching items within time intervals, via dates. The date you enter can be found exactly or you can choose to find all dates earlier / later / inside / outside ... than this one to be found.",
@@ -465,7 +466,7 @@
         "boolean": "This filter allows you to find fields based on two opposite values. For example: yes / no.",
         "type": "This filter can search for different types of this field that are in the system."
       },
-      "bulkOperationsActionBar":{
+      "bulkOperationsActionBar": {
         "readmode-noneselected": "To use this action, you have to be in readmode and you may not select items.",
         "readmode-someselected": "To use this action, you have to be in readmode and you have to select at least one item.",
         "editmode-noneselected": "To use this action, you have to be in editmode and you may not select items.",
@@ -491,7 +492,6 @@
       "contextMenuGeneralAction": {
         "setPrimaryMediafile": "Set this as the primary mediafile for the asset",
         "setPrimaryThumbnail": "Set this as the primary thumbnail for the asset"
-
       },
       "contextMenuElodyAction": {
         "delete-relation": "Delete link with {0}",
@@ -523,8 +523,8 @@
         "MediaFile": "mediafiles"
       }
     },
-    "audio":{
-      "no-support":"Uw browser ondersteund het audio element niet"
+    "audio": {
+      "no-support": "Uw browser ondersteund het audio element niet"
     },
     "actions": {
       "labels": {
@@ -583,32 +583,32 @@
         "missing": "{0} ontbreekt"
       }
     },
-    "bulk-operations":{
-      "undo-selection":"selectie ongedaan maken",
-      "select-page":"pagina selecteren",
-      "select-all":"alles selecteren",
-      "edit":"Bewerken",
-      "items":"items",
-      "selected":"geselecteerd",
-      "save":"opslaan",
-      "cancel":"annuleren",
-      "delete":"verwijderen",
-      "confirm-selection":"selectie bevestigen",
+    "bulk-operations": {
+      "undo-selection": "selectie ongedaan maken",
+      "select-page": "pagina selecteren",
+      "select-all": "alles selecteren",
+      "edit": "Bewerken",
+      "items": "items",
+      "selected": "geselecteerd",
+      "save": "opslaan",
+      "cancel": "annuleren",
+      "delete": "verwijderen",
+      "confirm-selection": "selectie bevestigen",
       "add-relation": "Voeg bestaande {0} toe",
       "add-new-relation": "Voeg nieuwe {0} toe",
       "add-existing-relation": "Voeg bestaande {0} toe",
       "delete-relations": "Verwijder relatielinks met geselecteerde items",
-      "csv-export":{
+      "csv-export": {
         "assets": "Exporteer een csv bestand van assets",
         "mediafiles": "Exporteer een csv bestand van mediafiles",
         "mediafiles-of-asset": "Exporteer een csv bestand van de mediafiles van deze asset(s)",
-        "error":{
-          "title":"Export mislukt"
+        "error": {
+          "title": "Export mislukt"
         }
       },
-      "download-mediafiles":"Download media bestanden",
+      "download-mediafiles": "Download media bestanden",
       "reorder-entities-with-csv": "Opnieuw orderen van entiteiten met csv",
-      "export-to-csv":"Exporteer naar CSV",
+      "export-to-csv": "Exporteer naar CSV",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan",
       "delete-selected": "Geselecteerde {0} verwijderen"
@@ -637,22 +637,22 @@
       "discard-create": {
         "message": "Ben je zeker dat je het creatiescherm wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren",
+        "cancel": "Annuleren",
         "title": "Creatieformulier verlaten"
       },
       "discard-update": {
         "message": "Ben je zeker dat je wilt stoppen met bewerken? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren",
+        "cancel": "Annuleren",
         "title": "Bewerkingen annuleren"
       },
       "discard-modal": {
         "message": "Ben je zeker dat je wilt stoppen? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
         "confirm": "Verlaten",
-        "cancel":"Annuleren",
+        "cancel": "Annuleren",
         "title": "Formulier verlaten"
       },
-       "logout-modal": {
+      "logout-modal": {
         "message": "Ben je zeker dat je wilt uitloggen?",
         "confirm": "Log uit",
         "cancel": "Annuleren",
@@ -665,18 +665,18 @@
         "title": "Verwijder relatielinks met geselecteerde items"
       }
     },
-    "dropdown":{
-      "select-option":"selecteer optie"
+    "dropdown": {
+      "select-option": "selecteer optie"
     },
-    "dropzone":{
-      "drag-add":"Sleep je bestanden, of klik hier om bestanden toe te voegen",
-      "failed":"Bestand(en) konden niet worden gëuploaded.",
-      "success":"Bestand(en) succesvol gëuploaded",
-      "uploading":"Uploaden...",
-      "upload":"Upload",
-      "successNotification":{
-        "title":"Upload klaar",
-        "description":"Alle bestanden werden succesvol gëuploaded"
+    "dropzone": {
+      "drag-add": "Sleep je bestanden, of klik hier om bestanden toe te voegen",
+      "failed": "Bestand(en) konden niet worden gëuploaded.",
+      "success": "Bestand(en) succesvol gëuploaded",
+      "uploading": "Uploaden...",
+      "upload": "Upload",
+      "successNotification": {
+        "title": "Upload klaar",
+        "description": "Alle bestanden werden succesvol gëuploaded"
       }
     },
     "error-pages": {
@@ -684,11 +684,11 @@
         "title": "Oops, we konden deze item of pagina niet vinden",
         "description": "Het item of de pagina die u zoekt, is mogelijk verwijderd, van naam veranderd of is tijdelijk niet beschikbaar."
       },
-      "access-denied":{
+      "access-denied": {
         "title": "Sorry, maar toegang is geweigerd",
         "description": "Het lijkt erop dat het account waarmee je bent ingelogd niet de benodigde machtigingen heeft om deze pagina te bekijken. Als je denkt dat er een fout is opgetreden, neem dan contact op met je beheerder."
       },
-      "unauthorized":{
+      "unauthorized": {
         "title": "Niet geautoriseerd",
         "description": "Het lijkt erop dat u niet bent ingelogd, log altublieft opnieuw in om verder te gaan"
       }
@@ -702,38 +702,38 @@
       "import-error": "Import mislukt",
       "import-success": "Import successful"
     },
-    "entity":{
-      "create":"Maak entiteit",
-      "type":"Type",
+    "entity": {
+      "create": "Maak entiteit",
+      "type": "Type",
       "belongs-to": "Behoort tot",
       "pick": "Selecteer entiteit",
       "upload": "Uploaden",
       "import": "Importeren",
       "reset-viewer": "Reset"
     },
-    "filters":{
-      "filter":"Filters",
-      "add-filter":"Filter toevoegen",
-      "active":"actief",
-      "clear":"Alles wissen",
-      "apply":"Filter(s) toepassen",
+    "filters": {
+      "filter": "Filters",
+      "add-filter": "Filter toevoegen",
+      "active": "actief",
+      "clear": "Alles wissen",
+      "apply": "Filter(s) toepassen",
       "minDropdownSearchCharacters": "Typ ten minste 3 karakters",
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
-      "matcher-labels":{
-        "select-filter-type":"Selecteer filter type",
-        "AnyMatcher":"is ingevuld",
-        "ContainsMatcher":"bevat",
-        "ExactMatcher":"is gelijk aan",
-        "IdMatcher":"ID",
-        "InBetweenMatcher":"tussen twee waardes",
-        "MaxIncludedMatcher":"op maximum waarde",
-        "MaxMatcher":"op maximum waarde (exclusief)",
-        "MinIncludedMatcher":"op minimum waarde",
-        "MinMatcher":"op minimum waarde (exclusief)",
-        "NoneMatcher":"is niet ingevuld",
-        "MetadataOnRelationExactMatcher":"is gelijk aan",
-        "MetadataOnRelationContainsMatcher":"bevat"
+      "matcher-labels": {
+        "select-filter-type": "Selecteer filter type",
+        "AnyMatcher": "is ingevuld",
+        "ContainsMatcher": "bevat",
+        "ExactMatcher": "is gelijk aan",
+        "IdMatcher": "ID",
+        "InBetweenMatcher": "tussen twee waardes",
+        "MaxIncludedMatcher": "op maximum waarde",
+        "MaxMatcher": "op maximum waarde (exclusief)",
+        "MinIncludedMatcher": "op minimum waarde",
+        "MinMatcher": "op minimum waarde (exclusief)",
+        "NoneMatcher": "is niet ingevuld",
+        "MetadataOnRelationExactMatcher": "is gelijk aan",
+        "MetadataOnRelationContainsMatcher": "bevat"
       },
       "matcher-placeholders": {
         "date": "datum",
@@ -746,13 +746,13 @@
     "form": {
       "create": "Creëer"
     },
-    "history-view":{
-      "search":"Zoek geschiedenis"
+    "history-view": {
+      "search": "Zoek geschiedenis"
     },
-    "jobs":{
-      "finished":"klaar",
-      "failed":"mislukt",
-      "pending":"in behandeling"
+    "jobs": {
+      "finished": "klaar",
+      "failed": "mislukt",
+      "pending": "in behandeling"
     },
     "element-labels": {
       "sub-job": "Onderliggende jobs",
@@ -794,21 +794,21 @@
         "no-label": "Geen label"
       }
     },
-    "notifications":{
+    "notifications": {
       "default": {
         "new-version-available": {
           "title": "Nieuwe versie beschikbaar",
           "description": "Er is een nieuwe versie beschikbaar, refresh de pagina om bij te werken"
         }
       },
-      "success":{
-        "entityCreated":{
-          "title":"Entiteit succesvol gecreëerd",
-          "description":"Wijzigingen succesvol opgeslagen"
+      "success": {
+        "entityCreated": {
+          "title": "Entiteit succesvol gecreëerd",
+          "description": "Wijzigingen succesvol opgeslagen"
         },
-        "entityUpdated":{
-          "title":"Entiteit succesvol gëupdated",
-          "description":"Wijzigingen succesvol opgeslagen"
+        "entityUpdated": {
+          "title": "Entiteit succesvol gëupdated",
+          "description": "Wijzigingen succesvol opgeslagen"
         },
         "entityDeleted": {
           "title": "Entiteiten succesvol verwijderd",
@@ -850,18 +850,18 @@
           "description": "Er zijn een fout opgetreden tijdens de wijzigingen"
         }
       },
-      "graphql-errors":{
-        "duplicate-entity":{
-          "title":"Duplicaat",
-          "description":"Creëren mislukt, duplicate identificatiewaarde gedetecteerd"
+      "graphql-errors": {
+        "duplicate-entity": {
+          "title": "Duplicaat",
+          "description": "Creëren mislukt, duplicate identificatiewaarde gedetecteerd"
         },
-        "duplicate-upload":{
-          "title":"Duplicaat",
-          "description":"Dubbel bestand gedetecteerd, upload teruggedraaid"
+        "duplicate-upload": {
+          "title": "Duplicaat",
+          "description": "Dubbel bestand gedetecteerd, upload teruggedraaid"
         },
-        "forbidden":{
-          "title":"Verboden",
-          "description":"Je hebt geen toegang tot deze pagina/actie"
+        "forbidden": {
+          "title": "Verboden",
+          "description": "Je hebt geen toegang tot deze pagina/actie"
         }
       }
     },
@@ -888,45 +888,45 @@
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
       "W5017": "Item voor key {key} met waarde {value} bestaat niet."
     },
-    "pagination":{
-      "page":"pagina",
-      "of":"van"
+    "pagination": {
+      "page": "pagina",
+      "of": "van"
     },
-    "saved-searches":{
-      "new":"Opslaan als nieuw",
-      "save-changes":"Wijzigingen opslaan",
-      "edit-label":"Label bewerken",
-      "reset":"Reset",
-      "delete":"Verwijderen",
-      "all-filters":"Alle filters",
-      "search-title":"Zoek titel",
-      "edit":"Bewerken",
-      "search-saved-searches":"Zoek in bewaarde zoekopdrachten"
+    "saved-searches": {
+      "new": "Opslaan als nieuw",
+      "save-changes": "Wijzigingen opslaan",
+      "edit-label": "Label bewerken",
+      "reset": "Reset",
+      "delete": "Verwijderen",
+      "all-filters": "Alle filters",
+      "search-title": "Zoek titel",
+      "edit": "Bewerken",
+      "search-saved-searches": "Zoek in bewaarde zoekopdrachten"
     },
-    "search":{
-      "noresult":"Geen resultaten",
-      "asset-library":"Zoek asset library...",
-      "mediafile-library":"Zoek Mediafiles..."
+    "search": {
+      "noresult": "Geen resultaten",
+      "asset-library": "Zoek asset library...",
+      "mediafile-library": "Zoek Mediafiles..."
     },
-    "language":{
-      "nl":"Nederlands",
-      "en":"Engels",
+    "language": {
+      "nl": "Nederlands",
+      "en": "Engels",
       "fr": "Frans"
     },
-    "library":{
-      "search":"Zoeken",
-      "items":"items",
-      "sort":"ordenen op",
-      "loading":"Laden",
-      "add":"Toevoegen"
+    "library": {
+      "search": "Zoeken",
+      "items": "items",
+      "sort": "ordenen op",
+      "loading": "Laden",
+      "add": "Toevoegen"
     },
-    "navigation":{
-      "title":"Elody",
-      "entities":"Entiteiten",
-      "new":"Nieuw",
-      "log-out":"Uitloggen",
-      "log-in":"Inloggen",
-      "go-home":"Ga terug naar het startscherm",
+    "navigation": {
+      "title": "Elody",
+      "entities": "Entiteiten",
+      "new": "Nieuw",
+      "log-out": "Uitloggen",
+      "log-in": "Inloggen",
+      "go-home": "Ga terug naar het startscherm",
       "users": "Gebruikers",
       "jobs": "Jobs",
       "settings": "Instellingen",
@@ -943,22 +943,23 @@
       "labels": {
         "csv-upload": "Zet hier je CSV neer.",
         "file-upload": "Sleep je bestanden hierheen of klik hier om je bestanden toe te voegen"
-        },
-        "errors": {
-          "missing": "{0} ontbreekt",
-          "extraneous": "{0} niet gevonden in CSV",
-          "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
-        },
+      },
+      "errors": {
+        "missing": "{0} ontbreekt",
+        "extraneous": "{0} niet gevonden in CSV",
+        "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
+      },
       "csv-template-link": "Download voorbeeld met instructies voor",
       "link-to-documentation": "Link naar de Elody CSV documentatie"
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",
       "tag-existing": "Selecteer bestaand {entityType}",
+      "tag-selected-button": "Tag geselecteerd {entityType}",
       "tag-new": "Maak een nieuw {entityType}"
     },
-    "tooltip":{
-      "advancedFilterTypes":{
+    "tooltip": {
+      "advancedFilterTypes": {
         "id": "Met deze filter kan je zoeken op basis van een id. Er kan exact / gedeeltelijk op een id gezocht worden. Daarnaast kan je op dit veld zoeken naar lege / niet lege id's.",
         "text": "Met deze filter kan je zoeken op basis van tekst in het veld. Je kan naar exacte tekst gaan zoeken of gedeeltelijke tekst terugvinden. Je kan ook zoeken naar velden die leeg / niet leeg zijn.",
         "date": "Met deze filter kan gezocht worden items binnen tijdsintervallen, via datums. De datum die je ingeeft kan exact teruggevonden worden of je kan kiezen om alle datums vroeger / later / erbinnen / erbuiten ... dan deze te vinden.",
@@ -967,7 +968,7 @@
         "boolean": "Met deze filter kan je velden vinden op basis van twee tegenovergestelde waarden. Bijvoorbeeld: ja / nee.",
         "type": "Deze filter kan gaan zoeken naar verschillende types van dit veld die in het systeem zitten."
       },
-      "bulkOperationsActionBar":{
+      "bulkOperationsActionBar": {
         "readmode-noneselected": "Om deze actie te gebruiken moet je in de leesmode zijn en mag je geen items geselecteerd hebben.",
         "readmode-someselected": "Om deze actie te gebruiken moet je in de leesmode zijn en moet je minstens één item geselecteerd hebben.",
         "editmode-noneselected": "Om deze actie te gebruiken moet je in de editmode zijn en mag je geen items geselecteerd hebben.",

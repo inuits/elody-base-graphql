@@ -576,6 +576,7 @@ export const baseSchema = gql`
     SortUp
     SquareFull
     Swatchbook
+    Tag
     Text
     Trash
     Update
