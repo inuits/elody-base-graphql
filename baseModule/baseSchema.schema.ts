@@ -457,11 +457,13 @@ export const baseSchema = gql`
     ArchiveAlt
     BookOpen
     BrightnessPlus
+    Car
     CloudBookmark
     Compass
     Create
     Database
     Download
+    Draggabledots
     ExclamationTriangle
     FileInfoAlt
     Focus
