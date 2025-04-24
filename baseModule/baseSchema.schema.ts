@@ -1068,6 +1068,7 @@ export const baseSchema = gql`
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
+    enableAdvancedFilters(input: Boolean): Boolean
     type(input: MediaFileElementTypes): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]

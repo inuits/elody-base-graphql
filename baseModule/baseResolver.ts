@@ -1079,6 +1079,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    enableAdvancedFilters: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     type: async (_source, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
