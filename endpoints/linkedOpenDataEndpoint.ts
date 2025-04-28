@@ -1,7 +1,6 @@
 import { Request, Response, Express } from "express";
-import {environment as env} from '../main';
+import { environment as env, serveFrontend } from '../main';
 import fetch from "node-fetch";
-import { serveFrontend } from "base-graphql";
 
 
 const acceptHeadersForFormat: Record<string, string> = {
