@@ -33,7 +33,6 @@ const returnEntityInFormat = async (
         const status = exception.extensions.response.status || 500;
         const statusText = exception.extensions.response.statusText || String(exception);
         res.status(status).end(statusText);
-        res.end(JSON.stringify(exception));
     }
 };
 
@@ -59,30 +58,29 @@ const getEntityIdFromPath = (path: string): string => {
     return path.match(regex)![1];
 };
 
-const shouldServeFrontend = (format: string | undefined, req: Request, res: Response): void => {
-    if (!format || acceptHeadersForFormat[format] === undefined ) {
-        console.log("Serving frontend");
-        serveFrontend(req, res);
-    }
+const shouldServeFrontend = (format: string | undefined): boolean => {
+    return (!format || acceptHeadersForFormat[format] === undefined);
 };
 
 export const applyLinkedOpenDataEndpoint = (app: Express) => {
     app.get("/*", async (req: Request, res: Response): Promise<void> => {
         try {
             const format = req.headers.accept;
-            shouldServeFrontend(format, req, res);
-            console.log("NOT serving frontend");
-
-            const entityId = getEntityIdFromPath(req.url);
-            if (await isEntityPresent(entityId, req)) await returnEntityInFormat(entityId, format!, req, res)
-            else res.status(404).end("Entity not found!");
+            if (shouldServeFrontend(format)) {
+                console.log("Serving frontend");
+                serveFrontend(req, res);
+                res.status(200).setHeader('Content-Type', "application/json").end("Serving frontend");
+            } else {
+                console.log("NOT serving frontend");
+                const entityId = getEntityIdFromPath(req.url);
+                if (await isEntityPresent(entityId, req)) await returnEntityInFormat(entityId, format!, req, res)
+                else res.status(404).end("Entity not found!");
+            }
         } catch (exception: any) {
             const status = exception.extensions.response.status || 500;
             const statusText = exception.extensions.response.statusText || String(exception);
             res.status(status).end(statusText);
-            res.end(JSON.stringify(exception));
         }
 
     });
-
 }
