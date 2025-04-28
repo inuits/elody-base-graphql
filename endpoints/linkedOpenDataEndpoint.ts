@@ -69,7 +69,6 @@ export const applyLinkedOpenDataEndpoint = (app: Express) => {
             if (shouldServeFrontend(format)) {
                 console.log("Serving frontend");
                 serveFrontend(req, res);
-                res.status(200).setHeader('Content-Type', "application/json").end("Serving frontend");
             } else {
                 console.log("NOT serving frontend");
                 const entityId = getEntityIdFromPath(req.url);
