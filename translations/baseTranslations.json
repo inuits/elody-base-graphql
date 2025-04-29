@@ -454,7 +454,8 @@
       "tag-entity": "Tag {entityType}",
       "tag-existing": "Select existing {entityType}",
       "tag-selected-button": "Tag selected {entityType}",
-      "tag-new": "Create new {entityType}"
+      "tag-new": "Create new {entityType}",
+      "configuration-entity-required": "A {entityType} is required to be able to start tagging"
     },
     "tooltip": {
       "advancedFilterTypes": {
@@ -956,7 +957,8 @@
       "tag-entity": "Tag {entityType}",
       "tag-existing": "Selecteer bestaand {entityType}",
       "tag-selected-button": "Tag geselecteerd {entityType}",
-      "tag-new": "Maak een nieuw {entityType}"
+      "tag-new": "Maak een nieuw {entityType}",
+      "configuration-entity-required": "Een {entityType} is nodig om te kunnen starten met taggen"
     },
     "tooltip": {
       "advancedFilterTypes": {
