@@ -164,7 +164,11 @@ const start = (
     });
 
     app.use(compression());
-    app.use(express.static(path.join(__dirname, 'dist')));
+
+    if (appConfig.environment === 'production')
+      serveFrontendThroughExpress(app);
+    else
+      app.use(express.static(path.join(__dirname, 'dist')));
 
     app.use(
       cors({
@@ -259,10 +263,6 @@ const start = (
     if (customTypeCollectionMapping) {
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
-
-    // Ensure this is always the last endpoint to be applied
-    if (appConfig.environment === 'production')
-      serveFrontendThroughExpress(app);
 
     await new Promise<void>((resolve) => {
       const server = httpServer.listen({ port: appConfig.port }, resolve);
