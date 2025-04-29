@@ -42,5 +42,5 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     applyTranslationEndpoint(app, appTranslations),
   tenantEndpoint: (app: Express) => applyTenantEndpoint(app),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
-  linkedOpenDataEndpoint: (app: Express) => applyLinkedOpenDataEndpoint(app),
+  // linkedOpenDataEndpoint: (app: Express) => applyLinkedOpenDataEndpoint(app),
 };
