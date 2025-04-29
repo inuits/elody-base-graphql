@@ -228,7 +228,7 @@ const start = (
       translationEndpoint: [app, appTranslations],
       tenantEndpoint: [app],
       healthEndpoint: [app],
-      linkedOpenDataEndpoint: [app],
+      // linkedOpenDataEndpoint: [app],
     };
 
     Object.keys(defaultElodyEndpointMapping).forEach((key: string) => {
