@@ -63,7 +63,7 @@ const shouldServeFrontend = (format: string | undefined): boolean => {
 };
 
 export const applyLinkedOpenDataEndpoint = (app: Express) => {
-    app.get("/*", async (req: Request, res: Response): Promise<void> => {
+    app.get("*", async (req: Request, res: Response): Promise<void> => {
         try {
             const format = req.headers.accept;
             if (shouldServeFrontend(format)) {
