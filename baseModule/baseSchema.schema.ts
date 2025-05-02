@@ -1570,6 +1570,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
   }
 
   type BaseEntity implements Entity {
@@ -1584,6 +1585,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1600,6 +1602,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1616,6 +1619,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1632,6 +1636,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1648,6 +1653,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1664,6 +1670,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
     mapElement: MapElement
   }
@@ -1677,6 +1684,16 @@ export const baseSchema = gql`
 
   input DeleteEntitiesInput {
     deleteMediafiles: Boolean
+  }
+
+  enum PreviewTypesEnum {
+    MediaViewerPreview
+    MapPreview
+  }
+
+  type PreviewComponent {
+    previewType(input: PreviewTypesEnum!): PreviewTypesEnum!
+    title(input: String!): String!
   }
 
   type Query {
@@ -1698,6 +1715,7 @@ export const baseSchema = gql`
     EntityTypeSortOptions(entityType: String!): Entity!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
+    PreviewComponents(entityType: String!): Entity
     BulkOperations(entityType: String!): Entity!
     CustomBulkOperations: Entity!
     BulkOperationCsvExportKeys(entityType: String!): BulkOperationCsvExportKeys!

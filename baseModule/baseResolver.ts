@@ -75,6 +75,7 @@ import {
   PanelThumbnail,
   Permission,
   PermissionRequestInfo,
+  PreviewTypesEnum,
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
@@ -308,6 +309,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
+    },
+    PreviewComponents: async (_source, { entityType }, { dataSources }) => {
+      return {
+        type: entityType,
+        previewComponent: {},
+      } as Entity;
     },
     BulkOperations: async (_source, { entityType }, { dataSources }) => {
       return {
@@ -1746,6 +1753,14 @@ export const baseResolver: Resolvers<ContextValue> = {
   PaginationLimitOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
+    },
+  },
+  PreviewComponent: {
+    previewType: async (parent, { input }, { dataSources }) => {
+      return input as PreviewTypesEnum;
+    },
+    title: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   FormTab: {
