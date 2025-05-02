@@ -165,11 +165,6 @@ const start = (
 
     app.use(compression());
 
-    if (appConfig.environment === 'production')
-      serveFrontendThroughExpress(app);
-    else
-      app.use(express.static(path.join(__dirname, 'dist')));
-
     app.use(
       cors({
         credentials: false,
@@ -263,6 +258,11 @@ const start = (
     if (customTypeCollectionMapping) {
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
+
+    if (appConfig.environment === 'production')
+      serveFrontendThroughExpress(app);
+    else
+      app.use(express.static(path.join(__dirname, 'dist')));
 
     await new Promise<void>((resolve) => {
       const server = httpServer.listen({ port: appConfig.port }, resolve);
