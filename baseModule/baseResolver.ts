@@ -75,7 +75,7 @@ import {
   PanelThumbnail,
   Permission,
   PermissionRequestInfo,
-  PreviewTypesEnum,
+  PreviewTypes,
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
@@ -1756,8 +1756,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   PreviewComponent: {
-    previewType: async (parent, { input }, { dataSources }) => {
-      return input as PreviewTypesEnum;
+    type: async (parent, { input }, { dataSources }) => {
+      return input as PreviewTypes;
     },
     title: async (parent, { input }, { dataSources }) => {
       return input as string;

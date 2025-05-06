@@ -1686,13 +1686,13 @@ export const baseSchema = gql`
     deleteMediafiles: Boolean
   }
 
-  enum PreviewTypesEnum {
-    MediaViewerPreview
-    MapPreview
+  enum PreviewTypes {
+    MediaViewer
+    Map
   }
 
   type PreviewComponent {
-    previewType(input: PreviewTypesEnum!): PreviewTypesEnum!
+    type(input: PreviewTypes!): PreviewTypes!
     title(input: String!): String!
   }
 
