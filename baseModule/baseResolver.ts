@@ -50,6 +50,7 @@ import {
   HiddenField,
   IntialValues,
   KeyValueSource,
+  ListItemCoverageTypes,
   ManifestViewerElement,
   MapElement,
   HierarchyListElement,
@@ -1761,6 +1762,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     title: async (parent, { input }, { dataSources }) => {
       return input as string;
+    },
+    listItemsCoverage: async (parent, { input }, { dataSources }) => {
+      return input as ListItemCoverageTypes;
     },
   },
   FormTab: {

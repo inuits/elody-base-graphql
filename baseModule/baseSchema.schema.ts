@@ -1690,10 +1690,16 @@ export const baseSchema = gql`
     MediaViewer
     Map
   }
+  
+  enum ListItemCoverageTypes {
+    OneListItem
+    AllListItems
+  }
 
   type PreviewComponent {
     type(input: PreviewTypes!): PreviewTypes!
     title(input: String!): String!
+    listItemsCoverage(input: ListItemCoverageTypes!): ListItemCoverageTypes!
   }
 
   type Query {

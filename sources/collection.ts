@@ -329,8 +329,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       return await this.get(
         `${Collection.Entities}/${id}/mediafiles?non_public=1`
       );
-    } catch (e) {
-      return { results: [] };
+    } catch (error) {
+      throw error;
     }
   }
 
