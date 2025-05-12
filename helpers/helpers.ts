@@ -120,6 +120,8 @@ export const capitalizeString = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+// Iteration filters exist so we can fetch multiple entity types with different relations filters in 1 call
+// This function can extract the right relation filter that fits the entity type
 export const determineAdvancedFiltersForIteration = (
   entityType: Entitytyping,
   advancedFilterInputs: AdvancedFilterInput[]
@@ -151,9 +153,9 @@ export const determineAdvancedFiltersForIteration = (
       }
     });
   const aditionalFilters = advancedFilterInputs.filter(
-      (advancedFilter: AdvancedFilterInput) =>
-          advancedFilter.type !== AdvancedFilterTypes.Type &&
-          advancedFilter.type !== AdvancedFilterTypes.Selection
+    (advancedFilter: AdvancedFilterInput) =>
+        advancedFilter.type !== AdvancedFilterTypes.Type &&
+        advancedFilter.type !== AdvancedFilterTypes.Selection
   );
   filtersIteration.push(...aditionalFilters);
   return filtersIteration;
