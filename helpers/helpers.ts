@@ -11,6 +11,7 @@ import {
   environment,
   CollectionAPIRelation,
 } from '../main';
+import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
 
 const loggedTypes: string[] = [];
@@ -123,6 +124,7 @@ export const determineAdvancedFiltersForIteration = (
   entityType: Entitytyping,
   advancedFilterInputs: AdvancedFilterInput[]
 ) => {
+  const relations = parseRelationTypesForEntityType(entityType);
   let filtersIteration = advancedFilterInputs.filter(
     (advancedFilter) =>
       advancedFilter.type === AdvancedFilterTypes.Type &&
@@ -132,14 +134,38 @@ export const determineAdvancedFiltersForIteration = (
     .filter(
       (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection
     )
-    .forEach((filter: AdvancedFilterInput) => filtersIteration.push(filter));
+    .forEach((filter: AdvancedFilterInput) => {
+      if (Array.isArray(filter.key)) {
+        if (
+            compareRelationsFilterKey(filter.key[0], relations.relationType) ||
+            compareRelationsFilterKey(filter.key[0], relations.fromRelationType)
+        )
+          filtersIteration.push(filter);
+      } else {
+        if (
+            filter.key === relations.relationType ||
+            filter.key === relations.fromRelationType
+        ) {
+          filtersIteration.push(filter);
+        }
+      }
+    });
   const aditionalFilters = advancedFilterInputs.filter(
-    (advancedFilter: AdvancedFilterInput) =>
-      advancedFilter.type !== AdvancedFilterTypes.Type &&
-      advancedFilter.type !== AdvancedFilterTypes.Selection
+      (advancedFilter: AdvancedFilterInput) =>
+          advancedFilter.type !== AdvancedFilterTypes.Type &&
+          advancedFilter.type !== AdvancedFilterTypes.Selection
   );
   filtersIteration.push(...aditionalFilters);
   return filtersIteration;
+};
+
+export const compareRelationsFilterKey = (
+    key: string,
+    comparison: string
+): boolean => {
+  const match = key.match(/relations\.(.*?)\.key/);
+  if (!match || match.length < 2) return false;
+  return match[1] === comparison;
 };
 
 export const extractErrorCode = (error: any): number => {
