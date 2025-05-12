@@ -27,6 +27,16 @@ export const baseSchema = gql`
     history
   }
 
+  enum Matchers {
+    AnyMatcher
+    NoneMatcher
+    ExactMatcher
+    ContainsMatcher
+    MinIncludedMatcher
+    MaxIncludedMatcher
+    InBetweenMatcher
+  }
+
   enum ElodyServices {
     pwa
     apolloGraphql
