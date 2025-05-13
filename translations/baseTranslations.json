@@ -192,7 +192,7 @@
     },
     "import": {
       "start-import": "Start import",
-      "magazine-import-started": "Magazine import started in background",
+      "import-started": "Import started in background",
       "no-directories": "No import directories available",
       "no-magazines": "No import magazines available",
       "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}",
@@ -696,7 +696,7 @@
     },
     "import": {
       "start-import": "Start importeren",
-      "magazine-import-started": "Magazine import gestart in de achtergrond",
+      "import-started": "Import gestart in de achtergrond",
       "no-directories": "Er konden geen import mappen gevonden worden",
       "no-magazines": "Er konden geen import magazines gevonden worden",
       "error-csv-count": "Exact 1 CSV-bestand verwacht in {folder}, {count} gevonden",
