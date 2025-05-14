@@ -195,9 +195,7 @@
       "import-started": "Import started in background",
       "no-directories": "No import directories available",
       "no-magazines": "No import magazines available",
-      "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}",
-      "import-error": "Import failed",
-      "import-success": "Import successful"
+      "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}"
     },
     "entity": {
       "create": "Create entity",
@@ -330,6 +328,10 @@
         "copiedToClipboard": {
           "title": "Copied to clipboard",
           "description": "The text has been successfully copied"
+        },
+        "import": {
+          "title": "Import",
+          "description": "Import started succesfully"
         }
       },
       "errors": {
@@ -345,6 +347,18 @@
         "entityDeleted": {
           "title": "Entities not deleted",
           "description": "Error occured during changes"
+        },
+        "copiedToClipboard": {
+          "title": "Failed to copy clipboard",
+          "description": "The text could not be copied to clipboard"
+        },
+        "directoryImport": {
+          "title": "Directory import",
+          "description": "Directory id required"
+        },
+        "import": {
+          "title": "Import",
+          "description": "Failed to start import"
         }
       },
       "graphql-errors": {
@@ -834,6 +848,10 @@
         "copiedToClipboard": {
           "title": "Gekopieerd naar klembord",
           "description": "De tekst is succesvol gekopieerd"
+        },
+        "import": {
+          "title": "Import",
+          "description": "Import succesvol gestart"
         }
       },
       "errors": {
@@ -849,6 +867,18 @@
         "entityDeleted": {
           "title": "Entiteiten zijn niet verwijderd",
           "description": "Er zijn een fout opgetreden tijdens de wijzigingen"
+        },
+        "copiedToClipboard": {
+          "title": "Kon niet kopiëren naar klembord",
+          "description": "De tekst kon niet gekopieerd worden"
+        },
+        "directoryImport": {
+          "title": "Map import",
+          "description": "Map id is verplicht"
+        },
+        "import": {
+          "title": "Import",
+          "description": "Imort kon net gestart worden"
         }
       },
       "graphql-errors": {
