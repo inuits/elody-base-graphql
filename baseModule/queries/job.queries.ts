@@ -356,7 +356,7 @@ export const jobQueries = gql`
         ) {
           type
           key
-          defaultValue(value: [])
+          defaultValue(value: "$parentIds")
           hidden(value: true)
         }
       }
