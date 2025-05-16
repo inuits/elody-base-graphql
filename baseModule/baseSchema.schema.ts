@@ -1057,12 +1057,14 @@ export const baseSchema = gql`
     seventy
     eighty
     ninety
+    hundred
   }
 
   enum BaseLibraryModes {
     normalBaseLibrary
     basicBaseLibraryWithBorder
     basicBaseLibrary
+    previewBaseLibrary
   }
 
   enum RelationActions {
@@ -1697,6 +1699,7 @@ export const baseSchema = gql`
   }
 
   enum PreviewTypes {
+    ColumnList
     MediaViewer
     Map
   }
@@ -1708,8 +1711,9 @@ export const baseSchema = gql`
 
   type PreviewComponent {
     type(input: PreviewTypes!): PreviewTypes!
-    title(input: String!): String!
     listItemsCoverage(input: ListItemCoverageTypes!): ListItemCoverageTypes!
+    title(input: String): String
+    previewQuery(input: String): String
   }
 
   type Query {
@@ -1732,6 +1736,7 @@ export const baseSchema = gql`
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
     PreviewComponents(entityType: String!): Entity
+    PreviewElement: ColumnList
     BulkOperations(entityType: String!): Entity!
     CustomBulkOperations: Entity!
     BulkOperationCsvExportKeys(entityType: String!): BulkOperationCsvExportKeys!

@@ -96,6 +96,7 @@ import {
   WysiwygElement,
   type TaggingExtensionConfiguration,
   ConfigItem,
+  ColumnList,
 } from '../../../generated-types/type-defs';
 import {ContextValue} from '../types';
 import {baseFields} from '../sources/forms';
@@ -316,6 +317,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         type: entityType,
         previewComponent: {},
       } as Entity;
+    },
+    PreviewElement: async (
+        _source: any,
+        _args,
+        { dataSources },
+    ) => {
+      return {} as ColumnList;
     },
     BulkOperations: async (_source, { entityType }, { dataSources }) => {
       return {
@@ -1765,6 +1773,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     listItemsCoverage: async (parent, { input }, { dataSources }) => {
       return input as ListItemCoverageTypes;
+    },
+    previewQuery: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   FormTab: {
