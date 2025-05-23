@@ -177,14 +177,13 @@ const applyMediaFileEndpoint = (
       },
       onProxyRes: responseInterceptor(
         async (responseBuffer, proxyRes, req, res) => {
-          const response = responseBuffer.toString('utf8'); // Or 'base64' if binary
+          const response = JSON.parse(responseBuffer.toString('utf8')); // Or 'base64' if binary
+          const responseUrl = new URL(response.id);
+          console.log(responseUrl.pathname);
 
-          const modifiedResponse = response.replace(
-            req.headers.host as string,
-            `${req.headers.host}/api`
-          );
+          response.id = `${req.headers.host}/api${responseUrl.pathname}`;
 
-          return modifiedResponse;
+          return JSON.stringify(response);
         }
       ),
       onError: (err, req, res) => {
