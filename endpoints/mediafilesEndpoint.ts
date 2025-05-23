@@ -179,9 +179,11 @@ const applyMediaFileEndpoint = (
         async (responseBuffer, proxyRes, req, res) => {
           const response = JSON.parse(responseBuffer.toString('utf8')); // Or 'base64' if binary
           const responseUrl = new URL(response.id);
-          console.log(responseUrl.pathname);
+          const path = responseUrl.pathname.includes('image/iiif/')
+            ? responseUrl.pathname.replace('image/iiif/', '')
+            : responseUrl.pathname;
 
-          response.id = `${req.headers.host}/api${responseUrl.pathname}`;
+          response.id = `${req.headers.host}/api${path}`;
 
           return JSON.stringify(response);
         }
