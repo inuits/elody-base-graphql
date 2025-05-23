@@ -177,17 +177,27 @@ const applyMediaFileEndpoint = (
       },
       onProxyRes: responseInterceptor(
         async (responseBuffer, proxyRes, req, res) => {
-          const response = JSON.parse(responseBuffer.toString('utf8')); // Or 'base64' if binary
-          const responseUrl = new URL(response.id);
-          const path = responseUrl.pathname.includes('image/iiif/')
-            ? responseUrl.pathname.replace('image/iiif/', '')
-            : responseUrl.pathname;
+          try {
+            const response = JSON.parse(responseBuffer.toString('utf8'));
 
-          response.id = `${req.headers.host}/api${path}`;
+            const idUrl = new URL(response.id);
 
-          return JSON.stringify(response);
+            // Replace /iiif/ with /api/iiif/ in the pathname
+            const updatedPath = idUrl.pathname.replace(
+              /^\/iiif\//,
+              '/api/iiif/'
+            );
+
+            response.id = `${idUrl.origin}${updatedPath}`;
+
+            return JSON.stringify(response);
+          } catch (err) {
+            console.error('Failed to rewrite IIIF id:', err);
+            return responseBuffer;
+          }
         }
       ),
+
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
         res.status(500).send(err);
