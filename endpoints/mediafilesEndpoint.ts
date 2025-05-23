@@ -6,7 +6,10 @@ import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import {
+  createProxyMiddleware,
+  responseInterceptor,
+} from 'http-proxy-middleware';
 
 let staticToken: string | undefined | null = undefined;
 
@@ -160,30 +163,36 @@ const applyMediaFileEndpoint = (
     })
   );
 
-  app.use('/api/iiif*.json', async (req, res) => {
-    try {
-      const datasource = new AuthRESTDataSource({ session: req.session });
-      const response = await datasource.get(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
-      );
-      const iiifUrlObject: URL = new URL(iiifUrlFrontend);
-      let urlWithoutProtocol: string =
-        iiifUrlObject.host + iiifUrlObject.pathname;
-      // remove slash at the end in case the url has no pathname to avoid extra /
-      urlWithoutProtocol = urlWithoutProtocol.replace(/\/$/, '');
+  app.use(
+    '/api/iiif*.json',
+    createProxyMiddleware({
+      target: iiifUrlFrontend,
+      changeOrigin: true,
+      selfHandleResponse: true,
+      pathRewrite: (path: string, req: Request) => {
+        return `${req.originalUrl.replace('/api', '')}`;
+      },
+      onProxyReq: (proxyReq, req, res) => {
+        addHeaders(proxyReq, req, res);
+      },
+      onProxyRes: responseInterceptor(
+        async (responseBuffer, proxyRes, req, res) => {
+          const response = responseBuffer.toString('utf8'); // Or 'base64' if binary
 
-      res.send(
-        JSON.parse(
-          JSON.stringify(response).replace(
-            urlWithoutProtocol,
+          const modifiedResponse = response.replace(
+            req.headers.host as string,
             `${req.headers.host}/api`
-          )
-        )
-      );
-    } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
-    }
-  });
+          );
+
+          return modifiedResponse;
+        }
+      ),
+      onError: (err, req, res) => {
+        console.error('Proxy error:', err);
+        res.status(500).send(err);
+      },
+    })
+  );
 
   app.use('/api/iiif/*', async (req, res) => {
     try {
