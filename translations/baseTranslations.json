@@ -513,6 +513,10 @@
         "delete-entity": "Delete {0}",
         "share": "Share link"
       }
+    },
+    "preview-component": {
+      "open": "Open preview component",
+      "close": "Close preview component"
     }
   },
   "nl": {
@@ -1030,6 +1034,10 @@
         "delete-entity": "Verwijder {0}",
         "share": "Deel link"
       }
+    },
+    "preview-component": {
+      "open": "Open preview component",
+      "close": "Close preview component"
     }
   }
 }

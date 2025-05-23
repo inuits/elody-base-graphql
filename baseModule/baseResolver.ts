@@ -1777,6 +1777,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     previewQuery: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
+    openByDefault: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
   },
   FormTab: {
     formFields: async (parent: any, {}, { dataSources }) => {

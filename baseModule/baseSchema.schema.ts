@@ -1714,6 +1714,7 @@ export const baseSchema = gql`
     listItemsCoverage(input: ListItemCoverageTypes!): ListItemCoverageTypes!
     title(input: String): String
     previewQuery(input: String): String
+    openByDefault(input: Boolean): Boolean
   }
 
   type Query {
