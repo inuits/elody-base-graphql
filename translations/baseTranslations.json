@@ -515,8 +515,8 @@
       }
     },
     "preview-component": {
-      "open": "Open preview component",
-      "close": "Close preview component"
+      "open": "Open preview",
+      "close": "Close preview"
     }
   },
   "nl": {
@@ -1036,8 +1036,8 @@
       }
     },
     "preview-component": {
-      "open": "Open preview component",
-      "close": "Close preview component"
+      "open": "Open preview",
+      "close": "Close preview"
     }
   }
 }
