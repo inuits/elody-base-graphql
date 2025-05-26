@@ -184,8 +184,8 @@ const applyMediaFileEndpoint = (
 
             // Replace /iiif/ with /api/iiif/ in the pathname
             const updatedPath = idUrl.pathname.replace(
-              /^\/iiif\/image\/iiif\//,
-              '/api/iiif/'
+              /^\/iiif\/(?:image\/iiif\/|((\d+)\/))/,
+              (_match, p1) => `/api/iiif/${p1 || ''}`
             );
 
             response.id = `${idUrl.origin}${updatedPath}`;
