@@ -317,13 +317,13 @@
           "title": "Reordering successful",
           "description": "The mediafiles are successfully reordered"
         },
-        "updataMetdataCsv": {
+        "updateMetadataCsv": {
           "title": "Update through CSV successful",
           "description": "The entities/mediafiles are successfully updated"
         },
         "downloadEntityCreated": {
           "title": "Download entity created",
-          "description": "The download entity that includes the download link is succesfully created"
+          "description": "The download entity that includes the download link is successfully created"
         },
         "copiedToClipboard": {
           "title": "Copied to clipboard",
@@ -331,7 +331,15 @@
         },
         "import": {
           "title": "Import",
-          "description": "Import started succesfully"
+          "description": "Import started successfully"
+        },
+        "items-deleted": {
+          "title": "Items successfully deleted",
+          "description": "Items related to entity were deleted"
+        },
+        "entity-deleted": {
+          "title": "Entity successfully deleted",
+          "description": "Entity was deleted"
         }
       },
       "errors": {
@@ -841,7 +849,7 @@
           "title": "Opnieuw orderen succesvol",
           "description": "De mediafiles zijn succesvol geordend"
         },
-        "updataMetdataCsv": {
+        "updateMetadataCsv": {
           "title": "Update met CSV succesvol",
           "description": "De entities/mediafiles zijn succesvol aangepast"
         },
@@ -856,7 +864,16 @@
         "import": {
           "title": "Import",
           "description": "Import succesvol gestart"
+        },
+        "items-deleted": {
+          "title": "Items succesvol verwijderd",
+          "description": "Items die gekoppeld zijn aan de entiteit zijn verwijderd"
+        },
+        "entity-deleted": {
+          "title": "Entiteit succesvol verwijderd",
+          "description": "De entiteit is verwijderd"
         }
+
       },
       "errors": {
         "construct-date-error": {
