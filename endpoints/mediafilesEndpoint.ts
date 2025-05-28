@@ -207,10 +207,6 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/iiif/*', async (req, res) => {
     try {
-      if (req.originalUrl.includes('hasbik')) {
-        throw new Error("Error hasbik")
-      }
-
       const response = await fetchWithTokenRefresh(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
         { method: 'GET' },
