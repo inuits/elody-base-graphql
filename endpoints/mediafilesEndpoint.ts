@@ -207,6 +207,10 @@ const applyMediaFileEndpoint = (
 
   app.use('/api/iiif/*', async (req, res) => {
     try {
+      if (req.originalUrl.includes('hasbik')) {
+        throw new Error("Error hasbik")
+      }
+
       const response = await fetchWithTokenRefresh(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
         { method: 'GET' },
@@ -224,8 +228,13 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      console.log(error);
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
+      res
+      .status(extractErrorCode(error))
+      .set({
+        'Cache-Control': 'no-store',
+        'Pragma': 'no-cache',
+      })
+      .end(JSON.stringify(error));
     }
   });
 
