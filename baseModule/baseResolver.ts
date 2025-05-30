@@ -93,6 +93,7 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  WindowElementLayout,
   WysiwygElement,
   type TaggingExtensionConfiguration,
   ConfigItem,
@@ -1232,6 +1233,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
     },
+    layout: async (_source, { input }, { dataSources }) => {
+      return input ? input : WindowElementLayout.Vertical;
+    },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ExpandButtonOptions;
     },
@@ -1779,6 +1783,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     openByDefault: async (parent, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
+    },
+    metadataPreviewQuery: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   FormTab: {

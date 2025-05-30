@@ -1412,9 +1412,15 @@ export const baseSchema = gql`
     intialValueKey(input: String!): String!
   }
 
+  enum WindowElementLayout {
+    Vertical
+    HorizontalGrid
+  }
+  
   type WindowElement {
     label(input: String): String!
     panels: WindowElementPanel!
+    layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
     lineClamp(input: String): String!
@@ -1715,6 +1721,7 @@ export const baseSchema = gql`
     title(input: String): String
     previewQuery(input: String): String
     openByDefault(input: Boolean): Boolean
+    metadataPreviewQuery(input: String): String
   }
 
   type Query {
