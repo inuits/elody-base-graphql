@@ -567,6 +567,7 @@ export const baseSchema = gql`
     KeyholeSquare
     Link
     ListUl
+    ListOl
     LocationArrowAlt
     Map
     Minus

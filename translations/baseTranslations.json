@@ -441,8 +441,8 @@
     },
     "library": {
       "search": "Search",
-      "items": "items",
-      "sort": "order by",
+      "items": "Items",
+      "sort": "Order by",
       "loading": "Loading",
       "add": "Add"
     },
@@ -976,8 +976,8 @@
     },
     "library": {
       "search": "Zoeken",
-      "items": "items",
-      "sort": "ordenen op",
+      "items": "Items",
+      "sort": "Ordenen op",
       "loading": "Laden",
       "add": "Toevoegen"
     },
