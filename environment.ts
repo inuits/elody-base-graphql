@@ -76,6 +76,10 @@ export interface Environment {
     };
     hasPersistentSessions?: boolean;
     contentIsMultiLanguage?: boolean;
+    multilanguage?: {
+      supportsMultilingualMetadataEditing: boolean,
+      metadataKeys: string[]
+    }
   };
   customization: {
     applicationTitle: string;

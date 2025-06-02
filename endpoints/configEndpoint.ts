@@ -83,12 +83,22 @@ const getConfig = (config: Environment) => {
         facetBy: config.features.advancedSearch.facetBy || '',
       },
     });
+  
   if (config.features.aiSearch)
     Object.assign(baseConfig.features, {
       aiSearch: {
         hasAiSearch: config.features.aiSearch.hasAiSearch,
       },
+  });
+
+  if (config.features.multilanguage?.supportsMultilingualMetadataEditing) {
+    Object.assign(baseConfig.features, {
+      multilanguage: {
+        supportsMultilingualMetadataEditing: config.features.multilanguage?.supportsMultilingualMetadataEditing || false,
+        metadataKeys: config.features.multilanguage?.metadataKeys
+      },
     });
+  }
 
   return baseConfig;
 };

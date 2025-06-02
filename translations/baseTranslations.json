@@ -118,6 +118,12 @@
         "cancel": "Cancel",
         "title": "Discard edit"
       },
+      "discard-edit-change-locale": {
+        "message": "Are you certain you wish to set the locale? Any unsaved changes will be discarded.",
+        "confirm": "Discard changes and set the locale",
+        "cancel": "Cancel",
+        "title": "Discard edit"
+      },
       "delete-entity": {
         "message": "Are you certain you wish to delete this {0}?",
         "confirm": "Delete {0}",

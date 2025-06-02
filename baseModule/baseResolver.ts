@@ -177,10 +177,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedSearchValue,
         advancedFilterInputs,
         searchInputType,
+        preferredLanguage
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
-
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
+      
       const entitiesResolverMapping: Partial<Record<SearchInputType, () => Promise<EntitiesResults>>> = {
         [SearchInputType.AdvancedInputType]: async () => await resolveAdvancedEntities(dataSources,type as Entitytyping | undefined, advancedFilterInputs, limit as number | undefined, skip as number | undefined, searchValue),
         [SearchInputType.SimpleInputtype]: async () => await resolveSimpleEntities(dataSources)
@@ -587,9 +590,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mutateEntityValues: async (
       _source,
-      { id, formInput, collection },
+      { id, formInput, collection, preferredLanguage },
       { dataSources }
     ) => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
       const filterEditStatus = (
         excludeEditStatus: EditStatus
       ): BaseRelationValuesInput[] => {

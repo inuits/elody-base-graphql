@@ -775,7 +775,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   async GetFilterOptions(
     input: AdvancedFilterInput[],
     limit: number,
-    entityType: string
+    entityType: string,
+    preferredLanguage?: string | null
   ): Promise<DropdownOption[]> {
     const data = await this.post(
       `${getCollectionValueForEntityType(
