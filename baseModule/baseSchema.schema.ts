@@ -597,6 +597,8 @@ export const baseSchema = gql`
     UserCircle
     WindowGrid
     WindowMaximize
+    Folder
+    VideoSlash
   }
 
   input BulkOperationInputModal {
@@ -1416,7 +1418,7 @@ export const baseSchema = gql`
     Vertical
     HorizontalGrid
   }
-  
+
   type WindowElement {
     label(input: String): String!
     panels: WindowElementPanel!
@@ -1709,7 +1711,7 @@ export const baseSchema = gql`
     MediaViewer
     Map
   }
-  
+
   enum ListItemCoverageTypes {
     OneListItem
     AllListItems
