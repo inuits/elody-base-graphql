@@ -531,6 +531,9 @@
     "preview-component": {
       "open": "Open preview",
       "close": "Close preview"
+    },
+    "media-viewer": {
+      "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'"
     }
   },
   "nl": {
@@ -1061,6 +1064,9 @@
     "preview-component": {
       "open": "Open preview",
       "close": "Close preview"
+    },
+    "media-viewer": {
+      "unsupported-mimetype": "Er is op dit moment geen viewer beschikbaar voor bestanden van het type '{mimetype}'"
     }
   }
 }
