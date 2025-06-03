@@ -18,18 +18,6 @@ const getConfig = (config: Environment) => {
       storageApiUrl: config.api.storageApiUrlExt,
     },
     features: {
-      simpleSearch: {
-        hasSimpleSearch: config.features.simpleSearch.hasSimpleSearch,
-        itemTypes: config.features.simpleSearch.itemTypes,
-        simpleSearchMetadataKey:
-          config.features.simpleSearch.simpleSearchMetadataKey,
-      },
-      aiSearch: {
-        hasAiSearch:
-          config.features.aiSearch?.hasAiSearch === undefined
-            ? false
-            : config.features.hasBulkOperations,
-      },
       hasTenantSelect: config.features.hasTenantSelect,
       hasBulkOperations:
         config.features.hasBulkSelect === undefined
@@ -83,19 +71,30 @@ const getConfig = (config: Environment) => {
         facetBy: config.features.advancedSearch.facetBy || '',
       },
     });
-  
+
+  if (config.features.simpleSearch)
+    Object.assign(baseConfig.features, {
+      simpleSearch: {
+        itemTypes: config.features.simpleSearch.itemTypes,
+        simpleSearchMetadataKey:
+          config.features.simpleSearch.simpleSearchMetadataKey,
+      },
+    });
+
   if (config.features.aiSearch)
     Object.assign(baseConfig.features, {
       aiSearch: {
         hasAiSearch: config.features.aiSearch.hasAiSearch,
       },
-  });
+    });
 
   if (config.features.multilanguage?.supportsMultilingualMetadataEditing) {
     Object.assign(baseConfig.features, {
       multilanguage: {
-        supportsMultilingualMetadataEditing: config.features.multilanguage?.supportsMultilingualMetadataEditing || false,
-        metadataKeys: config.features.multilanguage?.metadataKeys
+        supportsMultilingualMetadataEditing:
+          config.features.multilanguage?.supportsMultilingualMetadataEditing ||
+          false,
+        metadataKeys: config.features.multilanguage?.metadataKeys,
       },
     });
   }
