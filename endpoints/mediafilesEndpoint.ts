@@ -135,26 +135,11 @@ const applyMediaFileEndpoint = (
       target: storageApiUrl,
       changeOrigin: true,
       pathRewrite: (path: string, req: Request) => {
-        return `${req.originalUrl.replace('/api/mediafile', '')}`;
-      },
-      onProxyReq: (proxyReq, req, res) => {
-        addHeaders(proxyReq, req, res);
-        if (req.headers.range) {
-          proxyReq.setHeader('Range', req.headers.range);
-        }
-      },
-      onProxyRes: (proxyRes, req, res) => {
-        if (proxyRes.statusCode === 206) {
-          res.setHeader('Accept-Ranges', 'bytes');
-          res.setHeader(
-            'Content-Range',
-            proxyRes.headers['Content-Range'] || ''
-          );
-          res.setHeader(
-            'Content-Length',
-            proxyRes.headers['Content-Length'] || ''
-          );
-        }
+        const newUrl: string = `${req.originalUrl.replace(
+          '/api/mediafile',
+          ''
+        )}`;
+        return newUrl;
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
@@ -225,12 +210,12 @@ const applyMediaFileEndpoint = (
       pump(reader, res);
     } catch (error: any) {
       res
-      .status(extractErrorCode(error))
-      .set({
-        'Cache-Control': 'no-store',
-        'Pragma': 'no-cache',
-      })
-      .end(JSON.stringify(error));
+        .status(extractErrorCode(error))
+        .set({
+          'Cache-Control': 'no-store',
+          Pragma: 'no-cache',
+        })
+        .end(JSON.stringify(error));
     }
   });
 
