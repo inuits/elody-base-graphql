@@ -443,8 +443,11 @@
       "search": "Search",
       "items": "Items",
       "sort": "Order by",
+      "sort-direction": "Order direction",
       "loading": "Loading",
-      "add": "Add"
+      "add": "Add",
+      "asc": "Ascending",
+      "desc": "Descending"
     },
     "navigation": {
       "title": "Elody",
@@ -978,8 +981,11 @@
       "search": "Zoeken",
       "items": "Items",
       "sort": "Ordenen op",
+      "sort-direction": "Sorteer richting",
       "loading": "Laden",
-      "add": "Toevoegen"
+      "add": "Toevoegen",
+      "asc": "Oplopend",
+      "desc": "Aflopend"
     },
     "navigation": {
       "title": "Elody",
