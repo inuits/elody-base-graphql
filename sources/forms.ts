@@ -42,7 +42,8 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Tiff,
       FileType.Mp4,
       FileType.Gif,
-      FileType.Xml
+      FileType.Xml,
+      FileType.Pdf
     ],
     maxAmountOfFiles: 999,
     fileProgressSteps: {
