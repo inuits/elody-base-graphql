@@ -35,10 +35,10 @@ const getConfig = (config: Environment) => {
         config.features.hasSavedSearch === undefined
           ? false
           : config.features.hasSavedSearch,
-      contentIsMultiLanguage:
-        config.features.contentIsMultiLanguage === undefined
+      supportsMultilingualMetadataEditing:
+        config.features.supportsMultilingualMetadataEditing === undefined
           ? false
-          : config.features.contentIsMultiLanguage,
+          : config.features.supportsMultilingualMetadataEditing,
     },
     customization: {
       applicationTitle: config.customization.applicationTitle,
@@ -87,17 +87,6 @@ const getConfig = (config: Environment) => {
         hasAiSearch: config.features.aiSearch.hasAiSearch,
       },
     });
-
-  if (config.features.multilanguage?.supportsMultilingualMetadataEditing) {
-    Object.assign(baseConfig.features, {
-      multilanguage: {
-        supportsMultilingualMetadataEditing:
-          config.features.multilanguage?.supportsMultilingualMetadataEditing ||
-          false,
-        metadataKeys: config.features.multilanguage?.metadataKeys,
-      },
-    });
-  }
 
   return baseConfig;
 };

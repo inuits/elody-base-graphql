@@ -1344,6 +1344,7 @@ export const baseSchema = gql`
     ): PanelMetadataValueTooltip
     lineClamp(input: String): String!
     copyToClipboard(input: Boolean): Boolean
+    isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
     can(input: [String!]): [String]
   }
