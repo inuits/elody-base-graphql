@@ -512,7 +512,8 @@
         "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
         "disabled-submit-button": "This button is disabled because some fields are not correctly filled in or there was an error during creation.",
         "disabled-save-button": "This button is disabled because some fields are not correctly filled in.",
-        "disabled-updateMetadata-button": "This button is disabled because the type or csv fields are not correctly filled in."
+        "disabled-updateMetadata-button": "This button is disabled because the type or csv fields are not correctly filled in.",
+        "disabled-export-csv-button": "This button is disabled because the there is no entity selected."
       },
       "required": "This checkbox is required",
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
@@ -1048,7 +1049,8 @@
         "disabled-upload-button": "De knop is gedeactiveerd omdat er nog velden voor de upload ontbreken.",
         "disabled-submit-button": "De knop is gedeactiveerd omdat enkele velden niet correct zijn ingevuld of er was een error tijdens het creëren.",
         "disabled-save-button": "De knop is gedeactiveerd omdat enkele velden niet correct zijn ingevuld.",
-        "disabled-updateMetadata-button": "De knop is gedeactiveerd omdat het type of een csv niet is ingevuld."
+        "disabled-updateMetadata-button": "De knop is gedeactiveerd omdat het type of een csv niet is ingevuld.",
+        "disabled-export-csv-button": "De knop is gedeactiveerd omdat er geen entiteit geselecteerd is."
       },
       "required": "Deze checkbox is verplicht",
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
