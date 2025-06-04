@@ -11,6 +11,7 @@ import applyPromEndpoint from './endpoints/promEndpoint';
 import cors from 'cors';
 import express, { Express } from 'express';
 import compression from 'compression';
+import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
 import { ApolloServer } from '@apollo/server';
@@ -42,8 +43,8 @@ import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import {
-  configureFrontendForEnvironment,
-  renderPageForEnvironment,
+  serveFrontendThroughExpress,
+  serveFrontend,
 } from './endpoints/frontendEndpoint';
 import type {
   CollectionAPIEntity,
@@ -61,7 +62,6 @@ import {
   addAdditionalOptionalDataSources,
   generateElodyConfig,
 } from './helpers/elodyModuleHelpers';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -148,21 +148,6 @@ const start = (
     const app = express();
     const httpServer = http.createServer(app);
     httpServer.setTimeout(120000);
-
-    let viteServer: ViteDevServer | undefined;
-    if (appConfig.environment !== 'production') {
-      viteServer = await createViteServer({
-        server: { 
-          middlewareMode: true,
-          hmr: {
-            port: 24678,
-            clientPort: 24678
-          }
-        },
-        appType: 'spa',
-        root: path.join(__dirname, '../dashboard'),
-      });
-    }
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
@@ -274,11 +259,16 @@ const start = (
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
 
-    configureFrontendForEnvironment(app, viteServer);
+    if (appConfig.environment === 'production')
+      serveFrontendThroughExpress(app);
+    else
+      app.use(express.static(path.join(__dirname, 'dist')));
 
-    httpServer.listen(appConfig.port, () => {
-      console.log(`Server is running on port ${appConfig.port}`);
+    await new Promise<void>((resolve) => {
+      const server = httpServer.listen({ port: appConfig.port }, resolve);
+      ViteExpress.bind(app, server);
     });
+    console.log(`Server is running on port ${appConfig.port}`);
 
     return { app };
   };
@@ -317,6 +307,6 @@ export {
   resolveRelations,
   simpleReturn,
   getRoutesObject,
-  renderPageForEnvironment,
+  serveFrontend,
   generateElodyConfig,
 };

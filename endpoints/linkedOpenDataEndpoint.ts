@@ -1,5 +1,5 @@
 import { Request, Response, Express } from "express";
-import { environment as env, renderPageForEnvironment } from '../main';
+import { environment as env, serveFrontend } from '../main';
 import fetch from "node-fetch";
 
 
@@ -68,7 +68,7 @@ export const applyLinkedOpenDataEndpoint = (app: Express) => {
             const format = req.headers.accept;
             if (shouldServeFrontend(format)) {
                 console.log("Serving frontend");
-                renderPageForEnvironment(req, res);
+                serveFrontend(req, res);
             } else {
                 console.log("NOT serving frontend");
                 const entityId = getEntityIdFromPath(req.url);
