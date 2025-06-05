@@ -79,12 +79,12 @@
     "webpack-cli": "^4.10.0",
     "webpack-merge": "^5.10.0",
     "webpack-node-externals": "^3.0.0",
-    "compression": "^1.7.5"
+    "compression": "^1.7.5",
+    "vite": "5.4.19"
   },
   "devDependencies": {
     "@vitest/coverage-c8": "^0.33.0",
     "husky": "^8.0.1",
-    "vite": "5.4.19",
     "vitest": "2.1.9"
   },
   "publishConfig": {
