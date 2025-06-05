@@ -1837,7 +1837,7 @@ export const baseSchema = gql`
   enum ViewModes {
     ViewModesList
     ViewModesGrid
-    ViewModesMedia
+    ViewModesMedia @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
   }
 

@@ -239,7 +239,6 @@ export const baseFragments = gql`
         input: [
           { viewMode: ViewModesList }
           { viewMode: ViewModesGrid }
-          { viewMode: ViewModesMedia }
         ]
       ) {
         ...viewModes
