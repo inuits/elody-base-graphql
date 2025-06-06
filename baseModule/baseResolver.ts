@@ -1912,6 +1912,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     multiple: async (parent, _args, { dataSources }) => {
       return parent.multiple || false;
     },
+    entityType: async (parent, _args, { dataSources }) => {
+      return parent.entityType || '';
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {

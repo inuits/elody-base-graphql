@@ -392,6 +392,7 @@ export const baseSchema = gql`
     dependsOn: String
     multiple: Boolean
     lineClamp: String
+    entityType: String
   }
 
   enum TypeModals {

@@ -99,6 +99,7 @@ export const baseFragments = gql`
     dependsOn
     multiple
     lineClamp
+    entityType
   }
 
   fragment metadataRelation on MetadataRelation {
