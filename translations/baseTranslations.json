@@ -447,7 +447,8 @@
       "loading": "Loading",
       "add": "Add",
       "asc": "Ascending",
-      "desc": "Descending"
+      "desc": "Descending",
+      "language": "Choose language"
     },
     "navigation": {
       "title": "Elody",
@@ -986,7 +987,8 @@
       "loading": "Laden",
       "add": "Toevoegen",
       "asc": "Oplopend",
-      "desc": "Aflopend"
+      "desc": "Aflopend",
+      "language": "Kies taal"
     },
     "navigation": {
       "title": "Elody",
