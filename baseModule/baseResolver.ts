@@ -111,6 +111,7 @@ import {
 import {parseItemTypesFromInputField} from '../parsers/inputField';
 import {
   resolveIntialValueDerivatives,
+  resolveIntialValueLocation,
   resolveIntialValueMetadata,
   resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
@@ -119,7 +120,11 @@ import {
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata
 } from "../resolvers/intialValueResolver";
-import {prepareMetadataFieldForMapData, prepareRelationFieldForMapData,} from '../resolvers/mapComponentResolver';
+import {
+  prepareLocationFieldForMapData,
+  prepareMetadataFieldForMapData,
+  prepareRelationFieldForMapData,
+} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -962,7 +967,15 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter as string,
               customFormatters
             ),
-          derivatives: () => resolveIntialValueDerivatives(parent, key, technicalOrigin as string, dataSources)
+          derivatives: () => resolveIntialValueDerivatives(parent, key, technicalOrigin as string, dataSources),
+          location: () =>
+            resolveIntialValueLocation(
+              dataSources,
+              parent,
+              key,
+              keyOnMetadata,
+              formatter
+            ),
         };
 
         const returnObject = await resolveObject[source]();
@@ -1746,6 +1759,12 @@ export const baseResolver: Resolvers<ContextValue> = {
             splitRegex as SplitRegex,
             defaultValue
           ),
+        location: () =>
+          prepareLocationFieldForMapData(
+            parent.location,
+            key,
+            splitRegex as SplitRegex,
+            defaultValue          ),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,

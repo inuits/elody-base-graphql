@@ -1,4 +1,5 @@
 import {
+  resolveLocationData,
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
@@ -243,3 +244,12 @@ export const resolveIntialValueDerivatives = async (parent: CollectionAPIEntity,
   return derivativeFromTechnicalOrigin[key] as string
 }
 
+export const resolveIntialValueLocation = async (
+    dataSources: DataSources,
+    parent: any,
+    key: string,
+    keyOnMetadata: string | undefined | null,
+    formatter: string | null
+): Promise<string | { label: string, formatter: string }> => {
+  return await resolveLocationData(parent, key);
+};

@@ -61,6 +61,17 @@ export const resolveMetadataItemOfPreferredLanguage = (
   return preferredLanguageMetadataItem;
 };
 
+export const resolveLocationData = async (
+    parent: any,
+    key: string,
+) => {
+  let metadataValue: any = undefined;
+  if (parent.location) {
+    metadataValue = parent.location[key]
+  }
+  return metadataValue;
+};
+
 export const resolveId = (parent: any) => {
   return getEntityId(parent);
 };
