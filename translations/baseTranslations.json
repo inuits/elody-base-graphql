@@ -543,6 +543,7 @@
     "iiif-operations-modal": {
       "title": "Resize image",
       "dimensions": "Dimensions",
+      "format": "Output format",
       "scale": "Scale",
       "width": "Width",
       "height": "Height",
@@ -1087,9 +1088,14 @@
       "unsupported-mimetype": "Er is op dit moment geen viewer beschikbaar voor bestanden van het type '{mimetype}'"
     },
     "iiif-operations-modal": {
-      "title": "Afbeeldingsformaat wijzigen",
-      "dimensions": "Dimensions",
-      "get-resized-image": "Get resized image"
+      "title": "Afbeelding schalen",
+      "dimensions": "Afmetingen",
+      "format": "Uitvoerformaat",
+      "scale": "Schaal",
+      "width": "Breedte",
+      "height": "Hoogte",
+      "get-resized-image": "Aangepaste afbeelding ophalen"
     }
+
   }
 }
