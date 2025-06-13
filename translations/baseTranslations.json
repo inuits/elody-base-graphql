@@ -539,6 +539,14 @@
     },
     "media-viewer": {
       "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'"
+    },
+    "iiif-operations-modal": {
+      "title": "Resize image",
+      "dimensions": "Dimensions",
+      "scale": "Scale",
+      "width": "Width",
+      "height": "Height",
+      "get-resized-image": "Get resized image"
     }
   },
   "nl": {
@@ -1077,6 +1085,11 @@
     },
     "media-viewer": {
       "unsupported-mimetype": "Er is op dit moment geen viewer beschikbaar voor bestanden van het type '{mimetype}'"
+    },
+    "iiif-operations-modal": {
+      "title": "Afbeeldingsformaat wijzigen",
+      "dimensions": "Dimensions",
+      "get-resized-image": "Get resized image"
     }
   }
 }

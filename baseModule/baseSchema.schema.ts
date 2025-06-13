@@ -409,6 +409,7 @@ export const baseSchema = gql`
     SaveSearchPicker
     ElodyEntityTaggingModal
     EntityDetailModal
+    IiifOperationsModal
   }
 
   enum ModalStyle {
@@ -1838,7 +1839,8 @@ export const baseSchema = gql`
   enum ViewModes {
     ViewModesList
     ViewModesGrid
-    ViewModesMedia @deprecated(reason: "We use the new mediaviewer integrated in previews")
+    ViewModesMedia
+      @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
   }
 
