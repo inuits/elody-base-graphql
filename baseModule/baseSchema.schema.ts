@@ -183,6 +183,7 @@ export const baseSchema = gql`
     existing_date
     regex
     email
+    url
   }
 
   enum ValidationFields {
