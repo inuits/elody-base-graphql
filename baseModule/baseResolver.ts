@@ -105,6 +105,7 @@ import {
   type TaggingExtensionConfiguration,
   ConfigItem,
   ColumnList,
+  AdvancedFilters,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -594,6 +595,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return {} as ContextMenuActions;
+    },
+    GeoFilterForMap: async (
+      _source,
+      _args,
+      { dataSources }
+    ) => {
+      return {} as AdvancedFilters;
     },
   },
   Mutation: {

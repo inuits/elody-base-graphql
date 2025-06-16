@@ -1800,6 +1800,7 @@ export const baseSchema = gql`
     ): JSON
     FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
     GetEntityDetailContextMenuActions: ContextMenuActions!
+    GeoFilterForMap: AdvancedFilters
   }
 
   type Mutation {
