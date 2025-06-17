@@ -1,4 +1,4 @@
-import { Express, response } from 'express';
+import { Express, Response, Request } from 'express';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { manager } from '../auth/index';
 import { environment as env } from '../main';
@@ -6,19 +6,23 @@ import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
+import {
+  createProxyMiddleware,
+  responseInterceptor,
+} from 'http-proxy-middleware';
 
 let staticToken: string | undefined | null = undefined;
 
 const fetchWithTokenRefresh = async (
   url: string,
-  options: any = {},
+  options: any = { headers: {} },
   req: any,
   checkToken: boolean = false
 ) => {
   try {
     const token = req.session?.auth?.accessToken;
     if (token && token !== 'undefined') {
-      options.headers = { Authorization: `Bearer ${token}` };
+      Object.assign(options, { headers: { Authorization: `Bearer ${token}` } });
     }
     let response: any;
     const isExpired = checkToken && token && isTokenExpired(token);
@@ -89,12 +93,13 @@ function isTokenExpired(token: string) {
   }
 }
 
-export const addHeader = (proxyReq: any, req: any, res: any) => {
+export const addHeaders = (proxyReq: any, req: Request, res: Response) => {
   const mediafileId = extractIdFromMediafilePath(req.originalUrl);
-  res.setHeader(
-    'Link',
-    `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
-  );
+  if (mediafileId)
+    res.setHeader(
+      'Link',
+      `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
+    );
 };
 
 // pump the stream data
@@ -124,67 +129,66 @@ const applyMediaFileEndpoint = (
 ) => {
   staticToken = staticTokenInput;
 
-  app.use('/api/mediafile/download-with-ticket', async (req: any, res: any) => {
-    res.redirect(
-      302,
-      `${env?.api.storageApiUrlExt}${req.originalUrl.replace(
-        '/api/mediafile/',
-        ''
-      )}`
-    );
-  });
+  app.use(
+    ['/api/mediafile', '/api/mediafile/download-with-ticket'],
+    createProxyMiddleware({
+      target: storageApiUrl,
+      changeOrigin: true,
+      pathRewrite: (path: string, req: Request) => {
+        const newUrl: string = `${req.originalUrl.replace(
+          '/api/mediafile',
+          ''
+        )}`;
+        return newUrl;
+      },
+      onError: (err, req, res) => {
+        console.error('Proxy error:', err);
+        res.status(500).send('Proxy error');
+      },
+    })
+  );
 
-  app.use('/api/mediafile', async (req: any, res: any) => {
-    try {
-      const response = await fetchWithTokenRefresh(
-        `${storageApiUrl}${req.originalUrl.replace('/api/mediafile', '')}`,
-        { method: 'GET' },
-        req
-      );
+  app.use(
+    '/api/iiif*.json',
+    createProxyMiddleware({
+      target: iiifUrlFrontend,
+      changeOrigin: true,
+      selfHandleResponse: true,
+      pathRewrite: (path: string, req: Request) => {
+        return `${req.originalUrl.replace('/api', '')}`;
+      },
+      onProxyReq: (proxyReq, req, res) => {
+        addHeaders(proxyReq, req, res);
+      },
+      onProxyRes: responseInterceptor(
+        async (responseBuffer, proxyRes, req, res) => {
+          try {
+            const response = JSON.parse(responseBuffer.toString('utf8'));
 
-      if (!response.ok) {
-        throw response;
-      }
+            const idUrl = new URL(response.id);
 
-      addHeader(null, req, res);
-      const blob = await response.blob();
-      res.setHeader('Content-Type', blob.type);
-      const reader = blob.stream().getReader();
+            // Replace /iiif/ with /api/iiif/ in the pathname
+            const updatedPath = idUrl.pathname.replace(
+              /^\/iiif\/(?:image\/iiif\/|((\d+)\/))/,
+              (_match, p1) => `/api/iiif/${p1 || ''}`
+            );
 
-      pump(reader, res);
-    } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
-    }
-  });
+            response.id = `${idUrl.origin}${updatedPath}`;
 
-  app.use('/api/iiif*.json', async (req, res) => {
-    try {
-      const clientIp: string = req.headers['x-forwarded-for'] as string;
-      const datasource = new AuthRESTDataSource({
-        session: req.session,
-        clientIp,
-      });
-      const response = await datasource.get(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`
-      );
-      const iiifUrlObject: URL = new URL(iiifUrlFrontend);
-      let urlWithoutProtocol: string =
-        iiifUrlObject.host + iiifUrlObject.pathname;
-      // remove slash at the end in case the url has no pathname to avoid extra /
-      urlWithoutProtocol = urlWithoutProtocol.replace(/\/$/, '');
+            return JSON.stringify(response);
+          } catch (err) {
+            console.error('Failed to rewrite IIIF id:', err);
+            return responseBuffer;
+          }
+        }
+      ),
 
-      res.send(
-        JSON.parse(
-          JSON.stringify(response).replace(
-            urlWithoutProtocol,
-            `${req.headers.host}/api`
-          )
-        )
-      );
-    } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
-    }
-  });
+      onError: (err, req, res) => {
+        console.error('Proxy error:', err);
+        res.status(500).send(err);
+      },
+    })
+  );
 
   app.use('/api/iiif/*', async (req, res) => {
     try {
@@ -205,7 +209,13 @@ const applyMediaFileEndpoint = (
 
       pump(reader, res);
     } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
+      res
+        .status(extractErrorCode(error))
+        .set({
+          'Cache-Control': 'no-store',
+          Pragma: 'no-cache',
+        })
+        .end(JSON.stringify(error));
     }
   });
 

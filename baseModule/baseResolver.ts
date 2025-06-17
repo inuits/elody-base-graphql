@@ -4,7 +4,8 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations,} from '../resolvers/entityResolver';
+import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations} from '../resolvers/entityResolver';
+import {resolveAdvancedEntities, resolveSimpleEntities} from '../resolvers/entitiesResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -49,8 +50,10 @@ import {
   HiddenField,
   IntialValues,
   KeyValueSource,
+  ListItemCoverageTypes,
   ManifestViewerElement,
   MapElement,
+  HierarchyListElement,
   MapMetadata,
   MapTypes,
   MarkdownViewerElement,
@@ -73,6 +76,7 @@ import {
   PanelThumbnail,
   Permission,
   PermissionRequestInfo,
+  PreviewTypes,
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
@@ -89,6 +93,11 @@ import {
   ViewModes,
   WindowElement,
   WindowElementPanel,
+  WindowElementLayout,
+  WysiwygElement,
+  type TaggingExtensionConfiguration,
+  ConfigItem,
+  ColumnList,
 } from '../../../generated-types/type-defs';
 import {ContextValue} from '../types';
 import {baseFields} from '../sources/forms';
@@ -101,15 +110,21 @@ import {
 } from '../helpers/helpers';
 import {parseItemTypesFromInputField} from '../parsers/inputField';
 import {
+  resolveIntialValueDerivatives,
+  resolveIntialValueLocation,
   resolveIntialValueMetadata,
   resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
-  resolveIntialValueTechnicalMetadata,
-} from '../resolvers/intialValueResolver';
-import {prepareMetadataFieldForMapData, prepareRelationFieldForMapData,} from '../resolvers/mapComponentResolver';
+  resolveIntialValueTechnicalMetadata
+} from "../resolvers/intialValueResolver";
+import {
+  prepareLocationFieldForMapData,
+  prepareMetadataFieldForMapData,
+  prepareRelationFieldForMapData,
+} from '../resolvers/mapComponentResolver';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -167,89 +182,117 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedSearchValue,
         advancedFilterInputs,
         searchInputType,
+        preferredLanguage
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
-      let entities: EntitiesResults = {
-        results: [],
-        sortKeys: [],
-        count: 0,
-        limit: 0,
-      };
-
-      const typeFilters = advancedFilterInputs.filter(
-        (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
-      );
-      let entityTypes =
-        typeFilters.length <= 0 ? [type!!] : typeFilters[0].value;
-      if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
-
-      for (const entityType of entityTypes as Entitytyping[]) {
-        let entitiesIteration: EntitiesResults = {
-          results: [],
-          sortKeys: [],
-          count: 0,
-          limit: 0,
-        };
-        const filtersIteration =
-          entityTypes.length <= 1
-            ? advancedFilterInputs
-            : determineAdvancedFiltersForIteration(
-                entityType,
-                advancedFilterInputs
-              );
-        if (
-          advancedFilterInputs?.length >= 0 &&
-          (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
-            entityType === Entitytyping.Mediafile)
-        ) {
-          entitiesIteration =
-            await dataSources.CollectionAPI.GetAdvancedEntities(
-              Entitytyping.Mediafile,
-              limit || 20,
-              skip || 0,
-              filtersIteration,
-              searchValue || { value: '' }
-            );
-        } else if (
-          searchInputType === SearchInputType.AdvancedInputType &&
-          advancedFilterInputs?.length
-        ) {
-          entitiesIteration =
-            await dataSources.CollectionAPI.GetAdvancedEntities(
-              entityType,
-              limit || 20,
-              skip || 0,
-              filtersIteration,
-              searchValue || { value: '' }
-            );
-        } else if (searchInputType === SearchInputType.AdvancedInputType) {
-          entitiesIteration = await dataSources.CollectionAPI.getEntities(
-            limit || 20,
-            skip || 0,
-            searchValue || { value: '' },
-            entityType
-          );
-        }
-        if (entities && entitiesIteration) {
-          entities.results!!.push(...entitiesIteration.results!!);
-          entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
-          entities.count!! += entitiesIteration.count!!;
-          entities.limit!! += entitiesIteration.limit!!;
-        }
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
+      
+      const entitiesResolverMapping: Partial<Record<SearchInputType, () => Promise<EntitiesResults>>> = {
+        [SearchInputType.AdvancedInputType]: async () => await resolveAdvancedEntities(dataSources,type as Entitytyping | undefined, advancedFilterInputs, limit as number | undefined, skip as number | undefined, searchValue),
+        [SearchInputType.SimpleInputtype]: async () => await resolveSimpleEntities(dataSources)
       }
-      return entities!!;
+
+      return entitiesResolverMapping[searchInputType!!]!!()
+
+      // const typeFilters = advancedFilterInputs.filter(
+      //   (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+      // );
+      // let entityTypes =
+      //   typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
+      // if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
+      // for (const entityType of entityTypes as Entitytyping[]) {
+      //   let entitiesIteration: EntitiesResults = {
+      //     results: [],
+      //     sortKeys: [],
+      //     count: 0,
+      //     limit: 0,
+      //   };
+      //   const filtersIteration =
+      //     entityTypes.length <= 1
+      //       ? advancedFilterInputs
+      //       : determineAdvancedFiltersForIteration(
+      //           entityType,
+      //           advancedFilterInputs
+      //         );
+      //   if (
+      //     advancedFilterInputs?.length >= 0 &&
+      //     (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
+      //       entityType === Entitytyping.Mediafile)
+      //   ) {
+      //     entitiesIteration =
+      //       await dataSources.CollectionAPI.GetAdvancedEntities(
+      //         Entitytyping.Mediafile,
+      //         limit || 20,
+      //         skip || 0,
+      //         filtersIteration,
+      //         searchValue || { value: '' }
+      //       );
+      //   } else if (
+      //     searchInputType === SearchInputType.AdvancedInputType &&
+      //     advancedFilterInputs?.length
+      //   ) {
+      //     entitiesIteration =
+      //       await dataSources.CollectionAPI.GetAdvancedEntities(
+      //         entityType,
+      //         limit || 20,
+      //         skip || 0,
+      //         filtersIteration,
+      //         searchValue || { value: '' }
+      //       );
+      //   } else if (searchInputType === SearchInputType.AdvancedInputType) {
+      //     entitiesIteration = await dataSources.CollectionAPI.getEntities(
+      //       limit || 20,
+      //       skip || 0,
+      //       searchValue || { value: '' },
+      //       entityType
+      //     );
+      //   }
+      //   if (entities && entitiesIteration) {
+      //     entities.results!!.push(...entitiesIteration.results!!);
+      //     entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
+      //     entities.count!! += entitiesIteration.count!!;
+      //     entities.limit!! += entitiesIteration.limit!!;
+      //   }
+      // }
+      // return entities!!;
     },
     EntitiesByAdvancedSearch: async (
       _source,
       {
         q = "*",
-        filter_by = "",
         query_by = "",
+        filter_by = "",
+        query_by_weights = "",
+        sort_by = "",
+        limit = 25,
+        per_page = 25,
+        facet_by = "",
       },
       { dataSources }
     ): Promise<EntitiesResults> => {
-      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(q as string, filter_by as string, query_by as string);
+      return dataSources.CollectionAPI.getEntitiesByAdvancedSearch(
+        q as string,
+        query_by as string,
+        filter_by as string,
+        query_by_weights as string,
+        sort_by as string,
+        limit as number,
+        per_page as number,
+        facet_by as string,
+      );
+    },
+    EntitiesByAiSearch: async (
+      _source,
+      {
+        input = "",
+      },
+      { dataSources }
+    ): Promise<EntitiesResults> => {
+      return dataSources.CollectionAPI.getEntitiesByAiSearch(
+        input as string,
+      );
     },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();
@@ -277,6 +320,19 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
+    },
+    PreviewComponents: async (_source, { entityType }, { dataSources }) => {
+      return {
+        type: entityType,
+        previewComponent: {},
+      } as Entity;
+    },
+    PreviewElement: async (
+        _source: any,
+        _args,
+        { dataSources },
+    ) => {
+      return {} as ColumnList;
     },
     BulkOperations: async (_source, { entityType }, { dataSources }) => {
       return {
@@ -376,11 +432,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         customPermissions[permission];
       if (!permissionConfig) return false;
 
-      let response = await dataSources.CollectionAPI.checkAdvancedPermission(
-        permissionConfig,
-        parentEntityId,
-        childEntityId
-      );
+      let response: any;
+      if (permissionConfig.datasource === "CollectionAPI")
+        response = await dataSources.CollectionAPI.checkAdvancedPermission(
+            permissionConfig,
+            parentEntityId,
+            childEntityId
+        );
+      if (permissionConfig.datasource === "GraphqlAPI")
+        response = await dataSources.GraphqlAPI.checkAdvancedPermission(permissionConfig);
       return response;
     },
     PermissionMappingPerEntityType: async (
@@ -464,7 +524,8 @@ export const baseResolver: Resolvers<ContextValue> = {
           mediafiles: mediafiles,
           csv_mediafile_columns: mediafilesCsv,
           csv_entity_columns: assetsCsv,
-          download_entity: createdEntity.id,
+          download_entity_id: createdEntity.id,
+          download_entity_title: createdEntity.metadata.filter((metadata: Metadata) => metadata.key === "title")[0].value,
         });
       } catch (e) {
         throw new GraphQLError(
@@ -534,9 +595,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mutateEntityValues: async (
       _source,
-      { id, formInput, collection },
+      { id, formInput, collection, preferredLanguage },
       { dataSources }
     ) => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
       const filterEditStatus = (
         excludeEditStatus: EditStatus
       ): BaseRelationValuesInput[] => {
@@ -554,6 +617,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       const mutateRelations = async () => {
+        if (formInput.relations.length <= 0) return;
         await dataSources.CollectionAPI.putRelations(
           id,
           filterEditStatus(EditStatus.Deleted),
@@ -562,6 +626,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
 
       const mutateMetadata = async () => {
+        for (const metadata of formInput.metadata)
+          if (Array.isArray(metadata.value) && metadata.value.length === 0)
+            metadata.value = "";
+
         await dataSources.CollectionAPI.patchMetadata(
           id,
           formInput.metadata,
@@ -593,10 +661,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     bulkDeleteEntities: async (
       _source,
-      { ids, path, deleteEntities },
+      { ids, path, deleteEntities, skipItemsWithRelationDuringBulkDelete },
       { dataSources }
     ) => {
-      return dataSources.CollectionAPI.bulkDeleteEntities(ids, path, deleteEntities ?? {});
+      return dataSources.CollectionAPI.bulkDeleteEntities(
+          ids,
+          path,
+          deleteEntities ?? {},
+          skipItemsWithRelationDuringBulkDelete as string[] ?? []
+      );
     },
     bulkAddRelations: async (
       _source,
@@ -838,6 +911,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationEntityType,
         keyOnMetadata,
         formatter = '',
+        technicalOrigin
       },
       { dataSources, customFormatters }
     ) => {
@@ -892,7 +966,16 @@ export const baseResolver: Resolvers<ContextValue> = {
               relationKey as string,
               formatter as string,
               customFormatters
-            )
+            ),
+          derivatives: () => resolveIntialValueDerivatives(parent, key, technicalOrigin as string, dataSources),
+          location: () =>
+            resolveIntialValueLocation(
+              dataSources,
+              parent,
+              key,
+              keyOnMetadata,
+              formatter
+            ),
         };
 
         const returnObject = await resolveObject[source]();
@@ -960,6 +1043,35 @@ export const baseResolver: Resolvers<ContextValue> = {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
     },
+    mapMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapMetadata;
+    },
+    config: async (_source, { input }, { dataSources }) => {
+      return input as ConfigItem[];
+    },
+  },
+  HierarchyListElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    hierarchyRelationList: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
+    customQuery: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input as string[];
+    },
+    entityTypeAsCenterPoint: async (_source, { input }, { dataSources }) => {
+      return input as Entitytyping;
+    },
+    centerCoordinatesKey: async (_source, { input }, { dataSources }) => {
+      return input || "";
+    },
   },
   SingleMediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1006,6 +1118,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    enableAdvancedFilters: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
     type: async (_source, { input }, { dataSources }) => {
@@ -1103,6 +1218,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
     },
   },
+  WysiwygElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    metadataKey: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    extensions: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    taggingConfiguration: async (_source, {}, { dataSources }) => {
+      return {} as TaggingExtensionConfiguration;
+    },
+  },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
@@ -1127,6 +1256,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     panels: async (parent: unknown, {}, { dataSources }) => {
       return parent as WindowElementPanel;
+    },
+    layout: async (_source, { input }, { dataSources }) => {
+      return input ? input : WindowElementLayout.Vertical;
     },
     expandButtonOptions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ExpandButtonOptions;
@@ -1197,6 +1329,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as EntityListElement;
     },
+    wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
+    },
   },
   ExpandButtonOptions: {
     shown: async (_source, { input }, { dataSources }) => {
@@ -1247,6 +1382,18 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     lineClamp: async (_source, { input }, { dataSources }) => {
       return input ?? '';
+    },
+    copyToClipboard: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
+    },
+    customValue: async (_source, { input }, { dataSources }) => {
+      return input ?? "";
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input ?? [];
+    },
+    isMultilingual: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
     },
   },
   UploadContainer: {
@@ -1467,6 +1614,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     mapElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MapElement;
     },
+    wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
+    },
+    hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as HierarchyListElement;
+    },
   },
   MenuWrapper: {
     menu: async (parent, {}, { dataSources }) => {
@@ -1522,19 +1675,21 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   SortOptions: {
-    options: async (parent, { input }, { dataSources }) => {
-      const baseSortOptions: DropdownOption[] = [
-        {
-          icon: DamsIcons.NoIcon,
-          label: 'metadata.labels.date-updated',
-          value: 'date_updated',
-        },
-        {
-          icon: DamsIcons.NoIcon,
-          label: 'metadata.labels.last-editor',
-          value: 'last_editor',
-        },
-      ];
+    options: async (parent, { input, excludeBaseSortOptions }, { dataSources }) => {
+      let baseSortOptions: DropdownOption[] = [];
+      if (!excludeBaseSortOptions)
+        baseSortOptions = [
+          {
+            icon: DamsIcons.NoIcon,
+            label: 'metadata.labels.date-updated',
+            value: 'date_updated',
+          },
+          {
+            icon: DamsIcons.NoIcon,
+            label: 'metadata.labels.last-editor',
+            value: 'last_editor',
+          },
+        ];
       const default_sorting = input.filter((option) => option.primary);
       return [
         ...default_sorting,
@@ -1599,7 +1754,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   MapMetadata: {
     value: async (
       parent: any,
-      { key, source, relationKey, splitRegex },
+      { key, source, defaultValue, relationKey, splitRegex },
       { dataSources }
     ) => {
       const resolveObject: { [key: string]: Function } = {
@@ -1607,8 +1762,15 @@ export const baseResolver: Resolvers<ContextValue> = {
           prepareMetadataFieldForMapData(
             parent.metadata,
             key,
-            splitRegex as SplitRegex
+            splitRegex as SplitRegex,
+            defaultValue
           ),
+        location: () =>
+          prepareLocationFieldForMapData(
+            parent.location,
+            key,
+            splitRegex as SplitRegex,
+            defaultValue          ),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,
@@ -1618,26 +1780,6 @@ export const baseResolver: Resolvers<ContextValue> = {
           ),
       };
       return (await resolveObject[source]()) || '';
-    },
-  },
-  MapComponent: {
-    mapType: async (parent: unknown, { input }, { dataSources }) => {
-      return input as MapTypes;
-    },
-    center: async (parent: unknown, { input }, { dataSources }) => {
-      return input as [number];
-    },
-    zoom: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    blur: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    radius: async (parent: unknown, { input }, { dataSources }) => {
-      return input as number;
-    },
-    mapMetadata: async (parent: unknown, {}, { dataSources }) => {
-      return parent as MapMetadata;
     },
   },
   FetchDeepRelations: {
@@ -1657,6 +1799,26 @@ export const baseResolver: Resolvers<ContextValue> = {
   PaginationLimitOptions: {
     options: async (parent, { input }, { dataSources }) => {
       return input;
+    },
+  },
+  PreviewComponent: {
+    type: async (parent, { input }, { dataSources }) => {
+      return input as PreviewTypes;
+    },
+    title: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+    listItemsCoverage: async (parent, { input }, { dataSources }) => {
+      return input as ListItemCoverageTypes;
+    },
+    previewQuery: async (parent, { input }, { dataSources }) => {
+      return input as string;
+    },
+    openByDefault: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    metadataPreviewQuery: async (parent, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   FormTab: {
@@ -1775,6 +1937,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     multiple: async (parent, _args, { dataSources }) => {
       return parent.multiple || false;
     },
+    entityType: async (parent, _args, { dataSources }) => {
+      return parent.entityType || '';
+    },
   },
   Validation: {
     value: async (parent, _args, { dataSources }) => {
@@ -1848,4 +2013,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || [];
     },
   },
+  TaggingExtensionConfiguration: {
+    customQuery: async (_source, { input }, { dataSources }) => {
+      return input
+    },
+    taggableEntityConfiguration: async (_source, { configuration }, { dataSources }) => {
+      return configuration
+    }
+  }
 };

@@ -1,10 +1,13 @@
 import {
+  resolveLocationData,
   resolveMetadata,
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
 import { DataSources, type FormattersConfig } from '../types';
-import { Metadata } from '../../../generated-types/type-defs';
+import { Metadata  } from '../../../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
+import { GraphQLError } from "graphql";
+import { CollectionAPIDerivative, CollectionAPIEntity } from "../types/collectionAPITypes";
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
@@ -30,21 +33,25 @@ export const resolveIntialValueMetadata = async (
 };
 
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
-  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
-  let value = parent;
-  for (const part of keyParts || []) value = value?.[part];
+  try {
+    const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
+    let value = parent;
+    for (const part of keyParts || []) value = value?.[part];
 
-  let entity;
-  if (String(formatter).startsWith("link|")) {
-    entity = await dataSources.CollectionAPI.getEntity(
-      value,
-      '',
-      'entities',
-      true
-    );
+    let entity;
+    if (String(formatter).startsWith("link|")) {
+      entity = await dataSources.CollectionAPI.getEntity(
+        value,
+        '',
+        'entities',
+        true
+      );
+    }
+
+    return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
+  } catch (e) {
+    return ''
   }
-
-  return formatterFactory(ResolverFormatters.Root)({ value: value ?? '', formatter, formatterSettings, entity })
 };
 
 export const resolveIntialValueRelations = async (
@@ -78,6 +85,7 @@ export const resolveIntialValueRelations = async (
         type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
       } else {
         if (relationEntityType) {
+          if (!relation.key) console.log(relation, "IntialValueResolver")
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             relationEntityType,
@@ -86,6 +94,7 @@ export const resolveIntialValueRelations = async (
           );
         }
         else if (metadataKeyAsLabel || String(formatter).startsWith("link|")) {
+          if (!relation.key) console.log(relation, "IntialValueResolver2")
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             '',
@@ -113,7 +122,7 @@ export const resolveIntialValueRelations = async (
   } catch {
     return parent?.[key] ?? '';
   }
-  return '';
+  return [];
 };
 
 export const resolveIntialValueRelationMetadata = (
@@ -226,3 +235,21 @@ export const resolveIntialValueMetadataOrRelation = async (
   }
 };
 
+export const resolveIntialValueDerivatives = async (parent: CollectionAPIEntity, key: string, technicalOrigin: string, dataSources: DataSources): Promise<string> => {
+  if (parent.type !== 'mediafile') throw new GraphQLError('The derivatives source can only be used on mediafiles')
+  const derivativesResult = await dataSources.CollectionAPI.getDerivatives(parent._id)
+  const derivatives: CollectionAPIDerivative[] = derivativesResult.results
+  const derivativeFromTechnicalOrigin: {[key: string]: any} | undefined = derivatives.find((derivative: CollectionAPIDerivative) => derivative.technical_origin === technicalOrigin)
+  if (!derivativeFromTechnicalOrigin) return ''
+  return derivativeFromTechnicalOrigin[key] as string
+}
+
+export const resolveIntialValueLocation = async (
+    dataSources: DataSources,
+    parent: any,
+    key: string,
+    keyOnMetadata: string | undefined | null,
+    formatter: string | null
+): Promise<string | { label: string, formatter: string }> => {
+  return await resolveLocationData(parent, key);
+};

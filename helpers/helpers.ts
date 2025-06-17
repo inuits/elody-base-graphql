@@ -120,20 +120,18 @@ export const capitalizeString = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+// Iteration filters exist so we can fetch multiple entity types with different relations filters in 1 call
+// This function can extract the right relation filter that fits the entity type
 export const determineAdvancedFiltersForIteration = (
   entityType: Entitytyping,
   advancedFilterInputs: AdvancedFilterInput[]
 ) => {
   const relations = parseRelationTypesForEntityType(entityType);
   let filtersIteration = advancedFilterInputs.filter(
-    (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+    (advancedFilter) =>
+      advancedFilter.type === AdvancedFilterTypes.Type &&
+      advancedFilter.value === entityType
   );
-  if (filtersIteration.length > 0) {
-    filtersIteration = JSON.parse(JSON.stringify(filtersIteration));
-    filtersIteration[0].value = filtersIteration[0].value.filter(
-      (value: string) => value === entityType
-    )[0];
-  }
   advancedFilterInputs
     .filter(
       (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection
@@ -141,25 +139,31 @@ export const determineAdvancedFiltersForIteration = (
     .forEach((filter: AdvancedFilterInput) => {
       if (Array.isArray(filter.key)) {
         if (
-          compareRelationsFilterKey(filter.key[0], relations.relationType) ||
-          compareRelationsFilterKey(filter.key[0], relations.fromRelationType)
+            compareRelationsFilterKey(filter.key[0], relations.relationType) ||
+            compareRelationsFilterKey(filter.key[0], relations.fromRelationType)
         )
           filtersIteration.push(filter);
       } else {
         if (
-          filter.key === relations.relationType ||
-          filter.key === relations.fromRelationType
+            filter.key === relations.relationType ||
+            filter.key === relations.fromRelationType
         ) {
           filtersIteration.push(filter);
         }
       }
     });
+  const aditionalFilters = advancedFilterInputs.filter(
+    (advancedFilter: AdvancedFilterInput) =>
+        advancedFilter.type !== AdvancedFilterTypes.Type &&
+        advancedFilter.type !== AdvancedFilterTypes.Selection
+  );
+  filtersIteration.push(...aditionalFilters);
   return filtersIteration;
 };
 
 export const compareRelationsFilterKey = (
-  key: string,
-  comparison: string
+    key: string,
+    comparison: string
 ): boolean => {
   const match = key.match(/relations\.(.*?)\.key/);
   if (!match || match.length < 2) return false;

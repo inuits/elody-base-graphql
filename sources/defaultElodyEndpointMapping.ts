@@ -11,6 +11,7 @@ import applyMediaFileEndpoint from '../endpoints/mediafilesEndpoint';
 import { applyTranslationEndpoint } from '../endpoints/translationEndpoint';
 import { applyTenantEndpoint } from '../endpoints/tenantEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
+import { applyLinkedOpenDataEndpoint } from '../endpoints/linkedOpenDataEndpoint';
 import { TypeUrlMapping } from '../types';
 
 export const defaultElodyEndpointMapping: Record<string, Function> = {
@@ -41,4 +42,5 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     applyTranslationEndpoint(app, appTranslations),
   tenantEndpoint: (app: Express) => applyTenantEndpoint(app),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
+  // linkedOpenDataEndpoint: (app: Express) => applyLinkedOpenDataEndpoint(app),
 };

@@ -70,10 +70,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     try {
       let search = searchValue;
       data = await this.get(
-        `${getCollectionValueForEntityType(type)}?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&asc=${search.isAsc ? 1 : 0}&order_by=${search.order_by}`
+        `${getCollectionValueForEntityType(
+          type
+        )}?limit=${limit}&skip=${this.getSkip(skip, limit)}&asc=${
+          search.isAsc ? 1 : 0
+        }&order_by=${search.order_by}`
       );
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -84,14 +85,28 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getEntitiesByAdvancedSearch(
     q: string,
-    filter_by: string,
     query_by: string,
+    filter_by: string,
+    query_by_weights?: string,
+    sort_by?: string,
+    limit?: number,
+    per_page?: number,
+    facet_by?: string
   ): Promise<EntitiesResults> {
     let data;
-    const filters = { q, filter_by, query_by };
+    const filters = {
+      q,
+      filter_by,
+      query_by,
+      sort_by,
+      per_page,
+      limit,
+      query_by_weights,
+      facet_by,
+    };
     try {
       data = await this.post('filter_typesense', {
-        body: filters
+        body: filters,
       });
       data.results.forEach((element: any) => setId(element));
     } catch (e) {
@@ -100,6 +115,19 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data as EntitiesResults;
   }
 
+  async getEntitiesByAiSearch(input: string): Promise<EntitiesResults> {
+    let data;
+    const filters = { input };
+    try {
+      data = await this.post('ai_search', {
+        body: filters,
+      });
+      data.results.forEach((element: any) => setId(element));
+    } catch (e) {
+      console.log(e);
+    }
+    return data as EntitiesResults;
+  }
   async getTenants(): Promise<EntitiesResults> {
     let data: any;
     data = await this.get('tenants?limit=100&order_by=label');
@@ -144,12 +172,16 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (hasNoSoftParam) {
         config.uri += config.uri.includes('?') ? '&soft=1' : '?soft=1';
       }
-      if (config.uri.startsWith("/"))
-        config.uri = config.uri.slice(1);
+      if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
-      const data = await this[config.crud as CRUDMethod](config.uri, {
-        body: config.body,
-      });
+      let data;
+      if ((config.crud as CRUDMethod) == 'get') {
+        data = await this[config.crud as CRUDMethod](config.uri);
+      } else {
+        data = await this[config.crud as CRUDMethod](config.uri, {
+          body: config.body,
+        });
+      }
       return data === 'good';
     } catch (e) {
       return false;
@@ -198,9 +230,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.patch(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
         {
@@ -220,9 +252,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<string> {
     let data;
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.delete(
         `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
       );
@@ -239,16 +271,16 @@ export class CollectionAPI extends AuthRESTDataSource {
     _collection: string | undefined = undefined,
     returnIdIfFails: boolean = false
   ): Promise<any> {
-    const idSplit = id.split('/');
-    if (idSplit.length > 1) id = idSplit[1];
     let data;
     try {
+      const idSplit = id.split('/');
+      if (idSplit.length > 1) id = idSplit[1];
       data = await this.get<any>(
         `${
           _collection ? _collection : getCollectionValueForEntityType(type)
         }/${id}`
       );
-    } catch (error) {
+    } catch (error: any) {
       if (returnIdIfFails) return id;
       throw error;
     }
@@ -297,8 +329,8 @@ export class CollectionAPI extends AuthRESTDataSource {
       return await this.get(
         `${Collection.Entities}/${id}/mediafiles?non_public=1`
       );
-    } catch (e) {
-      return { results: [] };
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -425,7 +457,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     relations: BaseRelationValuesInput[],
     collection: Collection = Collection.Entities
   ): Promise<any> {
-    if (relations.length <= 0) return [];
     return await this.put(`${collection}/${id}/relations`, {
       body: relations,
     });
@@ -451,18 +482,25 @@ export class CollectionAPI extends AuthRESTDataSource {
   async bulkDeleteEntities(
     ids: string[] = [],
     path: Collection,
-    deleteEntities: DeleteEntitiesInput
+    deleteEntities: DeleteEntitiesInput,
+    skipItemsWithRelationDuringBulkDelete: string[]
   ): Promise<string> {
     if (ids.length === 0) return 'no ids were specified';
 
-    const queryParams = new URLSearchParams({
-      delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
-    }).toString();
+    try {
+      const queryParams = new URLSearchParams({
+        delete_mediafiles: deleteEntities.deleteMediafiles ? '1' : '0',
+        skip_items_with_relation:
+          skipItemsWithRelationDuringBulkDelete[0] ?? '',
+      }).toString();
 
-    await this.delete(`${path}?${queryParams}`, {
-      body: { identifiers: ids },
-    });
-    return 'data has been successfully deleted';
+      const result = await this.delete(`${path}?${queryParams}`, {
+        body: { identifiers: ids },
+      });
+      return result.parent_job_id;
+    } catch (error) {
+      return '';
+    }
   }
 
   async createEntity(
@@ -529,6 +567,14 @@ export class CollectionAPI extends AuthRESTDataSource {
         advancedFilterInputs,
         advancedSearchValue
       );
+    } else if (Entitytyping.History === type) {
+      data = await this.doAdvancedHistoryEntitiesCall(
+        type,
+        1000,
+        skip,
+        [],
+        advancedSearchValue
+      );
     } else {
       data = await this.doAdvancedEntitiesCall(
         type,
@@ -572,7 +618,26 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
     return await this.post(
-      `${getCollectionValueForEntityType(type)}/filter?limit=${limit}&skip=${this.getSkip(
+      `${getCollectionValueForEntityType(
+        type
+      )}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}&order_by=${
+        advancedSearchValue.order_by
+      }&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
+      { body }
+    );
+  }
+
+  // TODO: redo or remove after the demo #139636
+  private async doAdvancedHistoryEntitiesCall(
+    type: Entitytyping,
+    limit: number,
+    skip: number,
+    advancedFilterInputs: AdvancedFilterInput[],
+    advancedSearchValue: SearchFilter
+  ): Promise<EntetiesCallReturn> {
+    const body = advancedFilterInputs;
+    const data = await this.post(
+      `history/filter?limit=${limit}&skip=${this.getSkip(
         skip,
         limit
       )}&order_by=${advancedSearchValue.order_by}&asc=${
@@ -580,6 +645,12 @@ export class CollectionAPI extends AuthRESTDataSource {
       }`,
       { body }
     );
+
+    return {
+      ...data,
+      results: data.results.map((item: any) => item.object),
+      limit,
+    };
   }
 
   private async doAdvancedMediaCall(
@@ -704,7 +775,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   async GetFilterOptions(
     input: AdvancedFilterInput[],
     limit: number,
-    entityType: string
+    entityType: string,
+    preferredLanguage?: string | null
   ): Promise<DropdownOption[]> {
     const data = await this.post(
       `${getCollectionValueForEntityType(
@@ -733,5 +805,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     );
     if (data.results && data.results.length > 0) return data.results[0];
     return undefined;
+  }
+
+  async getDerivatives(mediafileId: string): Promise<any> {
+    return this.get(`mediafiles/${mediafileId}/derivatives`);
   }
 }

@@ -73,7 +73,6 @@ export const baseFragments = gql`
     }
     advancedFilterInputForSearchingOptions {
       type
-      parent_key
       key
       value
       match_exact
@@ -84,9 +83,23 @@ export const baseFragments = gql`
     maxAmountOfFiles
     uploadMultiple
     isMetadataField
+    relationFilter {
+      lookup {
+        as
+        foreign_field
+        from
+        local_field
+      }
+      type
+      key
+      value
+      match_exact
+      item_types
+    }
     dependsOn
     multiple
     lineClamp
+    entityType
   }
 
   fragment metadataRelation on MetadataRelation {
@@ -129,6 +142,7 @@ export const baseFragments = gql`
     formRelationType
     askForCloseConfirmation
     neededPermission
+    skipItemsWithRelationDuringBulkDelete
   }
 
   fragment viewModes on ViewModesWithConfig {
@@ -156,12 +170,24 @@ export const baseFragments = gql`
       id
       filename: keyValue(key: "filename", source: root)
       original_filename: keyValue(key: "original_filename", source: root)
+      transcode_filename: keyValue(
+        key: "filename"
+        source: derivatives
+        technicalOrigin: "transcode"
+      )
       original_file_location: keyValue(
         key: "original_file_location"
         source: root
       )
+      transcode_file_location: keyValue(
+        key: "transcode_file_location"
+        source: derivatives
+        technicalOrigin: "transcode"
+      )
       thumbnail: keyValue(key: "filename", source: root)
       mimetype: keyValue(key: "mimetype", source: root)
+      height: keyValue(key: "img_height", source: root)
+      width: keyValue(key: "img_width", source: root)
       __typename
     }
     teaserMetadata {
@@ -213,15 +239,28 @@ export const baseFragments = gql`
     }
     allowedViewModes {
       viewModes(
-        input: [
-          { viewMode: ViewModesList }
-          { viewMode: ViewModesGrid }
-          { viewMode: ViewModesMedia }
-        ]
+        input: [{ viewMode: ViewModesList }, { viewMode: ViewModesGrid }]
       ) {
         ...viewModes
       }
     }
     __typename
+  }
+
+  fragment taggableEntityConfiguration on TaggableEntityConfiguration {
+    taggableEntityType
+    createNewEntityFormQuery
+    relationType
+    metadataFilterForTagContent
+    metadataKeysToSetAsAttribute
+    tag
+    tagConfigurationByEntity {
+      configurationEntityType
+      configurationEntityRelationType
+      tagMetadataKey
+      colorMetadataKey
+      metadataKeysToSetAsAttribute
+      secondaryAttributeToDetermineTagConfig
+    }
   }
 `;

@@ -33,8 +33,8 @@ const handleLinkFormatterFromEntity = ({
   entity: BaseEntity & { metadata: Metadata[] };
   formatterSettings: LinkFormatter;
 }): { label: string; link: string, entity: BaseEntity & { metadata: Metadata[] } | string } => {
-  let value: string = entity[formatterSettings.value as keyof BaseEntity];
-  let label = entity.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value || entity?.id;
+  let value: string = entity?.[formatterSettings.value as keyof BaseEntity] || "";
+  let label = entity?.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value || entity?.id || "";
   let link = formatterSettings.link;
   if (!label) {
     label = entity;
@@ -109,6 +109,7 @@ const applyRootFormatter = ({
     const currentFormatter: Formatters = formatterSettings[formatterType][formatterTypeOption];
     return { ...handleLinkFormatterFromEntity({ entity, formatterSettings: currentFormatter as LinkFormatter }), formatter };
   }
+
   return handleRegexpFormatter({ value, formatter, formatterSettings });
 };
 

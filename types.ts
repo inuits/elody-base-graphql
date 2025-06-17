@@ -11,6 +11,7 @@ import {
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
 import { AuthRESTDataSource } from "./auth/AuthRESTDataSource";
+import {GraphqlAPI} from "./sources/graphql";
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
@@ -27,6 +28,7 @@ export interface DataSources {
   StorageAPI: StorageAPI;
   TranscodeService: TranscodeService;
   OcrService: OcrService;
+  GraphqlAPI: GraphqlAPI;
   [key: string]: AuthRESTDataSource;
 }
 

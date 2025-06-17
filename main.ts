@@ -11,7 +11,6 @@ import applyPromEndpoint from './endpoints/promEndpoint';
 import cors from 'cors';
 import express, { Express } from 'express';
 import compression from 'compression';
-import ViteExpress from 'vite-express';
 import http from 'http';
 import path from 'path';
 import { ApolloServer } from '@apollo/server';
@@ -43,8 +42,8 @@ import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { loadTranslations } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import {
-  serveFrontendThroughExpress,
-  serveFrontend,
+  configureFrontendForEnvironment,
+  renderPageForEnvironment,
 } from './endpoints/frontendEndpoint';
 import type {
   CollectionAPIEntity,
@@ -62,6 +61,7 @@ import {
   addAdditionalOptionalDataSources,
   generateElodyConfig,
 } from './helpers/elodyModuleHelpers';
+import { createServer as createViteServer, ViteDevServer } from 'vite';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -130,7 +130,7 @@ const start = (
       environment: appConfig.nomadNamespace,
     });
   }
-
+  
   const configureMiddleware = (app: any, appConfig: Environment) => {
     applyAuthSession(
       app,
@@ -149,6 +149,21 @@ const start = (
     const httpServer = http.createServer(app);
     httpServer.setTimeout(120000);
 
+    let viteServer: ViteDevServer | undefined;
+    if (appConfig.environment !== 'production') {
+      viteServer = await createViteServer({
+        server: { 
+          middlewareMode: true,
+          hmr: {
+            port: 24678,
+            clientPort: 24678
+          }
+        },
+        appType: 'spa',
+        root: path.join(__dirname, '../dashboard'),
+      });
+    }
+
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
       gateway: {
@@ -164,7 +179,6 @@ const start = (
     });
 
     app.use(compression());
-    app.use(express.static(path.join(__dirname, 'dist')));
 
     app.use(
       cors({
@@ -226,6 +240,7 @@ const start = (
       translationEndpoint: [app, appTranslations],
       tenantEndpoint: [app],
       healthEndpoint: [app],
+      // linkedOpenDataEndpoint: [app],
     };
 
     Object.keys(defaultElodyEndpointMapping).forEach((key: string) => {
@@ -261,15 +276,11 @@ const start = (
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
 
-    // Ensure this is always the last endpoint to be applied
-    if (appConfig.environment === 'production')
-      serveFrontendThroughExpress(app);
+    configureFrontendForEnvironment(app, viteServer);
 
-    await new Promise<void>((resolve) => {
-      const server = httpServer.listen({ port: appConfig.port }, resolve);
-      ViteExpress.bind(app, server);
+    httpServer.listen(appConfig.port, () => {
+      console.log(`Server is running on port ${appConfig.port}`);
     });
-    console.log(`Server is running on port ${appConfig.port}`);
 
     return { app };
   };
@@ -308,6 +319,6 @@ export {
   resolveRelations,
   simpleReturn,
   getRoutesObject,
-  serveFrontend,
+  renderPageForEnvironment,
   generateElodyConfig,
 };

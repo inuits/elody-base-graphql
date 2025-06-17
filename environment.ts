@@ -58,6 +58,18 @@ export interface Environment {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
+    advancedSearch?: {
+        queryBy: string;
+        queryByWeights?: string;
+        filterBy: string;
+        sortBy?: string;
+        limit?: number;
+        perPage?: number;
+        facetBy?: string;
+    };
+    aiSearch?: {
+      hasAiSearch?: boolean;
+    };
     SEO: {
       hasSEO: boolean;
       seoMetadataKeys?: {
@@ -67,7 +79,7 @@ export interface Environment {
       };
     };
     hasPersistentSessions?: boolean;
-    hasAdvancedSearch?: boolean;
+    supportsMultilingualMetadataEditing?: boolean;
   };
   customization: {
     applicationTitle: string;

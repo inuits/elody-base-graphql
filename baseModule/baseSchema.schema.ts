@@ -24,6 +24,17 @@ export const baseSchema = gql`
     user
     job
     shareLink
+    history
+  }
+
+  enum Matchers {
+    AnyMatcher
+    NoneMatcher
+    ExactMatcher
+    ContainsMatcher
+    MinIncludedMatcher
+    MaxIncludedMatcher
+    InBetweenMatcher
   }
 
   enum ElodyServices {
@@ -91,6 +102,7 @@ export const baseSchema = gql`
     dropdownSingleselectMetadata
     fileUpload
     csvUpload
+    xmlUpload
     baseEntityPickerField
     baseFileSystemImportField
     baseMagazineWithMetsImportField
@@ -115,6 +127,7 @@ export const baseSchema = gql`
     baseMagazineWithMetsImportField
     baseMagazineWithCsvImportField
     baseMediafilesWithOcrImportField
+    baseXmlUploadField
   }
 
   enum FileType {
@@ -132,6 +145,7 @@ export const baseSchema = gql`
     tiff
     tif
     gif
+    json
   }
 
   enum TranscodeType {
@@ -169,6 +183,7 @@ export const baseSchema = gql`
     existing_date
     regex
     email
+    url
   }
 
   enum ValidationFields {
@@ -374,9 +389,11 @@ export const baseSchema = gql`
     disabled: Boolean
     fieldKeyToSave(input: String): String
     isMetadataField(input: Boolean): Boolean
+    relationFilter: AdvancedFilterInputType
     dependsOn: String
     multiple: Boolean
     lineClamp: String
+    entityType: String
   }
 
   enum TypeModals {
@@ -388,8 +405,12 @@ export const baseSchema = gql`
     Delete
     DynamicForm
     Search
+    SearchAi
     SaveSearch
     SaveSearchPicker
+    ElodyEntityTaggingModal
+    EntityDetailModal
+    IiifOperationsModal
   }
 
   enum ModalStyle {
@@ -449,11 +470,13 @@ export const baseSchema = gql`
     ArchiveAlt
     BookOpen
     BrightnessPlus
+    Car
     CloudBookmark
     Compass
     Create
     Database
     Download
+    Draggabledots
     ExclamationTriangle
     FileInfoAlt
     Focus
@@ -466,6 +489,7 @@ export const baseSchema = gql`
     InfoCircle
     Iot
     KeyholeSquare
+    ListUl
     LocationArrowAlt
     LocationPoint
     MapMarker
@@ -546,6 +570,7 @@ export const baseSchema = gql`
     KeyholeSquare
     Link
     ListUl
+    ListOl
     LocationArrowAlt
     Map
     Minus
@@ -567,6 +592,7 @@ export const baseSchema = gql`
     SortUp
     SquareFull
     Swatchbook
+    Tag
     Text
     Trash
     Update
@@ -575,6 +601,8 @@ export const baseSchema = gql`
     UserCircle
     WindowGrid
     WindowMaximize
+    Folder
+    VideoSlash
   }
 
   input BulkOperationInputModal {
@@ -583,6 +611,7 @@ export const baseSchema = gql`
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
+    skipItemsWithRelationDuringBulkDelete: [String]
   }
   type BulkOperationModal {
     typeModal: TypeModals!
@@ -590,6 +619,7 @@ export const baseSchema = gql`
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
+    skipItemsWithRelationDuringBulkDelete: [String]
   }
 
   enum ActionContextEntitiesSelectionType {
@@ -723,7 +753,6 @@ export const baseSchema = gql`
   }
 
   enum SearchInputType {
-    AdvancedInputMediaFilesType
     AdvancedInputType
     SimpleInputtype
   }
@@ -778,6 +807,7 @@ export const baseSchema = gql`
   }
 
   type PermissionRequestInfo {
+    datasource: String!
     crud: String!
     uri: String!
     body: JSON!
@@ -821,7 +851,10 @@ export const baseSchema = gql`
   }
 
   type SortOptions {
-    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    options(
+      input: [DropdownOptionInput!]!
+      excludeBaseSortOptions: Boolean
+    ): [DropdownOption!]!
     isAsc(input: SortingDirection!): SortingDirection
   }
 
@@ -839,38 +872,6 @@ export const baseSchema = gql`
     customQueryBlockingRelationsFilters(input: String): String
     customQueryBlockingEntityTypes(input: [Entitytyping]): [Entitytyping]
     blockingRelationsLabel(input: String): String
-  }
-
-  enum MapTypes {
-    heatMap
-    wktMap
-  }
-
-  input SplitRegexInput {
-    separator: String!
-    retrieveSection: Int!
-  }
-
-  type SplitRegex {
-    separator: String!
-    retrieveSection: Int!
-  }
-
-  type MapMetadata {
-    value(
-      key: String!
-      source: KeyValueSource!
-      relationKey: String
-      splitRegex: SplitRegexInput
-    ): JSON!
-  }
-  type MapComponent {
-    mapType(input: MapTypes!): MapTypes!
-    center(input: [Float]!): [Float]!
-    zoom(input: Int!): Int!
-    blur(input: Int!): Int!
-    radius(input: Int!): Int!
-    mapMetadata: MapMetadata
   }
 
   enum DeepRelationsFetchStrategy {
@@ -955,6 +956,7 @@ export const baseSchema = gql`
     relationMetadata
     relationRootdata
     metadataOrRelation
+    derivatives
   }
 
   type IntialValues {
@@ -971,6 +973,7 @@ export const baseSchema = gql`
       relationEntityType: String
       keyOnMetadata: String
       formatter: String
+      technicalOrigin: String
     ): JSON!
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
@@ -1025,6 +1028,7 @@ export const baseSchema = gql`
   input MetadataValuesInput {
     key: String!
     value: JSON!
+    lang: String
   }
 
   input EntityFormInput {
@@ -1060,12 +1064,14 @@ export const baseSchema = gql`
     seventy
     eighty
     ninety
+    hundred
   }
 
   enum BaseLibraryModes {
     normalBaseLibrary
     basicBaseLibraryWithBorder
     basicBaseLibrary
+    previewBaseLibrary
   }
 
   enum RelationActions {
@@ -1081,6 +1087,7 @@ export const baseSchema = gql`
   type EntityListElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String
+    enableAdvancedFilters(input: Boolean): Boolean
     type(input: MediaFileElementTypes): String
     entityTypes(input: [Entitytyping]): [Entitytyping]
     entityList(metaKey: String): [Entity]
@@ -1114,12 +1121,61 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
   }
 
+  enum MapTypes {
+    heatMap
+    wktMap
+  }
+
+  input SplitRegexInput {
+    separator: String!
+    retrieveSection: Int!
+  }
+
+  type SplitRegex {
+    separator: String!
+    retrieveSection: Int!
+  }
+
+  type MapMetadata {
+    value(
+      key: String!
+      source: KeyValueSource!
+      defaultValue: JSON
+      relationKey: String
+      splitRegex: SplitRegexInput
+    ): JSON!
+  }
+
   type MapElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
     type(input: MapTypes): String!
     center(input: String): String!
     metaData: PanelMetaData!
+    mapMetadata: MapMetadata
+    config(input: [ConfigItemInput]): [ConfigItem]
+  }
+
+  input HierarchyRelationListInput {
+    key: String!
+    entityType: Entitytyping!
+  }
+
+  type HierarchyRelationList {
+    key: String!
+    entityType: Entitytyping!
+  }
+
+  type HierarchyListElement {
+    isCollapsed(input: Boolean!): Boolean!
+    label(input: String): String!
+    hierarchyRelationList(
+      input: [HierarchyRelationListInput]
+    ): [HierarchyRelationList]!
+    entityTypeAsCenterPoint(input: Entitytyping): Entitytyping
+    centerCoordinatesKey(input: String!): String!
+    customQuery(input: String): String!
+    can(input: [String]): [String]
   }
 
   type SingleMediaFileElement {
@@ -1202,6 +1258,8 @@ export const baseSchema = gql`
     mediafilesWithOptionalCsv
     uploadCsvForReordening
     mediafilesWithOcr
+    optionalMediafiles
+    xmlMarc
   }
 
   enum UploadFieldSize {
@@ -1215,6 +1273,19 @@ export const baseSchema = gql`
     single
     reorderEntities
     editMetadataWithCsv
+  }
+
+  enum WysiwygExtensions {
+    color
+    listItem
+    textStyle
+    starterKit
+    bold
+    italic
+    paragraph
+    doc
+    text
+    elodyTaggingExtension
   }
 
   type PanelInfo {
@@ -1277,6 +1348,10 @@ export const baseSchema = gql`
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
     lineClamp(input: String): String!
+    copyToClipboard(input: Boolean): Boolean
+    isMultilingual(input: Boolean): Boolean
+    customValue(input: String): String
+    can(input: [String!]): [String]
   }
 
   type PanelRelationMetaData {
@@ -1339,6 +1414,7 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
     relation: [PanelRelation]
     entityListElement: EntityListElement
+    wysiwygElement: WysiwygElement
   }
 
   type WindowElementBulkDataPanel {
@@ -1346,9 +1422,15 @@ export const baseSchema = gql`
     intialValueKey(input: String!): String!
   }
 
+  enum WindowElementLayout {
+    Vertical
+    HorizontalGrid
+  }
+
   type WindowElement {
     label(input: String): String!
     panels: WindowElementPanel!
+    layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
     lineClamp(input: String): String!
@@ -1377,6 +1459,58 @@ export const baseSchema = gql`
     entityId(relationType: String, metadataKey: String): String!
   }
 
+  input TagConfigurationByEntityInput {
+    configurationEntityType: Entitytyping!
+    configurationEntityRelationType: String!
+    tagMetadataKey: String!
+    colorMetadataKey: String!
+    metadataKeysToSetAsAttribute: [String]
+    secondaryAttributeToDetermineTagConfig: String # This is needed when entities can have the same tag
+  }
+
+  type TagConfigurationByEntity {
+    configurationEntityType: Entitytyping!
+    configurationEntityRelationType: String!
+    tagMetadataKey: String!
+    colorMetadataKey: String!
+    metadataKeysToSetAsAttribute: [String]
+    secondaryAttributeToDetermineTagConfig: String # This is needed when entities can have the same tag
+  }
+
+  input TaggableEntityConfigurationInput {
+    taggableEntityType: Entitytyping!
+    createNewEntityFormQuery: String!
+    relationType: String!
+    metadataFilterForTagContent: String!
+    metadataKeysToSetAsAttribute: [String]
+    tag: String
+    tagConfigurationByEntity: TagConfigurationByEntityInput
+  }
+
+  type TaggableEntityConfiguration {
+    taggableEntityType: Entitytyping!
+    createNewEntityFormQuery: String!
+    relationType: String!
+    metadataFilterForTagContent: String!
+    metadataKeysToSetAsAttribute: [String]
+    tag: String
+    tagConfigurationByEntity: TagConfigurationByEntity
+  }
+
+  type TaggingExtensionConfiguration {
+    customQuery(input: String!): String!
+    taggableEntityConfiguration(
+      configuration: [TaggableEntityConfigurationInput!]!
+    ): [TaggableEntityConfiguration!]!
+  }
+
+  type WysiwygElement {
+    label(input: String!): String!
+    metadataKey(input: String!): String!
+    extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
+    taggingConfiguration: TaggingExtensionConfiguration
+  }
+
   type ColumnList {
     column: Column!
   }
@@ -1391,7 +1525,9 @@ export const baseSchema = gql`
     graphElement: GraphElement
     windowElement: WindowElement
     actionElement: ActionElement
+    wysiwygElement: WysiwygElement
     mapElement: MapElement
+    hierarchyListElement: HierarchyListElement
   }
 
   type Column {
@@ -1462,6 +1598,7 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
   }
 
   type BaseEntity implements Entity {
@@ -1476,8 +1613,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type MediaFileEntity implements Entity {
@@ -1492,8 +1630,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type Tenant implements Entity {
@@ -1508,8 +1647,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type User implements Entity {
@@ -1524,8 +1664,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type Job implements Entity {
@@ -1540,8 +1681,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type ShareLink implements Entity {
@@ -1556,8 +1698,9 @@ export const baseSchema = gql`
     advancedFilters: AdvancedFilters
     sortOptions: SortOptions
     bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
     deleteQueryOptions: DeleteQueryOptions
-    mapComponent: MapComponent
+    mapElement: MapElement
   }
 
   type EntitiesResults {
@@ -1571,6 +1714,26 @@ export const baseSchema = gql`
     deleteMediafiles: Boolean
   }
 
+  enum PreviewTypes {
+    ColumnList
+    MediaViewer
+    Map
+  }
+
+  enum ListItemCoverageTypes {
+    OneListItem
+    AllListItems
+  }
+
+  type PreviewComponent {
+    type(input: PreviewTypes!): PreviewTypes!
+    listItemsCoverage(input: ListItemCoverageTypes!): ListItemCoverageTypes!
+    title(input: String): String
+    previewQuery(input: String): String
+    openByDefault(input: Boolean): Boolean
+    metadataPreviewQuery(input: String): String
+  }
+
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
@@ -1582,6 +1745,7 @@ export const baseSchema = gql`
       advancedSearchValue: [FilterInput]
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
+      preferredLanguage: String
     ): EntitiesResults
     Tenants: EntitiesResults
     User: User
@@ -1590,6 +1754,8 @@ export const baseSchema = gql`
     EntityTypeSortOptions(entityType: String!): Entity!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
+    PreviewComponents(entityType: String!): Entity
+    PreviewElement: ColumnList
     BulkOperations(entityType: String!): Entity!
     CustomBulkOperations: Entity!
     BulkOperationCsvExportKeys(entityType: String!): BulkOperationCsvExportKeys!
@@ -1598,7 +1764,13 @@ export const baseSchema = gql`
       q: String!
       filter_by: String!
       query_by: String!
+      query_by_weights: String!
+      sort_by: String!
+      limit: Int
+      per_page: Int
+      facet_by: String!
     ): EntitiesResults!
+    EntitiesByAiSearch(input: String!): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!
@@ -1635,6 +1807,7 @@ export const baseSchema = gql`
       id: String!
       formInput: EntityFormInput!
       collection: Collection!
+      preferredLanguage: String
     ): Entity
     deleteData(
       id: String!
@@ -1645,6 +1818,7 @@ export const baseSchema = gql`
       ids: [String!]!
       path: Collection!
       deleteEntities: DeleteEntitiesInput
+      skipItemsWithRelationDuringBulkDelete: [String!]
     ): String
     linkMediafileToEntity(
       entityId: String!
@@ -1669,6 +1843,7 @@ export const baseSchema = gql`
     ViewModesList
     ViewModesGrid
     ViewModesMedia
+      @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
   }
 
