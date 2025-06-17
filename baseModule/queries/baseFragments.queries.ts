@@ -186,6 +186,8 @@ export const baseFragments = gql`
       )
       thumbnail: keyValue(key: "filename", source: root)
       mimetype: keyValue(key: "mimetype", source: root)
+      height: keyValue(key: "img_height", source: root)
+      width: keyValue(key: "img_width", source: root)
       __typename
     }
     teaserMetadata {
@@ -237,10 +239,7 @@ export const baseFragments = gql`
     }
     allowedViewModes {
       viewModes(
-        input: [
-          { viewMode: ViewModesList }
-          { viewMode: ViewModesGrid }
-        ]
+        input: [{ viewMode: ViewModesList }, { viewMode: ViewModesGrid }]
       ) {
         ...viewModes
       }
