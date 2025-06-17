@@ -1172,6 +1172,8 @@ export const baseSchema = gql`
     hierarchyRelationList(
       input: [HierarchyRelationListInput]
     ): [HierarchyRelationList]!
+    entityTypeAsCenterPoint(input: Entitytyping): Entitytyping
+    centerCoordinatesKey(input: String!): String!
     customQuery(input: String): String!
     can(input: [String]): [String]
   }

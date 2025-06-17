@@ -1066,6 +1066,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input as string[];
     },
+    entityTypeAsCenterPoint: async (_source, { input }, { dataSources }) => {
+      return input as Entitytyping;
+    },
+    centerCoordinatesKey: async (_source, { input }, { dataSources }) => {
+      return input || "";
+    },
   },
   SingleMediaFileElement: {
     label: async (_source, { input }, { dataSources }) => {
