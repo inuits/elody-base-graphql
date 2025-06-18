@@ -26,17 +26,22 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
-      if (this.hasWhiteListingFeature() && this.isIpAddressWhiteListed())
+      const ipWhitelistFeature = environment?.features?.ipWhiteListing;
+
+      if (
+        ipWhitelistFeature &&
+        this.hasWhiteListingFeature() &&
+        this.isIpAddressWhiteListed()
+      ) {
         request.headers['Authorization'] =
-          'Bearer ' +
-          environment.features.ipWhiteListing
-            .tokenToUseForWhiteListedIpAddresses;
-      else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true')
+          'Bearer ' + ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
+      } else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true') {
         throw new GraphQLError(`AUTH | NO TOKEN`, {
           extensions: {
             statusCode: 401,
           },
         });
+      }
     }
 
     const tenant = this.session.tenant;
@@ -50,13 +55,13 @@ export class AuthRESTDataSource extends RESTDataSource {
   };
 
   private isIpAddressWhiteListed = (): boolean => {
-    return (
+    return Boolean(
       environment &&
-      this.clientIp &&
-      this.hasWhiteListingFeature() &&
-      environment!.features.ipWhiteListing!.whiteListedIpAddresses.includes(
-        this.clientIp
-      )
+        this.clientIp &&
+        this.hasWhiteListingFeature() &&
+        environment.features.ipWhiteListing?.whiteListedIpAddresses.includes(
+          this.clientIp
+        )
     );
   };
 
