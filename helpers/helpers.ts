@@ -120,50 +120,9 @@ export const capitalizeString = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-// Iteration filters exist so we can fetch multiple entity types with different relations filters in 1 call
-// This function can extract the right relation filter that fits the entity type
-export const determineAdvancedFiltersForIteration = (
-  entityType: Entitytyping,
-  advancedFilterInputs: AdvancedFilterInput[]
-) => {
-  const relations = parseRelationTypesForEntityType(entityType);
-  let filtersIteration = advancedFilterInputs.filter(
-    (advancedFilter) =>
-      advancedFilter.type === AdvancedFilterTypes.Type &&
-      advancedFilter.value === entityType
-  );
-  advancedFilterInputs
-    .filter(
-      (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection
-    )
-    .forEach((filter: AdvancedFilterInput) => {
-      if (Array.isArray(filter.key)) {
-        if (
-            compareRelationsFilterKey(filter.key[0], relations.relationType) ||
-            compareRelationsFilterKey(filter.key[0], relations.fromRelationType)
-        )
-          filtersIteration.push(filter);
-      } else {
-        if (
-            filter.key === relations.relationType ||
-            filter.key === relations.fromRelationType
-        ) {
-          filtersIteration.push(filter);
-        }
-      }
-    });
-  const aditionalFilters = advancedFilterInputs.filter(
-    (advancedFilter: AdvancedFilterInput) =>
-        advancedFilter.type !== AdvancedFilterTypes.Type &&
-        advancedFilter.type !== AdvancedFilterTypes.Selection
-  );
-  filtersIteration.push(...aditionalFilters);
-  return filtersIteration;
-};
-
 export const compareRelationsFilterKey = (
-    key: string,
-    comparison: string
+  key: string,
+  comparison: string
 ): boolean => {
   const match = key.match(/relations\.(.*?)\.key/);
   if (!match || match.length < 2) return false;
@@ -177,4 +136,36 @@ export const extractErrorCode = (error: any): number => {
     error.status ||
     500
   );
+};
+
+export const getTypesFromFilterInputs = (
+  advancedFilterInputs: AdvancedFilterInput[],
+  entityType: Entitytyping
+): Entitytyping[] => {
+  const entityTypes: Set<string> = new Set([entityType]);
+  const typeFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
+    (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
+  );
+  const selectionFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
+    (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Selection
+  );
+
+  typeFilters
+    .flatMap((filter: AdvancedFilterInput) => filter.value)
+    .forEach((val) => entityTypes.add(val));
+
+  if (selectionFilters.length) {
+    const typeSelectionFilter: AdvancedFilterInput | undefined =
+      selectionFilters.find(
+        (filter: AdvancedFilterInput) => filter.key === 'type'
+      );
+    if (typeSelectionFilter) {
+      const selectionTypes = Array.isArray(typeSelectionFilter.value)
+        ? typeSelectionFilter.value
+        : [typeSelectionFilter.value];
+      selectionTypes.forEach((type) => entityTypes.add(type));
+    }
+  }
+
+  return Array.from(entityTypes) as Entitytyping[];
 };

@@ -4,8 +4,15 @@ import {
   parseRelationTypesForEntityType,
   removePrefixFromId,
 } from '../parsers/entity';
-import {resolveMetadata, resolveMetadataItemOfPreferredLanguage, resolveRelations} from '../resolvers/entityResolver';
-import {resolveAdvancedEntities, resolveSimpleEntities} from '../resolvers/entitiesResolver';
+import {
+  resolveMetadata,
+  resolveMetadataItemOfPreferredLanguage,
+  resolveRelations,
+} from '../resolvers/entityResolver';
+import {
+  resolveAdvancedEntities,
+  resolveSimpleEntities,
+} from '../resolvers/entitiesResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -99,16 +106,15 @@ import {
   ConfigItem,
   ColumnList,
 } from '../../../generated-types/type-defs';
-import {ContextValue} from '../types';
-import {baseFields} from '../sources/forms';
-import {GraphQLError, GraphQLScalarType, Kind} from 'graphql';
+import { ContextValue } from '../types';
+import { baseFields } from '../sources/forms';
+import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
-  determineAdvancedFiltersForIteration,
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
 } from '../helpers/helpers';
-import {parseItemTypesFromInputField} from '../parsers/inputField';
+import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
   resolveIntialValueDerivatives,
   resolveIntialValueLocation,
@@ -118,8 +124,8 @@ import {
   resolveIntialValueRelationRootdata,
   resolveIntialValueRelations,
   resolveIntialValueRoot,
-  resolveIntialValueTechnicalMetadata
-} from "../resolvers/intialValueResolver";
+  resolveIntialValueTechnicalMetadata,
+} from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
   prepareMetadataFieldForMapData,
@@ -182,19 +188,30 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedSearchValue,
         advancedFilterInputs,
         searchInputType,
-        preferredLanguage
+        preferredLanguage,
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
-      
-      const entitiesResolverMapping: Partial<Record<SearchInputType, () => Promise<EntitiesResults>>> = {
-        [SearchInputType.AdvancedInputType]: async () => await resolveAdvancedEntities(dataSources,type as Entitytyping | undefined, advancedFilterInputs, limit as number | undefined, skip as number | undefined, searchValue),
-        [SearchInputType.SimpleInputtype]: async () => await resolveSimpleEntities(dataSources)
-      }
 
-      return entitiesResolverMapping[searchInputType!!]!!()
+      const entitiesResolverMapping: Partial<
+        Record<SearchInputType, () => Promise<EntitiesResults>>
+      > = {
+        [SearchInputType.AdvancedInputType]: async () =>
+          await resolveAdvancedEntities(
+            dataSources,
+            type as Entitytyping | undefined,
+            advancedFilterInputs,
+            limit as number | undefined,
+            skip as number | undefined,
+            searchValue
+          ),
+        [SearchInputType.SimpleInputtype]: async () =>
+          await resolveSimpleEntities(dataSources),
+      };
+
+      return entitiesResolverMapping[searchInputType!!]!!();
 
       // const typeFilters = advancedFilterInputs.filter(
       //   (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
@@ -261,14 +278,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     EntitiesByAdvancedSearch: async (
       _source,
       {
-        q = "*",
-        query_by = "",
-        filter_by = "",
-        query_by_weights = "",
-        sort_by = "",
+        q = '*',
+        query_by = '',
+        filter_by = '',
+        query_by_weights = '',
+        sort_by = '',
         limit = 25,
         per_page = 25,
-        facet_by = "",
+        facet_by = '',
       },
       { dataSources }
     ): Promise<EntitiesResults> => {
@@ -280,19 +297,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         sort_by as string,
         limit as number,
         per_page as number,
-        facet_by as string,
+        facet_by as string
       );
     },
     EntitiesByAiSearch: async (
       _source,
-      {
-        input = "",
-      },
+      { input = '' },
       { dataSources }
     ): Promise<EntitiesResults> => {
-      return dataSources.CollectionAPI.getEntitiesByAiSearch(
-        input as string,
-      );
+      return dataSources.CollectionAPI.getEntitiesByAiSearch(input as string);
     },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();
@@ -327,11 +340,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         previewComponent: {},
       } as Entity;
     },
-    PreviewElement: async (
-        _source: any,
-        _args,
-        { dataSources },
-    ) => {
+    PreviewElement: async (_source: any, _args, { dataSources }) => {
       return {} as ColumnList;
     },
     BulkOperations: async (_source, { entityType }, { dataSources }) => {
@@ -433,14 +442,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (!permissionConfig) return false;
 
       let response: any;
-      if (permissionConfig.datasource === "CollectionAPI")
+      if (permissionConfig.datasource === 'CollectionAPI')
         response = await dataSources.CollectionAPI.checkAdvancedPermission(
-            permissionConfig,
-            parentEntityId,
-            childEntityId
+          permissionConfig,
+          parentEntityId,
+          childEntityId
         );
-      if (permissionConfig.datasource === "GraphqlAPI")
-        response = await dataSources.GraphqlAPI.checkAdvancedPermission(permissionConfig);
+      if (permissionConfig.datasource === 'GraphqlAPI')
+        response =
+          await dataSources.GraphqlAPI.checkAdvancedPermission(
+            permissionConfig
+          );
       return response;
     },
     PermissionMappingPerEntityType: async (
@@ -448,9 +460,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       { type },
       { dataSources }
     ) => {
-      let status = await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
-        type
-      );
+      let status =
+        await dataSources.CollectionAPI.postEntitiesFilterSoftCall(type);
       return status == '200';
     },
     PermissionMappingCreate: async (
@@ -458,9 +469,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       { entityType },
       { dataSources }
     ) => {
-      const status = await dataSources.CollectionAPI.postEntitySoftCall(
-        entityType
-      );
+      const status =
+        await dataSources.CollectionAPI.postEntitySoftCall(entityType);
       return status == '200';
     },
     CustomFormattersSettings: async (_source, _, { customFormatters }) => {
@@ -490,7 +500,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         },
       ];
     },
-    BulkOperationsRelationForm:  async (_source: any, _args, { dataSources }) => {
+    BulkOperationsRelationForm: async (
+      _source: any,
+      _args,
+      { dataSources }
+    ) => {
       return {} as WindowElement;
     },
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
@@ -525,7 +539,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           csv_mediafile_columns: mediafilesCsv,
           csv_entity_columns: assetsCsv,
           download_entity_id: createdEntity.id,
-          download_entity_title: createdEntity.metadata.filter((metadata: Metadata) => metadata.key === "title")[0].value,
+          download_entity_title: createdEntity.metadata.filter(
+            (metadata: Metadata) => metadata.key === 'title'
+          )[0].value,
         });
       } catch (e) {
         throw new GraphQLError(
@@ -604,7 +620,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         excludeEditStatus: EditStatus
       ): BaseRelationValuesInput[] => {
         return formInput.relations
-          .filter((relationInput) => relationInput.editStatus !== excludeEditStatus)
+          .filter(
+            (relationInput) => relationInput.editStatus !== excludeEditStatus
+          )
           .map((relationInput) => {
             const relation: any = {};
             Object.keys(relationInput)
@@ -623,19 +641,19 @@ export const baseResolver: Resolvers<ContextValue> = {
           filterEditStatus(EditStatus.Deleted),
           collection
         );
-      }
+      };
 
       const mutateMetadata = async () => {
         for (const metadata of formInput.metadata)
           if (Array.isArray(metadata.value) && metadata.value.length === 0)
-            metadata.value = "";
+            metadata.value = '';
 
         await dataSources.CollectionAPI.patchMetadata(
           id,
           formInput.metadata,
           collection
-        )
-      }
+        );
+      };
 
       if (formInput.updateOnlyRelations) {
         await mutateRelations();
@@ -665,10 +683,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return dataSources.CollectionAPI.bulkDeleteEntities(
-          ids,
-          path,
-          deleteEntities ?? {},
-          skipItemsWithRelationDuringBulkDelete as string[] ?? []
+        ids,
+        path,
+        deleteEntities ?? {},
+        (skipItemsWithRelationDuringBulkDelete as string[]) ?? []
       );
     },
     bulkAddRelations: async (
@@ -911,7 +929,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationEntityType,
         keyOnMetadata,
         formatter = '',
-        technicalOrigin
+        technicalOrigin,
       },
       { dataSources, customFormatters }
     ) => {
@@ -926,7 +944,13 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter
             ),
           root: () =>
-            resolveIntialValueRoot(dataSources, parent, key, formatter, customFormatters),
+            resolveIntialValueRoot(
+              dataSources,
+              parent,
+              key,
+              formatter,
+              customFormatters
+            ),
           relations: () =>
             resolveIntialValueRelations(
               dataSources,
@@ -949,7 +973,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter as string
             ),
           relationRootdata: () =>
-              resolveIntialValueRelationRootdata(
+            resolveIntialValueRelationRootdata(
               parent,
               key,
               uuid as string,
@@ -967,7 +991,13 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter as string,
               customFormatters
             ),
-          derivatives: () => resolveIntialValueDerivatives(parent, key, technicalOrigin as string, dataSources),
+          derivatives: () =>
+            resolveIntialValueDerivatives(
+              parent,
+              key,
+              technicalOrigin as string,
+              dataSources
+            ),
           location: () =>
             resolveIntialValueLocation(
               dataSources,
@@ -979,7 +1009,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         };
 
         const returnObject = await resolveObject[source]();
-        return (returnObject !== undefined) ? returnObject : '';
+        return returnObject !== undefined ? returnObject : '';
       } catch (e) {
         console.log(e);
         return '';
@@ -1034,8 +1064,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    center:  async (_source, { input }, { dataSources }) => {
-      return input !== undefined ? input as string : "";
+    center: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? (input as string) : '';
     },
     type: async (_source, { input }, { dataSources }) => {
       return input as string;
@@ -1070,7 +1100,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input as Entitytyping;
     },
     centerCoordinatesKey: async (_source, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
   SingleMediaFileElement: {
@@ -1387,7 +1417,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ?? false;
     },
     customValue: async (_source, { input }, { dataSources }) => {
-      return input ?? "";
+      return input ?? '';
     },
     can: async (_source, { input }, { dataSources }) => {
       return input ?? [];
@@ -1540,9 +1570,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             (mediafile: any) => mediafile.is_primary_thumbnail
           ) || mediafileRelations[0];
         const thumbnailId: string = thumbnailMediafile.key;
-        const mediafile = await dataSources.CollectionAPI.getMediaFile(
-          thumbnailId
-        );
+        const mediafile =
+          await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
         return mediafile.transcode_filename || mediafile.filename;
       } catch {
@@ -1675,7 +1704,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   SortOptions: {
-    options: async (parent, { input, excludeBaseSortOptions }, { dataSources }) => {
+    options: async (
+      parent,
+      { input, excludeBaseSortOptions },
+      { dataSources }
+    ) => {
       let baseSortOptions: DropdownOption[] = [];
       if (!excludeBaseSortOptions)
         baseSortOptions = [
@@ -1770,7 +1803,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             parent.location,
             key,
             splitRegex as SplitRegex,
-            defaultValue          ),
+            defaultValue
+          ),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,
@@ -2015,10 +2049,14 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   TaggingExtensionConfiguration: {
     customQuery: async (_source, { input }, { dataSources }) => {
-      return input
+      return input;
     },
-    taggableEntityConfiguration: async (_source, { configuration }, { dataSources }) => {
-      return configuration
-    }
-  }
+    taggableEntityConfiguration: async (
+      _source,
+      { configuration },
+      { dataSources }
+    ) => {
+      return configuration;
+    },
+  },
 };
