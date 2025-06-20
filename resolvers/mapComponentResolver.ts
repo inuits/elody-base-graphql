@@ -1,19 +1,12 @@
-import {
-    SplitRegex
-} from "../../../generated-types/type-defs";
 import { DataSources } from "../types";
 
-export const prepareMetadataFieldForMapData = (metadata: any, key: string, splitRegex: SplitRegex, defaultValue: any): any => {
+export const prepareMetadataFieldForMapData = (metadata: any, key: string, defaultValue: any): any => {
     let value = metadata.filter((item: any) => item.key === key)[0]?.value;
-    if (value && splitRegex)
-        value = value.split(splitRegex.separator)[splitRegex.retrieveSection];
     return value !== undefined ? value : defaultValue;
 }
 
-export const prepareLocationFieldForMapData = (location: any, key: string, splitRegex: SplitRegex, defaultValue: any): any => {
+export const prepareLocationFieldForMapData = (location: any, key: string, defaultValue: any): any => {
     let value = location[key];
-    if (value && splitRegex)
-        value = value.split(splitRegex.separator)[splitRegex.retrieveSection];
     return value !== undefined ? value : defaultValue;
 }
 

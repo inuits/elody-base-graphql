@@ -62,6 +62,7 @@ import {
   MapElement,
   HierarchyListElement,
   MapMetadata,
+  GeoJsonFeature,
   MapTypes,
   MarkdownViewerElement,
   Maybe,
@@ -89,7 +90,6 @@ import {
   SearchInputType,
   SingleMediaFileElement,
   SortingDirection,
-  SplitRegex,
   TimeUnit,
   UploadContainer,
   UploadField,
@@ -111,6 +111,8 @@ import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 import {
+  normalizeCoordinatesForHeatmap,
+  normalizeWeightForHeatmap,
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
@@ -1084,6 +1086,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     mapMetadata: async (parent: unknown, {}, { dataSources }) => {
       return parent as MapMetadata;
     },
+    geoJsonFeature: async (parent: unknown, {}, { dataSources }) => {
+      return parent as GeoJsonFeature;
+    },
     config: async (_source, { input }, { dataSources }) => {
       return input as ConfigItem[];
     },
@@ -1795,7 +1800,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   MapMetadata: {
     value: async (
       parent: any,
-      { key, source, defaultValue, relationKey, splitRegex },
+      { key, source, defaultValue, relationKey },
       { dataSources }
     ) => {
       const resolveObject: { [key: string]: Function } = {
@@ -1803,15 +1808,13 @@ export const baseResolver: Resolvers<ContextValue> = {
           prepareMetadataFieldForMapData(
             parent.metadata,
             key,
-            splitRegex as SplitRegex,
             defaultValue
           ),
         location: () =>
           prepareLocationFieldForMapData(
             parent.location,
             key,
-            splitRegex as SplitRegex,
-            defaultValue
+            defaultValue,
           ),
         relations: () =>
           prepareRelationFieldForMapData(
@@ -1822,6 +1825,52 @@ export const baseResolver: Resolvers<ContextValue> = {
           ),
       };
       return (await resolveObject[source]()) || '';
+    },
+  },
+  GeoJsonFeature: {
+    value: async (
+      parent: any,
+      { id, weight, coordinates },
+      { dataSources }
+    ) => {
+      const resolveObject: { [key: string]: Function } = {
+        root: (currentKey: string, currentDefaultValue: any) =>
+            resolveIntialValueRoot(
+                dataSources,
+                parent,
+                currentKey,
+                null,
+                undefined
+            ),
+        metadata: (currentKey: string, currentDefaultValue: any) =>
+            prepareMetadataFieldForMapData(
+                parent.metadata,
+                currentKey,
+                currentDefaultValue
+            ),
+        location: (currentKey: string, currentDefaultValue: any) =>
+            prepareLocationFieldForMapData(
+                parent.location,
+                currentKey,
+                currentDefaultValue
+            ),
+      };
+
+      const coordinatesValue =  (await resolveObject[coordinates.source](coordinates.key, coordinates.defaultValue)) || '';
+      const idValue =  (await resolveObject[id.source](id.key, id.defaultValue)) || '';
+      const weightValue =  (await resolveObject[weight.source](weight.key, weight.defaultValue)) || '';
+
+      return {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: normalizeCoordinatesForHeatmap(coordinatesValue),
+        },
+        properties: {
+          id: idValue,
+          weight: normalizeWeightForHeatmap(weightValue), // value between 0 and 1
+        },
+      };
     },
   },
   FetchDeepRelations: {

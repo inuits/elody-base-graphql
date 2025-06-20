@@ -13,6 +13,7 @@ import {
 } from '../main';
 import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
+import proj4 from "proj4";
 
 const loggedTypes: string[] = [];
 
@@ -137,6 +138,14 @@ export const extractErrorCode = (error: any): number => {
     500
   );
 };
+
+export const normalizeCoordinatesForHeatmap = (coordinates: number[]) => {
+  return proj4('EPSG:4326', 'EPSG:3857', coordinates);
+}
+
+export const normalizeWeightForHeatmap = (value: number) => {
+  return value / 100;
+}
 
 export const getTypesFromFilterInputs = (
   advancedFilterInputs: AdvancedFilterInput[],

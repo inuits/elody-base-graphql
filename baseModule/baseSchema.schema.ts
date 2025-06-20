@@ -1126,24 +1126,28 @@ export const baseSchema = gql`
     wktMap
   }
 
-  input SplitRegexInput {
-    separator: String!
-    retrieveSection: Int!
-  }
-
-  type SplitRegex {
-    separator: String!
-    retrieveSection: Int!
-  }
-
   type MapMetadata {
     value(
       key: String!
       source: KeyValueSource!
       defaultValue: JSON
       relationKey: String
-      splitRegex: SplitRegexInput
     ): JSON!
+  }
+  
+  input GeoJsonFeatureInput {
+      key: String!
+      source: KeyValueSource!
+      defaultValue: JSON
+      relationKey: String
+  }
+  
+  type GeoJsonFeature {
+      value(
+          id: GeoJsonFeatureInput!
+          coordinates: GeoJsonFeatureInput!
+          weight: GeoJsonFeatureInput!
+      ): JSON
   }
 
   type MapElement {
@@ -1153,6 +1157,7 @@ export const baseSchema = gql`
     center(input: String): String!
     metaData: PanelMetaData!
     mapMetadata: MapMetadata
+    geoJsonFeature: GeoJsonFeature
     config(input: [ConfigItemInput]): [ConfigItem]
   }
 
