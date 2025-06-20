@@ -773,7 +773,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async GetFilterOptions(
-    input: any[],
+    input: AdvancedFilterInput[],
     limit: number,
     entityType: string,
     preferredLanguage?: string | null
