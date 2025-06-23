@@ -21,6 +21,7 @@ export const resolveAdvancedEntities = async (
   let limitResult = limit;
 
   let entityTypes = getTypesFromFilterInputs(advancedFilterInputs, entityType);
+  let totalCount = 0;
 
   for await (const entityType of entityTypes as Entitytyping[]) {
     const iterationFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
@@ -47,6 +48,7 @@ export const resolveAdvancedEntities = async (
     );
 
     const iterationEntities: Entity[] = iterationResult?.results as Entity[];
+    totalCount += iterationResult.count ?? 0;
     if (!iterationEntities) break;
 
     iterationEntities.forEach((entity) => {
@@ -60,7 +62,7 @@ export const resolveAdvancedEntities = async (
     results: Array.from(entitiesMap.values()),
     sortKeys: [],
     limit: limitResult,
-    count: entitiesMap.size,
+    count: totalCount,
   };
 };
 
