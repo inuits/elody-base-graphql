@@ -263,7 +263,8 @@
       "map-element": "Map"
     },
     "panel-labels": {
-      "description": "Description"
+      "description": "Description",
+      "other-metadata": "Other metadata"
     },
     "metadata": {
       "labels": {
@@ -814,7 +815,8 @@
       "map-element": "Map"
     },
     "panel-labels": {
-      "description": "Omschrijving"
+      "description": "Omschrijving",
+      "other-metadata": "Andere metadata"
     },
     "metadata": {
       "labels": {
