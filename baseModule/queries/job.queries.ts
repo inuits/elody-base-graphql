@@ -153,11 +153,18 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.type.value"]
         label: "metadata.labels.type"
         isDisplayedByDefault: true
+        useNewWayToFetchOptions: true
+        filterOptionsMapping: {
+          label: "intialValues.type"
+          value: "intialValues.type"
+        }
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
             key: ["elody:1|metadata.type.value"]
+            distinct_by: "metadata.type.value"
             value: "*"
+            match_exact: false
           },
           {
             type: type
@@ -169,11 +176,17 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
+        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
           value
-          item_types
+          distinct_by
+          match_exact
+        }
+        filterOptionsMapping {
+          label
+          value
         }
         tooltip(value: true)
       }
@@ -182,11 +195,18 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.name.value"]
         label: "metadata.labels.name"
         isDisplayedByDefault: true
+        useNewWayToFetchOptions: true
+        filterOptionsMapping: {
+          label: "intialValues.name"
+          value: "intialValues.name"
+        }
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
             key: ["elody:1|metadata.name.value"]
+            distinct_by: "metadata.name.value"
             value: "*"
+            match_exact: false
           },
           {
             type: type
@@ -198,11 +218,17 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
+        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
           value
-          item_types
+          match_exact
+          distinct_by
+        }
+        filterOptionsMapping {
+          label
+          value
         }
         tooltip(value: true)
       }
@@ -211,11 +237,18 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.status.value"]
         label: "metadata.labels.status"
         isDisplayedByDefault: true
+        useNewWayToFetchOptions: true
+        filterOptionsMapping: {
+          label: "intialValues.status"
+          value: "intialValues.status"
+        }
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
             key: ["elody:1|metadata.status.value"]
+            distinct_by: "metadata.status.value"
             value: "*"
+            match_exact: false
           },
           {
             type: type
@@ -227,11 +260,17 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
+        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
           value
-          item_types
+          match_exact
+          distinct_by
+        }
+        filterOptionsMapping {
+          label
+          value
         }
         tooltip(value: true)
       }
@@ -268,16 +307,21 @@ export const jobQueries = gql`
         key: ["elody:1|last_editor"]
         label: "metadata.labels.started-by"
         isDisplayedByDefault: true
+        useNewWayToFetchOptions: true
+        filterOptionsMapping: {
+          label: "intialValues.email"
+          value: "intialValues.email"
+        }
         advancedFilterInputForRetrievingOptions: [
           {
             type: text
-            key: ["elody:1|last_editor"]
+            key: ["elody:1|metadata.email.value"]
             value: "*"
-            metadata_key_as_label: "metadata.email.value"
+            match_exact: false
           },
           {
             type: type
-            value: "job"
+            value: "user"
           }
         ]
       ) {
@@ -285,12 +329,16 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
+        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
           value
-          metadata_key_as_label
-          item_types
+          match_exact
+        }
+        filterOptionsMapping {
+          label
+          value
         }
         defaultValue(value: "session-$email")
         tooltip(value: true)
