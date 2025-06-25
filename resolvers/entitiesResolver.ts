@@ -20,7 +20,8 @@ export const resolveAdvancedEntities = async (
   const entitiesMap = new Map<string, Entity>();
   let limitResult = limit;
 
-  let entityTypes = getTypesFromFilterInputs(advancedFilterInputs, entityType);
+  let typesFromFilters = getTypesFromFilterInputs(advancedFilterInputs);
+  let entityTypes = typesFromFilters.length > 0 ? typesFromFilters : [entityType];
   let totalCount = 0;
 
   for await (const entityType of entityTypes as Entitytyping[]) {

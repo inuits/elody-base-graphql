@@ -149,9 +149,9 @@ export const normalizeWeightForHeatmap = (value: number) => {
 
 export const getTypesFromFilterInputs = (
   advancedFilterInputs: AdvancedFilterInput[],
-  entityType: Entitytyping
+  entityType?: Entitytyping
 ): Entitytyping[] => {
-  const entityTypes: Set<string> = new Set([entityType]);
+  const entityTypes: Set<string> = new Set(entityType ? [entityType] : []);
   const typeFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
     (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
   );
