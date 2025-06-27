@@ -57,6 +57,7 @@ const getConfig = (config: Environment) => {
     SENTRY_DSN_FRONTEND: config.sentryDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,
     IGNORE_PERMISSIONS: config.ignorePermissions,
+    skeletonLayouts: config.skeletonLayouts,
   };
 
   if (config.features.advancedSearch)

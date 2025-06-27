@@ -152,6 +152,27 @@ export const baseSchema = gql`
     pdf
   }
 
+  enum SkeletonComponentType {
+    Title
+    Subtitle
+    UploadInfoLink
+    UploadCsvTemplates
+    DropzoneInfo
+    Dropdown
+    RelationDropdown
+    Input
+    Textarea
+    Checkbox
+    ButtonWithProgress
+    DropzoneSmall
+    DropzoneMedium
+    DropzoneBig
+    Button
+    DisabledButton
+    Progress
+    EntityPicker
+  }
+
   enum OcrType {
     pdf
     txt
