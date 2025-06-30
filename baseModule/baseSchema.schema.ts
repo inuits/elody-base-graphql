@@ -1378,6 +1378,7 @@ export const baseSchema = gql`
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
     can(input: [String!]): [String]
+    valueTranslationKey(input: String): String
   }
 
   type PanelRelationMetaData {

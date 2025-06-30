@@ -1438,6 +1438,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
+    valueTranslationKey: async (_source, { input }, { dataSources }) => {
+      return input ?? '';
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
