@@ -1155,20 +1155,20 @@ export const baseSchema = gql`
       relationKey: String
     ): JSON!
   }
-  
+
   input GeoJsonFeatureInput {
-      key: String!
-      source: KeyValueSource!
-      defaultValue: JSON
-      relationKey: String
+    key: String!
+    source: KeyValueSource!
+    defaultValue: JSON
+    relationKey: String
   }
-  
+
   type GeoJsonFeature {
-      value(
-          id: GeoJsonFeatureInput!
-          coordinates: GeoJsonFeatureInput!
-          weight: GeoJsonFeatureInput!
-      ): JSON
+    value(
+      id: GeoJsonFeatureInput!
+      coordinates: GeoJsonFeatureInput!
+      weight: GeoJsonFeatureInput!
+    ): JSON
   }
 
   type MapElement {
@@ -1509,6 +1509,7 @@ export const baseSchema = gql`
     createNewEntityFormQuery: String!
     relationType: String!
     metadataFilterForTagContent: String!
+    charactersToStripFromTagContentRegex: String
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntityInput
@@ -1519,6 +1520,7 @@ export const baseSchema = gql`
     createNewEntityFormQuery: String!
     relationType: String!
     metadataFilterForTagContent: String!
+    charactersToStripFromTagContentRegex: String
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntity
