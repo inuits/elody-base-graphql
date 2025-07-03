@@ -1914,6 +1914,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadataPreviewQuery: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
+    showCurrentPreviewFlow: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : true;
+    },
   },
   FormTab: {
     formFields: async (parent: any, {}, { dataSources }) => {

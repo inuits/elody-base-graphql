@@ -1761,6 +1761,7 @@ export const baseSchema = gql`
     previewQuery(input: String): String
     openByDefault(input: Boolean): Boolean
     metadataPreviewQuery(input: String): String
+    showCurrentPreviewFlow(input: Boolean): Boolean
   }
 
   type Query {
