@@ -1124,7 +1124,6 @@ export const baseSchema = gql`
     searchInputType(input: String): String
     baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
     entityListElement: EntityListElement
-    allowedActionsOnRelations(input: [RelationActions]): [RelationActions]
     customBulkOperations(input: String): String
     fetchDeepRelations: FetchDeepRelations
     can(input: [String!]): [String!]

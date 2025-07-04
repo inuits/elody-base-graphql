@@ -1206,13 +1206,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityListElement: async (parent: any, {}, { dataSources }) => {
       return parent as EntityListElement;
     },
-    allowedActionsOnRelations: async (
-      parent: any,
-      { input },
-      { dataSources }
-    ) => {
-      return input ? input : [];
-    },
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
