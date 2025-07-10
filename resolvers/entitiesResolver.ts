@@ -29,9 +29,16 @@ export const resolveAdvancedEntities = async (
       (filter: AdvancedFilterInput) => filter.type !== AdvancedFilterTypes.Type
     );
 
-    const containsTypeFilter = iterationFilters.some(
-      (filter: AdvancedFilterInput) => filter.type === AdvancedFilterTypes.Type
-    );
+    const containsTypeFilter =
+      iterationFilters.some(
+        (filter: AdvancedFilterInput) =>
+          filter.type === AdvancedFilterTypes.Type
+      ) ||
+      iterationFilters.some(
+        (filter: AdvancedFilterInput) =>
+          filter.type === AdvancedFilterTypes.Selection && filter.key === 'type'
+      );
+
     if (!containsTypeFilter) {
       iterationFilters.push({
         type: AdvancedFilterTypes.Type,
