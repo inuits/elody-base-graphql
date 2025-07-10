@@ -264,7 +264,8 @@
     },
     "panel-labels": {
       "description": "Description",
-      "other-metadata": "Other metadata"
+      "other-metadata": "Other metadata",
+      "history": "History"
     },
     "metadata": {
       "labels": {
@@ -293,7 +294,8 @@
         "edit-metadata": "Edit metadata",
         "editing-metadata": "Editing metadata",
         "delete-entity": "Delete entity",
-        "no-label": "No label"
+        "no-label": "No label",
+        "date-created": "Datum aangemaakt"
       }
     },
     "notifications": {
@@ -816,7 +818,8 @@
     },
     "panel-labels": {
       "description": "Omschrijving",
-      "other-metadata": "Andere metadata"
+      "other-metadata": "Andere metadata",
+      "history": "Geschiedenis"
     },
     "metadata": {
       "labels": {
@@ -845,7 +848,8 @@
         "edit-metadata": "Bewerk metadata",
         "editing-metadata": "Bewerken van metadata",
         "delete-entity": "Verwijder entiteit",
-        "no-label": "Geen label"
+        "no-label": "Geen label",
+        "date-created": "Date created"
       }
     },
     "notifications": {
