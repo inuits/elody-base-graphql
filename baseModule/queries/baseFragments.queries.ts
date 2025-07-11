@@ -252,7 +252,10 @@ export const baseFragments = gql`
     createNewEntityFormQuery
     relationType
     metadataFilterForTagContent
-    charactersToStripFromTagContentRegex
+    replaceCharacterFromTagSettings {
+      replacementCharactersRegex
+      characterToReplaceWith
+    }
     metadataKeysToSetAsAttribute
     tag
     tagConfigurationByEntity {

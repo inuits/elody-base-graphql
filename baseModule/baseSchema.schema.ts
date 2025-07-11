@@ -1503,12 +1503,22 @@ export const baseSchema = gql`
     secondaryAttributeToDetermineTagConfig: String # This is needed when entities can have the same tag
   }
 
+  input CharacterReplacementSettingsInput {
+    replacementCharactersRegex: String!
+    characterToReplaceWith: String!
+  }
+
+  type CharacterReplacementSettings {
+    replacementCharactersRegex: String!
+    characterToReplaceWith: String!
+  }
+
   input TaggableEntityConfigurationInput {
     taggableEntityType: Entitytyping!
     createNewEntityFormQuery: String!
     relationType: String!
     metadataFilterForTagContent: String!
-    charactersToStripFromTagContentRegex: String
+    replaceCharacterFromTagSettings: [CharacterReplacementSettingsInput]
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntityInput
@@ -1519,7 +1529,7 @@ export const baseSchema = gql`
     createNewEntityFormQuery: String!
     relationType: String!
     metadataFilterForTagContent: String!
-    charactersToStripFromTagContentRegex: String
+    replaceCharacterFromTagSettings: [CharacterReplacementSettings]
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntity
