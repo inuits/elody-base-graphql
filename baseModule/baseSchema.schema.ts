@@ -1029,6 +1029,12 @@ export const baseSchema = gql`
     unchanged
   }
 
+  input InheritFromInput {
+    entityType: Entitytyping!
+    relationKey: String!
+    valueKey: String!
+  }
+
   input BaseRelationValuesInput {
     key: String!
     label: String
@@ -1044,6 +1050,7 @@ export const baseSchema = gql`
     operation: String
     lang: String
     roles: [String]
+    inheritFrom: InheritFromInput
   }
 
   input MetadataValuesInput {
@@ -1337,13 +1344,21 @@ export const baseSchema = gql`
   }
 
   type HiddenField {
-    hidden: Boolean!
-    searchValueForFilter: String!
+    hidden: Boolean
+    searchValueForFilter: String
+    inherited: Boolean
+    entityType: Entitytyping
+    relationToExtractKey: String
+    keyToExtractValue: String
   }
 
   input HiddenFieldInput {
-    hidden: Boolean!
-    searchValueForFilter: String!
+    hidden: Boolean
+    searchValueForFilter: String
+    inherited: Boolean
+    entityType: Entitytyping
+    relationToExtractKey: String
+    keyToExtractValue: String
   }
 
   enum PanelMetadataValueTooltipTypes {

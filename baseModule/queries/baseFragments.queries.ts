@@ -162,6 +162,10 @@ export const baseFragments = gql`
   fragment hiddenField on HiddenField {
     hidden
     searchValueForFilter
+    inherited 
+    entityType
+    relationToExtractKey
+    keyToExtractValue
   }
 
   fragment mediafileInEntity on MediaFileEntity {
