@@ -100,6 +100,7 @@ export const baseFragments = gql`
     multiple
     lineClamp
     entityType
+    hasVirtualKeyboard
   }
 
   fragment metadataRelation on MetadataRelation {

@@ -295,7 +295,8 @@
         "editing-metadata": "Editing metadata",
         "delete-entity": "Delete entity",
         "no-label": "No label",
-        "date-created": "Datum aangemaakt"
+        "date-created": "Datum aangemaakt",
+        "virtual-keyboard": "Virtual keyboard"
       }
     },
     "notifications": {

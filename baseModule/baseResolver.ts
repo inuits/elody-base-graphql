@@ -1267,6 +1267,30 @@ export const baseResolver: Resolvers<ContextValue> = {
     taggingConfiguration: async (_source, {}, { dataSources }) => {
       return {} as TaggingExtensionConfiguration;
     },
+    hasVirtualKeyboard: async (_source, { input }, { dataSources }) => {
+      return input || false;
+    },
+    virtulKeyboardLayouts: async (_source, { input }, { dataSources }) => {
+      // In order to display different language layouts we need to define that resolver on a client side.
+      // So by default we have an English layout and others we can add through that resolver. Simple example below:
+      // ----------------------------------------------------
+      // const allKeyboardLayouts: { [key: string]: any } = {
+      //   'nl': {
+      //     default: "q w e",
+      //     shift: "Q W E"
+      //   }
+      // };
+      // const requestedLayouts: { [key: string]: any } = {};
+      // input.forEach((key: string) => {
+      //   if (allKeyboardLayouts[key]) {
+      //     requestedLayouts[key] = allKeyboardLayouts[key];
+      //   }
+      // });
+      // return requestedLayouts;
+      // ----------------------------------------------------
+
+      return input || {};
+    },
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2010,6 +2034,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     dependsOn: async (parent, _args, { dataSources }) => {
       return parent.dependsOn || '';
+    },
+    hasVirtualKeyboard: async (parent, _args, { dataSources }) => {
+      return parent.hasVirtualKeyboard || false;
     },
     metadataKeyToCreateEntityFromOption: async (
       parent,

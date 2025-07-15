@@ -415,6 +415,7 @@ export const baseSchema = gql`
     multiple: Boolean
     lineClamp: String
     entityType: String
+    hasVirtualKeyboard: Boolean
   }
 
   enum TypeModals {
@@ -624,6 +625,7 @@ export const baseSchema = gql`
     WindowMaximize
     Folder
     VideoSlash
+    Keyboard
   }
 
   input BulkOperationInputModal {
@@ -1562,6 +1564,8 @@ export const baseSchema = gql`
     metadataKey(input: String!): String!
     extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
     taggingConfiguration: TaggingExtensionConfiguration
+    hasVirtualKeyboard(input: Boolean): Boolean!
+    virtulKeyboardLayouts(input: [String!]): JSON
   }
 
   type ColumnList {
