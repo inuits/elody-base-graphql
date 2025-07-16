@@ -571,7 +571,7 @@
         "BaseEntity": "basis entiteiten",
         "Tenant": "tenants",
         "User": "gebruikers",
-        "Job": "jobs",
+        "Job": "opdrachten",
         "ShareLink": "deel linken",
         "Asset": "assets",
         "mediafile": "mediafiles",
@@ -811,8 +811,8 @@
       "pending": "in behandeling"
     },
     "element-labels": {
-      "sub-job": "Onderliggende jobs",
-      "has-job": "Items aangemaakt en gewijzigd door deze job",
+      "sub-job": "Onderliggende opdrachten",
+      "has-job": "Items aangemaakt en gewijzigd door deze opdracht",
       "metadata-element": "Metadata",
       "media-element": "Media weergave",
       "map-element": "Map"
@@ -1016,7 +1016,7 @@
       "log-in": "Inloggen",
       "go-home": "Ga terug naar het startscherm",
       "users": "Gebruikers",
-      "jobs": "Jobs",
+      "jobs": "Opdrachten",
       "settings": "Instellingen",
       "upload": "Upload",
       "sets": "Sets",
