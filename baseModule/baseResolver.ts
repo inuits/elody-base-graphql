@@ -134,6 +134,7 @@ import {
   prepareMetadataFieldForMapData,
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
+import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -476,8 +477,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         await dataSources.CollectionAPI.postEntitySoftCall(entityType);
       return status == '200';
     },
-    CustomFormattersSettings: async (_source, _, { customFormatters }) => {
-      return customFormatters;
+    CustomFormattersSettings: async (_source, _, { customFormatters = {} }) => {
+      return getWithDefaultFormatters(customFormatters);
     },
     PermissionMappingEntityDetail: async (
       _source,

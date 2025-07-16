@@ -10,7 +10,7 @@ export const jobQueries = gql`
       last_editor: keyValue(key: "last_editor", source: root)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
-      status: keyValue(key: "status", source: metadata)
+      status: keyValue(key: "status", source: metadata, formatter: "pill")
       title: keyValue(key: "name", source: metadata)
       type: keyValue(key: "type", source: metadata)
     }
@@ -65,7 +65,7 @@ export const jobQueries = gql`
       last_editor: keyValue(key: "last_editor", source: root)
       name: keyValue(key: "name", source: metadata)
       slug: keyValue(key: "_id", source: root)
-      status: keyValue(key: "status", source: metadata)
+      status: keyValue(key: "status", source: metadata, formatter: "pill")
       title: keyValue(key: "name", source: metadata)
       type: keyValue(key: "type", source: metadata)
     }
@@ -486,7 +486,7 @@ export const jobQueries = gql`
             info: keyValue(key: "info", source: metadata)
             name: keyValue(key: "name", source: metadata)
             slug: keyValue(key: "_id", source: root)
-            status: keyValue(key: "status", source: metadata)
+            status: keyValue(key: "status", source: metadata, formatter: "pill")
             title: keyValue(key: "name", source: metadata)
           }
           allowedViewModes {
