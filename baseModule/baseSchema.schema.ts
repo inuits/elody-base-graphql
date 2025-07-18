@@ -1828,7 +1828,6 @@ export const baseSchema = gql`
       per_page: Int
       facet_by: String!
     ): EntitiesResults!
-    EntitiesByAiSearch(input: String!): EntitiesResults!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!

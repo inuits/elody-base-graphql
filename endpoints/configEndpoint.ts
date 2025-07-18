@@ -82,13 +82,6 @@ const getConfig = (config: Environment) => {
       },
     });
 
-  if (config.features.aiSearch)
-    Object.assign(baseConfig.features, {
-      aiSearch: {
-        hasAiSearch: config.features.aiSearch.hasAiSearch,
-      },
-    });
-
   return baseConfig;
 };
 

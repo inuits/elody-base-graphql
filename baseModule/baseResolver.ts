@@ -304,13 +304,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         facet_by as string
       );
     },
-    EntitiesByAiSearch: async (
-      _source,
-      { input = '' },
-      { dataSources }
-    ): Promise<EntitiesResults> => {
-      return dataSources.CollectionAPI.getEntitiesByAiSearch(input as string);
-    },
     Tenants: async (_source, _args, { dataSources }) => {
       return await dataSources.CollectionAPI.getTenants();
     },
