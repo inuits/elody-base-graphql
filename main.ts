@@ -62,6 +62,7 @@ import {
   generateElodyConfig,
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
+import helmet from 'helmet';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -179,6 +180,8 @@ const start = (
     });
 
     app.use(compression());
+
+    app.use(helmet());
 
     app.use(
       cors({
