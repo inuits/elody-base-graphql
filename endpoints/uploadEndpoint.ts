@@ -9,6 +9,7 @@ export const applyUploadEndpoint = (app: Express) => {
     '/api/upload/batch',
     async (request: Request, response: Response) => {
       try {
+        const filename: string = request.query['filename'] as string;
         const isDryRun: boolean = !!request.query['dry_run'];
         const mainJobId: string = request.query['main_job_id'] as string;
         const extraMediafileType: string | undefined = request.query[
@@ -30,6 +31,7 @@ export const applyUploadEndpoint = (app: Express) => {
                 request,
                 response,
                 csv,
+                filename,
                 extraMediafileType
               );
               response.end(JSON.stringify(res));
@@ -39,6 +41,7 @@ export const applyUploadEndpoint = (app: Express) => {
                   request,
                   response,
                   csv,
+                  filename,
                  mainJobId, extraMediafileType
                 );
               const uploadUrls =
@@ -151,6 +154,7 @@ const __batchDryRun = async (
   request: Request,
   response: Response,
   csv: string,
+  filename: string,
   extraMediafileType: string | undefined
 ): Promise<any> => {
   let result = undefined;
@@ -161,7 +165,7 @@ const __batchDryRun = async (
       clientIp,
     });
     result = await datasource.post(
-      `${env?.api.collectionApiUrl}/batch?dry_run=1${
+      `${env?.api.collectionApiUrl}/batch?filename=${filename}&dry_run=1${
         !!extraMediafileType
           ? `&extra_mediafile_type=${extraMediafileType}`
           : ''
@@ -184,6 +188,7 @@ const __batchEntities = async (
   request: Request,
   response: Response,
   csv: string,
+  filename: string,
   mainJobId: string,
   extraMediafileType: string | undefined
 ): Promise<any> => {
@@ -195,9 +200,9 @@ const __batchEntities = async (
   let result: any;
   try {
     result = await datasource.post(
-      `${env?.api.collectionApiUrl}/batch?${
+      `${env?.api.collectionApiUrl}/batch?filename=${filename}${
         !!extraMediafileType
-          ? `extra_mediafile_type=${extraMediafileType}&` : ""}${mainJobId ? `main_job_id=${mainJobId}`
+          ? `&extra_mediafile_type=${extraMediafileType}` : ""}${mainJobId ? `&main_job_id=${mainJobId}`
           : ''
       }`,
       {
