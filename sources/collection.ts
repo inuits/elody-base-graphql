@@ -729,7 +729,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async GetCsvExportKeysPerEntityType(
-    entityType: string
+    entityType: string,
+    requiredKeys: string[] = [],
   ): Promise<BulkOperationCsvExportKeys> {
     const options = {
       headers: {
@@ -753,7 +754,7 @@ export class CollectionAPI extends AuthRESTDataSource {
         icon: DamsIcons.NoIcon,
         label: item,
         value: item,
-        required: item === 'identifiers',
+        required: requiredKeys.includes(item),
       });
     });
     return dropdownOptions;

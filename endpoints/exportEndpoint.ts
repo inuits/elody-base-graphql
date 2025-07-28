@@ -9,11 +9,11 @@ export const applyExportEndpoint = (app: Express) => {
     try {
       let fieldQueryParameter = '';
       (request.query.field as string[]).forEach(
-        (field) => (fieldQueryParameter += `&field[]=${field}`)
+        (field) => (fieldQueryParameter += `&field=${field}`)
       );
 
       await fetch(
-        `${env?.api.collectionApiUrl}/${getCollectionValueForEntityType(request.query.type as string)}?ids=${request.query.ids}${fieldQueryParameter}`,
+        `${env?.api.collectionApiUrl}/${getCollectionValueForEntityType(request.query.type as string)}?type=${request.query.type}&ids=${request.query.ids}${fieldQueryParameter}`,
         {
           method: 'GET',
           headers: {

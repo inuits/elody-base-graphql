@@ -357,7 +357,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(
-        entityType
+        entityType, ['identifiers']
       );
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
