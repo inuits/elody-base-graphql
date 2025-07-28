@@ -189,6 +189,7 @@ const start = (
         directives: {
           ...helmet.contentSecurityPolicy.getDefaultDirectives(),
           "script-src": ["'self'", "'unsafe-eval'"],
+          "img-src": ["'self'", "data:", "blob:"],
         },
       })
     );
