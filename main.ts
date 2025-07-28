@@ -63,6 +63,7 @@ import {
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
+import { deepSanitize, sanitizeRequestBody } from './utilities/sanitize';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = loadTranslations(
@@ -181,6 +182,10 @@ const start = (
 
     app.use(compression());
 
+    app.use(sanitizeRequestBody)
+
+    app.use(helmet())
+
     app.use(
       cors({
         credentials: false,
@@ -213,6 +218,11 @@ const start = (
           );
           if (!isRequiredDataSources(dataSources)) {
             throw new Error('All DataSources properties must be defined');
+          }
+
+          if (req.body.variables) {
+            const sanitizedVariables = deepSanitize(req.body.variables)
+            req.body.variables = sanitizedVariables;
           }
 
           return {
