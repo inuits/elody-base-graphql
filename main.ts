@@ -185,15 +185,13 @@ const start = (
     app.use(sanitizeRequestBody)
 
     app.use(
-        helmet.contentSecurityPolicy({
+      helmet.contentSecurityPolicy({
         directives: {
-          scriptSrc: [
-            "self",
-            "unsafe-eval",
-          ],
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          "script-src": ["'self'", "'unsafe-eval'"],
         },
       })
-    )
+    );
 
     app.use(
       cors({
