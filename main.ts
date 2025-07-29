@@ -186,12 +186,30 @@ const start = (
 
     app.use(helmet());
 
+    appConfig.sentryEnabled
+
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           ...helmet.contentSecurityPolicy.getDefaultDirectives(),
           "script-src": ["'self'", "'unsafe-eval'"],
-          "img-src": ["'self'", "data:", "blob:", "https://server.arcgisonline.com"],
+          "img-src": [
+            "'self'", 
+            "data:", 
+            "blob:", 
+            "https://server.arcgisonline.com", 
+            "https://a.tile.openstreetmap.org",
+            "https://b.tile.openstreetmap.org",
+            "https://c.tile.openstreetmap.org",
+          ],
+          "connect-src": [
+            "'self'",
+            ...(
+              appConfig.sentryEnabled && appConfig.sentryDsn
+                ? [new URL(appConfig.sentryDsn).origin]
+                : []
+            ),
+          ],
         },
       })
     );
