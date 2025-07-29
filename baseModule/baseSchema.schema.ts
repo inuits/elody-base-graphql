@@ -192,6 +192,7 @@ export const baseSchema = gql`
   }
 
   enum ValidationRules {
+    alpha
     alpha_dash
     alpha_num
     alpha_spaces
