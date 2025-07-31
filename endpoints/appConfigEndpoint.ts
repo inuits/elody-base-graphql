@@ -3,7 +3,6 @@ import { Environment } from '../environment';
 import { TypeUrlMapping } from '../types';
 
 const getConfig = (config: Environment) => {
-  console.log(config)
   const baseConfig = {
     graphQlLink: config.graphqlEndpoint,
     iiifLink: config.api.iiifUrlFrontend,
