@@ -1793,6 +1793,11 @@ export const baseSchema = gql`
     showCurrentPreviewFlow(input: Boolean): Boolean
   }
 
+  type PermissionResult {
+    permission: String!
+    hasPermission: Boolean!
+  }
+
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     Entities(
@@ -1838,6 +1843,11 @@ export const baseSchema = gql`
       parentEntityId: String
       childEntityId: String
     ): JSON!
+    AdvancedPermissions(
+      permissions: [String!]!
+      parentEntityId: String
+      childEntityId: String
+    ): [PermissionResult!]!
     CustomFormattersSettings: JSON!
     PermissionMappingEntityDetail(
       id: String!

@@ -1,7 +1,9 @@
 import { Express } from 'express';
 import { Environment } from '../environment';
+import { TypeUrlMapping } from '../types';
 
 const getConfig = (config: Environment) => {
+  console.log(config)
   const baseConfig = {
     graphQlLink: config.graphqlEndpoint,
     iiifLink: config.api.iiifUrlFrontend,
@@ -85,10 +87,13 @@ const getConfig = (config: Environment) => {
   return baseConfig;
 };
 
-const applyConfigEndpoint = (app: Express, config: Environment) => {
-  app.get('/api/config', async (req, res) => {
-    res.end(JSON.stringify(getConfig(config)));
+export const applyAppConfigsEndpoint = (app: Express, config: Environment, translations: Object, urlMapping: TypeUrlMapping ) => {
+  app.get('/api/app-configs', async (req, res) => {
+    res.end(JSON.stringify({ 
+        config: getConfig(config), 
+        translations, 
+        urlMapping, 
+        version: { 'apollo-graphql-version': config.version } 
+      }));
   });
 };
-
-export default applyConfigEndpoint;

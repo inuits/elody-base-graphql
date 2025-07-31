@@ -452,6 +452,44 @@ export const baseResolver: Resolvers<ContextValue> = {
           );
       return response;
     },
+    AdvancedPermissions: async (
+      _source,
+      { permissions, parentEntityId, childEntityId },
+      { dataSources, customPermissions }
+    ) => {
+      const permissionPromises = permissions.map(async (permission) => {
+        const permissionConfig = customPermissions[permission];
+        if (!permissionConfig) {
+          return { permission, hasPermission: false };
+        }
+
+        try {
+          let hasPermission: boolean;
+          if (permissionConfig.datasource === 'CollectionAPI') {
+            hasPermission = await dataSources.CollectionAPI.checkAdvancedPermission(
+              permissionConfig,
+              parentEntityId,
+              childEntityId
+            );
+          } else if (permissionConfig.datasource === 'GraphqlAPI') {
+            hasPermission = await dataSources.GraphqlAPI.checkAdvancedPermission(
+              permissionConfig
+            );
+          } else {
+            hasPermission = false;
+          }
+          
+          return { permission, hasPermission };
+        } catch (error) {
+          console.error(`Error checking permission ${permission}:`, error);
+          return { permission, hasPermission: false };
+        }
+      });
+
+      const results = await Promise.all(permissionPromises);
+      
+      return results;
+    },
     PermissionMappingPerEntityType: async (
       _source,
       { type },

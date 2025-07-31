@@ -13,13 +13,14 @@ export class GraphqlAPI extends AuthRESTDataSource {
 
     async checkAdvancedPermission(
         permissionRequestInfo: PermissionRequestInfo,
-    ): Promise<boolean | undefined> {
+    ): Promise<boolean> {
         try {
             let parsedRequestInfo = JSON.stringify(permissionRequestInfo);
             const config = JSON.parse(parsedRequestInfo);
 
             const method = `${config.crud}${config.uri}`;
             if (method === "getUserIsAnonymousUser") return !this.getUserIsAnonymousUser();
+            return false;
         } catch (e) {
             return false;
         }

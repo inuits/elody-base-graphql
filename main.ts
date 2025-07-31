@@ -264,8 +264,6 @@ const start = (
 
     const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
       authEndpoint: [app, appConfig.oauth.baseUrl, appConfig.clientSecret],
-      configEndpoint: [app, appConfig],
-      urlMappingEndpoint: [app, customTypeUrlMapping],
       versionEndpoint: [app, appConfig],
       downloadEndpoint: [app],
       uploadEndpoint: [app],
@@ -276,9 +274,9 @@ const start = (
         appConfig.api.iiifUrl,
         appConfig.staticToken,
       ],
-      translationEndpoint: [app, appTranslations],
       tenantEndpoint: [app],
       healthEndpoint: [app],
+      configsEndoint: [app, appConfig, appTranslations, customTypeUrlMapping]
       // linkedOpenDataEndpoint: [app],
     };
 

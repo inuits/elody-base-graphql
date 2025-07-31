@@ -17,4 +17,19 @@ export const permissionsQuery = gql`
       childEntityId: $childEntityId
     )
   }
+
+  query GetAdvancedPermissions(
+    $permissions: [String!]!
+    $parentEntityId: String
+    $childEntityId: String
+  ) {
+    AdvancedPermissions(
+      permissions: $permissions,
+      parentEntityId: $parentEntityId,
+      childEntityId: $childEntityId
+    ) {
+      permission
+      hasPermission
+    }
+  }
 `;
