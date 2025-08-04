@@ -13,17 +13,21 @@ export const getWithDefaultFormatters = (customConfig: FormattersConfig): Format
 
 export const elodyFormattersConfig: FormattersConfig = {
   [CustomFormatterTypes.Pill]: {
-    finished: {
-      "background": "#daecdd",
-      "text": "#0b8319",
+    queued: {
+      "background": "#e6e6e6",
+      "text": "#4a4a4a",
+    },
+    running: {
+      "background": "#d9ecf3",
+      "text": "#003366",
     },
     failed: {
       "background": "#ecdada",
       "text": "#ac1113",
     },
-    running: {
-      "background": "#d9ecf3",
-      "text": "#003366",
+    finished: {
+      "background": "#daecdd",
+      "text": "#0b8319",
     },
   }
 };
