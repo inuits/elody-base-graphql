@@ -1100,7 +1100,7 @@
       "close": "Close preview"
     },
     "media-viewer": {
-      "unsupported-mimetype": "Er is op dit moment geen viewer beschikbaar voor bestanden van het type '{mimetype}'"
+      "unsupported-mimetype": "Er is op dit moment geen weergave beschikbaar voor bestanden van het type '{mimetype}'"
     },
     "iiif-operations-modal": {
       "title": "Afbeelding schalen",
