@@ -686,9 +686,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       const mutateMetadata = async () => {
-        for (const metadata of formInput.metadata)
+        for (const metadata of formInput.metadata) {
           if (Array.isArray(metadata.value) && metadata.value.length === 0)
             metadata.value = '';
+          if (metadata.value?.formatter?.startsWith("pill"))
+            metadata.value = metadata.value.label;
+        }
 
         await dataSources.CollectionAPI.patchMetadata(
           id,
