@@ -247,6 +247,7 @@ export const baseSchema = gql`
     loading
     empty
     failed
+    paused
   }
 
   enum ProgressStepType {
