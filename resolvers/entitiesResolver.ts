@@ -23,6 +23,11 @@ export const resolveAdvancedEntities = async (
   let typesFromFilters = getTypesFromFilterInputs(advancedFilterInputs);
   let entityTypes = typesFromFilters.length > 0 ? typesFromFilters : [entityType];
   let totalCount = 0;
+  
+  const containSelectionFilterWithMultipleValues = advancedFilterInputs.some(
+    (filter: AdvancedFilterInput) =>
+      filter.type === AdvancedFilterTypes.Selection && filter.key === 'type' && filter.value?.length > 1
+  );
 
   for await (const entityType of entityTypes as Entitytyping[]) {
     const iterationFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
@@ -47,6 +52,11 @@ export const resolveAdvancedEntities = async (
       });
     }
 
+    if (containSelectionFilterWithMultipleValues) {
+      const selectionFilter = iterationFilters.find(filter => filter.type === AdvancedFilterTypes.Selection && filter.key === 'type')
+      if (selectionFilter) selectionFilter.value = [entityType]
+    }
+
     const iterationResult = await dataSources.CollectionAPI.GetAdvancedEntities(
       entityType,
       limit,
@@ -57,6 +67,7 @@ export const resolveAdvancedEntities = async (
 
     const iterationEntities: Entity[] = iterationResult?.results as Entity[];
     totalCount += iterationResult.count ?? 0;
+
     if (!iterationEntities) break;
 
     iterationEntities.forEach((entity) => {
