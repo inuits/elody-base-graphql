@@ -182,7 +182,7 @@ const start = (
 
     app.use(compression());
 
-    app.use(sanitizeRequestBody)
+    // app.use(sanitizeRequestBody)
 
     app.use(helmet());
 
@@ -248,10 +248,10 @@ const start = (
             throw new Error('All DataSources properties must be defined');
           }
 
-          if (req.body.variables) {
-            const sanitizedVariables = deepSanitize(req.body.variables)
-            req.body.variables = sanitizedVariables;
-          }
+          // if (req.body.variables) {
+          //   const sanitizedVariables = deepSanitize(req.body.variables)
+          //   req.body.variables = sanitizedVariables;
+          // }
 
           return {
             dataSources,
