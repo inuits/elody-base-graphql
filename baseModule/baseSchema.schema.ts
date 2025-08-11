@@ -1040,7 +1040,7 @@ export const baseSchema = gql`
   }
 
   input BaseRelationValuesInput {
-    key: String!
+    key: String
     label: String
     type: String!
     value: String
