@@ -15,7 +15,7 @@ export const applyDownloadEndpoint = (app: Express) => {
         const result = await datasource.post(
           `${env?.api.collectionApiUrl}/entities/${
             request.body.parentId
-          }/order?${returnType ? `return_type=${returnType}` : ''}`,
+          }/order?order_by=order${returnType ? `&return_type=${returnType}` : ''}`,
           {
             method: 'GET',
           }
