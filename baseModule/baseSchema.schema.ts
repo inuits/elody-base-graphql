@@ -1321,6 +1321,7 @@ export const baseSchema = gql`
     paragraph
     doc
     text
+    hardBreak
     elodyTaggingExtension
   }
 
