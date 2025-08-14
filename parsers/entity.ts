@@ -71,13 +71,17 @@ export const parseRelations = (
   const groupedRelations: { [key: string]: RelationFieldInput[] } = {};
   const relationTypes: string[] = [];
 
-  relations?.forEach((relation: RelationFieldInput) => {
-    if (!relationTypes.includes(relation.type))
-      relationTypes.push(relation.type);
-  });
+  const sanitizedRelations: RelationFieldInput[] = [];
+  for (const relation of relations) {
+    if (relation?.key) {
+      sanitizedRelations.push(relation);
+      if (!relationTypes.includes(relation.type))
+        relationTypes.push(relation.type);
+    }
+  }
 
   relationTypes?.forEach((relationType: string) => {
-    groupedRelations[relationType] = relations.filter(
+    groupedRelations[relationType] = sanitizedRelations.filter(
       (relation: RelationFieldInput) => relation.type === relationType
     );
   });

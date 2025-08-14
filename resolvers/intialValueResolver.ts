@@ -85,7 +85,7 @@ export const resolveIntialValueRelations = async (
         type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
       } else {
         if (relationEntityType) {
-          if (!relation.key) console.log(relation, "IntialValueResolver")
+          if (!relation?.key) return [];
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             relationEntityType,
@@ -94,7 +94,7 @@ export const resolveIntialValueRelations = async (
           );
         }
         else if (metadataKeyAsLabel || String(formatter).startsWith("link|")) {
-          if (!relation.key) console.log(relation, "IntialValueResolver2")
+          if (!relation?.key) return [];
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
             '',
