@@ -272,4 +272,24 @@ export const baseFragments = gql`
       secondaryAttributeToDetermineTagConfig
     }
   }
+  
+  fragment basicContextMenuActions on ContextMenuActions {
+    doLinkAction {
+      label(input: "contextMenu.contextMenuLinkAction.followLink")
+      icon(input: "AngleRight")
+      __typename
+    }
+    doElodyAction {
+      label(input: "contextMenu.contextMenuElodyAction.delete-relation")
+      action(input: DeleteRelation)
+      icon(input: "Trash")
+      __typename
+    }
+    deleteEntity: doElodyAction {
+      label(input: "contextMenu.contextMenuElodyAction.delete-entity")
+      action(input: DeleteEntity)
+      icon(input: "Trash")
+      __typename
+    }
+  }
 `;
