@@ -73,7 +73,7 @@ export const parseRelations = (
 
   const sanitizedRelations: RelationFieldInput[] = [];
   for (const relation of relations) {
-    if (relation?.key) {
+    if (relation?.key && relation?.type) {
       sanitizedRelations.push(relation);
       if (!relationTypes.includes(relation.type))
         relationTypes.push(relation.type);

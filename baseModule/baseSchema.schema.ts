@@ -750,7 +750,7 @@ export const baseSchema = gql`
   input RelationFieldInput {
     key: String!
     label: String
-    type: String!
+    type: String
     value: String
     editStatus: EditStatus!
   }
