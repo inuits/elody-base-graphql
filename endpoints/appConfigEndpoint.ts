@@ -86,13 +86,41 @@ const getConfig = (config: Environment) => {
   return baseConfig;
 };
 
-export const applyAppConfigsEndpoint = (app: Express, config: Environment, translations: Object, urlMapping: TypeUrlMapping ) => {
+const getAvailableTranslations = (
+  config: { [key: string]: any },
+  translations: { [key: string]: string }
+) => {
+  const availableTranslationKeys: string[] =
+    config.customization.availableLanguages;
+  if (!availableTranslationKeys) return translations;
+
+  const availableTranslations: { [key: string]: string } = {};
+
+  availableTranslationKeys.forEach((key: string) => {
+    if (!Object.keys(translations).includes(key))
+      console.error(
+        `Language with key ${key} not available in translations, check if you are using the correct key or add translations for '${key}'`
+      );
+    availableTranslations[key] = translations[key];
+  });
+
+  return availableTranslations;
+};
+
+export const applyAppConfigsEndpoint = (
+  app: Express,
+  config: Environment,
+  translations: { [key: string]: string },
+  urlMapping: TypeUrlMapping
+) => {
   app.get('/api/app-configs', async (req, res) => {
-    res.end(JSON.stringify({ 
-        config: getConfig(config), 
-        translations, 
-        urlMapping, 
-        version: { 'apollo-graphql-version': config.version } 
-      }));
+    res.end(
+      JSON.stringify({
+        config: getConfig(config),
+        translations: getAvailableTranslations(config, translations),
+        urlMapping,
+        version: { 'apollo-graphql-version': config.version },
+      })
+    );
   });
 };

@@ -59,13 +59,13 @@ export interface Environment {
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
     advancedSearch?: {
-        queryBy: string;
-        queryByWeights?: string;
-        filterBy: string;
-        sortBy?: string;
-        limit?: number;
-        perPage?: number;
-        facetBy?: string;
+      queryBy: string;
+      queryByWeights?: string;
+      filterBy: string;
+      sortBy?: string;
+      limit?: number;
+      perPage?: number;
+      facetBy?: string;
     };
     SEO: {
       hasSEO: boolean;
@@ -82,6 +82,7 @@ export interface Environment {
     applicationTitle: string;
     applicationLocale: string;
     hideEmptyFields?: boolean;
+    availableLanguages?: string[];
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
   };
@@ -98,5 +99,5 @@ export interface Environment {
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
-  skeletonLayouts?: Record<string, string[]>
+  skeletonLayouts?: Record<string, string[]>;
 }

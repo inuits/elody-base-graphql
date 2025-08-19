@@ -19,7 +19,7 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
   uploadEndpoint: (app: Express) => applyUploadEndpoint(app),
   exportEndpoint: (app: Express) => applyExportEndpoint(app),
   versionEndpoint: (app: Express, config: Environment) =>
-  applyVersionEndpoint(app, config),
+    applyVersionEndpoint(app, config),
   mediafileEndpoint: (
     app: Express,
     storageApiUrl: string,
@@ -34,7 +34,11 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     ),
   tenantEndpoint: (app: Express) => applyTenantEndpoint(app),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
-  configsEndoint: (app: Express, config: Environment, appTranslations: Object, urlMapping: TypeUrlMapping) => 
-    applyAppConfigsEndpoint(app, config, appTranslations, urlMapping)
+  configsEndoint: (
+    app: Express,
+    config: Environment,
+    appTranslations: { [key: string]: string },
+    urlMapping: TypeUrlMapping
+  ) => applyAppConfigsEndpoint(app, config, appTranslations, urlMapping),
   // linkedOpenDataEndpoint: (app: Express) => applyLinkedOpenDataEndpoint(app),
 };

@@ -66,9 +66,12 @@ import helmet from 'helmet';
 import { deepSanitize, sanitizeRequestBody } from './utilities/sanitize';
 
 let environment: Environment | undefined = undefined;
-const baseTranslations: Object = loadTranslations(
-  path.join(__dirname, './translations/baseTranslations.json')
-);
+const baseTranslations: Object = {
+  en: loadTranslations(path.join(__dirname, './translations/en.json'))['en'],
+  nl: loadTranslations(path.join(__dirname, './translations/nl.json'))['nl'],
+};
+
+console.log(baseTranslations);
 
 const applyCustomEndpoints = (
   app: Express,
@@ -107,7 +110,7 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
 const start = (
   elodyConfig: ElodyConfig,
   appConfig: Environment,
-  appTranslations: Object,
+  appTranslations: { [key: string]: string },
   customEndpoints: ((app: any) => void)[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
   customTypeCollectionMapping:
@@ -115,7 +118,7 @@ const start = (
     | undefined = undefined,
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
-  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {}}
+  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} }
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
@@ -132,7 +135,7 @@ const start = (
       environment: appConfig.nomadNamespace,
     });
   }
-  
+
   const configureMiddleware = (app: any, appConfig: Environment) => {
     applyAuthSession(
       app,
@@ -154,12 +157,12 @@ const start = (
     let viteServer: ViteDevServer | undefined;
     if (appConfig.environment !== 'production') {
       viteServer = await createViteServer({
-        server: { 
+        server: {
           middlewareMode: true,
           hmr: {
             port: 24678,
-            clientPort: 24678
-          }
+            clientPort: 24678,
+          },
         },
         appType: 'spa',
         root: path.join(__dirname, '../dashboard'),
@@ -186,29 +189,27 @@ const start = (
 
     app.use(helmet());
 
-    appConfig.sentryEnabled
+    appConfig.sentryEnabled;
 
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
           ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-          "script-src": ["'self'", "'unsafe-eval'"],
-          "img-src": [
-            "'self'", 
-            "data:", 
-            "blob:", 
-            "https://server.arcgisonline.com", 
-            "https://a.tile.openstreetmap.org",
-            "https://b.tile.openstreetmap.org",
-            "https://c.tile.openstreetmap.org",
-          ],
-          "connect-src": [
+          'script-src': ["'self'", "'unsafe-eval'"],
+          'img-src': [
             "'self'",
-            ...(
-              appConfig.sentryEnabled && appConfig.sentryDsn
-                ? [new URL(appConfig.sentryDsn).origin]
-                : []
-            ),
+            'data:',
+            'blob:',
+            'https://server.arcgisonline.com',
+            'https://a.tile.openstreetmap.org',
+            'https://b.tile.openstreetmap.org',
+            'https://c.tile.openstreetmap.org',
+          ],
+          'connect-src': [
+            "'self'",
+            ...(appConfig.sentryEnabled && appConfig.sentryDsn
+              ? [new URL(appConfig.sentryDsn).origin]
+              : []),
           ],
         },
       })
@@ -276,7 +277,7 @@ const start = (
       ],
       tenantEndpoint: [app],
       healthEndpoint: [app],
-      configsEndoint: [app, appConfig, appTranslations, customTypeUrlMapping]
+      configsEndoint: [app, appConfig, appTranslations, customTypeUrlMapping],
       // linkedOpenDataEndpoint: [app],
     };
 

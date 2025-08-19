@@ -1,0 +1,560 @@
+{"en": {
+  "entity-translations": {
+    "singular": {
+      "baseEntity": "base entity",
+      "tenant": "tenant",
+      "user": "user",
+      "job": "job",
+      "shareLink": "share link",
+      "asset": "asset",
+      "mediafile": "mediafile",
+      "mediaFile": "mediafile",
+      "MediaFile": "mediafile"
+    },
+    "plural": {
+      "baseEntity": "base entities",
+      "tenant": "tenants",
+      "user": "users",
+      "job": "jobs",
+      "shareLink": "share links",
+      "asset": "assets",
+      "mediafile": "mediafiles",
+      "mediaFile": "mediafiles",
+      "MediaFile": "mediafiles"
+    }
+  },
+  "audio": {
+    "no-support": "Your browser does not support the audio element."
+  },
+  "actions": {
+    "labels": {
+      "upload": "Upload",
+      "update": "Update",
+      "download": "Download",
+      "download-csv-ordering": "Download a csv to reorder mediafiles",
+      "download-csv-assets": "Download a csv containing the assets",
+      "download-csv-mediafiles": "Download a csv containing the mediafiles",
+      "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
+      "upload-csv-metadata": "Upload the modified csv to adjust metadata",
+      "create": "Create",
+      "success": "{0} Items imported",
+      "csv-success": "CSV successfully imported",
+      "csv-errors": "Errors during CSV import",
+      "reset-upload": "Import more files",
+      "pause-upload": "Pause upload",
+      "resume-upload": "Resume upload",
+      "start-ocr": "Start OCR",
+      "delete-relation-entities": "Do you want to delete following {0} as well?",
+      "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}.",
+      "complete": "Complete"
+    },
+    "progress-steps": {
+      "validate": "CSV",
+      "validate-labels": {
+        "empty": "No CSV",
+        "complete": "OK",
+        "loading": "Validating CSV",
+        "failed": "Error in CSV"
+      },
+      "prepare": "Mediafiles",
+      "prepare-labels": {
+        "empty": "No mediafiles",
+        "complete": "OK",
+        "incomplete": "Missing mediafiles in uploadzone",
+        "loading": "Loading mediafiles",
+        "failed": "Mismatch between mediafiles and CSV"
+      },
+      "upload": "Upload",
+      "upload-labels": {
+        "empty": "Not uploading",
+        "complete": "Uploaded",
+        "loading": "Uploading",
+        "failed": "Something went wrong while uploading"
+      }
+    },
+    "progress-bar": {
+      "percentage": "Progress: {0}%",
+      "steps": "{0} of {1} completed"
+    },
+    "upload": {
+      "errors": "No items failed | {0} item failed:  | {0} items failed:",
+      "missing": "{0} is missing"
+    }
+  },
+  "bulk-operations": {
+    "undo-selection": "undo selection",
+    "select-page": "select page",
+    "select-all": "select all",
+    "edit": "Edit",
+    "items": "items",
+    "selected": "selected",
+    "save": "save",
+    "cancel": "cancel",
+    "delete": "delete",
+    "confirm-selection": "confirm selection",
+    "add-relation": "Add {0}",
+    "add-new-relation": "Add new {0}",
+    "add-existing-relation": "Add existing {0}",
+    "delete-relations": "Delete relation links with selected items",
+    "csv-export": {
+      "assets": "Export a csv file of assets",
+      "mediafiles": "Export a csv file of mediafiles",
+      "mediafiles-of-asset": "Export a csv file of the mediafiles of these assets",
+      "error": {
+        "title": "Export failed"
+      }
+    },
+    "download-mediafiles": "Download mediafiles",
+    "reorder-entities-with-csv": "Reorder entities with csv",
+    "export-to-csv": "Export to CSV",
+    "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
+    "create-share-link": "Create share link",
+    "delete-selected": "Delete selected {0}"
+  },
+  "confirm": {
+    "discard-edit": {
+      "message": "Are you certain you wish to leave the entity editor? Any unsaved changes will be discarded.",
+      "confirm": "Leave editor",
+      "secondary-confirm": "Save changes and leave editor",
+      "cancel": "Cancel",
+      "title": "Discard edit"
+    },
+    "discard-edit-change-locale": {
+      "message": "Are you certain you wish to set the locale? Any unsaved changes will be discarded.",
+      "confirm": "Discard changes and set the locale",
+      "cancel": "Cancel",
+      "title": "Discard edit"
+    },
+    "delete-entity": {
+      "message": "Are you certain you wish to delete this {0}?",
+      "confirm": "Delete {0}",
+      "secondary-confirm": "Delete entity and mediafiles",
+      "cancel": "Cancel",
+      "title": "Delete {0}"
+    },
+    "delete-entities": {
+      "message": "Are you certain you wish to delete selected entities?",
+      "confirm": "Delete",
+      "cancel": "Cancel",
+      "title": "Delete selected entities"
+    },
+    "discard-create": {
+      "message": "Are you certain you wish to exit the creation screen? Any unsaved changes will be discarded.",
+      "confirm": "Leave",
+      "cancel": "Cancel",
+      "title": "Discard create"
+    },
+    "discard-update": {
+      "message": "Are you certain you wish to stop editing? Any unsaved changes will be discarded",
+      "confirm": "Leave",
+      "cancel": "Cancel",
+      "title": "Discard update"
+    },
+    "discard-modal": {
+      "message": "Are you certain you wish to stop? Any unsaved changes will be discarded",
+      "confirm": "Leave",
+      "cancel": "Cancel",
+      "title": "Leave form"
+    },
+    "logout-modal": {
+      "message": "Are you certain you wish to log out?",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "title": "Logout"
+    },
+    "delete-relations": {
+      "message": "Are you sure you want to delete relation links with the selected items?",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "title": "Delete relation links with selected items"
+    }
+  },
+  "dropdown": {
+    "select-option": "select option"
+  },
+  "dropzone": {
+    "drag-add": "Drag your files, or click here to add your files",
+    "failed": "File(s) failed to upload.",
+    "success": "File(s) successfully uploaded.",
+    "uploading": "Uploading...",
+    "upload": "Upload",
+    "successNotification": {
+      "title": "Upload finished",
+      "description": "All files were succesfully uploaded"
+    }
+  },
+  "error-pages": {
+    "not-found": {
+      "title": "Oops, we couldn't find the item or page you are looking for",
+      "description": "The item or page you are looking for might have been removed, had its name changed or is temporarily unavailable. "
+    },
+    "access-denied": {
+      "title": "Sorry, but access is denied",
+      "description": "It seems that the account you logged in with doesn't have the necessary permissions to view this page. If you believe an error has occurred, please contact your administrator."
+    },
+    "unauthorized": {
+      "title": "Unauthorized",
+      "description": "It seems like you are not logged in, please log back in to continue"
+    }
+  },
+  "import": {
+    "start-import": "Start import",
+    "import-started": "Import started in background",
+    "no-directories": "No import directories available",
+    "no-magazines": "No import magazines available",
+    "error-csv-count": "Expected exactly 1 CSV file in {folder}, found {count}"
+  },
+  "entity": {
+    "create": "Create entity",
+    "type": "Type",
+    "belongs-to": "Belongs to",
+    "pick": "Pick entity",
+    "upload": "Upload",
+    "import": "Import",
+    "reset-viewer": "Reset"
+  },
+  "filters": {
+    "filter": "Filters",
+    "add-filter": "Add filter",
+    "active": "active",
+    "clear": "Clear all",
+    "apply": "Apply filter(s)",
+    "minDropdownSearchCharacters": "Type at least 3 characters",
+    "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
+    "rangeFilterToInputError": "'To' cannot be less than 'from'",
+    "matcher-labels": {
+      "select-filter-type": "Select filter type",
+      "AnyMatcher": "has a value",
+      "ContainsMatcher": "contains",
+      "ExactMatcher": "is exactly",
+      "IdMatcher": "ID",
+      "InBetweenMatcher": "between two values",
+      "MaxIncludedMatcher": "on maximum value",
+      "MaxMatcher": "on maximum value (not included)",
+      "MinIncludedMatcher": "on minimum value",
+      "MinMatcher": "on minimum value (not included)",
+      "NoneMatcher": "has no value",
+      "MetadataOnRelationExactMatcher": "is exactly",
+      "MetadataOnRelationContainsMatcher": "contains"
+    },
+    "matcher-placeholders": {
+      "date": "date",
+      "number": "number",
+      "keyword": "keyword",
+      "property": "property",
+      "ID": "ID"
+    }
+  },
+  "form": {
+    "create": "Create"
+  },
+  "history-view": {
+    "search": "Search History"
+  },
+  "jobs": {
+    "finished": "finished",
+    "failed": "failed",
+    "pending": "pending"
+  },
+  "element-labels": {
+    "sub-job": "Sub jobs",
+    "has-job": "Items created and modified by this job",
+    "metadata-element": "Metadata",
+    "media-element": "Media viewer",
+    "map-element": "Map"
+  },
+  "panel-labels": {
+    "description": "Description",
+    "other-metadata": "Other metadata",
+    "history": "History"
+  },
+  "metadata": {
+    "labels": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "identifier": "Identifier",
+      "user": "User",
+      "expire-date": "Expire date",
+      "status": "Status",
+      "rights": "Rights",
+      "date-updated": "Date updated",
+      "last-editor": "Last editor",
+      "title-zip": "Title zip file",
+      "basic-csv": "Basic csv file",
+      "expire-date-zip": "Expire date zip file",
+      "privacy": "Privacy",
+      "created-at": "Created at",
+      "started-at": "Started at",
+      "started-by": "Started by",
+      "ttl": "Time to live",
+      "info": "Info",
+      "status-updated-at": "Status updated at",
+      "optional": "optional",
+      "one-of-required": "1 of these fields are required",
+      "edit-metadata": "Edit metadata",
+      "editing-metadata": "Editing metadata",
+      "delete-entity": "Delete entity",
+      "no-label": "No label",
+      "date-created": "Datum aangemaakt",
+      "virtual-keyboard": "Virtual keyboard"
+    }
+  },
+  "notifications": {
+    "default": {
+      "new-version-available": {
+        "title": "New version available",
+        "description": "There is a new version available refresh the page to update"
+      }
+    },
+    "success": {
+      "entityCreated": {
+        "title": "Entity successfully created",
+        "description": "Changes have been saved successfully"
+      },
+      "entityUpdated": {
+        "title": "Entity successfully Updated",
+        "description": "Changes have been saved successfully"
+      },
+      "entityDeleted": {
+        "title": "Entity successfully deleted",
+        "description": "Changes have been saved successfully"
+      },
+      "entitiesDeleted": {
+        "title": "Entities successfully deleted",
+        "description": "Changes have been saved successfully"
+      },
+      "csvReordering": {
+        "title": "Reordering successful",
+        "description": "The mediafiles are successfully reordered"
+      },
+      "updateMetadataCsv": {
+        "title": "Update through CSV successful",
+        "description": "The entities/mediafiles are successfully updated"
+      },
+      "downloadEntityCreated": {
+        "title": "Download entity created",
+        "description": "The download entity that includes the download link is successfully created"
+      },
+      "copiedToClipboard": {
+        "title": "Copied to clipboard",
+        "description": "The text has been successfully copied"
+      },
+      "import": {
+        "title": "Import",
+        "description": "Import started successfully"
+      },
+      "items-deleted": {
+        "title": "Items successfully deleted",
+        "description": "Items related to entity were deleted"
+      },
+      "entity-deleted": {
+        "title": "Entity successfully deleted",
+        "description": "Entity was deleted"
+      }
+    },
+    "errors": {
+      "construct-date-error": {
+        "title": "Date must be an exiting date"
+      },
+      "future-date-error": {
+        "title": "Date can not be in the future"
+      },
+      "validation-error": {
+        "title": "Something went wrong"
+      },
+      "entityDeleted": {
+        "title": "Entities not deleted",
+        "description": "Error occured during changes"
+      },
+      "copiedToClipboard": {
+        "title": "Failed to copy clipboard",
+        "description": "The text could not be copied to clipboard"
+      },
+      "directoryImport": {
+        "title": "Directory import",
+        "description": "Directory id required"
+      },
+      "import": {
+        "title": "Import",
+        "description": "Failed to start import"
+      }
+    },
+    "graphql-errors": {
+      "duplicate-entity": {
+        "title": "Duplicate",
+        "description": "Creation failed, duplicate identifier detected"
+      },
+      "duplicate-upload": {
+        "title": "Duplicate",
+        "description": "Duplicate file detected, upload reverted"
+      },
+      "forbidden": {
+        "title": "Forbidden",
+        "description": "You don't have access to this page/action"
+      }
+    }
+  },
+  "error-codes": {
+    "R0002": "An unknown error occurred",
+    "R0004": "Item not found",
+    "R0009": "Entity has no tenant",
+    "R1004": "You have no permission to see this",
+    "R1008": "You don't have the permission to create/update/delete this resource.",
+    "R5014": "There is no metadata available for item with id {id}",
+    "W0004": "Item not found",
+    "W0011": "Item with id {id} doesn't exist in the collection {collection} in the uploaded csv.",
+    "W1004": "You have no permission to update this",
+    "W11000": "The institute for this record doesn't exist yet. Please first create the institute before creating this asset.",
+    "W2003": "Following entry must be unique: {duplicate_entry}",
+    "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded. Click to navigate to the mediafile $LINK(mediafile, {existing_file})",
+    "W2004": "Entity with following identifiers already exists: {duplicate_keys}",
+    "W5001": "{prefix}Property {property} can only have one of the following values: {values}",
+    "W5002": "{prefix}Missing required property {property}",
+    "W5005": "The CSV file has missing columns: {missing_columns}",
+    "W5008": "The value {value} is not a valid datetime",
+    "W5009": "{type} is not a valid type",
+    "W5011": "Validation failed: {message}",
+    "W5013": "The format is invalid for type {type}",
+    "W5014": "No metadata available for item with id {id}",
+    "W5016": "The value {value} is invalid, these are the valid values: {options}",
+    "W5017": "Item for key {key} with value {value} doesn't exist."
+  },
+  "pagination": {
+    "page": "page",
+    "of": "of"
+  },
+  "saved-searches": {
+    "new": "Save as new",
+    "save-changes": "Save changes",
+    "edit-label": "Edit label",
+    "reset": "Reset",
+    "delete": "Delete",
+    "all-filters": "All filters",
+    "search-title": "Search title",
+    "search-modal-title": "Search filter",
+    "edit": "Edit",
+    "search-saved-searches": "Search Saved Searches"
+  },
+  "search": {
+    "noresult": "No results",
+    "asset-library": "Search Asset Library...",
+    "mediafile-library": "Search Mediafiles..."
+  },
+  "language": {
+    "nl": "Dutch",
+    "en": "English",
+    "fr": "French"
+  },
+  "library": {
+    "search": "Search",
+    "items": "Items",
+    "sort": "Order by",
+    "sort-direction": "Order direction",
+    "loading": "Loading",
+    "add": "Add",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "language": "Choose language"
+  },
+  "navigation": {
+    "title": "Elody",
+    "entities": "Entities",
+    "new": "New",
+    "log-out": "Log out",
+    "log-in": "Log in",
+    "go-home": "Go back home",
+    "users": "Users",
+    "jobs": "Jobs",
+    "settings": "Settings",
+    "upload": "Upload",
+    "sets": "Sets",
+    "tenant": "Tenant",
+    "create-set": "Set",
+    "make-download": "Make a download of files",
+    "edit-csv": "Update metadata with CSV",
+    "delete-entity-window": "Delete {0}",
+    "create-share-link": "Create share link"
+  },
+  "upload-fields": {
+    "labels": {
+      "csv-upload": "Drop your CSV, here.",
+      "file-upload": "Drag your files, or click here to add your files"
+    },
+    "errors": {
+      "missing": "{0} is missing",
+      "extraneous": "{0} not found in CSV",
+      "dry-run-failed": "Something went wrong while running CSV validation"
+    },
+    "csv-template-link": "Download example with instructions for",
+    "link-to-documentation": "Link to Elody CSV documentation"
+  },
+  "tagging": {
+    "tag-entity": "Tag {entityType}",
+    "tag-existing": "Select existing {entityType}",
+    "tag-selected-button": "Tag selected {entityType}",
+    "tag-new": "Create new {entityType}",
+    "configuration-entity-required": "A {entityType} is required to be able to start tagging"
+  },
+  "tooltip": {
+    "advancedFilterTypes": {
+      "id": "This filter allows you to search based on an id. An exact / partial search can be performed on an id. In addition, you can search for empty / non-empty id's on this field.",
+      "text": "This filter allows you to search based on text in the field. You can search for the exact text or find partial text. You can also search for fields that are empty / not empty.",
+      "date": "This filter allows searching items within time intervals, via dates. The date you enter can be found exactly or you can choose to find all dates earlier / later / inside / outside ... than this one to be found.",
+      "number": "This filter searches based on numbers. You can enter a number that is smaller / larger / in between / outside / equal ... to the field you are looking for.",
+      "selection": "This filter can build a list of possible selections from your search: !with the filter type 'exact'! It can also search for partial, empty and non-empty fields.",
+      "boolean": "This filter allows you to find fields based on two opposite values. For example: yes / no.",
+      "type": "This filter can search for different types of this field that are in the system."
+    },
+    "bulkOperationsActionBar": {
+      "readmode-noneselected": "To use this action, you have to be in readmode and you may not select items.",
+      "readmode-someselected": "To use this action, you have to be in readmode and you have to select at least one item.",
+      "editmode-noneselected": "To use this action, you have to be in editmode and you may not select items.",
+      "editmode-someselected": "To use this action, you have to be in editmode and you have to select at least one item.",
+      "noneselected": "To use this action, you may not select items.",
+      "someselected": "To use this action, you have to select at least one item.",
+      "readmode": "To use this action you have to be in readmode",
+      "ocr-locked": "The OCR option is not available when the 'Ocr locked' Asset metadata field has a value of 'true'. The action is also not available in editmode or when an item is selected."
+    },
+    "buttons": {
+      "disabled-upload-button": "This button is disabled because there are some fields that are missing for the upload.",
+      "disabled-submit-button": "This button is disabled because some fields are not correctly filled in or there was an error during creation.",
+      "disabled-save-button": "This button is disabled because some fields are not correctly filled in.",
+      "disabled-updateMetadata-button": "This button is disabled because the type or csv fields are not correctly filled in.",
+      "disabled-export-csv-button": "This button is disabled because the there is no entity selected."
+    },
+    "required": "This checkbox is required",
+    "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
+  },
+  "contextMenu": {
+    "contextMenuLinkAction": {
+      "followLink": "Open {0} in a new tab"
+    },
+    "contextMenuGeneralAction": {
+      "setPrimaryMediafile": "Set this as the primary mediafile for the asset",
+      "setPrimaryThumbnail": "Set this as the primary thumbnail for the asset"
+    },
+    "contextMenuElodyAction": {
+      "delete-relation": "Delete link with {0}",
+      "delete-entity": "Delete {0}",
+      "share": "Share link"
+    }
+  },
+  "preview-component": {
+    "open": "Open preview",
+    "close": "Close preview"
+  },
+  "media-viewer": {
+    "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'"
+  },
+  "iiif-operations-modal": {
+    "title": "Resize image",
+    "dimensions": "Dimensions",
+    "format": "Output format",
+    "scale": "Scale",
+    "width": "Width",
+    "height": "Height",
+    "get-resized-image": "Get resized image"
+  }
+}
+}
