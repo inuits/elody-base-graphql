@@ -90,19 +90,38 @@ const getAvailableTranslations = (
   config: { [key: string]: any },
   translations: { [key: string]: string }
 ) => {
-  const availableTranslationKeys: string[] =
-    config.customization.availableLanguages;
-  if (!availableTranslationKeys) return translations;
+  const includedTranslationKeys: string[] | undefined =
+    config.customization?.availableLanguages;
+  const excludedTranslationKeys: string[] | undefined =
+    config.customization?.excludedLanguages;
 
-  const availableTranslations: { [key: string]: string } = {};
+  if (!includedTranslationKeys && !excludedTranslationKeys) {
+    return translations;
+  }
 
-  availableTranslationKeys.forEach((key: string) => {
-    if (!Object.keys(translations).includes(key))
-      console.error(
-        `Language with key ${key} not available in translations, check if you are using the correct key or add translations for '${key}'`
-      );
-    availableTranslations[key] = translations[key];
-  });
+  let availableTranslations: { [key: string]: string } = {};
+
+  if (includedTranslationKeys) {
+    includedTranslationKeys.forEach((key: string) => {
+      if (!(key in translations)) {
+        console.error(
+          `Language with key ${key} not available in translations, check if you are using the correct key or add translations for '${key}'`
+        );
+      } else {
+        availableTranslations[key] = translations[key];
+      }
+    });
+  } else {
+    availableTranslations = { ...translations };
+  }
+
+  if (excludedTranslationKeys) {
+    excludedTranslationKeys.forEach((key: string) => {
+      if (key in availableTranslations) {
+        delete availableTranslations[key];
+      }
+    });
+  }
 
   return availableTranslations;
 };

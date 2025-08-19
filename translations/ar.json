@@ -1,0 +1,562 @@
+{
+  "ar": {
+    "entity-translations": {
+      "singular": {
+        "baseEntity": "كيان أساسي",
+        "tenant": "مستأجر",
+        "user": "مستخدم",
+        "job": "مهمة",
+        "shareLink": "رابط مشاركة",
+        "asset": "مورد",
+        "mediafile": "ملف وسائط",
+        "mediaFile": "ملف وسائط",
+        "MediaFile": "ملف وسائط"
+      },
+      "plural": {
+        "baseEntity": "كيانات أساسية",
+        "tenant": "مستأجرون",
+        "user": "مستخدمون",
+        "job": "مهام",
+        "shareLink": "روابط مشاركة",
+        "asset": "موارد",
+        "mediafile": "ملفات وسائط",
+        "mediaFile": "ملفات وسائط",
+        "MediaFile": "ملفات وسائط"
+      }
+    },
+    "audio": {
+      "no-support": "متصفحك لا يدعم عنصر الصوت."
+    },
+    "actions": {
+      "labels": {
+        "upload": "رفع",
+        "update": "تحديث",
+        "download": "تنزيل",
+        "download-csv-ordering": "تنزيل ملف CSV لإعادة ترتيب ملفات الوسائط",
+        "download-csv-assets": "تنزيل ملف CSV يحتوي على الموارد",
+        "download-csv-mediafiles": "تنزيل ملف CSV يحتوي على ملفات الوسائط",
+        "upload-csv-ordering": "رفع ملف CSV معدل لإعادة ترتيب ملفات الوسائط",
+        "upload-csv-metadata": "رفع ملف CSV معدل لتعديل البيانات الوصفية",
+        "create": "إنشاء",
+        "success": "تم استيراد {0} عنصر",
+        "csv-success": "تم استيراد CSV بنجاح",
+        "csv-errors": "حدثت أخطاء أثناء استيراد CSV",
+        "reset-upload": "استيراد المزيد من الملفات",
+        "pause-upload": "إيقاف مؤقت للرفع",
+        "resume-upload": "استئناف الرفع",
+        "start-ocr": "بدء OCR",
+        "delete-relation-entities": "هل تريد حذف {0} التالية أيضًا؟",
+        "blocking-relations": "هناك علاقات تمنع الحذف: لا يمكن حذف {0} بسبب {1} التالية.",
+        "complete": "مكتمل"
+      },
+      "progress-steps": {
+        "validate": "CSV",
+        "validate-labels": {
+          "empty": "لا يوجد CSV",
+          "complete": "تم",
+          "loading": "جارٍ التحقق من CSV",
+          "failed": "خطأ في CSV"
+        },
+        "prepare": "ملفات الوسائط",
+        "prepare-labels": {
+          "empty": "لا توجد ملفات وسائط",
+          "complete": "تم",
+          "incomplete": "ملفات وسائط مفقودة في منطقة الرفع",
+          "loading": "جارٍ تحميل ملفات الوسائط",
+          "failed": "عدم تطابق بين ملفات الوسائط و CSV"
+        },
+        "upload": "رفع",
+        "upload-labels": {
+          "empty": "غير جارٍ الرفع",
+          "complete": "تم الرفع",
+          "loading": "جارٍ الرفع",
+          "failed": "حدث خطأ أثناء الرفع"
+        }
+      },
+      "progress-bar": {
+        "percentage": "التقدم: {0}%",
+        "steps": "{0} من {1} مكتملة"
+      },
+      "upload": {
+        "errors": "لم تفشل أي عناصر | فشل {0} عنصر: | فشلت {0} عناصر:",
+        "missing": "{0} مفقود"
+      }
+    },
+    "bulk-operations": {
+      "undo-selection": "إلغاء التحديد",
+      "select-page": "تحديد الصفحة",
+      "select-all": "تحديد الكل",
+      "edit": "تعديل",
+      "items": "عناصر",
+      "selected": "محدد",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "confirm-selection": "تأكيد التحديد",
+      "add-relation": "إضافة {0}",
+      "add-new-relation": "إضافة {0} جديد",
+      "add-existing-relation": "إضافة {0} موجود",
+      "delete-relations": "حذف الروابط مع العناصر المحددة",
+      "csv-export": {
+        "assets": "تصدير ملف CSV للموارد",
+        "mediafiles": "تصدير ملف CSV لملفات الوسائط",
+        "mediafiles-of-asset": "تصدير ملف CSV لملفات الوسائط لهذه الموارد",
+        "error": {
+          "title": "فشل التصدير"
+        }
+      },
+      "download-mediafiles": "تنزيل ملفات الوسائط",
+      "reorder-entities-with-csv": "إعادة ترتيب الكيانات باستخدام CSV",
+      "export-to-csv": "تصدير إلى CSV",
+      "bulk-select-all-size-limit-reached": "تم تعطيل زر تحديد الكل لأن الحد الأقصى للاختيار هو {0}",
+      "create-share-link": "إنشاء رابط مشاركة",
+      "delete-selected": "حذف {0} المحددة"
+    },
+    "confirm": {
+      "discard-edit": {
+        "message": "هل أنت متأكد أنك تريد مغادرة محرر الكيان؟ سيتم تجاهل أي تغييرات غير محفوظة.",
+        "confirm": "مغادرة المحرر",
+        "secondary-confirm": "حفظ التغييرات ومغادرة المحرر",
+        "cancel": "إلغاء",
+        "title": "تجاهل التعديل"
+      },
+      "discard-edit-change-locale": {
+        "message": "هل أنت متأكد أنك تريد تغيير اللغة؟ سيتم تجاهل أي تغييرات غير محفوظة.",
+        "confirm": "تجاهل التغييرات وتعيين اللغة",
+        "cancel": "إلغاء",
+        "title": "تجاهل التعديل"
+      },
+      "delete-entity": {
+        "message": "هل أنت متأكد أنك تريد حذف هذا {0}؟",
+        "confirm": "حذف {0}",
+        "secondary-confirm": "حذف الكيان وملفات الوسائط",
+        "cancel": "إلغاء",
+        "title": "حذف {0}"
+      },
+      "delete-entities": {
+        "message": "هل أنت متأكد أنك تريد حذف الكيانات المحددة؟",
+        "confirm": "حذف",
+        "cancel": "إلغاء",
+        "title": "حذف الكيانات المحددة"
+      },
+      "discard-create": {
+        "message": "هل أنت متأكد أنك تريد الخروج من شاشة الإنشاء؟ سيتم تجاهل أي تغييرات غير محفوظة.",
+        "confirm": "مغادرة",
+        "cancel": "إلغاء",
+        "title": "تجاهل الإنشاء"
+      },
+      "discard-update": {
+        "message": "هل أنت متأكد أنك تريد التوقف عن التعديل؟ سيتم تجاهل أي تغييرات غير محفوظة",
+        "confirm": "مغادرة",
+        "cancel": "إلغاء",
+        "title": "تجاهل التحديث"
+      },
+      "discard-modal": {
+        "message": "هل أنت متأكد أنك تريد التوقف؟ سيتم تجاهل أي تغييرات غير محفوظة",
+        "confirm": "مغادرة",
+        "cancel": "إلغاء",
+        "title": "مغادرة النموذج"
+      },
+      "logout-modal": {
+        "message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+        "confirm": "تأكيد",
+        "cancel": "إلغاء",
+        "title": "تسجيل الخروج"
+      },
+      "delete-relations": {
+        "message": "هل أنت متأكد أنك تريد حذف الروابط مع العناصر المحددة؟",
+        "confirm": "تأكيد",
+        "cancel": "إلغاء",
+        "title": "حذف الروابط مع العناصر المحددة"
+      }
+    },
+    "dropdown": {
+      "select-option": "اختر خيار"
+    },
+    "dropzone": {
+      "drag-add": "اسحب ملفاتك، أو انقر هنا لإضافة ملفاتك",
+      "failed": "فشل رفع الملف/الملفات.",
+      "success": "تم رفع الملف/الملفات بنجاح.",
+      "uploading": "جارٍ الرفع...",
+      "upload": "رفع",
+      "successNotification": {
+        "title": "انتهى الرفع",
+        "description": "تم رفع جميع الملفات بنجاح"
+      }
+    },
+    "error-pages": {
+      "not-found": {
+        "title": "عذرًا، لم نتمكن من العثور على العنصر أو الصفحة التي تبحث عنها",
+        "description": "قد يكون العنصر أو الصفحة التي تبحث عنها قد تمت إزالتها، أو تم تغيير اسمها، أو أنها غير متاحة مؤقتًا."
+      },
+      "access-denied": {
+        "title": "عذرًا، الوصول مرفوض",
+        "description": "يبدو أن الحساب الذي سجلت الدخول به لا يملك الصلاحيات اللازمة لعرض هذه الصفحة. إذا كنت تعتقد أن هناك خطأ، يرجى التواصل مع المسؤول."
+      },
+      "unauthorized": {
+        "title": "غير مصرح",
+        "description": "يبدو أنك غير مسجل الدخول، يرجى تسجيل الدخول مرة أخرى للمتابعة"
+      }
+    },
+    "import": {
+      "start-import": "بدء الاستيراد",
+      "import-started": "بدأ الاستيراد في الخلفية",
+      "no-directories": "لا توجد أدلة استيراد متاحة",
+      "no-magazines": "لا توجد مجلات استيراد متاحة",
+      "error-csv-count": "متوقع ملف CSV واحد بالضبط في {folder}، تم العثور على {count}"
+    },
+    "entity": {
+      "create": "إنشاء كيان",
+      "type": "النوع",
+      "belongs-to": "ينتمي إلى",
+      "pick": "اختر كيان",
+      "upload": "رفع",
+      "import": "استيراد",
+      "reset-viewer": "إعادة تعيين"
+    },
+    "filters": {
+      "filter": "مرشحات",
+      "add-filter": "إضافة مرشح",
+      "active": "نشط",
+      "clear": "مسح الكل",
+      "apply": "تطبيق المرشح(ات)",
+      "minDropdownSearchCharacters": "اكتب 3 أحرف على الأقل",
+      "rangeFilterFromInputError": "لا يمكن أن يكون 'من' أكبر من 'إلى'",
+      "rangeFilterToInputError": "لا يمكن أن يكون 'إلى' أصغر من 'من'",
+      "matcher-labels": {
+        "select-filter-type": "اختر نوع المرشح",
+        "AnyMatcher": "يحتوي على قيمة",
+        "ContainsMatcher": "يحتوي",
+        "ExactMatcher": "مساوٍ تمامًا",
+        "IdMatcher": "المعرف",
+        "InBetweenMatcher": "بين قيمتين",
+        "MaxIncludedMatcher": "على القيمة القصوى",
+        "MaxMatcher": "على القيمة القصوى (غير مشمولة)",
+        "MinIncludedMatcher": "على القيمة الدنيا",
+        "MinMatcher": "على القيمة الدنيا (غير مشمولة)",
+        "NoneMatcher": "بدون قيمة",
+        "MetadataOnRelationExactMatcher": "مساوٍ تمامًا",
+        "MetadataOnRelationContainsMatcher": "يحتوي"
+      },
+      "matcher-placeholders": {
+        "date": "تاريخ",
+        "number": "رقم",
+        "keyword": "كلمة مفتاحية",
+        "property": "خاصية",
+        "ID": "المعرف"
+      }
+    },
+    "form": {
+      "create": "إنشاء"
+    },
+    "history-view": {
+      "search": "بحث في السجل"
+    },
+    "jobs": {
+      "finished": "منتهية",
+      "failed": "فشلت",
+      "pending": "قيد الانتظار"
+    },
+    "element-labels": {
+      "sub-job": "مهام فرعية",
+      "has-job": "العناصر التي أنشأتها أو عدلتها هذه المهمة",
+      "metadata-element": "البيانات الوصفية",
+      "media-element": "عارض الوسائط",
+      "map-element": "خريطة"
+    },
+    "panel-labels": {
+      "description": "الوصف",
+      "other-metadata": "بيانات وصفية أخرى",
+      "history": "السجل"
+    },
+    "metadata": {
+      "labels": {
+        "email": "البريد الإلكتروني",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "identifier": "المعرف",
+        "user": "مستخدم",
+        "expire-date": "تاريخ الانتهاء",
+        "status": "الحالة",
+        "rights": "الحقوق",
+        "date-updated": "تاريخ التحديث",
+        "last-editor": "آخر محرر",
+        "title-zip": "ملف مضغوط بالعنوان",
+        "basic-csv": "ملف CSV أساسي",
+        "expire-date-zip": "ملف مضغوط بتاريخ الانتهاء",
+        "privacy": "الخصوصية",
+        "created-at": "تاريخ الإنشاء",
+        "started-at": "تاريخ البدء",
+        "started-by": "بدأ بواسطة",
+        "ttl": "مدة الحياة",
+        "info": "معلومات",
+        "status-updated-at": "تم تحديث الحالة في",
+        "optional": "اختياري",
+        "one-of-required": "1 من هذه الحقول مطلوب",
+        "edit-metadata": "تعديل البيانات الوصفية",
+        "editing-metadata": "جاري تعديل البيانات الوصفية",
+        "delete-entity": "حذف الكيان",
+        "no-label": "بدون تسمية",
+        "date-created": "تاريخ الإنشاء",
+        "virtual-keyboard": "لوحة مفاتيح افتراضية"
+      }
+    },
+    "notifications": {
+      "default": {
+        "new-version-available": {
+          "title": "نسخة جديدة متاحة",
+          "description": "توجد نسخة جديدة متاحة، قم بتحديث الصفحة للتحديث"
+        }
+      },
+      "success": {
+        "entityCreated": {
+          "title": "تم إنشاء الكيان بنجاح",
+          "description": "تم حفظ التغييرات بنجاح"
+        },
+        "entityUpdated": {
+          "title": "تم تحديث الكيان بنجاح",
+          "description": "تم حفظ التغييرات بنجاح"
+        },
+        "entityDeleted": {
+          "title": "تم حذف الكيان بنجاح",
+          "description": "تم حفظ التغييرات بنجاح"
+        },
+        "entitiesDeleted": {
+          "title": "تم حذف الكيانات بنجاح",
+          "description": "تم حفظ التغييرات بنجاح"
+        },
+        "csvReordering": {
+          "title": "إعادة الترتيب ناجحة",
+          "description": "تمت إعادة ترتيب ملفات الوسائط بنجاح"
+        },
+        "updateMetadataCsv": {
+          "title": "تم التحديث عبر CSV بنجاح",
+          "description": "تم تحديث الكيانات/ملفات الوسائط بنجاح"
+        },
+        "downloadEntityCreated": {
+          "title": "تم إنشاء كيان التنزيل",
+          "description": "تم إنشاء كيان التنزيل الذي يحتوي على رابط التنزيل بنجاح"
+        },
+        "copiedToClipboard": {
+          "title": "تم النسخ إلى الحافظة",
+          "description": "تم نسخ النص بنجاح"
+        },
+        "import": {
+          "title": "استيراد",
+          "description": "بدأ الاستيراد بنجاح"
+        },
+        "items-deleted": {
+          "title": "تم حذف العناصر بنجاح",
+          "description": "تم حذف العناصر المتعلقة بالكيان"
+        },
+        "entity-deleted": {
+          "title": "تم حذف الكيان بنجاح",
+          "description": "تم حذف الكيان"
+        }
+      },
+      "errors": {
+        "construct-date-error": {
+          "title": "يجب أن يكون التاريخ صالحًا"
+        },
+        "future-date-error": {
+          "title": "لا يمكن أن يكون التاريخ في المستقبل"
+        },
+        "validation-error": {
+          "title": "حدث خطأ ما"
+        },
+        "entityDeleted": {
+          "title": "لم يتم حذف الكيانات",
+          "description": "حدث خطأ أثناء التغييرات"
+        },
+        "copiedToClipboard": {
+          "title": "فشل النسخ إلى الحافظة",
+          "description": "تعذر نسخ النص إلى الحافظة"
+        },
+        "directoryImport": {
+          "title": "استيراد الدليل",
+          "description": "معرف الدليل مطلوب"
+        },
+        "import": {
+          "title": "استيراد",
+          "description": "فشل بدء الاستيراد"
+        }
+      },
+      "graphql-errors": {
+        "duplicate-entity": {
+          "title": "مكرر",
+          "description": "فشل الإنشاء، تم اكتشاف معرف مكرر"
+        },
+        "duplicate-upload": {
+          "title": "مكرر",
+          "description": "تم اكتشاف ملف مكرر، تم إلغاء الرفع"
+        },
+        "forbidden": {
+          "title": "ممنوع",
+          "description": "ليس لديك صلاحية الوصول إلى هذه الصفحة/الإجراء"
+        }
+      }
+    },
+    "error-codes": {
+      "R0002": "حدث خطأ غير معروف",
+      "R0004": "العنصر غير موجود",
+      "R0009": "الكيان لا يحتوي على مستأجر",
+      "R1004": "ليس لديك إذن لرؤية هذا",
+      "R1008": "ليس لديك الإذن لإنشاء/تحديث/حذف هذا المورد.",
+      "R5014": "لا توجد بيانات وصفية متاحة للعنصر ذو المعرف {id}",
+      "W0004": "العنصر غير موجود",
+      "W0011": "العنصر ذو المعرف {id} غير موجود في المجموعة {collection} في ملف CSV المرفوع.",
+      "W1004": "ليس لديك إذن لتحديث هذا",
+      "W11000": "المعهد لهذا السجل غير موجود بعد. يرجى إنشاء المعهد أولاً قبل إنشاء هذا المورد.",
+      "W2003": "يجب أن يكون الإدخال التالي فريدًا: {duplicate_entry}",
+      "W4009": "تم اكتشاف ملف مكرر، الصورة التي تحاول رفعها تم رفعها مسبقًا. اضغط للانتقال إلى ملف الوسائط $LINK(mediafile, {existing_file})",
+      "W2004": "يوجد كيان بهذه المعرفات مسبقًا: {duplicate_keys}",
+      "W5001": "{prefix} الخاصية {property} يمكن أن تحتوي على واحدة فقط من القيم التالية: {values}",
+      "W5002": "{prefix} الخاصية المطلوبة {property} مفقودة",
+      "W5005": "ملف CSV يحتوي على أعمدة مفقودة: {missing_columns}",
+      "W5008": "القيمة {value} ليست تاريخ/وقت صحيح",
+      "W5009": "{type} ليس نوعًا صالحًا",
+      "W5011": "فشل التحقق: {message}",
+      "W5013": "التنسيق غير صالح للنوع {type}",
+      "W5014": "لا توجد بيانات وصفية للعنصر ذو المعرف {id}",
+      "W5016": "القيمة {value} غير صالحة، القيم الصالحة هي: {options}",
+      "W5017": "العنصر للمفتاح {key} ذو القيمة {value} غير موجود."
+    },
+    "pagination": {
+      "page": "صفحة",
+      "of": "من"
+    },
+    "saved-searches": {
+      "new": "حفظ كجديد",
+      "save-changes": "حفظ التغييرات",
+      "edit-label": "تعديل التسمية",
+      "reset": "إعادة تعيين",
+      "delete": "حذف",
+      "all-filters": "كل الفلاتر",
+      "search-title": "عنوان البحث",
+      "search-modal-title": "فلتر البحث",
+      "edit": "تعديل",
+      "search-saved-searches": "البحث في عمليات البحث المحفوظة"
+    },
+    "search": {
+      "noresult": "لا توجد نتائج",
+      "asset-library": "ابحث في مكتبة الموارد...",
+      "mediafile-library": "ابحث في ملفات الوسائط..."
+    },
+    "language": {
+      "nl": "هولندية",
+      "en": "إنجليزية",
+      "fr": "فرنسية",
+      "ar": "العربية"
+    },
+    "library": {
+      "search": "بحث",
+      "items": "عناصر",
+      "sort": "ترتيب حسب",
+      "sort-direction": "اتجاه الترتيب",
+      "loading": "جارٍ التحميل",
+      "add": "إضافة",
+      "asc": "تصاعدي",
+      "desc": "تنازلي",
+      "language": "اختر اللغة"
+    },
+    "navigation": {
+      "title": "إيلودي",
+      "entities": "كيانات",
+      "new": "جديد",
+      "log-out": "تسجيل خروج",
+      "log-in": "تسجيل دخول",
+      "go-home": "العودة إلى الصفحة الرئيسية",
+      "users": "مستخدمون",
+      "jobs": "مهام",
+      "settings": "إعدادات",
+      "upload": "رفع",
+      "sets": "مجموعات",
+      "tenant": "مستأجر",
+      "create-set": "مجموعة",
+      "make-download": "إنشاء تنزيل للملفات",
+      "edit-csv": "تحديث البيانات الوصفية باستخدام CSV",
+      "delete-entity-window": "حذف {0}",
+      "create-share-link": "إنشاء رابط مشاركة"
+    },
+    "upload-fields": {
+      "labels": {
+        "csv-upload": "أسقط ملف CSV هنا.",
+        "file-upload": "اسحب ملفاتك، أو اضغط هنا لإضافة ملفاتك"
+      },
+      "errors": {
+        "missing": "{0} مفقود",
+        "extraneous": "{0} غير موجود في CSV",
+        "dry-run-failed": "حدث خطأ أثناء التحقق من CSV"
+      },
+      "csv-template-link": "تنزيل مثال مع تعليمات لـ",
+      "link-to-documentation": "رابط إلى وثائق Elody الخاصة بـ CSV"
+    },
+    "tagging": {
+      "tag-entity": "إضافة وسم لـ {entityType}",
+      "tag-existing": "اختر {entityType} موجود",
+      "tag-selected-button": "إضافة وسم لـ {entityType} المحدد",
+      "tag-new": "إنشاء {entityType} جديد",
+      "configuration-entity-required": "يتطلب {entityType} للبدء في الوسم"
+    },
+    "tooltip": {
+      "advancedFilterTypes": {
+        "id": "يسمح لك هذا الفلتر بالبحث باستخدام المعرف. يمكن إجراء بحث دقيق / جزئي، كما يمكنك البحث عن معرفات فارغة / غير فارغة.",
+        "text": "يسمح هذا الفلتر بالبحث في النص داخل الحقل. يمكنك البحث عن النص بالكامل أو جزء منه. يمكنك أيضًا البحث عن الحقول الفارغة / غير الفارغة.",
+        "date": "يسمح هذا الفلتر بالبحث عن العناصر ضمن فترات زمنية عبر التواريخ. يمكنك إدخال تاريخ دقيق أو البحث عن تواريخ أقدم / أحدث / داخل / خارج الفترة.",
+        "number": "يسمح هذا الفلتر بالبحث باستخدام الأرقام. يمكنك إدخال رقم أصغر / أكبر / بين / خارج / يساوي القيمة في الحقل.",
+        "selection": "يسمح هذا الفلتر ببناء قائمة من الاختيارات الممكنة: !مع نوع فلتر 'دقيق'! كما يمكنه البحث عن حقول جزئية أو فارغة أو غير فارغة.",
+        "boolean": "يسمح هذا الفلتر بالبحث عن الحقول ذات القيم المتعاكسة. مثل: نعم / لا.",
+        "type": "يسمح هذا الفلتر بالبحث عن أنواع مختلفة من هذا الحقل الموجودة في النظام."
+      },
+      "bulkOperationsActionBar": {
+        "readmode-noneselected": "لاستخدام هذا الإجراء، يجب أن تكون في وضع القراءة وألا تختار أي عناصر.",
+        "readmode-someselected": "لاستخدام هذا الإجراء، يجب أن تكون في وضع القراءة وأن تختار عنصرًا واحدًا على الأقل.",
+        "editmode-noneselected": "لاستخدام هذا الإجراء، يجب أن تكون في وضع التحرير وألا تختار أي عناصر.",
+        "editmode-someselected": "لاستخدام هذا الإجراء، يجب أن تكون في وضع التحرير وأن تختار عنصرًا واحدًا على الأقل.",
+        "noneselected": "لاستخدام هذا الإجراء، لا يجب اختيار أي عناصر.",
+        "someselected": "لاستخدام هذا الإجراء، يجب اختيار عنصر واحد على الأقل.",
+        "readmode": "لاستخدام هذا الإجراء يجب أن تكون في وضع القراءة",
+        "ocr-locked": "خيار OCR غير متاح عندما يكون حقل البيانات الوصفية 'Ocr locked' في الأصل بقيمة 'true'. هذا الإجراء غير متاح أيضًا في وضع التحرير أو عند تحديد عنصر."
+      },
+      "buttons": {
+        "disabled-upload-button": "تم تعطيل هذا الزر لأن بعض الحقول مفقودة من أجل الرفع.",
+        "disabled-submit-button": "تم تعطيل هذا الزر لأن بعض الحقول غير معبأة بشكل صحيح أو حدث خطأ أثناء الإنشاء.",
+        "disabled-save-button": "تم تعطيل هذا الزر لأن بعض الحقول غير معبأة بشكل صحيح.",
+        "disabled-updateMetadata-button": "تم تعطيل هذا الزر لأن النوع أو حقول CSV غير صحيحة.",
+        "disabled-export-csv-button": "تم تعطيل هذا الزر لأنه لم يتم تحديد أي كيان."
+      },
+      "required": "هذا المربع مطلوب",
+        "manifest-viewer-add-to-comparison": "يمكنك الآن إضافة هذا العمل وعرضه في وضع المقارنة. اضغط للانتقال."
+      },
+      "contextMenu": {
+        "contextMenuLinkAction": {
+        "followLink": "فتح {0} في تبويب جديد"
+      },
+      "contextMenuGeneralAction": {
+        "setPrimaryMediafile": "تعيين هذا كملف وسائط أساسي للعنصر",
+        "setPrimaryThumbnail": "تعيين هذا كصورة مصغرة أساسية للعنصر"
+      },
+      "contextMenuElodyAction": {
+        "delete-relation": "حذف الرابط مع {0}",
+        "delete-entity": "حذف {0}",
+        "share": "رابط مشاركة"
+      }
+    },
+    "preview-component": {
+      "open": "فتح المعاينة",
+      "close": "إغلاق المعاينة"
+    },
+    "media-viewer": {
+      "unsupported-mimetype": "لا يوجد عارض متاح حاليًا للملفات من النوع '{mimetype}'"
+    },
+    "iiif-operations-modal": {
+      "title": "تغيير حجم الصورة",
+      "dimensions": "الأبعاد",
+      "format": "صيغة الإخراج",
+      "scale": "مقياس",
+      "width": "العرض",
+      "height": "الارتفاع",
+      "get-resized-image": "الحصول على صورة معدلة الحجم"
+    }
+  }
+}

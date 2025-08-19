@@ -83,6 +83,7 @@ export interface Environment {
     applicationLocale: string;
     hideEmptyFields?: boolean;
     availableLanguages?: string[];
+    excludedLanguages?: string[];
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
   };

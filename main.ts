@@ -69,6 +69,7 @@ let environment: Environment | undefined = undefined;
 const baseTranslations: Object = {
   en: loadTranslations(path.join(__dirname, './translations/en.json'))['en'],
   nl: loadTranslations(path.join(__dirname, './translations/nl.json'))['nl'],
+  ar: loadTranslations(path.join(__dirname, './translations/ar.json'))['ar'],
 };
 
 console.log(baseTranslations);
