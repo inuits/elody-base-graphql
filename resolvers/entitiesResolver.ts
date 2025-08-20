@@ -9,6 +9,10 @@ import {
 } from '../../../generated-types/type-defs';
 import { getTypesFromFilterInputs } from '../helpers/helpers';
 
+type RawFacetGroup = {
+  [facetName: string]: { _id: string; count: number; }[];
+};
+
 export const resolveAdvancedEntities = async (
   dataSources: DataSources,
   entityType: Entitytyping = Entitytyping.BaseEntity,
@@ -18,6 +22,7 @@ export const resolveAdvancedEntities = async (
   searchValue: SearchFilter = { value: '' }
 ): Promise<EntitiesResults> => {
   const entitiesMap = new Map<string, Entity>();
+  const facetsList: RawFacetGroup[] = [];
   let limitResult = limit;
 
   let typesFromFilters = getTypesFromFilterInputs(advancedFilterInputs);
@@ -35,7 +40,7 @@ export const resolveAdvancedEntities = async (
 
   for await (const entityType of entityTypesToLoop as Entitytyping[]) {
     const iterationFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
-      (filter: AdvancedFilterInput) => filter.type !== AdvancedFilterTypes.Type
+      (filter: AdvancedFilterInput) => filter.type !== AdvancedFilterTypes.Type || filter.facets
     );
 
     const containsTypeFilter =
@@ -74,6 +79,11 @@ export const resolveAdvancedEntities = async (
 
     if (!iterationEntities) break;
 
+
+    if (iterationResult?.facets) {
+      facetsList.push(...iterationResult.facets);
+    }
+
     iterationEntities.forEach((entity) => {
       if (entity.id) {
         entitiesMap.set(entity.id, entity); // overwrite duplicates
@@ -84,6 +94,7 @@ export const resolveAdvancedEntities = async (
   return {
     results: Array.from(entitiesMap.values()),
     sortKeys: [],
+    facets: facetsList,
     limit: limitResult,
     count: totalCount,
   };

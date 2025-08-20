@@ -1765,6 +1765,7 @@ export const baseSchema = gql`
 
   type EntitiesResults {
     results: [Entity]
+    facets: JSON
     sortKeys(sortItems: [String]): [String]
     count: Int
     limit: Int

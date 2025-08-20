@@ -137,6 +137,14 @@ export const baseFragments = gql`
     neededPermission
   }
 
+  fragment facetFields on FacetInputType {
+    type
+    value
+    facets {
+      key
+    }
+  }
+
   fragment bulkOperationModal on BulkOperationModal {
     typeModal
     formQuery
