@@ -72,8 +72,6 @@ const baseTranslations: Object = {
   ar: loadTranslations(path.join(__dirname, './translations/ar.json'))['ar'],
 };
 
-console.log(baseTranslations);
-
 const applyCustomEndpoints = (
   app: Express,
   customEndpoints: ((app: any) => void)[] = []
