@@ -13,7 +13,7 @@ export const applyExportEndpoint = (app: Express) => {
       );
 
       await fetch(
-        `${env?.api.collectionApiUrl}/${getCollectionValueForEntityType(request.query.type as string)}?type=${request.query.type}&ids=${request.query.ids}${fieldQueryParameter}`,
+        `${env?.api.collectionApiUrl}/${getCollectionValueForEntityType(request.query.type as string)}?order_by=${request.query.order_by}&asc=${request.query.asc}&type=${request.query.type}&ids=${request.query.ids}${fieldQueryParameter}`,
         {
           method: 'GET',
           headers: {
