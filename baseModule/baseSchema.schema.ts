@@ -227,6 +227,7 @@ export const baseSchema = gql`
     submit
     submitWithUpload
     upload
+    uploadWithMetadata
     uploadWithOcr
     download
     ocr
