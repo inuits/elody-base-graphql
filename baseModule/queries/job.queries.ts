@@ -126,7 +126,7 @@ export const jobQueries = gql`
                 unit(input: DATETIME_DEFAULT)
               }
               started_at: metaData {
-                label(input: "metadata.labels.created-at")
+                label(input: "metadata.labels.started-at")
                 key(input: "started_at")
                 unit(input: DATETIME_DEFAULT)
               }
