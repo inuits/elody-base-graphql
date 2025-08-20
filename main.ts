@@ -208,6 +208,7 @@ const start = (
           ],
           'connect-src': [
             "'self'",
+            '*',
             ...(appConfig.sentryEnabled && appConfig.sentryDsn
               ? [new URL(appConfig.sentryDsn).origin]
               : []),
