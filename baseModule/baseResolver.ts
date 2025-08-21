@@ -558,21 +558,24 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         let mediafilesCsv: string[] = [];
         let assetsCsv: string[] = [];
+        downloadEntity.relations = (downloadEntity.relations as [])
+            .map((relationInput) => {
+              const relation: any = {};
+              Object.keys(relationInput)
+                  .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
+                  .forEach((key) => {
+                    relation[key] = (relationInput as any)[key];
+                  });
+              return relation;
+            });
         createdEntity = await dataSources.CollectionAPI.createEntity(
           downloadEntity,
           (downloadEntity.metadata as Metadata[]) || [],
           downloadEntity.relations as []
         );
-        if (basicCsv) {
-          const config = await dataSources.CollectionAPI.getConfig();
-          mediafilesCsv = config.mediafile_fields;
-          if (includeAssetCsv) assetsCsv = config.asset_fields;
-        }
         const result = await dataSources.TranscodeService.downloadItemsInZip({
           entities: entities,
           mediafiles: mediafiles,
-          csv_mediafile_columns: mediafilesCsv,
-          csv_entity_columns: assetsCsv,
           download_entity_id: createdEntity.id,
           download_entity_title: createdEntity.metadata.filter(
             (metadata: Metadata) => metadata.key === 'title'
