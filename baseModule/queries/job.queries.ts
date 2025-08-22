@@ -411,27 +411,27 @@ export const jobQueries = gql`
     }
   }
 
-  query GetEntitiesModifiedFromJobFilters($entityType: String!) {
-    EntityTypeFilters(type: $entityType) {
-      advancedFilters {
-        hasJob: advancedFilter(type: selection, key: "identifiers") {
-          type
-          key
-          defaultValue(value: "$entity.relationValues.isJobFor.key")
-          hidden(value: true)
-        }
-        type: advancedFilter(
-          type: selection
-          key: "type"
-        ) {
-          type
-          key
-          defaultValue(value: [asset, mediafile])
-          hidden(value: true)
-        }
-      }
-    }
-  }
+  # query GetEntitiesModifiedFromJobFilters($entityType: String!) {
+  #   EntityTypeFilters(type: $entityType) {
+  #     advancedFilters {
+  #       hasJob: advancedFilter(type: selection, key: "identifiers") {
+  #         type
+  #         key
+  #         defaultValue(value: "$entity.relationValues.isJobFor.key")
+  #         hidden(value: true)
+  #       }
+  #       type: advancedFilter(
+  #         type: selection
+  #         key: "type"
+  #       ) {
+  #         type
+  #         key
+  #         defaultValue(value: [asset, mediafile])
+  #         hidden(value: true)
+  #       }
+  #     }
+  #   }
+  # }
 
   query GetJobsBulkOperations {
     CustomBulkOperations {
