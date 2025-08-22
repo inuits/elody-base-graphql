@@ -145,6 +145,11 @@ export const baseFragments = gql`
     }
   }
 
+  fragment filterOptionsMappingFields on FilterOptionsMappingType {
+    label
+    value
+  }
+
   fragment bulkOperationModal on BulkOperationModal {
     typeModal
     formQuery
