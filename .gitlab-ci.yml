@@ -15,16 +15,17 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
+  image: node:18-bullseye
   tags:
     - prod
   before_script:
     - corepack enable
     - corepack prepare pnpm@7.26.0 --activate
-    - apt-get update && apt-get install -y python3 python3-pip make g++
-    - pnpm install --include=dev
   script: |
     echo "DEBUG: Looking for test files..."
     echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    pnpm install --include=dev
+
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
