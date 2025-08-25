@@ -20,7 +20,7 @@ test-job-2:
   before_script:
     - corepack enable
     - corepack prepare pnpm@7.26.0 --activate
-    - pnpm install --include=dev --no-optional
+    - pnpm install --include=dev --ignore-scripts
   script: |
     echo "DEBUG: Looking for test files..."
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
