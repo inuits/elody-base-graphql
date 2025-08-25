@@ -26,6 +26,8 @@ test-job-2:
     node --version
     echo "NPM version:"
     npm --version
+    echo "OS release:"
+    cat /etc/os-release
 
     # Run tests
     echo "DEBUG: Looking for test files..."
