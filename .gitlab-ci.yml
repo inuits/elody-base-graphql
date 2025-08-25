@@ -20,7 +20,8 @@ test-job-2:
   before_script:
     - corepack enable
     - corepack prepare pnpm@9.12.0 --activate
-    - pnpm install
+    - apk add --no-cache python3 make g++ bash git
+    - pnpm install --include=dev
   script: |
     echo "Node.js version:"
     node --version
