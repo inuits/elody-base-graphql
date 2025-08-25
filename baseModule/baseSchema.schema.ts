@@ -1000,7 +1000,7 @@ export const baseSchema = gql`
       keyOnMetadata: String
       formatter: String
       technicalOrigin: String
-    ): JSON!
+    ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
   }
