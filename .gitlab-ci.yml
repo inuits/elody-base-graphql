@@ -15,11 +15,9 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
+  image: node:18-alpine
   tags:
     - prod
-  before_script:
-    - corepack enable
-    - corepack prepare pnpm@7.26.0 --activate
   script: |
     # Set up authentication first
     echo "//nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN}" > ~/.npmrc
@@ -27,29 +25,8 @@ test-job-2:
     # Install pnpm and dependencies
     npm install -g pnpm
     pnpm install --include=dev
-    
-    # Replicate the type generation from build stage
-    echo "Generating GraphQL types for testing..."
-    cp /app/inuits-dams-graphql-service/codegen.ts ./codegen.ts
-    mkdir -p ./schemas
-    find ./node_modules/ -type f -name "*.schema.ts" -exec cp -n {} ./schemas \;
-    find ./node_modules/ -type f -name "*.queries.ts" -exec cp -n {} ./schemas \;
-    
-    if [ -n "${MOVE_SCHEMA}" ]; then
-        set -- ${MOVE_SCHEMA}
-        for SCHEMA; do
-          echo "Removing schema: ${SCHEMA}"
-          rm -f ./schemas/${SCHEMA} || echo "Failed to remove file"
-        done
-    fi
-
-    # Generate graphql types
-    mkdir -p generated-types
-    npx graphql-code-generator --config ./codegen.ts
-    
-    # Clean up temporary files
-    rm -rf ./schemas
-    rm -f ./codegen.ts
+    pnpm run build
+    ls -la .
 
     # Run tests
     echo "DEBUG: Looking for test files..."
