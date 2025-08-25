@@ -15,7 +15,6 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
-  image: node:18-alpine
   tags:
     - prod
   script: |
