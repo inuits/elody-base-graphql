@@ -19,11 +19,38 @@ test-job-2:
   tags:
     - prod
   script: |
-    echo "DEBUG: Looking for test files..."
-    echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    # Set up authentication first
+    echo "//nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN}" > ~/.npmrc
+    
+    # Install pnpm and dependencies
     npm install -g pnpm
     pnpm install --include=dev
+    
+    # Replicate the type generation from build stage
+    echo "Generating GraphQL types for testing..."
+    cp /app/inuits-dams-graphql-service/codegen.ts ./codegen.ts
+    mkdir -p ./schemas
+    find ./node_modules/ -type f -name "*.schema.ts" -exec cp -n {} ./schemas \;
+    find ./node_modules/ -type f -name "*.queries.ts" -exec cp -n {} ./schemas \;
+    
+    if [ -n "${MOVE_SCHEMA}" ]; then
+        set -- ${MOVE_SCHEMA}
+        for SCHEMA; do
+          echo "Removing schema: ${SCHEMA}"
+          rm -f ./schemas/${SCHEMA} || echo "Failed to remove file"
+        done
+    fi
 
+    # Generate graphql types
+    mkdir -p generated-types
+    npx graphql-code-generator --config ./codegen.ts
+    
+    # Clean up temporary files
+    rm -rf ./schemas
+    rm -f ./codegen.ts
+
+    # Run tests
+    echo "DEBUG: Looking for test files..."
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
