@@ -21,14 +21,14 @@ test-job-2:
     - corepack enable
     - corepack prepare pnpm@7.26.0 --activate
     - pnpm install
-  script:
-    - echo "DEBUG: Looking for test files..."
-    - find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print
-    - |
-      TEST_FILES=$(find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \))
-      if [ -n "$TEST_FILES" ]; then
-        echo "Found test files, running vitest..."
-        pnpm exec vitest run
-      else
-        echo "No test files found, skipping tests."
-      fi
+  script: |
+    echo "DEBUG: Looking for test files..."
+    find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print
+
+    TEST_FILES=$(find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \))
+    if [ -n "$TEST_FILES" ]; then
+      echo "Found test files, running vitest..."
+      pnpm exec vitest run
+    else
+      echo "No test files found, skipping tests."
+    fi
