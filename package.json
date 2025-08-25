@@ -87,7 +87,6 @@
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
-    "@vitest/coverage-c8": "^0.33.0",
     "husky": "^8.0.1",
     "vitest": "2.1.9"
   },
