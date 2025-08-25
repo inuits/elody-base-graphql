@@ -28,7 +28,7 @@ test-job-2:
     TEST_FILES=$(find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \))
     if [ -n "$TEST_FILES" ]; then
       echo "Found test files, running vitest..."
-      pnpm exec vitest run
+      pnpm vitest --run
     else
       echo "No test files found, skipping tests."
     fi
