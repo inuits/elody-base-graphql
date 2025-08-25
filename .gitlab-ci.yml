@@ -23,12 +23,13 @@ test-job-2:
     - pnpm install
   script: |
     echo "DEBUG: Looking for test files..."
-    find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print
+    TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
-    TEST_FILES=$(find . -type f \( -name "*.test.ts" -o -name "*.spec.ts" \))
     if [ -n "$TEST_FILES" ]; then
-      echo "Found test files, running vitest..."
-      pnpm vitest --run
+      echo "Found test files:"
+      echo "$TEST_FILES"
+      echo "Running vitest..."
+      pnpm exec vitest --run
     else
       echo "No test files found, skipping tests."
     fi
