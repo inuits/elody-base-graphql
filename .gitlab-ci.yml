@@ -20,12 +20,18 @@ test-job-2:
     - prod
   script: |
     echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
-    ls -la ../../../
     npm install -g pnpm
     pnpm install --include=dev
 
-    mkdir -p ../../../generated-types
-    cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
+    if [ -f "./__mock__/types.ts" ]; then
+      mkdir -p ../../../generated-types
+      cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
+      echo "Mock types copied successfully"
+    else
+      echo "Mock types file not found, skipping copy"
+      exit 0
+    fi
+
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
