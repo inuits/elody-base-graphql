@@ -28,7 +28,7 @@ test-job-2:
       cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
       echo "Mock types copied successfully"
     else
-      echo "Mock types file not found, skipping copy"
+      echo "Mock types file not found, skipping tests."
       exit 0
     fi
 
