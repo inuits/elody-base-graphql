@@ -21,6 +21,7 @@ test-job-2:
     - corepack enable
     - corepack prepare pnpm@9.12.0 --activate
     # First check what's already available
+    - apk add g++ make python3
     - echo "Checking available Python:"
     - which python3 || echo "python3 not found"
     - which python || echo "python not found"
