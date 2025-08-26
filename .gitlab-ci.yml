@@ -15,11 +15,12 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
-  image: node:18-alpine
+  # image: node:18-alpine
   tags:
     - prod
   script: |
     echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    ls -la ../../../
     npm install -g pnpm
     pnpm install --include=dev
 
