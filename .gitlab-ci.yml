@@ -11,35 +11,3 @@ include:
 variables:
   GRAPHQL_IMAGE: 'pza/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
-
-# 👇 Temporary job for testing
-test-job-2:
-  stage: test
-  image: node:18-alpine
-  tags:
-    - prod
-  script: |
-    echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
-    npm install -g pnpm
-    pnpm install --include=dev
-
-    if [ -f "./__mock__/types.ts" ]; then
-      mkdir -p ../../../generated-types
-      cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
-      echo "Mock types copied successfully"
-    else
-      echo "Mock types file not found, skipping tests."
-      exit 0
-    fi
-
-    TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
-
-    if [ -n "$TEST_FILES" ]; then
-      echo "Found test files:"
-      echo "$TEST_FILES"
-      echo "Running vitest..."
-      pnpm exec vitest --run
-    else
-      echo "No test files found, skipping tests."
-      exit 0
-    fi
