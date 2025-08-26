@@ -19,7 +19,12 @@
       "graphql": ["node_modules/graphql"]
     }
   },
-  "exclude": ["node_modules", "./test/**/*.test.ts"],
+  "exclude": [
+    "node_modules", 
+    "./test/**/*.test.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts"
+  ],
   "include": ["./**/*.ts", "./**/*.json"],
   "files": ["../../generated-types/type-defs.ts"],
 }
