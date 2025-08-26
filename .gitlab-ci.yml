@@ -15,7 +15,7 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
-  # image: node:18-alpine
+  image: node:18-alpine
   tags:
     - prod
   script: |
@@ -24,6 +24,8 @@ test-job-2:
     npm install -g pnpm
     pnpm install --include=dev
 
+    mkdir -p ../../../generated-types
+    touch ../../../generated-types/type-defs.ts
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
