@@ -41,4 +41,5 @@ test-job-2:
       pnpm exec vitest --run
     else
       echo "No test files found, skipping tests."
+      exit 0
     fi
