@@ -11,3 +11,15 @@ include:
 variables:
   GRAPHQL_IMAGE: 'pza/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
+
+build-job-1:
+  stage: test
+  tags:
+    - prod
+  script: |
+  - find /app -name "*codegen*" -type f
+  - ls -la /app/
+  - ls -la /app/inuits-dams-graphql-service/ 2>/dev/null || echo "Directory doesn't exist"
+
+
+
