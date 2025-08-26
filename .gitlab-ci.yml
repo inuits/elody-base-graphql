@@ -15,29 +15,16 @@ variables:
 # 👇 Temporary job for testing
 test-job-2:
   stage: test
+  image: node:18-alpine
   tags:
     - prod
   before_script:
     - corepack enable
     - corepack prepare pnpm@9.12.0 --activate
-    # First check what's already available
-    - apk add g++ make python3
-    - echo "Checking available Python:"
-    - which python3 || echo "python3 not found"
-    - which python || echo "python not found"
-    - python3 --version || echo "Cannot get python3 version"
-    - python --version || echo "Cannot get python version"
-    - pnpm install --include=dev
   script: |
-    echo "Node.js version:"
-    node --version
-    echo "NPM version:"
-    npm --version
-    echo "OS release:"
-    cat /etc/os-release
+    echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    pnpm install --include=dev
 
-    # Run tests
-    echo "DEBUG: Looking for test files..."
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
