@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { vi, expect, test } from 'vitest';
 import { getTypesFromFilterInputs } from '../helpers/helpers';
 import {
   Entitytyping,

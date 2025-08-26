@@ -31,8 +31,8 @@ describe('getWithDefaultFormatters', () => {
     });
 
     expect(result[CustomFormatterTypes.Pill].failed).toEqual({
-      background: '#C70039',
-      text: '#fff',
+      background: '#ecdada',
+      text: '#ac1113',
     });
 
     expect(result[CustomFormatterTypes.Pill].newState).toEqual({

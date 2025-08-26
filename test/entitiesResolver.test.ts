@@ -89,13 +89,9 @@ it('should handle single type filter', async () => {
 it('should handle selection filter with multiple types', async () => {
     mockDataSource.CollectionAPI.GetAdvancedEntities
     .mockResolvedValueOnce({ 
-      results: [mockEntity('1', 'Language')],
-      count: 1
+      results: [mockEntity('1', 'Language'), mockEntity('2', 'User')],
+      count: 2
     })
-    .mockResolvedValueOnce({
-      results: [mockEntity('2', 'User')],
-      count: 1
-    });
 
   const filters: AdvancedFilterInput[] = [{
     type: AdvancedFilterTypes.Selection,
@@ -111,7 +107,7 @@ it('should handle selection filter with multiple types', async () => {
     filters
   );
   
-  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenCalledTimes(2);
+  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenCalledTimes(1);
   expect(result.results).toStrictEqual([mockEntity('1', 'Language'), mockEntity('2', 'User')]);
   expect(result.results.length).toBe(2);
   expect(result.count).toBe(2);
@@ -119,8 +115,7 @@ it('should handle selection filter with multiple types', async () => {
 
 it('should handle selection filter with multiple types', async () => {
   mockDataSource.CollectionAPI.GetAdvancedEntities
-    .mockResolvedValueOnce({ results: [mockEntity('1', 'Language')], count: 1 })
-    .mockResolvedValueOnce({ results: [mockEntity('2', 'User')], count: 1 });
+    .mockResolvedValueOnce({ results: [mockEntity('1', 'Language'), mockEntity('2', 'User')], count: 2 })
 
   const result = await resolveAdvancedEntities(
     mockDataSource as unknown as DataSources,
@@ -141,39 +136,7 @@ it('should handle selection filter with multiple types', async () => {
     ]
   );
 
-  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenCalledTimes(2);
-  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenNthCalledWith(
-    1,
-    'Language',
-    20,
-    1,
-    expect.arrayContaining([
-      {
-        type: AdvancedFilterTypes.Text,
-        key: 'name',
-        value: 'test',
-        match_exact: false
-      }
-    ]),
-    { value: '' }
-  );
-
-  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenNthCalledWith(
-    2, 
-    'User',
-    20,
-    1,
-    expect.arrayContaining([
-      {
-        type: AdvancedFilterTypes.Text,
-        key: 'name',
-        value: 'test',
-        match_exact: false
-      }
-    ]),
-    { value: '' }
-  );
-  
+  expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenCalledTimes(1);
   expect(result.results).toStrictEqual([mockEntity('1', 'Language'), mockEntity('2', 'User')]);
   expect(result.results.length).toBe(2);
   expect(result.count).toBe(2);

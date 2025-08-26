@@ -1821,8 +1821,8 @@ export const baseSchema = gql`
   }
   
   enum Operator {
-      or
-      and
+    or
+    and
   }
 
   input AdvancedFilterInput {
