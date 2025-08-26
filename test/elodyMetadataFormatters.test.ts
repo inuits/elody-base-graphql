@@ -3,8 +3,6 @@ import { CustomFormatterTypes } from '../../../generated-types/type-defs';
 import { getWithDefaultFormatters, elodyFormattersConfig } from '../utilities/elodyMetadataFormatters';
 import type { FormattersConfig } from '../types';
 
-console.log(CustomFormatterTypes)
-
 describe('getWithDefaultFormatters', () => {
   it('should return default config when no custom config provided', () => {
     const result = getWithDefaultFormatters({});
