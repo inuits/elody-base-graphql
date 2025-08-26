@@ -17,9 +17,9 @@ build-job-1:
   tags:
     - prod
   script: |
-  - find /app -name "*codegen*" -type f
-  - ls -la /app/
-  - ls -la /app/inuits-dams-graphql-service/ 2>/dev/null || echo "Directory doesn't exist"
+    find /app -name "*codegen*" -type f
+    ls -la /app/
+    ls -la /app/inuits-dams-graphql-service/ 2>/dev/null || echo "Directory doesn't exist"
 
 
 
