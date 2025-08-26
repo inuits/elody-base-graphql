@@ -4,12 +4,12 @@ import {
   AdvancedFilterTypes,
   InputField,
   InputFieldTypes,
+  Entitytyping
 } from '../../../generated-types/type-defs';
-import { Entitytyping } from '../../../clients/generated-types/type-defs';
 
 test('Get item type from input field', () => {
   const inputField: InputField = {
-    type: InputFieldTypes.DropdownMultiselect,
+    type: InputFieldTypes.DropdownMultiselectMetadata,
     advancedFilterInputForSearchingOptions: {
       type: AdvancedFilterTypes.Text,
       key: ['elody:1|metadata.title.value'],
