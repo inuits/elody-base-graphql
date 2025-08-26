@@ -20,7 +20,12 @@ test-job-2:
   before_script:
     - corepack enable
     - corepack prepare pnpm@9.12.0 --activate
-    - apk add --no-cache python3 make g++ bash git
+    # First check what's already available
+    - echo "Checking available Python:"
+    - which python3 || echo "python3 not found"
+    - which python || echo "python not found"
+    - python3 --version || echo "Cannot get python3 version"
+    - python --version || echo "Cannot get python version"
     - pnpm install --include=dev
   script: |
     echo "Node.js version:"
