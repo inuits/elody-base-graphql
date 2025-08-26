@@ -50,7 +50,9 @@ build-job-1:
         mv -f ./generated-types/type-defs.ts ../../generated-types/type-defs.ts
         rm -rf ./generated-types
         rm -rf schemas
-
+        
+        pnpm run build
+        pnpm publish
         echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to the Nexus NPM registry."
       else
         echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
