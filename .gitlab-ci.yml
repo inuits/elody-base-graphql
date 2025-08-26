@@ -18,11 +18,9 @@ test-job-2:
   image: node:18-alpine
   tags:
     - prod
-  before_script:
-    - corepack enable
-    - corepack prepare pnpm@9.12.0 --activate
   script: |
     echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    npm install -g pnpm
     pnpm install --include=dev
 
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
