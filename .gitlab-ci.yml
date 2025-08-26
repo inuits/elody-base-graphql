@@ -25,7 +25,7 @@ test-job-2:
     pnpm install --include=dev
 
     mkdir -p ../../../generated-types
-    touch ../../../generated-types/type-defs.ts
+    cp ./__mock__/types.ts ../../generated-types/type-defs.ts
     TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
 
     if [ -n "$TEST_FILES" ]; then
