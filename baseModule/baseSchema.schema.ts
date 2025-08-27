@@ -275,6 +275,11 @@ export const baseSchema = gql`
     right
   }
 
+  enum SanitizeMode {
+    link
+    html
+  }
+
   type ActionProgressStep {
     label(input: String!): String!
     stepType(input: ProgressStepType!): ProgressStepType!
@@ -1819,7 +1824,7 @@ export const baseSchema = gql`
     checkboxlist
     autocomplete
   }
-  
+
   enum Operator {
     or
     and
@@ -2047,7 +2052,11 @@ export const baseSchema = gql`
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping: FilterMatcherMap!
     EntityTypeFilters(type: String!): Entity!
-    FilterOptions(input: [AdvancedFilterInput!]!, limit: Int!, entityType: String!): [DropdownOption!]!
+    FilterOptions(
+      input: [AdvancedFilterInput!]!
+      limit: Int!
+      entityType: String!
+    ): [DropdownOption!]!
   }
 
   type Mutation {
