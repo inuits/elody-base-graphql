@@ -12,51 +12,5 @@ variables:
   GRAPHQL_IMAGE: 'pza/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
 
-build-job-1:
-  stage: test
-  tags:
-    - prod
-  script:
-    - echo "Building and publishing the code..."
-    - echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
-    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
-    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
-    - |
-      if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
-        echo "Found unpublished version ${NPM_PACKAGE_VERSION} building and publishing now..."
-        pnpm install
-        ls -la .
-
-        # FIXED: Use the correct path to codegen.ts
-        cp /app/codegen.ts ./codegen.ts
-        
-        mkdir ./schemas
-        find ./node_modules/ -type f -name "*.schema.ts" -exec cp -n {} ./schemas \;
-        find ./node_modules/ -type f -name "*.queries.ts" -exec cp -n {} ./schemas \;
-        ls -la ./schemas/
-
-        if [ -n "${MOVE_SCHEMA}" ]; then
-            set -- ${MOVE_SCHEMA}
-            for SCHEMA; do
-              echo "Removing schema: ${SCHEMA}"
-              rm -f ./schemas/${SCHEMA} || echo "Failed to remove file"
-            done
-        fi
-
-        mkdir generated-types
-        rm -rf ../../generated-types
-        mkdir ../../generated-types
-        npx graphql-code-generator --config ./codegen.ts
-        mv -f ./generated-types/type-defs.ts ../../generated-types/type-defs.ts
-        rm -rf ./generated-types
-        rm -rf schemas
-        
-        pnpm run build
-        pnpm publish
-        echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to the Nexus NPM registry."
-      else
-        echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
-      fi
-
 
 
