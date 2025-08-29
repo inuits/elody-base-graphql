@@ -410,7 +410,7 @@
     "W4009": "Duplicate file detected, the image you are trying to upload has already been uploaded. Click to navigate to the mediafile $LINK(mediafile, {existing_file})",
     "W2004": "Entity with following identifiers already exists: {duplicate_keys}",
     "W5001": "{prefix}Property {property} can only have one of the following values: {values}",
-    "W5002": "{prefix}Missing required property {property}",
+    "W5002": "{prefix}Missing required property {property} — {type}",
     "W5005": "The CSV file has missing columns: {missing_columns}",
     "W5008": "The value {value} is not a valid datetime",
     "W5009": "{type} is not a valid type",

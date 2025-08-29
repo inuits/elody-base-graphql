@@ -411,7 +411,7 @@
       "W4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload. Klik om te navigeren naar de mediafile $LINK(mediafile, {existing_file})",
       "W2004": "Entiteit met volgende identifiers bestaat al: {duplicate_keys}",
       "W5001": "{prefix} Het veld {property} kan enkel bestaan uit één van de volgende waarden: {values}",
-      "W5002": "{prefix} Verplicht veld {property} ontbreekt",
+      "W5002": "{prefix} Verplicht veld {property} ontbreekt — {type}",
       "W5005": "Er zijn ontbrekende kolommen in het CSV bestand: {missing_columns}",
       "W5008": "De waarde {value} is geen geldige datum/tijd",
       "W5009": "{type} is geen geldig type",
