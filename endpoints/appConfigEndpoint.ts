@@ -77,6 +77,7 @@ const getConfig = (config: Environment) => {
   if (config.features.simpleSearch)
     Object.assign(baseConfig.features, {
       simpleSearch: {
+        hasSimpleSearch: config.features.simpleSearch.hasSimpleSearch,
         itemTypes: config.features.simpleSearch.itemTypes,
         simpleSearchMetadataKey:
           config.features.simpleSearch.simpleSearchMetadataKey,
