@@ -558,7 +558,8 @@
     "input-validation": {
       "messages": {
         "_default": "{field} is niet geldig",
-        "required": "{field} is verplicht"
+        "required": "{field} is verplicht",
+        "between": "{field} moet tussen {min} en {max} zijn"
       }
     }
   }
