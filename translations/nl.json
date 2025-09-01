@@ -540,8 +540,8 @@
       }
     },
     "preview-component": {
-      "open": "Open preview",
-      "close": "Close preview"
+      "open": "Preview openen",
+      "close": "Preview sluiten"
     },
     "media-viewer": {
       "unsupported-mimetype": "Er is op dit moment geen weergave beschikbaar voor bestanden van het type '{mimetype}'"
@@ -554,7 +554,13 @@
       "width": "Breedte",
       "height": "Hoogte",
       "get-resized-image": "Aangepaste afbeelding ophalen"
+    },
+    "input-validation": {
+      "messages": {
+        "_default": "{field} is niet geldig",
+        "required": "{field} is verplicht"
+      }
     }
-
   }
 }
+
