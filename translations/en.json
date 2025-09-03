@@ -556,6 +556,14 @@
     "width": "Width",
     "height": "Height",
     "get-resized-image": "Get resized image"
+  },
+  "input-validation": {
+    "messages": {
+      "_default": "{field} is not valid",
+      "required": "{field} is required",
+      "between": "{field} must be between {min} and {max}",
+      "no_xss": "{field} can not include html"
+    }
   }
 }
 }

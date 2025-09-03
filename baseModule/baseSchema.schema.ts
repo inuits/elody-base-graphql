@@ -206,6 +206,7 @@ export const baseSchema = gql`
     regex
     email
     url
+    no_xss
   }
 
   enum ValidationFields {

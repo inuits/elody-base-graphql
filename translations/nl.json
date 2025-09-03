@@ -559,7 +559,8 @@
       "messages": {
         "_default": "{field} is niet geldig",
         "required": "{field} is verplicht",
-        "between": "{field} moet tussen {min} en {max} zijn"
+        "between": "{field} moet tussen {min} en {max} zijn",
+        "no_xss": "{field} kan geen html bevatten"
       }
     }
   }
