@@ -1322,10 +1322,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     taggingConfiguration: async (_source, {}, { dataSources }) => {
       return {} as TaggingExtensionConfiguration;
     },
-    hasVirtualKeyboard: async (_source, { input }, { dataSources }) => {
+    showLineNumbers: async (_source, { input }, { dataSources }) => {
       return input || false;
     },
-    virtulKeyboardLayouts: async (_source, { input }, { dataSources }) => {
+    virtualKeyboardLayouts: async (_source, { input }, { dataSources }) => {
       // In order to display different language layouts we need to define that resolver on a client side.
       // So by default we have an English layout and others we can add through that resolver. Simple example below:
       // ----------------------------------------------------

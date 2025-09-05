@@ -1574,8 +1574,8 @@ export const baseSchema = gql`
     metadataKey(input: String!): String!
     extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
     taggingConfiguration: TaggingExtensionConfiguration
-    hasVirtualKeyboard(input: Boolean): Boolean!
-    virtulKeyboardLayouts(input: [String!]): JSON
+    showLineNumbers(input: Boolean): Boolean!
+    virtualKeyboardLayouts(input: [String!]): JSON
   }
 
   type ColumnList {
