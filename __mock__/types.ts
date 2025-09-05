@@ -3718,7 +3718,7 @@ export type WysiwygElementMetadataKeyArgs = {
   input: Scalars['String'];
 };
 
-export type WysiwygElementVirtulKeyboardLayoutsArgs = {
+export type WysiwygElementVirtualKeyboardLayoutsArgs = {
   input?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -9524,11 +9524,11 @@ export type WysiwygElementResolvers<
     ParentType,
     ContextType
   >;
-  virtulKeyboardLayouts?: Resolver<
+  virtualKeyboardLayouts?: Resolver<
     Maybe<ResolversTypes['JSON']>,
     ParentType,
     ContextType,
-    Partial<WysiwygElementVirtulKeyboardLayoutsArgs>
+    Partial<WysiwygElementVirtualKeyboardLayoutsArgs>
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
