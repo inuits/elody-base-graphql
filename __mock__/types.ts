@@ -1,10 +1,19 @@
-import type { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import type {
+  GraphQLResolveInfo,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> &
+  { [P in K]-?: NonNullable<T[P]> };
 
 export type Scalars = {
   ID: string;
@@ -26,7 +35,7 @@ export type ActionContext = {
 
 export enum ActionContextEntitiesSelectionType {
   NoneSelected = 'noneSelected',
-  SomeSelected = 'someSelected'
+  SomeSelected = 'someSelected',
 }
 
 export type ActionContextInput = {
@@ -38,7 +47,7 @@ export type ActionContextInput = {
 
 export enum ActionContextViewModeTypes {
   EditMode = 'editMode',
-  ReadMode = 'readMode'
+  ReadMode = 'readMode',
 }
 
 export type ActionElement = {
@@ -47,11 +56,9 @@ export type ActionElement = {
   label: Scalars['String'];
 };
 
-
 export type ActionElementActionsArgs = {
   input?: InputMaybe<Array<InputMaybe<Actions>>>;
 };
-
 
 export type ActionElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -63,14 +70,13 @@ export type ActionProgress = {
   type: ActionProgressIndicatorType;
 };
 
-
 export type ActionProgressTypeArgs = {
   input: ActionProgressIndicatorType;
 };
 
 export enum ActionProgressIndicatorType {
   ProgressSteps = 'progressSteps',
-  Spinner = 'spinner'
+  Spinner = 'spinner',
 }
 
 export type ActionProgressStep = {
@@ -80,11 +86,9 @@ export type ActionProgressStep = {
   stepType: ProgressStepType;
 };
 
-
 export type ActionProgressStepLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type ActionProgressStepStepTypeArgs = {
   input: ProgressStepType;
@@ -101,18 +105,20 @@ export enum ActionType {
   Upload = 'upload',
   UploadCsvForReordening = 'uploadCsvForReordening',
   UploadWithMetadata = 'uploadWithMetadata',
-  UploadWithOcr = 'uploadWithOcr'
+  UploadWithOcr = 'uploadWithOcr',
 }
 
 export enum Actions {
   Download = 'download',
   NoActions = 'noActions',
-  Ocr = 'ocr'
+  Ocr = 'ocr',
 }
 
 export type AdvancedFilter = {
   __typename?: 'AdvancedFilter';
-  advancedFilterInputForRetrievingOptions?: Maybe<Array<AdvancedFilterInputType>>;
+  advancedFilterInputForRetrievingOptions?: Maybe<
+    Array<AdvancedFilterInputType>
+  >;
   aggregation?: Maybe<Scalars['String']>;
   context?: Maybe<Scalars['JSON']>;
   defaultValue: Scalars['JSON'];
@@ -143,26 +149,21 @@ export type AdvancedFilter = {
   useNewWayToFetchOptions?: Maybe<Scalars['Boolean']>;
 };
 
-
 export type AdvancedFilterDefaultValueArgs = {
   value: Scalars['JSON'];
 };
-
 
 export type AdvancedFilterDoNotOverrideDefaultValueArgs = {
   value?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type AdvancedFilterHiddenArgs = {
   value?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type AdvancedFilterMinDropdownSearchCharactersArgs = {
   value?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdvancedFilterTooltipArgs = {
   value?: InputMaybe<Scalars['Boolean']>;
@@ -215,7 +216,7 @@ export enum AdvancedFilterTypes {
   Number = 'number',
   Selection = 'selection',
   Text = 'text',
-  Type = 'type'
+  Type = 'type',
 }
 
 export type AdvancedFilters = {
@@ -223,9 +224,10 @@ export type AdvancedFilters = {
   advancedFilter: AdvancedFilter;
 };
 
-
 export type AdvancedFiltersAdvancedFilterArgs = {
-  advancedFilterInputForRetrievingOptions?: InputMaybe<Array<AdvancedFilterInput>>;
+  advancedFilterInputForRetrievingOptions?: InputMaybe<
+    Array<AdvancedFilterInput>
+  >;
   aggregation?: InputMaybe<Scalars['String']>;
   context?: InputMaybe<Scalars['JSON']>;
   distinctBy?: InputMaybe<Scalars['String']>;
@@ -254,7 +256,7 @@ export type AdvancedFiltersAdvancedFilterArgs = {
 export enum AdvancedInputType {
   MinMaxInput = 'MinMaxInput',
   SelectionInput = 'SelectionInput',
-  TextInput = 'TextInput'
+  TextInput = 'TextInput',
 }
 
 export type AdvancedSearchInput = {
@@ -265,7 +267,6 @@ export type AllowedViewModes = {
   __typename?: 'AllowedViewModes';
   viewModes?: Maybe<Array<Maybe<ViewModesWithConfig>>>;
 };
-
 
 export type AllowedViewModesViewModesArgs = {
   input?: InputMaybe<Array<InputMaybe<ViewModesWithConfigInput>>>;
@@ -307,7 +308,7 @@ export type Asset = Entity & {
 export enum AutocompleteSelectionOptions {
   Auto = 'auto',
   Autocomplete = 'autocomplete',
-  Checkboxlist = 'checkboxlist'
+  Checkboxlist = 'checkboxlist',
 }
 
 export type BaseEntity = Entity & {
@@ -372,14 +373,14 @@ export enum BaseFieldType {
   SignificanceField = 'significanceField',
   SitePublicationStatusField = 'sitePublicationStatusField',
   UrgencyField = 'urgencyField',
-  YesNoField = 'yesNoField'
+  YesNoField = 'yesNoField',
 }
 
 export enum BaseLibraryModes {
   BasicBaseLibrary = 'basicBaseLibrary',
   BasicBaseLibraryWithBorder = 'basicBaseLibraryWithBorder',
   NormalBaseLibrary = 'normalBaseLibrary',
-  PreviewBaseLibrary = 'previewBaseLibrary'
+  PreviewBaseLibrary = 'previewBaseLibrary',
 }
 
 export type BaseRelationValuesInput = {
@@ -440,7 +441,9 @@ export type BulkOperationInputModal = {
   formQuery?: InputMaybe<Scalars['String']>;
   formRelationType?: InputMaybe<Scalars['String']>;
   neededPermission?: InputMaybe<Permission>;
-  skipItemsWithRelationDuringBulkDelete?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  skipItemsWithRelationDuringBulkDelete?: InputMaybe<
+    Array<InputMaybe<Scalars['String']>>
+  >;
   typeModal: TypeModals;
 };
 
@@ -450,7 +453,9 @@ export type BulkOperationModal = {
   formQuery?: Maybe<Scalars['String']>;
   formRelationType?: Maybe<Scalars['String']>;
   neededPermission?: Maybe<Permission>;
-  skipItemsWithRelationDuringBulkDelete?: Maybe<Array<Maybe<Scalars['String']>>>;
+  skipItemsWithRelationDuringBulkDelete?: Maybe<
+    Array<Maybe<Scalars['String']>>
+  >;
   typeModal: TypeModals;
 };
 
@@ -458,7 +463,6 @@ export type BulkOperationOptions = {
   __typename?: 'BulkOperationOptions';
   options: Array<DropdownOption>;
 };
-
 
 export type BulkOperationOptionsOptionsArgs = {
   input: Array<DropdownOptionInput>;
@@ -474,14 +478,13 @@ export enum BulkOperationTypes {
   ExportCsv = 'exportCsv',
   ExportCsvOfMediafilesFromAsset = 'exportCsvOfMediafilesFromAsset',
   ReorderEntities = 'reorderEntities',
-  StartOcr = 'startOcr'
+  StartOcr = 'startOcr',
 }
 
 export type BulkOperations = {
   __typename?: 'BulkOperations';
   options: Array<DropdownOption>;
 };
-
 
 export type BulkOperationsOptionsArgs = {
   input: Array<DropdownOptionInput>;
@@ -501,7 +504,7 @@ export type CharacterReplacementSettingsInput = {
 export enum Collection {
   Entities = 'entities',
   Jobs = 'jobs',
-  Mediafiles = 'mediafiles'
+  Mediafiles = 'mediafiles',
 }
 
 export type Column = {
@@ -509,7 +512,6 @@ export type Column = {
   elements: EntityViewElements;
   size: ColumnSizes;
 };
-
 
 export type ColumnSizeArgs = {
   size?: InputMaybe<ColumnSizes>;
@@ -530,7 +532,7 @@ export enum ColumnSizes {
   Sixty = 'sixty',
   Ten = 'ten',
   Thirty = 'thirty',
-  Twenty = 'twenty'
+  Twenty = 'twenty',
 }
 
 export type CompositeSite = Entity & {
@@ -583,7 +585,7 @@ export type ContextMenuActions = {
 
 export enum ContextMenuDirection {
   Left = 'left',
-  Right = 'right'
+  Right = 'right',
 }
 
 export type ContextMenuElodyAction = {
@@ -594,21 +596,17 @@ export type ContextMenuElodyAction = {
   label: Scalars['String'];
 };
 
-
 export type ContextMenuElodyActionActionArgs = {
   input?: InputMaybe<ContextMenuElodyActionEnum>;
 };
-
 
 export type ContextMenuElodyActionCanArgs = {
   input?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type ContextMenuElodyActionIconArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type ContextMenuElodyActionLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -617,7 +615,7 @@ export type ContextMenuElodyActionLabelArgs = {
 export enum ContextMenuElodyActionEnum {
   DeleteEntity = 'DeleteEntity',
   DeleteRelation = 'DeleteRelation',
-  Share = 'Share'
+  Share = 'Share',
 }
 
 export type ContextMenuGeneralAction = {
@@ -628,21 +626,17 @@ export type ContextMenuGeneralAction = {
   label: Scalars['String'];
 };
 
-
 export type ContextMenuGeneralActionActionArgs = {
   input?: InputMaybe<ContextMenuGeneralActionEnum>;
 };
-
 
 export type ContextMenuGeneralActionCanArgs = {
   input?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type ContextMenuGeneralActionIconArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type ContextMenuGeneralActionLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -650,7 +644,7 @@ export type ContextMenuGeneralActionLabelArgs = {
 
 export enum ContextMenuGeneralActionEnum {
   SetPrimaryMediafile = 'SetPrimaryMediafile',
-  SetPrimaryThumbnail = 'SetPrimaryThumbnail'
+  SetPrimaryThumbnail = 'SetPrimaryThumbnail',
 }
 
 export type ContextMenuLinkAction = {
@@ -660,16 +654,13 @@ export type ContextMenuLinkAction = {
   label: Scalars['String'];
 };
 
-
 export type ContextMenuLinkActionCanArgs = {
   input?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-
 export type ContextMenuLinkActionIconArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type ContextMenuLinkActionLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -695,7 +686,7 @@ export type Creator = Entity & {
 export enum CustomFormatterTypes {
   Link = 'link',
   Pill = 'pill',
-  RegexpMatch = 'regexpMatch'
+  RegexpMatch = 'regexpMatch',
 }
 
 export enum DamsIcons {
@@ -779,12 +770,12 @@ export enum DamsIcons {
   UserCircle = 'UserCircle',
   VideoSlash = 'VideoSlash',
   WindowGrid = 'WindowGrid',
-  WindowMaximize = 'WindowMaximize'
+  WindowMaximize = 'WindowMaximize',
 }
 
 export enum DeepRelationsFetchStrategy {
   UseExistingBreadcrumbsInfo = 'useExistingBreadcrumbsInfo',
-  UseMethodsAndFetch = 'useMethodsAndFetch'
+  UseMethodsAndFetch = 'useMethodsAndFetch',
 }
 
 export type DeleteEntitiesInput = {
@@ -804,46 +795,37 @@ export type DeleteQueryOptions = {
   deleteRelationsLabel?: Maybe<Scalars['String']>;
 };
 
-
 export type DeleteQueryOptionsBlockingRelationsLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type DeleteQueryOptionsCustomQueryBlockingEntityTypesArgs = {
   input?: InputMaybe<Array<InputMaybe<Entitytyping>>>;
 };
 
-
 export type DeleteQueryOptionsCustomQueryBlockingRelationsArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type DeleteQueryOptionsCustomQueryBlockingRelationsFiltersArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type DeleteQueryOptionsCustomQueryDeleteRelationsArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type DeleteQueryOptionsCustomQueryDeleteRelationsFiltersArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type DeleteQueryOptionsCustomQueryEntityTypesArgs = {
   input?: InputMaybe<Array<InputMaybe<Entitytyping>>>;
 };
 
-
 export type DeleteQueryOptionsDeleteEntityLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type DeleteQueryOptionsDeleteRelationsLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -872,16 +854,13 @@ export type DropdownOption = {
   value: Scalars['StringOrInt'];
 };
 
-
 export type DropdownOptionActionContextArgs = {
   input?: InputMaybe<ActionContextInput>;
 };
 
-
 export type DropdownOptionAvailableInPagesArgs = {
   input?: InputMaybe<Array<InputMaybe<RouteMatchingInput>>>;
 };
-
 
 export type DropdownOptionBulkOperationModalArgs = {
   input?: InputMaybe<BulkOperationInputModal>;
@@ -905,7 +884,6 @@ export type DropzoneEntityToCreate = {
   options: Array<DropdownOption>;
 };
 
-
 export type DropzoneEntityToCreateOptionsArgs = {
   input: Array<DropdownOptionInput>;
 };
@@ -927,12 +905,12 @@ export enum EditStatus {
   Changed = 'changed',
   Deleted = 'deleted',
   New = 'new',
-  Unchanged = 'unchanged'
+  Unchanged = 'unchanged',
 }
 
 export enum ElodyServices {
   ApolloGraphql = 'apolloGraphql',
-  Pwa = 'pwa'
+  Pwa = 'pwa',
 }
 
 export enum ElodyViewers {
@@ -940,7 +918,7 @@ export enum ElodyViewers {
   Iiif = 'iiif',
   Pdf = 'pdf',
   Text = 'text',
-  Video = 'video'
+  Video = 'video',
 }
 
 export type EndpointInformation = {
@@ -960,7 +938,7 @@ export type EndpointInformationInput = {
 
 export enum EndpointResponseActions {
   DownloadResponse = 'downloadResponse',
-  Notification = 'notification'
+  Notification = 'notification',
 }
 
 export type EntitiesResults = {
@@ -971,7 +949,6 @@ export type EntitiesResults = {
   results?: Maybe<Array<Maybe<Entity>>>;
   sortKeys?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
-
 
 export type EntitiesResultsSortKeysArgs = {
   sortItems?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -1032,96 +1009,77 @@ export type EntityListElement = {
   viewMode?: Maybe<EntityListViewMode>;
 };
 
-
 export type EntityListElementBaseLibraryModeArgs = {
   input?: InputMaybe<BaseLibraryModes>;
 };
-
 
 export type EntityListElementCanArgs = {
   input?: InputMaybe<Array<Scalars['String']>>;
 };
 
-
 export type EntityListElementCustomBulkOperationsArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityListElementCustomQueryArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type EntityListElementCustomQueryEntityPickerListArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityListElementCustomQueryEntityPickerListFiltersArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type EntityListElementCustomQueryFiltersArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityListElementCustomQueryRelationTypeArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type EntityListElementEnableAdvancedFiltersArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type EntityListElementEnableNavigationArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type EntityListElementEntityListArgs = {
   metaKey?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityListElementEntityTypesArgs = {
   input?: InputMaybe<Array<InputMaybe<Entitytyping>>>;
 };
 
-
 export type EntityListElementFiltersNeedContextArgs = {
   input?: InputMaybe<Array<InputMaybe<EntitySubelement>>>;
 };
-
 
 export type EntityListElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type EntityListElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityListElementRelationTypeArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type EntityListElementSearchInputTypeArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type EntityListElementTypeArgs = {
   input?: InputMaybe<MediaFileElementTypes>;
 };
-
 
 export type EntityListElementViewModeArgs = {
   input?: InputMaybe<EntityListViewMode>;
@@ -1129,17 +1087,17 @@ export type EntityListElementViewModeArgs = {
 
 export enum EntityListViewMode {
   Dropdown = 'Dropdown',
-  Library = 'Library'
+  Library = 'Library',
 }
 
 export enum EntityPickerMode {
   Emit = 'emit',
-  Save = 'save'
+  Save = 'save',
 }
 
 export enum EntitySubelement {
   IntialValues = 'intialValues',
-  RelationValues = 'relationValues'
+  RelationValues = 'relationValues',
 }
 
 export type EntityViewElements = {
@@ -1164,12 +1122,10 @@ export type EntityViewerElement = {
   label: Scalars['String'];
 };
 
-
 export type EntityViewerElementEntityIdArgs = {
   metadataKey?: InputMaybe<Scalars['String']>;
   relationType?: InputMaybe<Scalars['String']>;
 };
-
 
 export type EntityViewerElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -1203,7 +1159,7 @@ export enum Entitytyping {
   Typology = 'typology',
   User = 'user',
   Word = 'word',
-  WritingTechnique = 'writing_technique'
+  WritingTechnique = 'writing_technique',
 }
 
 export type EpiDocTag = Entity & {
@@ -1225,7 +1181,7 @@ export type EpiDocTag = Entity & {
 
 export enum ErrorCodeType {
   Read = 'read',
-  Write = 'write'
+  Write = 'write',
 }
 
 export type ExpandButtonOptions = {
@@ -1234,11 +1190,9 @@ export type ExpandButtonOptions = {
   shown: Scalars['Boolean'];
 };
 
-
 export type ExpandButtonOptionsOrientationArgs = {
   input?: InputMaybe<Orientations>;
 };
-
 
 export type ExpandButtonOptionsShownArgs = {
   input: Scalars['Boolean'];
@@ -1286,21 +1240,17 @@ export type FetchDeepRelations = {
   routeConfig?: Maybe<Array<Maybe<BreadCrumbRoute>>>;
 };
 
-
 export type FetchDeepRelationsAmountOfRecursionsArgs = {
   input?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type FetchDeepRelationsDeepRelationsFetchStrategyArgs = {
   input?: InputMaybe<DeepRelationsFetchStrategy>;
 };
 
-
 export type FetchDeepRelationsEntityTypeArgs = {
   input?: InputMaybe<Entitytyping>;
 };
-
 
 export type FetchDeepRelationsRouteConfigArgs = {
   input?: InputMaybe<Array<InputMaybe<BreadCrumbRouteInput>>>;
@@ -1334,7 +1284,7 @@ export enum FileType {
   Tif = 'tif',
   Tiff = 'tiff',
   Txt = 'txt',
-  Xml = 'xml'
+  Xml = 'xml',
 }
 
 export type FilterInput = {
@@ -1382,16 +1332,13 @@ export type Form = {
   modalStyle: ModalStyle;
 };
 
-
 export type FormInfoLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type FormLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type FormModalStyleArgs = {
   input: ModalStyle;
@@ -1409,36 +1356,29 @@ export type FormAction = {
   showsFormErrors?: Maybe<Scalars['Boolean']>;
 };
 
-
 export type FormActionActionQueryArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type FormActionActionTypeArgs = {
   input?: InputMaybe<ActionType>;
 };
 
-
 export type FormActionCreationTypeArgs = {
   input?: InputMaybe<Entitytyping>;
 };
-
 
 export type FormActionEndpointInformationArgs = {
   input: EndpointInformationInput;
 };
 
-
 export type FormActionIconArgs = {
   input?: InputMaybe<DamsIcons>;
 };
 
-
 export type FormActionLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type FormActionShowsFormErrorsArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
@@ -1462,7 +1402,6 @@ export type GeoJsonFeature = {
   __typename?: 'GeoJsonFeature';
   value?: Maybe<Scalars['JSON']>;
 };
-
 
 export type GeoJsonFeatureValueArgs = {
   coordinates: GeoJsonFeatureInput;
@@ -1511,41 +1450,33 @@ export type GraphElement = {
   type: GraphType;
 };
 
-
 export type GraphElementConvert_ToArgs = {
   input: Scalars['String'];
 };
-
 
 export type GraphElementDatapointsArgs = {
   input: Scalars['Int'];
 };
 
-
 export type GraphElementDatasetArgs = {
   input: GraphDatasetInput;
 };
-
 
 export type GraphElementDatasourceArgs = {
   input: Scalars['String'];
 };
 
-
 export type GraphElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
-
 
 export type GraphElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type GraphElementTimeUnitArgs = {
   input: TimeUnit;
 };
-
 
 export type GraphElementTypeArgs = {
   input: GraphType;
@@ -1567,7 +1498,7 @@ export enum GraphType {
   Pie = 'pie',
   PolarArea = 'polarArea',
   Radar = 'radar',
-  Scatter = 'scatter'
+  Scatter = 'scatter',
 }
 
 export type HiddenField = {
@@ -1600,36 +1531,29 @@ export type HierarchyListElement = {
   label: Scalars['String'];
 };
 
-
 export type HierarchyListElementCanArgs = {
   input?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type HierarchyListElementCenterCoordinatesKeyArgs = {
   input: Scalars['String'];
 };
 
-
 export type HierarchyListElementCustomQueryArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type HierarchyListElementEntityTypeAsCenterPointArgs = {
   input?: InputMaybe<Entitytyping>;
 };
 
-
 export type HierarchyListElementHierarchyRelationListArgs = {
   input?: InputMaybe<Array<InputMaybe<HierarchyRelationListInput>>>;
 };
 
-
 export type HierarchyListElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
-
 
 export type HierarchyListElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -1661,9 +1585,15 @@ export type InheritFromInput = {
 
 export type InputField = {
   __typename?: 'InputField';
-  advancedFilterInputForRetrievingAllOptions?: Maybe<Array<AdvancedFilterInputType>>;
-  advancedFilterInputForRetrievingOptions?: Maybe<Array<AdvancedFilterInputType>>;
-  advancedFilterInputForRetrievingRelatedOptions?: Maybe<Array<AdvancedFilterInputType>>;
+  advancedFilterInputForRetrievingAllOptions?: Maybe<
+    Array<AdvancedFilterInputType>
+  >;
+  advancedFilterInputForRetrievingOptions?: Maybe<
+    Array<AdvancedFilterInputType>
+  >;
+  advancedFilterInputForRetrievingRelatedOptions?: Maybe<
+    Array<AdvancedFilterInputType>
+  >;
   advancedFilterInputForSearchingOptions?: Maybe<AdvancedFilterInputType>;
   autoSelectable?: Maybe<Scalars['Boolean']>;
   canCreateEntityFromOption?: Maybe<Scalars['Boolean']>;
@@ -1690,21 +1620,17 @@ export type InputField = {
   validation?: Maybe<Validation>;
 };
 
-
 export type InputFieldFieldKeyToSaveArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type InputFieldFieldNameArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type InputFieldIsMetadataFieldArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type InputFieldValidationArgs = {
   input?: InputMaybe<ValidationInput>;
@@ -1732,7 +1658,7 @@ export enum InputFieldTypes {
   ResizableTextarea = 'resizableTextarea',
   Text = 'text',
   Textarea = 'textarea',
-  XmlUpload = 'xmlUpload'
+  XmlUpload = 'xmlUpload',
 }
 
 export type Inscription = Entity & {
@@ -1760,12 +1686,10 @@ export type IntialValues = {
   relationMetadata?: Maybe<IntialValues>;
 };
 
-
 export type IntialValuesKeyLabelArgs = {
   key: Scalars['String'];
   source: KeyValueSource;
 };
-
 
 export type IntialValuesKeyValueArgs = {
   containsRelationPropertyKey?: InputMaybe<Scalars['String']>;
@@ -1781,7 +1705,6 @@ export type IntialValuesKeyValueArgs = {
   technicalOrigin?: InputMaybe<Scalars['String']>;
   uuid?: InputMaybe<Scalars['String']>;
 };
-
 
 export type IntialValuesRelationMetadataArgs = {
   type: Scalars['String'];
@@ -1827,7 +1750,7 @@ export enum JobType {
   CsvRead = 'csv_read',
   CsvRowImport = 'csv_row_import',
   UploadFile = 'upload_file',
-  UploadTranscode = 'upload_transcode'
+  UploadTranscode = 'upload_transcode',
 }
 
 export type JobsResults = {
@@ -1849,7 +1772,6 @@ export type KeyValue = {
   keyValue: Scalars['JSON'];
 };
 
-
 export type KeyValueKeyValueArgs = {
   key: Scalars['String'];
 };
@@ -1862,7 +1784,7 @@ export enum KeyValueSource {
   RelationRootdata = 'relationRootdata',
   Relations = 'relations',
   Root = 'root',
-  TechnicalMetadata = 'technicalMetadata'
+  TechnicalMetadata = 'technicalMetadata',
 }
 
 export type Language = Entity & {
@@ -1891,7 +1813,7 @@ export type LinkFormatter = {
 
 export enum ListItemCoverageTypes {
   AllListItems = 'AllListItems',
-  OneListItem = 'OneListItem'
+  OneListItem = 'OneListItem',
 }
 
 export type Location = Entity & {
@@ -1934,21 +1856,17 @@ export type ManifestViewerElement = {
   manifestVersion: Scalars['Int'];
 };
 
-
 export type ManifestViewerElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
-
 
 export type ManifestViewerElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type ManifestViewerElementManifestUrlArgs = {
   metadataKey: Scalars['String'];
 };
-
 
 export type ManifestViewerElementManifestVersionArgs = {
   metadataKey: Scalars['String'];
@@ -1966,26 +1884,21 @@ export type MapElement = {
   type: Scalars['String'];
 };
 
-
 export type MapElementCenterArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type MapElementConfigArgs = {
   input?: InputMaybe<Array<InputMaybe<ConfigItemInput>>>;
 };
 
-
 export type MapElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type MapElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type MapElementTypeArgs = {
   input?: InputMaybe<MapTypes>;
@@ -1996,7 +1909,6 @@ export type MapMetadata = {
   value: Scalars['JSON'];
 };
 
-
 export type MapMetadataValueArgs = {
   defaultValue?: InputMaybe<Scalars['JSON']>;
   key: Scalars['String'];
@@ -2006,7 +1918,7 @@ export type MapMetadataValueArgs = {
 
 export enum MapTypes {
   HeatMap = 'heatMap',
-  WktMap = 'wktMap'
+  WktMap = 'wktMap',
 }
 
 export type MarkdownViewerElement = {
@@ -2016,16 +1928,13 @@ export type MarkdownViewerElement = {
   markdownContent: Scalars['String'];
 };
 
-
 export type MarkdownViewerElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type MarkdownViewerElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type MarkdownViewerElementMarkdownContentArgs = {
   metadataKey: Scalars['String'];
@@ -2049,7 +1958,7 @@ export enum Matchers {
   InBetweenMatcher = 'InBetweenMatcher',
   MaxIncludedMatcher = 'MaxIncludedMatcher',
   MinIncludedMatcher = 'MinIncludedMatcher',
-  NoneMatcher = 'NoneMatcher'
+  NoneMatcher = 'NoneMatcher',
 }
 
 export type Media = Entity & {
@@ -2092,16 +2001,13 @@ export type MediaFileElement = {
   type: Scalars['String'];
 };
 
-
 export type MediaFileElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type MediaFileElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type MediaFileElementTypeArgs = {
   input?: InputMaybe<MediaFileElementTypes>;
@@ -2109,7 +2015,7 @@ export type MediaFileElementTypeArgs = {
 
 export enum MediaFileElementTypes {
   Map = 'map',
-  Media = 'media'
+  Media = 'media',
 }
 
 export type MediaFileEntity = Entity & {
@@ -2161,7 +2067,7 @@ export type MediaFilePostReturn = {
 
 export enum MediaTypeEntities {
   Asset = 'asset',
-  Mediafile = 'mediafile'
+  Mediafile = 'mediafile',
 }
 
 export type Menu = {
@@ -2169,7 +2075,6 @@ export type Menu = {
   menuItem?: Maybe<MenuItem>;
   name: Scalars['String'];
 };
-
 
 export type MenuMenuItemArgs = {
   can?: InputMaybe<Array<Scalars['String']>>;
@@ -2217,7 +2122,7 @@ export enum MenuIcons {
   Swatchbook = 'Swatchbook',
   Update = 'Update',
   Upload = 'Upload',
-  UserSquare = 'UserSquare'
+  UserSquare = 'UserSquare',
 }
 
 export type MenuItem = {
@@ -2231,7 +2136,6 @@ export type MenuItem = {
   subMenu?: Maybe<Menu>;
   typeLink?: Maybe<MenuTypeLink>;
 };
-
 
 export type MenuItemSubMenuArgs = {
   name: Scalars['String'];
@@ -2286,7 +2190,6 @@ export type Metadata = {
   unit?: Maybe<Unit>;
   value: Scalars['JSON'];
 };
-
 
 export type MetadataUnitArgs = {
   input?: InputMaybe<Unit>;
@@ -2362,7 +2265,7 @@ export enum ModalStyle {
   CenterWide = 'centerWide',
   Left = 'left',
   Right = 'right',
-  RightWide = 'rightWide'
+  RightWide = 'rightWide',
 }
 
 export type MultiSelectInput = {
@@ -2388,19 +2291,16 @@ export type Mutation = {
   updateMetadataWithCsv?: Maybe<Scalars['String']>;
 };
 
-
 export type MutationCreateEntityArgs = {
   entity: EntityInput;
   tenantId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type MutationBulkAddRelationsArgs = {
   entityIds: Array<Scalars['String']>;
   relationEntityId: Scalars['String'];
   relationType: Scalars['String'];
 };
-
 
 export type MutationBulkDeleteEntitiesArgs = {
   deleteEntities?: InputMaybe<DeleteEntitiesInput>;
@@ -2409,13 +2309,11 @@ export type MutationBulkDeleteEntitiesArgs = {
   skipItemsWithRelationDuringBulkDelete?: InputMaybe<Array<Scalars['String']>>;
 };
 
-
 export type MutationDeleteDataArgs = {
   deleteMediafiles: Scalars['Boolean'];
   id: Scalars['String'];
   path: Collection;
 };
-
 
 export type MutationGenerateTranscodeArgs = {
   masterEntityId?: InputMaybe<Scalars['String']>;
@@ -2423,22 +2321,18 @@ export type MutationGenerateTranscodeArgs = {
   transcodeType: TranscodeType;
 };
 
-
 export type MutationGetAssetsRelationedWithMediafFileArgs = {
   mediaFileId: Scalars['String'];
 };
-
 
 export type MutationGetMediaRelationedWithMediafFileArgs = {
   mediaFileId: Scalars['String'];
 };
 
-
 export type MutationLinkMediafileToEntityArgs = {
   entityId: Scalars['String'];
   mediaFileInput: MediaFileInput;
 };
-
 
 export type MutationMutateEntityValuesArgs = {
   collection: Collection;
@@ -2447,29 +2341,24 @@ export type MutationMutateEntityValuesArgs = {
   preferredLanguage?: InputMaybe<Scalars['String']>;
 };
 
-
 export type MutationPatchMediaFileMetadataArgs = {
   MediaFileMetadata: Array<InputMaybe<MediaFileMetadataInput>>;
   MediafileId: Scalars['String'];
 };
 
-
 export type MutationPostStartImportArgs = {
   folder: Scalars['String'];
 };
-
 
 export type MutationSetPrimaryMediafileArgs = {
   entityId: Scalars['String'];
   mediafileId: Scalars['String'];
 };
 
-
 export type MutationSetPrimaryThumbnailArgs = {
   entityId: Scalars['String'];
   mediafileId: Scalars['String'];
 };
-
 
 export type MutationUpdateMetadataWithCsvArgs = {
   csv: Scalars['String'];
@@ -2480,19 +2369,19 @@ export enum OcrType {
   Alto = 'alto',
   ManualUpload = 'manualUpload',
   Pdf = 'pdf',
-  Txt = 'txt'
+  Txt = 'txt',
 }
 
 export enum Operator {
   And = 'and',
-  Or = 'or'
+  Or = 'or',
 }
 
 export enum Orientations {
   Bottom = 'bottom',
   Left = 'left',
   Right = 'right',
-  Top = 'top'
+  Top = 'top',
 }
 
 export type PaginationInfo = {
@@ -2505,7 +2394,6 @@ export type PaginationLimitOptions = {
   options: Array<DropdownOption>;
 };
 
-
 export type PaginationLimitOptionsOptionsArgs = {
   input: Array<DropdownOptionInput>;
 };
@@ -2517,16 +2405,13 @@ export type PanelInfo = {
   value: Scalars['String'];
 };
 
-
 export type PanelInfoInputFieldArgs = {
   type: BaseFieldType;
 };
 
-
 export type PanelInfoLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelInfoValueArgs = {
   input: Scalars['String'];
@@ -2540,21 +2425,17 @@ export type PanelLink = {
   linkText?: Maybe<Scalars['String']>;
 };
 
-
 export type PanelLinkKeyArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelLinkLabelArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelLinkLinkIconArgs = {
   input: DamsIcons;
 };
-
 
 export type PanelLinkLinkTextArgs = {
   input: Scalars['String'];
@@ -2579,76 +2460,61 @@ export type PanelMetaData = {
   valueTranslationKey?: Maybe<Scalars['String']>;
 };
 
-
 export type PanelMetaDataCanArgs = {
   input?: InputMaybe<Array<Scalars['String']>>;
 };
-
 
 export type PanelMetaDataCopyToClipboardArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type PanelMetaDataCustomValueArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type PanelMetaDataHiddenFieldArgs = {
   input: HiddenFieldInput;
 };
 
-
 export type PanelMetaDataInputFieldArgs = {
   type: BaseFieldType;
 };
-
 
 export type PanelMetaDataIsMultilingualArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type PanelMetaDataKeyArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelMetaDataLabelArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelMetaDataLineClampArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type PanelMetaDataLinkTextArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelMetaDataShowOnlyInEditModeArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type PanelMetaDataTooltipArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelMetaDataUnitArgs = {
   input: Unit;
 };
 
-
 export type PanelMetaDataValueTooltipArgs = {
   input?: InputMaybe<PanelMetadataValueTooltipInput>;
 };
-
 
 export type PanelMetaDataValueTranslationKeyArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -2666,7 +2532,7 @@ export type PanelMetadataValueTooltipInput = {
 
 export enum PanelMetadataValueTooltipTypes {
   Plane = 'plane',
-  Preview = 'preview'
+  Preview = 'preview',
 }
 
 export type PanelRelation = {
@@ -2685,31 +2551,25 @@ export type PanelRelationMetaData = {
   unit: Unit;
 };
 
-
 export type PanelRelationMetaDataInputFieldArgs = {
   type: BaseFieldType;
 };
-
 
 export type PanelRelationMetaDataKeyArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelRelationMetaDataLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelRelationMetaDataLinkTextArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelRelationMetaDataShowOnlyInEditModeArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type PanelRelationMetaDataUnitArgs = {
   input: Unit;
@@ -2725,31 +2585,25 @@ export type PanelRelationRootData = {
   unit: Unit;
 };
 
-
 export type PanelRelationRootDataInputFieldArgs = {
   type: BaseFieldType;
 };
-
 
 export type PanelRelationRootDataKeyArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelRelationRootDataLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelRelationRootDataLinkTextArgs = {
   input: Scalars['String'];
 };
 
-
 export type PanelRelationRootDataShowOnlyInEditModeArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type PanelRelationRootDataUnitArgs = {
   input: Unit;
@@ -2764,27 +2618,22 @@ export type PanelThumbnail = {
   width?: Maybe<Scalars['Int']>;
 };
 
-
 export type PanelThumbnailCustomUrlArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelThumbnailFilenameArgs = {
   fromMediafile?: InputMaybe<Scalars['Boolean']>;
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type PanelThumbnailHeightArgs = {
   input: Scalars['Int'];
 };
 
-
 export type PanelThumbnailKeyArgs = {
   input: Scalars['String'];
 };
-
 
 export type PanelThumbnailWidthArgs = {
   input: Scalars['Int'];
@@ -2795,14 +2644,14 @@ export enum PanelType {
   Map = 'map',
   Mediainfo = 'mediainfo',
   Metadata = 'metadata',
-  Relation = 'relation'
+  Relation = 'relation',
 }
 
 export enum Permission {
   Cancreate = 'cancreate',
   Candelete = 'candelete',
   Canread = 'canread',
-  Canupdate = 'canupdate'
+  Canupdate = 'canupdate',
 }
 
 export type PermissionMapping = {
@@ -2859,36 +2708,29 @@ export type PreviewComponent = {
   type: PreviewTypes;
 };
 
-
 export type PreviewComponentListItemsCoverageArgs = {
   input: ListItemCoverageTypes;
 };
-
 
 export type PreviewComponentMetadataPreviewQueryArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type PreviewComponentOpenByDefaultArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type PreviewComponentPreviewQueryArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type PreviewComponentShowCurrentPreviewFlowArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type PreviewComponentTitleArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type PreviewComponentTypeArgs = {
   input: PreviewTypes;
@@ -2897,7 +2739,7 @@ export type PreviewComponentTypeArgs = {
 export enum PreviewTypes {
   ColumnList = 'ColumnList',
   Map = 'Map',
-  MediaViewer = 'MediaViewer'
+  MediaViewer = 'MediaViewer',
 }
 
 export enum ProgressStepStatus {
@@ -2906,13 +2748,13 @@ export enum ProgressStepStatus {
   Failed = 'failed',
   Incomplete = 'incomplete',
   Loading = 'loading',
-  Paused = 'paused'
+  Paused = 'paused',
 }
 
 export enum ProgressStepType {
   Prepare = 'prepare',
   Upload = 'upload',
-  Validate = 'validate'
+  Validate = 'validate',
 }
 
 export type Query = {
@@ -2956,13 +2798,11 @@ export type Query = {
   getMediafile?: Maybe<MediaFile>;
 };
 
-
 export type QueryAdvancedPermissionArgs = {
   childEntityId?: InputMaybe<Scalars['String']>;
   parentEntityId?: InputMaybe<Scalars['String']>;
   permission: Scalars['String'];
 };
-
 
 export type QueryAdvancedPermissionsArgs = {
   childEntityId?: InputMaybe<Scalars['String']>;
@@ -2970,21 +2810,17 @@ export type QueryAdvancedPermissionsArgs = {
   permissions: Array<Scalars['String']>;
 };
 
-
 export type QueryBulkOperationCsvExportKeysArgs = {
   entityType: Scalars['String'];
 };
-
 
 export type QueryBulkOperationsArgs = {
   entityType: Scalars['String'];
 };
 
-
 export type QueryDirectoriesArgs = {
   dir?: InputMaybe<Scalars['String']>;
 };
-
 
 export type QueryDownloadItemsInZipArgs = {
   basicCsv: Scalars['Boolean'];
@@ -2993,7 +2829,6 @@ export type QueryDownloadItemsInZipArgs = {
   includeAssetCsv: Scalars['Boolean'];
   mediafiles: Array<InputMaybe<Scalars['String']>>;
 };
-
 
 export type QueryEntitiesArgs = {
   advancedFilterInputs: Array<AdvancedFilterInput>;
@@ -3007,7 +2842,6 @@ export type QueryEntitiesArgs = {
   type?: InputMaybe<Entitytyping>;
 };
 
-
 export type QueryEntitiesByAdvancedSearchArgs = {
   facet_by: Scalars['String'];
   filter_by: Scalars['String'];
@@ -3019,28 +2853,23 @@ export type QueryEntitiesByAdvancedSearchArgs = {
   sort_by: Scalars['String'];
 };
 
-
 export type QueryEntityArgs = {
   id: Scalars['String'];
   preferredLanguage?: InputMaybe<Scalars['String']>;
   type: Scalars['String'];
 };
 
-
 export type QueryEntityTypeFiltersArgs = {
   type: Scalars['String'];
 };
-
 
 export type QueryEntityTypeSortOptionsArgs = {
   entityType: Scalars['String'];
 };
 
-
 export type QueryFetchMediafilesOfEntityArgs = {
   entityIds: Array<Scalars['String']>;
 };
-
 
 export type QueryFilterOptionsArgs = {
   entityType: Scalars['String'];
@@ -3048,25 +2877,21 @@ export type QueryFilterOptionsArgs = {
   limit: Scalars['Int'];
 };
 
-
 export type QueryGenerateOcrWithAssetArgs = {
   assetId: Scalars['String'];
   language: Scalars['String'];
   operation: Array<Scalars['String']>;
 };
 
-
 export type QueryGraphDataArgs = {
   graph: GraphElementInput;
   id: Scalars['String'];
 };
 
-
 export type QueryJobArgs = {
   failed: Scalars['Boolean'];
   id: Scalars['String'];
 };
-
 
 export type QueryJobsArgs = {
   failed: Scalars['Boolean'];
@@ -3074,37 +2899,30 @@ export type QueryJobsArgs = {
   paginationInfo?: InputMaybe<PaginationInfo>;
 };
 
-
 export type QueryMenuArgs = {
   name: Scalars['String'];
 };
-
 
 export type QueryPermissionMappingArgs = {
   entities: Array<InputMaybe<Scalars['String']>>;
 };
 
-
 export type QueryPermissionMappingCreateArgs = {
   entityType: Scalars['String'];
 };
-
 
 export type QueryPermissionMappingEntityDetailArgs = {
   entityType: Scalars['String'];
   id: Scalars['String'];
 };
 
-
 export type QueryPermissionMappingPerEntityTypeArgs = {
   type: Scalars['String'];
 };
 
-
 export type QueryPreviewComponentsArgs = {
   entityType: Scalars['String'];
 };
-
 
 export type QueryGetMediafileArgs = {
   mediafileId?: InputMaybe<Scalars['String']>;
@@ -3134,7 +2952,7 @@ export type Region = Entity & {
 
 export enum RelationActions {
   AddRelation = 'addRelation',
-  RemoveRelation = 'removeRelation'
+  RemoveRelation = 'removeRelation',
 }
 
 export type RelationField = {
@@ -3158,12 +2976,12 @@ export type RelationFieldInput = {
 
 export enum RelationFieldViewMode {
   Big = 'big',
-  Small = 'small'
+  Small = 'small',
 }
 
 export enum RelationType {
   Frames = 'frames',
-  Stories = 'stories'
+  Stories = 'stories',
 }
 
 export type RequiredOneOfMetadataValidation = {
@@ -3218,7 +3036,7 @@ export enum RouteNames {
   Jobs = 'Jobs',
   NotFound = 'NotFound',
   SingleEntity = 'SingleEntity',
-  Unauthorized = 'Unauthorized'
+  Unauthorized = 'Unauthorized',
 }
 
 export type SavedSearch = Entity & {
@@ -3266,7 +3084,7 @@ export type SearchFilter = {
 export enum SearchInputType {
   AdvancedInputType = 'AdvancedInputType',
   AdvancedSavedSearchType = 'AdvancedSavedSearchType',
-  SimpleInputtype = 'SimpleInputtype'
+  SimpleInputtype = 'SimpleInputtype',
 }
 
 export type SelectionInput = {
@@ -3300,16 +3118,13 @@ export type SingleMediaFileElement = {
   type: Scalars['String'];
 };
 
-
 export type SingleMediaFileElementIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type SingleMediaFileElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type SingleMediaFileElementTypeArgs = {
   input?: InputMaybe<MediaFileElementTypes>;
@@ -3384,7 +3199,7 @@ export enum SkeletonComponentType {
   Textarea = 'Textarea',
   Title = 'Title',
   UploadCsvTemplates = 'UploadCsvTemplates',
-  UploadInfoLink = 'UploadInfoLink'
+  UploadInfoLink = 'UploadInfoLink',
 }
 
 export type SortOptions = {
@@ -3393,11 +3208,9 @@ export type SortOptions = {
   options: Array<DropdownOption>;
 };
 
-
 export type SortOptionsIsAscArgs = {
   input: SortingDirection;
 };
-
 
 export type SortOptionsOptionsArgs = {
   excludeBaseSortOptions?: InputMaybe<Scalars['Boolean']>;
@@ -3406,7 +3219,7 @@ export type SortOptionsOptionsArgs = {
 
 export enum SortingDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type SubJobResults = {
@@ -3446,7 +3259,9 @@ export type TagConfigurationByEntityInput = {
   colorMetadataKey: Scalars['String'];
   configurationEntityRelationType: Scalars['String'];
   configurationEntityType: Entitytyping;
-  metadataKeysToSetAsAttribute?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  metadataKeysToSetAsAttribute?: InputMaybe<
+    Array<InputMaybe<Scalars['String']>>
+  >;
   secondaryAttributeToDetermineTagConfig?: InputMaybe<Scalars['String']>;
   tagMetadataKey: Scalars['String'];
 };
@@ -3457,7 +3272,9 @@ export type TaggableEntityConfiguration = {
   metadataFilterForTagContent: Scalars['String'];
   metadataKeysToSetAsAttribute?: Maybe<Array<Maybe<Scalars['String']>>>;
   relationType: Scalars['String'];
-  replaceCharacterFromTagSettings?: Maybe<Array<Maybe<CharacterReplacementSettings>>>;
+  replaceCharacterFromTagSettings?: Maybe<
+    Array<Maybe<CharacterReplacementSettings>>
+  >;
   tag?: Maybe<Scalars['String']>;
   tagConfigurationByEntity?: Maybe<TagConfigurationByEntity>;
   taggableEntityType: Entitytyping;
@@ -3466,9 +3283,13 @@ export type TaggableEntityConfiguration = {
 export type TaggableEntityConfigurationInput = {
   createNewEntityFormQuery: Scalars['String'];
   metadataFilterForTagContent: Scalars['String'];
-  metadataKeysToSetAsAttribute?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  metadataKeysToSetAsAttribute?: InputMaybe<
+    Array<InputMaybe<Scalars['String']>>
+  >;
   relationType: Scalars['String'];
-  replaceCharacterFromTagSettings?: InputMaybe<Array<InputMaybe<CharacterReplacementSettingsInput>>>;
+  replaceCharacterFromTagSettings?: InputMaybe<
+    Array<InputMaybe<CharacterReplacementSettingsInput>>
+  >;
   tag?: InputMaybe<Scalars['String']>;
   tagConfigurationByEntity?: InputMaybe<TagConfigurationByEntityInput>;
   taggableEntityType: Entitytyping;
@@ -3480,11 +3301,9 @@ export type TaggingExtensionConfiguration = {
   taggableEntityConfiguration: Array<TaggableEntityConfiguration>;
 };
 
-
 export type TaggingExtensionConfigurationCustomQueryArgs = {
   input: Scalars['String'];
 };
-
 
 export type TaggingExtensionConfigurationTaggableEntityConfigurationArgs = {
   configuration: Array<TaggableEntityConfigurationInput>;
@@ -3516,11 +3335,11 @@ export enum TimeUnit {
   DayOfWeek = 'dayOfWeek',
   DayOfYear = 'dayOfYear',
   Hour = 'hour',
-  Month = 'month'
+  Month = 'month',
 }
 
 export enum TranscodeType {
-  Pdf = 'pdf'
+  Pdf = 'pdf',
 }
 
 export enum TypeModals {
@@ -3537,7 +3356,7 @@ export enum TypeModals {
   SaveSearch = 'SaveSearch',
   SaveSearchPicker = 'SaveSearchPicker',
   Search = 'Search',
-  SearchAi = 'SearchAi'
+  SearchAi = 'SearchAi',
 }
 
 export type Typology = Entity & {
@@ -3569,7 +3388,7 @@ export enum Unit {
   ListDefault = 'LIST_DEFAULT',
   Percent = 'PERCENT',
   SecondsDefault = 'SECONDS_DEFAULT',
-  Volt = 'VOLT'
+  Volt = 'VOLT',
 }
 
 export type UploadContainer = {
@@ -3579,13 +3398,12 @@ export type UploadContainer = {
   uploadMetadata?: Maybe<PanelMetaData>;
 };
 
-
 export type UploadContainerUploadFlowArgs = {
   input: UploadFlow;
 };
 
 export enum UploadEntityTypes {
-  Undefined = 'undefined'
+  Undefined = 'undefined',
 }
 
 export type UploadField = {
@@ -3600,41 +3418,33 @@ export type UploadField = {
   uploadFieldType: UploadFieldType;
 };
 
-
 export type UploadFieldDryRunUploadArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type UploadFieldExtraMediafileTypeArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type UploadFieldInfoLabelUrlArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type UploadFieldInputFieldArgs = {
   type: BaseFieldType;
 };
 
-
 export type UploadFieldLabelArgs = {
   input: Scalars['String'];
 };
-
 
 export type UploadFieldTemplateCsvsArgs = {
   input: Array<Scalars['String']>;
 };
 
-
 export type UploadFieldUploadFieldSizeArgs = {
   input?: InputMaybe<UploadFieldSize>;
 };
-
 
 export type UploadFieldUploadFieldTypeArgs = {
   input: UploadFieldType;
@@ -3643,14 +3453,14 @@ export type UploadFieldUploadFieldTypeArgs = {
 export enum UploadFieldSize {
   Big = 'big',
   Normal = 'normal',
-  Small = 'small'
+  Small = 'small',
 }
 
 export enum UploadFieldType {
   Batch = 'batch',
   EditMetadataWithCsv = 'editMetadataWithCsv',
   ReorderEntities = 'reorderEntities',
-  Single = 'single'
+  Single = 'single',
 }
 
 export enum UploadFlow {
@@ -3662,7 +3472,7 @@ export enum UploadFlow {
   OptionalMediafiles = 'optionalMediafiles',
   UpdateMetadata = 'updateMetadata',
   UploadCsvForReordening = 'uploadCsvForReordening',
-  XmlMarc = 'xmlMarc'
+  XmlMarc = 'xmlMarc',
 }
 
 export type User = Entity & {
@@ -3707,7 +3517,7 @@ export enum ValidationFields {
   RelationMetadata = 'relationMetadata',
   RelationRootdata = 'relationRootdata',
   RelationValues = 'relationValues',
-  Relations = 'relations'
+  Relations = 'relations',
 }
 
 export type ValidationInput = {
@@ -3736,7 +3546,7 @@ export enum ValidationRules {
   MaxDateToday = 'max_date_today',
   Regex = 'regex',
   Required = 'required',
-  Url = 'url'
+  Url = 'url',
 }
 
 export enum ViewModes {
@@ -3744,7 +3554,7 @@ export enum ViewModes {
   ViewModesList = 'ViewModesList',
   ViewModesMap = 'ViewModesMap',
   /** @deprecated We use the new mediaviewer integrated in previews */
-  ViewModesMedia = 'ViewModesMedia'
+  ViewModesMedia = 'ViewModesMedia',
 }
 
 export type ViewModesWithConfig = {
@@ -3761,7 +3571,7 @@ export type ViewModesWithConfigInput = {
 export enum VisibilityLevels {
   NotPublic = 'not_public',
   Private = 'private',
-  Public = 'public'
+  Public = 'public',
 }
 
 export type WindowElement = {
@@ -3774,21 +3584,17 @@ export type WindowElement = {
   panels: WindowElementPanel;
 };
 
-
 export type WindowElementEditMetadataButtonArgs = {
   input: EditMetadataButtonInput;
 };
-
 
 export type WindowElementLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
 
-
 export type WindowElementLayoutArgs = {
   input?: InputMaybe<WindowElementLayout>;
 };
-
 
 export type WindowElementLineClampArgs = {
   input?: InputMaybe<Scalars['String']>;
@@ -3800,11 +3606,9 @@ export type WindowElementBulkDataPanel = {
   label: Scalars['String'];
 };
 
-
 export type WindowElementBulkDataPanelIntialValueKeyArgs = {
   input: Scalars['String'];
 };
-
 
 export type WindowElementBulkDataPanelLabelArgs = {
   input: Scalars['String'];
@@ -3812,7 +3616,7 @@ export type WindowElementBulkDataPanelLabelArgs = {
 
 export enum WindowElementLayout {
   HorizontalGrid = 'HorizontalGrid',
-  Vertical = 'Vertical'
+  Vertical = 'Vertical',
 }
 
 export type WindowElementPanel = {
@@ -3830,31 +3634,25 @@ export type WindowElementPanel = {
   wysiwygElement?: Maybe<WysiwygElement>;
 };
 
-
 export type WindowElementPanelBulkDataArgs = {
   bulkDataSource: Scalars['String'];
 };
-
 
 export type WindowElementPanelCanBeMultipleColumnsArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type WindowElementPanelIsCollapsedArgs = {
   input: Scalars['Boolean'];
 };
-
 
 export type WindowElementPanelIsEditableArgs = {
   input: Scalars['Boolean'];
 };
 
-
 export type WindowElementPanelLabelArgs = {
   input?: InputMaybe<Scalars['String']>;
 };
-
 
 export type WindowElementPanelPanelTypeArgs = {
   input: PanelType;
@@ -3901,29 +3699,24 @@ export type WysiwygElement = {
   label: Scalars['String'];
   metadataKey: Scalars['String'];
   taggingConfiguration?: Maybe<TaggingExtensionConfiguration>;
-  virtulKeyboardLayouts?: Maybe<Scalars['JSON']>;
+  virtualKeyboardLayouts?: Maybe<Scalars['JSON']>;
 };
-
 
 export type WysiwygElementExtensionsArgs = {
   input: Array<InputMaybe<WysiwygExtensions>>;
 };
 
-
 export type WysiwygElementHasVirtualKeyboardArgs = {
   input?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type WysiwygElementLabelArgs = {
   input: Scalars['String'];
 };
 
-
 export type WysiwygElementMetadataKeyArgs = {
   input: Scalars['String'];
 };
-
 
 export type WysiwygElementVirtulKeyboardLayoutsArgs = {
   input?: InputMaybe<Array<Scalars['String']>>;
@@ -3940,7 +3733,7 @@ export enum WysiwygExtensions {
   Paragraph = 'paragraph',
   StarterKit = 'starterKit',
   Text = 'text',
-  TextStyle = 'textStyle'
+  TextStyle = 'textStyle',
 }
 
 export type RelationInput = {
@@ -3971,15 +3764,14 @@ export type UserPermissions = {
   payload?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-
-
 export type ResolverTypeWrapper<T> = Promise<T> | T;
-
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -4002,9 +3794,25 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
+  subscribe: SubscriptionSubscribeFn<
+    { [key in TKey]: TResult },
+    TParent,
+    TContext,
+    TArgs
+  >;
+  resolve?: SubscriptionResolveFn<
+    TResult,
+    { [key in TKey]: TResult },
+    TContext,
+    TArgs
+  >;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -4012,12 +3820,26 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+export type SubscriptionObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
-  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+export type SubscriptionResolver<
+  TResult,
+  TKey extends string,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
+  | ((
+      ...args: any[]
+    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -4026,11 +3848,20 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+  obj: T,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -4112,7 +3943,35 @@ export type ResolversTypes = {
   EndpointInformationInput: EndpointInformationInput;
   EndpointResponseActions: EndpointResponseActions;
   EntitiesResults: ResolverTypeWrapper<EntitiesResults>;
-  Entity: ResolversTypes['Area'] | ResolversTypes['Asset'] | ResolversTypes['BaseEntity'] | ResolversTypes['BibliographicalReference'] | ResolversTypes['CompositeSite'] | ResolversTypes['Creator'] | ResolversTypes['EpiDocTag'] | ResolversTypes['ExternalSigla'] | ResolversTypes['Inscription'] | ResolversTypes['Job'] | ResolversTypes['Language'] | ResolversTypes['Location'] | ResolversTypes['Media'] | ResolversTypes['MediaFileEntity'] | ResolversTypes['Point'] | ResolversTypes['Region'] | ResolversTypes['SavedSearch'] | ResolversTypes['Script'] | ResolversTypes['ShareLink'] | ResolversTypes['Site'] | ResolversTypes['SiteFunction'] | ResolversTypes['SiteType'] | ResolversTypes['Support'] | ResolversTypes['Tenant'] | ResolversTypes['Typology'] | ResolversTypes['User'] | ResolversTypes['Word'] | ResolversTypes['WritingTechnique'];
+  Entity:
+    | ResolversTypes['Area']
+    | ResolversTypes['Asset']
+    | ResolversTypes['BaseEntity']
+    | ResolversTypes['BibliographicalReference']
+    | ResolversTypes['CompositeSite']
+    | ResolversTypes['Creator']
+    | ResolversTypes['EpiDocTag']
+    | ResolversTypes['ExternalSigla']
+    | ResolversTypes['Inscription']
+    | ResolversTypes['Job']
+    | ResolversTypes['Language']
+    | ResolversTypes['Location']
+    | ResolversTypes['Media']
+    | ResolversTypes['MediaFileEntity']
+    | ResolversTypes['Point']
+    | ResolversTypes['Region']
+    | ResolversTypes['SavedSearch']
+    | ResolversTypes['Script']
+    | ResolversTypes['ShareLink']
+    | ResolversTypes['Site']
+    | ResolversTypes['SiteFunction']
+    | ResolversTypes['SiteType']
+    | ResolversTypes['Support']
+    | ResolversTypes['Tenant']
+    | ResolversTypes['Typology']
+    | ResolversTypes['User']
+    | ResolversTypes['Word']
+    | ResolversTypes['WritingTechnique'];
   EntityFormInput: EntityFormInput;
   EntityInput: EntityInput;
   EntityListElement: ResolverTypeWrapper<EntityListElement>;
@@ -4141,7 +4000,10 @@ export type ResolversTypes = {
   FormAction: ResolverTypeWrapper<FormAction>;
   FormFields: ResolverTypeWrapper<FormFields>;
   FormTab: ResolverTypeWrapper<FormTab>;
-  Formatters: ResolversTypes['LinkFormatter'] | ResolversTypes['PillFormatter'] | ResolversTypes['RegexpMatchFormatter'];
+  Formatters:
+    | ResolversTypes['LinkFormatter']
+    | ResolversTypes['PillFormatter']
+    | ResolversTypes['RegexpMatchFormatter'];
   GeoJsonFeature: ResolverTypeWrapper<GeoJsonFeature>;
   GeoJsonFeatureInput: GeoJsonFeatureInput;
   GraphDataset: ResolverTypeWrapper<GraphDataset>;
@@ -4205,7 +4067,9 @@ export type ResolversTypes = {
   MenuTypeLinkRoute: ResolverTypeWrapper<MenuTypeLinkRoute>;
   MenuWrapper: ResolverTypeWrapper<MenuWrapper>;
   Metadata: ResolverTypeWrapper<Metadata>;
-  MetadataAndRelation: ResolversTypes['Metadata'] | ResolversTypes['MetadataRelation'];
+  MetadataAndRelation:
+    | ResolversTypes['Metadata']
+    | ResolversTypes['MetadataRelation'];
   MetadataField: ResolverTypeWrapper<MetadataField>;
   MetadataFieldInput: MetadataFieldInput;
   MetadataFieldOption: ResolverTypeWrapper<MetadataFieldOption>;
@@ -4370,7 +4234,35 @@ export type ResolversParentTypes = {
   EndpointInformation: EndpointInformation;
   EndpointInformationInput: EndpointInformationInput;
   EntitiesResults: EntitiesResults;
-  Entity: ResolversParentTypes['Area'] | ResolversParentTypes['Asset'] | ResolversParentTypes['BaseEntity'] | ResolversParentTypes['BibliographicalReference'] | ResolversParentTypes['CompositeSite'] | ResolversParentTypes['Creator'] | ResolversParentTypes['EpiDocTag'] | ResolversParentTypes['ExternalSigla'] | ResolversParentTypes['Inscription'] | ResolversParentTypes['Job'] | ResolversParentTypes['Language'] | ResolversParentTypes['Location'] | ResolversParentTypes['Media'] | ResolversParentTypes['MediaFileEntity'] | ResolversParentTypes['Point'] | ResolversParentTypes['Region'] | ResolversParentTypes['SavedSearch'] | ResolversParentTypes['Script'] | ResolversParentTypes['ShareLink'] | ResolversParentTypes['Site'] | ResolversParentTypes['SiteFunction'] | ResolversParentTypes['SiteType'] | ResolversParentTypes['Support'] | ResolversParentTypes['Tenant'] | ResolversParentTypes['Typology'] | ResolversParentTypes['User'] | ResolversParentTypes['Word'] | ResolversParentTypes['WritingTechnique'];
+  Entity:
+    | ResolversParentTypes['Area']
+    | ResolversParentTypes['Asset']
+    | ResolversParentTypes['BaseEntity']
+    | ResolversParentTypes['BibliographicalReference']
+    | ResolversParentTypes['CompositeSite']
+    | ResolversParentTypes['Creator']
+    | ResolversParentTypes['EpiDocTag']
+    | ResolversParentTypes['ExternalSigla']
+    | ResolversParentTypes['Inscription']
+    | ResolversParentTypes['Job']
+    | ResolversParentTypes['Language']
+    | ResolversParentTypes['Location']
+    | ResolversParentTypes['Media']
+    | ResolversParentTypes['MediaFileEntity']
+    | ResolversParentTypes['Point']
+    | ResolversParentTypes['Region']
+    | ResolversParentTypes['SavedSearch']
+    | ResolversParentTypes['Script']
+    | ResolversParentTypes['ShareLink']
+    | ResolversParentTypes['Site']
+    | ResolversParentTypes['SiteFunction']
+    | ResolversParentTypes['SiteType']
+    | ResolversParentTypes['Support']
+    | ResolversParentTypes['Tenant']
+    | ResolversParentTypes['Typology']
+    | ResolversParentTypes['User']
+    | ResolversParentTypes['Word']
+    | ResolversParentTypes['WritingTechnique'];
   EntityFormInput: EntityFormInput;
   EntityInput: EntityInput;
   EntityListElement: EntityListElement;
@@ -4393,7 +4285,10 @@ export type ResolversParentTypes = {
   FormAction: FormAction;
   FormFields: FormFields;
   FormTab: FormTab;
-  Formatters: ResolversParentTypes['LinkFormatter'] | ResolversParentTypes['PillFormatter'] | ResolversParentTypes['RegexpMatchFormatter'];
+  Formatters:
+    | ResolversParentTypes['LinkFormatter']
+    | ResolversParentTypes['PillFormatter']
+    | ResolversParentTypes['RegexpMatchFormatter'];
   GeoJsonFeature: GeoJsonFeature;
   GeoJsonFeatureInput: GeoJsonFeatureInput;
   GraphDataset: GraphDataset;
@@ -4447,7 +4342,9 @@ export type ResolversParentTypes = {
   MenuTypeLinkRoute: MenuTypeLinkRoute;
   MenuWrapper: MenuWrapper;
   Metadata: Metadata;
-  MetadataAndRelation: ResolversParentTypes['Metadata'] | ResolversParentTypes['MetadataRelation'];
+  MetadataAndRelation:
+    | ResolversParentTypes['Metadata']
+    | ResolversParentTypes['MetadataRelation'];
   MetadataField: MetadataField;
   MetadataFieldInput: MetadataFieldInput;
   MetadataFieldOption: MetadataFieldOption;
@@ -4530,759 +4427,2480 @@ export type ResolversParentTypes = {
   userPermissions: UserPermissions;
 };
 
-export type ActionContextResolvers<ContextType = any, ParentType extends ResolversParentTypes['ActionContext'] = ResolversParentTypes['ActionContext']> = {
-  activeViewMode?: Resolver<Maybe<Array<Maybe<ResolversTypes['ActionContextViewModeTypes']>>>, ParentType, ContextType>;
-  entitiesSelectionType?: Resolver<Maybe<ResolversTypes['ActionContextEntitiesSelectionType']>, ParentType, ContextType>;
-  labelForTooltip?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  matchMetadataValue?: Resolver<Maybe<Array<Maybe<ResolversTypes['MatchMetadataValue']>>>, ParentType, ContextType>;
+export type ActionContextResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActionContext'] = ResolversParentTypes['ActionContext']
+> = {
+  activeViewMode?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['ActionContextViewModeTypes']>>>,
+    ParentType,
+    ContextType
+  >;
+  entitiesSelectionType?: Resolver<
+    Maybe<ResolversTypes['ActionContextEntitiesSelectionType']>,
+    ParentType,
+    ContextType
+  >;
+  labelForTooltip?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  matchMetadataValue?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['MatchMetadataValue']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ActionElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['ActionElement'] = ResolversParentTypes['ActionElement']> = {
-  actions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Actions']>>>, ParentType, ContextType, Partial<ActionElementActionsArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ActionElementLabelArgs>>;
+export type ActionElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActionElement'] = ResolversParentTypes['ActionElement']
+> = {
+  actions?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Actions']>>>,
+    ParentType,
+    ContextType,
+    Partial<ActionElementActionsArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ActionElementLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ActionProgressResolvers<ContextType = any, ParentType extends ResolversParentTypes['ActionProgress'] = ResolversParentTypes['ActionProgress']> = {
-  step?: Resolver<Maybe<ResolversTypes['ActionProgressStep']>, ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['ActionProgressIndicatorType'], ParentType, ContextType, RequireFields<ActionProgressTypeArgs, 'input'>>;
+export type ActionProgressResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActionProgress'] = ResolversParentTypes['ActionProgress']
+> = {
+  step?: Resolver<
+    Maybe<ResolversTypes['ActionProgressStep']>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    ResolversTypes['ActionProgressIndicatorType'],
+    ParentType,
+    ContextType,
+    RequireFields<ActionProgressTypeArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ActionProgressStepResolvers<ContextType = any, ParentType extends ResolversParentTypes['ActionProgressStep'] = ResolversParentTypes['ActionProgressStep']> = {
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ActionProgressStepLabelArgs, 'input'>>;
-  status?: Resolver<ResolversTypes['ProgressStepStatus'], ParentType, ContextType>;
-  stepType?: Resolver<ResolversTypes['ProgressStepType'], ParentType, ContextType, RequireFields<ActionProgressStepStepTypeArgs, 'input'>>;
+export type ActionProgressStepResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ActionProgressStep'] = ResolversParentTypes['ActionProgressStep']
+> = {
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<ActionProgressStepLabelArgs, 'input'>
+  >;
+  status?: Resolver<
+    ResolversTypes['ProgressStepStatus'],
+    ParentType,
+    ContextType
+  >;
+  stepType?: Resolver<
+    ResolversTypes['ProgressStepType'],
+    ParentType,
+    ContextType,
+    RequireFields<ActionProgressStepStepTypeArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdvancedFilterResolvers<ContextType = any, ParentType extends ResolversParentTypes['AdvancedFilter'] = ResolversParentTypes['AdvancedFilter']> = {
-  advancedFilterInputForRetrievingOptions?: Resolver<Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>, ParentType, ContextType>;
-  aggregation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type AdvancedFilterResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AdvancedFilter'] = ResolversParentTypes['AdvancedFilter']
+> = {
+  advancedFilterInputForRetrievingOptions?: Resolver<
+    Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  aggregation?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   context?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  defaultValue?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<AdvancedFilterDefaultValueArgs, 'value'>>;
-  distinctBy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  doNotOverrideDefaultValue?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<AdvancedFilterDoNotOverrideDefaultValueArgs>>;
-  entityType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  facets?: Resolver<Maybe<Array<ResolversTypes['FacetInputType']>>, ParentType, ContextType>;
-  filterOptionsMapping?: Resolver<Maybe<ResolversTypes['FilterOptionsMappingType']>, ParentType, ContextType>;
-  hidden?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, Partial<AdvancedFilterHiddenArgs>>;
-  isDisplayedByDefault?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  itemTypes?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  defaultValue?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<AdvancedFilterDefaultValueArgs, 'value'>
+  >;
+  distinctBy?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  doNotOverrideDefaultValue?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<AdvancedFilterDoNotOverrideDefaultValueArgs>
+  >;
+  entityType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  facets?: Resolver<
+    Maybe<Array<ResolversTypes['FacetInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  filterOptionsMapping?: Resolver<
+    Maybe<ResolversTypes['FilterOptionsMappingType']>,
+    ParentType,
+    ContextType
+  >;
+  hidden?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    Partial<AdvancedFilterHiddenArgs>
+  >;
+  isDisplayedByDefault?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType
+  >;
+  itemTypes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lookup?: Resolver<Maybe<ResolversTypes['LookupInputType']>, ParentType, ContextType>;
-  matchExact?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  lookup?: Resolver<
+    Maybe<ResolversTypes['LookupInputType']>,
+    ParentType,
+    ContextType
+  >;
+  matchExact?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   max?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  metadataKeyAsLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  metadataKeyAsLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   min?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  minDropdownSearchCharacters?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, Partial<AdvancedFilterMinDropdownSearchCharactersArgs>>;
-  operator?: Resolver<Maybe<ResolversTypes['Operator']>, ParentType, ContextType>;
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType>;
-  parentKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  selectionOption?: Resolver<Maybe<ResolversTypes['AutocompleteSelectionOptions']>, ParentType, ContextType>;
-  showTimeForDateFilter?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  tooltip?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<AdvancedFilterTooltipArgs>>;
-  type?: Resolver<ResolversTypes['AdvancedFilterTypes'], ParentType, ContextType>;
+  minDropdownSearchCharacters?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    Partial<AdvancedFilterMinDropdownSearchCharactersArgs>
+  >;
+  operator?: Resolver<
+    Maybe<ResolversTypes['Operator']>,
+    ParentType,
+    ContextType
+  >;
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType
+  >;
+  parentKey?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  selectionOption?: Resolver<
+    Maybe<ResolversTypes['AutocompleteSelectionOptions']>,
+    ParentType,
+    ContextType
+  >;
+  showTimeForDateFilter?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  tooltip?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<AdvancedFilterTooltipArgs>
+  >;
+  type?: Resolver<
+    ResolversTypes['AdvancedFilterTypes'],
+    ParentType,
+    ContextType
+  >;
   unit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  useNewWayToFetchOptions?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  useNewWayToFetchOptions?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdvancedFilterInputTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['AdvancedFilterInputType'] = ResolversParentTypes['AdvancedFilterInputType']> = {
-  aggregation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type AdvancedFilterInputTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AdvancedFilterInputType'] = ResolversParentTypes['AdvancedFilterInputType']
+> = {
+  aggregation?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   context?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  distinct_by?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  inner_exact_matches?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  item_types?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  distinct_by?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  inner_exact_matches?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  item_types?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  lookup?: Resolver<Maybe<ResolversTypes['LookupInputType']>, ParentType, ContextType>;
-  match_exact?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  metadata_key_as_label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  operator?: Resolver<Maybe<ResolversTypes['Operator']>, ParentType, ContextType>;
-  parent_key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  returnIdAtIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  selectionOption?: Resolver<Maybe<ResolversTypes['AutocompleteSelectionOptions']>, ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['AdvancedFilterTypes'], ParentType, ContextType>;
+  lookup?: Resolver<
+    Maybe<ResolversTypes['LookupInputType']>,
+    ParentType,
+    ContextType
+  >;
+  match_exact?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  metadata_key_as_label?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  operator?: Resolver<
+    Maybe<ResolversTypes['Operator']>,
+    ParentType,
+    ContextType
+  >;
+  parent_key?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  returnIdAtIndex?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >;
+  selectionOption?: Resolver<
+    Maybe<ResolversTypes['AutocompleteSelectionOptions']>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    ResolversTypes['AdvancedFilterTypes'],
+    ParentType,
+    ContextType
+  >;
   value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AdvancedFiltersResolvers<ContextType = any, ParentType extends ResolversParentTypes['AdvancedFilters'] = ResolversParentTypes['AdvancedFilters']> = {
-  advancedFilter?: Resolver<ResolversTypes['AdvancedFilter'], ParentType, ContextType, RequireFields<AdvancedFiltersAdvancedFilterArgs, 'type'>>;
+export type AdvancedFiltersResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AdvancedFilters'] = ResolversParentTypes['AdvancedFilters']
+> = {
+  advancedFilter?: Resolver<
+    ResolversTypes['AdvancedFilter'],
+    ParentType,
+    ContextType,
+    RequireFields<AdvancedFiltersAdvancedFilterArgs, 'type'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AllowedViewModesResolvers<ContextType = any, ParentType extends ResolversParentTypes['AllowedViewModes'] = ResolversParentTypes['AllowedViewModes']> = {
-  viewModes?: Resolver<Maybe<Array<Maybe<ResolversTypes['ViewModesWithConfig']>>>, ParentType, ContextType, Partial<AllowedViewModesViewModesArgs>>;
+export type AllowedViewModesResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['AllowedViewModes'] = ResolversParentTypes['AllowedViewModes']
+> = {
+  viewModes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['ViewModesWithConfig']>>>,
+    ParentType,
+    ContextType,
+    Partial<AllowedViewModesViewModesArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AreaResolvers<ContextType = any, ParentType extends ResolversParentTypes['Area'] = ResolversParentTypes['Area']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type AreaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Area'] = ResolversParentTypes['Area']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type AssetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Asset'] = ResolversParentTypes['Asset']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
+export type AssetResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Asset'] = ResolversParentTypes['Asset']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BaseEntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseEntity'] = ResolversParentTypes['BaseEntity']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type BaseEntityResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BaseEntity'] = ResolversParentTypes['BaseEntity']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BibliographicalReferenceResolvers<ContextType = any, ParentType extends ResolversParentTypes['BibliographicalReference'] = ResolversParentTypes['BibliographicalReference']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type BibliographicalReferenceResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BibliographicalReference'] = ResolversParentTypes['BibliographicalReference']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BreadCrumbRouteResolvers<ContextType = any, ParentType extends ResolversParentTypes['BreadCrumbRoute'] = ResolversParentTypes['BreadCrumbRoute']> = {
-  entityType?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType>;
-  overviewPage?: Resolver<Maybe<ResolversTypes['RouteNames']>, ParentType, ContextType>;
+export type BreadCrumbRouteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BreadCrumbRoute'] = ResolversParentTypes['BreadCrumbRoute']
+> = {
+  entityType?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType
+  >;
+  overviewPage?: Resolver<
+    Maybe<ResolversTypes['RouteNames']>,
+    ParentType,
+    ContextType
+  >;
   relation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BulkOperationCsvExportKeysResolvers<ContextType = any, ParentType extends ResolversParentTypes['BulkOperationCsvExportKeys'] = ResolversParentTypes['BulkOperationCsvExportKeys']> = {
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType>;
+export type BulkOperationCsvExportKeysResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BulkOperationCsvExportKeys'] = ResolversParentTypes['BulkOperationCsvExportKeys']
+> = {
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BulkOperationModalResolvers<ContextType = any, ParentType extends ResolversParentTypes['BulkOperationModal'] = ResolversParentTypes['BulkOperationModal']> = {
-  askForCloseConfirmation?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  formQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  formRelationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  neededPermission?: Resolver<Maybe<ResolversTypes['Permission']>, ParentType, ContextType>;
-  skipItemsWithRelationDuringBulkDelete?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+export type BulkOperationModalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BulkOperationModal'] = ResolversParentTypes['BulkOperationModal']
+> = {
+  askForCloseConfirmation?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  formQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  formRelationType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  neededPermission?: Resolver<
+    Maybe<ResolversTypes['Permission']>,
+    ParentType,
+    ContextType
+  >;
+  skipItemsWithRelationDuringBulkDelete?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   typeModal?: Resolver<ResolversTypes['TypeModals'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BulkOperationOptionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['BulkOperationOptions'] = ResolversParentTypes['BulkOperationOptions']> = {
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<BulkOperationOptionsOptionsArgs, 'input'>>;
+export type BulkOperationOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BulkOperationOptions'] = ResolversParentTypes['BulkOperationOptions']
+> = {
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<BulkOperationOptionsOptionsArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BulkOperationsResolvers<ContextType = any, ParentType extends ResolversParentTypes['BulkOperations'] = ResolversParentTypes['BulkOperations']> = {
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<BulkOperationsOptionsArgs, 'input'>>;
+export type BulkOperationsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['BulkOperations'] = ResolversParentTypes['BulkOperations']
+> = {
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<BulkOperationsOptionsArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CharacterReplacementSettingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['CharacterReplacementSettings'] = ResolversParentTypes['CharacterReplacementSettings']> = {
-  characterToReplaceWith?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  replacementCharactersRegex?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type CharacterReplacementSettingsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['CharacterReplacementSettings'] = ResolversParentTypes['CharacterReplacementSettings']
+> = {
+  characterToReplaceWith?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  replacementCharactersRegex?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ColumnResolvers<ContextType = any, ParentType extends ResolversParentTypes['Column'] = ResolversParentTypes['Column']> = {
-  elements?: Resolver<ResolversTypes['EntityViewElements'], ParentType, ContextType>;
-  size?: Resolver<ResolversTypes['ColumnSizes'], ParentType, ContextType, Partial<ColumnSizeArgs>>;
+export type ColumnResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Column'] = ResolversParentTypes['Column']
+> = {
+  elements?: Resolver<
+    ResolversTypes['EntityViewElements'],
+    ParentType,
+    ContextType
+  >;
+  size?: Resolver<
+    ResolversTypes['ColumnSizes'],
+    ParentType,
+    ContextType,
+    Partial<ColumnSizeArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ColumnListResolvers<ContextType = any, ParentType extends ResolversParentTypes['ColumnList'] = ResolversParentTypes['ColumnList']> = {
+export type ColumnListResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ColumnList'] = ResolversParentTypes['ColumnList']
+> = {
   column?: Resolver<ResolversTypes['Column'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CompositeSiteResolvers<ContextType = any, ParentType extends ResolversParentTypes['CompositeSite'] = ResolversParentTypes['CompositeSite']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type CompositeSiteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['CompositeSite'] = ResolversParentTypes['CompositeSite']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ConditionalResolvers<ContextType = any, ParentType extends ResolversParentTypes['Conditional'] = ResolversParentTypes['Conditional']> = {
+export type ConditionalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Conditional'] = ResolversParentTypes['Conditional']
+> = {
   field?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ifAnyValue?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ConfigItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['ConfigItem'] = ResolversParentTypes['ConfigItem']> = {
+export type ConfigItemResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ConfigItem'] = ResolversParentTypes['ConfigItem']
+> = {
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ContextMenuActionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ContextMenuActions'] = ResolversParentTypes['ContextMenuActions']> = {
-  doElodyAction?: Resolver<Maybe<ResolversTypes['ContextMenuElodyAction']>, ParentType, ContextType>;
-  doGeneralAction?: Resolver<Maybe<ResolversTypes['ContextMenuGeneralAction']>, ParentType, ContextType>;
-  doLinkAction?: Resolver<Maybe<ResolversTypes['ContextMenuLinkAction']>, ParentType, ContextType>;
+export type ContextMenuActionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ContextMenuActions'] = ResolversParentTypes['ContextMenuActions']
+> = {
+  doElodyAction?: Resolver<
+    Maybe<ResolversTypes['ContextMenuElodyAction']>,
+    ParentType,
+    ContextType
+  >;
+  doGeneralAction?: Resolver<
+    Maybe<ResolversTypes['ContextMenuGeneralAction']>,
+    ParentType,
+    ContextType
+  >;
+  doLinkAction?: Resolver<
+    Maybe<ResolversTypes['ContextMenuLinkAction']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ContextMenuElodyActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ContextMenuElodyAction'] = ResolversParentTypes['ContextMenuElodyAction']> = {
-  action?: Resolver<ResolversTypes['ContextMenuElodyActionEnum'], ParentType, ContextType, Partial<ContextMenuElodyActionActionArgs>>;
-  can?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<ContextMenuElodyActionCanArgs>>;
-  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuElodyActionIconArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuElodyActionLabelArgs>>;
+export type ContextMenuElodyActionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ContextMenuElodyAction'] = ResolversParentTypes['ContextMenuElodyAction']
+> = {
+  action?: Resolver<
+    ResolversTypes['ContextMenuElodyActionEnum'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuElodyActionActionArgs>
+  >;
+  can?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<ContextMenuElodyActionCanArgs>
+  >;
+  icon?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuElodyActionIconArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuElodyActionLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ContextMenuGeneralActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ContextMenuGeneralAction'] = ResolversParentTypes['ContextMenuGeneralAction']> = {
-  action?: Resolver<ResolversTypes['ContextMenuGeneralActionEnum'], ParentType, ContextType, Partial<ContextMenuGeneralActionActionArgs>>;
-  can?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<ContextMenuGeneralActionCanArgs>>;
-  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuGeneralActionIconArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuGeneralActionLabelArgs>>;
+export type ContextMenuGeneralActionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ContextMenuGeneralAction'] = ResolversParentTypes['ContextMenuGeneralAction']
+> = {
+  action?: Resolver<
+    ResolversTypes['ContextMenuGeneralActionEnum'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuGeneralActionActionArgs>
+  >;
+  can?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<ContextMenuGeneralActionCanArgs>
+  >;
+  icon?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuGeneralActionIconArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuGeneralActionLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ContextMenuLinkActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ContextMenuLinkAction'] = ResolversParentTypes['ContextMenuLinkAction']> = {
-  can?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<ContextMenuLinkActionCanArgs>>;
-  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuLinkActionIconArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ContextMenuLinkActionLabelArgs>>;
+export type ContextMenuLinkActionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ContextMenuLinkAction'] = ResolversParentTypes['ContextMenuLinkAction']
+> = {
+  can?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<ContextMenuLinkActionCanArgs>
+  >;
+  icon?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuLinkActionIconArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ContextMenuLinkActionLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CreatorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Creator'] = ResolversParentTypes['Creator']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type CreatorResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Creator'] = ResolversParentTypes['Creator']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DeleteQueryOptionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteQueryOptions'] = ResolversParentTypes['DeleteQueryOptions']> = {
-  blockingRelationsLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsBlockingRelationsLabelArgs>>;
-  customQueryBlockingEntityTypes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryBlockingEntityTypesArgs>>;
-  customQueryBlockingRelations?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryBlockingRelationsArgs>>;
-  customQueryBlockingRelationsFilters?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryBlockingRelationsFiltersArgs>>;
-  customQueryDeleteRelations?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryDeleteRelationsArgs>>;
-  customQueryDeleteRelationsFilters?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryDeleteRelationsFiltersArgs>>;
-  customQueryEntityTypes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>, ParentType, ContextType, Partial<DeleteQueryOptionsCustomQueryEntityTypesArgs>>;
-  deleteEntityLabel?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<DeleteQueryOptionsDeleteEntityLabelArgs, 'input'>>;
-  deleteRelationsLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<DeleteQueryOptionsDeleteRelationsLabelArgs>>;
+export type DeleteQueryOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['DeleteQueryOptions'] = ResolversParentTypes['DeleteQueryOptions']
+> = {
+  blockingRelationsLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsBlockingRelationsLabelArgs>
+  >;
+  customQueryBlockingEntityTypes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryBlockingEntityTypesArgs>
+  >;
+  customQueryBlockingRelations?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryBlockingRelationsArgs>
+  >;
+  customQueryBlockingRelationsFilters?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryBlockingRelationsFiltersArgs>
+  >;
+  customQueryDeleteRelations?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryDeleteRelationsArgs>
+  >;
+  customQueryDeleteRelationsFilters?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryDeleteRelationsFiltersArgs>
+  >;
+  customQueryEntityTypes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsCustomQueryEntityTypesArgs>
+  >;
+  deleteEntityLabel?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<DeleteQueryOptionsDeleteEntityLabelArgs, 'input'>
+  >;
+  deleteRelationsLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<DeleteQueryOptionsDeleteRelationsLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DirectoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Directory'] = ResolversParentTypes['Directory']> = {
+export type DirectoryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Directory'] = ResolversParentTypes['Directory']
+> = {
   dir?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  has_subdirs?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  has_subdirs?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   parent?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DropdownOptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['DropdownOption'] = ResolversParentTypes['DropdownOption']> = {
-  actionContext?: Resolver<Maybe<ResolversTypes['ActionContext']>, ParentType, ContextType, Partial<DropdownOptionActionContextArgs>>;
+export type DropdownOptionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['DropdownOption'] = ResolversParentTypes['DropdownOption']
+> = {
+  actionContext?: Resolver<
+    Maybe<ResolversTypes['ActionContext']>,
+    ParentType,
+    ContextType,
+    Partial<DropdownOptionActionContextArgs>
+  >;
   active?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  availableInPages?: Resolver<Maybe<Array<Maybe<ResolversTypes['RouteMatching']>>>, ParentType, ContextType, Partial<DropdownOptionAvailableInPagesArgs>>;
-  bulkOperationModal?: Resolver<Maybe<ResolversTypes['BulkOperationModal']>, ParentType, ContextType, Partial<DropdownOptionBulkOperationModalArgs>>;
-  can?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  availableInPages?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RouteMatching']>>>,
+    ParentType,
+    ContextType,
+    Partial<DropdownOptionAvailableInPagesArgs>
+  >;
+  bulkOperationModal?: Resolver<
+    Maybe<ResolversTypes['BulkOperationModal']>,
+    ParentType,
+    ContextType,
+    Partial<DropdownOptionBulkOperationModalArgs>
+  >;
+  can?: Resolver<
+    Maybe<Array<ResolversTypes['String']>>,
+    ParentType,
+    ContextType
+  >;
   icon?: Resolver<Maybe<ResolversTypes['DamsIcons']>, ParentType, ContextType>;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   primary?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  required?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  requiresAuth?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  required?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  requiresAuth?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   value?: Resolver<ResolversTypes['StringOrInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DropzoneEntityToCreateResolvers<ContextType = any, ParentType extends ResolversParentTypes['DropzoneEntityToCreate'] = ResolversParentTypes['DropzoneEntityToCreate']> = {
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<DropzoneEntityToCreateOptionsArgs, 'input'>>;
+export type DropzoneEntityToCreateResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['DropzoneEntityToCreate'] = ResolversParentTypes['DropzoneEntityToCreate']
+> = {
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<DropzoneEntityToCreateOptionsArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EditMetadataButtonResolvers<ContextType = any, ParentType extends ResolversParentTypes['EditMetadataButton'] = ResolversParentTypes['EditMetadataButton']> = {
-  editmodeLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type EditMetadataButtonResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EditMetadataButton'] = ResolversParentTypes['EditMetadataButton']
+> = {
+  editmodeLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   hasButton?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  readmodeLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  readmodeLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EndpointInformationResolvers<ContextType = any, ParentType extends ResolversParentTypes['EndpointInformation'] = ResolversParentTypes['EndpointInformation']> = {
-  endpointName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type EndpointInformationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EndpointInformation'] = ResolversParentTypes['EndpointInformation']
+> = {
+  endpointName?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   method?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  responseAction?: Resolver<Maybe<ResolversTypes['EndpointResponseActions']>, ParentType, ContextType>;
-  variables?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  responseAction?: Resolver<
+    Maybe<ResolversTypes['EndpointResponseActions']>,
+    ParentType,
+    ContextType
+  >;
+  variables?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EntitiesResultsResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitiesResults'] = ResolversParentTypes['EntitiesResults']> = {
+export type EntitiesResultsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EntitiesResults'] = ResolversParentTypes['EntitiesResults']
+> = {
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   facets?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   limit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  results?: Resolver<Maybe<Array<Maybe<ResolversTypes['Entity']>>>, ParentType, ContextType>;
-  sortKeys?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<EntitiesResultsSortKeysArgs>>;
+  results?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Entity']>>>,
+    ParentType,
+    ContextType
+  >;
+  sortKeys?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<EntitiesResultsSortKeysArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']> = {
-  __resolveType: TypeResolveFn<'Area' | 'Asset' | 'BaseEntity' | 'BibliographicalReference' | 'CompositeSite' | 'Creator' | 'EpiDocTag' | 'ExternalSigla' | 'Inscription' | 'Job' | 'Language' | 'Location' | 'Media' | 'MediaFileEntity' | 'Point' | 'Region' | 'SavedSearch' | 'Script' | 'ShareLink' | 'Site' | 'SiteFunction' | 'SiteType' | 'Support' | 'Tenant' | 'Typology' | 'User' | 'Word' | 'WritingTechnique', ParentType, ContextType>;
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
+export type EntityResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']
+> = {
+  __resolveType: TypeResolveFn<
+    | 'Area'
+    | 'Asset'
+    | 'BaseEntity'
+    | 'BibliographicalReference'
+    | 'CompositeSite'
+    | 'Creator'
+    | 'EpiDocTag'
+    | 'ExternalSigla'
+    | 'Inscription'
+    | 'Job'
+    | 'Language'
+    | 'Location'
+    | 'Media'
+    | 'MediaFileEntity'
+    | 'Point'
+    | 'Region'
+    | 'SavedSearch'
+    | 'Script'
+    | 'ShareLink'
+    | 'Site'
+    | 'SiteFunction'
+    | 'SiteType'
+    | 'Support'
+    | 'Tenant'
+    | 'Typology'
+    | 'User'
+    | 'Word'
+    | 'WritingTechnique',
+    ParentType,
+    ContextType
+  >;
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
-export type EntityListElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntityListElement'] = ResolversParentTypes['EntityListElement']> = {
-  baseLibraryMode?: Resolver<Maybe<ResolversTypes['BaseLibraryModes']>, ParentType, ContextType, Partial<EntityListElementBaseLibraryModeArgs>>;
-  can?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType, Partial<EntityListElementCanArgs>>;
-  customBulkOperations?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomBulkOperationsArgs>>;
-  customQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomQueryArgs>>;
-  customQueryEntityPickerList?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomQueryEntityPickerListArgs>>;
-  customQueryEntityPickerListFilters?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomQueryEntityPickerListFiltersArgs>>;
-  customQueryFilters?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomQueryFiltersArgs>>;
-  customQueryRelationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementCustomQueryRelationTypeArgs>>;
-  enableAdvancedFilters?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<EntityListElementEnableAdvancedFiltersArgs>>;
-  enableNavigation?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<EntityListElementEnableNavigationArgs>>;
-  entityList?: Resolver<Maybe<Array<Maybe<ResolversTypes['Entity']>>>, ParentType, ContextType, Partial<EntityListElementEntityListArgs>>;
-  entityListElement?: Resolver<Maybe<ResolversTypes['EntityListElement']>, ParentType, ContextType>;
-  entityTypes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>, ParentType, ContextType, Partial<EntityListElementEntityTypesArgs>>;
-  fetchDeepRelations?: Resolver<Maybe<ResolversTypes['FetchDeepRelations']>, ParentType, ContextType>;
-  filtersNeedContext?: Resolver<Maybe<Array<Maybe<ResolversTypes['EntitySubelement']>>>, ParentType, ContextType, Partial<EntityListElementFiltersNeedContextArgs>>;
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<EntityListElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementLabelArgs>>;
-  relationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementRelationTypeArgs>>;
-  searchInputType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementSearchInputTypeArgs>>;
-  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<EntityListElementTypeArgs>>;
-  viewMode?: Resolver<Maybe<ResolversTypes['EntityListViewMode']>, ParentType, ContextType, Partial<EntityListElementViewModeArgs>>;
+export type EntityListElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EntityListElement'] = ResolversParentTypes['EntityListElement']
+> = {
+  baseLibraryMode?: Resolver<
+    Maybe<ResolversTypes['BaseLibraryModes']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementBaseLibraryModeArgs>
+  >;
+  can?: Resolver<
+    Maybe<Array<ResolversTypes['String']>>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCanArgs>
+  >;
+  customBulkOperations?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomBulkOperationsArgs>
+  >;
+  customQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomQueryArgs>
+  >;
+  customQueryEntityPickerList?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomQueryEntityPickerListArgs>
+  >;
+  customQueryEntityPickerListFilters?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomQueryEntityPickerListFiltersArgs>
+  >;
+  customQueryFilters?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomQueryFiltersArgs>
+  >;
+  customQueryRelationType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementCustomQueryRelationTypeArgs>
+  >;
+  enableAdvancedFilters?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementEnableAdvancedFiltersArgs>
+  >;
+  enableNavigation?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementEnableNavigationArgs>
+  >;
+  entityList?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Entity']>>>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementEntityListArgs>
+  >;
+  entityListElement?: Resolver<
+    Maybe<ResolversTypes['EntityListElement']>,
+    ParentType,
+    ContextType
+  >;
+  entityTypes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Entitytyping']>>>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementEntityTypesArgs>
+  >;
+  fetchDeepRelations?: Resolver<
+    Maybe<ResolversTypes['FetchDeepRelations']>,
+    ParentType,
+    ContextType
+  >;
+  filtersNeedContext?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['EntitySubelement']>>>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementFiltersNeedContextArgs>
+  >;
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<EntityListElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementLabelArgs>
+  >;
+  relationType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementRelationTypeArgs>
+  >;
+  searchInputType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementSearchInputTypeArgs>
+  >;
+  type?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementTypeArgs>
+  >;
+  viewMode?: Resolver<
+    Maybe<ResolversTypes['EntityListViewMode']>,
+    ParentType,
+    ContextType,
+    Partial<EntityListElementViewModeArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EntityViewElementsResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntityViewElements'] = ResolversParentTypes['EntityViewElements']> = {
-  actionElement?: Resolver<Maybe<ResolversTypes['ActionElement']>, ParentType, ContextType>;
-  entityListElement?: Resolver<Maybe<ResolversTypes['EntityListElement']>, ParentType, ContextType>;
-  entityViewerElement?: Resolver<Maybe<ResolversTypes['EntityViewerElement']>, ParentType, ContextType>;
-  graphElement?: Resolver<Maybe<ResolversTypes['GraphElement']>, ParentType, ContextType>;
-  hierarchyListElement?: Resolver<Maybe<ResolversTypes['HierarchyListElement']>, ParentType, ContextType>;
-  manifestViewerElement?: Resolver<Maybe<ResolversTypes['ManifestViewerElement']>, ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  markdownViewerElement?: Resolver<Maybe<ResolversTypes['MarkdownViewerElement']>, ParentType, ContextType>;
-  mediaFileElement?: Resolver<Maybe<ResolversTypes['MediaFileElement']>, ParentType, ContextType>;
-  singleMediaFileElement?: Resolver<Maybe<ResolversTypes['SingleMediaFileElement']>, ParentType, ContextType>;
-  windowElement?: Resolver<Maybe<ResolversTypes['WindowElement']>, ParentType, ContextType>;
-  wysiwygElement?: Resolver<Maybe<ResolversTypes['WysiwygElement']>, ParentType, ContextType>;
+export type EntityViewElementsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EntityViewElements'] = ResolversParentTypes['EntityViewElements']
+> = {
+  actionElement?: Resolver<
+    Maybe<ResolversTypes['ActionElement']>,
+    ParentType,
+    ContextType
+  >;
+  entityListElement?: Resolver<
+    Maybe<ResolversTypes['EntityListElement']>,
+    ParentType,
+    ContextType
+  >;
+  entityViewerElement?: Resolver<
+    Maybe<ResolversTypes['EntityViewerElement']>,
+    ParentType,
+    ContextType
+  >;
+  graphElement?: Resolver<
+    Maybe<ResolversTypes['GraphElement']>,
+    ParentType,
+    ContextType
+  >;
+  hierarchyListElement?: Resolver<
+    Maybe<ResolversTypes['HierarchyListElement']>,
+    ParentType,
+    ContextType
+  >;
+  manifestViewerElement?: Resolver<
+    Maybe<ResolversTypes['ManifestViewerElement']>,
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  markdownViewerElement?: Resolver<
+    Maybe<ResolversTypes['MarkdownViewerElement']>,
+    ParentType,
+    ContextType
+  >;
+  mediaFileElement?: Resolver<
+    Maybe<ResolversTypes['MediaFileElement']>,
+    ParentType,
+    ContextType
+  >;
+  singleMediaFileElement?: Resolver<
+    Maybe<ResolversTypes['SingleMediaFileElement']>,
+    ParentType,
+    ContextType
+  >;
+  windowElement?: Resolver<
+    Maybe<ResolversTypes['WindowElement']>,
+    ParentType,
+    ContextType
+  >;
+  wysiwygElement?: Resolver<
+    Maybe<ResolversTypes['WysiwygElement']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EntityViewerElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntityViewerElement'] = ResolversParentTypes['EntityViewerElement']> = {
-  entityId?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<EntityViewerElementEntityIdArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<EntityViewerElementLabelArgs>>;
+export type EntityViewerElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EntityViewerElement'] = ResolversParentTypes['EntityViewerElement']
+> = {
+  entityId?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<EntityViewerElementEntityIdArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<EntityViewerElementLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EpiDocTagResolvers<ContextType = any, ParentType extends ResolversParentTypes['EpiDocTag'] = ResolversParentTypes['EpiDocTag']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type EpiDocTagResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['EpiDocTag'] = ResolversParentTypes['EpiDocTag']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ExpandButtonOptionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ExpandButtonOptions'] = ResolversParentTypes['ExpandButtonOptions']> = {
-  orientation?: Resolver<Maybe<ResolversTypes['Orientations']>, ParentType, ContextType, Partial<ExpandButtonOptionsOrientationArgs>>;
-  shown?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<ExpandButtonOptionsShownArgs, 'input'>>;
+export type ExpandButtonOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ExpandButtonOptions'] = ResolversParentTypes['ExpandButtonOptions']
+> = {
+  orientation?: Resolver<
+    Maybe<ResolversTypes['Orientations']>,
+    ParentType,
+    ContextType,
+    Partial<ExpandButtonOptionsOrientationArgs>
+  >;
+  shown?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<ExpandButtonOptionsShownArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ExternalSiglaResolvers<ContextType = any, ParentType extends ResolversParentTypes['ExternalSigla'] = ResolversParentTypes['ExternalSigla']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type ExternalSiglaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ExternalSigla'] = ResolversParentTypes['ExternalSigla']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FacetInputTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['FacetInputType'] = ResolversParentTypes['FacetInputType']> = {
-  facets?: Resolver<Maybe<Array<ResolversTypes['FacetInputType']>>, ParentType, ContextType>;
+export type FacetInputTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FacetInputType'] = ResolversParentTypes['FacetInputType']
+> = {
+  facets?: Resolver<
+    Maybe<Array<ResolversTypes['FacetInputType']>>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lookups?: Resolver<Maybe<Array<ResolversTypes['LookupInputType']>>, ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['AdvancedFilterTypes']>, ParentType, ContextType>;
+  lookups?: Resolver<
+    Maybe<Array<ResolversTypes['LookupInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilterTypes']>,
+    ParentType,
+    ContextType
+  >;
   value?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FetchDeepRelationsResolvers<ContextType = any, ParentType extends ResolversParentTypes['FetchDeepRelations'] = ResolversParentTypes['FetchDeepRelations']> = {
-  amountOfRecursions?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, Partial<FetchDeepRelationsAmountOfRecursionsArgs>>;
-  deepRelationsFetchStrategy?: Resolver<Maybe<ResolversTypes['DeepRelationsFetchStrategy']>, ParentType, ContextType, Partial<FetchDeepRelationsDeepRelationsFetchStrategyArgs>>;
-  entityType?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType, Partial<FetchDeepRelationsEntityTypeArgs>>;
-  routeConfig?: Resolver<Maybe<Array<Maybe<ResolversTypes['BreadCrumbRoute']>>>, ParentType, ContextType, Partial<FetchDeepRelationsRouteConfigArgs>>;
+export type FetchDeepRelationsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FetchDeepRelations'] = ResolversParentTypes['FetchDeepRelations']
+> = {
+  amountOfRecursions?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    Partial<FetchDeepRelationsAmountOfRecursionsArgs>
+  >;
+  deepRelationsFetchStrategy?: Resolver<
+    Maybe<ResolversTypes['DeepRelationsFetchStrategy']>,
+    ParentType,
+    ContextType,
+    Partial<FetchDeepRelationsDeepRelationsFetchStrategyArgs>
+  >;
+  entityType?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType,
+    Partial<FetchDeepRelationsEntityTypeArgs>
+  >;
+  routeConfig?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['BreadCrumbRoute']>>>,
+    ParentType,
+    ContextType,
+    Partial<FetchDeepRelationsRouteConfigArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FileProgressResolvers<ContextType = any, ParentType extends ResolversParentTypes['FileProgress'] = ResolversParentTypes['FileProgress']> = {
-  steps?: Resolver<Maybe<Array<Maybe<ResolversTypes['FileProgressStep']>>>, ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['ActionProgressIndicatorType'], ParentType, ContextType>;
+export type FileProgressResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FileProgress'] = ResolversParentTypes['FileProgress']
+> = {
+  steps?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['FileProgressStep']>>>,
+    ParentType,
+    ContextType
+  >;
+  type?: Resolver<
+    ResolversTypes['ActionProgressIndicatorType'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FileProgressStepResolvers<ContextType = any, ParentType extends ResolversParentTypes['FileProgressStep'] = ResolversParentTypes['FileProgressStep']> = {
+export type FileProgressStepResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FileProgressStep'] = ResolversParentTypes['FileProgressStep']
+> = {
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  status?: Resolver<ResolversTypes['ProgressStepStatus'], ParentType, ContextType>;
-  stepType?: Resolver<ResolversTypes['ProgressStepType'], ParentType, ContextType>;
+  status?: Resolver<
+    ResolversTypes['ProgressStepStatus'],
+    ParentType,
+    ContextType
+  >;
+  stepType?: Resolver<
+    ResolversTypes['ProgressStepType'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FilterMatcherMapResolvers<ContextType = any, ParentType extends ResolversParentTypes['FilterMatcherMap'] = ResolversParentTypes['FilterMatcherMap']> = {
+export type FilterMatcherMapResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FilterMatcherMap'] = ResolversParentTypes['FilterMatcherMap']
+> = {
   boolean?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  metadata_on_relation?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  metadata_on_relation?: Resolver<
+    Array<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   number?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  selection?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  selection?: Resolver<
+    Array<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   text?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FilterOptionsMappingTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['FilterOptionsMappingType'] = ResolversParentTypes['FilterOptionsMappingType']> = {
+export type FilterOptionsMappingTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FilterOptionsMappingType'] = ResolversParentTypes['FilterOptionsMappingType']
+> = {
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FormResolvers<ContextType = any, ParentType extends ResolversParentTypes['Form'] = ResolversParentTypes['Form']> = {
+export type FormResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Form'] = ResolversParentTypes['Form']
+> = {
   formTab?: Resolver<ResolversTypes['FormTab'], ParentType, ContextType>;
-  infoLabel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<FormInfoLabelArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<FormLabelArgs>>;
-  modalStyle?: Resolver<ResolversTypes['ModalStyle'], ParentType, ContextType, RequireFields<FormModalStyleArgs, 'input'>>;
+  infoLabel?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<FormInfoLabelArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<FormLabelArgs>
+  >;
+  modalStyle?: Resolver<
+    ResolversTypes['ModalStyle'],
+    ParentType,
+    ContextType,
+    RequireFields<FormModalStyleArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FormActionResolvers<ContextType = any, ParentType extends ResolversParentTypes['FormAction'] = ResolversParentTypes['FormAction']> = {
-  actionProgressIndicator?: Resolver<Maybe<ResolversTypes['ActionProgress']>, ParentType, ContextType>;
-  actionQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<FormActionActionQueryArgs>>;
-  actionType?: Resolver<Maybe<ResolversTypes['ActionType']>, ParentType, ContextType, Partial<FormActionActionTypeArgs>>;
-  creationType?: Resolver<ResolversTypes['Entitytyping'], ParentType, ContextType, Partial<FormActionCreationTypeArgs>>;
-  endpointInformation?: Resolver<ResolversTypes['EndpointInformation'], ParentType, ContextType, RequireFields<FormActionEndpointInformationArgs, 'input'>>;
-  icon?: Resolver<Maybe<ResolversTypes['DamsIcons']>, ParentType, ContextType, Partial<FormActionIconArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<FormActionLabelArgs, 'input'>>;
-  showsFormErrors?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<FormActionShowsFormErrorsArgs>>;
+export type FormActionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FormAction'] = ResolversParentTypes['FormAction']
+> = {
+  actionProgressIndicator?: Resolver<
+    Maybe<ResolversTypes['ActionProgress']>,
+    ParentType,
+    ContextType
+  >;
+  actionQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<FormActionActionQueryArgs>
+  >;
+  actionType?: Resolver<
+    Maybe<ResolversTypes['ActionType']>,
+    ParentType,
+    ContextType,
+    Partial<FormActionActionTypeArgs>
+  >;
+  creationType?: Resolver<
+    ResolversTypes['Entitytyping'],
+    ParentType,
+    ContextType,
+    Partial<FormActionCreationTypeArgs>
+  >;
+  endpointInformation?: Resolver<
+    ResolversTypes['EndpointInformation'],
+    ParentType,
+    ContextType,
+    RequireFields<FormActionEndpointInformationArgs, 'input'>
+  >;
+  icon?: Resolver<
+    Maybe<ResolversTypes['DamsIcons']>,
+    ParentType,
+    ContextType,
+    Partial<FormActionIconArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<FormActionLabelArgs, 'input'>
+  >;
+  showsFormErrors?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<FormActionShowsFormErrorsArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FormFieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['FormFields'] = ResolversParentTypes['FormFields']> = {
-  action?: Resolver<Maybe<ResolversTypes['FormAction']>, ParentType, ContextType>;
+export type FormFieldsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FormFields'] = ResolversParentTypes['FormFields']
+> = {
+  action?: Resolver<
+    Maybe<ResolversTypes['FormAction']>,
+    ParentType,
+    ContextType
+  >;
   metaData?: Resolver<ResolversTypes['PanelMetaData'], ParentType, ContextType>;
-  uploadContainer?: Resolver<Maybe<ResolversTypes['UploadContainer']>, ParentType, ContextType>;
+  uploadContainer?: Resolver<
+    Maybe<ResolversTypes['UploadContainer']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FormTabResolvers<ContextType = any, ParentType extends ResolversParentTypes['FormTab'] = ResolversParentTypes['FormTab']> = {
+export type FormTabResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['FormTab'] = ResolversParentTypes['FormTab']
+> = {
   formFields?: Resolver<ResolversTypes['FormFields'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FormattersResolvers<ContextType = any, ParentType extends ResolversParentTypes['Formatters'] = ResolversParentTypes['Formatters']> = {
-  __resolveType: TypeResolveFn<'LinkFormatter' | 'PillFormatter' | 'RegexpMatchFormatter', ParentType, ContextType>;
+export type FormattersResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Formatters'] = ResolversParentTypes['Formatters']
+> = {
+  __resolveType: TypeResolveFn<
+    'LinkFormatter' | 'PillFormatter' | 'RegexpMatchFormatter',
+    ParentType,
+    ContextType
+  >;
 };
 
-export type GeoJsonFeatureResolvers<ContextType = any, ParentType extends ResolversParentTypes['GeoJsonFeature'] = ResolversParentTypes['GeoJsonFeature']> = {
-  value?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<GeoJsonFeatureValueArgs, 'coordinates' | 'id' | 'weight'>>;
+export type GeoJsonFeatureResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['GeoJsonFeature'] = ResolversParentTypes['GeoJsonFeature']
+> = {
+  value?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<GeoJsonFeatureValueArgs, 'coordinates' | 'id' | 'weight'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GraphDatasetResolvers<ContextType = any, ParentType extends ResolversParentTypes['GraphDataset'] = ResolversParentTypes['GraphDataset']> = {
-  filter?: Resolver<Maybe<ResolversTypes['GraphDatasetFilter']>, ParentType, ContextType>;
+export type GraphDatasetResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['GraphDataset'] = ResolversParentTypes['GraphDataset']
+> = {
+  filter?: Resolver<
+    Maybe<ResolversTypes['GraphDatasetFilter']>,
+    ParentType,
+    ContextType
+  >;
   labels?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GraphDatasetFilterResolvers<ContextType = any, ParentType extends ResolversParentTypes['GraphDatasetFilter'] = ResolversParentTypes['GraphDatasetFilter']> = {
+export type GraphDatasetFilterResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['GraphDatasetFilter'] = ResolversParentTypes['GraphDatasetFilter']
+> = {
   key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  values?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  values?: Resolver<
+    Maybe<Array<ResolversTypes['String']>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GraphElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['GraphElement'] = ResolversParentTypes['GraphElement']> = {
-  convert_to?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<GraphElementConvert_ToArgs, 'input'>>;
-  datapoints?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<GraphElementDatapointsArgs, 'input'>>;
-  dataset?: Resolver<ResolversTypes['GraphDataset'], ParentType, ContextType, RequireFields<GraphElementDatasetArgs, 'input'>>;
-  datasource?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<GraphElementDatasourceArgs, 'input'>>;
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<GraphElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<GraphElementLabelArgs>>;
-  timeUnit?: Resolver<ResolversTypes['TimeUnit'], ParentType, ContextType, RequireFields<GraphElementTimeUnitArgs, 'input'>>;
-  type?: Resolver<ResolversTypes['GraphType'], ParentType, ContextType, RequireFields<GraphElementTypeArgs, 'input'>>;
+export type GraphElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['GraphElement'] = ResolversParentTypes['GraphElement']
+> = {
+  convert_to?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementConvert_ToArgs, 'input'>
+  >;
+  datapoints?: Resolver<
+    ResolversTypes['Int'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementDatapointsArgs, 'input'>
+  >;
+  dataset?: Resolver<
+    ResolversTypes['GraphDataset'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementDatasetArgs, 'input'>
+  >;
+  datasource?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementDatasourceArgs, 'input'>
+  >;
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<GraphElementLabelArgs>
+  >;
+  timeUnit?: Resolver<
+    ResolversTypes['TimeUnit'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementTimeUnitArgs, 'input'>
+  >;
+  type?: Resolver<
+    ResolversTypes['GraphType'],
+    ParentType,
+    ContextType,
+    RequireFields<GraphElementTypeArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type HiddenFieldResolvers<ContextType = any, ParentType extends ResolversParentTypes['HiddenField'] = ResolversParentTypes['HiddenField']> = {
-  entityType?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType>;
+export type HiddenFieldResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['HiddenField'] = ResolversParentTypes['HiddenField']
+> = {
+  entityType?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType
+  >;
   hidden?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  inherited?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  keyToExtractValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  relationToExtractKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  searchValueForFilter?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  inherited?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  keyToExtractValue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  relationToExtractKey?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  searchValueForFilter?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type HierarchyListElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['HierarchyListElement'] = ResolversParentTypes['HierarchyListElement']> = {
-  can?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<HierarchyListElementCanArgs>>;
-  centerCoordinatesKey?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<HierarchyListElementCenterCoordinatesKeyArgs, 'input'>>;
-  customQuery?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<HierarchyListElementCustomQueryArgs>>;
-  entityTypeAsCenterPoint?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType, Partial<HierarchyListElementEntityTypeAsCenterPointArgs>>;
-  hierarchyRelationList?: Resolver<Array<Maybe<ResolversTypes['HierarchyRelationList']>>, ParentType, ContextType, Partial<HierarchyListElementHierarchyRelationListArgs>>;
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<HierarchyListElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<HierarchyListElementLabelArgs>>;
+export type HierarchyListElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['HierarchyListElement'] = ResolversParentTypes['HierarchyListElement']
+> = {
+  can?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<HierarchyListElementCanArgs>
+  >;
+  centerCoordinatesKey?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<HierarchyListElementCenterCoordinatesKeyArgs, 'input'>
+  >;
+  customQuery?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<HierarchyListElementCustomQueryArgs>
+  >;
+  entityTypeAsCenterPoint?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType,
+    Partial<HierarchyListElementEntityTypeAsCenterPointArgs>
+  >;
+  hierarchyRelationList?: Resolver<
+    Array<Maybe<ResolversTypes['HierarchyRelationList']>>,
+    ParentType,
+    ContextType,
+    Partial<HierarchyListElementHierarchyRelationListArgs>
+  >;
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<HierarchyListElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<HierarchyListElementLabelArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type HierarchyRelationListResolvers<ContextType = any, ParentType extends ResolversParentTypes['HierarchyRelationList'] = ResolversParentTypes['HierarchyRelationList']> = {
-  entityType?: Resolver<ResolversTypes['Entitytyping'], ParentType, ContextType>;
+export type HierarchyRelationListResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['HierarchyRelationList'] = ResolversParentTypes['HierarchyRelationList']
+> = {
+  entityType?: Resolver<
+    ResolversTypes['Entitytyping'],
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ImportReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['ImportReturn'] = ResolversParentTypes['ImportReturn']> = {
+export type ImportReturnResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ImportReturn'] = ResolversParentTypes['ImportReturn']
+> = {
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  message_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  message_id?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   status?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type InputFieldResolvers<ContextType = any, ParentType extends ResolversParentTypes['InputField'] = ResolversParentTypes['InputField']> = {
-  advancedFilterInputForRetrievingAllOptions?: Resolver<Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>, ParentType, ContextType>;
-  advancedFilterInputForRetrievingOptions?: Resolver<Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>, ParentType, ContextType>;
-  advancedFilterInputForRetrievingRelatedOptions?: Resolver<Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>, ParentType, ContextType>;
-  advancedFilterInputForSearchingOptions?: Resolver<Maybe<ResolversTypes['AdvancedFilterInputType']>, ParentType, ContextType>;
-  autoSelectable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  canCreateEntityFromOption?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  dependsOn?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  disabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  entityType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fieldKeyToSave?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<InputFieldFieldKeyToSaveArgs>>;
-  fieldName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<InputFieldFieldNameArgs>>;
-  fileProgressSteps?: Resolver<Maybe<ResolversTypes['FileProgress']>, ParentType, ContextType>;
-  fileTypes?: Resolver<Maybe<Array<Maybe<ResolversTypes['FileType']>>>, ParentType, ContextType>;
-  fromRelationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  hasVirtualKeyboard?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  isMetadataField?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<InputFieldIsMetadataFieldArgs>>;
-  lineClamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  maxAmountOfFiles?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  maxFileSize?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  metadataKeyToCreateEntityFromOption?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  multiple?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  options?: Resolver<Maybe<Array<Maybe<ResolversTypes['DropdownOption']>>>, ParentType, ContextType>;
-  relationFilter?: Resolver<Maybe<ResolversTypes['AdvancedFilterInputType']>, ParentType, ContextType>;
-  relationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type InputFieldResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['InputField'] = ResolversParentTypes['InputField']
+> = {
+  advancedFilterInputForRetrievingAllOptions?: Resolver<
+    Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  advancedFilterInputForRetrievingOptions?: Resolver<
+    Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  advancedFilterInputForRetrievingRelatedOptions?: Resolver<
+    Maybe<Array<ResolversTypes['AdvancedFilterInputType']>>,
+    ParentType,
+    ContextType
+  >;
+  advancedFilterInputForSearchingOptions?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilterInputType']>,
+    ParentType,
+    ContextType
+  >;
+  autoSelectable?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  canCreateEntityFromOption?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  dependsOn?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  disabled?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  entityType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  fieldKeyToSave?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<InputFieldFieldKeyToSaveArgs>
+  >;
+  fieldName?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<InputFieldFieldNameArgs>
+  >;
+  fileProgressSteps?: Resolver<
+    Maybe<ResolversTypes['FileProgress']>,
+    ParentType,
+    ContextType
+  >;
+  fileTypes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['FileType']>>>,
+    ParentType,
+    ContextType
+  >;
+  fromRelationType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  hasVirtualKeyboard?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  isMetadataField?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<InputFieldIsMetadataFieldArgs>
+  >;
+  lineClamp?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  maxAmountOfFiles?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >;
+  maxFileSize?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  metadataKeyToCreateEntityFromOption?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  multiple?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  options?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['DropdownOption']>>>,
+    ParentType,
+    ContextType
+  >;
+  relationFilter?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilterInputType']>,
+    ParentType,
+    ContextType
+  >;
+  relationType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  uploadMultiple?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  validation?: Resolver<Maybe<ResolversTypes['Validation']>, ParentType, ContextType, Partial<InputFieldValidationArgs>>;
+  uploadMultiple?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  validation?: Resolver<
+    Maybe<ResolversTypes['Validation']>,
+    ParentType,
+    ContextType,
+    Partial<InputFieldValidationArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type InscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Inscription'] = ResolversParentTypes['Inscription']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type InscriptionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Inscription'] = ResolversParentTypes['Inscription']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type IntialValuesResolvers<ContextType = any, ParentType extends ResolversParentTypes['IntialValues'] = ResolversParentTypes['IntialValues']> = {
+export type IntialValuesResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['IntialValues'] = ResolversParentTypes['IntialValues']
+> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  keyLabel?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<IntialValuesKeyLabelArgs, 'key' | 'source'>>;
-  keyValue?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<IntialValuesKeyValueArgs, 'key' | 'source'>>;
-  relationMetadata?: Resolver<Maybe<ResolversTypes['IntialValues']>, ParentType, ContextType, RequireFields<IntialValuesRelationMetadataArgs, 'type'>>;
+  keyLabel?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<IntialValuesKeyLabelArgs, 'key' | 'source'>
+  >;
+  keyValue?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<IntialValuesKeyValueArgs, 'key' | 'source'>
+  >;
+  relationMetadata?: Resolver<
+    Maybe<ResolversTypes['IntialValues']>,
+    ParentType,
+    ContextType,
+    RequireFields<IntialValuesRelationMetadataArgs, 'type'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
+export interface JsonScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['JSON'], any> {
   name: 'JSON';
 }
 
-export type JobResolvers<ContextType = any, ParentType extends ResolversParentTypes['Job'] = ResolversParentTypes['Job']> = {
+export type JobResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Job'] = ResolversParentTypes['Job']
+> = {
   _id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   _key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   _rev?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  amount_of_jobs?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  amount_of_jobs?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >;
   asset_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  completed_jobs?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  completed_jobs?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   end_time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
   job_info?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   job_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  mediafile_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  mediafile_id?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  parent_job_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  start_time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  parent_job_id?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  start_time?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  sub_jobs?: Resolver<Maybe<ResolversTypes['SubJobResults']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  sub_jobs?: Resolver<
+    Maybe<ResolversTypes['SubJobResults']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type JobsResultsResolvers<ContextType = any, ParentType extends ResolversParentTypes['JobsResults'] = ResolversParentTypes['JobsResults']> = {
+export type JobsResultsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['JobsResults'] = ResolversParentTypes['JobsResults']
+> = {
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   limit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   next?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  results?: Resolver<Maybe<Array<Maybe<ResolversTypes['Job']>>>, ParentType, ContextType>;
+  results?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Job']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeyAndValueResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeyAndValue'] = ResolversParentTypes['KeyAndValue']> = {
+export type KeyAndValueResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyAndValue'] = ResolversParentTypes['KeyAndValue']
+> = {
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type KeyValueResolvers<ContextType = any, ParentType extends ResolversParentTypes['KeyValue'] = ResolversParentTypes['KeyValue']> = {
-  keyValue?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<KeyValueKeyValueArgs, 'key'>>;
+export type KeyValueResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['KeyValue'] = ResolversParentTypes['KeyValue']
+> = {
+  keyValue?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<KeyValueKeyValueArgs, 'key'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type LanguageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Language'] = ResolversParentTypes['Language']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type LanguageResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Language'] = ResolversParentTypes['Language']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type LinkFormatterResolvers<ContextType = any, ParentType extends ResolversParentTypes['LinkFormatter'] = ResolversParentTypes['LinkFormatter']> = {
+export type LinkFormatterResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['LinkFormatter'] = ResolversParentTypes['LinkFormatter']
+> = {
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   link?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type LocationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type LocationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type LookupInputTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['LookupInputType'] = ResolversParentTypes['LookupInputType']> = {
+export type LookupInputTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['LookupInputType'] = ResolversParentTypes['LookupInputType']
+> = {
   as?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   foreign_field?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   from?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -5290,300 +6908,966 @@ export type LookupInputTypeResolvers<ContextType = any, ParentType extends Resol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManifestViewerElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['ManifestViewerElement'] = ResolversParentTypes['ManifestViewerElement']> = {
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<ManifestViewerElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<ManifestViewerElementLabelArgs>>;
-  manifestUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<ManifestViewerElementManifestUrlArgs, 'metadataKey'>>;
-  manifestVersion?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<ManifestViewerElementManifestVersionArgs, 'metadataKey'>>;
+export type ManifestViewerElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ManifestViewerElement'] = ResolversParentTypes['ManifestViewerElement']
+> = {
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<ManifestViewerElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<ManifestViewerElementLabelArgs>
+  >;
+  manifestUrl?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<ManifestViewerElementManifestUrlArgs, 'metadataKey'>
+  >;
+  manifestVersion?: Resolver<
+    ResolversTypes['Int'],
+    ParentType,
+    ContextType,
+    RequireFields<ManifestViewerElementManifestVersionArgs, 'metadataKey'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MapElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['MapElement'] = ResolversParentTypes['MapElement']> = {
-  center?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MapElementCenterArgs>>;
-  config?: Resolver<Maybe<Array<Maybe<ResolversTypes['ConfigItem']>>>, ParentType, ContextType, Partial<MapElementConfigArgs>>;
-  geoJsonFeature?: Resolver<Maybe<ResolversTypes['GeoJsonFeature']>, ParentType, ContextType>;
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MapElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MapElementLabelArgs>>;
-  mapMetadata?: Resolver<Maybe<ResolversTypes['MapMetadata']>, ParentType, ContextType>;
+export type MapElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MapElement'] = ResolversParentTypes['MapElement']
+> = {
+  center?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MapElementCenterArgs>
+  >;
+  config?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['ConfigItem']>>>,
+    ParentType,
+    ContextType,
+    Partial<MapElementConfigArgs>
+  >;
+  geoJsonFeature?: Resolver<
+    Maybe<ResolversTypes['GeoJsonFeature']>,
+    ParentType,
+    ContextType
+  >;
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MapElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MapElementLabelArgs>
+  >;
+  mapMetadata?: Resolver<
+    Maybe<ResolversTypes['MapMetadata']>,
+    ParentType,
+    ContextType
+  >;
   metaData?: Resolver<ResolversTypes['PanelMetaData'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MapElementTypeArgs>>;
+  type?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MapElementTypeArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MapMetadataResolvers<ContextType = any, ParentType extends ResolversParentTypes['MapMetadata'] = ResolversParentTypes['MapMetadata']> = {
-  value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<MapMetadataValueArgs, 'key' | 'source'>>;
+export type MapMetadataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MapMetadata'] = ResolversParentTypes['MapMetadata']
+> = {
+  value?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<MapMetadataValueArgs, 'key' | 'source'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MarkdownViewerElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarkdownViewerElement'] = ResolversParentTypes['MarkdownViewerElement']> = {
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MarkdownViewerElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MarkdownViewerElementLabelArgs>>;
-  markdownContent?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MarkdownViewerElementMarkdownContentArgs, 'metadataKey'>>;
+export type MarkdownViewerElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MarkdownViewerElement'] = ResolversParentTypes['MarkdownViewerElement']
+> = {
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MarkdownViewerElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MarkdownViewerElementLabelArgs>
+  >;
+  markdownContent?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<MarkdownViewerElementMarkdownContentArgs, 'metadataKey'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MatchMetadataValueResolvers<ContextType = any, ParentType extends ResolversParentTypes['MatchMetadataValue'] = ResolversParentTypes['MatchMetadataValue']> = {
+export type MatchMetadataValueResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MatchMetadataValue'] = ResolversParentTypes['MatchMetadataValue']
+> = {
   matchKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  matchValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  matchValue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaResolvers<ContextType = any, ParentType extends ResolversParentTypes['Media'] = ResolversParentTypes['Media']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
+export type MediaResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Media'] = ResolversParentTypes['Media']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaFileResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaFile'] = ResolversParentTypes['MediaFile']> = {
+export type MediaFileResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MediaFile'] = ResolversParentTypes['MediaFile']
+> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  entities?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  entities?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   filename?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  isPublic?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  is_primary?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  is_primary_thumbnail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  metadata?: Resolver<Maybe<Array<Maybe<ResolversTypes['MediaFileMetadata']>>>, ParentType, ContextType>;
+  isPublic?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  is_primary?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  is_primary_thumbnail?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  metadata?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['MediaFileMetadata']>>>,
+    ParentType,
+    ContextType
+  >;
   mimetype?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  original_file_location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  thumbnail_file_location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  transcode_filename?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  original_file_location?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  thumbnail_file_location?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  transcode_filename?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   user?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaFileElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaFileElement'] = ResolversParentTypes['MediaFileElement']> = {
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MediaFileElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MediaFileElementLabelArgs>>;
+export type MediaFileElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MediaFileElement'] = ResolversParentTypes['MediaFileElement']
+> = {
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MediaFileElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MediaFileElementLabelArgs>
+  >;
   metaData?: Resolver<ResolversTypes['PanelMetaData'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MediaFileElementTypeArgs>>;
+  type?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<MediaFileElementTypeArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaFileEntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaFileEntity'] = ResolversParentTypes['MediaFileEntity']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type MediaFileEntityResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MediaFileEntity'] = ResolversParentTypes['MediaFileEntity']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaFileMetadataResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaFileMetadata'] = ResolversParentTypes['MediaFileMetadata']> = {
+export type MediaFileMetadataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MediaFileMetadata'] = ResolversParentTypes['MediaFileMetadata']
+> = {
   key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MediaFilePostReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaFilePostReturn'] = ResolversParentTypes['MediaFilePostReturn']> = {
+export type MediaFilePostReturnResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MediaFilePostReturn'] = ResolversParentTypes['MediaFilePostReturn']
+> = {
   url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuResolvers<ContextType = any, ParentType extends ResolversParentTypes['Menu'] = ResolversParentTypes['Menu']> = {
-  menuItem?: Resolver<Maybe<ResolversTypes['MenuItem']>, ParentType, ContextType, RequireFields<MenuMenuItemArgs, 'label'>>;
+export type MenuResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Menu'] = ResolversParentTypes['Menu']
+> = {
+  menuItem?: Resolver<
+    Maybe<ResolversTypes['MenuItem']>,
+    ParentType,
+    ContextType,
+    RequireFields<MenuMenuItemArgs, 'label'>
+  >;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['MenuItem'] = ResolversParentTypes['MenuItem']> = {
-  can?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
-  entityType?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType>;
+export type MenuItemResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MenuItem'] = ResolversParentTypes['MenuItem']
+> = {
+  can?: Resolver<
+    Maybe<Array<ResolversTypes['String']>>,
+    ParentType,
+    ContextType
+  >;
+  entityType?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType
+  >;
   icon?: Resolver<Maybe<ResolversTypes['MenuIcons']>, ParentType, ContextType>;
-  isLoggedIn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isLoggedIn?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  requiresAuth?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  subMenu?: Resolver<Maybe<ResolversTypes['Menu']>, ParentType, ContextType, RequireFields<MenuItemSubMenuArgs, 'name'>>;
-  typeLink?: Resolver<Maybe<ResolversTypes['MenuTypeLink']>, ParentType, ContextType>;
+  requiresAuth?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  subMenu?: Resolver<
+    Maybe<ResolversTypes['Menu']>,
+    ParentType,
+    ContextType,
+    RequireFields<MenuItemSubMenuArgs, 'name'>
+  >;
+  typeLink?: Resolver<
+    Maybe<ResolversTypes['MenuTypeLink']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuTypeLinkResolvers<ContextType = any, ParentType extends ResolversParentTypes['MenuTypeLink'] = ResolversParentTypes['MenuTypeLink']> = {
-  modal?: Resolver<Maybe<ResolversTypes['MenuTypeLinkModal']>, ParentType, ContextType>;
-  route?: Resolver<Maybe<ResolversTypes['MenuTypeLinkRoute']>, ParentType, ContextType>;
+export type MenuTypeLinkResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MenuTypeLink'] = ResolversParentTypes['MenuTypeLink']
+> = {
+  modal?: Resolver<
+    Maybe<ResolversTypes['MenuTypeLinkModal']>,
+    ParentType,
+    ContextType
+  >;
+  route?: Resolver<
+    Maybe<ResolversTypes['MenuTypeLinkRoute']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuTypeLinkModalResolvers<ContextType = any, ParentType extends ResolversParentTypes['MenuTypeLinkModal'] = ResolversParentTypes['MenuTypeLinkModal']> = {
-  askForCloseConfirmation?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  formQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  neededPermission?: Resolver<Maybe<ResolversTypes['Permission']>, ParentType, ContextType>;
+export type MenuTypeLinkModalResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MenuTypeLinkModal'] = ResolversParentTypes['MenuTypeLinkModal']
+> = {
+  askForCloseConfirmation?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
+  formQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  neededPermission?: Resolver<
+    Maybe<ResolversTypes['Permission']>,
+    ParentType,
+    ContextType
+  >;
   typeModal?: Resolver<ResolversTypes['TypeModals'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuTypeLinkRouteResolvers<ContextType = any, ParentType extends ResolversParentTypes['MenuTypeLinkRoute'] = ResolversParentTypes['MenuTypeLinkRoute']> = {
+export type MenuTypeLinkRouteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MenuTypeLinkRoute'] = ResolversParentTypes['MenuTypeLinkRoute']
+> = {
   destination?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MenuWrapperResolvers<ContextType = any, ParentType extends ResolversParentTypes['MenuWrapper'] = ResolversParentTypes['MenuWrapper']> = {
+export type MenuWrapperResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MenuWrapper'] = ResolversParentTypes['MenuWrapper']
+> = {
   menu?: Resolver<ResolversTypes['Menu'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MetadataResolvers<ContextType = any, ParentType extends ResolversParentTypes['Metadata'] = ResolversParentTypes['Metadata']> = {
-  immutable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+export type MetadataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Metadata'] = ResolversParentTypes['Metadata']
+> = {
+  immutable?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lang?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  unit?: Resolver<Maybe<ResolversTypes['Unit']>, ParentType, ContextType, Partial<MetadataUnitArgs>>;
+  unit?: Resolver<
+    Maybe<ResolversTypes['Unit']>,
+    ParentType,
+    ContextType,
+    Partial<MetadataUnitArgs>
+  >;
   value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MetadataAndRelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['MetadataAndRelation'] = ResolversParentTypes['MetadataAndRelation']> = {
-  __resolveType: TypeResolveFn<'Metadata' | 'MetadataRelation', ParentType, ContextType>;
+export type MetadataAndRelationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MetadataAndRelation'] = ResolversParentTypes['MetadataAndRelation']
+> = {
+  __resolveType: TypeResolveFn<
+    'Metadata' | 'MetadataRelation',
+    ParentType,
+    ContextType
+  >;
 };
 
-export type MetadataFieldResolvers<ContextType = any, ParentType extends ResolversParentTypes['MetadataField'] = ResolversParentTypes['MetadataField']> = {
+export type MetadataFieldResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MetadataField'] = ResolversParentTypes['MetadataField']
+> = {
   active?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  config_key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  config_key?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  options?: Resolver<Maybe<Array<Maybe<ResolversTypes['MetadataFieldOption']>>>, ParentType, ContextType>;
+  options?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['MetadataFieldOption']>>>,
+    ParentType,
+    ContextType
+  >;
   order?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['InputFieldTypes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MetadataFieldOptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MetadataFieldOption'] = ResolversParentTypes['MetadataFieldOption']> = {
+export type MetadataFieldOptionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MetadataFieldOption'] = ResolversParentTypes['MetadataFieldOption']
+> = {
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MetadataRelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['MetadataRelation'] = ResolversParentTypes['MetadataRelation']> = {
+export type MetadataRelationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MetadataRelation'] = ResolversParentTypes['MetadataRelation']
+> = {
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  linkedEntity?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType>;
-  metadataOnRelation?: Resolver<Maybe<Array<Maybe<ResolversTypes['KeyAndValue']>>>, ParentType, ContextType>;
+  linkedEntity?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType
+  >;
+  metadataOnRelation?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['KeyAndValue']>>>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  CreateEntity?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType, RequireFields<MutationCreateEntityArgs, 'entity'>>;
-  bulkAddRelations?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationBulkAddRelationsArgs, 'entityIds' | 'relationEntityId' | 'relationType'>>;
-  bulkDeleteEntities?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationBulkDeleteEntitiesArgs, 'ids' | 'path'>>;
-  deleteData?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteDataArgs, 'deleteMediafiles' | 'id' | 'path'>>;
-  generateTranscode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationGenerateTranscodeArgs, 'mediafileIds' | 'transcodeType'>>;
-  getAssetsRelationedWithMediafFile?: Resolver<Maybe<Array<Maybe<ResolversTypes['Asset']>>>, ParentType, ContextType, RequireFields<MutationGetAssetsRelationedWithMediafFileArgs, 'mediaFileId'>>;
-  getMediaRelationedWithMediafFile?: Resolver<Maybe<Array<Maybe<ResolversTypes['Media']>>>, ParentType, ContextType, RequireFields<MutationGetMediaRelationedWithMediafFileArgs, 'mediaFileId'>>;
-  linkMediafileToEntity?: Resolver<Maybe<ResolversTypes['MediaFile']>, ParentType, ContextType, RequireFields<MutationLinkMediafileToEntityArgs, 'entityId' | 'mediaFileInput'>>;
-  mutateEntityValues?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType, RequireFields<MutationMutateEntityValuesArgs, 'collection' | 'formInput' | 'id'>>;
-  patchMediaFileMetadata?: Resolver<Maybe<ResolversTypes['MediaFile']>, ParentType, ContextType, RequireFields<MutationPatchMediaFileMetadataArgs, 'MediaFileMetadata' | 'MediafileId'>>;
-  postStartImport?: Resolver<Maybe<ResolversTypes['ImportReturn']>, ParentType, ContextType, RequireFields<MutationPostStartImportArgs, 'folder'>>;
-  setPrimaryMediafile?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<MutationSetPrimaryMediafileArgs, 'entityId' | 'mediafileId'>>;
-  setPrimaryThumbnail?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<MutationSetPrimaryThumbnailArgs, 'entityId' | 'mediafileId'>>;
-  updateMetadataWithCsv?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationUpdateMetadataWithCsvArgs, 'csv' | 'entityType'>>;
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = {
+  CreateEntity?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateEntityArgs, 'entity'>
+  >;
+  bulkAddRelations?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationBulkAddRelationsArgs,
+      'entityIds' | 'relationEntityId' | 'relationType'
+    >
+  >;
+  bulkDeleteEntities?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationBulkDeleteEntitiesArgs, 'ids' | 'path'>
+  >;
+  deleteData?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteDataArgs, 'deleteMediafiles' | 'id' | 'path'>
+  >;
+  generateTranscode?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationGenerateTranscodeArgs,
+      'mediafileIds' | 'transcodeType'
+    >
+  >;
+  getAssetsRelationedWithMediafFile?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Asset']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGetAssetsRelationedWithMediafFileArgs, 'mediaFileId'>
+  >;
+  getMediaRelationedWithMediafFile?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Media']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGetMediaRelationedWithMediafFileArgs, 'mediaFileId'>
+  >;
+  linkMediafileToEntity?: Resolver<
+    Maybe<ResolversTypes['MediaFile']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationLinkMediafileToEntityArgs,
+      'entityId' | 'mediaFileInput'
+    >
+  >;
+  mutateEntityValues?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationMutateEntityValuesArgs,
+      'collection' | 'formInput' | 'id'
+    >
+  >;
+  patchMediaFileMetadata?: Resolver<
+    Maybe<ResolversTypes['MediaFile']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationPatchMediaFileMetadataArgs,
+      'MediaFileMetadata' | 'MediafileId'
+    >
+  >;
+  postStartImport?: Resolver<
+    Maybe<ResolversTypes['ImportReturn']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationPostStartImportArgs, 'folder'>
+  >;
+  setPrimaryMediafile?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetPrimaryMediafileArgs, 'entityId' | 'mediafileId'>
+  >;
+  setPrimaryThumbnail?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetPrimaryThumbnailArgs, 'entityId' | 'mediafileId'>
+  >;
+  updateMetadataWithCsv?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateMetadataWithCsvArgs, 'csv' | 'entityType'>
+  >;
 };
 
-export type PaginationLimitOptionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['PaginationLimitOptions'] = ResolversParentTypes['PaginationLimitOptions']> = {
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<PaginationLimitOptionsOptionsArgs, 'input'>>;
+export type PaginationLimitOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PaginationLimitOptions'] = ResolversParentTypes['PaginationLimitOptions']
+> = {
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<PaginationLimitOptionsOptionsArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelInfo'] = ResolversParentTypes['PanelInfo']> = {
-  inputField?: Resolver<ResolversTypes['InputField'], ParentType, ContextType, RequireFields<PanelInfoInputFieldArgs, 'type'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelInfoLabelArgs, 'input'>>;
-  value?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelInfoValueArgs, 'input'>>;
+export type PanelInfoResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelInfo'] = ResolversParentTypes['PanelInfo']
+> = {
+  inputField?: Resolver<
+    ResolversTypes['InputField'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelInfoInputFieldArgs, 'type'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelInfoLabelArgs, 'input'>
+  >;
+  value?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelInfoValueArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelLinkResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelLink'] = ResolversParentTypes['PanelLink']> = {
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelLinkKeyArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelLinkLabelArgs, 'input'>>;
-  linkIcon?: Resolver<Maybe<ResolversTypes['DamsIcons']>, ParentType, ContextType, RequireFields<PanelLinkLinkIconArgs, 'input'>>;
-  linkText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelLinkLinkTextArgs, 'input'>>;
+export type PanelLinkResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelLink'] = ResolversParentTypes['PanelLink']
+> = {
+  key?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelLinkKeyArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelLinkLabelArgs, 'input'>
+  >;
+  linkIcon?: Resolver<
+    Maybe<ResolversTypes['DamsIcons']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelLinkLinkIconArgs, 'input'>
+  >;
+  linkText?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelLinkLinkTextArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelMetaDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelMetaData'] = ResolversParentTypes['PanelMetaData']> = {
-  can?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, Partial<PanelMetaDataCanArgs>>;
-  copyToClipboard?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PanelMetaDataCopyToClipboardArgs>>;
-  customValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PanelMetaDataCustomValueArgs>>;
-  hiddenField?: Resolver<Maybe<ResolversTypes['HiddenField']>, ParentType, ContextType, RequireFields<PanelMetaDataHiddenFieldArgs, 'input'>>;
-  inputField?: Resolver<ResolversTypes['InputField'], ParentType, ContextType, RequireFields<PanelMetaDataInputFieldArgs, 'type'>>;
-  isMultilingual?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PanelMetaDataIsMultilingualArgs>>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelMetaDataKeyArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelMetaDataLabelArgs, 'input'>>;
-  lineClamp?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<PanelMetaDataLineClampArgs>>;
-  linkText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelMetaDataLinkTextArgs, 'input'>>;
-  showOnlyInEditMode?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PanelMetaDataShowOnlyInEditModeArgs>>;
-  tooltip?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelMetaDataTooltipArgs, 'input'>>;
-  unit?: Resolver<ResolversTypes['Unit'], ParentType, ContextType, RequireFields<PanelMetaDataUnitArgs, 'input'>>;
-  valueTooltip?: Resolver<Maybe<ResolversTypes['PanelMetadataValueTooltip']>, ParentType, ContextType, Partial<PanelMetaDataValueTooltipArgs>>;
-  valueTranslationKey?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PanelMetaDataValueTranslationKeyArgs>>;
+export type PanelMetaDataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelMetaData'] = ResolversParentTypes['PanelMetaData']
+> = {
+  can?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataCanArgs>
+  >;
+  copyToClipboard?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataCopyToClipboardArgs>
+  >;
+  customValue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataCustomValueArgs>
+  >;
+  hiddenField?: Resolver<
+    Maybe<ResolversTypes['HiddenField']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataHiddenFieldArgs, 'input'>
+  >;
+  inputField?: Resolver<
+    ResolversTypes['InputField'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataInputFieldArgs, 'type'>
+  >;
+  isMultilingual?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataIsMultilingualArgs>
+  >;
+  key?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataKeyArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataLabelArgs, 'input'>
+  >;
+  lineClamp?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataLineClampArgs>
+  >;
+  linkText?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataLinkTextArgs, 'input'>
+  >;
+  showOnlyInEditMode?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataShowOnlyInEditModeArgs>
+  >;
+  tooltip?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataTooltipArgs, 'input'>
+  >;
+  unit?: Resolver<
+    ResolversTypes['Unit'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelMetaDataUnitArgs, 'input'>
+  >;
+  valueTooltip?: Resolver<
+    Maybe<ResolversTypes['PanelMetadataValueTooltip']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataValueTooltipArgs>
+  >;
+  valueTranslationKey?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PanelMetaDataValueTranslationKeyArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelMetadataValueTooltipResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelMetadataValueTooltip'] = ResolversParentTypes['PanelMetadataValueTooltip']> = {
-  type?: Resolver<ResolversTypes['PanelMetadataValueTooltipTypes'], ParentType, ContextType>;
+export type PanelMetadataValueTooltipResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelMetadataValueTooltip'] = ResolversParentTypes['PanelMetadataValueTooltip']
+> = {
+  type?: Resolver<
+    ResolversTypes['PanelMetadataValueTooltipTypes'],
+    ParentType,
+    ContextType
+  >;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelRelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelRelation'] = ResolversParentTypes['PanelRelation']> = {
+export type PanelRelationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelRelation'] = ResolversParentTypes['PanelRelation']
+> = {
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelRelationMetaDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelRelationMetaData'] = ResolversParentTypes['PanelRelationMetaData']> = {
-  inputField?: Resolver<ResolversTypes['InputField'], ParentType, ContextType, RequireFields<PanelRelationMetaDataInputFieldArgs, 'type'>>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelRelationMetaDataKeyArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelRelationMetaDataLabelArgs, 'input'>>;
-  linkText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelRelationMetaDataLinkTextArgs, 'input'>>;
-  showOnlyInEditMode?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PanelRelationMetaDataShowOnlyInEditModeArgs>>;
-  unit?: Resolver<ResolversTypes['Unit'], ParentType, ContextType, RequireFields<PanelRelationMetaDataUnitArgs, 'input'>>;
+export type PanelRelationMetaDataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelRelationMetaData'] = ResolversParentTypes['PanelRelationMetaData']
+> = {
+  inputField?: Resolver<
+    ResolversTypes['InputField'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationMetaDataInputFieldArgs, 'type'>
+  >;
+  key?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationMetaDataKeyArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationMetaDataLabelArgs, 'input'>
+  >;
+  linkText?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationMetaDataLinkTextArgs, 'input'>
+  >;
+  showOnlyInEditMode?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PanelRelationMetaDataShowOnlyInEditModeArgs>
+  >;
+  unit?: Resolver<
+    ResolversTypes['Unit'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationMetaDataUnitArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelRelationRootDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelRelationRootData'] = ResolversParentTypes['PanelRelationRootData']> = {
-  inputField?: Resolver<ResolversTypes['InputField'], ParentType, ContextType, RequireFields<PanelRelationRootDataInputFieldArgs, 'type'>>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelRelationRootDataKeyArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<PanelRelationRootDataLabelArgs, 'input'>>;
-  linkText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelRelationRootDataLinkTextArgs, 'input'>>;
-  showOnlyInEditMode?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PanelRelationRootDataShowOnlyInEditModeArgs>>;
-  unit?: Resolver<ResolversTypes['Unit'], ParentType, ContextType, RequireFields<PanelRelationRootDataUnitArgs, 'input'>>;
+export type PanelRelationRootDataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelRelationRootData'] = ResolversParentTypes['PanelRelationRootData']
+> = {
+  inputField?: Resolver<
+    ResolversTypes['InputField'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationRootDataInputFieldArgs, 'type'>
+  >;
+  key?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationRootDataKeyArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationRootDataLabelArgs, 'input'>
+  >;
+  linkText?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationRootDataLinkTextArgs, 'input'>
+  >;
+  showOnlyInEditMode?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PanelRelationRootDataShowOnlyInEditModeArgs>
+  >;
+  unit?: Resolver<
+    ResolversTypes['Unit'],
+    ParentType,
+    ContextType,
+    RequireFields<PanelRelationRootDataUnitArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PanelThumbnailResolvers<ContextType = any, ParentType extends ResolversParentTypes['PanelThumbnail'] = ResolversParentTypes['PanelThumbnail']> = {
-  customUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelThumbnailCustomUrlArgs, 'input'>>;
-  filename?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PanelThumbnailFilenameArgs>>;
-  height?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<PanelThumbnailHeightArgs, 'input'>>;
-  key?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<PanelThumbnailKeyArgs, 'input'>>;
-  width?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<PanelThumbnailWidthArgs, 'input'>>;
+export type PanelThumbnailResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PanelThumbnail'] = ResolversParentTypes['PanelThumbnail']
+> = {
+  customUrl?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelThumbnailCustomUrlArgs, 'input'>
+  >;
+  filename?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PanelThumbnailFilenameArgs>
+  >;
+  height?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelThumbnailHeightArgs, 'input'>
+  >;
+  key?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelThumbnailKeyArgs, 'input'>
+  >;
+  width?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType,
+    RequireFields<PanelThumbnailWidthArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PermissionMappingResolvers<ContextType = any, ParentType extends ResolversParentTypes['PermissionMapping'] = ResolversParentTypes['PermissionMapping']> = {
+export type PermissionMappingResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PermissionMapping'] = ResolversParentTypes['PermissionMapping']
+> = {
   hasPermission?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   permission?: Resolver<ResolversTypes['Permission'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PermissionRequestInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PermissionRequestInfo'] = ResolversParentTypes['PermissionRequestInfo']> = {
+export type PermissionRequestInfoResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PermissionRequestInfo'] = ResolversParentTypes['PermissionRequestInfo']
+> = {
   body?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   crud?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   datasource?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -5591,500 +7875,1706 @@ export type PermissionRequestInfoResolvers<ContextType = any, ParentType extends
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PermissionResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['PermissionResult'] = ResolversParentTypes['PermissionResult']> = {
+export type PermissionResultResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PermissionResult'] = ResolversParentTypes['PermissionResult']
+> = {
   hasPermission?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   permission?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PillFormatterResolvers<ContextType = any, ParentType extends ResolversParentTypes['PillFormatter'] = ResolversParentTypes['PillFormatter']> = {
+export type PillFormatterResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PillFormatter'] = ResolversParentTypes['PillFormatter']
+> = {
   background?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PointResolvers<ContextType = any, ParentType extends ResolversParentTypes['Point'] = ResolversParentTypes['Point']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type PointResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Point'] = ResolversParentTypes['Point']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PreviewComponentResolvers<ContextType = any, ParentType extends ResolversParentTypes['PreviewComponent'] = ResolversParentTypes['PreviewComponent']> = {
-  listItemsCoverage?: Resolver<ResolversTypes['ListItemCoverageTypes'], ParentType, ContextType, RequireFields<PreviewComponentListItemsCoverageArgs, 'input'>>;
-  metadataPreviewQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PreviewComponentMetadataPreviewQueryArgs>>;
-  openByDefault?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PreviewComponentOpenByDefaultArgs>>;
-  previewQuery?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PreviewComponentPreviewQueryArgs>>;
-  showCurrentPreviewFlow?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<PreviewComponentShowCurrentPreviewFlowArgs>>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<PreviewComponentTitleArgs>>;
-  type?: Resolver<ResolversTypes['PreviewTypes'], ParentType, ContextType, RequireFields<PreviewComponentTypeArgs, 'input'>>;
+export type PreviewComponentResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['PreviewComponent'] = ResolversParentTypes['PreviewComponent']
+> = {
+  listItemsCoverage?: Resolver<
+    ResolversTypes['ListItemCoverageTypes'],
+    ParentType,
+    ContextType,
+    RequireFields<PreviewComponentListItemsCoverageArgs, 'input'>
+  >;
+  metadataPreviewQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PreviewComponentMetadataPreviewQueryArgs>
+  >;
+  openByDefault?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PreviewComponentOpenByDefaultArgs>
+  >;
+  previewQuery?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PreviewComponentPreviewQueryArgs>
+  >;
+  showCurrentPreviewFlow?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<PreviewComponentShowCurrentPreviewFlowArgs>
+  >;
+  title?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<PreviewComponentTitleArgs>
+  >;
+  type?: Resolver<
+    ResolversTypes['PreviewTypes'],
+    ParentType,
+    ContextType,
+    RequireFields<PreviewComponentTypeArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  AdvancedPermission?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<QueryAdvancedPermissionArgs, 'permission'>>;
-  AdvancedPermissions?: Resolver<Array<ResolversTypes['PermissionResult']>, ParentType, ContextType, RequireFields<QueryAdvancedPermissionsArgs, 'permissions'>>;
-  BulkOperationCsvExportKeys?: Resolver<ResolversTypes['BulkOperationCsvExportKeys'], ParentType, ContextType, RequireFields<QueryBulkOperationCsvExportKeysArgs, 'entityType'>>;
-  BulkOperations?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryBulkOperationsArgs, 'entityType'>>;
-  BulkOperationsRelationForm?: Resolver<ResolversTypes['WindowElement'], ParentType, ContextType>;
-  CustomBulkOperations?: Resolver<ResolversTypes['Entity'], ParentType, ContextType>;
-  CustomFormattersSettings?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
-  Directories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Directory']>>>, ParentType, ContextType, Partial<QueryDirectoriesArgs>>;
-  DownloadItemsInZip?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType, RequireFields<QueryDownloadItemsInZipArgs, 'basicCsv' | 'downloadEntity' | 'entities' | 'includeAssetCsv' | 'mediafiles'>>;
-  DropzoneEntityToCreate?: Resolver<ResolversTypes['DropzoneEntityToCreate'], ParentType, ContextType>;
-  Entities?: Resolver<Maybe<ResolversTypes['EntitiesResults']>, ParentType, ContextType, RequireFields<QueryEntitiesArgs, 'advancedFilterInputs' | 'searchValue'>>;
-  EntitiesByAdvancedSearch?: Resolver<ResolversTypes['EntitiesResults'], ParentType, ContextType, RequireFields<QueryEntitiesByAdvancedSearchArgs, 'facet_by' | 'filter_by' | 'q' | 'query_by' | 'query_by_weights' | 'sort_by'>>;
-  Entity?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType, RequireFields<QueryEntityArgs, 'id' | 'type'>>;
-  EntityTypeFilters?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryEntityTypeFiltersArgs, 'type'>>;
-  EntityTypeSortOptions?: Resolver<ResolversTypes['Entity'], ParentType, ContextType, RequireFields<QueryEntityTypeSortOptionsArgs, 'entityType'>>;
-  FetchMediafilesOfEntity?: Resolver<Array<Maybe<ResolversTypes['MediaFileEntity']>>, ParentType, ContextType, RequireFields<QueryFetchMediafilesOfEntityArgs, 'entityIds'>>;
-  FilterMatcherMapping?: Resolver<ResolversTypes['FilterMatcherMap'], ParentType, ContextType>;
-  FilterOptions?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<QueryFilterOptionsArgs, 'entityType' | 'input' | 'limit'>>;
-  GenerateOcrWithAsset?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<QueryGenerateOcrWithAssetArgs, 'assetId' | 'language' | 'operation'>>;
-  GeoFilterForMap?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
+export type QueryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = {
+  AdvancedPermission?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryAdvancedPermissionArgs, 'permission'>
+  >;
+  AdvancedPermissions?: Resolver<
+    Array<ResolversTypes['PermissionResult']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryAdvancedPermissionsArgs, 'permissions'>
+  >;
+  BulkOperationCsvExportKeys?: Resolver<
+    ResolversTypes['BulkOperationCsvExportKeys'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryBulkOperationCsvExportKeysArgs, 'entityType'>
+  >;
+  BulkOperations?: Resolver<
+    ResolversTypes['Entity'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryBulkOperationsArgs, 'entityType'>
+  >;
+  BulkOperationsRelationForm?: Resolver<
+    ResolversTypes['WindowElement'],
+    ParentType,
+    ContextType
+  >;
+  CustomBulkOperations?: Resolver<
+    ResolversTypes['Entity'],
+    ParentType,
+    ContextType
+  >;
+  CustomFormattersSettings?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType
+  >;
+  Directories?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Directory']>>>,
+    ParentType,
+    ContextType,
+    Partial<QueryDirectoriesArgs>
+  >;
+  DownloadItemsInZip?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryDownloadItemsInZipArgs,
+      | 'basicCsv'
+      | 'downloadEntity'
+      | 'entities'
+      | 'includeAssetCsv'
+      | 'mediafiles'
+    >
+  >;
+  DropzoneEntityToCreate?: Resolver<
+    ResolversTypes['DropzoneEntityToCreate'],
+    ParentType,
+    ContextType
+  >;
+  Entities?: Resolver<
+    Maybe<ResolversTypes['EntitiesResults']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryEntitiesArgs, 'advancedFilterInputs' | 'searchValue'>
+  >;
+  EntitiesByAdvancedSearch?: Resolver<
+    ResolversTypes['EntitiesResults'],
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryEntitiesByAdvancedSearchArgs,
+      | 'facet_by'
+      | 'filter_by'
+      | 'q'
+      | 'query_by'
+      | 'query_by_weights'
+      | 'sort_by'
+    >
+  >;
+  Entity?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryEntityArgs, 'id' | 'type'>
+  >;
+  EntityTypeFilters?: Resolver<
+    ResolversTypes['Entity'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryEntityTypeFiltersArgs, 'type'>
+  >;
+  EntityTypeSortOptions?: Resolver<
+    ResolversTypes['Entity'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryEntityTypeSortOptionsArgs, 'entityType'>
+  >;
+  FetchMediafilesOfEntity?: Resolver<
+    Array<Maybe<ResolversTypes['MediaFileEntity']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFetchMediafilesOfEntityArgs, 'entityIds'>
+  >;
+  FilterMatcherMapping?: Resolver<
+    ResolversTypes['FilterMatcherMap'],
+    ParentType,
+    ContextType
+  >;
+  FilterOptions?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFilterOptionsArgs, 'entityType' | 'input' | 'limit'>
+  >;
+  GenerateOcrWithAsset?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryGenerateOcrWithAssetArgs,
+      'assetId' | 'language' | 'operation'
+    >
+  >;
+  GeoFilterForMap?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
   GetDynamicForm?: Resolver<ResolversTypes['Form'], ParentType, ContextType>;
-  GetEntityDetailContextMenuActions?: Resolver<ResolversTypes['ContextMenuActions'], ParentType, ContextType>;
-  GraphData?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<QueryGraphDataArgs, 'graph' | 'id'>>;
-  Job?: Resolver<Maybe<ResolversTypes['Job']>, ParentType, ContextType, RequireFields<QueryJobArgs, 'failed' | 'id'>>;
-  Jobs?: Resolver<Maybe<ResolversTypes['JobsResults']>, ParentType, ContextType, RequireFields<QueryJobsArgs, 'failed'>>;
-  Menu?: Resolver<Maybe<ResolversTypes['MenuWrapper']>, ParentType, ContextType, RequireFields<QueryMenuArgs, 'name'>>;
-  PaginationLimitOptions?: Resolver<ResolversTypes['PaginationLimitOptions'], ParentType, ContextType>;
-  PermissionMapping?: Resolver<ResolversTypes['JSON'], ParentType, ContextType, RequireFields<QueryPermissionMappingArgs, 'entities'>>;
-  PermissionMappingCreate?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryPermissionMappingCreateArgs, 'entityType'>>;
-  PermissionMappingEntityDetail?: Resolver<Array<ResolversTypes['PermissionMapping']>, ParentType, ContextType, RequireFields<QueryPermissionMappingEntityDetailArgs, 'entityType' | 'id'>>;
-  PermissionMappingPerEntityType?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryPermissionMappingPerEntityTypeArgs, 'type'>>;
-  PreviewComponents?: Resolver<Maybe<ResolversTypes['Entity']>, ParentType, ContextType, RequireFields<QueryPreviewComponentsArgs, 'entityType'>>;
-  PreviewElement?: Resolver<Maybe<ResolversTypes['ColumnList']>, ParentType, ContextType>;
-  Tenants?: Resolver<Maybe<ResolversTypes['EntitiesResults']>, ParentType, ContextType>;
+  GetEntityDetailContextMenuActions?: Resolver<
+    ResolversTypes['ContextMenuActions'],
+    ParentType,
+    ContextType
+  >;
+  GraphData?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryGraphDataArgs, 'graph' | 'id'>
+  >;
+  Job?: Resolver<
+    Maybe<ResolversTypes['Job']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryJobArgs, 'failed' | 'id'>
+  >;
+  Jobs?: Resolver<
+    Maybe<ResolversTypes['JobsResults']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryJobsArgs, 'failed'>
+  >;
+  Menu?: Resolver<
+    Maybe<ResolversTypes['MenuWrapper']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMenuArgs, 'name'>
+  >;
+  PaginationLimitOptions?: Resolver<
+    ResolversTypes['PaginationLimitOptions'],
+    ParentType,
+    ContextType
+  >;
+  PermissionMapping?: Resolver<
+    ResolversTypes['JSON'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryPermissionMappingArgs, 'entities'>
+  >;
+  PermissionMappingCreate?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryPermissionMappingCreateArgs, 'entityType'>
+  >;
+  PermissionMappingEntityDetail?: Resolver<
+    Array<ResolversTypes['PermissionMapping']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPermissionMappingEntityDetailArgs, 'entityType' | 'id'>
+  >;
+  PermissionMappingPerEntityType?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryPermissionMappingPerEntityTypeArgs, 'type'>
+  >;
+  PreviewComponents?: Resolver<
+    Maybe<ResolversTypes['Entity']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryPreviewComponentsArgs, 'entityType'>
+  >;
+  PreviewElement?: Resolver<
+    Maybe<ResolversTypes['ColumnList']>,
+    ParentType,
+    ContextType
+  >;
+  Tenants?: Resolver<
+    Maybe<ResolversTypes['EntitiesResults']>,
+    ParentType,
+    ContextType
+  >;
   User?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  UserPermissions?: Resolver<Maybe<ResolversTypes['userPermissions']>, ParentType, ContextType>;
-  getMediafile?: Resolver<Maybe<ResolversTypes['MediaFile']>, ParentType, ContextType, Partial<QueryGetMediafileArgs>>;
+  UserPermissions?: Resolver<
+    Maybe<ResolversTypes['userPermissions']>,
+    ParentType,
+    ContextType
+  >;
+  getMediafile?: Resolver<
+    Maybe<ResolversTypes['MediaFile']>,
+    ParentType,
+    ContextType,
+    Partial<QueryGetMediafileArgs>
+  >;
 };
 
-export type RegexpMatchFormatterResolvers<ContextType = any, ParentType extends ResolversParentTypes['RegexpMatchFormatter'] = ResolversParentTypes['RegexpMatchFormatter']> = {
+export type RegexpMatchFormatterResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RegexpMatchFormatter'] = ResolversParentTypes['RegexpMatchFormatter']
+> = {
   value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RegionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Region'] = ResolversParentTypes['Region']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type RegionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Region'] = ResolversParentTypes['Region']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RelationFieldResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationField'] = ResolversParentTypes['RelationField']> = {
-  acceptedEntityTypes?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
-  disabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+export type RelationFieldResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RelationField'] = ResolversParentTypes['RelationField']
+> = {
+  acceptedEntityTypes?: Resolver<
+    Array<Maybe<ResolversTypes['String']>>,
+    ParentType,
+    ContextType
+  >;
+  disabled?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  metadata?: Resolver<Maybe<Array<Maybe<ResolversTypes['MetadataField']>>>, ParentType, ContextType>;
+  metadata?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['MetadataField']>>>,
+    ParentType,
+    ContextType
+  >;
   relationType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  viewMode?: Resolver<Maybe<ResolversTypes['RelationFieldViewMode']>, ParentType, ContextType>;
+  viewMode?: Resolver<
+    Maybe<ResolversTypes['RelationFieldViewMode']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RequiredOneOfMetadataValidationResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequiredOneOfMetadataValidation'] = ResolversParentTypes['RequiredOneOfMetadataValidation']> = {
+export type RequiredOneOfMetadataValidationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RequiredOneOfMetadataValidation'] = ResolversParentTypes['RequiredOneOfMetadataValidation']
+> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  includedMetadataFields?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  includedMetadataFields?: Resolver<
+    Array<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RequiredOneOfRelationValidationResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequiredOneOfRelationValidation'] = ResolversParentTypes['RequiredOneOfRelationValidation']> = {
+export type RequiredOneOfRelationValidationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RequiredOneOfRelationValidation'] = ResolversParentTypes['RequiredOneOfRelationValidation']
+> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  relationTypes?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  relationTypes?: Resolver<
+    Array<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RequiredRelationValidationResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequiredRelationValidation'] = ResolversParentTypes['RequiredRelationValidation']> = {
+export type RequiredRelationValidationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RequiredRelationValidation'] = ResolversParentTypes['RequiredRelationValidation']
+> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   exact?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   relationType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RouteMatchingResolvers<ContextType = any, ParentType extends ResolversParentTypes['RouteMatching'] = ResolversParentTypes['RouteMatching']> = {
-  entityType?: Resolver<Maybe<ResolversTypes['Entitytyping']>, ParentType, ContextType>;
-  routeName?: Resolver<Maybe<ResolversTypes['RouteNames']>, ParentType, ContextType>;
+export type RouteMatchingResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RouteMatching'] = ResolversParentTypes['RouteMatching']
+> = {
+  entityType?: Resolver<
+    Maybe<ResolversTypes['Entitytyping']>,
+    ParentType,
+    ContextType
+  >;
+  routeName?: Resolver<
+    Maybe<ResolversTypes['RouteNames']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SavedSearchResolvers<ContextType = any, ParentType extends ResolversParentTypes['SavedSearch'] = ResolversParentTypes['SavedSearch']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type SavedSearchResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SavedSearch'] = ResolversParentTypes['SavedSearch']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ScriptResolvers<ContextType = any, ParentType extends ResolversParentTypes['Script'] = ResolversParentTypes['Script']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type ScriptResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Script'] = ResolversParentTypes['Script']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ShareLinkResolvers<ContextType = any, ParentType extends ResolversParentTypes['ShareLink'] = ResolversParentTypes['ShareLink']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type ShareLinkResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ShareLink'] = ResolversParentTypes['ShareLink']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SingleMediaFileElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleMediaFileElement'] = ResolversParentTypes['SingleMediaFileElement']> = {
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<SingleMediaFileElementIsCollapsedArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<SingleMediaFileElementLabelArgs>>;
+export type SingleMediaFileElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SingleMediaFileElement'] = ResolversParentTypes['SingleMediaFileElement']
+> = {
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<SingleMediaFileElementIsCollapsedArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<SingleMediaFileElementLabelArgs>
+  >;
   metaData?: Resolver<ResolversTypes['PanelMetaData'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<SingleMediaFileElementTypeArgs>>;
+  type?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<SingleMediaFileElementTypeArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SiteResolvers<ContextType = any, ParentType extends ResolversParentTypes['Site'] = ResolversParentTypes['Site']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type SiteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Site'] = ResolversParentTypes['Site']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SiteFunctionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SiteFunction'] = ResolversParentTypes['SiteFunction']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type SiteFunctionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SiteFunction'] = ResolversParentTypes['SiteFunction']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SiteTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['SiteType'] = ResolversParentTypes['SiteType']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type SiteTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SiteType'] = ResolversParentTypes['SiteType']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SortOptionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['SortOptions'] = ResolversParentTypes['SortOptions']> = {
-  isAsc?: Resolver<Maybe<ResolversTypes['SortingDirection']>, ParentType, ContextType, RequireFields<SortOptionsIsAscArgs, 'input'>>;
-  options?: Resolver<Array<ResolversTypes['DropdownOption']>, ParentType, ContextType, RequireFields<SortOptionsOptionsArgs, 'input'>>;
+export type SortOptionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SortOptions'] = ResolversParentTypes['SortOptions']
+> = {
+  isAsc?: Resolver<
+    Maybe<ResolversTypes['SortingDirection']>,
+    ParentType,
+    ContextType,
+    RequireFields<SortOptionsIsAscArgs, 'input'>
+  >;
+  options?: Resolver<
+    Array<ResolversTypes['DropdownOption']>,
+    ParentType,
+    ContextType,
+    RequireFields<SortOptionsOptionsArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface StringOrIntScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['StringOrInt'], any> {
+export interface StringOrIntScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['StringOrInt'], any> {
   name: 'StringOrInt';
 }
 
-export type SubJobResultsResolvers<ContextType = any, ParentType extends ResolversParentTypes['SubJobResults'] = ResolversParentTypes['SubJobResults']> = {
+export type SubJobResultsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SubJobResults'] = ResolversParentTypes['SubJobResults']
+> = {
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  results?: Resolver<Maybe<Array<Maybe<ResolversTypes['Job']>>>, ParentType, ContextType>;
+  results?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Job']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SupportResolvers<ContextType = any, ParentType extends ResolversParentTypes['Support'] = ResolversParentTypes['Support']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type SupportResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Support'] = ResolversParentTypes['Support']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TagConfigurationByEntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['TagConfigurationByEntity'] = ResolversParentTypes['TagConfigurationByEntity']> = {
-  colorMetadataKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  configurationEntityRelationType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  configurationEntityType?: Resolver<ResolversTypes['Entitytyping'], ParentType, ContextType>;
-  metadataKeysToSetAsAttribute?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
-  secondaryAttributeToDetermineTagConfig?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type TagConfigurationByEntityResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['TagConfigurationByEntity'] = ResolversParentTypes['TagConfigurationByEntity']
+> = {
+  colorMetadataKey?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  configurationEntityRelationType?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  configurationEntityType?: Resolver<
+    ResolversTypes['Entitytyping'],
+    ParentType,
+    ContextType
+  >;
+  metadataKeysToSetAsAttribute?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
+  secondaryAttributeToDetermineTagConfig?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   tagMetadataKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TaggableEntityConfigurationResolvers<ContextType = any, ParentType extends ResolversParentTypes['TaggableEntityConfiguration'] = ResolversParentTypes['TaggableEntityConfiguration']> = {
-  createNewEntityFormQuery?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  metadataFilterForTagContent?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  metadataKeysToSetAsAttribute?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+export type TaggableEntityConfigurationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['TaggableEntityConfiguration'] = ResolversParentTypes['TaggableEntityConfiguration']
+> = {
+  createNewEntityFormQuery?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  metadataFilterForTagContent?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  metadataKeysToSetAsAttribute?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   relationType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  replaceCharacterFromTagSettings?: Resolver<Maybe<Array<Maybe<ResolversTypes['CharacterReplacementSettings']>>>, ParentType, ContextType>;
+  replaceCharacterFromTagSettings?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['CharacterReplacementSettings']>>>,
+    ParentType,
+    ContextType
+  >;
   tag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  tagConfigurationByEntity?: Resolver<Maybe<ResolversTypes['TagConfigurationByEntity']>, ParentType, ContextType>;
-  taggableEntityType?: Resolver<ResolversTypes['Entitytyping'], ParentType, ContextType>;
+  tagConfigurationByEntity?: Resolver<
+    Maybe<ResolversTypes['TagConfigurationByEntity']>,
+    ParentType,
+    ContextType
+  >;
+  taggableEntityType?: Resolver<
+    ResolversTypes['Entitytyping'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TaggingExtensionConfigurationResolvers<ContextType = any, ParentType extends ResolversParentTypes['TaggingExtensionConfiguration'] = ResolversParentTypes['TaggingExtensionConfiguration']> = {
-  customQuery?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<TaggingExtensionConfigurationCustomQueryArgs, 'input'>>;
-  taggableEntityConfiguration?: Resolver<Array<ResolversTypes['TaggableEntityConfiguration']>, ParentType, ContextType, RequireFields<TaggingExtensionConfigurationTaggableEntityConfigurationArgs, 'configuration'>>;
+export type TaggingExtensionConfigurationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['TaggingExtensionConfiguration'] = ResolversParentTypes['TaggingExtensionConfiguration']
+> = {
+  customQuery?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<TaggingExtensionConfigurationCustomQueryArgs, 'input'>
+  >;
+  taggableEntityConfiguration?: Resolver<
+    Array<ResolversTypes['TaggableEntityConfiguration']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      TaggingExtensionConfigurationTaggableEntityConfigurationArgs,
+      'configuration'
+    >
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TenantResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tenant'] = ResolversParentTypes['Tenant']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type TenantResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Tenant'] = ResolversParentTypes['Tenant']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TypologyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Typology'] = ResolversParentTypes['Typology']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type TypologyResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Typology'] = ResolversParentTypes['Typology']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UploadContainerResolvers<ContextType = any, ParentType extends ResolversParentTypes['UploadContainer'] = ResolversParentTypes['UploadContainer']> = {
-  uploadField?: Resolver<ResolversTypes['UploadField'], ParentType, ContextType>;
-  uploadFlow?: Resolver<ResolversTypes['UploadFlow'], ParentType, ContextType, RequireFields<UploadContainerUploadFlowArgs, 'input'>>;
-  uploadMetadata?: Resolver<Maybe<ResolversTypes['PanelMetaData']>, ParentType, ContextType>;
+export type UploadContainerResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['UploadContainer'] = ResolversParentTypes['UploadContainer']
+> = {
+  uploadField?: Resolver<
+    ResolversTypes['UploadField'],
+    ParentType,
+    ContextType
+  >;
+  uploadFlow?: Resolver<
+    ResolversTypes['UploadFlow'],
+    ParentType,
+    ContextType,
+    RequireFields<UploadContainerUploadFlowArgs, 'input'>
+  >;
+  uploadMetadata?: Resolver<
+    Maybe<ResolversTypes['PanelMetaData']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UploadFieldResolvers<ContextType = any, ParentType extends ResolversParentTypes['UploadField'] = ResolversParentTypes['UploadField']> = {
-  dryRunUpload?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<UploadFieldDryRunUploadArgs>>;
-  extraMediafileType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<UploadFieldExtraMediafileTypeArgs>>;
-  infoLabelUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<UploadFieldInfoLabelUrlArgs>>;
-  inputField?: Resolver<ResolversTypes['InputField'], ParentType, ContextType, RequireFields<UploadFieldInputFieldArgs, 'type'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<UploadFieldLabelArgs, 'input'>>;
-  templateCsvs?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, RequireFields<UploadFieldTemplateCsvsArgs, 'input'>>;
-  uploadFieldSize?: Resolver<ResolversTypes['UploadFieldSize'], ParentType, ContextType, Partial<UploadFieldUploadFieldSizeArgs>>;
-  uploadFieldType?: Resolver<ResolversTypes['UploadFieldType'], ParentType, ContextType, RequireFields<UploadFieldUploadFieldTypeArgs, 'input'>>;
+export type UploadFieldResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['UploadField'] = ResolversParentTypes['UploadField']
+> = {
+  dryRunUpload?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    Partial<UploadFieldDryRunUploadArgs>
+  >;
+  extraMediafileType?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<UploadFieldExtraMediafileTypeArgs>
+  >;
+  infoLabelUrl?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<UploadFieldInfoLabelUrlArgs>
+  >;
+  inputField?: Resolver<
+    ResolversTypes['InputField'],
+    ParentType,
+    ContextType,
+    RequireFields<UploadFieldInputFieldArgs, 'type'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<UploadFieldLabelArgs, 'input'>
+  >;
+  templateCsvs?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<UploadFieldTemplateCsvsArgs, 'input'>
+  >;
+  uploadFieldSize?: Resolver<
+    ResolversTypes['UploadFieldSize'],
+    ParentType,
+    ContextType,
+    Partial<UploadFieldUploadFieldSizeArgs>
+  >;
+  uploadFieldType?: Resolver<
+    ResolversTypes['UploadFieldType'],
+    ParentType,
+    ContextType,
+    RequireFields<UploadFieldUploadFieldTypeArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   family_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   given_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  mapElement?: Resolver<Maybe<ResolversTypes['MapElement']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  mapElement?: Resolver<
+    Maybe<ResolversTypes['MapElement']>,
+    ParentType,
+    ContextType
+  >;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  preferred_username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  preferred_username?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ValidationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Validation'] = ResolversParentTypes['Validation']> = {
-  available_if?: Resolver<Maybe<ResolversTypes['Conditional']>, ParentType, ContextType>;
-  customValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  fastValidationMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  has_one_of_required_metadata?: Resolver<Maybe<ResolversTypes['RequiredOneOfMetadataValidation']>, ParentType, ContextType>;
-  has_one_of_required_relations?: Resolver<Maybe<ResolversTypes['RequiredOneOfRelationValidation']>, ParentType, ContextType>;
-  has_required_relation?: Resolver<Maybe<ResolversTypes['RequiredRelationValidation']>, ParentType, ContextType>;
+export type ValidationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Validation'] = ResolversParentTypes['Validation']
+> = {
+  available_if?: Resolver<
+    Maybe<ResolversTypes['Conditional']>,
+    ParentType,
+    ContextType
+  >;
+  customValue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  fastValidationMessage?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  has_one_of_required_metadata?: Resolver<
+    Maybe<ResolversTypes['RequiredOneOfMetadataValidation']>,
+    ParentType,
+    ContextType
+  >;
+  has_one_of_required_relations?: Resolver<
+    Maybe<ResolversTypes['RequiredOneOfRelationValidation']>,
+    ParentType,
+    ContextType
+  >;
+  has_required_relation?: Resolver<
+    Maybe<ResolversTypes['RequiredRelationValidation']>,
+    ParentType,
+    ContextType
+  >;
   regex?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  required_if?: Resolver<Maybe<ResolversTypes['Conditional']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<Array<Maybe<ResolversTypes['ValidationRules']>>>, ParentType, ContextType>;
+  required_if?: Resolver<
+    Maybe<ResolversTypes['Conditional']>,
+    ParentType,
+    ContextType
+  >;
+  value?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['ValidationRules']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ViewModesWithConfigResolvers<ContextType = any, ParentType extends ResolversParentTypes['ViewModesWithConfig'] = ResolversParentTypes['ViewModesWithConfig']> = {
-  config?: Resolver<Maybe<Array<Maybe<ResolversTypes['ConfigItem']>>>, ParentType, ContextType>;
-  viewMode?: Resolver<Maybe<ResolversTypes['ViewModes']>, ParentType, ContextType>;
+export type ViewModesWithConfigResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['ViewModesWithConfig'] = ResolversParentTypes['ViewModesWithConfig']
+> = {
+  config?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['ConfigItem']>>>,
+    ParentType,
+    ContextType
+  >;
+  viewMode?: Resolver<
+    Maybe<ResolversTypes['ViewModes']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WindowElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['WindowElement'] = ResolversParentTypes['WindowElement']> = {
-  editMetadataButton?: Resolver<Maybe<ResolversTypes['EditMetadataButton']>, ParentType, ContextType, RequireFields<WindowElementEditMetadataButtonArgs, 'input'>>;
-  expandButtonOptions?: Resolver<Maybe<ResolversTypes['ExpandButtonOptions']>, ParentType, ContextType>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<WindowElementLabelArgs>>;
-  layout?: Resolver<Maybe<ResolversTypes['WindowElementLayout']>, ParentType, ContextType, Partial<WindowElementLayoutArgs>>;
-  lineClamp?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<WindowElementLineClampArgs>>;
-  panels?: Resolver<ResolversTypes['WindowElementPanel'], ParentType, ContextType>;
+export type WindowElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['WindowElement'] = ResolversParentTypes['WindowElement']
+> = {
+  editMetadataButton?: Resolver<
+    Maybe<ResolversTypes['EditMetadataButton']>,
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementEditMetadataButtonArgs, 'input'>
+  >;
+  expandButtonOptions?: Resolver<
+    Maybe<ResolversTypes['ExpandButtonOptions']>,
+    ParentType,
+    ContextType
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<WindowElementLabelArgs>
+  >;
+  layout?: Resolver<
+    Maybe<ResolversTypes['WindowElementLayout']>,
+    ParentType,
+    ContextType,
+    Partial<WindowElementLayoutArgs>
+  >;
+  lineClamp?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    Partial<WindowElementLineClampArgs>
+  >;
+  panels?: Resolver<
+    ResolversTypes['WindowElementPanel'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WindowElementBulkDataPanelResolvers<ContextType = any, ParentType extends ResolversParentTypes['WindowElementBulkDataPanel'] = ResolversParentTypes['WindowElementBulkDataPanel']> = {
-  intialValueKey?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<WindowElementBulkDataPanelIntialValueKeyArgs, 'input'>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<WindowElementBulkDataPanelLabelArgs, 'input'>>;
+export type WindowElementBulkDataPanelResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['WindowElementBulkDataPanel'] = ResolversParentTypes['WindowElementBulkDataPanel']
+> = {
+  intialValueKey?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementBulkDataPanelIntialValueKeyArgs, 'input'>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementBulkDataPanelLabelArgs, 'input'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WindowElementPanelResolvers<ContextType = any, ParentType extends ResolversParentTypes['WindowElementPanel'] = ResolversParentTypes['WindowElementPanel']> = {
-  bulkData?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, RequireFields<WindowElementPanelBulkDataArgs, 'bulkDataSource'>>;
-  canBeMultipleColumns?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<WindowElementPanelCanBeMultipleColumnsArgs, 'input'>>;
-  entityListElement?: Resolver<Maybe<ResolversTypes['EntityListElement']>, ParentType, ContextType>;
+export type WindowElementPanelResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['WindowElementPanel'] = ResolversParentTypes['WindowElementPanel']
+> = {
+  bulkData?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementPanelBulkDataArgs, 'bulkDataSource'>
+  >;
+  canBeMultipleColumns?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementPanelCanBeMultipleColumnsArgs, 'input'>
+  >;
+  entityListElement?: Resolver<
+    Maybe<ResolversTypes['EntityListElement']>,
+    ParentType,
+    ContextType
+  >;
   info?: Resolver<ResolversTypes['PanelInfo'], ParentType, ContextType>;
-  isCollapsed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<WindowElementPanelIsCollapsedArgs, 'input'>>;
-  isEditable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<WindowElementPanelIsEditableArgs, 'input'>>;
-  label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, Partial<WindowElementPanelLabelArgs>>;
+  isCollapsed?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementPanelIsCollapsedArgs, 'input'>
+  >;
+  isEditable?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementPanelIsEditableArgs, 'input'>
+  >;
+  label?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    Partial<WindowElementPanelLabelArgs>
+  >;
   metaData?: Resolver<ResolversTypes['PanelMetaData'], ParentType, ContextType>;
-  panelType?: Resolver<ResolversTypes['PanelType'], ParentType, ContextType, RequireFields<WindowElementPanelPanelTypeArgs, 'input'>>;
-  relation?: Resolver<Maybe<Array<Maybe<ResolversTypes['PanelRelation']>>>, ParentType, ContextType>;
-  wysiwygElement?: Resolver<Maybe<ResolversTypes['WysiwygElement']>, ParentType, ContextType>;
+  panelType?: Resolver<
+    ResolversTypes['PanelType'],
+    ParentType,
+    ContextType,
+    RequireFields<WindowElementPanelPanelTypeArgs, 'input'>
+  >;
+  relation?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['PanelRelation']>>>,
+    ParentType,
+    ContextType
+  >;
+  wysiwygElement?: Resolver<
+    Maybe<ResolversTypes['WysiwygElement']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Word'] = ResolversParentTypes['Word']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type WordResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Word'] = ResolversParentTypes['Word']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WritingTechniqueResolvers<ContextType = any, ParentType extends ResolversParentTypes['WritingTechnique'] = ResolversParentTypes['WritingTechnique']> = {
-  advancedFilters?: Resolver<Maybe<ResolversTypes['AdvancedFilters']>, ParentType, ContextType>;
-  allowedViewModes?: Resolver<Maybe<ResolversTypes['AllowedViewModes']>, ParentType, ContextType>;
-  bulkOperationOptions?: Resolver<Maybe<ResolversTypes['BulkOperationOptions']>, ParentType, ContextType>;
-  deleteQueryOptions?: Resolver<Maybe<ResolversTypes['DeleteQueryOptions']>, ParentType, ContextType>;
+export type WritingTechniqueResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['WritingTechnique'] = ResolversParentTypes['WritingTechnique']
+> = {
+  advancedFilters?: Resolver<
+    Maybe<ResolversTypes['AdvancedFilters']>,
+    ParentType,
+    ContextType
+  >;
+  allowedViewModes?: Resolver<
+    Maybe<ResolversTypes['AllowedViewModes']>,
+    ParentType,
+    ContextType
+  >;
+  bulkOperationOptions?: Resolver<
+    Maybe<ResolversTypes['BulkOperationOptions']>,
+    ParentType,
+    ContextType
+  >;
+  deleteQueryOptions?: Resolver<
+    Maybe<ResolversTypes['DeleteQueryOptions']>,
+    ParentType,
+    ContextType
+  >;
   entityView?: Resolver<ResolversTypes['ColumnList'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  intialValues?: Resolver<ResolversTypes['IntialValues'], ParentType, ContextType>;
-  previewComponent?: Resolver<Maybe<ResolversTypes['PreviewComponent']>, ParentType, ContextType>;
-  relationValues?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
-  sortOptions?: Resolver<Maybe<ResolversTypes['SortOptions']>, ParentType, ContextType>;
-  teaserMetadata?: Resolver<Maybe<ResolversTypes['teaserMetadata']>, ParentType, ContextType>;
+  intialValues?: Resolver<
+    ResolversTypes['IntialValues'],
+    ParentType,
+    ContextType
+  >;
+  previewComponent?: Resolver<
+    Maybe<ResolversTypes['PreviewComponent']>,
+    ParentType,
+    ContextType
+  >;
+  relationValues?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType
+  >;
+  sortOptions?: Resolver<
+    Maybe<ResolversTypes['SortOptions']>,
+    ParentType,
+    ContextType
+  >;
+  teaserMetadata?: Resolver<
+    Maybe<ResolversTypes['teaserMetadata']>,
+    ParentType,
+    ContextType
+  >;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uuid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type WysiwygElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['WysiwygElement'] = ResolversParentTypes['WysiwygElement']> = {
-  extensions?: Resolver<Array<Maybe<ResolversTypes['WysiwygExtensions']>>, ParentType, ContextType, RequireFields<WysiwygElementExtensionsArgs, 'input'>>;
-  hasVirtualKeyboard?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, Partial<WysiwygElementHasVirtualKeyboardArgs>>;
-  label?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<WysiwygElementLabelArgs, 'input'>>;
-  metadataKey?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<WysiwygElementMetadataKeyArgs, 'input'>>;
-  taggingConfiguration?: Resolver<Maybe<ResolversTypes['TaggingExtensionConfiguration']>, ParentType, ContextType>;
-  virtulKeyboardLayouts?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType, Partial<WysiwygElementVirtulKeyboardLayoutsArgs>>;
+export type WysiwygElementResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['WysiwygElement'] = ResolversParentTypes['WysiwygElement']
+> = {
+  extensions?: Resolver<
+    Array<Maybe<ResolversTypes['WysiwygExtensions']>>,
+    ParentType,
+    ContextType,
+    RequireFields<WysiwygElementExtensionsArgs, 'input'>
+  >;
+  hasVirtualKeyboard?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    Partial<WysiwygElementHasVirtualKeyboardArgs>
+  >;
+  label?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<WysiwygElementLabelArgs, 'input'>
+  >;
+  metadataKey?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<WysiwygElementMetadataKeyArgs, 'input'>
+  >;
+  taggingConfiguration?: Resolver<
+    Maybe<ResolversTypes['TaggingExtensionConfiguration']>,
+    ParentType,
+    ContextType
+  >;
+  virtulKeyboardLayouts?: Resolver<
+    Maybe<ResolversTypes['JSON']>,
+    ParentType,
+    ContextType,
+    Partial<WysiwygElementVirtulKeyboardLayoutsArgs>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TeaserMetadataResolvers<ContextType = any, ParentType extends ResolversParentTypes['teaserMetadata'] = ResolversParentTypes['teaserMetadata']> = {
-  contextMenuActions?: Resolver<Maybe<ResolversTypes['ContextMenuActions']>, ParentType, ContextType>;
+export type TeaserMetadataResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['teaserMetadata'] = ResolversParentTypes['teaserMetadata']
+> = {
+  contextMenuActions?: Resolver<
+    Maybe<ResolversTypes['ContextMenuActions']>,
+    ParentType,
+    ContextType
+  >;
   link?: Resolver<Maybe<ResolversTypes['PanelLink']>, ParentType, ContextType>;
-  metaData?: Resolver<Maybe<ResolversTypes['PanelMetaData']>, ParentType, ContextType>;
-  relationMetaData?: Resolver<Maybe<ResolversTypes['PanelRelationMetaData']>, ParentType, ContextType>;
-  relationRootData?: Resolver<Maybe<ResolversTypes['PanelRelationRootData']>, ParentType, ContextType>;
-  thumbnail?: Resolver<Maybe<ResolversTypes['PanelThumbnail']>, ParentType, ContextType>;
+  metaData?: Resolver<
+    Maybe<ResolversTypes['PanelMetaData']>,
+    ParentType,
+    ContextType
+  >;
+  relationMetaData?: Resolver<
+    Maybe<ResolversTypes['PanelRelationMetaData']>,
+    ParentType,
+    ContextType
+  >;
+  relationRootData?: Resolver<
+    Maybe<ResolversTypes['PanelRelationRootData']>,
+    ParentType,
+    ContextType
+  >;
+  thumbnail?: Resolver<
+    Maybe<ResolversTypes['PanelThumbnail']>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserPermissionsResolvers<ContextType = any, ParentType extends ResolversParentTypes['userPermissions'] = ResolversParentTypes['userPermissions']> = {
-  payload?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+export type UserPermissionsResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['userPermissions'] = ResolversParentTypes['userPermissions']
+> = {
+  payload?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
