@@ -93,7 +93,7 @@ export const resolveIntialValueRelations = async (
             true
           );
         }
-        else if (metadataKeyAsLabel || String(formatter).startsWith("link|")) {
+        else if (metadataKeyAsLabel || rootKeyAsLabel || String(formatter).startsWith("link|")) {
           if (!relation?.key) return [];
           type = await dataSources.CollectionAPI.getEntity(
             relation.key,
