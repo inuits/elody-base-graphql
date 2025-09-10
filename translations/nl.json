@@ -399,6 +399,7 @@
     "error-codes": {
       "R0002": "Er is een onbekende fout opgetreden",
       "R0004": "Item niet gevonden",
+      "R0008": "Het veld {key} was niet gevonden in document met id {document}",
       "R0009": "Entiteit heeft geen tenant",
       "R1004": "Je hebt geen rechten om dit te bekijken",
       "R1008": "Je hebt geen toestemming om deze bron te creëren/bij te werken/verwijderen.",
