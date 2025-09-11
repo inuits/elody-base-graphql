@@ -42,6 +42,7 @@ export interface Environment {
       dbName: string;
       replicaSet?: string;
       tls?: boolean;
+      authSource?: string;
     };
   };
   features: {
