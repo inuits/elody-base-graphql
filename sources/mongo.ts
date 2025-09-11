@@ -33,6 +33,9 @@ export const createMongoConnectionString = (appConfig: Environment): string => {
   if (mongoConfig.dbName) connectionString += `/${mongoConfig.dbName}`;
   if (mongoConfig.username && mongoConfig.password) {
     connectionString += `?authSource=${mongoConfig.dbName}`;
+    if (mongoConfig.tls) {
+      connectionString += `&tls=${mongoConfig.tls}`;
+    }
     if (mongoConfig.replicaSet) {
       connectionString += `&replicaSet=${mongoConfig.replicaSet}`;
     }
