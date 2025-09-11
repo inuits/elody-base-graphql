@@ -525,6 +525,11 @@
       "disabled-updateMetadata-button": "This button is disabled because the type or csv fields are not correctly filled in.",
       "disabled-export-csv-button": "This button is disabled because the there is no entity selected."
     },
+    "media-viewer": {
+      "selection-disabled": "Select an item first to enable this tool",
+      "selection": "Select an area to crop",
+      "remove-selected-area": "Clear current selection"
+    },
     "required": "This checkbox is required",
     "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
   },

@@ -523,6 +523,11 @@
         "disabled-updateMetadata-button": "De knop is gedeactiveerd omdat het type of een csv niet is ingevuld.",
         "disabled-export-csv-button": "De knop is gedeactiveerd omdat er geen entiteit geselecteerd is."
       },
+      "media-viewer": {
+        "selection-disabled": "Selecteer eerst een item om deze tool te activeren",
+        "selection": "Selecteer een gebied om bij te snijden",
+        "remove-selected-area": "Huidige selectie wissen"
+      },
       "required": "Deze checkbox is verplicht",
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
     },

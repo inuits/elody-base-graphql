@@ -157,6 +157,8 @@ export const baseFragments = gql`
     askForCloseConfirmation
     neededPermission
     skipItemsWithRelationDuringBulkDelete
+    enableImageCrop
+    keyToSaveCropCoordinates
   }
 
   fragment viewModes on ViewModesWithConfig {

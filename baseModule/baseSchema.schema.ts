@@ -635,6 +635,8 @@ export const baseSchema = gql`
     Folder
     VideoSlash
     Keyboard
+    Crop
+    Cancel
   }
 
   input BulkOperationInputModal {
@@ -644,7 +646,10 @@ export const baseSchema = gql`
     askForCloseConfirmation: Boolean
     neededPermission: Permission
     skipItemsWithRelationDuringBulkDelete: [String]
+    enableImageCrop: Boolean
+    keyToSaveCropCoordinates: String
   }
+
   type BulkOperationModal {
     typeModal: TypeModals!
     formQuery: String
@@ -652,6 +657,8 @@ export const baseSchema = gql`
     askForCloseConfirmation: Boolean
     neededPermission: Permission
     skipItemsWithRelationDuringBulkDelete: [String]
+    enableImageCrop: Boolean
+    keyToSaveCropCoordinates: String
   }
 
   enum ActionContextEntitiesSelectionType {
@@ -1145,6 +1152,7 @@ export const baseSchema = gql`
     customBulkOperations(input: String): String
     fetchDeepRelations: FetchDeepRelations
     can(input: [String!]): [String!]
+    cropMediafileCoordinatesKey(input: String): String
   }
 
   enum EntityListViewMode {

@@ -1270,6 +1270,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (parent, { input }, { dataSources }) => {
       return input || [];
     },
+    cropMediafileCoordinatesKey: async (parent, { input }, { dataSources }) => {
+      return input || "";
+    },
   },
   ManifestViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
