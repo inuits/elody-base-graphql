@@ -21,6 +21,10 @@ export const elodyFormattersConfig: FormattersConfig = {
       "background": "#d9ecf3",
       "text": "#003366",
     },
+    warning: {
+      "background": "#faeecd",
+      "text": "#916807",
+    },
     failed: {
       "background": "#ecdada",
       "text": "#ac1113",
