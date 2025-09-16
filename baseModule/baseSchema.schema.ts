@@ -502,8 +502,11 @@ export const baseSchema = gql`
     BookOpen
     BrightnessPlus
     Car
+    Channel
     CloudBookmark
+    CloudDataConnection
     Compass
+    Cog
     Create
     Database
     Download
@@ -528,6 +531,7 @@ export const baseSchema = gql`
     MapPin
     Police
     Process
+    Processor
     Settings
     Swatchbook
     Update
