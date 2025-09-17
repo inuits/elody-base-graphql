@@ -83,7 +83,8 @@
       },
       "upload": {
         "errors": "Geen items mislukt | {0} item mislukt:  | {0} items mislukt:",
-        "missing": "{0} ontbreekt"
+        "missing": "{0} ontbreekt",
+        "ocr-optional-missing": "Mediabestanden onvolledig, {0} of {1} verwacht"
       }
     },
     "bulk-operations": {

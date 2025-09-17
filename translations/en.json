@@ -78,7 +78,8 @@
     },
     "upload": {
       "errors": "No items failed | {0} item failed:  | {0} items failed:",
-      "missing": "{0} is missing"
+      "missing": "{0} is missing",
+      "ocr-optional-missing": "Mediafiles incomplete, {0} or {1} expected"
     }
   },
   "bulk-operations": {
