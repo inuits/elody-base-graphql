@@ -1417,6 +1417,7 @@ export const baseSchema = gql`
     customValue(input: String): String
     can(input: [String!]): [String]
     valueTranslationKey(input: String): String
+    onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
   }
 
   type PanelRelationMetaData {
