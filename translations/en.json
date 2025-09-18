@@ -110,7 +110,8 @@
     "export-to-csv": "Export to CSV",
     "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
     "create-share-link": "Create share link",
-    "delete-selected": "Delete selected {0}"
+    "delete-selected": "Delete selected {0}",
+    "create-mediafile-with-metadata": "Upload new mediafiles and add metadata"
   },
   "confirm": {
     "discard-edit": {

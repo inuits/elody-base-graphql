@@ -115,7 +115,8 @@
       "export-to-csv": "Exporteer naar CSV",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan",
-      "delete-selected": "Geselecteerde {0} verwijderen"
+      "delete-selected": "Geselecteerde {0} verwijderen",
+      "create-mediafile-with-metadata": "Upload nieuwe mediafiles en voeg metadata toe"
     },
     "confirm": {
       "discard-edit": {
