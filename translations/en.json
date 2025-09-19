@@ -356,6 +356,9 @@
       }
     },
     "errors": {
+      "no-url-error": {
+        "title": "Value is no URL"
+      },
       "construct-date-error": {
         "title": "Date must be an exiting date"
       },

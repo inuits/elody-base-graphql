@@ -357,6 +357,9 @@
 
       },
       "errors": {
+        "no-url-error": {
+          "title": "Waarde is geen URL"
+        },
         "construct-date-error": {
           "title": "Datum moet bestaan"
         },
