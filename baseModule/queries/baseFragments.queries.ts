@@ -159,6 +159,7 @@ export const baseFragments = gql`
     skipItemsWithRelationDuringBulkDelete
     enableImageCrop
     keyToSaveCropCoordinates
+    pageToNavigateToAfterCreation
   }
 
   fragment viewModes on ViewModesWithConfig {

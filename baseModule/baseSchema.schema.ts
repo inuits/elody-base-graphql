@@ -652,6 +652,7 @@ export const baseSchema = gql`
     skipItemsWithRelationDuringBulkDelete: [String]
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
+    pageToNavigateToAfterCreation: BulkNavigationPages
   }
 
   type BulkOperationModal {
@@ -663,11 +664,16 @@ export const baseSchema = gql`
     skipItemsWithRelationDuringBulkDelete: [String]
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
+    pageToNavigateToAfterCreation: BulkNavigationPages
   }
 
   enum ActionContextEntitiesSelectionType {
     noneSelected
     someSelected
+  }
+  
+  enum BulkNavigationPages {
+    detailPage
   }
 
   enum ActionContextViewModeTypes {
