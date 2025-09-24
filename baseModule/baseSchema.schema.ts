@@ -929,12 +929,12 @@ export const baseSchema = gql`
   }
   input BreadCrumbRouteInput {
     relation: String
-    entityType: Entitytyping
+    entityType: [Entitytyping]
     overviewPage: RouteNames
   }
   type BreadCrumbRoute {
     relation: String
-    entityType: Entitytyping
+    entityType: [Entitytyping]
     overviewPage: RouteNames
   }
   type FetchDeepRelations {
