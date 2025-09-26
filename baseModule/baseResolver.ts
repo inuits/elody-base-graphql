@@ -124,15 +124,16 @@ import {
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
-  resolveIntialValueDerivatives,
-  resolveIntialValueLocation,
-  resolveIntialValueMetadata,
-  resolveIntialValueMetadataOrRelation,
-  resolveIntialValueRelationMetadata,
-  resolveIntialValueRelationRootdata,
-  resolveIntialValueRelations,
-  resolveIntialValueRoot,
-  resolveIntialValueTechnicalMetadata,
+    resolveIntialValueDerivatives,
+    resolveIntialValueLocation,
+    resolveIntialValueMetadata,
+    resolveIntialValueMetadataOrRelation,
+    resolveIntialValueRelationMetadata,
+    resolveIntialValueRelationRootdata,
+    resolveIntialValueRelations,
+    resolveIntialValueRoot,
+    resolveIntialValueTechnicalMetadata,
+    resolveIntialValueTypePillLabel,
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -1063,6 +1064,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               technicalOrigin as string,
               dataSources
             ),
+          typePillLabel: () =>
+              resolveIntialValueTypePillLabel(parent, key, formatter),
           location: () =>
             resolveIntialValueLocation(
               dataSources,

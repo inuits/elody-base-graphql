@@ -1006,6 +1006,7 @@ export const baseSchema = gql`
     relationRootdata
     metadataOrRelation
     derivatives
+      typePillLabel
   }
 
   type IntialValues {

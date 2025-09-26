@@ -13,6 +13,7 @@ export enum ResolverFormatters {
   Metadata = "metadata",
   RelationMetadata = "relationMetadata",
   Root = "root",
+  TypePillLabel = "typePillLabel"
 }
 
 export const formatterFactory = (resolverType: string) => {
@@ -21,6 +22,7 @@ export const formatterFactory = (resolverType: string) => {
     [ResolverFormatters.Metadata]: applyPillFormatter,
     [ResolverFormatters.RelationMetadata]: applyPillFormatter,
     [ResolverFormatters.Root]: applyRootFormatter,
+    [ResolverFormatters.TypePillLabel]: applyPillFormatter,
   };
 
   return formattersByResolver[resolverType];

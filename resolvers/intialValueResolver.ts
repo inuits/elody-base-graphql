@@ -8,6 +8,7 @@ import { Metadata  } from '../../../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
 import { GraphQLError } from "graphql";
 import { CollectionAPIDerivative, CollectionAPIEntity } from "../types/collectionAPITypes";
+import { baseTypePillLabelMapping } from '../sources/typePillLabelMapping';
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
@@ -243,6 +244,21 @@ export const resolveIntialValueDerivatives = async (parent: CollectionAPIEntity,
   if (!derivativeFromTechnicalOrigin) return ''
   return derivativeFromTechnicalOrigin[key] as string
 }
+
+export const resolveIntialValueTypePillLabel = (
+    parent: any,
+    key: string,
+    formatter: string | null
+): string => {
+    let typeMapping: string = '';
+    try {
+        const type = parent[key];
+        typeMapping = baseTypePillLabelMapping[type];
+    } catch {
+        return '';
+    }
+    return formatterFactory(ResolverFormatters.Metadata)({label: typeMapping, formatter });
+};
 
 export const resolveIntialValueLocation = async (
     dataSources: DataSources,
