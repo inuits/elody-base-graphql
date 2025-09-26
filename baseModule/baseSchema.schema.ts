@@ -941,7 +941,7 @@ export const baseSchema = gql`
     deepRelationsFetchStrategy(
       input: DeepRelationsFetchStrategy
     ): DeepRelationsFetchStrategy
-    entityType(input: Entitytyping): Entitytyping
+    entityTypes(input: [Entitytyping]): [Entitytyping]
     routeConfig(input: [BreadCrumbRouteInput]): [BreadCrumbRoute]
     amountOfRecursions(input: Int): Int
   }

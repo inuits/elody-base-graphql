@@ -1958,8 +1958,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     deepRelationsFetchStrategy: async (parent, { input }, { dataSources }) => {
       return input as DeepRelationsFetchStrategy;
     },
-    entityType: async (parent, { input }, { dataSources }) => {
-      return input as Entitytyping;
+    entityTypes: async (parent, { input }, { dataSources }) => {
+      return input as Entitytyping[];
     },
     routeConfig: async (parent, { input }, { dataSources }) => {
       return input as BreadCrumbRoute[];
