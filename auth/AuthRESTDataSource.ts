@@ -98,7 +98,7 @@ export class AuthRESTDataSource extends RESTDataSource {
   public async get<TResult = any>(
     path: string,
     params?: any,
-    init?: RequestInit
+    init?: RequestInit 
   ): Promise<TResult> {
     return this.withRetry(super.get.bind(this) as any, path, params, init);
   }

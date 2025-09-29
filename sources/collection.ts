@@ -326,6 +326,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     return await this.post(`${Collection.Entities}/${id}/relations`, {
       body: relations,
     });
+
   }
 
   async getRelations(
@@ -604,6 +605,32 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
+    
+    if (type === 'sensorDetection') {
+      const jellyPath = '/jelly/stream';
+      
+      try {
+        const rawJelly = await this.get<ArrayBuffer>(jellyPath, undefined, {
+          headers: { 'Accept': 'application/octet-stream' },
+        });
+      console.log('rawJelly', rawJelly)
+      const uint8 = new Uint8Array(rawJelly);
+
+
+
+      let binary = '';
+      for (let i = 0; i < uint8.length; i++) {
+        binary += String.fromCharCode(uint8[i]);
+        }
+
+      return 
+
+      } catch (error: any) {
+        console.error('Error fetching from Jelly:', error?.message || error);
+        return { error: true, message: error?.message || 'Unknown error' } as any;
+      }
+    }
+
     return await this.post(
       `${getCollectionValueForEntityType(
         type
@@ -799,3 +826,5 @@ export class CollectionAPI extends AuthRESTDataSource {
     return this.get(`mediafiles/${mediafileId}/derivatives`);
   }
 }
+
+
