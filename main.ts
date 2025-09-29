@@ -20,6 +20,7 @@ import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
+import { baseTypePillLabelMapping } from './sources/typePillLabelMapping';
 import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
@@ -106,6 +107,14 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
   });
 };
 
+const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
+  [key: string]: string;
+}) => {
+  Object.keys(customTypePillLabelMapping).forEach((key: string) => {
+    baseTypePillLabelMapping[key] = customTypePillLabelMapping[key];
+  });
+};
+
 const start = (
   elodyConfig: ElodyConfig,
   appConfig: Environment,
@@ -117,7 +126,10 @@ const start = (
     | undefined = undefined,
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
-  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} }
+  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} },
+  customTypePillLabelMapping:
+      | { [key: string]: string }
+      | undefined = undefined,
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
@@ -312,6 +324,10 @@ const start = (
 
     if (customTypeCollectionMapping) {
       addCustomTypeCollectionMapping(customTypeCollectionMapping);
+    }
+
+    if (customTypePillLabelMapping) {
+      addCustomTypePillLabelMapping(customTypePillLabelMapping);
     }
 
     configureFrontendForEnvironment(app, viteServer);

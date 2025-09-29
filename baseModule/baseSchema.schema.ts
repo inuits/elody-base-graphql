@@ -929,19 +929,19 @@ export const baseSchema = gql`
   }
   input BreadCrumbRouteInput {
     relation: String
-    entityType: Entitytyping
+    entityType: [Entitytyping]
     overviewPage: RouteNames
   }
   type BreadCrumbRoute {
     relation: String
-    entityType: Entitytyping
+    entityType: [Entitytyping]
     overviewPage: RouteNames
   }
   type FetchDeepRelations {
     deepRelationsFetchStrategy(
       input: DeepRelationsFetchStrategy
     ): DeepRelationsFetchStrategy
-    entityType(input: Entitytyping): Entitytyping
+    entityTypes(input: [Entitytyping]): [Entitytyping]
     routeConfig(input: [BreadCrumbRouteInput]): [BreadCrumbRoute]
     amountOfRecursions(input: Int): Int
   }
@@ -1006,6 +1006,7 @@ export const baseSchema = gql`
     relationRootdata
     metadataOrRelation
     derivatives
+      typePillLabel
   }
 
   type IntialValues {

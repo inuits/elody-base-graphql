@@ -124,15 +124,16 @@ import {
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
-  resolveIntialValueDerivatives,
-  resolveIntialValueLocation,
-  resolveIntialValueMetadata,
-  resolveIntialValueMetadataOrRelation,
-  resolveIntialValueRelationMetadata,
-  resolveIntialValueRelationRootdata,
-  resolveIntialValueRelations,
-  resolveIntialValueRoot,
-  resolveIntialValueTechnicalMetadata,
+    resolveIntialValueDerivatives,
+    resolveIntialValueLocation,
+    resolveIntialValueMetadata,
+    resolveIntialValueMetadataOrRelation,
+    resolveIntialValueRelationMetadata,
+    resolveIntialValueRelationRootdata,
+    resolveIntialValueRelations,
+    resolveIntialValueRoot,
+    resolveIntialValueTechnicalMetadata,
+    resolveIntialValueTypePillLabel,
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -1063,6 +1064,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               technicalOrigin as string,
               dataSources
             ),
+          typePillLabel: () =>
+              resolveIntialValueTypePillLabel(parent, key, formatter),
           location: () =>
             resolveIntialValueLocation(
               dataSources,
@@ -1958,8 +1961,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     deepRelationsFetchStrategy: async (parent, { input }, { dataSources }) => {
       return input as DeepRelationsFetchStrategy;
     },
-    entityType: async (parent, { input }, { dataSources }) => {
-      return input as Entitytyping;
+    entityTypes: async (parent, { input }, { dataSources }) => {
+      return input as Entitytyping[];
     },
     routeConfig: async (parent, { input }, { dataSources }) => {
       return input as BreadCrumbRoute[];
