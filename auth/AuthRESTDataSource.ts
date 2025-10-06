@@ -9,18 +9,37 @@ import { environment } from '../main';
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
   protected clientIp: string | undefined;
+  protected context: any;
+  private requestId?: string;
 
   constructor(options: {
     session: any;
     cache?: KeyValueCache;
     clientIp?: string;
+    context?: any;
   }) {
     super(options);
     this.session = options.session;
     this.clientIp = options.clientIp;
+    this.context = options.context;
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
+    const start = Date.now();
+    // Ensure a stable requestId for the lifetime of this datasource instance
+    const requestId = (this.context?.requestId as string) || this.requestId || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    this.requestId = requestId;
+
+    if (this.context && !this.context.requestId) {
+      this.context.requestId = requestId;
+    }
+
+    if (request.headers) {
+      request.headers['X-request-id'] = requestId;
+    }
+
+    console.log(`[Request Start][${requestId}] ${_path} at ${new Date(start).toISOString()}`);
+
     const accessToken = this.session?.auth?.accessToken;
 
     if (accessToken && accessToken !== 'undefined' && request.headers) {
@@ -48,6 +67,9 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (request.headers && tenant) {
       request.headers['X-tenant-id'] = tenant;
     }
+
+    const duration = Date.now() - start;
+    console.log(`[Request End][${requestId}] ${_path} took ${duration}ms`);
   }
 
   private hasWhiteListingFeature = (): boolean => {
