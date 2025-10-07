@@ -23,8 +23,6 @@ import {
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode';
-
-import { baseTypeCollectionMapping as collection } from './typeCollectionMapping';
 import { Config } from '../types';
 import { environment as env } from '../main';
 import { GraphQLError } from 'graphql/index';

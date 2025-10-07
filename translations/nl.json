@@ -269,7 +269,8 @@
     "panel-labels": {
       "description": "Omschrijving",
       "other-metadata": "Andere metadata",
-      "history": "Geschiedenis"
+      "history": "Geschiedenis",
+      "audit-panel": "Audit"
     },
     "metadata": {
       "labels": {
@@ -288,6 +289,9 @@
         "expire-date-zip": "Vervaldatum zip bestand",
         "privacy": "Privacy",
         "created-at": "Aangemaakt op",
+        "created-by": "Aangemaakt door",
+        "updated-at": "Gewijzigd op",
+        "updated-by": "Gewijzigd door",
         "started-at": "Gestart op",
         "started-by": "Gestart door",
         "ttl": "Vervaltijd",
