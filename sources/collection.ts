@@ -673,10 +673,6 @@ export class CollectionAPI extends AuthRESTDataSource {
         )}&order_by=${advancedSearchValue.order_by}&asc=${
           advancedSearchValue.isAsc ? 1 : 0
         }`
-      ).then(
-        (
-          result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
-        ): EntetiesCallReturn => this.handleAdvancedMediaResult(result)
       );
     } else {
       const body = advancedFilterInputs;
@@ -688,35 +684,8 @@ export class CollectionAPI extends AuthRESTDataSource {
           advancedSearchValue.isAsc ? 1 : 0
         }`,
         { body }
-      ).then(
-        (
-          result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
-        ): EntetiesCallReturn => this.handleAdvancedMediaResult(result)
       );
     }
-  }
-
-  private handleAdvancedMediaResult(
-    result: Exclude<EntetiesCallReturn, 'no-call-is-triggerd'>
-  ): EntetiesCallReturn {
-    //Add mediafile type to the result, is missing from the mediafile endpoint
-    if (!Array.isArray(result)) {
-      const finalResult = result.results?.map(
-        (item: unknown): Record<string, unknown> => {
-          //Todo write typescheker for EntitieResults
-          return { ...(item as Object), type: 'mediafile' } as Record<
-            string,
-            unknown
-          >;
-        }
-      );
-      finalResult?.unshift({
-        count: result.count ? result.count : result.results.length,
-      });
-      return finalResult;
-    }
-
-    return 'no-call-is-triggerd';
   }
 
   async updateMetadataWithCsv(entityType: string, csv: any): Promise<any> {
