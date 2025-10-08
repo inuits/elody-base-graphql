@@ -1660,10 +1660,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (!fromMediafile) return input || '';
       try {
         const thumbnailId: string = _source["primary_thumbnail_id"];
-        const mediafile =
+        const mediafile: CollectionAPIMediaFile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
-        return mediafile.transcode_filename || mediafile.filename;
+        return mediafile.display_filename || mediafile.filename;
       } catch {
         return undefined;
       }

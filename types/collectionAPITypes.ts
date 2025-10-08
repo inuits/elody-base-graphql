@@ -12,6 +12,7 @@ export type CollectionAPIEntity = {
 export type CollectionAPIMediaFile = {
   _id: string;
   filename: string;
+  display_filename: string;
   metadata: [CollectionAPIMetadata];
   date_created: string;
   date_updated: string;
