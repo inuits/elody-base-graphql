@@ -1665,7 +1665,7 @@ export const baseResolver: Resolvers<ContextValue> = {
 
         return mediafile.display_filename || mediafile.filename;
       } catch {
-        return undefined;
+        return '';
       }
     },
     width: async (_source, { input }, { dataSources }) => {
