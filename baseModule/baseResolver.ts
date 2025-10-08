@@ -1659,14 +1659,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (!fromMediafile) return input || '';
       try {
-        const mediafileRelations: any[] = _source.relations.filter(
-          (relation: any) => relation.type === 'hasMediafile'
-        );
-        const thumbnailMediafile: any =
-          mediafileRelations.find(
-            (mediafile: any) => mediafile.is_primary_thumbnail
-          ) || mediafileRelations[0];
-        const thumbnailId: string = thumbnailMediafile.key;
+        const thumbnailId: string = _source["primary_thumbnail_id"];
         const mediafile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
