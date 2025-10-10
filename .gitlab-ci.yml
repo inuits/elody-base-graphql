@@ -9,7 +9,7 @@ include:
     ref: 'v4.12.4'
 
 variables:
-  GRAPHQL_IMAGE: 'digipolis/dams-v2-dams-graphql'
+  GRAPHQL_IMAGE: 'pza/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
 
 
