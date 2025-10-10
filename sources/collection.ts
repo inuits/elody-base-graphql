@@ -625,9 +625,10 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
+    console.log('body', body)
 
     if(type == 'sensorDetection'){
-      const jellyUrl = '/jelly/stream/'
+      const jellyUrl = '/jelly/stream'
 
       try{
         const triples = await this.getAllTriples(jellyUrl)
