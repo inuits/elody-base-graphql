@@ -296,6 +296,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const data = await this.put<any>(
       `${Collection.Entities}/${entity_id}/set_primary_mediafile/${mediafile_id}`
     );
+    console.log({ data });
     return data;
   }
 
@@ -697,7 +698,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async GetCsvExportKeysPerEntityType(
     entityType: string,
-    requiredKeys: string[] = [],
+    requiredKeys: string[] = []
   ): Promise<BulkOperationCsvExportKeys> {
     const options = {
       headers: {
