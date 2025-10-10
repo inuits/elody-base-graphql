@@ -627,7 +627,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const body = advancedFilterInputs;
 
     if(type == 'sensorDetection'){
-      const jellyUrl = '/jelly/stream/'
+      const jellyUrl = '/jelly/stream'
 
       try{
         const triples = await this.getAllTriples(jellyUrl)
