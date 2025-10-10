@@ -671,7 +671,7 @@ export const baseSchema = gql`
     noneSelected
     someSelected
   }
-
+  
   enum BulkNavigationPages {
     detailPage
   }
@@ -1006,7 +1006,7 @@ export const baseSchema = gql`
     relationRootdata
     metadataOrRelation
     derivatives
-    typePillLabel
+      typePillLabel
   }
 
   type IntialValues {
@@ -2113,8 +2113,8 @@ export const baseSchema = gql`
       masterEntityId: String
     ): String
     updateMetadataWithCsv(entityType: String!, csv: String!): String
-    setPrimaryMediafile(entityId: String!, mediafileId: String!): Entity!
-    setPrimaryThumbnail(entityId: String!, mediafileId: String!): Entity!
+    setPrimaryMediafile(entityId: String!, mediafileId: String!): JSON
+    setPrimaryThumbnail(entityId: String!, mediafileId: String!): JSON
   }
 
   enum ViewModes {
