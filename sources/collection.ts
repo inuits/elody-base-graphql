@@ -28,6 +28,9 @@ import { environment as env } from '../main';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
+import { decodeJellyToTriples } from "./jellyDecoder";
+
+
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -595,6 +598,25 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { results: [], count: 0, limit };
   }
 
+
+  public async getAllTriples(jellyUrl: string): Promise<{ s: string, p: string, o: string | number }[]> {
+    const response = await this.get(jellyUrl, {
+      method: "GET",
+      headers: { "Accept": "application/octet-stream" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Jelly stream: ${response.status} ${response.statusText}`);
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+
+    // decode Jelly binaries
+    const triples = await decodeJellyToTriples(arrayBuffer);
+    return triples;
+  }
+
+
   private async doAdvancedEntitiesCall(
     type: Entitytyping,
     limit: number,
@@ -603,6 +625,20 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
+
+    if(type == 'sensorDetection'){
+      const jellyUrl = '/jelly/stream/'
+
+      try{
+        const triples = await this.getAllTriples(jellyUrl)
+        console.log('all triples:', triples)
+      }
+      catch (error) {
+        console.error('failed to load jelly stream', error)
+      }
+    }
+
+
     return await this.post(
       `${getCollectionValueForEntityType(
         type
