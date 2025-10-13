@@ -929,11 +929,13 @@ export const baseSchema = gql`
   }
   input BreadCrumbRouteInput {
     relation: String
+    key: [String]
     entityType: [Entitytyping]
     overviewPage: RouteNames
   }
   type BreadCrumbRoute {
     relation: String
+    key: [String]
     entityType: [Entitytyping]
     overviewPage: RouteNames
   }
