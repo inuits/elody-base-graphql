@@ -1209,6 +1209,10 @@ export const baseSchema = gql`
     ): JSON
   }
 
+  type MapFeatureMetadata {
+    metaData: PanelMetaData!
+  }
+
   type MapElement {
     isCollapsed(input: Boolean!): Boolean!
     label(input: String): String!
@@ -1218,6 +1222,7 @@ export const baseSchema = gql`
     mapMetadata: MapMetadata
     geoJsonFeature: GeoJsonFeature
     config(input: [ConfigItemInput]): [ConfigItem]
+    mapFeatureMetadata: MapFeatureMetadata
   }
 
   input HierarchyRelationListInput {
