@@ -1,5 +1,5 @@
 import { RESTDataSource, AugmentedRequest } from '@apollo/datasource-rest';
-import { BodyInit, RequestInit } from 'apollo-server-env';
+import { BodyInit, RequestInit, Response, Request } from 'apollo-server-env';
 import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';

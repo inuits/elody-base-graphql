@@ -28,9 +28,9 @@ import { environment as env } from '../main';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
-import { decodeJellyToTriples } from "./jellyDecoder";
-
-
+import { decodeJellyToTriples, triplesToMongo } from './jellyDecoder';
+import protobuf from 'protobufjs';
+import { JellyToQuads } from './jellyToQuads';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -598,24 +598,34 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { results: [], count: 0, limit };
   }
 
-
-  public async getAllTriples(jellyUrl: string): Promise<{ s: string, p: string, o: string | number }[]> {
-    const response = await this.get(jellyUrl, {
-      method: "GET",
-      headers: { "Accept": "application/octet-stream" },
+  public async getAllTriples(
+    jellyUrl: string
+  ): Promise<{ s: string; p: string; o: string | number }[]> {
+    const response = await fetch(`http://collection-api:5000/${jellyUrl}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/octet-stream',
+        Authorization: `Bearer: ${process.env.STATIC_JWT}`,
+      },
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch Jelly stream: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch Jelly stream: ${response.status} ${response.statusText}`
+      );
     }
 
-    const arrayBuffer = await response.arrayBuffer();
+    const buf = new Uint8Array(await response.arrayBuffer());
 
-    // decode Jelly binaries
-    const triples = await decodeJellyToTriples(arrayBuffer);
-    return triples;
+    const jtq = await JellyToQuads.create(
+      'node_modules/base-graphql/jelly/rdf.proto'
+    );
+
+    const quads = jtq.decodeAll(buf);
+    console.log(triplesToMongo(quads));
+
+    return [];
   }
-
 
   private async doAdvancedEntitiesCall(
     type: Entitytyping,
@@ -625,20 +635,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
-    console.log('body', body)
 
-    if(type == 'sensorDetection'){
-      const jellyUrl = '/jelly/stream'
+    if (type == 'sensorDetection') {
+      const jellyUrl = 'jelly/stream';
 
-      try{
-        const triples = await this.getAllTriples(jellyUrl)
-        console.log('all triples:', triples)
-      }
-      catch (error) {
-        console.error('failed to load jelly stream', error)
+      try {
+        const triples = await this.getAllTriples(jellyUrl);
+        console.log('all triples:', triples);
+      } catch (error) {
+        console.error('failed to load jelly stream', error);
       }
     }
-
 
     return await this.post(
       `${getCollectionValueForEntityType(

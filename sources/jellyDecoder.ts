@@ -1,42 +1,80 @@
-
 // Generated with ChatGPT 10/10/2025 14:30 - This script will handle the decoding of the jelly binaries
 // @ts-ignore
-import protobuf from "../vendor/protobuf"; // adjust path if needed
+import protobuf from 'protobufjs';
+import { DataFactory, Quad } from 'n3';
+const { namedNode, literal } = DataFactory;
 
-export async function decodeJellyToTriples(arrayBuffer: ArrayBuffer): Promise<{ s: string, p: string, o: string | number }[]> {
+export async function decodeJellyToTriples(reader: any): Promise<void> {
   // load the proto definitions
-  const root = await protobuf.load([
-    "./proto/rdf.proto",
-    "./proto/stream.proto"
-  ]);
+  const root = await protobuf.load('node_modules/base-graphql/jelly/rdf.proto');
 
-  const EntityStream = root.lookupType("jelly.stream.EntityStream");
+  const Frame = root.lookupType(
+    'eu.ostrzyciel.jelly.core.proto.v1.RdfStreamFrame'
+  );
 
-  const message = EntityStream.decode(new Uint8Array(arrayBuffer));
-  const obj = EntityStream.toObject(message, { defaults: true });
+  const frame = Frame.decodeDelimited(reader) as any;
 
-  const triples: { s: string, p: string, o: string | number }[] = [];
+  // 4️⃣ verwerk elke row in volgorde
+  for (const row of frame.rows ?? []) {
+    if (row.triple) {
+      const t = row.triple;
+      console.log('Triple row:', JSON.stringify(t));
+    }
+    // ...zelfde voor options / prefix / quad enz.
+  }
+}
 
-  // obj.entities is usually the top-level container for triples
-  if (obj.entities && Array.isArray(obj.entities)) {
-    for (const entity of obj.entities) {
-      const subject = entity.id || entity.uri;
+interface MongoDoc {
+  _id: string;
+  type?: string;
+  metadata?: { key: string; value: string }[];
+  identifiers?: string[];
+  relations?: { type: string; key: string; roles?: string[] }[];
+  location?: { coordinates: [number, number] };
+}
 
-      if (!subject) continue;
+export function triplesToMongo(quads: Quad[]): MongoDoc {
+  if (quads.length === 0) throw new Error('No triples provided');
 
-      // entity.properties is an object with predicate -> values
-      for (const [pred, values] of Object.entries(entity.properties || {})) {
-        for (const val of values as any[]) {
-          // simple mode: convert literal numbers to JS numbers, else string
-          let o: string | number = val.value;
-          if (val.datatype === "xsd:decimal" || val.datatype === "xsd:integer") {
-            o = Number(val.value);
-          }
-          triples.push({ s: subject, p: pred, o });
-        }
+  // Subject (extract _id from URI)
+  const subject = quads[0].subject.value;
+  const id = subject.split('/').pop()!;
+
+  const doc: MongoDoc = {
+    _id: id,
+    metadata: [],
+    identifiers: [],
+    relations: [],
+  };
+
+  for (const quad of quads) {
+    const predicate = quad.predicate.value;
+    const object = quad.object;
+
+    if (predicate.endsWith('type')) {
+      doc.type = object.value;
+    } else if (predicate.includes('identifier')) {
+      doc.identifiers!.push(object.value);
+    } else if (predicate.endsWith('lat')) {
+      doc.location = doc.location || { coordinates: [0, 0] };
+      doc.location.coordinates[1] = parseFloat(object.value);
+    } else if (predicate.endsWith('lon')) {
+      doc.location = doc.location || { coordinates: [0, 0] };
+      doc.location.coordinates[0] = parseFloat(object.value);
+    } else if (predicate.includes('role')) {
+      let rel = doc.relations!.find((r) => r.type === 'role');
+      if (!rel) {
+        rel = { type: 'role', key: '', roles: [] };
+        doc.relations!.push(rel);
       }
+      rel.roles!.push(object.value);
+    } else {
+      doc.metadata!.push({
+        key: predicate.split('#').pop() || predicate,
+        value: object.value,
+      });
     }
   }
 
-  return triples;
+  return doc;
 }
