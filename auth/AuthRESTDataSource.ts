@@ -5,6 +5,7 @@ import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { environment } from '../main';
+import { trace, context, propagation } from '@opentelemetry/api';
 
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
@@ -24,10 +25,15 @@ export class AuthRESTDataSource extends RESTDataSource {
     this.context = options.context;
   }
 
+  tracer = trace.getTracer('elody-graphql');
+
   async willSendRequest(_path: string, request: AugmentedRequest) {
     const start = Date.now();
     // Ensure a stable requestId for the lifetime of this datasource instance
-    const requestId = (this.context?.requestId as string) || this.requestId || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    const requestId =
+      (this.context?.requestId as string) ||
+      this.requestId ||
+      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     this.requestId = requestId;
 
     if (this.context && !this.context.requestId) {
@@ -38,7 +44,9 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-request-id'] = requestId;
     }
 
-    console.log(`[Request Start][${requestId}] ${_path} at ${new Date(start).toISOString()}`);
+    console.log(
+      `[Request Start][${requestId}] ${_path} at ${new Date(start).toISOString()}`
+    );
 
     const accessToken = this.session?.auth?.accessToken;
 
@@ -91,29 +99,60 @@ export class AuthRESTDataSource extends RESTDataSource {
     fn: F,
     ...args: T
   ): Promise<S> {
+    const span = this.tracer.startSpan(`HTTP ${args[0]}`, {
+      attributes: {
+        'http.path': args[0],
+        'http.method': (fn as any).name.toUpperCase(),
+      },
+    });
+
+    if (!args[2]) args[2] = {};
+    if (!args[2].headers) args[2].headers = {};
+    propagation.inject(context.active(), args[2].headers);
+
     try {
-      return await fn(...args);
+      const result = await fn(...args);
+      span.setStatus({ code: 1 });
+      return result;
     } catch (error: any) {
       if (this.session.auth && error?.extensions?.response?.status === 401) {
-        const response = await manager?.refresh(
-          this.session.auth.accessToken,
-          this.session.auth.refreshToken
-        );
+        try {
+          const response = await manager?.refresh(
+            this.session.auth.accessToken,
+            this.session.auth.refreshToken
+          );
 
-        if (!response) {
-          throw new GraphQLError(`AUTH | REFRESH FAILED`, {
-            extensions: {
-              statusCode: 401,
-            },
-          });
+          if (!response) {
+            span.recordException(error);
+            span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+            span.setAttribute('request.id', this.requestId);
+            span.setAttribute('entity.type', args[0]);
+            throw new GraphQLError(`AUTH | REFRESH FAILED`, {
+              extensions: {
+                statusCode: 401,
+              },
+            });
+          }
+
+          this.session.auth = response;
+
+          return await fn(...args);
+        } catch (refreshError) {
+          span.recordException(refreshError);
+          span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+          span.setAttribute('request.id', this.requestId);
+          span.setAttribute('entity.type', args[0]);
+          throw refreshError;
         }
-
-        this.session.auth = response;
-
-        return await fn(...args);
       } else {
+        span.recordException(error);
+        span.setStatus({ code: 2, message: (error as Error).message });
+        span.setAttribute('request.id', this.requestId);
+        span.setAttribute('entity.type', args[0]);
         throw error;
       }
+    } finally {
+      span.end();
     }
   }
 
