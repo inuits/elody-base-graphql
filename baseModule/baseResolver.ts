@@ -110,7 +110,8 @@ import {
   Operator,
   AdvancedFilterInputType,
   LookupInputType,
-  AutocompleteSelectionOptions
+  AutocompleteSelectionOptions,
+  MapFeatureMetadata
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -141,6 +142,7 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
+import {CollectionAPIMediaFile} from "../types/collectionAPITypes";
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -1147,6 +1149,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     geoJsonFeature: async (parent: unknown, {}, { dataSources }) => {
       return parent as GeoJsonFeature;
     },
+    mapFeatureMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapFeatureMetadata;
+    },
     config: async (_source, { input }, { dataSources }) => {
       return input as ConfigItem[];
     },
@@ -1659,20 +1664,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (!fromMediafile) return input || '';
       try {
-        const mediafileRelations: any[] = _source.relations.filter(
-          (relation: any) => relation.type === 'hasMediafile'
-        );
-        const thumbnailMediafile: any =
-          mediafileRelations.find(
-            (mediafile: any) => mediafile.is_primary_thumbnail
-          ) || mediafileRelations[0];
-        const thumbnailId: string = thumbnailMediafile.key;
-        const mediafile =
+        const thumbnailId: string = _source["primary_thumbnail_id"];
+        const mediafile: CollectionAPIMediaFile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
-        return mediafile.transcode_filename || mediafile.filename;
+        return mediafile.display_filename || mediafile.filename;
       } catch {
-        return undefined;
+        return '';
       }
     },
     width: async (_source, { input }, { dataSources }) => {
@@ -2386,4 +2384,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.facets || [];
     },
   },
+  MapFeatureMetadata: {
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+  return parent as PanelMetaData;
+}
+}
 };
