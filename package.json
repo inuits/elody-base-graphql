@@ -55,6 +55,7 @@
     "graphql": "^16.9.0",
     "graphql-codegen": "^0.4.0",
     "graphql-codegen-webpack-plugin": "0.0.7",
+    "graphql-depth-limit": "^1.1.0",
     "graphql-import-node": "^0.0.5",
     "graphql-modules": "^2.4.0",
     "helmet": "^8.1.0",
@@ -87,6 +88,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
+    "@types/graphql-depth-limit": "^1.1.6",
     "husky": "^8.0.1",
     "vitest": "2.1.9"
   },

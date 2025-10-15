@@ -64,7 +64,7 @@ import {
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
-import { deepSanitize, sanitizeRequestBody } from './utilities/sanitize';
+import depthLimit from 'graphql-depth-limit';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = {
@@ -127,9 +127,7 @@ const start = (
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
   customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} },
-  customTypePillLabelMapping:
-      | { [key: string]: string }
-      | undefined = undefined,
+  customTypePillLabelMapping: { [key: string]: string } | undefined = undefined
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
@@ -182,6 +180,8 @@ const start = (
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
+      validationRules: [depthLimit(10)],
+      introspection: environment?.apollo.introspection || false,
       gateway: {
         async load() {
           return { executor: application.createApolloExecutor() };
