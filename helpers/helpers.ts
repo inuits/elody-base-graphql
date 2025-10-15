@@ -11,9 +11,9 @@ import {
   environment,
   CollectionAPIRelation,
 } from '../main';
-import { parseRelationTypesForEntityType } from '../parsers/entity';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
-import proj4 from "proj4";
+import proj4 from 'proj4';
+import type { Request, Response } from 'express';
 
 const loggedTypes: string[] = [];
 
@@ -141,11 +141,11 @@ export const extractErrorCode = (error: any): number => {
 
 export const normalizeCoordinatesForHeatmap = (coordinates: number[]) => {
   return proj4('EPSG:4326', 'EPSG:3857', coordinates);
-}
+};
 
 export const normalizeWeightForHeatmap = (value: number) => {
   return value / 100;
-}
+};
 
 export const getTypesFromFilterInputs = (
   advancedFilterInputs: AdvancedFilterInput[],
@@ -177,4 +177,13 @@ export const getTypesFromFilterInputs = (
   }
 
   return Array.from(entityTypes) as Entitytyping[];
+};
+
+export const checkRequestContentType = (req: Request, res: Response) => {
+  const allowed: string[] = ['application/json'];
+  const contentType: string = req.headers['content-type']!;
+
+  if (!allowed.includes(contentType)) {
+    return res.status(415).send('Unsupported Media Type');
+  }
 };

@@ -25,6 +25,7 @@ import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
   alterDimensionsOfIIIFUrl,
+  checkRequestContentType,
 } from './helpers/helpers';
 import {
   Collection,
@@ -247,7 +248,8 @@ const start = (
     app.use(
       appConfig.apollo.graphqlPath,
       expressMiddleware(server, {
-        context: async ({ req }) => {
+        context: async ({ req, res }) => {
+          checkRequestContentType(req, res);
           const { cache } = server;
           const session = { ...req.session };
           const clientIp: string = req.headers['x-forwarded-for'] as string;
