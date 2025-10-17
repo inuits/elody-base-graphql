@@ -1,3 +1,4 @@
+import './tracing';
 import { applyAuthSession, applyEnvironmentConfig } from './auth';
 import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 import {

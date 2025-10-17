@@ -111,7 +111,7 @@ import {
   AdvancedFilterInputType,
   LookupInputType,
   AutocompleteSelectionOptions,
-  MapFeatureMetadata
+  // MapFeatureMetadata,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -125,16 +125,16 @@ import {
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
-    resolveIntialValueDerivatives,
-    resolveIntialValueLocation,
-    resolveIntialValueMetadata,
-    resolveIntialValueMetadataOrRelation,
-    resolveIntialValueRelationMetadata,
-    resolveIntialValueRelationRootdata,
-    resolveIntialValueRelations,
-    resolveIntialValueRoot,
-    resolveIntialValueTechnicalMetadata,
-    resolveIntialValueTypePillLabel,
+  resolveIntialValueDerivatives,
+  resolveIntialValueLocation,
+  resolveIntialValueMetadata,
+  resolveIntialValueMetadataOrRelation,
+  resolveIntialValueRelationMetadata,
+  resolveIntialValueRelationRootdata,
+  resolveIntialValueRelations,
+  resolveIntialValueRoot,
+  resolveIntialValueTechnicalMetadata,
+  resolveIntialValueTypePillLabel,
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -142,7 +142,7 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import {CollectionAPIMediaFile} from "../types/collectionAPITypes";
+import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -365,7 +365,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(
-        entityType, ['identifiers']
+        entityType,
+        ['identifiers']
       );
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
@@ -474,19 +475,21 @@ export const baseResolver: Resolvers<ContextValue> = {
         try {
           let hasPermission: boolean;
           if (permissionConfig.datasource === 'CollectionAPI') {
-            hasPermission = await dataSources.CollectionAPI.checkAdvancedPermission(
-              permissionConfig,
-              parentEntityId,
-              childEntityId
-            );
+            hasPermission =
+              await dataSources.CollectionAPI.checkAdvancedPermission(
+                permissionConfig,
+                parentEntityId,
+                childEntityId
+              );
           } else if (permissionConfig.datasource === 'GraphqlAPI') {
-            hasPermission = await dataSources.GraphqlAPI.checkAdvancedPermission(
-              permissionConfig
-            );
+            hasPermission =
+              await dataSources.GraphqlAPI.checkAdvancedPermission(
+                permissionConfig
+              );
           } else {
             hasPermission = false;
           }
-          
+
           return { permission, hasPermission };
         } catch (error) {
           console.error(`Error checking permission ${permission}:`, error);
@@ -495,7 +498,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       });
 
       const results = await Promise.all(permissionPromises);
-      
+
       return results;
     },
     PermissionMappingPerEntityType: async (
@@ -566,16 +569,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         let mediafilesCsv: string[] = [];
         let assetsCsv: string[] = [];
-        downloadEntity.relations = (downloadEntity.relations as [])
-            .map((relationInput) => {
-              const relation: any = {};
-              Object.keys(relationInput)
-                  .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
-                  .forEach((key) => {
-                    relation[key] = (relationInput as any)[key];
-                  });
-              return relation;
-            });
+        downloadEntity.relations = (downloadEntity.relations as []).map(
+          (relationInput) => {
+            const relation: any = {};
+            Object.keys(relationInput)
+              .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
+              .forEach((key) => {
+                relation[key] = (relationInput as any)[key];
+              });
+            return relation;
+          }
+        );
         createdEntity = await dataSources.CollectionAPI.createEntity(
           downloadEntity,
           (downloadEntity.metadata as Metadata[]) || [],
@@ -641,11 +645,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return {} as ContextMenuActions;
     },
-    GeoFilterForMap: async (
-      _source,
-      _args,
-      { dataSources }
-    ) => {
+    GeoFilterForMap: async (_source, _args, { dataSources }) => {
       return {} as AdvancedFilters;
     },
     FilterMatcherMapping: async (_source, {}, { dataSources }) => {
@@ -657,8 +657,16 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedFilters: {},
       } as Entity;
     },
-    FilterOptions: async (_source, { input, limit, entityType }, { dataSources }) => {
-      return await dataSources.CollectionAPI.GetFilterOptions(input, limit, entityType);
+    FilterOptions: async (
+      _source,
+      { input, limit, entityType },
+      { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.GetFilterOptions(
+        input,
+        limit,
+        entityType
+      );
     },
   },
   Mutation: {
@@ -712,7 +720,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         for (const metadata of formInput.metadata) {
           if (Array.isArray(metadata.value) && metadata.value.length === 0)
             metadata.value = '';
-          if (metadata.value?.formatter?.startsWith("pill"))
+          if (metadata.value?.formatter?.startsWith('pill'))
             metadata.value = metadata.value.label;
         }
 
@@ -1067,7 +1075,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               dataSources
             ),
           typePillLabel: () =>
-              resolveIntialValueTypePillLabel(parent, key, formatter),
+            resolveIntialValueTypePillLabel(parent, key, formatter),
           location: () =>
             resolveIntialValueLocation(
               dataSources,
@@ -1149,9 +1157,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     geoJsonFeature: async (parent: unknown, {}, { dataSources }) => {
       return parent as GeoJsonFeature;
     },
-    mapFeatureMetadata: async (parent: unknown, {}, { dataSources }) => {
-      return parent as MapFeatureMetadata;
-    },
+    // mapFeatureMetadata: async (parent: unknown, {}, { dataSources }) => {
+    //   return parent as MapFeatureMetadata;
+    // },
     config: async (_source, { input }, { dataSources }) => {
       return input as ConfigItem[];
     },
@@ -1279,7 +1287,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || [];
     },
     cropMediafileCoordinatesKey: async (parent, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
   ManifestViewerElement: {
@@ -1526,7 +1534,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     onlyForEntityTypes: async (_source, { input }, { dataSources }) => {
       return input ?? [];
-    }
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
@@ -1664,7 +1672,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (!fromMediafile) return input || '';
       try {
-        const thumbnailId: string = _source["primary_thumbnail_id"];
+        const thumbnailId: string = _source['primary_thumbnail_id'];
         const mediafile: CollectionAPIMediaFile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
@@ -1887,17 +1895,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       const resolveObject: { [key: string]: Function } = {
         metadata: () =>
-          prepareMetadataFieldForMapData(
-            parent.metadata,
-            key,
-            defaultValue
-          ),
+          prepareMetadataFieldForMapData(parent.metadata, key, defaultValue),
         location: () =>
-          prepareLocationFieldForMapData(
-            parent.location,
-            key,
-            defaultValue,
-          ),
+          prepareLocationFieldForMapData(parent.location, key, defaultValue),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,
@@ -1917,35 +1917,42 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       const resolveObject: { [key: string]: Function } = {
         root: (currentKey: string, currentDefaultValue: any) =>
-            resolveIntialValueRoot(
-                dataSources,
-                parent,
-                currentKey,
-                null,
-                undefined
-            ),
+          resolveIntialValueRoot(
+            dataSources,
+            parent,
+            currentKey,
+            null,
+            undefined
+          ),
         metadata: (currentKey: string, currentDefaultValue: any) =>
-            prepareMetadataFieldForMapData(
-                parent.metadata,
-                currentKey,
-                currentDefaultValue
-            ),
+          prepareMetadataFieldForMapData(
+            parent.metadata,
+            currentKey,
+            currentDefaultValue
+          ),
         location: (currentKey: string, currentDefaultValue: any) =>
-            prepareLocationFieldForMapData(
-                parent.location,
-                currentKey,
-                currentDefaultValue
-            ),
+          prepareLocationFieldForMapData(
+            parent.location,
+            currentKey,
+            currentDefaultValue
+          ),
       };
 
-      const coordinatesValue =  (await resolveObject[coordinates.source](coordinates.key, coordinates.defaultValue)) || '';
-      const idValue =  (await resolveObject[id.source](id.key, id.defaultValue)) || '';
-      const weightValue =  (await resolveObject[weight.source](weight.key, weight.defaultValue)) || '';
+      const coordinatesValue =
+        (await resolveObject[coordinates.source](
+          coordinates.key,
+          coordinates.defaultValue
+        )) || '';
+      const idValue =
+        (await resolveObject[id.source](id.key, id.defaultValue)) || '';
+      const weightValue =
+        (await resolveObject[weight.source](weight.key, weight.defaultValue)) ||
+        '';
 
       return {
-        type: "Feature",
+        type: 'Feature',
         geometry: {
-          type: "Point",
+          type: 'Point',
           coordinates: normalizeCoordinatesForHeatmap(coordinatesValue),
         },
         properties: {
@@ -2228,7 +2235,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         matchExact,
         filterOptionsMapping,
         operator,
-        facets
+        facets,
       }
     ) => {
       return {
@@ -2238,13 +2245,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         parentKey,
         key,
         itemTypes,
-        label: label || "",
+        label: label || '',
         isDisplayedByDefault: isDisplayedByDefault || false,
         showTimeForDateFilter: showTimeForDateFilter,
         options: [],
         advancedFilterInputForRetrievingOptions,
         aggregation,
-        defaultValue: "",
+        defaultValue: '',
         doNotOverrideValue: false,
         hidden: false,
         min,
@@ -2256,7 +2263,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType,
         filterOptionsMapping,
         operator,
-        facets
+        facets,
       };
     },
   },
@@ -2271,33 +2278,39 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.selectionOption || AutocompleteSelectionOptions.Auto;
     },
     parentKey: async (parent) => {
-      return parent.parentKey || "";
+      return parent.parentKey || '';
     },
     key: async (parent) => {
-      return parent.key || "";
+      return parent.key || '';
     },
     itemTypes: async (parent) => {
       return parent.itemTypes || [];
     },
     label: async (parent) => {
-      return parent.label || "";
+      return parent.label || '';
     },
     isDisplayedByDefault: async (parent) => {
       return parent.isDisplayedByDefault || false;
     },
     showTimeForDateFilter: async (parent) => {
-      return parent.showTimeForDateFilter !== undefined ? parent.showTimeForDateFilter : true;
+      return parent.showTimeForDateFilter !== undefined
+        ? parent.showTimeForDateFilter
+        : true;
     },
     options: async (parent) => {
       return [
-        { icon: DamsIcons.NoIcon, label: "IotDevice", value: "IotDevice" },
+        { icon: DamsIcons.NoIcon, label: 'IotDevice', value: 'IotDevice' },
       ];
     },
-    advancedFilterInputForRetrievingOptions: async (parent, _, { dataSources }) => {
+    advancedFilterInputForRetrievingOptions: async (
+      parent,
+      _,
+      { dataSources }
+    ) => {
       const processFilterItem = async (item: AdvancedFilterInputType) => {
         const { value, ...rest } = item;
 
-        if (typeof value !== "string") {
+        if (typeof value !== 'string') {
           return { ...rest, value };
         }
 
@@ -2308,39 +2321,43 @@ export const baseResolver: Resolvers<ContextValue> = {
           return { ...rest, value };
         }
 
-        const sessionValue = await dataSources.CollectionAPI.getSessionInfo(match[1]);
+        const sessionValue = await dataSources.CollectionAPI.getSessionInfo(
+          match[1]
+        );
         return { ...rest, value: sessionValue };
       };
 
-      const originalFilters = parent.advancedFilterInputForRetrievingOptions || [];
-      const processedFilters = await Promise.all(originalFilters.map(processFilterItem));
+      const originalFilters =
+        parent.advancedFilterInputForRetrievingOptions || [];
+      const processedFilters = await Promise.all(
+        originalFilters.map(processFilterItem)
+      );
       return processedFilters as AdvancedFilterInputType[];
     },
     aggregation: async (parent) => {
-      return parent.aggregation || "";
+      return parent.aggregation || '';
     },
     defaultValue: async (parent, { value }, { dataSources }) => {
-      if (value && typeof value === "string") {
+      if (value && typeof value === 'string') {
         const sessionRegex = /^session-\$(.+)$/;
         let match = value.match(sessionRegex);
         if (match && match[1])
           return await dataSources.CollectionAPI.getSessionInfo(match[1]);
 
         const relationsRegex = /^parent.relationValues-\$(.+)$/;
-        match =  value.match(relationsRegex);
+        match = value.match(relationsRegex);
         if (match && match[1]) {
-          const relations = parent?.context || [""];
-          const defaultValueInfo = match[1].split("-");
-          if (defaultValueInfo[0] === "components") {
-            const relation = relations[0]?.components?.filter((relation: any) => relation.label === defaultValueInfo[defaultValueInfo.length-1]);
-            if (relation?.length <= 0) return [""];
+          const relations = parent?.context || [''];
+          const defaultValueInfo = match[1].split('-');
+          if (defaultValueInfo[0] === 'components') {
+            const relation = relations[0]?.components?.filter(
+              (relation: any) =>
+                relation.label === defaultValueInfo[defaultValueInfo.length - 1]
+            );
+            if (relation?.length <= 0) return [''];
             const key = relation?.[0].key;
             if (key) {
-              return [
-                key,
-                "entities/" + key,
-                "mediafiles/" + key,
-              ];
+              return [key, 'entities/' + key, 'mediafiles/' + key];
             }
           }
         }
@@ -2363,7 +2380,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent?.max ?? 0;
     },
     unit: (parent) => {
-      return parent?.unit ?? "";
+      return parent?.unit ?? '';
     },
     minDropdownSearchCharacters: (parent, { value }) => {
       return value ?? 3;
@@ -2372,7 +2389,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.useNewWayToFetchOptions ?? false;
     },
     entityType: (parent) => {
-      return parent.entityType ?? "";
+      return parent.entityType ?? '';
     },
     filterOptionsMapping: (parent) => {
       return parent.filterOptionsMapping as FilterOptionsMappingType;
@@ -2384,9 +2401,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.facets || [];
     },
   },
-  MapFeatureMetadata: {
-    metaData: async (parent: unknown, {}, { dataSources }) => {
-  return parent as PanelMetaData;
-}
-}
+  // MapFeatureMetadata: {
+  //   metaData: async (parent: unknown, {}, { dataSources }) => {
+  //     return parent as PanelMetaData;
+  //   },
+  // },
 };

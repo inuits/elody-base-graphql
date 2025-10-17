@@ -125,8 +125,8 @@ export class AuthRESTDataSource extends RESTDataSource {
           if (!response) {
             span.recordException(error);
             span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
-            span.setAttribute('request.id', this.requestId);
-            span.setAttribute('entity.type', args[0]);
+            if (this.requestId) span.setAttribute('request.id', this.requestId);
+            if (args[0]) span.setAttribute('request.id', args[0]);
             throw new GraphQLError(`AUTH | REFRESH FAILED`, {
               extensions: {
                 statusCode: 401,
@@ -138,17 +138,19 @@ export class AuthRESTDataSource extends RESTDataSource {
 
           return await fn(...args);
         } catch (refreshError) {
-          span.recordException(refreshError);
+          span.recordException(
+            error instanceof Error ? error : new Error(String(error))
+          );
           span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
-          span.setAttribute('request.id', this.requestId);
-          span.setAttribute('entity.type', args[0]);
+          if (this.requestId) span.setAttribute('request.id', this.requestId);
+          if (args[0]) span.setAttribute('entity.type', args[0]);
           throw refreshError;
         }
       } else {
         span.recordException(error);
         span.setStatus({ code: 2, message: (error as Error).message });
-        span.setAttribute('request.id', this.requestId);
-        span.setAttribute('entity.type', args[0]);
+        if (this.requestId) span.setAttribute('request.id', this.requestId);
+        if (args[0]) span.setAttribute('entity.type', args[0]);
         throw error;
       }
     } finally {
