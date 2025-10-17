@@ -519,6 +519,7 @@ export const baseSchema = gql`
     Globe
     Hdd
     History
+    Home
     Image
     InfoCircle
     Iot
