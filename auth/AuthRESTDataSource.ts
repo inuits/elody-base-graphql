@@ -86,16 +86,36 @@ export class AuthRESTDataSource extends RESTDataSource {
     fn: F,
     ...args: T
   ): Promise<S> {
+    const spanName = `${(fn as any).name.toUpperCase()} ${args[0]}`;
+    const spanOptions = {
+      attributes: {
+        'http.path': args[0],
+        'http.method': (fn as any).name.toUpperCase(),
+      },
+    };
+    return this.tracer.startActiveSpan(spanName, spanOptions, async (span) => {
+      if (!args[2]) args[2] = {};
+      if (!args[2].headers) args[2].headers = {};
+      propagation.inject(context.active(), args[2].headers);
+
       try {
-        return await fn(...args);
+        const result = await fn(...args);
+        span.setStatus({ code: 1 });
+        return result;
       } catch (error: any) {
         if (this.session.auth && error?.extensions?.response?.status === 401) {
+          try {
             const response = await manager?.refresh(
               this.session.auth.accessToken,
               this.session.auth.refreshToken
             );
 
             if (!response) {
+              span.recordException(error);
+              span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+              if (this.requestId)
+                span.setAttribute('request.id', this.requestId);
+              if (args[0]) span.setAttribute('request.id', args[0]);
               throw new GraphQLError(`AUTH | REFRESH FAILED`, {
                 extensions: {
                   statusCode: 401,
@@ -106,10 +126,27 @@ export class AuthRESTDataSource extends RESTDataSource {
             this.session.auth = response;
 
             return await fn(...args);
-          } else {
+          } catch (refreshError) {
+            span.recordException(
+              error instanceof Error ? error : new Error(String(error))
+            );
+            span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+            if (this.requestId) span.setAttribute('request.id', this.requestId);
+            if (args[0]) span.setAttribute('entity.type', args[0]);
+            throw refreshError;
+          }
+        } else {
+          span.recordException(error);
+          span.setStatus({ code: 2, message: (error as Error).message });
+          if (this.requestId) span.setAttribute('request.id', this.requestId);
+          if (args[0]) span.setAttribute('entity.type', args[0]);
           throw error;
         }
       }
+    });
+    finally {
+      span.end();
+    }
   }
 
   public async get<TResult = any>(
