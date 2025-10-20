@@ -211,9 +211,7 @@ const start = (
             'data:',
             'blob:',
             'https://server.arcgisonline.com',
-            'https://a.tile.openstreetmap.org',
-            'https://b.tile.openstreetmap.org',
-            'https://c.tile.openstreetmap.org',
+            'https://*.openstreetmap.org',
           ],
           'connect-src': [
             "'self'",
