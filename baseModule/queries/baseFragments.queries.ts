@@ -161,6 +161,17 @@ export const baseFragments = gql`
     keyToSaveCropCoordinates
     pageToNavigateToAfterCreation
   }
+  
+  fragment subOptions on DropdownOption {
+      icon
+      label
+      value
+      primary
+      can
+      bulkOperationModal {
+          ...bulkOperationModal
+      }
+  }
 
   fragment viewModes on ViewModesWithConfig {
     viewMode

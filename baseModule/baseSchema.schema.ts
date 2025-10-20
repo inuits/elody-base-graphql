@@ -519,6 +519,7 @@ export const baseSchema = gql`
     Globe
     Hdd
     History
+    Home
     Image
     InfoCircle
     Iot
@@ -714,6 +715,7 @@ export const baseSchema = gql`
     required: Boolean
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
+    subOptions: [DropdownOption]
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
@@ -736,6 +738,7 @@ export const baseSchema = gql`
     active: Boolean
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
+    subOptions: [DropdownOptionInput]
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
@@ -746,6 +749,7 @@ export const baseSchema = gql`
   }
 
   enum BulkOperationTypes {
+    openDropdown
     createEntity
     downloadMediafiles
     reorderEntities
@@ -1026,6 +1030,7 @@ export const baseSchema = gql`
       keyOnMetadata: String
       formatter: String
       technicalOrigin: String
+      index: Int
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues

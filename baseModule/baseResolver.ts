@@ -1006,6 +1006,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         keyOnMetadata,
         formatter = '',
         technicalOrigin,
+        index,
       },
       { dataSources, customFormatters }
     ) => {
@@ -1075,7 +1076,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               dataSources
             ),
           typePillLabel: () =>
-            resolveIntialValueTypePillLabel(parent, key, formatter),
+            resolveIntialValueTypePillLabel(parent, key, index as number, formatter),
           location: () =>
             resolveIntialValueLocation(
               dataSources,

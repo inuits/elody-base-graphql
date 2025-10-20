@@ -110,7 +110,7 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
 };
 
 const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
-  [key: string]: string;
+  [key: string]: string[];
 }) => {
   Object.keys(customTypePillLabelMapping).forEach((key: string) => {
     baseTypePillLabelMapping[key] = customTypePillLabelMapping[key];
@@ -129,7 +129,9 @@ const start = (
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
   customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} },
-  customTypePillLabelMapping: { [key: string]: string } | undefined = undefined
+  customTypePillLabelMapping:
+    | { [key: string]: string[] }
+    | undefined = undefined
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);
@@ -198,11 +200,7 @@ const start = (
 
     app.use(compression());
 
-    // app.use(sanitizeRequestBody)
-
     app.use(helmet());
-
-    appConfig.sentryEnabled;
 
     app.use(
       helmet.contentSecurityPolicy({
@@ -214,9 +212,7 @@ const start = (
             'data:',
             'blob:',
             'https://server.arcgisonline.com',
-            'https://a.tile.openstreetmap.org',
-            'https://b.tile.openstreetmap.org',
-            'https://c.tile.openstreetmap.org',
+            'https://*.openstreetmap.org',
           ],
           'connect-src': [
             "'self'",
@@ -250,7 +246,7 @@ const start = (
       appConfig.apollo.graphqlPath,
       expressMiddleware(server, {
         context: async ({ req, res }) => {
-          checkRequestContentType(req, res);
+          if (checkRequestContentType(req, res)) return {} as ContextValue;
           const { cache } = server;
           const session = { ...req.session };
           const clientIp: string = req.headers['x-forwarded-for'] as string;
@@ -263,11 +259,6 @@ const start = (
           if (!isRequiredDataSources(dataSources)) {
             throw new Error('All DataSources properties must be defined');
           }
-
-          // if (req.body.variables) {
-          //   const sanitizedVariables = deepSanitize(req.body.variables)
-          //   req.body.variables = sanitizedVariables;
-          // }
 
           return {
             dataSources,
