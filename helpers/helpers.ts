@@ -180,10 +180,11 @@ export const getTypesFromFilterInputs = (
 };
 
 export const checkRequestContentType = (req: Request, res: Response) => {
-  const allowed: string[] = ['application/json'];
-  const contentType: string = req.headers['content-type']!;
-
-  if (!allowed.includes(contentType)) {
-    return res.status(415).send('Unsupported Media Type');
+  const allowed = ['application/json'];
+  const contentType = req.headers['content-type'];
+  if (!contentType || !allowed.includes(contentType)) {
+    res.status(415).send('Unsupported Media Type');
+    return true;
   }
+  return false;
 };
