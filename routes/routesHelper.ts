@@ -1,11 +1,18 @@
 import {baseRoutes} from './baseRoutes';
 
+type routeMetaQueries = {
+    getEntities: string,
+    getFilters: string,
+    getSortOptions: string,
+    getBulkOperations: string,
+}
+
 type Route = {
     path: string,
     name?: string,
     component?: string,
     meta?: {
-        queries?: object,
+        queries?: routeMetaQueries,
         requiresAuth?: boolean,
         type?: string,
         entityType?: string,
@@ -63,7 +70,7 @@ const mapRouteChildren = (routeChildren: Route[]) => {
     });
 }
 
-const createDefaultQueriesForRoute = (): object => {
+const createDefaultQueriesForRoute = (): routeMetaQueries => {
     return {
         getEntities: "GetEntities",
         getFilters: "GetAdvancedFilters",
