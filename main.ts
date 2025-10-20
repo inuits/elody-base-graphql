@@ -110,7 +110,7 @@ const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
 };
 
 const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
-  [key: string]: string;
+  [key: string]: string[];
 }) => {
   Object.keys(customTypePillLabelMapping).forEach((key: string) => {
     baseTypePillLabelMapping[key] = customTypePillLabelMapping[key];
@@ -129,7 +129,7 @@ const start = (
   customPermissions: { [key: string]: PermissionRequestInfo } = {},
   customFormatters: FormattersConfig = {},
   customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} },
-  customTypePillLabelMapping: { [key: string]: string } | undefined = undefined
+  customTypePillLabelMapping: { [key: string]: string[] } | undefined = undefined
 ): void => {
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(appConfig);

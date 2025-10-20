@@ -248,12 +248,13 @@ export const resolveIntialValueDerivatives = async (parent: CollectionAPIEntity,
 export const resolveIntialValueTypePillLabel = (
     parent: any,
     key: string,
+    index: number = 0,
     formatter: string | null
 ): string => {
     let typeMapping: string = '';
     try {
         const type = parent[key];
-        typeMapping = baseTypePillLabelMapping[type];
+        typeMapping = baseTypePillLabelMapping[type][index];
     } catch {
         return '';
     }
