@@ -5,6 +5,12 @@ import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { environment } from '../main';
+import {
+  trace,
+  context,
+  propagation,
+  SpanStatusCode,
+} from '@opentelemetry/api';
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
   protected clientIp: string | undefined;
