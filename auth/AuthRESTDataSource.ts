@@ -5,8 +5,12 @@ import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { environment } from '../main';
-import { trace, context, propagation } from '@opentelemetry/api';
-
+import {
+  trace,
+  context,
+  propagation,
+  SpanStatusCode,
+} from '@opentelemetry/api';
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
   protected clientIp: string | undefined;
@@ -113,7 +117,7 @@ export class AuthRESTDataSource extends RESTDataSource {
 
       try {
         const result = await fn(...args);
-        span.setStatus({ code: 1 });
+        span.setStatus({ code: SpanStatusCode.OK });
         return result;
       } catch (error: any) {
         if (this.session.auth && error?.extensions?.response?.status === 401) {
@@ -125,7 +129,10 @@ export class AuthRESTDataSource extends RESTDataSource {
 
             if (!response) {
               span.recordException(error);
-              span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+              span.setStatus({
+                code: SpanStatusCode.ERROR,
+                message: 'AUTH REFRESH FAILED',
+              });
               if (this.requestId)
                 span.setAttribute('request.id', this.requestId);
               if (args[0]) span.setAttribute('request.id', args[0]);
@@ -143,14 +150,20 @@ export class AuthRESTDataSource extends RESTDataSource {
             span.recordException(
               error instanceof Error ? error : new Error(String(error))
             );
-            span.setStatus({ code: 2, message: 'AUTH REFRESH FAILED' });
+            span.setStatus({
+              code: SpanStatusCode.ERROR,
+              message: 'AUTH REFRESH FAILED',
+            });
             if (this.requestId) span.setAttribute('request.id', this.requestId);
             if (args[0]) span.setAttribute('entity.type', args[0]);
             throw refreshError;
           }
         } else {
           span.recordException(error);
-          span.setStatus({ code: 2, message: (error as Error).message });
+          span.setStatus({
+            code: SpanStatusCode.ERROR,
+            message: (error as Error).message,
+          });
           if (this.requestId) span.setAttribute('request.id', this.requestId);
           if (args[0]) span.setAttribute('entity.type', args[0]);
           throw error;
