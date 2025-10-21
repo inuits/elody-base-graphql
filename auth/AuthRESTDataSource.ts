@@ -65,7 +65,6 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (request.headers && tenant) {
       request.headers['X-tenant-id'] = tenant;
     }
-
   }
 
   private hasWhiteListingFeature = (): boolean => {
