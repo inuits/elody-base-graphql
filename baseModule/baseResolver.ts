@@ -111,7 +111,7 @@ import {
   AdvancedFilterInputType,
   LookupInputType,
   AutocompleteSelectionOptions,
-  // MapFeatureMetadata,
+  MapFeatureMetadata,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1158,9 +1158,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     geoJsonFeature: async (parent: unknown, {}, { dataSources }) => {
       return parent as GeoJsonFeature;
     },
-    // mapFeatureMetadata: async (parent: unknown, {}, { dataSources }) => {
-    //   return parent as MapFeatureMetadata;
-    // },
+    mapFeatureMetadata: async (parent: unknown, {}, { dataSources }) => {
+      return parent as MapFeatureMetadata;
+    },
     config: async (_source, { input }, { dataSources }) => {
       return input as ConfigItem[];
     },
@@ -2402,9 +2402,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.facets || [];
     },
   },
-  // MapFeatureMetadata: {
-  //   metaData: async (parent: unknown, {}, { dataSources }) => {
-  //     return parent as PanelMetaData;
-  //   },
-  // },
+  MapFeatureMetadata: {
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
+  },
 };

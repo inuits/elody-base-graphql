@@ -48,10 +48,6 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-request-id'] = requestId;
     }
 
-    console.log(
-      `[Request Start][${requestId}] ${_path} at ${new Date(start).toISOString()}`
-    );
-
     const accessToken = this.session?.auth?.accessToken;
 
     if (accessToken && accessToken !== 'undefined' && request.headers) {
@@ -168,11 +164,10 @@ export class AuthRESTDataSource extends RESTDataSource {
           if (args[0]) span.setAttribute('entity.type', args[0]);
           throw error;
         }
+      } finally {
+        span.end();
       }
     });
-    // finally {
-    //   span.end();
-    // }
   }
 
   public async get<TResult = any>(
