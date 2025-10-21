@@ -5,12 +5,7 @@ import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { environment } from '../main';
-import {
-  trace,
-  context,
-  propagation,
-  SpanStatusCode,
-} from '@opentelemetry/api';
+
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
   protected clientIp: string | undefined;
@@ -29,15 +24,9 @@ export class AuthRESTDataSource extends RESTDataSource {
     this.context = options.context;
   }
 
-  tracer = trace.getTracer('elody-graphql');
-
   async willSendRequest(_path: string, request: AugmentedRequest) {
-    const start = Date.now();
     // Ensure a stable requestId for the lifetime of this datasource instance
-    const requestId =
-      (this.context?.requestId as string) ||
-      this.requestId ||
-      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    const requestId = (this.context?.requestId as string) || this.requestId || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     this.requestId = requestId;
 
     if (this.context && !this.context.requestId) {
@@ -47,6 +36,7 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (request.headers) {
       request.headers['X-request-id'] = requestId;
     }
+
 
     const accessToken = this.session?.auth?.accessToken;
 
@@ -76,8 +66,6 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-tenant-id'] = tenant;
     }
 
-    const duration = Date.now() - start;
-    console.log(`[Request End][${requestId}] ${_path} took ${duration}ms`);
   }
 
   private hasWhiteListingFeature = (): boolean => {
@@ -99,39 +87,16 @@ export class AuthRESTDataSource extends RESTDataSource {
     fn: F,
     ...args: T
   ): Promise<S> {
-    const spanName = `${(fn as any).name.toUpperCase()} ${args[0]}`;
-    const spanOptions = {
-      attributes: {
-        'http.path': args[0],
-        'http.method': (fn as any).name.toUpperCase(),
-      },
-    };
-    return this.tracer.startActiveSpan(spanName, spanOptions, async (span) => {
-      if (!args[2]) args[2] = {};
-      if (!args[2].headers) args[2].headers = {};
-      propagation.inject(context.active(), args[2].headers);
-
       try {
-        const result = await fn(...args);
-        span.setStatus({ code: SpanStatusCode.OK });
-        return result;
+        return await fn(...args);
       } catch (error: any) {
         if (this.session.auth && error?.extensions?.response?.status === 401) {
-          try {
             const response = await manager?.refresh(
               this.session.auth.accessToken,
               this.session.auth.refreshToken
             );
 
             if (!response) {
-              span.recordException(error);
-              span.setStatus({
-                code: SpanStatusCode.ERROR,
-                message: 'AUTH REFRESH FAILED',
-              });
-              if (this.requestId)
-                span.setAttribute('request.id', this.requestId);
-              if (args[0]) span.setAttribute('request.id', args[0]);
               throw new GraphQLError(`AUTH | REFRESH FAILED`, {
                 extensions: {
                   statusCode: 401,
@@ -142,32 +107,10 @@ export class AuthRESTDataSource extends RESTDataSource {
             this.session.auth = response;
 
             return await fn(...args);
-          } catch (refreshError) {
-            span.recordException(
-              error instanceof Error ? error : new Error(String(error))
-            );
-            span.setStatus({
-              code: SpanStatusCode.ERROR,
-              message: 'AUTH REFRESH FAILED',
-            });
-            if (this.requestId) span.setAttribute('request.id', this.requestId);
-            if (args[0]) span.setAttribute('entity.type', args[0]);
-            throw refreshError;
-          }
-        } else {
-          span.recordException(error);
-          span.setStatus({
-            code: SpanStatusCode.ERROR,
-            message: (error as Error).message,
-          });
-          if (this.requestId) span.setAttribute('request.id', this.requestId);
-          if (args[0]) span.setAttribute('entity.type', args[0]);
+          } else {
           throw error;
         }
-      } finally {
-        span.end();
       }
-    });
   }
 
   public async get<TResult = any>(

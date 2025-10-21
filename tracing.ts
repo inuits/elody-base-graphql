@@ -4,16 +4,13 @@ import { SemanticResourceAttributes as R } from '@opentelemetry/semantic-convent
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 
-const exporter_url =
-  process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://alloy:4318';
-
 const exporter = new OTLPTraceExporter({
-  url: `${exporter_url}/v1/traces`,
+  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://alloy"4318/v1/traces',
 });
 
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
-    [R.SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'elody-graphql',
+    [R.SERVICE_NAME]: process.env.SERVICE_NAME || 'elody-graphql',
     [R.DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV || 'dev',
     [R.SERVICE_VERSION]: process.env.APP_VERSION || 'local',
   }),
@@ -24,15 +21,6 @@ const sdk = new NodeSDK({
       // '@opentelemetry/instrumentation-fs': {
       //   enabled: false,
       // },
-      '@opentelemetry/instrumentation-express': {
-        enabled: false,
-      },
-      '@opentelemetry/instrumentation-dns': {
-        enabled: false,
-      },
-      '@opentelemetry/instrumentation-net': {
-        enabled: false,
-      },
     }),
   ],
 });

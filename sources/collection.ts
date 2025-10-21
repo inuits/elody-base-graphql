@@ -28,12 +28,6 @@ import { environment as env } from '../main';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
-import {
-  trace,
-  context,
-  propagation,
-  SpanStatusCode,
-} from '@opentelemetry/api';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -47,8 +41,6 @@ export class CollectionAPI extends AuthRESTDataSource {
   public config: Config | 'no-config' = 'no-config';
   public preferredLanguage: string =
     env?.customization?.applicationLocale || 'en';
-
-  tracer = trace.getTracer('elody-graphql');
 
   async getSessionInfo(key: string): Promise<string> {
     const user = jwtDecode(this.session.auth.accessToken!) as {
@@ -611,50 +603,14 @@ export class CollectionAPI extends AuthRESTDataSource {
     advancedSearchValue: SearchFilter
   ): Promise<EntetiesCallReturn> {
     const body = advancedFilterInputs;
-
-    const path = `${getCollectionValueForEntityType(
-      type
-    )}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}&order_by=${
-      advancedSearchValue.order_by
-    }&asc=${advancedSearchValue.isAsc ? 1 : 0}`;
-    const spanName = `doAdvancedEntitiesCall ${type}`;
-    const spanOptions = {
-      attributes: {
-        'http.method': 'POST',
-        'entity.type': type,
-        'query.limit': limit,
-        'query.skip': skip,
-      },
-    };
-    return this.tracer.startActiveSpan(spanName, spanOptions, async (span) => {
-      try {
-        const init: any = { headers: {} };
-        propagation.inject(context.active(), init.headers as any);
-
-        const data = await context.with(
-          trace.setSpan(context.active(), span),
-          async () => {
-            return this.post(path, { body }, init);
-          }
-        );
-
-        span.setStatus({ code: SpanStatusCode.OK });
-        span.setAttribute(
-          'result.count',
-          Array.isArray(data?.results) ? data.results.length : 0
-        );
-        return data;
-      } catch (error: any) {
-        span.recordException(error);
-        span.setStatus({
-          code: SpanStatusCode.ERROR,
-          message: error.message,
-        });
-        throw error;
-      } finally {
-        span.end();
-      }
-    });
+    return await this.post(
+      `${getCollectionValueForEntityType(
+        type
+      )}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}&order_by=${
+        advancedSearchValue.order_by
+      }&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
+      { body }
+    );
   }
 
   // TODO: redo or remove after the demo #139636
