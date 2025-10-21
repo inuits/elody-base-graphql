@@ -715,6 +715,7 @@ export const baseSchema = gql`
     required: Boolean
     actionContext(input: ActionContextInput): ActionContext
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
+    subOptions: [DropdownOption]
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
@@ -737,6 +738,7 @@ export const baseSchema = gql`
     active: Boolean
     actionContext: ActionContextInput
     bulkOperationModal: BulkOperationInputModal
+    subOptions: [DropdownOptionInput]
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
@@ -747,6 +749,7 @@ export const baseSchema = gql`
   }
 
   enum BulkOperationTypes {
+    openDropdown
     createEntity
     downloadMediafiles
     reorderEntities
