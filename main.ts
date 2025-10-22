@@ -300,7 +300,7 @@ const start = (
     app.set('views', path.join(__dirname + '/views'));
     app.set('view engine', 'pug');
 
-    if (appConfig.features.SEO.hasSEO)
+    if (appConfig.features.SEO)
       applySEOEndpoint(app, environment as Environment);
 
     if (appConfig.api.promUrl !== 'no-prom') {
