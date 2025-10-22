@@ -5,6 +5,7 @@ export interface Environment {
     introspection: boolean;
     playground: boolean;
     tokenLogging: string;
+    maxQueryDepth: number;
   };
   port: number | string;
   environment: string;
@@ -22,7 +23,6 @@ export interface Environment {
   };
   api: {
     collectionApiUrl: string;
-    searchApiUrl: string;
     csvImportServiceUrl: string;
     fileSystemImporterServiceUrl?: string;
     iiifUrl: string;
@@ -46,10 +46,9 @@ export interface Environment {
     };
   };
   features: {
-    simpleSearch: {
-      hasSimpleSearch: boolean;
-      itemTypes?: Entitytyping[];
-      simpleSearchMetadataKey?: string[];
+    simpleSearch?: {
+      itemTypes: Entitytyping[];
+      simpleSearchMetadataKey: string[];
     };
     ipWhiteListing?: {
       whiteListedIpAddresses: string[];
@@ -69,9 +68,8 @@ export interface Environment {
       perPage?: number;
       facetBy?: string;
     };
-    SEO: {
-      hasSEO: boolean;
-      seoMetadataKeys?: {
+    SEO?: {
+      seoMetadataKeys: {
         title: string;
         description: string;
         image: string;
