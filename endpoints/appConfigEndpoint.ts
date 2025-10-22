@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { Environment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 import { TypeUrlMapping } from '../types';
 
 const getConfig = (config: Environment) => {

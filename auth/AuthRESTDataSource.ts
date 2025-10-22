@@ -4,13 +4,15 @@ import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
-import { environment } from '../main';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 export class AuthRESTDataSource extends RESTDataSource {
   protected session: any;
   protected clientIp: string | undefined;
   protected context: any;
   private requestId?: string;
+  environment: Environment = getCurrentEnvironment();
 
   constructor(options: {
     session: any;
@@ -26,7 +28,10 @@ export class AuthRESTDataSource extends RESTDataSource {
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
     // Ensure a stable requestId for the lifetime of this datasource instance
-    const requestId = (this.context?.requestId as string) || this.requestId || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    const requestId =
+      (this.context?.requestId as string) ||
+      this.requestId ||
+      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     this.requestId = requestId;
 
     if (this.context && !this.context.requestId) {
@@ -37,13 +42,18 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-request-id'] = requestId;
     }
 
+    console.log(
+      `[Request Start][${requestId}] ${_path} at ${new Date(
+        start
+      ).toISOString()}`
+    );
 
     const accessToken = this.session?.auth?.accessToken;
 
     if (accessToken && accessToken !== 'undefined' && request.headers) {
       request.headers['Authorization'] = 'Bearer ' + accessToken;
     } else {
-      const ipWhitelistFeature = environment?.features?.ipWhiteListing;
+      const ipWhitelistFeature = this.environment?.features?.ipWhiteListing;
 
       if (
         ipWhitelistFeature &&
@@ -69,15 +79,14 @@ export class AuthRESTDataSource extends RESTDataSource {
   }
 
   private hasWhiteListingFeature = (): boolean => {
-    return !!(environment && environment.features.ipWhiteListing);
+    return !!this.environment.features.ipWhiteListing;
   };
 
   private isIpAddressWhiteListed = (): boolean => {
     return Boolean(
-      environment &&
-        this.clientIp &&
+      this.clientIp &&
         this.hasWhiteListingFeature() &&
-        environment.features.ipWhiteListing?.whiteListedIpAddresses.includes(
+        this.environment.features.ipWhiteListing?.whiteListedIpAddresses.includes(
           this.clientIp
         )
     );

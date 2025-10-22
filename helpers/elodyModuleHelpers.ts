@@ -4,9 +4,10 @@ import { StorageAPI } from '../sources/storage';
 import { CollectionAPI } from '../sources/collection';
 import { GraphqlAPI } from '../sources/graphql';
 import { DataSources, OptionalDataSources } from '../types';
-import { AuthRESTDataSource, Environment, environment } from '../main';
+import { AuthRESTDataSource } from '../main';
 import { TranscodeService } from '../sources/transcode';
 import { OcrService } from '../sources/ocr';
+import { Environment } from '../types/environmentTypes';
 
 export type ElodyConfig = {
   modules: Module[];
@@ -33,7 +34,7 @@ const baseElodyElodyConfig: ElodyConfig = {
 };
 
 export const addAdditionalOptionalDataSources = (environment: Environment) => {
-  if (environment?.api.fileSystemImporterServiceUrl) {
+  if (environment.api.fileSystemImporterServiceUrl) {
     baseElodyElodyConfig.dataSources.push(
       (session: any, cache: any, clientIp: string) => {
         return {
@@ -42,7 +43,7 @@ export const addAdditionalOptionalDataSources = (environment: Environment) => {
       }
     );
   }
-  if (environment?.api.ocrService) {
+  if (environment.api.ocrService) {
     baseElodyElodyConfig.dataSources.push(
       (session: any, cache: any, clientIp: string) => {
         return { OcrService: new OcrService({ session, cache, clientIp }) };

@@ -1,10 +1,12 @@
 import fetch, { Response as FetchResponse } from 'node-fetch';
 import { addJwt } from './mediafilesEndpoint';
-import { environment as env } from '../main';
 import { Express, Request, Response } from 'express';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 export const applyExportEndpoint = (app: Express) => {
+  const env: Environment = getCurrentEnvironment();
   app.get(`/api/export/csv`, async (request: Request, response: Response) => {
     try {
       let fieldQueryParameter = '';
@@ -13,7 +15,11 @@ export const applyExportEndpoint = (app: Express) => {
       );
 
       await fetch(
-        `${env?.api.collectionApiUrl}/${getCollectionValueForEntityType(request.query.type as string)}?order_by=${request.query.order_by}&asc=${request.query.asc}&type=${request.query.type}&ids=${request.query.ids}${fieldQueryParameter}`,
+        `${env.api.collectionApiUrl}/${getCollectionValueForEntityType(
+          request.query.type as string
+        )}?order_by=${request.query.order_by}&asc=${request.query.asc}&type=${
+          request.query.type
+        }&ids=${request.query.ids}${fieldQueryParameter}`,
         {
           method: 'GET',
           headers: {

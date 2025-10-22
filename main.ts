@@ -38,7 +38,16 @@ import {
   FormattersConfig,
   TypeUrlMapping,
 } from './types';
-import { Environment } from './environment';
+import {
+  createElodyEnvironment,
+  currentEnvironment,
+  getCurrentEnvironment,
+  setCurrentEnvironment,
+} from './environment';
+import {
+  Environment,
+  FullyOptionalEnvironmentInput,
+} from './types/environmentTypes';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { loadTranslations } from './translations/loadTranslations';
@@ -67,7 +76,6 @@ import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
 import depthLimit from 'graphql-depth-limit';
 
-let environment: Environment | undefined = undefined;
 const baseTranslations: Object = {
   en: loadTranslations(path.join(__dirname, './translations/en.json'))['en'],
   nl: loadTranslations(path.join(__dirname, './translations/nl.json'))['nl'],
@@ -118,7 +126,7 @@ const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
 
 const start = (
   elodyConfig: ElodyConfig,
-  appConfig: Environment,
+  appConfig: FullyOptionalEnvironmentInput,
   appTranslations: { [key: string]: string },
   customEndpoints: ((app: any) => void)[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
@@ -132,32 +140,33 @@ const start = (
     | { [key: string]: string[] }
     | undefined = undefined
 ): void => {
+  setCurrentEnvironment(createElodyEnvironment(appConfig));
+  const environment = getCurrentEnvironment();
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
-  addAdditionalOptionalDataSources(appConfig);
+  addAdditionalOptionalDataSources(environment);
 
   const application = createApplication({
     modules: fullElodyConfig.modules,
   });
-  environment = appConfig;
 
-  if (appConfig.sentryEnabled) {
+  if (environment.sentryEnabled) {
     Sentry.init({
-      dsn: appConfig.sentryDsn,
+      dsn: environment.sentryDsn,
       sendClientReports: false,
-      environment: appConfig.nomadNamespace,
+      environment: environment.nomadNamespace,
     });
   }
 
-  const configureMiddleware = (app: any, appConfig: Environment) => {
+  const configureMiddleware = (app: any, environment: Environment) => {
     applyAuthSession(
       app,
-      appConfig.sessionSecret,
-      createMongoConnectionString(appConfig),
-      appConfig
+      environment.sessionSecret,
+      createMongoConnectionString(environment),
+      environment
     );
     applyEnvironmentConfig({
-      tokenLogging: appConfig.apollo.tokenLogging,
-      staticJWT: appConfig.staticToken,
+      tokenLogging: environment.apollo.tokenLogging,
+      staticJWT: environment.staticToken,
     });
   };
 
@@ -167,7 +176,7 @@ const start = (
     httpServer.setTimeout(120000);
 
     let viteServer: ViteDevServer | undefined;
-    if (appConfig.environment !== 'production') {
+    if (environment.environment !== 'production') {
       viteServer = await createViteServer({
         server: {
           middlewareMode: true,
@@ -183,7 +192,7 @@ const start = (
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
-      validationRules: [depthLimit(10)],
+      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 10)],
       introspection: environment?.apollo.introspection || false,
       gateway: {
         async load() {
@@ -216,8 +225,8 @@ const start = (
           'connect-src': [
             "'self'",
             '*',
-            ...(appConfig.sentryEnabled && appConfig.sentryDsn
-              ? [new URL(appConfig.sentryDsn).origin]
+            ...(environment.sentryEnabled && environment.sentryDsn
+              ? [new URL(environment.sentryDsn).origin]
               : []),
           ],
         },
@@ -227,22 +236,22 @@ const start = (
     app.use(
       cors({
         credentials: false,
-        origin: [appConfig.damsFrontend],
+        origin: [environment.damsFrontend],
       }),
-      express.json({ limit: appConfig.maxUploadSize }),
+      express.json({ limit: environment.maxUploadSize }),
       express.urlencoded({
         extended: true,
-        limit: appConfig.maxUploadSize,
+        limit: environment.maxUploadSize,
         parameterLimit: 1000000,
       })
     );
 
     await server.start();
 
-    configureMiddleware(app, appConfig);
+    configureMiddleware(app, environment);
 
     app.use(
-      appConfig.apollo.graphqlPath,
+      environment.apollo.graphqlPath,
       expressMiddleware(server, {
         context: async ({ req, res }) => {
           if (checkRequestContentType(req, res)) return {} as ContextValue;
@@ -269,20 +278,20 @@ const start = (
     );
 
     const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
-      authEndpoint: [app, appConfig.oauth.baseUrl, appConfig.clientSecret],
-      versionEndpoint: [app, appConfig],
+      authEndpoint: [app, environment.oauth.baseUrl, environment.clientSecret],
+      versionEndpoint: [app, environment],
       downloadEndpoint: [app],
       uploadEndpoint: [app],
       exportEndpoint: [app],
       mediafileEndpoint: [
         app,
-        appConfig.api.storageApiUrl,
-        appConfig.api.iiifUrl,
-        appConfig.staticToken,
+        environment.api.storageApiUrl,
+        environment.api.iiifUrl,
+        environment.staticToken,
       ],
       tenantEndpoint: [app],
       healthEndpoint: [app],
-      configsEndoint: [app, appConfig, appTranslations, customTypeUrlMapping],
+      configsEndoint: [app, environment, appTranslations, customTypeUrlMapping],
       // linkedOpenDataEndpoint: [app],
     };
 
@@ -300,11 +309,11 @@ const start = (
     app.set('views', path.join(__dirname + '/views'));
     app.set('view engine', 'pug');
 
-    if (appConfig.features.SEO)
+    if (environment.features.SEO)
       applySEOEndpoint(app, environment as Environment);
 
-    if (appConfig.api.promUrl !== 'no-prom') {
-      applyPromEndpoint(app, appConfig.api.promUrl);
+    if (environment.api.promUrl !== 'no-prom') {
+      applyPromEndpoint(app, environment.api.promUrl);
     }
 
     if (customEndpoints) {
@@ -325,8 +334,8 @@ const start = (
 
     configureFrontendForEnvironment(app, viteServer);
 
-    httpServer.listen(appConfig.port, () => {
-      console.log(`Server is running on port ${appConfig.port}`);
+    httpServer.listen(environment.port, () => {
+      console.log(`Server is running on port ${environment.port}`);
     });
 
     return { app };
@@ -339,6 +348,7 @@ export default start;
 export type {
   ContextValue,
   DataSources,
+  FullyOptionalEnvironmentInput,
   Environment,
   FormattersConfig,
   CollectionAPIEntity,
@@ -348,7 +358,7 @@ export type {
   ElodyConfig,
 };
 export {
-  environment,
+  currentEnvironment as environment,
   baseModule,
   baseSchema,
   resolveMetadata,

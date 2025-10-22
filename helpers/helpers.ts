@@ -6,14 +6,12 @@ import {
   Collection,
 } from '../../../generated-types/type-defs';
 import { DataSources } from '../types';
-import {
-  CollectionAPIEntity,
-  environment,
-  CollectionAPIRelation,
-} from '../main';
+import { CollectionAPIEntity, CollectionAPIRelation } from '../main';
 import { baseTypeCollectionMapping as collection } from '../sources/typeCollectionMapping';
 import proj4 from 'proj4';
 import type { Request, Response } from 'express';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 const loggedTypes: string[] = [];
 
@@ -113,7 +111,8 @@ export const alterDimensionsOfIIIFUrl = (
 };
 
 export const getEntityId = (entity: any) => {
-  const key: string = environment?.customization?.entityIdKey || '_id';
+  const environment: Environment = getCurrentEnvironment();
+  const key: string = environment.customization?.entityIdKey || '_id';
   return entity[key];
 };
 

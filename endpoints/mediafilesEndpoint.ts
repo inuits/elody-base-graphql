@@ -1,7 +1,8 @@
 import { Express, Response, Request } from 'express';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { manager } from '../auth/index';
-import { environment as env } from '../main';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 import { Collection } from '../../../generated-types/type-defs';
 import { GraphQLError } from 'graphql/index';
 import jwt_decode from 'jwt-decode';
@@ -94,6 +95,7 @@ function isTokenExpired(token: string) {
 }
 
 export const addHeaders = (proxyReq: any, req: Request, res: Response) => {
+  const env: Environment = getCurrentEnvironment();
   const mediafileId = extractIdFromMediafilePath(req.originalUrl);
   if (mediafileId)
     res.setHeader(
@@ -220,6 +222,7 @@ const applyMediaFileEndpoint = (
   });
 
   app.use('/api/mediafiles/*/download', async (req, res) => {
+    const env: Environment = getCurrentEnvironment();
     try {
       const clientIp: string = req.headers['x-forwarded-for'] as string;
       const datasource = new AuthRESTDataSource({

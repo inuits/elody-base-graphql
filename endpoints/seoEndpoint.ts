@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { Environment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 import {
   BaseEntity,
   Collection,

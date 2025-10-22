@@ -6,7 +6,7 @@ import { AuthSessionResponse, EnvConfig } from './types';
 import { applyConfig } from './libConfig';
 import MongoStore from 'connect-mongo';
 import { isMongoConfigAvailable } from '../sources/mongo';
-import { Environment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 declare module 'express-session' {
   interface SessionData {

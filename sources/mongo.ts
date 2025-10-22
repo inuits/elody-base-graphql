@@ -1,4 +1,4 @@
-import { Environment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 const quotePlus = (str: string): string =>
   encodeURIComponent(str).replace(/%20/g, '+');

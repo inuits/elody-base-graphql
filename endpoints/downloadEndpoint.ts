@@ -1,11 +1,14 @@
-import { AuthRESTDataSource, environment as env } from '../main';
+import { AuthRESTDataSource } from '../main';
 import { Express, Request, Response } from 'express';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 export const applyDownloadEndpoint = (app: Express) => {
   app.post(
     `/api/download/csv`,
     async (request: Request, response: Response) => {
       try {
+        const environment: Environment = getCurrentEnvironment();
         const returnType = request.query['return_type'];
         const clientIp: string = request.headers['x-forwarded-for'] as string;
         const datasource = new AuthRESTDataSource({
@@ -13,9 +16,11 @@ export const applyDownloadEndpoint = (app: Express) => {
           clientIp,
         });
         const result = await datasource.post(
-          `${env?.api.collectionApiUrl}/entities/${
+          `${environment.api.collectionApiUrl}/entities/${
             request.body.parentId
-          }/order?order_by=order${returnType ? `&return_type=${returnType}` : ''}`,
+          }/order?order_by=order${
+            returnType ? `&return_type=${returnType}` : ''
+          }`,
           {
             method: 'GET',
           }
