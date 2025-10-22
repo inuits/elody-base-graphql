@@ -24,10 +24,11 @@ import {
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode';
 import { Config } from '../types';
-import { environment as env } from '../main';
+import { Environment } from '../types/environmentTypes';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
+import { getCurrentEnvironment } from '../environment';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -37,10 +38,11 @@ let sixthCollectionId: string | 'no-id' = 'no-id';
 type CRUDMethod = 'get' | 'post' | 'put' | 'delete';
 
 export class CollectionAPI extends AuthRESTDataSource {
-  public baseURL = `${env?.api.collectionApiUrl}/`;
+  env: Environment = getCurrentEnvironment();
+  public baseURL = `${this.env.api.collectionApiUrl}/`;
   public config: Config | 'no-config' = 'no-config';
   public preferredLanguage: string =
-    env?.customization?.applicationLocale || 'en';
+    this.env.customization?.applicationLocale || 'en';
 
   async getSessionInfo(key: string): Promise<string> {
     const user = jwtDecode(this.session.auth.accessToken!) as {

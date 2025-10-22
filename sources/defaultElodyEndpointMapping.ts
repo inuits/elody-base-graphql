@@ -1,6 +1,6 @@
 import { applyAuthEndpoints } from '../auth';
 import { Express } from 'express';
-import { Environment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 import { applyDownloadEndpoint } from '../endpoints/downloadEndpoint';
 import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
 import { applyExportEndpoint } from '../endpoints/exportEndpoint';

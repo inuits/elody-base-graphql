@@ -1,9 +1,11 @@
 import FormData from 'form-data';
-import { environment as env } from '../main';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
+import { getCurrentEnvironment } from '../environment';
+import { Environment } from '../types/environmentTypes';
 
 export class StorageAPI extends AuthRESTDataSource {
-  public baseURL = `${env?.api.storageApiUrl}`;
+  env: Environment = getCurrentEnvironment();
+  public baseURL = `${this.env.api.storageApiUrl}`;
 
   async uploadFile(id: String, file: any): Promise<any> {
     const form = new FormData();
