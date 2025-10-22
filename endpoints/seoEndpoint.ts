@@ -7,7 +7,7 @@ import {
   MetadataRelation,
 } from '../../../generated-types/type-defs';
 import fetch from 'node-fetch';
-import {getMetadataItemValueByKey} from '../helpers/helpers'
+import { getMetadataItemValueByKey } from '../helpers/helpers';
 
 const getMediafileValueForPugObject = async (
   mediafileId: string,
@@ -36,7 +36,7 @@ const getPugEntityObject = (
   environment: Environment
 ): Object => {
   const metadata: Metadata[] = entity.metadata;
-  const metadataKeys = environment.features.SEO.seoMetadataKeys;
+  const metadataKeys = environment.features.SEO?.seoMetadataKeys;
   if (!metadataKeys) return {};
   let pugEntityObject = {
     title: getMetadataItemValueByKey(
