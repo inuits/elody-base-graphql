@@ -134,6 +134,5 @@ export const createElodyEnvironment = (
   environmentInput: FullyOptionalEnvironmentInput
 ): Environment => {
   const merged = deepMerge(baseEnvironment, environmentInput);
-  console.log(merged);
   return merged as Environment;
 };
