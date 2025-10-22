@@ -215,6 +215,7 @@ const start = (
         directives: {
           ...helmet.contentSecurityPolicy.getDefaultDirectives(),
           'script-src': ["'self'", "'unsafe-eval'", 'blob:'],
+          'worker-src': ["'self'", 'blob:'],
           'img-src': [
             "'self'",
             'data:',
