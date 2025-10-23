@@ -47,7 +47,7 @@ export interface Environment {
   };
   features: {
     simpleSearch?: {
-      itemTypes: Entitytyping[];
+      itemTypes?: Entitytyping[];
       simpleSearchMetadataKey: string[];
     };
     ipWhiteListing?: {
