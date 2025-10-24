@@ -80,6 +80,7 @@ const getConfig = (config: Environment) => {
         itemTypes: config.features.simpleSearch.itemTypes,
         simpleSearchMetadataKey:
           config.features.simpleSearch.simpleSearchMetadataKey,
+        clientKeyFormat: config.features.simpleSearch.clientKeyFormat,
       },
     });
 
