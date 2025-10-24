@@ -29,9 +29,14 @@ export class AuthRESTDataSource extends RESTDataSource {
     this.context = options.context;
   }
 
+  tracer = trace.getTracer('elody-graphql');
+
   async willSendRequest(_path: string, request: AugmentedRequest) {
     // Ensure a stable requestId for the lifetime of this datasource instance
-    const requestId = (this.context?.requestId as string) || this.requestId || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    const requestId =
+      (this.context?.requestId as string) ||
+      this.requestId ||
+      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     this.requestId = requestId;
 
     if (this.context && !this.context.requestId) {
@@ -159,9 +164,6 @@ export class AuthRESTDataSource extends RESTDataSource {
         span.end();
       }
     });
-    finally {
-      span.end();
-    }
   }
 
   public async get<TResult = any>(
