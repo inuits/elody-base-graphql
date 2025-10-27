@@ -385,6 +385,12 @@
         "description": "Failed to start import"
       }
     },
+    "warning": {
+      "entity-not-updated": {
+        "title": "Saving failed",
+        "description": "There are errors in the edit form of the current entity"
+      }
+    },
     "graphql-errors": {
       "duplicate-entity": {
         "title": "Duplicate",

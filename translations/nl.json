@@ -390,6 +390,12 @@
           "description": "Imort kon net gestart worden"
         }
       },
+      "warning": {
+        "entity-not-updated": {
+          "title": "Opslaan is niet gelukt",
+          "description": "Er zijn errors in het edit forumlier van de huidige entiteit"
+        }
+      },
       "graphql-errors": {
         "duplicate-entity": {
           "title": "Duplicaat",
