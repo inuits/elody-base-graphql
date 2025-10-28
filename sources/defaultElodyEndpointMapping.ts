@@ -9,6 +9,7 @@ import { applyTenantEndpoint } from '../endpoints/tenantEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
 import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
+import { applyTracingEndpoint } from '../endpoints/tracingEndpoint';
 import { applyLinkedOpenDataEndpoint } from '../endpoints/linkedOpenDataEndpoint';
 import { TypeUrlMapping } from '../types';
 
@@ -34,6 +35,7 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     ),
   tenantEndpoint: (app: Express) => applyTenantEndpoint(app),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
+  tracingEndpoint: (app: Express) => applyTracingEndpoint(app),
   configsEndoint: (
     app: Express,
     config: Environment,

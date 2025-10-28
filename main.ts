@@ -66,6 +66,7 @@ import {
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
 import depthLimit from 'graphql-depth-limit';
+import { context, propagation, trace } from '@opentelemetry/api';
 
 let environment: Environment | undefined = undefined;
 const baseTranslations: Object = {
@@ -165,6 +166,21 @@ const start = (
     const app = express();
     const httpServer = http.createServer(app);
     httpServer.setTimeout(120000);
+
+    app.use(appConfig.apollo.graphqlPath, (req, res, next) => {
+      const tracer = trace.getTracer('graphql');
+      tracer.startActiveSpan(
+        `GraphQL ${req.method}`,
+        { attributes: { 'graphql.operation': req.body?.operationName } },
+        (span) => {
+          res.on('finish', () => {
+            span.setAttribute('http.status_code', res.statusCode);
+            span.end();
+          });
+          next();
+        }
+      );
+    });
 
     let viteServer: ViteDevServer | undefined;
     if (appConfig.environment !== 'production') {
@@ -283,6 +299,7 @@ const start = (
       ],
       tenantEndpoint: [app],
       healthEndpoint: [app],
+      tracingEndpoint: [app, appConfig],
       configsEndoint: [app, appConfig, appTranslations, customTypeUrlMapping],
       // linkedOpenDataEndpoint: [app],
     };
