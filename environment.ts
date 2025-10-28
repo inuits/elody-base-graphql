@@ -49,7 +49,7 @@ export interface Environment {
     simpleSearch?: {
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey: string[];
-      clientKeyFormat: string[]
+      clientKeyFormat?: string[]
     };
     ipWhiteListing?: {
       whiteListedIpAddresses: string[];
