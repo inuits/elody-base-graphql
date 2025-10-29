@@ -375,7 +375,7 @@
         },
         "entityDeleted": {
           "title": "Entiteiten zijn niet verwijderd",
-          "description": "Er zijn een fout opgetreden tijdens de wijzigingen"
+          "description": "Er is een fout opgetreden tijdens de wijzigingen"
         },
         "copiedToClipboard": {
           "title": "Kon niet kopiëren naar klembord",
@@ -435,7 +435,8 @@
       "W5013": "Het formaat is ongeldig voor type {type}",
       "W5014": "Er werd geen metadata gevonden voor item met id {id}",
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
-      "W5017": "Item voor key {key} met waarde {value} bestaat niet."
+      "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
+      "W5018": "De volgende waardes moet uniek zijn bij het creëren van een relatie met een {entity_type} entiteit: {duplicate_entry}"
     },
     "pagination": {
       "page": "pagina",

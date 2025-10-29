@@ -430,7 +430,8 @@
     "W5013": "The format is invalid for type {type}",
     "W5014": "No metadata available for item with id {id}",
     "W5016": "The value {value} is invalid, these are the valid values: {options}",
-    "W5017": "Item for key {key} with value {value} doesn't exist."
+    "W5017": "Item for key {key} with value {value} doesn't exist.",
+    "W5018": "Following values have to be unique when creating a relation with a {entity_type} entity: {duplicate_entry}"
   },
   "pagination": {
     "page": "page",
