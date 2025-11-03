@@ -42,12 +42,6 @@ export class AuthRESTDataSource extends RESTDataSource {
       request.headers['X-request-id'] = requestId;
     }
 
-    console.log(
-      `[Request Start][${requestId}] ${_path} at ${new Date(
-        start
-      ).toISOString()}`
-    );
-
     const accessToken = this.session?.auth?.accessToken;
 
     if (accessToken && accessToken !== 'undefined' && request.headers) {
@@ -75,7 +69,6 @@ export class AuthRESTDataSource extends RESTDataSource {
     if (request.headers && tenant) {
       request.headers['X-tenant-id'] = tenant;
     }
-
   }
 
   private hasWhiteListingFeature = (): boolean => {
@@ -96,30 +89,30 @@ export class AuthRESTDataSource extends RESTDataSource {
     fn: F,
     ...args: T
   ): Promise<S> {
-      try {
-        return await fn(...args);
-      } catch (error: any) {
-        if (this.session.auth && error?.extensions?.response?.status === 401) {
-            const response = await manager?.refresh(
-              this.session.auth.accessToken,
-              this.session.auth.refreshToken
-            );
+    try {
+      return await fn(...args);
+    } catch (error: any) {
+      if (this.session.auth && error?.extensions?.response?.status === 401) {
+        const response = await manager?.refresh(
+          this.session.auth.accessToken,
+          this.session.auth.refreshToken
+        );
 
-            if (!response) {
-              throw new GraphQLError(`AUTH | REFRESH FAILED`, {
-                extensions: {
-                  statusCode: 401,
-                },
-              });
-            }
-
-            this.session.auth = response;
-
-            return await fn(...args);
-          } else {
-          throw error;
+        if (!response) {
+          throw new GraphQLError(`AUTH | REFRESH FAILED`, {
+            extensions: {
+              statusCode: 401,
+            },
+          });
         }
+
+        this.session.auth = response;
+
+        return await fn(...args);
+      } else {
+        throw error;
       }
+    }
   }
 
   public async get<TResult = any>(
