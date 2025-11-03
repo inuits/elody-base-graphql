@@ -142,6 +142,7 @@ const start = (
 ): void => {
   setCurrentEnvironment(createElodyEnvironment(appConfig));
   const environment = getCurrentEnvironment();
+  console.log(environment);
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
   addAdditionalOptionalDataSources(environment);
 
