@@ -1,15 +1,15 @@
-import fetch from "node-fetch";
-import { URLSearchParams } from "url";
-import jwt_decode from "jwt-decode";
-import { ForbiddenError } from "apollo-server-errors";
-import { logToken, logUser } from "./debug";
+import fetch from 'node-fetch';
+import { URLSearchParams } from 'url';
+import jwt_decode from 'jwt-decode';
+import { ForbiddenError } from 'apollo-server-errors';
+import { logToken, logUser } from './debug';
 import {
   AuthenticationBody,
   AuthSessionResponse,
   LogoutBody,
   RefreshBody,
   TokenResponse,
-} from "./types";
+} from './types';
 
 export class AuthManager {
   constructor(
@@ -25,12 +25,12 @@ export class AuthManager {
     redirectUri: string
   ): Promise<AuthSessionResponse> {
     const res = await fetch(`${this.oauthBaseUrl}${this.tokenEndpoint}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        grant_type: "authorization_code",
+        grant_type: 'authorization_code',
         code: authCode,
         client_id: this.clientId,
         client_secret: this.clientSecret,
@@ -39,6 +39,7 @@ export class AuthManager {
     });
     const data = (await res.json()) as TokenResponse;
     if (!data.access_token || !data.refresh_token) {
+      console.error(res);
       throw new Error(
         `\n AUTH | AUTHENTICATE | Invalid response from OpenID server`
       );
@@ -62,17 +63,17 @@ export class AuthManager {
     if (_accessToken != undefined) {
       const refreshEndpoint = `${this.oauthBaseUrl}${this.tokenEndpoint}`;
       const refreshBody = new URLSearchParams({
-        prompt: "none",
-        grant_type: "refresh_token",
+        prompt: 'none',
+        grant_type: 'refresh_token',
         refresh_token: _refreshToken,
         client_secret: this.clientSecret,
         client_id: this.clientId,
         oidc_url: this.tokenEndpoint,
       } as RefreshBody);
       await fetch(refreshEndpoint, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: refreshBody,
       })
@@ -90,7 +91,7 @@ export class AuthManager {
             );
             sessionAuthResponse = {
               accessToken: tokenResponse.access_token,
-              refreshToken: tokenResponse.refresh_token
+              refreshToken: tokenResponse.refresh_token,
             } as AuthSessionResponse;
           }
         })
@@ -115,14 +116,14 @@ export class AuthManager {
       refresh_token: _refreshToken,
       client_secret: this.clientSecret,
       client_id: this.clientId,
-      prompt: "none",
+      prompt: 'none',
     } as LogoutBody);
     if (_accessToken) {
       fetch(`${this.oauthBaseUrl}/protocol/openid-connect/logout`, {
-        method: "POST",
+        method: 'POST',
         headers: {
           Authorization: _accessToken,
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: params,
       })
@@ -131,7 +132,7 @@ export class AuthManager {
           logUser(_accessToken);
         })
         .catch((error: any) => {
-          throw new Error("\n AUTH | LOGOUT KEYCLOAK | Logout failed");
+          throw new Error('\n AUTH | LOGOUT KEYCLOAK | Logout failed');
         });
     }
   }
