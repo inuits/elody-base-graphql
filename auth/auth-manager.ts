@@ -39,7 +39,7 @@ export class AuthManager {
     });
     const data = (await res.json()) as TokenResponse;
     if (!data.access_token || !data.refresh_token) {
-      console.error(res);
+      console.error(data);
       throw new Error(
         `\n AUTH | AUTHENTICATE | Invalid response from OpenID server`
       );
