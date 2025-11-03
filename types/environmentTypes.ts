@@ -1,5 +1,5 @@
-import { Entitytyping } from '../../generated-types/type-defs';
-import { Route } from './routes/routesHelper';
+import { Entitytyping } from '../../../generated-types/type-defs';
+import { Route } from '../routes/routesHelper';
 
 export interface Environment {
   apollo: {
