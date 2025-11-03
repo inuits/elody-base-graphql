@@ -1506,6 +1506,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     inputField: async (parent: any, { type }, { dataSources }) => {
       return baseFields[type];
     },
+    nonEditableField: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false
+    },
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
     },

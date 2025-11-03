@@ -1425,6 +1425,7 @@ export const baseSchema = gql`
     unit(input: Unit!): Unit!
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
+    nonEditableField(input: Boolean): Boolean
     showOnlyInEditMode(input: Boolean): Boolean
     tooltip(input: String!): String!
     valueTooltip(

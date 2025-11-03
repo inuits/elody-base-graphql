@@ -55,6 +55,146 @@ export const resolveIntialValueRoot = async (dataSources: DataSources, parent: a
   }
 };
 
+const filterRelationsByProperty = (
+  relations: any[],
+  propertyKey: string,
+  propertyValue: string
+): any[] => {
+  if (!propertyKey) return relations;
+  
+  return relations.filter((relation) => 
+    String(relation[propertyKey]) === propertyValue
+  );
+};
+
+const fetchRelationEntity = async (
+  dataSources: DataSources,
+  relation: any,
+  relationEntityType: string,
+  metadataKeyAsLabel: string,
+  rootKeyAsLabel: string,
+  formatter: string
+): Promise<any> => {
+  if (!relation?.key) return null;
+
+  if (relation.type === 'hasMediafile') {
+    return dataSources.CollectionAPI.getMediaFile(
+      relation.key.replace("mediafiles/", "")
+    );
+  }
+
+  const shouldFetchEntity = relationEntityType || 
+    metadataKeyAsLabel || rootKeyAsLabel || String(formatter).startsWith("link|");
+
+  if (!shouldFetchEntity) return null;
+
+  const entityType = relationEntityType || '';
+  const collection = relationEntityType ? undefined : 'entities';
+
+  return dataSources.CollectionAPI.getEntity(
+    relation.key,
+    entityType,
+    collection,
+    true
+  );
+};
+
+const extractValueFromEntity = (
+  entity: any,
+  relation: any,
+  metadataKeyAsLabel: string,
+  rootKeyAsLabel: string
+): string => {
+  if (rootKeyAsLabel) {
+    return entity?.[rootKeyAsLabel] || '';
+  }
+
+  if (metadataKeyAsLabel && entity?.metadata) {
+    const metadataKeys = String(metadataKeyAsLabel).split('|');
+    const metadataItem = entity.metadata.find((metadata: any) => 
+      metadataKeys.includes(metadata.key)
+    );
+    return metadataItem?.value || relation.key;
+  }
+
+  return relation.key;
+};
+
+const formatResults = (
+  results: any[],
+  formatter: string,
+  formatterSettings?: FormattersConfig,
+  isMultiple: boolean = false
+): any => {
+  if (isMultiple) {
+    return results.join(', ');
+  }
+
+  const singleResult = results[0];
+  
+  if (!formatter) {
+    return singleResult;
+  }
+
+  if (formatter === 'pill') {
+    return formatterFactory(ResolverFormatters.Metadata)({
+      label: singleResult ?? '', 
+      formatter 
+    });
+  }
+
+  const relationsFormatters = formatterFactory(ResolverFormatters.Relations);
+  return {
+    ...relationsFormatters(formatter, formatterSettings)({ entity: singleResult }),
+    formatter
+  };
+};
+
+const processRelations = async (
+  dataSources: DataSources,
+  relations: any[],
+  metadataKeyAsLabel: string,
+  rootKeyAsLabel: string,
+  relationEntityType: string,
+  formatter: string,
+  formatterSettings?: FormattersConfig
+): Promise<any> => {
+  if (relations.length === 0) {
+    return '';
+  }
+
+  const entityPromises = relations.map(relation =>
+    fetchRelationEntity(
+      dataSources,
+      relation,
+      relationEntityType,
+      metadataKeyAsLabel,
+      rootKeyAsLabel,
+      formatter
+    ).then(entity => ({ relation, entity }))
+  );
+
+  const entityResults = await Promise.all(entityPromises);
+
+  const results = entityResults
+    .filter(({ entity }) => entity !== null)
+    .map(({ entity, relation }) =>
+      extractValueFromEntity(
+        entity,
+        relation,
+        metadataKeyAsLabel,
+        rootKeyAsLabel
+      )
+    );
+  
+  if (results.length === 0) {
+    return '';
+  }
+
+  const isMultiple = relations.length > 1;
+  return formatResults(results, formatter, formatterSettings, isMultiple);
+};
+
 export const resolveIntialValueRelations = async (
   dataSources: DataSources,
   parent: any,
@@ -68,62 +208,38 @@ export const resolveIntialValueRelations = async (
   formatterSettings?: FormattersConfig,
 ): Promise<string | any> => {
   try {
-    let relation: any;
-    const relations = parent?.relations.filter(
+    const relations = parent?.relations?.filter(
       (relation: any) => relation.type === key
-    );
-    if (containsRelationPropertyKey)
-      relations.forEach((rel: any) => {
-        if (String(rel[containsRelationPropertyKey]) == containsRelationPropertyValue) {
-          relation = rel;
-        }
-      });
-    else relation = relations?.[0];
+    ) || [];
 
-    if (relation) {
-      let type;
-      if (relation.type === 'hasMediafile') {
-        type = await dataSources.CollectionAPI.getMediaFile(relation.key.replace("mediafiles/", ""));
-      } else {
-        if (relationEntityType) {
-          if (!relation?.key) return [];
-          type = await dataSources.CollectionAPI.getEntity(
-            relation.key,
-            relationEntityType,
-            undefined,
-            true
-          );
-        }
-        else if (metadataKeyAsLabel || rootKeyAsLabel || String(formatter).startsWith("link|")) {
-          if (!relation?.key) return [];
-          type = await dataSources.CollectionAPI.getEntity(
-            relation.key,
-            '',
-            'entities',
-            true
-          );
-        }
-      }
-
-      if (rootKeyAsLabel) return type[rootKeyAsLabel];
-
-      const result = type?.metadata?.find(
-        (metadata: any) => {
-          const keys =  String(metadataKeyAsLabel).split('|');
-          return keys.includes(metadata.key)
-        }
-      )?.value || relation.key
-
-      if (!formatter) return result;
-      if (formatter === 'pill')
-        return formatterFactory(ResolverFormatters.Metadata)({label: result ?? '', formatter });
-      const relationsFormatters = formatterFactory(ResolverFormatters.Relations);
-      return { ...relationsFormatters(formatter, formatterSettings)({ entity: type }), formatter };
+    if (relations.length === 0) {
+      return [];
     }
-  } catch {
+
+    const filteredRelations = filterRelationsByProperty(
+      relations,
+      containsRelationPropertyKey,
+      containsRelationPropertyValue
+    );
+
+    if (filteredRelations.length === 0) {
+      return [];
+    }
+
+    return processRelations(
+      dataSources,
+      filteredRelations,
+      metadataKeyAsLabel,
+      rootKeyAsLabel,
+      relationEntityType,
+      formatter,
+      formatterSettings
+    );
+
+  } catch (error) {
+    console.error('Error resolving relations:', error);
     return parent?.[key] ?? '';
   }
-  return [];
 };
 
 export const resolveIntialValueRelationMetadata = (
