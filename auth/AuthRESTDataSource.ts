@@ -54,6 +54,9 @@ export class AuthRESTDataSource extends RESTDataSource {
         this.hasWhiteListingFeature() &&
         this.isIpAddressWhiteListed()
       ) {
+        console.log(
+          'User visited from a whitelisted ip address, using configured token'
+        );
         request.headers['Authorization'] =
           'Bearer ' + ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
       } else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true') {
