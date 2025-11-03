@@ -69,7 +69,7 @@ export const baseEnvironment: Environment = {
       username: process.env.MONGODB_USERNAME,
       password: process.env.MONGODB_PASSWORD,
       port: process.env.MONGODB_PORT || '27017',
-      hostname: process.env.MONGODB_HOST || 'mongo',
+      hostname: process.env.MONGODB_HOSTS || 'mongo',
       dbName: process.env.MONGODB_DB_NAME || 'dams',
       replicaSet: process.env.MONGODB_REPLICA_SET,
       tls: process.env.MONGODB_TLS === 'true' || undefined,
