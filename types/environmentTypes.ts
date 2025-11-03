@@ -106,6 +106,7 @@ export interface Environment {
   skeletonLayouts?: Record<string, string[]>;
 }
 
+// Todo: Find a better way to create a fully optional mirror of Environment
 export interface FullyOptionalEnvironmentInput {
   apollo?: {
     graphqlPath?: string;
@@ -156,6 +157,7 @@ export interface FullyOptionalEnvironmentInput {
     simpleSearch?: {
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey?: string[];
+      clientKeyFormat?: string[];
     };
     ipWhiteListing?: {
       whiteListedIpAddresses?: string[];
