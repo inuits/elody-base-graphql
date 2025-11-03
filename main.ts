@@ -225,6 +225,7 @@ const start = (
           ],
           'connect-src': [
             "'self'",
+            'blob:',
             '*',
             ...(environment.sentryEnabled && environment.sentryDsn
               ? [new URL(environment.sentryDsn).origin]
