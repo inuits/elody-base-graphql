@@ -80,6 +80,8 @@ export class AuthRESTDataSource extends RESTDataSource {
   };
 
   private isIpAddressWhiteListed = (): boolean => {
+    // Todo: Remove again
+    console.log(this.clientIp);
     return Boolean(
       this.clientIp &&
         this.hasWhiteListingFeature() &&
