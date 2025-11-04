@@ -3,10 +3,14 @@ import path from 'path';
 import fs from 'fs';
 import { ViteDevServer } from 'vite';
 
-export const renderPageForEnvironment = async (req: Request, res: Response, vite?: ViteDevServer): Promise<void> => {
+export const renderPageForEnvironment = async (
+  req: Request,
+  res: Response,
+  vite?: ViteDevServer
+): Promise<void> => {
   const __dirname: string = path.resolve();
   const frontendPath: string = path.join(__dirname, 'dashboard/dist');
-  
+
   try {
     if (vite) {
       const template = await fs.promises.readFile(
@@ -21,11 +25,16 @@ export const renderPageForEnvironment = async (req: Request, res: Response, vite
   } catch (e: any) {
     vite?.ssrFixStacktrace(e);
     console.error(e);
-    res.status(500).end(e.message);
+    res.status(500).json({
+      error: e?.message ?? 'Internal Server Error',
+    });
   }
 };
 
-export const configureFrontendForEnvironment = (app: any, vite?: ViteDevServer) => {
+export const configureFrontendForEnvironment = (
+  app: any,
+  vite?: ViteDevServer
+) => {
   const __dirname: string = path.resolve();
   const frontendPath: string = path.join(__dirname, 'dashboard/dist');
 
