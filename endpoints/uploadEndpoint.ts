@@ -73,8 +73,12 @@ export const applyUploadEndpoint = (app: Express) => {
   );
 
   app.post('/api/upload/xml', async (request: Request, response: Response) => {
+    const env: Environment = getCurrentEnvironment();
     try {
-      const datasource = new AuthRESTDataSource({ session: request.session });
+      const datasource = new AuthRESTDataSource({
+        environment: env,
+        session: request.session,
+      });
       const result = await datasource.post(
         `${env.api.collectionApiUrl}/parse_marcxml`,
         {
@@ -135,9 +139,11 @@ export const applyUploadEndpoint = (app: Express) => {
     });
 
     request.on('end', async () => {
+      const env: Environment = getCurrentEnvironment();
       try {
         const clientIp: string = request.headers['x-forwarded-for'] as string;
         const datasource = new AuthRESTDataSource({
+          environment: env,
           session: request.session,
           clientIp,
         });
@@ -175,6 +181,7 @@ const __batchDryRun = async (
   try {
     const clientIp: string = request.headers['x-forwarded-for'] as string;
     const datasource = new AuthRESTDataSource({
+      environment: env,
       session: request.session,
       clientIp,
     });
@@ -209,6 +216,7 @@ const __batchEntities = async (
   const env: Environment = getCurrentEnvironment();
   const clientIp: string = request.headers['x-forwarded-for'] as string;
   const datasource = new AuthRESTDataSource({
+    environment: env,
     session: request.session,
     clientIp,
   });
@@ -241,6 +249,7 @@ const __createMediafileForEntity = async (
   const env: Environment = getCurrentEnvironment();
   const clientIp: string = request.headers['x-forwarded-for'] as string;
   const datasource = new AuthRESTDataSource({
+    environment: env,
     session: request.session,
     clientIp,
   });
@@ -274,6 +283,7 @@ const __createStandaloneMediafile = async (
   const env: Environment = getCurrentEnvironment();
   const clientIp: string = request.headers['x-forwarded-for'] as string;
   const datasource = new AuthRESTDataSource({
+    environment: env,
     session: request.session,
     clientIp,
   });

@@ -226,6 +226,7 @@ const applyMediaFileEndpoint = (
     try {
       const clientIp: string = req.headers['x-forwarded-for'] as string;
       const datasource = new AuthRESTDataSource({
+        environment: env,
         session: req.session,
         clientIp,
       });

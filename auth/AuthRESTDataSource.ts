@@ -4,23 +4,24 @@ import { KeyValueCache } from '@apollo/utils.keyvaluecache';
 import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
-import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 
 export class AuthRESTDataSource extends RESTDataSource {
+  protected environment: Environment;
   protected session: any;
   protected clientIp: string | undefined;
   protected context: any;
   private requestId?: string;
-  environment: Environment = getCurrentEnvironment();
 
   constructor(options: {
+    environment: Environment;
     session: any;
     cache?: KeyValueCache;
     clientIp?: string;
     context?: any;
   }) {
     super(options);
+    this.environment = options.environment;
     this.session = options.session;
     this.clientIp = options.clientIp;
     this.context = options.context;

@@ -40,7 +40,6 @@ import {
 } from './types';
 import {
   createElodyEnvironment,
-  currentEnvironment,
   getCurrentEnvironment,
   setCurrentEnvironment,
 } from './environment';
@@ -71,6 +70,7 @@ import {
   ElodyConfig,
   addAdditionalOptionalDataSources,
   generateElodyConfig,
+  ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
@@ -84,10 +84,11 @@ const baseTranslations: Object = {
 
 const applyCustomEndpoints = (
   app: Express,
-  customEndpoints: ((app: any) => void)[] = []
+  environment: Environment,
+  customEndpoints: ((app: any, environment: Environment) => void)[] = []
 ) => {
   customEndpoints.forEach((customEndpoint: Function) => {
-    customEndpoint(app);
+    customEndpoint(app, environment);
   });
 };
 
@@ -125,10 +126,10 @@ const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
 };
 
 const start = (
-  elodyConfig: ElodyConfig,
+  customModuleConfig: ElodyModuleConfig,
   appConfig: FullyOptionalEnvironmentInput,
   appTranslations: { [key: string]: string },
-  customEndpoints: ((app: any) => void)[] = [],
+  customEndpoints: ((app: any, environment: Environment) => void)[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
   customTypeCollectionMapping:
     | { [key: string]: Collection }
@@ -142,7 +143,9 @@ const start = (
 ): void => {
   setCurrentEnvironment(createElodyEnvironment(appConfig));
   const environment = getCurrentEnvironment();
-  const fullElodyConfig: ElodyConfig = createFullElodyConfig(elodyConfig);
+  const fullElodyConfig: ElodyConfig = createFullElodyConfig(
+    generateElodyConfig(environment, customModuleConfig)
+  );
   addAdditionalOptionalDataSources(environment);
 
   const application = createApplication({
@@ -262,6 +265,7 @@ const start = (
           const clientIp: string = req.headers['x-forwarded-for'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
+            environment,
             session,
             cache,
             clientIp
@@ -319,7 +323,7 @@ const start = (
     }
 
     if (customEndpoints) {
-      applyCustomEndpoints(app, customEndpoints);
+      applyCustomEndpoints(app, environment, customEndpoints);
     }
 
     if (customInputFields) {
@@ -357,10 +361,10 @@ export type {
   CollectionAPIMediaFile,
   CollectionAPIMetadata,
   CollectionAPIRelation,
-  ElodyConfig,
+  ElodyModuleConfig,
 };
 export {
-  currentEnvironment as environment,
+  getCurrentEnvironment,
   baseModule,
   baseSchema,
   resolveMetadata,
@@ -379,5 +383,4 @@ export {
   simpleReturn,
   getRoutesObject,
   renderPageForEnvironment,
-  generateElodyConfig,
 };

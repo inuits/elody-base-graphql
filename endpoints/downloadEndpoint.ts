@@ -12,6 +12,7 @@ export const applyDownloadEndpoint = (app: Express) => {
         const returnType = request.query['return_type'];
         const clientIp: string = request.headers['x-forwarded-for'] as string;
         const datasource = new AuthRESTDataSource({
+          environment,
           session: request.session,
           clientIp,
         });
