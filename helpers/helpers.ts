@@ -74,6 +74,7 @@ export const getRelationsByType = (
 export const getPrimaryMediaFileIDOfEntity = (
   entity: CollectionAPIEntity
 ): string | undefined => {
+  // Todo: Needs to be updated for id on asset
   try {
     const mediaFileRelations = getRelationsByType(
       'hasMediafile',
