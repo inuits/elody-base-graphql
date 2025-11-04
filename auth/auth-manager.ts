@@ -24,46 +24,42 @@ export class AuthManager {
     authCode: string,
     redirectUri: string
   ): Promise<AuthSessionResponse> {
-    try {
-      const res = await fetch(`${this.oauthBaseUrl}${this.tokenEndpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          grant_type: 'authorization_code',
-          code: authCode,
-          client_id: this.clientId,
-          client_secret: this.clientSecret,
-          redirect_uri: redirectUri,
-        }),
-      });
+    const res = await fetch(`${this.oauthBaseUrl}${this.tokenEndpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: authCode,
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
+        redirect_uri: redirectUri,
+      }),
+    });
 
-      const data = (await res.json()) as TokenResponse;
+    const data = (await res.json()) as TokenResponse;
 
-      if (!data.access_token || !data.refresh_token) {
-        throw new Error(
-          `AUTHENTICATE | Invalid response from OpenID server: ${
-            data ? JSON.stringify(data) : 'No data received'
-          }`
-        );
-      }
-
-      jwt_decode(data.access_token);
-      jwt_decode(data.refresh_token);
-
-      logToken(
-        data.access_token,
-        `auth-manager`,
-        `User Token @authentication`,
-        true
+    if (!data.access_token || !data.refresh_token) {
+      throw new Error(
+        `AUTHENTICATE | Invalid response from OpenID server: ${
+          data ? JSON.stringify(data) : 'No data received'
+        }`
       );
-
-      return {
-        accessToken: data.access_token,
-        refreshToken: data.refresh_token,
-      };
-    } catch (err) {
-      console.error(`[AUTH ERROR]`, err);
     }
+
+    jwt_decode(data.access_token);
+    jwt_decode(data.refresh_token);
+
+    logToken(
+      data.access_token,
+      `auth-manager`,
+      `User Token @authentication`,
+      true
+    );
+
+    return {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+    };
   }
 
   async refresh(
