@@ -41,9 +41,9 @@ export class AuthManager {
 
       if (!data.access_token || !data.refresh_token) {
         throw new Error(
-          `AUTHENTICATE | Invalid response from OpenID server: ${JSON.stringify(
-            data
-          )}`
+          `AUTHENTICATE | Invalid response from OpenID server: ${
+            data ? JSON.stringify(data) : 'No data received'
+          }`
         );
       }
 
