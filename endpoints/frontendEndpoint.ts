@@ -12,7 +12,6 @@ export const renderPageForEnvironment = async (
   const frontendPath: string = path.join(__dirname, 'dashboard/dist');
 
   try {
-    console.log(req.originalUrl);
     if (vite) {
       const template = await fs.promises.readFile(
         path.resolve(__dirname, 'index.html'),
