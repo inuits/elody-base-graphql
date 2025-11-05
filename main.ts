@@ -144,7 +144,7 @@ const start = (
   setCurrentEnvironment(createElodyEnvironment(appConfig));
   const environment = getCurrentEnvironment();
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(
-    generateElodyConfig(environment, customModuleConfig)
+    generateElodyConfig(customModuleConfig)
   );
   addAdditionalOptionalDataSources(environment);
 
@@ -351,6 +351,7 @@ const start = (
 };
 
 export default start;
+export * from './types';
 export type {
   ContextValue,
   DataSources,

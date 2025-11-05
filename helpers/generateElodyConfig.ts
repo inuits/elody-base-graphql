@@ -120,7 +120,6 @@ export const isRequiredDataSources = (
 };
 
 export const generateElodyConfig = (
-  environment: Environment,
   elodyModuleConfig: ElodyModuleConfig
 ): ElodyConfig => {
   const { dataSources, modules } = elodyModuleConfig;
@@ -130,7 +129,12 @@ export const generateElodyConfig = (
   const dataSourceKeys = Object.keys(dataSources);
   const dataSourcesToInitialize = dataSourceKeys.map(
     (dataSourceKey: string) => {
-      return ( environment: Environment, session: any, cache: any, clientIp: string) => {
+      return (
+        environment: Environment,
+        session: any,
+        cache: any,
+        clientIp: string
+      ) => {
         return {
           [dataSourceKey]: new dataSources[dataSourceKey]({
             environment,
