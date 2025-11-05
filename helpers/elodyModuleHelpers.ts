@@ -130,7 +130,7 @@ export const generateElodyConfig = (
   const dataSourceKeys = Object.keys(dataSources);
   const dataSourcesToInitialize = dataSourceKeys.map(
     (dataSourceKey: string) => {
-      return (session: any, cache: any, clientIp: string) => {
+      return ( environment: Environment, session: any, cache: any, clientIp: string) => {
         return {
           [dataSourceKey]: new dataSources[dataSourceKey]({
             environment,
