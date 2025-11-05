@@ -351,7 +351,6 @@ const start = (
 };
 
 export default start;
-export * from './types';
 export type {
   ContextValue,
   DataSources,
