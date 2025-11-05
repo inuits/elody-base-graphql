@@ -1,9 +1,12 @@
 export type CollectionAPIEntity = {
   _id: string;
   type: string;
+  identifiers: string[];
   date_created: string;
   date_updated: string;
   version: number;
+  primary_mediafile_id: string;
+  primary_thumbnail_id: string;
   metadata: [CollectionAPIMetadata];
   relations: [CollectionAPIRelation];
   last_editor: string;

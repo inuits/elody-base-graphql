@@ -76,24 +76,7 @@ export const getPrimaryMediaFileIDOfEntity = (
 ): string | undefined => {
   // Todo: Needs to be updated for id on asset
   try {
-    const mediaFileRelations = getRelationsByType(
-      'hasMediafile',
-      entity.relations
-    );
-
-    if (!mediaFileRelations) return undefined;
-
-    let primaryMediaFile: CollectionAPIRelation | undefined =
-      mediaFileRelations.find(
-        (mediaFile: CollectionAPIRelation) => mediaFile.is_primary
-      );
-
-    if (!primaryMediaFile && mediaFileRelations)
-      primaryMediaFile = mediaFileRelations[0];
-
-    if (!primaryMediaFile) return undefined;
-
-    return primaryMediaFile.key;
+    return entity.primary_mediafile_id;
   } catch {
     return undefined;
   }
