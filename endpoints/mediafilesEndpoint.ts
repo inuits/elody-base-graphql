@@ -143,9 +143,6 @@ const applyMediaFileEndpoint = (
         )}`;
         return newUrl;
       },
-      onProxyReq: (proxyReq, req, res) => {
-        addHeaders(proxyReq, req, res);
-      },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
         res.status(500).send('Proxy error');
@@ -195,20 +192,34 @@ const applyMediaFileEndpoint = (
     })
   );
 
-  app.use(
-    '/api/iiif/*',
-    createProxyMiddleware({
-      target: iiifUrlFrontend,
-      changeOrigin: true,
-      pathRewrite: (path: string, req: Request) => {
-        return `${req.originalUrl.replace('/api', '')}`;
-      },
-      onProxyReq: (proxyReq, req, res) => {
-        addHeaders(proxyReq, req, res);
-        console.log(req.headers);
-      },
-    })
-  );
+  app.use('/api/iiif/*', async (req, res) => {
+    try {
+      const response = await fetchWithTokenRefresh(
+        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
+        { method: 'GET' },
+        req,
+        true
+      );
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      const blob = await response.blob();
+      res.setHeader('Content-Type', blob.type);
+      const reader = blob.stream().getReader();
+
+      pump(reader, res);
+    } catch (error: any) {
+      res
+        .status(extractErrorCode(error))
+        .set({
+          'Cache-Control': 'no-store',
+          Pragma: 'no-cache',
+        })
+        .end(JSON.stringify(error));
+    }
+  });
 
   app.use('/api/mediafiles/*/download', async (req, res) => {
     const env: Environment = getCurrentEnvironment();
