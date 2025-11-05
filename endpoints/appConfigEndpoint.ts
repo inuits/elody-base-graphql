@@ -1,6 +1,9 @@
 import { Express } from 'express';
 import { Environment } from '../types/environmentTypes';
 import { TypeUrlMapping } from '../types';
+import { mergeObjects } from 'json-merger';
+import { loadTranslationsFromDirectory } from '../translations/loadTranslations';
+import path from 'path';
 
 const getConfig = (config: Environment) => {
   const baseConfig = {
@@ -89,18 +92,23 @@ const getConfig = (config: Environment) => {
 
 const getAvailableTranslations = (
   config: { [key: string]: any },
-  translations: { [key: string]: string }
+  translations: { [key: string]: Object }
 ) => {
+  const baseTranslations: Object = loadTranslationsFromDirectory(
+    path.join(__dirname, `../translations`)
+  );
+  const fullTranslations = mergeObjects([baseTranslations, translations]);
+
   const includedTranslationKeys: string[] | undefined =
     config.customization?.availableLanguages;
   const excludedTranslationKeys: string[] | undefined =
     config.customization?.excludedLanguages;
 
   if (!includedTranslationKeys && !excludedTranslationKeys) {
-    return translations;
+    return fullTranslations;
   }
 
-  let availableTranslations: { [key: string]: string } = {};
+  let availableTranslations: { [key: string]: Object } = {};
 
   if (includedTranslationKeys) {
     includedTranslationKeys.forEach((key: string) => {
@@ -109,11 +117,11 @@ const getAvailableTranslations = (
           `Language with key ${key} not available in translations, check if you are using the correct key or add translations for '${key}'`
         );
       } else {
-        availableTranslations[key] = translations[key];
+        availableTranslations[key] = fullTranslations[key];
       }
     });
   } else {
-    availableTranslations = { ...translations };
+    availableTranslations = { ...fullTranslations };
   }
 
   if (excludedTranslationKeys) {
@@ -130,7 +138,7 @@ const getAvailableTranslations = (
 export const applyAppConfigsEndpoint = (
   app: Express,
   config: Environment,
-  translations: { [key: string]: string },
+  translations: { [key: string]: Object },
   urlMapping: TypeUrlMapping
 ) => {
   app.get('/api/app-configs', async (req, res) => {

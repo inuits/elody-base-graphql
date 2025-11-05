@@ -49,7 +49,7 @@ import {
 } from './types/environmentTypes';
 import { expressMiddleware } from '@apollo/server/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
-import { loadTranslations } from './translations/loadTranslations';
+import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import {
   configureFrontendForEnvironment,
@@ -75,12 +75,6 @@ import {
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
 import depthLimit from 'graphql-depth-limit';
-
-const baseTranslations: Object = {
-  en: loadTranslations(path.join(__dirname, './translations/en.json'))['en'],
-  nl: loadTranslations(path.join(__dirname, './translations/nl.json'))['nl'],
-  ar: loadTranslations(path.join(__dirname, './translations/ar.json'))['ar'],
-};
 
 const applyCustomEndpoints = (
   app: Express,
@@ -128,7 +122,7 @@ const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
 const start = (
   customModuleConfig: ElodyModuleConfig,
   appConfig: FullyOptionalEnvironmentInput,
-  appTranslations: { [key: string]: string },
+  customTranslations: { [key: string]: Object },
   customEndpoints: ((app: any, environment: Environment) => void)[] = [],
   customInputFields: { [key: string]: InputField } | undefined = undefined,
   customTypeCollectionMapping:
@@ -297,7 +291,12 @@ const start = (
       ],
       tenantEndpoint: [app],
       healthEndpoint: [app],
-      configsEndoint: [app, environment, appTranslations, customTypeUrlMapping],
+      configsEndoint: [
+        app,
+        environment,
+        customTranslations,
+        customTypeUrlMapping,
+      ],
       // linkedOpenDataEndpoint: [app],
     };
 
@@ -364,6 +363,7 @@ export type {
   ElodyModuleConfig,
 };
 export {
+  loadTranslationsFromDirectory,
   getCurrentEnvironment,
   baseModule,
   baseSchema,
@@ -373,8 +373,6 @@ export {
   alterDimensionsOfIIIFUrl,
   parseIdToGetMoreData,
   applyPromEndpoint,
-  loadTranslations,
-  baseTranslations,
   AuthRESTDataSource,
   getMetadataItemValueByKey,
   getEntityId,
