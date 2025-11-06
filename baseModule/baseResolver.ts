@@ -142,7 +142,8 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
+import { CollectionAPIMediaFile } from "../types/collectionAPITypes";
+import { parseValidationRulesString } from '../utilities/validationParser';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -2046,6 +2047,14 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.type;
     },
     validation: async (parent, { input }, { dataSources }) => {
+      if (!input) return null;
+      
+      const inputWithRules = input as any;
+      if (inputWithRules.rules && typeof inputWithRules.rules === 'string') {
+        const validation = parseValidationRulesString(inputWithRules.rules);
+        return validation as Validation;
+      }
+
       return input as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
@@ -2132,16 +2141,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   Validation: {
-    value: async (parent, _args, { dataSources }) => {
+    value: async (parent: any, _args: any) => {
       return parent.value as ValidationRules[];
     },
-    required_if: async (parent, _args, { dataSources }) => {
+    required_if: async (parent: any, _args: any) => {
       return parent.required_if as Conditional;
     },
-    available_if: async (parent, _args, { dataSources }) => {
+    available_if: async (parent: any, _args: any) => {
       return parent.available_if as Conditional;
     },
-  },
+  } as any,
   Conditional: {
     value: async (parent, _args, { dataSources }) => {
       return parent.value as string;

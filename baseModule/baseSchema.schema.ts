@@ -383,6 +383,7 @@ export const baseSchema = gql`
     has_one_of_required_relations: RequiredOneOfRelationValidation
     has_one_of_required_metadata: RequiredOneOfMetadataValidation
     regex: String
+    rules: String
   }
 
   input ValidationInput {
@@ -395,6 +396,7 @@ export const baseSchema = gql`
     has_one_of_required_relations: RequiredOneOfRelationValidationInput
     has_one_of_required_metadata: RequiredOneOfMetadataValidationInput
     regex: String
+    rules: String
   }
 
   type InputField {
