@@ -5,6 +5,7 @@ import { manager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { Environment } from '../types/environmentTypes';
+import { AuthTokenManager } from './authTokenManager';
 
 export class AuthRESTDataSource extends RESTDataSource {
   protected environment: Environment;
@@ -12,6 +13,7 @@ export class AuthRESTDataSource extends RESTDataSource {
   protected clientIp: string | undefined;
   protected context: any;
   private requestId?: string;
+  private tokenManager: AuthTokenManager;
 
   constructor(options: {
     environment: Environment;
@@ -25,71 +27,29 @@ export class AuthRESTDataSource extends RESTDataSource {
     this.session = options.session;
     this.clientIp = options.clientIp;
     this.context = options.context;
+    this.tokenManager = new AuthTokenManager(
+      this.environment,
+      this.session,
+      this.clientIp
+    );
   }
 
   async willSendRequest(_path: string, request: AugmentedRequest) {
-    // Ensure a stable requestId for the lifetime of this datasource instance
     const requestId =
-      (this.context?.requestId as string) ||
+      this.context?.requestId ||
       this.requestId ||
       `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     this.requestId = requestId;
-
-    if (this.context && !this.context.requestId) {
+    if (this.context && !this.context.requestId)
       this.context.requestId = requestId;
-    }
+    request.headers['X-request-id'] = requestId;
 
-    if (request.headers) {
-      request.headers['X-request-id'] = requestId;
-    }
+    const token = await this.tokenManager.getValidToken();
+    if (token) request.headers['Authorization'] = `Bearer ${token}`;
 
-    const accessToken = this.session?.auth?.accessToken;
-
-    if (accessToken && accessToken !== 'undefined' && request.headers) {
-      request.headers['Authorization'] = 'Bearer ' + accessToken;
-    } else {
-      const ipWhitelistFeature = this.environment?.features?.ipWhiteListing;
-
-      if (
-        ipWhitelistFeature &&
-        this.hasWhiteListingFeature() &&
-        this.isIpAddressWhiteListed()
-      ) {
-        console.log(
-          'User visited from a whitelisted ip address, using configured token'
-        );
-        request.headers['Authorization'] =
-          'Bearer ' + ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
-      } else if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() !== 'true') {
-        throw new GraphQLError(`AUTH | NO TOKEN`, {
-          extensions: {
-            statusCode: 401,
-          },
-        });
-      }
-    }
-
-    const tenant = this.session.tenant;
-    if (request.headers && tenant) {
-      request.headers['X-tenant-id'] = tenant;
-    }
+    const tenant = this.session?.tenant;
+    if (tenant) request.headers['X-tenant-id'] = tenant;
   }
-
-  private hasWhiteListingFeature = (): boolean => {
-    return !!this.environment.features.ipWhiteListing;
-  };
-
-  private isIpAddressWhiteListed = (): boolean => {
-    // Todo: Remove again
-    console.log(this.clientIp);
-    return Boolean(
-      this.clientIp &&
-        this.hasWhiteListingFeature() &&
-        this.environment.features.ipWhiteListing?.whiteListedIpAddresses.includes(
-          this.clientIp
-        )
-    );
-  };
 
   private async withRetry<T extends any[], S, F extends (...args: T) => S>(
     fn: F,

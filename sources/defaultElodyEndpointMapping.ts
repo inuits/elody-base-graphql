@@ -23,15 +23,8 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
   mediafileEndpoint: (
     app: Express,
     storageApiUrl: string,
-    iiifURLFrontend: string,
-    staticTokenInput: any
-  ) =>
-    applyMediaFileEndpoint(
-      app,
-      storageApiUrl,
-      iiifURLFrontend,
-      staticTokenInput
-    ),
+    iiifURLFrontend: string
+  ) => applyMediaFileEndpoint(app, storageApiUrl, iiifURLFrontend),
   tenantEndpoint: (app: Express) => applyTenantEndpoint(app),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
   configsEndoint: (

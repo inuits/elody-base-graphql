@@ -1,9 +1,9 @@
-import fetch, { Response as FetchResponse } from 'node-fetch';
-import { addJwt } from './mediafilesEndpoint';
+import { Response as FetchResponse } from 'node-fetch';
 import { Express, Request, Response } from 'express';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
+import { fetchWithTokenRefresh } from './fetchWithToken';
 
 export const applyExportEndpoint = (app: Express) => {
   const env: Environment = getCurrentEnvironment();
@@ -14,7 +14,7 @@ export const applyExportEndpoint = (app: Express) => {
         (field) => (fieldQueryParameter += `&field=${field}`)
       );
 
-      await fetch(
+      await fetchWithTokenRefresh(
         `${env.api.collectionApiUrl}/${getCollectionValueForEntityType(
           request.query.type as string
         )}?order_by=${request.query.order_by}&asc=${request.query.asc}&type=${
@@ -24,11 +24,11 @@ export const applyExportEndpoint = (app: Express) => {
           method: 'GET',
           headers: {
             Accept: 'text/csv',
-            Authorization: addJwt(undefined, request, undefined),
           },
-        }
+        },
+        request
       )
-        .then(async (urlResponse: FetchResponse) => {
+        .then(async (urlResponse) => {
           if (!urlResponse.ok) throw urlResponse;
           response.status(200).setHeader('Content-Type', 'text/csv');
           response.end(await urlResponse.text());

@@ -1,97 +1,20 @@
 import { Express, Response, Request } from 'express';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
-import { manager } from '../auth/index';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 import { Collection } from '../../../generated-types/type-defs';
-import { GraphQLError } from 'graphql/index';
-import jwt_decode from 'jwt-decode';
 import { extractErrorCode } from '../helpers/helpers';
 import {
   createProxyMiddleware,
   responseInterceptor,
 } from 'http-proxy-middleware';
-
-let staticToken: string | undefined | null = undefined;
-
-const fetchWithTokenRefresh = async (
-  url: string,
-  options: any = { headers: {} },
-  req: any,
-  checkToken: boolean = false
-) => {
-  try {
-    const token = req.session?.auth?.accessToken;
-    if (token && token !== 'undefined') {
-      Object.assign(options, { headers: { Authorization: `Bearer ${token}` } });
-    }
-    let response: any;
-    const isExpired = checkToken && token && isTokenExpired(token);
-    if (!checkToken || (checkToken && !isExpired)) {
-      response = await fetch(url, options);
-    }
-
-    if (response?.status === 401 || (checkToken && isExpired)) {
-      const refreshTokenResponse = await manager?.refresh(
-        req?.session?.auth?.accessToken,
-        req?.session?.auth?.refreshToken
-      );
-      if (!refreshTokenResponse) {
-        return Promise.reject(
-          new GraphQLError(`AUTH | REFRESH FAILED`, {
-            extensions: {
-              statusCode: 401,
-            },
-          })
-        );
-      }
-      req.session.auth = refreshTokenResponse;
-
-      options.headers.Authorization = `Bearer ${refreshTokenResponse.accessToken}`;
-      const retryResponse = await fetch(url, options);
-
-      return retryResponse;
-    }
-
-    return response;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// Proxy for storage API
-export const addJwt = (proxyReq: any, req: any, res: any) => {
-  const auth =
-    req.session && req.session.auth && req.session.auth.accessToken
-      ? req.session.auth.accessToken
-      : staticToken;
-
-  if (proxyReq) {
-    proxyReq.setHeader('Authorization', 'Bearer ' + auth);
-  }
-
-  return ('Bearer ' + auth) as string;
-};
+import { fetchWithTokenRefresh } from './fetchWithToken';
 
 function extractIdFromMediafilePath(path: string): string | null {
   const regex = /\/api\/mediafile\/([a-f\d-]+)-[^\/]+$/;
   const match = path.match(regex);
 
   return match ? match[1] : null;
-}
-
-function isTokenExpired(token: string) {
-  try {
-    const decodedToken: any = jwt_decode(token);
-    return Date.now() >= decodedToken.exp * 1000 ? true : false;
-  } catch (error: any) {
-    console.error(`message: ${error?.message}, token: ${token}`);
-    throw new GraphQLError(`TOKEN IS NOT SPECIFIED`, {
-      extensions: {
-        statusCode: 401,
-      },
-    });
-  }
 }
 
 export const addHeaders = (proxyReq: any, req: Request, res: Response) => {
@@ -126,11 +49,8 @@ const pump = (reader: any, res: any) => {
 const applyMediaFileEndpoint = (
   app: Express,
   storageApiUrl: string,
-  iiifUrlFrontend: string,
-  staticTokenInput: string | undefined | null
+  iiifUrlFrontend: string
 ) => {
-  staticToken = staticTokenInput;
-
   app.use(
     ['/api/mediafile', '/api/mediafile/download-with-ticket'],
     createProxyMiddleware({
@@ -197,8 +117,7 @@ const applyMediaFileEndpoint = (
       const response = await fetchWithTokenRefresh(
         `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
         { method: 'GET' },
-        req,
-        true
+        req
       );
 
       if (!response.ok) {
@@ -207,6 +126,7 @@ const applyMediaFileEndpoint = (
 
       const blob = await response.blob();
       res.setHeader('Content-Type', blob.type);
+      // @ts-ignore
       const reader = blob.stream().getReader();
 
       pump(reader, res);
