@@ -63,7 +63,7 @@ const baseElodyElodyConfig: ElodyConfig = {
 export const addAdditionalOptionalDataSources = (environment: Environment) => {
   if (environment.api.fileSystemImporterServiceUrl) {
     baseElodyElodyConfig.dataSources.push(
-      (session: any, cache: any, clientIp: string) => {
+      (_environment: any, session: any, cache: any, clientIp: string) => {
         return {
           TranscodeService: new TranscodeService({
             environment,
@@ -77,7 +77,7 @@ export const addAdditionalOptionalDataSources = (environment: Environment) => {
   }
   if (environment.api.ocrService) {
     baseElodyElodyConfig.dataSources.push(
-      (session: any, cache: any, clientIp: string) => {
+      (_environment: any, session: any, cache: any, clientIp: string) => {
         return {
           OcrService: new OcrService({ environment, session, cache, clientIp }),
         };
