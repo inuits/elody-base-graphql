@@ -564,7 +564,8 @@
     "close": "Close preview"
   },
   "media-viewer": {
-    "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'"
+    "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'",
+    "processing-image": "Processing the image..."
   },
   "iiif-operations-modal": {
     "title": "Resize image",
