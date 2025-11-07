@@ -507,8 +507,8 @@ export const baseSchema = gql`
     Channel
     CloudBookmark
     CloudDataConnection
-    Compass
     Cog
+    Compass
     Create
     Database
     Download
@@ -519,6 +519,7 @@ export const baseSchema = gql`
     FocusTarget
     Font
     Globe
+    GripHorizontalLine
     Hdd
     History
     Home
