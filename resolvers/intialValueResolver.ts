@@ -176,6 +176,10 @@ const processRelations = async (
 
   const entityResults = await Promise.all(entityPromises);
 
+  const entities = entityResults
+    .filter(({ entity }) => entity !== null)
+    .map(({ entity, relation }) => entity);
+
   const results = entityResults
     .filter(({ entity }) => entity !== null)
     .map(({ entity, relation }) =>
@@ -186,12 +190,14 @@ const processRelations = async (
         rootKeyAsLabel
       )
     );
-  
+
   if (results.length === 0) {
     return '';
   }
 
   const isMultiple = relations.length > 1;
+  if (formatter.startsWith('link'))
+    return formatResults(entities, formatter, formatterSettings, isMultiple);
   return formatResults(results, formatter, formatterSettings, isMultiple);
 };
 
