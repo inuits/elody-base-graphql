@@ -63,9 +63,9 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         try {
           const transcodeUrl = response['transcode_file_location'];
           return transcodeUrl;
-        } catch (e) {
+        } catch (e: any) {
           console.error(e);
-          return e.toString();
+          return JSON.stringify(e);
         }
       },
       onError: (err, req, res) => {
