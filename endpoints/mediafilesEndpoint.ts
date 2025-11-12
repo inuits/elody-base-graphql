@@ -60,10 +60,13 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           req
         );
         const response = await downloadUrls.json();
-        const transcodeUrl =
-          response['transcode_file_location'] ||
-          response['original_file_location'];
-        return transcodeUrl;
+        try {
+          const transcodeUrl = response['transcode_file_location'];
+          return transcodeUrl;
+        } catch (e) {
+          console.error(e);
+          return e.toString();
+        }
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
