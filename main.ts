@@ -283,12 +283,7 @@ const start = (
       downloadEndpoint: [app],
       uploadEndpoint: [app],
       exportEndpoint: [app],
-      mediafileEndpoint: [
-        app,
-        environment.api.storageApiUrl,
-        environment.api.iiifUrl,
-        environment.staticToken,
-      ],
+      mediafileEndpoint: [app, environment],
       tenantEndpoint: [app],
       healthEndpoint: [app],
       configsEndoint: [

@@ -46,22 +46,24 @@ const pump = (reader: any, res: any) => {
     });
 };
 
-const applyMediaFileEndpoint = (
-  app: Express,
-  storageApiUrl: string,
-  iiifUrlFrontend: string
-) => {
+const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   app.use(
     ['/api/mediafile', '/api/mediafile/download-with-ticket'],
     createProxyMiddleware({
-      target: storageApiUrl,
+      target: environment.api.storageApiUrl,
       changeOrigin: true,
-      pathRewrite: (path: string, req: Request) => {
-        const newUrl: string = `${req.originalUrl.replace(
-          '/api/mediafile',
-          ''
-        )}`;
-        return newUrl;
+      pathRewrite: async (path: string, req: Request) => {
+        const filename = path.split('/').at(-1);
+        const downloadUrls = await fetchWithTokenRefresh(
+          `${environment.api.collectionApiUrl}mediafiles/${filename}/download-urls`,
+          { method: 'GET' },
+          req
+        );
+        const response = await downloadUrls.json();
+        const transcodeUrl =
+          response['transcode_file_location'] ||
+          response['original_file_location'];
+        return transcodeUrl;
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
@@ -73,7 +75,7 @@ const applyMediaFileEndpoint = (
   app.use(
     '/api/iiif*.json',
     createProxyMiddleware({
-      target: iiifUrlFrontend,
+      target: environment.api.iiifUrl,
       changeOrigin: true,
       selfHandleResponse: true,
       pathRewrite: (path: string, req: Request) => {
@@ -115,7 +117,7 @@ const applyMediaFileEndpoint = (
   app.use('/api/iiif/*', async (req, res) => {
     try {
       const response = await fetchWithTokenRefresh(
-        `${iiifUrlFrontend}${req.originalUrl.replace('/api', '')}`,
+        `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`,
         { method: 'GET' },
         req
       );
