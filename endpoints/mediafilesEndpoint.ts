@@ -1,5 +1,4 @@
 import { Express, Response, Request } from 'express';
-import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 import { Collection } from '../../../generated-types/type-defs';
@@ -82,7 +81,15 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           req,
           environment
         );
-        return full.replace(/^\/storage\/v1/, '');
+        return full.replace(environment.api.storageApiUrl, '');
+      },
+      onProxyReq: (proxyReq, req, res) => {
+        console.log(
+          'Forwarding to:',
+          proxyReq.protocol,
+          proxyReq.host,
+          proxyReq.path
+        );
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);

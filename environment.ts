@@ -58,7 +58,7 @@ export const baseEnvironment: Environment = {
     storageApiUrl:
       process.env.STORAGE_API_URL || 'http://storage-api-elody:5000/',
     storageApiUrlExt:
-      process.env.STORAGE_API_URL_EXT ||
+      process.env.STORAGE_API_URL_EXT + 'storage/v1/' ||
       'http://storage-api.elody.localhost:8000/',
     transcodeService:
       process.env.TRANSCODE_SERVICE_URL || 'http://transcode-service:5000/',
