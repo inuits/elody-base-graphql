@@ -59,7 +59,7 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           { method: 'GET' },
           req
         );
-        const response = await downloadUrls.json();
+        const response: any = await downloadUrls.json();
         try {
           const transcodeUrl = response['transcode_file_location'];
           return transcodeUrl;
