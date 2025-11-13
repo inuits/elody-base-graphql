@@ -77,7 +77,12 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         const filename = path.split('/').at(-1);
         if (!filename)
           throw Error('Unable to request download url for mediafile');
-        return await getDownloadUrlForMediafile(filename, req, environment);
+        const full = await getDownloadUrlForMediafile(
+          filename,
+          req,
+          environment
+        );
+        return full.replace(/^\/storage\/v1/, '');
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
