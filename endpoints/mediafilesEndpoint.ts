@@ -156,22 +156,6 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         .end(JSON.stringify(error));
     }
   });
-
-  app.use('/api/mediafiles/*/download', async (req, res) => {
-    try {
-      const mediafileId = req.originalUrl.split('/').at(-2);
-      if (!mediafileId)
-        throw Error('Unable to request download url for mediafile');
-      const downloadUrl = await getDownloadUrlForMediafile(
-        mediafileId,
-        req,
-        environment
-      );
-      res.status(200).end(downloadUrl);
-    } catch (error: any) {
-      res.status(extractErrorCode(error)).end(JSON.stringify(error));
-    }
-  });
 };
 
 export default applyMediaFileEndpoint;
