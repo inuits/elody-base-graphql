@@ -69,7 +69,7 @@ const getDownloadUrlForMediafile = async (
 
 const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   app.use(
-    ['/api/mediafile', '/api/mediafile/download-with-ticket'],
+    ['/api/mediafile/*', '/api/mediafile/download-with-ticket'],
     createProxyMiddleware({
       target: environment.api.storageApiUrl,
       changeOrigin: true,
