@@ -46,6 +46,27 @@ const pump = (reader: any, res: any) => {
     });
 };
 
+const getDownloadUrlForMediafile = async (
+  mediafileId: string,
+  req: Request,
+  environment: Environment,
+  kind: 'transcode' | 'original' = 'transcode'
+): Promise<string> => {
+  try {
+    const downloadUrls = await fetchWithTokenRefresh(
+      `${environment.api.collectionApiUrl}mediafiles/${mediafileId}/download-urls`,
+      { method: 'GET' },
+      req
+    );
+    const response: any = await downloadUrls.json();
+    if (kind === 'transcode') return response['transcode_file_location'];
+    else return response['original_file_location'];
+  } catch (e) {
+    console.error(e);
+    return JSON.stringify(e);
+  }
+};
+
 const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   app.use(
     ['/api/mediafile', '/api/mediafile/download-with-ticket'],
@@ -54,19 +75,9 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
       changeOrigin: true,
       pathRewrite: async (path: string, req: Request) => {
         const filename = path.split('/').at(-1);
-        const downloadUrls = await fetchWithTokenRefresh(
-          `${environment.api.collectionApiUrl}mediafiles/${filename}/download-urls`,
-          { method: 'GET' },
-          req
-        );
-        const response: any = await downloadUrls.json();
-        try {
-          const transcodeUrl = response['transcode_file_location'];
-          return transcodeUrl;
-        } catch (e: any) {
-          console.error(e);
-          return JSON.stringify(e);
-        }
+        if (!filename)
+          throw Error('Unable to request download url for mediafile');
+        return await getDownloadUrlForMediafile(filename, req, environment);
       },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
@@ -147,19 +158,16 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   });
 
   app.use('/api/mediafiles/*/download', async (req, res) => {
-    const env: Environment = getCurrentEnvironment();
     try {
-      const clientIp: string = req.headers['x-forwarded-for'] as string;
-      const datasource = new AuthRESTDataSource({
-        environment: env,
-        session: req.session,
-        clientIp,
-      });
-      const url: string = `${
-        env?.api.collectionApiUrl
-      }${req.originalUrl.replace('/api/', '')}`;
-      const response = await datasource.get(url);
-      res.status(200).end(response);
+      const mediafileId = req.originalUrl.split('/').at(-2);
+      if (!mediafileId)
+        throw Error('Unable to request download url for mediafile');
+      const downloadUrl = await getDownloadUrlForMediafile(
+        mediafileId,
+        req,
+        environment
+      );
+      res.status(200).end(downloadUrl);
     } catch (error: any) {
       res.status(extractErrorCode(error)).end(JSON.stringify(error));
     }
