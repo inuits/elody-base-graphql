@@ -83,14 +83,6 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         );
         return full.replace(environment.api.storageApiUrl, '');
       },
-      onProxyReq: (proxyReq, req, res) => {
-        console.log(
-          'Forwarding to:',
-          proxyReq.protocol,
-          proxyReq.host,
-          proxyReq.path
-        );
-      },
       onError: (err, req, res) => {
         console.error('Proxy error:', err);
         res.status(500).send('Proxy error');
