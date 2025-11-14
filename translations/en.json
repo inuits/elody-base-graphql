@@ -224,6 +224,7 @@
     "minDropdownSearchCharacters": "Type at least 3 characters",
     "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
     "rangeFilterToInputError": "'To' cannot be less than 'from'",
+    "noOptionsAvailable": "No options available",
     "matcher-labels": {
       "select-filter-type": "Select filter type",
       "AnyMatcher": "has a value",

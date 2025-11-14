@@ -225,6 +225,7 @@
       "minDropdownSearchCharacters": "Typ ten minste 3 karakters",
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
+      "noOptionsAvailable": "Geen opties beschikbaar",
       "matcher-labels": {
         "select-filter-type": "Selecteer filter type",
         "AnyMatcher": "is ingevuld",
