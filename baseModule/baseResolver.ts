@@ -102,6 +102,8 @@ import {
   WindowElementPanel,
   WindowElementLayout,
   WysiwygElement,
+  type WysiwygElementConfiguration,
+  type WysiwygElementStyleConfiguration,
   type TaggingExtensionConfiguration,
   ConfigItem,
   ColumnList,
@@ -142,7 +144,7 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import { CollectionAPIMediaFile } from "../types/collectionAPITypes";
+import { CollectionAPIEntity, CollectionAPIMediaFile, CollectionAPIMetadata, CollectionAPIRelation } from "../types/collectionAPITypes";
 import { parseValidationRulesString } from '../utilities/validationParser';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -1367,6 +1369,9 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return input || {};
     },
+    wysiwygElementConfiguration: async (_source, {  }, { dataSources }) => {
+      return _source as WysiwygElementConfiguration
+    },
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2222,6 +2227,30 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return configuration;
+    },
+  },
+  WysiwygElementStyleConfiguration: {
+    displayTextItalic: async (_source: any, {input, relationLookup  }, { dataSources }) => {
+      if (input) return input
+
+      try {
+        if (!relationLookup) return false
+
+        const relation = _source.relations.find((relation: CollectionAPIRelation) => relation.type === relationLookup.relationType)
+        const lookupEntity: CollectionAPIEntity = await dataSources.CollectionAPI.getEntityById(relation.key)
+        const lookupValue:boolean = lookupEntity.metadata.find((metadataItem: CollectionAPIMetadata) => metadataItem.key === relationLookup.metadataKey)?.value as boolean || false
+
+        return lookupValue
+
+      } catch {
+        console.log('Something went wrong during italic text lookup')
+        return false
+      }
+    },
+  },
+  WysiwygElementConfiguration: {
+    styleConfiguration: async (_source, {  }, { dataSources }) => {
+      return _source as WysiwygElementStyleConfiguration;
     },
   },
   AdvancedFilters: {

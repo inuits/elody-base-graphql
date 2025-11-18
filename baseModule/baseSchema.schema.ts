@@ -1606,6 +1606,22 @@ export const baseSchema = gql`
     ): [TaggableEntityConfiguration!]!
   }
 
+  input RelationLookupInput {
+    relationType: String!
+    metadataKey: String!
+  }
+
+  type WysiwygElementStyleConfiguration {
+    displayTextItalic(
+      input: Boolean
+      relationLookup: RelationLookupInput
+    ): Boolean!
+  }
+
+  type WysiwygElementConfiguration {
+    styleConfiguration: WysiwygElementStyleConfiguration
+  }
+
   type WysiwygElement {
     label(input: String!): String!
     metadataKey(input: String!): String!
@@ -1613,6 +1629,7 @@ export const baseSchema = gql`
     taggingConfiguration: TaggingExtensionConfiguration
     showLineNumbers(input: Boolean): Boolean!
     virtualKeyboardLayouts(input: [String!]): JSON
+    wysiwygElementConfiguration: WysiwygElementConfiguration
   }
 
   type ColumnList {
