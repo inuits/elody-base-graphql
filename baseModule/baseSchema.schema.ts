@@ -1620,6 +1620,8 @@ export const baseSchema = gql`
 
   type WysiwygElementConfiguration {
     styleConfiguration: WysiwygElementStyleConfiguration
+    showLineNumbers(input: Boolean): Boolean
+    virtualKeyboardLayouts(input: [String!]): JSON
   }
 
   type WysiwygElement {
@@ -1627,8 +1629,6 @@ export const baseSchema = gql`
     metadataKey(input: String!): String!
     extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
     taggingConfiguration: TaggingExtensionConfiguration
-    showLineNumbers(input: Boolean): Boolean!
-    virtualKeyboardLayouts(input: [String!]): JSON
     wysiwygElementConfiguration: WysiwygElementConfiguration
   }
 

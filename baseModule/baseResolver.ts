@@ -1345,30 +1345,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     taggingConfiguration: async (_source, {}, { dataSources }) => {
       return {} as TaggingExtensionConfiguration;
     },
-    showLineNumbers: async (_source, { input }, { dataSources }) => {
-      return input || false;
-    },
-    virtualKeyboardLayouts: async (_source, { input }, { dataSources }) => {
-      // In order to display different language layouts we need to define that resolver on a client side.
-      // So by default we have an English layout and others we can add through that resolver. Simple example below:
-      // ----------------------------------------------------
-      // const allKeyboardLayouts: { [key: string]: any } = {
-      //   'nl': {
-      //     default: "q w e",
-      //     shift: "Q W E"
-      //   }
-      // };
-      // const requestedLayouts: { [key: string]: any } = {};
-      // input.forEach((key: string) => {
-      //   if (allKeyboardLayouts[key]) {
-      //     requestedLayouts[key] = allKeyboardLayouts[key];
-      //   }
-      // });
-      // return requestedLayouts;
-      // ----------------------------------------------------
-
-      return input || {};
-    },
     wysiwygElementConfiguration: async (_source, {  }, { dataSources }) => {
       return _source as WysiwygElementConfiguration
     },
@@ -2251,6 +2227,30 @@ export const baseResolver: Resolvers<ContextValue> = {
   WysiwygElementConfiguration: {
     styleConfiguration: async (_source, {  }, { dataSources }) => {
       return _source as WysiwygElementStyleConfiguration;
+    },
+    showLineNumbers: async (_source, { input }, { dataSources }) => {
+      return input || false;
+    },
+    virtualKeyboardLayouts: async (_source, { input }, { dataSources }) => {
+      // In order to display different language layouts we need to define that resolver on a client side.
+      // So by default we have an English layout and others we can add through that resolver. Simple example below:
+      // ----------------------------------------------------
+      // const allKeyboardLayouts: { [key: string]: any } = {
+      //   'nl': {
+      //     default: "q w e",
+      //     shift: "Q W E"
+      //   }
+      // };
+      // const requestedLayouts: { [key: string]: any } = {};
+      // input.forEach((key: string) => {
+      //   if (allKeyboardLayouts[key]) {
+      //     requestedLayouts[key] = allKeyboardLayouts[key];
+      //   }
+      // });
+      // return requestedLayouts;
+      // ----------------------------------------------------
+
+      return input || {};
     },
   },
   AdvancedFilters: {
