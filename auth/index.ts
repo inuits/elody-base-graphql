@@ -24,6 +24,8 @@ export async function applyAuthSession(
     appConfig.features.hasPersistentSessions || true;
   const isProd: boolean = appConfig.environment === 'production';
 
+  console.log(isProd);
+
   const sessionOptions: SessionOptions = {
     secret: clientSecret,
     saveUninitialized: true,
@@ -40,6 +42,8 @@ export async function applyAuthSession(
       store: MongoStore.create({ mongoUrl: mongoUrl }),
     });
   }
+
+  console.log(sessionOptions);
 
   app.use(session(sessionOptions));
 }
