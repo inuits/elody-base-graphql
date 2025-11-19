@@ -2225,13 +2225,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WysiwygElementConfiguration: {
-    styleConfiguration: async (_source, {  }, { dataSources }) => {
+    styleConfiguration: async (_source: any, {  }, { dataSources }) => {
       return _source as WysiwygElementStyleConfiguration;
     },
-    showLineNumbers: async (_source, { input }, { dataSources }) => {
+    showLineNumbers: async (_source: any, { input }, { dataSources }) => {
       return input || false;
     },
-    virtualKeyboardLayouts: async (_source, { input }, { dataSources }) => {
+    virtualKeyboardLayouts: async (_source: any, { input }, { dataSources }) => {
       // In order to display different language layouts we need to define that resolver on a client side.
       // So by default we have an English layout and others we can add through that resolver. Simple example below:
       // ----------------------------------------------------
