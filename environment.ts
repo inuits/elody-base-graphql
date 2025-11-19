@@ -14,6 +14,15 @@ export const getCurrentEnvironment = (): Environment => {
   return currentEnvironment;
 };
 
+const getRequiredEnv = (key: string): string => {
+  const value = process.env[key];
+
+  if (typeof value === 'undefined') {
+    throw new Error(`Environment variable "${key}" is required and not set.`);
+  }
+  return value;
+};
+
 export const baseEnvironment: Environment = {
   apollo: {
     graphqlPath: process.env.APOLLO_GRAPHQL_PATH || '/api/graphql',
@@ -24,9 +33,8 @@ export const baseEnvironment: Environment = {
   },
   environment: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 4000,
-  sessionSecret: process.env.APOLLO_SESSION_SECRET || 'heelgeheim',
-  clientSecret:
-    process.env.APOLLO_CLIENT_SECRET || 'c9d9c9f7-e4b2-4bf3-b5a7-ad5e53d7ee31',
+  sessionSecret: getRequiredEnv('APOLLO_SESSION_SECRET'),
+  clientSecret: getRequiredEnv('APOLLO_CLIENT_SECRET'),
   version: process.env.VERSION || 'development-version',
   oauth: {
     baseUrl:
@@ -70,7 +78,7 @@ export const baseEnvironment: Environment = {
       password: process.env.MONGODB_PASSWORD,
       port: process.env.MONGODB_PORT || '27017',
       hostname: process.env.MONGODB_HOSTS || 'mongo',
-      dbName: process.env.MONGODB_DB_NAME || 'dams',
+      dbName: process.env.MONGODB_DB_NAME || 'elody',
       replicaSet: process.env.MONGODB_REPLICA_SET,
       tls: process.env.MONGODB_TLS === 'true' || undefined,
       authSource: process.env.MONGODB_AUTH_SOURCE,
