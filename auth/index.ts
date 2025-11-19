@@ -19,6 +19,7 @@ export async function applyAuthSession(
   mongoUrl: string,
   appConfig: Environment
 ) {
+  app.set('trust proxy', 1);
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
   const isProd: boolean = appConfig.environment === 'production';
