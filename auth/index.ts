@@ -22,6 +22,7 @@ export async function applyAuthSession(
 ) {
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
+  const isProd: boolean = appConfig.environment === 'production';
 
   const sessionOptions: SessionOptions = {
     secret: clientSecret,
@@ -29,8 +30,8 @@ export async function applyAuthSession(
     resave: false,
     cookie: {
       httpOnly: true,
-      secure: false,
-      sameSite: 'strict',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
     },
   };
 
