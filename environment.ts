@@ -24,7 +24,7 @@ export const baseEnvironment: Environment = {
   },
   environment: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 4000,
-  sessionSecret: process.env.SESSION_SECRET || 'heelgeheim',
+  sessionSecret: process.env.APOLLO_SESSION_SECRET || 'heelgeheim',
   clientSecret:
     process.env.APOLLO_CLIENT_SECRET || 'c9d9c9f7-e4b2-4bf3-b5a7-ad5e53d7ee31',
   version: process.env.VERSION || 'development-version',

@@ -157,7 +157,6 @@ const start = (
   const configureMiddleware = (app: any, environment: Environment) => {
     applyAuthSession(
       app,
-      environment.sessionSecret,
       createMongoConnectionString(environment),
       environment
     );

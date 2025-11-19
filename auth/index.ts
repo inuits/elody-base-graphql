@@ -7,6 +7,7 @@ import { applyConfig } from './libConfig';
 import MongoStore from 'connect-mongo';
 import { isMongoConfigAvailable } from '../sources/mongo';
 import { Environment } from '../types/environmentTypes';
+import { environment } from 'base-graphql';
 
 declare module 'express-session' {
   interface SessionData {
@@ -16,7 +17,6 @@ declare module 'express-session' {
 
 export async function applyAuthSession(
   app: any,
-  clientSecret: string,
   mongoUrl: string,
   appConfig: Environment
 ) {
@@ -27,7 +27,7 @@ export async function applyAuthSession(
   console.log(isProd);
 
   const sessionOptions: SessionOptions = {
-    secret: clientSecret,
+    secret: appConfig.sessionSecret,
     saveUninitialized: true,
     resave: false,
     cookie: {
