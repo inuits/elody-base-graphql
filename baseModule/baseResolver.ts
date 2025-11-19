@@ -1345,7 +1345,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     taggingConfiguration: async (_source, {}, { dataSources }) => {
       return {} as TaggingExtensionConfiguration;
     },
-    wysiwygElementConfiguration: async (_source, {  }, { dataSources }) => {
+    wysiwygElementConfiguration: async (_source: any, {  }, { dataSources }) => {
       return _source as WysiwygElementConfiguration
     },
   },
