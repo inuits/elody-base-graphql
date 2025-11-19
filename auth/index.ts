@@ -7,7 +7,6 @@ import { applyConfig } from './libConfig';
 import MongoStore from 'connect-mongo';
 import { isMongoConfigAvailable } from '../sources/mongo';
 import { Environment } from '../types/environmentTypes';
-import { environment } from 'base-graphql';
 
 declare module 'express-session' {
   interface SessionData {
