@@ -17,7 +17,7 @@ export const getCurrentEnvironment = (): Environment => {
 const getRequiredEnv = (key: string): string => {
   const value = process.env[key];
 
-  if (typeof value === 'undefined') {
+  if (typeof value === 'undefined' && process.env.NODE_ENV === 'production') {
     throw new Error(`Environment variable "${key}" is required and not set.`);
   }
   return value;
