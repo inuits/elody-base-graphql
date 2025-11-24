@@ -33,10 +33,7 @@ export async function applyAuthSession(
   mongoUrl: string,
   appConfig: Environment
 ) {
-  app.set('trust proxy', (ip: string) => {
-    console.log(ip);
-    return true;
-  });
+  app.set('trust proxy', 1);
   app.use(logProxyHeaders);
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
