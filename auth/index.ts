@@ -1,4 +1,5 @@
 import session, { SessionOptions } from 'express-session';
+import type { Request, Response } from 'express';
 import jwt_decode from 'jwt-decode';
 import { AuthManager } from './auth-manager';
 import { logToken } from './debug';
@@ -14,6 +15,19 @@ declare module 'express-session' {
   }
 }
 
+const logProxyHeaders = (req: Request, res: Response, next: () => any) => {
+  const xfp = req.headers['x-forwarded-proto'];
+
+  const protocol = req.protocol;
+
+  console.log('----------------------------------------------------');
+  console.log(`[HEADER CHECK] X-Forwarded-Proto: ${xfp}`);
+  console.log(`[EXPRESS PROTOCOL] req.protocol: ${protocol}`);
+  console.log('----------------------------------------------------');
+
+  next();
+};
+
 export async function applyAuthSession(
   app: any,
   mongoUrl: string,
@@ -23,6 +37,7 @@ export async function applyAuthSession(
     console.log(ip);
     return true;
   });
+  app.use(logProxyHeaders);
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
   const isProd: boolean = appConfig.environment === 'production';
