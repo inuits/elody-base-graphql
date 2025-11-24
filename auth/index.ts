@@ -19,7 +19,7 @@ export async function applyAuthSession(
   mongoUrl: string,
   appConfig: Environment
 ) {
-  app.set('trust proxy', (ip) => {
+  app.set('trust proxy', (ip: string) => {
     console.log(ip);
     return true;
   });
