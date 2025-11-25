@@ -64,8 +64,6 @@ export async function applyAuthSession(
     cookie: getSessionCookieSettings(appConfig),
   };
 
-  console.log(sessionOptions);
-
   if (hasPersistentSessions && isMongoConfigAvailable()) {
     Object.assign(sessionOptions, {
       store: MongoStore.create({ mongoUrl: mongoUrl }),
