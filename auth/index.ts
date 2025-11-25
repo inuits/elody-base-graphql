@@ -15,19 +15,6 @@ declare module 'express-session' {
   }
 }
 
-const logProxyHeaders = (req: Request, res: Response, next: () => any) => {
-  const xfp = req.headers['x-forwarded-proto'];
-
-  const protocol = req.protocol;
-
-  console.log('----------------------------------------------------');
-  console.log(`[HEADER CHECK] X-Forwarded-Proto: ${xfp}`);
-  console.log(`[EXPRESS PROTOCOL] req.protocol: ${protocol}`);
-  console.log('----------------------------------------------------');
-
-  next();
-};
-
 const getSessionCookieSettings = (appconfig: Environment): CookieOptions => {
   const cookieSettings: CookieOptions = {
     httpOnly: true,
@@ -53,7 +40,6 @@ export async function applyAuthSession(
   appConfig: Environment
 ) {
   app.set('trust proxy', 1);
-  app.use(logProxyHeaders);
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
 
