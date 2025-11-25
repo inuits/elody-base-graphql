@@ -1,5 +1,5 @@
 import session, { SessionOptions } from 'express-session';
-import type { Request, Response } from 'express';
+import type { CookieOptions, Request, Response } from 'express';
 import jwt_decode from 'jwt-decode';
 import { AuthManager } from './auth-manager';
 import { logToken } from './debug';
@@ -28,6 +28,25 @@ const logProxyHeaders = (req: Request, res: Response, next: () => any) => {
   next();
 };
 
+const getSessionCookieSettings = (appconfig: Environment): CookieOptions => {
+  const cookieSettings: CookieOptions = {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  };
+
+  const isProdEnvironment: boolean = appconfig.environment === 'production';
+  const redirectsToExternalSites: boolean =
+    appconfig.features.hasRedirectToExternalSites;
+
+  if (isProdEnvironment && redirectsToExternalSites) {
+    cookieSettings.secure = true;
+    cookieSettings.sameSite = 'none';
+  }
+
+  return cookieSettings;
+};
+
 export async function applyAuthSession(
   app: any,
   mongoUrl: string,
@@ -37,18 +56,15 @@ export async function applyAuthSession(
   app.use(logProxyHeaders);
   const hasPersistentSessions =
     appConfig.features.hasPersistentSessions || true;
-  const isProd: boolean = appConfig.environment === 'production';
 
   const sessionOptions: SessionOptions = {
     secret: appConfig.sessionSecret,
     saveUninitialized: true,
     resave: false,
-    cookie: {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-    },
+    cookie: getSessionCookieSettings(appConfig),
   };
+
+  console.log(sessionOptions);
 
   if (hasPersistentSessions && isMongoConfigAvailable()) {
     Object.assign(sessionOptions, {

@@ -93,6 +93,7 @@ export const baseEnvironment: Environment = {
     hasSavedSearch: false,
     hasPersistentSessions: true,
     supportsMultilingualMetadataEditing: false,
+    hasRedirectToExternalSites: false,
   },
   customization: {
     applicationTitle: process.env.APPLICATION_TITLE || 'Elody',

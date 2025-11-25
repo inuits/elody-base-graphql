@@ -80,6 +80,7 @@ export interface Environment {
     };
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
+    hasRedirectToExternalSites: boolean;
   };
   customization: {
     applicationTitle: string;
@@ -186,6 +187,7 @@ export interface FullyOptionalEnvironmentInput {
     };
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
+    hasRedirectToExternalSites?: boolean;
   };
   customization?: {
     applicationTitle?: string;
