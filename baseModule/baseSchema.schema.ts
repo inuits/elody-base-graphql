@@ -1442,6 +1442,7 @@ export const baseSchema = gql`
     can(input: [String!]): [String]
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
+    highlightIfPrimaryMediafile(input: Boolean): Boolean
   }
 
   type PanelRelationMetaData {

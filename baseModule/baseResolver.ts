@@ -1521,6 +1521,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     onlyForEntityTypes: async (_source, { input }, { dataSources }) => {
       return input ?? [];
     },
+    highlightIfPrimaryMediafile: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
