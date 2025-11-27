@@ -12,6 +12,21 @@
 | tokenLogging  | `String`  | Should be changed to boolean, but currently accepts a string as `true` or `false`, this toggles the logging of user tokens in the container |
 | maxQueryDepth | `Number`  | Limits the query depth the graphql accepts, by default maximum `10` levels                                                                  |
 
+#### Api
+
+| Config item                  | Type                  | Description                                                                                                                                          |
+|------------------------------|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| collectionApiUrl             | `String`              | The url on which the collectionAPI is reachable, takes its value by default from the `COLLECTION_API_URL` environment variable                       |
+| csvImportServiceUrl          | `String`              | The url on which the csv-import-service is reachable, takes its value by default from the  `CSV_IMPORTER_URL`  environment variable                  |
+| fileSystemImporterServiceUrl | `String`              | The url on which the filesystem-importer-service is reachable, takes its value by default from the  `FILE_SYSTEM_IMPORTER_URL`  environment variable |
+| iiifUrl                      | `String`              | The internal url on which the iiif-service is reachable, takes its value by default from the  `IMAGE_API_URL`  environment variable                  |
+| iiifUrlFrontend              | `String`              | The external url on which the iiif-service is reachable, takes its value by default from the  `IMAGE_API_URL_EXT`  environment variable              |
+| storageApiUrl                | `String`              | The internal url on which the storageAPI is reachable, takes its value by default from the  `STORAGE_API_URL`  environment variable                  |
+| storageApiUrlExt             | `String`              | The external url on which the storageAPI is reachable, takes its value by default from the  `STORAGE_API_URL_EXT`  environment variable              |
+| promUrl                      | `String \| 'no-prom'` | The url on which prometheus is reachable to show charts for the PZA client, should maybe be moved to the pza config                                  |
+| transcodeService             | `String`              | The url on which the transcode-service is reachable, takes its value by default from the  `TRANSCODE_SERVICE_URL`  environment variable              |
+| ocrService                   | `String`              | The url on which the ocr-service is reachable, takes its value by default from the  `OCR_SERVICE_URL`  environment variable                          |
+
 #### Features
 
 | Config item                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -23,7 +38,7 @@
 
 ### Generate new types manualy inside container
 
-Go to the `èlody-common` folder and run the `task generate` command, then pick the number of the client you want to regenerate the types for from the list, type it and hit enter
+Go to the `elody-common` folder and run the `task generate` command, then pick the number of the client you want to regenerate the types for from the list, type it and hit enter
 
 ### How to publish a graphql module to nexus (using gitlab pipelines)
 
