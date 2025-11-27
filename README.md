@@ -23,11 +23,7 @@
 
 ### Generate new types manualy inside container
 
-If the automatic type generation inside of the container fails to pick up your changes use these steps to generate them manually:
-
-- `docker exec -it dams-graphql-1 ash`
-- Go to the app directory: `cd ../`
-- `pnpm run generate` (this also works in the inuits-dams-graphql-service directory but is only for use inside of the pipelines)
+Go to the `èlody-common` folder and run the `task generate` command, then pick the number of the client you want to regenerate the types for from the list, type it and hit enter
 
 ### How to publish a graphql module to nexus (using gitlab pipelines)
 
