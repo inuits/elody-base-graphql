@@ -2,6 +2,16 @@
 
 ### Environment
 
+#### Apollo
+
+| Config item   | Type      | Description                                                                                                                                 |
+|---------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| graphqlPath   | `String`  | The path where the graphql api can be reached, by default `/api/graphql`                                                                    |
+| introspection | `Boolean` | Toggles [graphq introspection](https://graphql.org/learn/introspection/)                                                                    |
+| playground    | `Boolean` | Toggles the graphql playground                                                                                                              |
+| tokenLogging  | `String`  | Should be changed to boolean, but currently accepts a string as `true` or `false`, this toggles the logging of user tokens in the container |
+| maxQueryDepth | `Number`  | Limits the query depth the graphql accepts, by default maximum `10` levels                                                                  |
+
 #### Features
 
 | Config item                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
