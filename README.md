@@ -38,18 +38,6 @@ Follow these steps to publish a package to nexus for use in graphql pipeline:
 - The gitlab pipeline should start running where the npm package gets built and published to nexus automatically
 
 
-### How to publish a graphql module to nexus (manually - depricated)
-
-Follow these steps to publish a package to nexus for use in graphql pipeline:
-
-- Change the `main` entry under `publishConfig` inside of the `package.json` to `./dist/modules/{moduleDirectoryName}/{moduleFileName}.js` (Do not commit)
-- `pnpm run generate` from the inuits-dams-frontend directory
-- `pnpm run build` from in the directory of the module you want to publish
-- Bump `package.json` version
-- Commit new `package.json` and other changes inside the graphql module
-- `pnpm publish`
-
-
 ### Add the gitlab pipeline to a new repository
 
 To add the gitlab pipeline ([example project](https://gitlab.inuits.io/rnd/inuits/dams/inuits-dams-saved-search-module)) where the npm package gets automatically built and published to nexus follow these steps:
