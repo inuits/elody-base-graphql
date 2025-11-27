@@ -12,6 +12,18 @@
 | tokenLogging  | `String`  | Should be changed to boolean, but currently accepts a string as `true` or `false`, this toggles the logging of user tokens in the container |
 | maxQueryDepth | `Number`  | Limits the query depth the graphql accepts, by default maximum `10` levels                                                                  |
 
+#### Oauth
+
+| Config item     | Type     | Description                                                                                                     |
+|-----------------|----------|-----------------------------------------------------------------------------------------------------------------|
+| baseUrl         | `String` | The base url of your access management solution, gets its value from the `OAUTH_BASE_URL` variable              |
+| baseUrlFrontend | `String` | The base url of your access management solution, gets its value from the  `OAUTH_BASE_URL_FRONTEND`  variable   |
+| clientId        | `String` | The id of the client in your access management solution, gets its value from the  `OAUTH_CLIENT_ID`  variable   |
+| tokenEndpoint   | `String` | By default `/protocol/openid-connect/token` or overwritten by the `OAUTH_TOKEN_ENDPOINT` environment variable   |
+| logoutEndpoint  | `String` | By default `/protocol/openid-connect/logout` or overwritten by the `OAUTH_LOGOUT_ENDPOINT` environment variable |
+| authEndpoint    | `String` | By default `protocol/openid-connect/auth` or overwritten by the `OAUTH_AUTH_ENDPOINT` environment variable      |
+| apiCodeEndpoint | `String` | By default `/api/auth_code` or overwritten by the `OAUTH_API_CODE_ENDPOINT` environment variable                |
+
 #### Api
 
 | Config item                  | Type                  | Description                                                                                                                                          |
