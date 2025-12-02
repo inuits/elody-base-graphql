@@ -92,7 +92,7 @@ export const applyUploadEndpoint = (app: Express) => {
         request.on('end', async () => {
             try {
                 const result = await datasource.post(
-                    `${env.api.collectionApiUrl}/marc21/v1/batch`,
+                    `${env.api.collectionApiUrl}/marc21/v1/batch?xml_type=${request.query.upload_type}`,
                     {
                         method: 'POST',
                         headers: {
