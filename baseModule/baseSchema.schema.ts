@@ -1194,6 +1194,16 @@ export const baseSchema = gql`
     wktMap
   }
 
+  enum MapViews {
+    satellite
+    standard
+  }
+
+  enum MapModes {
+    heatMode
+    default
+  }
+
   type MapMetadata {
     value(
       key: String!
