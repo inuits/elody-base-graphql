@@ -126,8 +126,9 @@ export const normalizeCoordinatesForHeatmap = (coordinates: number[]) => {
   return proj4('EPSG:4326', 'EPSG:3857', coordinates);
 };
 
-export const normalizeWeightForHeatmap = (value: number) => {
-  return value / 100;
+export const normalizeWeightForHeatmap = (value: number, minimalValue?: number) => {
+  const valueToNormalize = !!minimalValue && value < minimalValue ? minimalValue : value;
+  return valueToNormalize / 100;
 };
 
 export const getTypesFromFilterInputs = (

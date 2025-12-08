@@ -1887,6 +1887,14 @@ export const baseResolver: Resolvers<ContextValue> = {
           prepareMetadataFieldForMapData(parent.metadata, key, defaultValue),
         location: () =>
           prepareLocationFieldForMapData(parent.location, key, defaultValue),
+        root: () =>
+          resolveIntialValueRoot(
+            dataSources,
+            parent,
+            key,
+            null,
+            undefined
+          ),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,
@@ -1946,7 +1954,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         },
         properties: {
           id: idValue,
-          weight: normalizeWeightForHeatmap(weightValue), // value between 0 and 1
+          weight: normalizeWeightForHeatmap(weightValue, weight.minimalValue), // value between 0 and 1
         },
       };
     },
@@ -2281,6 +2289,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         filterOptionsMapping,
         operator,
         facets,
+        bucket
       }
     ) => {
       return {
@@ -2309,6 +2318,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         filterOptionsMapping,
         operator,
         facets,
+        bucket,
       };
     },
   },
@@ -2445,6 +2455,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     facets: (parent) => {
       return parent.facets || [];
     },
+    bucket: (parent) => {
+      return parent.bucket || '';
+    }
   },
   MapFeatureMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {

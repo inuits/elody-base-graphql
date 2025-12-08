@@ -1217,6 +1217,7 @@ export const baseSchema = gql`
     key: String!
     source: KeyValueSource!
     defaultValue: JSON
+    minimalValue: JSON
     relationKey: String
   }
 
@@ -1912,6 +1913,7 @@ export const baseSchema = gql`
     operator: Operator
     aggregation: String
     returnIdAtIndex: Int
+    bucket: String
     facets: [FacetInputInput!]
   }
 
@@ -1962,6 +1964,7 @@ export const baseSchema = gql`
     minDropdownSearchCharacters(value: Int): Int
     operator: Operator
     facets: [FacetInputType!]
+    bucket: String
   }
 
   type FacetInputType {
@@ -1996,6 +1999,7 @@ export const baseSchema = gql`
     distinct_by: String
     context: JSON
     operator: Operator
+    bucket: String
   }
 
   type AdvancedFilters {
@@ -2024,6 +2028,7 @@ export const baseSchema = gql`
       filterOptionsMapping: FilterOptionsMappingInput
       operator: Operator
       facets: [FacetInputInput!]
+      bucket: String
     ): AdvancedFilter!
   }
 
