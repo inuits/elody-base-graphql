@@ -354,6 +354,10 @@
       "entity-deleted": {
         "title": "Entity successfully deleted",
         "description": "Entity was deleted"
+      },
+      "action-started": {
+        "title": "Action started",
+        "description": "The action has started successfully"
       }
     },
     "errors": {

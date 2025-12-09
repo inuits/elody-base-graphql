@@ -114,6 +114,7 @@ import {
   LookupInputType,
   AutocompleteSelectionOptions,
   MapFeatureMetadata,
+  ContextMenuCustomAction,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1386,6 +1387,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     lineClamp: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuActions;
+    }
   },
   ActionElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2164,6 +2168,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     doElodyAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuElodyAction;
     },
+    doCustomAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuCustomAction;
+    },
   },
   ContextMenuLinkAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2203,6 +2210,23 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input || [];
     },
+  },
+  ContextMenuCustomAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    action: async (_source, { input }, { dataSources }) => {
+      return input as ContextMenuElodyActionEnum;
+    },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
+    endpointUrl: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    }
   },
   TaggingExtensionConfiguration: {
     customQuery: async (_source, { input }, { dataSources }) => {

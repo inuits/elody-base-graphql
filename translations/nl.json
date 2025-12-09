@@ -358,8 +358,11 @@
         "entity-deleted": {
           "title": "Entiteit succesvol verwijderd",
           "description": "De entiteit is verwijderd"
+        },
+        "action-started": {
+          "title": "Actie gestart",
+          "description": "De actie is succesvol gestart"
         }
-
       },
       "errors": {
         "no-url-error": {

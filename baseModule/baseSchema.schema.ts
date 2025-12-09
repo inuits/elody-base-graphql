@@ -1535,6 +1535,7 @@ export const baseSchema = gql`
     layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
+    contextMenuActions: ContextMenuActions
     lineClamp(input: String): String!
   }
 
@@ -1682,6 +1683,7 @@ export const baseSchema = gql`
     DeleteRelation
     DeleteEntity
     Share
+    EndpointCall
   }
 
   type ContextMenuGeneralAction {
@@ -1704,10 +1706,19 @@ export const baseSchema = gql`
     can(input: [String]): [String]
   }
 
+  type ContextMenuCustomAction {
+    label(input: String): String!
+    icon(input: String): String!
+    action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
+    can(input: [String]): [String]
+    endpointUrl(input: String): String
+  }
+
   type ContextMenuActions {
     doLinkAction: ContextMenuLinkAction
     doGeneralAction: ContextMenuGeneralAction
     doElodyAction: ContextMenuElodyAction
+    doCustomAction: ContextMenuCustomAction
   }
 
   type teaserMetadata {
