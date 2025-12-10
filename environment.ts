@@ -99,7 +99,6 @@ export const baseEnvironment: Environment = {
     applicationTitle: process.env.APPLICATION_TITLE || 'Elody',
     applicationLocale: process.env.APPLICATION_LOCALE || 'en',
     hideEmptyFields: false,
-    excludedLanguages: ['ar'],
     entityIdKey: '_id',
   },
   allowAnonymousUsers:

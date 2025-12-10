@@ -101,10 +101,8 @@ const getAvailableTranslations = (
 
   const includedTranslationKeys: string[] | undefined =
     config.customization?.availableLanguages;
-  const excludedTranslationKeys: string[] | undefined =
-    config.customization?.excludedLanguages;
 
-  if (!includedTranslationKeys && !excludedTranslationKeys) {
+  if (!includedTranslationKeys) {
     return fullTranslations;
   }
 
@@ -122,14 +120,6 @@ const getAvailableTranslations = (
     });
   } else {
     availableTranslations = { ...fullTranslations };
-  }
-
-  if (excludedTranslationKeys) {
-    excludedTranslationKeys.forEach((key: string) => {
-      if (key in availableTranslations) {
-        delete availableTranslations[key];
-      }
-    });
   }
 
   return availableTranslations;
