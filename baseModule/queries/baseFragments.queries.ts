@@ -38,6 +38,27 @@ export const baseFragments = gql`
     regex
   }
 
+  fragment advancedFilter on AdvancedFilter {
+      type
+      key
+      label
+      selectionOption
+      isDisplayedByDefault
+      filterOptionsMapping {
+          label
+          value
+      }
+      useNewWayToFetchOptions
+      advancedFilterInputForRetrievingOptions {
+          type
+          key
+          value
+          distinct_by
+          match_exact
+      }
+      tooltip(value: true)
+  }
+  
   fragment inputfield on InputField {
     type
     options {
