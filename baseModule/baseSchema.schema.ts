@@ -534,6 +534,7 @@ export const baseSchema = gql`
     MapMarker
     MapMarkerInfo
     MapPin
+    Palette
     Police
     Process
     Processor
