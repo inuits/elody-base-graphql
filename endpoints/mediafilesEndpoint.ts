@@ -58,6 +58,7 @@ const getDownloadUrlForMediafile = async (
       req
     );
     const response: any = await downloadUrls.json();
+    console.log(response);
     if (kind === 'transcode') return response['transcode_file_location'];
     else return response['original_file_location'];
   } catch (e) {
@@ -81,6 +82,8 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           req,
           environment
         );
+        console.log(full);
+        console.log(full.replace(environment.api.storageApiUrl, ''));
         return full.replace(environment.api.storageApiUrl, '');
       },
       onError: (err, req, res) => {
