@@ -52,6 +52,9 @@ const getDownloadUrlForMediafile = async (
   kind: 'transcode' | 'original' = 'transcode'
 ): Promise<string> => {
   try {
+    console.log(
+      `${environment.api.collectionApiUrl}mediafiles/${mediafileId}/download-urls`
+    );
     const downloadUrls = await fetchWithTokenRefresh(
       `${environment.api.collectionApiUrl}mediafiles/${mediafileId}/download-urls`,
       { method: 'GET' },
