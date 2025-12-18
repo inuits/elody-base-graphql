@@ -502,6 +502,7 @@ export const baseSchema = gql`
   enum MenuIcons {
     Anpr
     ArchiveAlt
+    Bell
     BookOpen
     BrightnessPlus
     Car
