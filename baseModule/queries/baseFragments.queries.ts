@@ -123,6 +123,7 @@ export const baseFragments = gql`
     entityType
     hasVirtualKeyboard
     autoSelectable
+    autoAllSelectable
   }
 
   fragment metadataRelation on MetadataRelation {

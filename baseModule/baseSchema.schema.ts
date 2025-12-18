@@ -419,6 +419,7 @@ export const baseSchema = gql`
     uploadMultiple: Boolean
     fileProgressSteps: FileProgress
     autoSelectable: Boolean
+    autoAllSelectable: Boolean
     disabled: Boolean
     fieldKeyToSave(input: String): String
     isMetadataField(input: Boolean): Boolean
