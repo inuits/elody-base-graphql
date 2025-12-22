@@ -2204,6 +2204,7 @@ export const baseSchema = gql`
     link: String!
     label: String!
     value: String!
+    customLabel: String
   }
 
   type PillFormatter {
