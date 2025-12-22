@@ -1178,6 +1178,16 @@ export const baseSchema = gql`
     fetchDeepRelations: FetchDeepRelations
     can(input: [String!]): [String!]
     cropMediafileCoordinatesKey(input: String): String
+    actionsOnResult: ActionsOnResult
+  }
+  
+  enum ActionsOnResultTypes {
+      NoResult
+  }
+  
+  type ActionsOnResult {
+      type(input: ActionsOnResultTypes!): ActionsOnResultTypes!
+      options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
   enum EntityListViewMode {

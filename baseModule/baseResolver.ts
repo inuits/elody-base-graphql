@@ -19,6 +19,8 @@ import {
   ActionProgressIndicatorType,
   ActionProgressStep,
   Actions,
+  ActionsOnResult,
+  ActionsOnResultTypes,
   ActionType,
   AdvancedFilterTypes,
   BaseLibraryModes,
@@ -1293,6 +1295,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     cropMediafileCoordinatesKey: async (parent, { input }, { dataSources }) => {
       return input || '';
+    },
+    actionsOnResult: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ActionsOnResult;
+    },
+  },
+  ActionsOnResult: {
+    type: async (_source, { input }, { dataSources }) => {
+      return input as ActionsOnResultTypes;
+    },
+    options: async (_source, { input }, { dataSources }) => {
+      return input;
     },
   },
   ManifestViewerElement: {
