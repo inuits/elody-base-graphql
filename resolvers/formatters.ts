@@ -34,7 +34,7 @@ const handleLinkFormatterFromEntity = ({
 }: {
   entity: BaseEntity & { metadata: Metadata[] };
   formatterSettings: LinkFormatter;
-}): { label: string; link: string, entity: BaseEntity & { metadata: Metadata[] } | string } => {
+}): { label: string; link: string, openInNewTab: boolean, entity: BaseEntity & { metadata: Metadata[] } | string } => {
   let value: string = entity?.[formatterSettings.value as keyof BaseEntity] || "";
   let label = entity?.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value 
     || formatterSettings.customLabel || entity?.id || "";
@@ -44,7 +44,7 @@ const handleLinkFormatterFromEntity = ({
     value = entity as unknown as string;
     link = "/not-found";
   };
-  return { label, link: link.replace("$value", value), entity };
+  return { label, link: link.replace("$value", value), entity, openInNewTab: formatterSettings.openInNewTab || false};
 };
 
 const handlePillFormatter = ({

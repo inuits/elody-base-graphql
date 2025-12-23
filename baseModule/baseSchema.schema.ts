@@ -2215,6 +2215,7 @@ export const baseSchema = gql`
     label: String!
     value: String!
     customLabel: String
+    openInNewTab: Boolean
   }
 
   type PillFormatter {
