@@ -81,6 +81,10 @@ export interface Environment {
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
     hasRedirectToExternalSites: boolean;
+    globalNotification?: {
+      title: string;
+      description: string;
+    };
   };
   customization: {
     applicationTitle: string;
@@ -187,6 +191,10 @@ export interface FullyOptionalEnvironmentInput {
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
     hasRedirectToExternalSites?: boolean;
+    globalNotification?: {
+      title?: string;
+      description?: string;
+    };
   };
   customization?: {
     applicationTitle?: string;

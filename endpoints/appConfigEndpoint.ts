@@ -87,6 +87,15 @@ const getConfig = (config: Environment) => {
       },
     });
 
+  if (config.features.globalNotification) {
+    Object.assign(baseConfig.features, {
+      globalNotification: {
+        title: config.features.globalNotification.title,
+        description: config.features.globalNotification.description,
+      },
+    });
+  }
+
   return baseConfig;
 };
 
