@@ -1541,6 +1541,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     highlightIfPrimaryMediafile: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
+    repeatable: async (_source, { input = false }, { dataSources }) => {
+      return input
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {

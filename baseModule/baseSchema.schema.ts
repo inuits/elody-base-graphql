@@ -1180,14 +1180,14 @@ export const baseSchema = gql`
     cropMediafileCoordinatesKey(input: String): String
     actionsOnResult: ActionsOnResult
   }
-  
+
   enum ActionsOnResultTypes {
-      NoResult
+    NoResult
   }
-  
+
   type ActionsOnResult {
-      type(input: ActionsOnResultTypes!): ActionsOnResultTypes!
-      options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    type(input: ActionsOnResultTypes!): ActionsOnResultTypes!
+    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
   enum EntityListViewMode {
@@ -1467,6 +1467,7 @@ export const baseSchema = gql`
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
+    repeatable(input: Boolean): Boolean!
   }
 
   type PanelRelationMetaData {
