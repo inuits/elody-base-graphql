@@ -1529,6 +1529,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input ?? [];
     },
+    canEdit: async (_source, { input }, { dataSources }) => {
+      return input ?? [];
+    },
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
