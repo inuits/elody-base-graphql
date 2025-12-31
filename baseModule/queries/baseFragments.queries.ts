@@ -183,6 +183,7 @@ export const baseFragments = gql`
     enableImageCrop
     keyToSaveCropCoordinates
     pageToNavigateToAfterCreation
+    copyIntialValues
   }
   
   fragment subOptions on DropdownOption {

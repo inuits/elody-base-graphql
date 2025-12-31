@@ -29,6 +29,7 @@ import {
   Collection,
   Column,
   ColumnSizes,
+  CopyValueFromParentIntialValues,
   Conditional,
   ContextMenuActions,
   ContextMenuElodyAction,
@@ -1543,6 +1544,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     highlightIfPrimaryMediafile: async (_source, { input }, { dataSources }) => {
       return input ?? false;
+    },
+    copyValueFromParent: async (_source, { input }, { dataSources }) => {
+      return input as CopyValueFromParentIntialValues;
     },
   },
   UploadContainer: {

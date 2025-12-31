@@ -661,6 +661,7 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
+    copyIntialValues: [String!]
   }
 
   type BulkOperationModal {
@@ -673,6 +674,7 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
+    copyIntialValues: [String!]
   }
 
   enum ActionContextEntitiesSelectionType {
@@ -1468,6 +1470,17 @@ export const baseSchema = gql`
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
+    copyValueFromParent(input: CopyValueFromParentIntialValuesInput!): CopyValueFromParentIntialValues!
+  }
+
+  type CopyValueFromParentIntialValues {
+      label: String!
+      key: String!
+  }
+  
+  input CopyValueFromParentIntialValuesInput {
+      label: String!
+      key: String!
   }
 
   type PanelRelationMetaData {
