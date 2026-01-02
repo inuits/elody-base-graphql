@@ -2242,7 +2242,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     endpointUrl: async (_source, { input }, { dataSources }) => {
       return input || '';
-    }
+    },
+    endpointMethod: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
   },
   TaggingExtensionConfiguration: {
     customQuery: async (_source, { input }, { dataSources }) => {

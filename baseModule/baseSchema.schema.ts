@@ -1726,6 +1726,7 @@ export const baseSchema = gql`
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
     can(input: [String]): [String]
     endpointUrl(input: String): String
+    endpointMethod(input: String): String
   }
 
   type ContextMenuActions {
