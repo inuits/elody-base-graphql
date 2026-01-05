@@ -661,7 +661,6 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
-    copyIntialValues: [String!]
   }
 
   type BulkOperationModal {
@@ -674,7 +673,6 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
-    copyIntialValues: [String!]
   }
 
   enum ActionContextEntitiesSelectionType {
