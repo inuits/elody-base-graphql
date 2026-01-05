@@ -579,6 +579,7 @@ export const baseSchema = gql`
     ArrowCircleLeft
     ArrowCircleRight
     AudioThumbnail
+    CompressAlt
     Ban
     BookOpen
     Check
@@ -599,6 +600,7 @@ export const baseSchema = gql`
     EllipsisV
     ExclamationTriangle
     Export
+    ExpandAlt
     Eye
     FileAlt
     FileExport
