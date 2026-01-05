@@ -1466,6 +1466,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
+    repeatable: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
+    },
   },
   ExpandButtonOptions: {
     shown: async (_source, { input }, { dataSources }) => {

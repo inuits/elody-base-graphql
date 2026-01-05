@@ -1531,6 +1531,7 @@ export const baseSchema = gql`
     relation: [PanelRelation]
     entityListElement: EntityListElement
     wysiwygElement: WysiwygElement
+    repeatable(input: Boolean): Boolean
   }
 
   type WindowElementBulkDataPanel {
