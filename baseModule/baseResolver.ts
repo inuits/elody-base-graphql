@@ -1689,7 +1689,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         const mediafile: CollectionAPIMediaFile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
-        return mediafile.display_filename || mediafile.filename;
+        return mediafile.display_filename;
       } catch {
         return '';
       }
