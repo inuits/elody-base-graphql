@@ -1,15 +1,15 @@
 import { Express } from 'express';
 import cors from 'cors';
-import { currentEnvironment } from '../environment';
+import { type Environment } from 'base-graphql';
 
-export const enableCors = (app: Express) => {
+export const enableCors = (app: Express, environment: Environment) => {
   const allowedOrigins = [];
 
-  if (currentEnvironment.corsAllowedOrigins)
-    allowedOrigins.push(...currentEnvironment.corsAllowedOrigins.split(','));
+  if (environment.corsAllowedOrigins)
+    allowedOrigins.push(...environment.corsAllowedOrigins.split(','));
 
-  if (!allowedOrigins.includes(currentEnvironment.damsFrontend))
-    allowedOrigins.push(currentEnvironment.damsFrontend);
+  if (!allowedOrigins.includes(environment.damsFrontend))
+    allowedOrigins.push(environment.damsFrontend);
 
   app.use(
     cors({

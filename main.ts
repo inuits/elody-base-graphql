@@ -202,7 +202,7 @@ const start = (
       },
     });
 
-    enableCors(app);
+    enableCors(app, environment);
 
     app.use(compression());
 
