@@ -99,6 +99,7 @@ export interface Environment {
   routerConfig: Route[];
   damsFrontend: string;
   graphqlEndpoint: string;
+  corsAllowedOrigins: string;
   staticToken: string | undefined | null;
   sentryEnabled: boolean;
   sentryDsn: string;
@@ -209,6 +210,7 @@ export interface FullyOptionalEnvironmentInput {
   routerConfig?: Route[];
   damsFrontend?: string;
   graphqlEndpoint?: string;
+  corsAllowedOrigins: string[];
   staticToken?: string | undefined | null;
   sentryEnabled?: boolean;
   sentryDsn?: string;

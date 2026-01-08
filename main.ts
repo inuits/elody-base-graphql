@@ -8,7 +8,6 @@ import {
 } from './resolvers/entityResolver';
 import * as Sentry from '@sentry/node';
 import applyPromEndpoint from './endpoints/promEndpoint';
-import cors from 'cors';
 import express, { Express } from 'express';
 import compression from 'compression';
 import http from 'http';
@@ -75,6 +74,7 @@ import {
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import helmet from 'helmet';
 import depthLimit from 'graphql-depth-limit';
+import { enableCors } from './helpers/corsHelper';
 
 const applyCustomEndpoints = (
   app: Express,
@@ -202,9 +202,11 @@ const start = (
       },
     });
 
+    enableCors(app);
+
     app.use(compression());
 
-    app.use(helmet());
+    app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
     app.use(
       helmet.contentSecurityPolicy({
@@ -232,10 +234,6 @@ const start = (
     );
 
     app.use(
-      cors({
-        credentials: false,
-        origin: [environment.damsFrontend],
-      }),
       express.json({ limit: environment.maxUploadSize }),
       express.urlencoded({
         extended: true,
