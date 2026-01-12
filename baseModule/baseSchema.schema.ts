@@ -1020,6 +1020,9 @@ export const baseSchema = gql`
     metadataOrRelation
     derivatives
     typePillLabel
+    parentRoot
+    parentMetadata
+    parentRelations
   }
 
   type IntialValues {
@@ -1038,6 +1041,7 @@ export const baseSchema = gql`
       formatter: String
       technicalOrigin: String
       index: Int
+      parentRelations: [String]
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues

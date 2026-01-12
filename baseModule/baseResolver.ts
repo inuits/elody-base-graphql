@@ -141,6 +141,9 @@ import {
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
   resolveIntialValueTypePillLabel,
+  resolveIntialValueParentRoot,
+  resolveIntialValueParentMetadata,
+  resolveIntialValueParentRelations
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -1014,6 +1017,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         formatter = '',
         technicalOrigin,
         index,
+        parentRelations,
       },
       { dataSources, customFormatters }
     ) => {
@@ -1092,6 +1096,27 @@ export const baseResolver: Resolvers<ContextValue> = {
               keyOnMetadata,
               formatter
             ),
+          parentRoot: () =>
+              resolveIntialValueParentRoot(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
+          parentMetadata: () =>
+              resolveIntialValueParentMetadata(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
+          parentRelations: () =>
+              resolveIntialValueParentRelations(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
         };
 
         const returnObject = await resolveObject[source]();
