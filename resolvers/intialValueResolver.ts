@@ -35,10 +35,7 @@ export const resolveIntialValueMetadata = async (
 
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
   try {
-    const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
-    let value = parent;
-    for (const part of keyParts || []) value = value?.[part];
-
+    const value = extractValueFromKeyParts(parent, key);
     let entity;
     if (String(formatter).startsWith("link|")) {
       entity = await dataSources.CollectionAPI.getEntity(
@@ -401,11 +398,7 @@ export const resolveIntialValueParentRoot = async (
 ): Promise<string> => {
   const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
   if (!finalParent) return '';
-
-  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
-  let value = finalParent;
-  for (const part of keyParts || []) value = value?.[part];
-  return value;
+  return extractValueFromKeyParts(finalParent, key);
 };
 
 export const resolveIntialValueParentMetadata = async (
@@ -467,3 +460,10 @@ const fetchEntity = async (
     dataSources: DataSources,
     id: string,
 ) => {  return await dataSources.CollectionAPI.getEntityById(id) };
+
+const extractValueFromKeyParts = (parent: any, key: string) => {
+  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
+  let value = parent;
+  for (const part of keyParts || []) value = value?.[part];
+  return value;
+}
