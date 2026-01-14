@@ -1279,6 +1279,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQueryFilters: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
+    includeRelatedDataFromIntialValues: async (parent, { input }, { dataSources }) => {
+      return input || [];
+    },
     filtersNeedContext: async (parent, { input }, { dataSources }) => {
       return input ? input : [];
     },
