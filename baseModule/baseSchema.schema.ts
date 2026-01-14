@@ -1172,7 +1172,6 @@ export const baseSchema = gql`
         customQuery(input: String): String
         customQueryRelationType(input: String): String
         customQueryFilters(input: String): String
-        includeRelatedDataFromIntialValues(input: [String]): [String]
         filtersNeedContext(input: [EntitySubelement]): [EntitySubelement]
         customQueryEntityPickerList(input: String): String
         customQueryEntityPickerListFilters(input: String): String
@@ -2007,6 +2006,7 @@ export const baseSchema = gql`
         operator: Operator
         facets: [FacetInputType!]
         bucket: String
+        includeDefaultValuesFromIntialValues: [String]
     }
 
     type FacetInputType {
@@ -2042,6 +2042,7 @@ export const baseSchema = gql`
         context: JSON
         operator: Operator
         bucket: String
+        includeDefaultValuesFromIntialValues: [String]
     }
 
     type AdvancedFilters {
@@ -2071,6 +2072,7 @@ export const baseSchema = gql`
             operator: Operator
             facets: [FacetInputInput!]
             bucket: String
+            includeDefaultValuesFromIntialValues: [String]
         ): AdvancedFilter!
     }
 

@@ -1279,9 +1279,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     customQueryFilters: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
-    includeRelatedDataFromIntialValues: async (parent, { input }, { dataSources }) => {
-      return input || [];
-    },
     filtersNeedContext: async (parent, { input }, { dataSources }) => {
       return input ? input : [];
     },
@@ -2364,7 +2361,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         filterOptionsMapping,
         operator,
         facets,
-        bucket
+        bucket,
+        includeDefaultValuesFromIntialValues
       }
     ) => {
       return {
@@ -2394,6 +2392,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         operator,
         facets,
         bucket,
+        includeDefaultValuesFromIntialValues,
       };
     },
   },
@@ -2532,6 +2531,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     bucket: (parent) => {
       return parent.bucket || '';
+    },
+    includeDefaultValuesFromIntialValues: (parent) => {
+      return parent.includeDefaultValuesFromIntialValues || [];
     }
   },
   MapFeatureMetadata: {

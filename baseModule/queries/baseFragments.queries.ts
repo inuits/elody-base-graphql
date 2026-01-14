@@ -57,6 +57,7 @@ export const baseFragments = gql`
           match_exact
       }
       tooltip(value: true)
+      includeDefaultValuesFromIntialValues
   }
   
   fragment inputfield on InputField {
