@@ -77,6 +77,7 @@ import {
   MenuTypeLink,
   Metadata,
   Orientations,
+  ParentRelationsConfigInput,
   PanelInfo,
   PanelLink,
   PanelMetaData,
@@ -1101,21 +1102,21 @@ export const baseResolver: Resolvers<ContextValue> = {
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[]
               ),
           parentMetadata: () =>
               resolveIntialValueParentMetadata(
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[]
               ),
           parentRelations: () =>
               resolveIntialValueParentRelations(
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[],
               ),
         };
 
@@ -2089,7 +2090,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     validation: async (parent, { input }, { dataSources }) => {
       if (!input) return null;
-      
+
       const inputWithRules = input as any;
       if (inputWithRules.rules && typeof inputWithRules.rules === 'string') {
         const validation = parseValidationRulesString(inputWithRules.rules);

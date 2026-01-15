@@ -1041,10 +1041,16 @@ export const baseSchema = gql`
             formatter: String
             technicalOrigin: String
             index: Int
-            parentRelations: [String]
+            parentRelations: [ParentRelationsConfigInput]
         ): JSON
         keyLabel(key: String!, source: KeyValueSource!): JSON
         relationMetadata(type: String!): IntialValues
+    }
+
+    input ParentRelationsConfigInput {
+        entityType: Entitytyping
+        key: [String]
+        relationType: String
     }
 
     input ViewModesWithConfigInput {
