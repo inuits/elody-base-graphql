@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import cors from 'cors';
-import { type Environment } from 'base-graphql';
+import { type Environment } from '../types/environmentTypes';
 
 export const enableCors = (app: Express, environment: Environment) => {
   const allowedOrigins = [];
