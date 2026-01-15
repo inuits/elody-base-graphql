@@ -42,7 +42,7 @@ describe('IntialValueResolver', () => {
             mockDataSource as unknown as DataSources,
             child,
             "type",
-            ["refWork"]
+            [{relationType: "refWork"}]
         );
 
         expect(mockDataSource.CollectionAPI.getEntityById).toHaveBeenCalledTimes(1);
@@ -67,7 +67,7 @@ describe('IntialValueResolver', () => {
             mockDataSource as unknown as DataSources,
             child,
             "actual_metadata",
-            ["refWork"]
+            [{relationType: "refWork"}]
         );
 
         expect(mockDataSource.CollectionAPI.getEntityById).toHaveBeenCalledTimes(1);
@@ -89,7 +89,10 @@ describe('IntialValueResolver', () => {
             mockDataSource as unknown as DataSources,
             child,
             "refAuthor",
-            ["refExpressions", "refWork"]
+            [
+              {relationType: "refExpressions"},
+              {relationType: "refWork"}
+            ]
         );
 
         expect(mockDataSource.CollectionAPI.getEntityById).toHaveBeenCalledTimes(2);
