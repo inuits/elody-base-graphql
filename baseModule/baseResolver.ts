@@ -2363,7 +2363,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         operator,
         facets,
         bucket,
-        includeDefaultValuesFromIntialValues
+        includeDefaultValuesFromIntialValues,
+        defaultMatcher,
       }
     ) => {
       return {
@@ -2394,6 +2395,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         facets,
         bucket,
         includeDefaultValuesFromIntialValues,
+        defaultMatcher,
       };
     },
   },
@@ -2535,6 +2537,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     includeDefaultValuesFromIntialValues: (parent) => {
       return parent.includeDefaultValuesFromIntialValues || [];
+    },
+    defaultMatcher: (parent) => {
+      return parent.defaultMatcher || null;
     }
   },
   MapFeatureMetadata: {

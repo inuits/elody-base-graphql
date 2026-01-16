@@ -2013,6 +2013,7 @@ export const baseSchema = gql`
         facets: [FacetInputType!]
         bucket: String
         includeDefaultValuesFromIntialValues: [String]
+        defaultMatcher: Matchers
     }
 
     type FacetInputType {
@@ -2079,6 +2080,7 @@ export const baseSchema = gql`
             facets: [FacetInputInput!]
             bucket: String
             includeDefaultValuesFromIntialValues: [String]
+            defaultMatcher: Matchers
         ): AdvancedFilter!
     }
 
