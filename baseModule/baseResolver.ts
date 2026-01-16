@@ -1877,8 +1877,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   BulkOperationOptions: {
-    options: async (parent, { input }, { dataSources }) => {
-      return input;
+    options: async (parent, { condition, input }, { dataSources }) => {
+      if (!condition) return input;
+      return input.filter((option) => {
+        if (!option.allowCondition) return option;
+        if (option.allowCondition.includes(condition)) return option;
+      });
     },
   },
   DeleteQueryOptions: {

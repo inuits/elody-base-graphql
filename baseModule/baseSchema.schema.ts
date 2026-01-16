@@ -726,6 +726,7 @@ export const baseSchema = gql`
         primary: Boolean
         requiresAuth: Boolean
         can: [String!]
+        allowCondition: [String]
     }
 
     type RouteMatching {
@@ -749,6 +750,7 @@ export const baseSchema = gql`
         primary: Boolean
         requiresAuth: Boolean
         can: [String!]
+        allowCondition: [String]
     }
 
     type DropzoneEntityToCreate {
@@ -919,7 +921,10 @@ export const baseSchema = gql`
     }
 
     type BulkOperationOptions {
-        options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+        options(
+          condition: String,
+          input: [DropdownOptionInput!]!
+        ): [DropdownOption!]!
     }
 
     type DeleteQueryOptions {
