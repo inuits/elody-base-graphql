@@ -2375,7 +2375,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         max,
         unit,
         context,
-        useNewWayToFetchOptions,
+        useOldWayToFetchOptions,
         entityType,
         matchExact,
         filterOptionsMapping,
@@ -2407,7 +2407,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         unit,
         context,
         matchExact,
-        useNewWayToFetchOptions,
+        useOldWayToFetchOptions,
         entityType,
         filterOptionsMapping,
         operator,
@@ -2536,8 +2536,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     minDropdownSearchCharacters: (parent, { value }) => {
       return value ?? 3;
     },
-    useNewWayToFetchOptions: (parent) => {
-      return parent.useNewWayToFetchOptions ?? false;
+    useOldWayToFetchOptions: (parent) => {
+      return parent.useOldWayToFetchOptions ?? false;
     },
     entityType: (parent) => {
       return parent.entityType ?? '';

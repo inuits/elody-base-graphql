@@ -2020,7 +2020,7 @@ export const baseSchema = gql`
         distinctBy: String
         metadataKeyAsLabel: String
         filterOptionsMapping: FilterOptionsMappingType
-        useNewWayToFetchOptions: Boolean
+        useOldWayToFetchOptions: Boolean
         entityType: String
         minDropdownSearchCharacters(value: Int): Int
         operator: Operator
@@ -2084,7 +2084,7 @@ export const baseSchema = gql`
             max: Int
             unit: String
             context: JSON
-            useNewWayToFetchOptions: Boolean
+            useOldWayToFetchOptions: Boolean
             entityType: String
             minDropdownSearchCharacters: Int
             distinctBy: String

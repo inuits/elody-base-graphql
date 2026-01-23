@@ -48,7 +48,7 @@ export const baseFragments = gql`
           label
           value
       }
-      useNewWayToFetchOptions
+      useOldWayToFetchOptions
       advancedFilterInputForRetrievingOptions {
           type
           key
@@ -59,7 +59,7 @@ export const baseFragments = gql`
       tooltip(value: true)
       includeDefaultValuesFromIntialValues
   }
-  
+
   fragment inputfield on InputField {
     type
     options {
@@ -185,7 +185,7 @@ export const baseFragments = gql`
     keyToSaveCropCoordinates
     pageToNavigateToAfterCreation
   }
-  
+
   fragment subOptions on DropdownOption {
       icon
       label
@@ -214,7 +214,7 @@ export const baseFragments = gql`
   fragment hiddenField on HiddenField {
     hidden
     searchValueForFilter
-    inherited 
+    inherited
     entityType
     relationToExtractKey
     keyToExtractValue
@@ -323,7 +323,7 @@ export const baseFragments = gql`
       secondaryAttributeToDetermineTagConfig
     }
   }
-  
+
   fragment basicContextMenuActions on ContextMenuActions {
     doLinkAction {
       label(input: "contextMenu.contextMenuLinkAction.followLink")
@@ -343,7 +343,7 @@ export const baseFragments = gql`
       __typename
     }
   }
-  
+
   fragment linkAndDeleteEntityContextMenuActions on ContextMenuActions {
     doLinkAction {
       label(input: "contextMenu.contextMenuLinkAction.followLink")
