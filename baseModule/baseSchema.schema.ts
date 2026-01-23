@@ -446,6 +446,7 @@ export const baseSchema = gql`
         ElodyEntityTaggingModal
         EntityDetailModal
         IiifOperationsModal
+        EntityEditModal
     }
 
     enum ModalStyle {
@@ -1724,6 +1725,7 @@ export const baseSchema = gql`
         DeleteEntity
         Share
         EndpointCall
+        UpdateMetadata
     }
 
     type ContextMenuGeneralAction {
@@ -1736,6 +1738,7 @@ export const baseSchema = gql`
     type ContextMenuElodyAction {
         label(input: String): String!
         action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
+        formQuery(input: String): String
         icon(input: String): String!
         can(input: [String]): [String]
     }
@@ -1755,11 +1758,16 @@ export const baseSchema = gql`
         endpointMethod(input: String): String
     }
 
+    type ContextMenuDisplaySettings {
+        showInHeader(input: Boolean): Boolean
+    }
+
     type ContextMenuActions {
         doLinkAction: ContextMenuLinkAction
         doGeneralAction: ContextMenuGeneralAction
         doElodyAction: ContextMenuElodyAction
         doCustomAction: ContextMenuCustomAction
+        displaySettings: ContextMenuDisplaySettings
     }
 
     type teaserMetadata {
@@ -1768,6 +1776,7 @@ export const baseSchema = gql`
         relationRootData: PanelRelationRootData
         thumbnail: PanelThumbnail
         link: PanelLink
+        forceShowContextMenuActions(input: Boolean): Boolean
         contextMenuActions: ContextMenuActions
     }
 

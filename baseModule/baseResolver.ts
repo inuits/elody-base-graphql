@@ -37,6 +37,7 @@ import {
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
+  ContextMenuDisplaySettings,
   DamsIcons,
   DeepRelationsFetchStrategy,
   DropdownOption,
@@ -881,6 +882,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     link: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelLink;
+    },
+    forceShowContextMenuActions: async (_source, { input }, { dataSources }) => {
+      return input ? input : false;
     },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuActions;
@@ -2221,6 +2225,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     doCustomAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuCustomAction;
     },
+    displaySettings: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuDisplaySettings;
+    },
+  },
+  ContextMenuDisplaySettings: {
+    showInHeader: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    }
   },
   ContextMenuLinkAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2246,6 +2258,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input || [];
     },
+    formQuery: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    }
   },
   ContextMenuGeneralAction: {
     label: async (_source, { input }, { dataSources }) => {
