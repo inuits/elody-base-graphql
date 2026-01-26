@@ -4,7 +4,7 @@ import {
   resolveMetadataItemOfPreferredLanguage,
 } from './entityResolver';
 import { DataSources, type FormattersConfig } from '../types';
-import { Metadata  } from '../../../generated-types/type-defs';
+import { Metadata, RelationField} from '../../../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
 import { GraphQLError } from "graphql";
 import { CollectionAPIDerivative, CollectionAPIEntity } from "../types/collectionAPITypes";
@@ -35,10 +35,7 @@ export const resolveIntialValueMetadata = async (
 
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
   try {
-    const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
-    let value = parent;
-    for (const part of keyParts || []) value = value?.[part];
-
+    const value = extractValueFromKeyParts(parent, key);
     let entity;
     if (String(formatter).startsWith("link|")) {
       entity = await dataSources.CollectionAPI.getEntity(
@@ -392,3 +389,81 @@ export const resolveIntialValueLocation = async (
 ): Promise<string | { label: string, formatter: string }> => {
   return await resolveLocationData(parent, key);
 };
+
+export const resolveIntialValueParentRoot = async (
+    dataSources: DataSources,
+    parent: any,
+    key: string,
+    parentRelations: string[],
+): Promise<string> => {
+  const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
+  if (!finalParent) return '';
+  return extractValueFromKeyParts(finalParent, key);
+};
+
+export const resolveIntialValueParentMetadata = async (
+    dataSources: DataSources,
+    parent: any,
+    key: string,
+    parentRelations: string[],
+): Promise<string> => {
+  const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
+  if (!finalParent) return '';
+
+  const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+  const metadata = await resolveMetadata(finalParent, [key], undefined);
+  if (metadata.length > 1) {
+    const hasLanguage = metadata.some((item: Metadata) => item.lang);
+    const metadataValues = hasLanguage
+        ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)
+            ?.value
+        : metadata.map((item: Metadata) => item.value).join(', ');
+    return metadataValues;
+  }
+  return metadata[0]?.value;
+};
+
+export const resolveIntialValueParentRelations = async (
+    dataSources: DataSources,
+    parent: any,
+    key: string,
+    parentRelations: string[],
+): Promise<string[]> => {
+  const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
+  if (!finalParent) return [];
+
+  const relations = finalParent?.relations?.filter(
+      (relation: any) => relation.type === key
+  ) || [];
+  if (!relations || relations.length < 1) return [];
+  return relations.map((relation: RelationField) => relation.key);
+};
+
+const loopOverParentRelations = async (
+    dataSources: DataSources,
+    parent: any,
+    parentRelations: string[],
+): Promise<any> => {
+  let currentParent = parent;
+  for (const parentRelation of parentRelations) {
+    const relations = currentParent?.relations?.filter(
+        (relation: any) => relation.type === parentRelation
+    ) || [];
+    const id = relations[0]?.key || undefined;
+    if (!id) return undefined;
+    currentParent = await fetchEntity(dataSources, id);
+  }
+  return currentParent;
+};
+
+const fetchEntity = async (
+    dataSources: DataSources,
+    id: string,
+) => {  return await dataSources.CollectionAPI.getEntityById(id) };
+
+const extractValueFromKeyParts = (parent: any, key: string) => {
+  const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));
+  let value = parent;
+  for (const part of keyParts || []) value = value?.[part];
+  return value;
+}

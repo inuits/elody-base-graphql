@@ -29,6 +29,7 @@ import {
   Collection,
   Column,
   ColumnSizes,
+  CopyValueFromParentIntialValues,
   Conditional,
   ContextMenuActions,
   ContextMenuElodyAction,
@@ -140,6 +141,9 @@ import {
   resolveIntialValueRoot,
   resolveIntialValueTechnicalMetadata,
   resolveIntialValueTypePillLabel,
+  resolveIntialValueParentRoot,
+  resolveIntialValueParentMetadata,
+  resolveIntialValueParentRelations
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -1013,6 +1017,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         formatter = '',
         technicalOrigin,
         index,
+        parentRelations,
       },
       { dataSources, customFormatters }
     ) => {
@@ -1091,6 +1096,27 @@ export const baseResolver: Resolvers<ContextValue> = {
               keyOnMetadata,
               formatter
             ),
+          parentRoot: () =>
+              resolveIntialValueParentRoot(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
+          parentMetadata: () =>
+              resolveIntialValueParentMetadata(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
+          parentRelations: () =>
+              resolveIntialValueParentRelations(
+                  dataSources,
+                  parent,
+                  key,
+                  parentRelations as string[]
+              ),
         };
 
         const returnObject = await resolveObject[source]();
@@ -1532,6 +1558,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input ?? [];
     },
+    canEdit: async (_source, { input }, { dataSources }) => {
+      return input ?? [];
+    },
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
@@ -1546,6 +1575,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     repeatable: async (_source, { input }, { dataSources }) => {
       return input ?? false
+    },
+    copyValueFromParent: async (_source, { input }, { dataSources }) => {
+      return input as CopyValueFromParentIntialValues;
     },
   },
   UploadContainer: {
@@ -1688,7 +1720,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         const mediafile: CollectionAPIMediaFile =
           await dataSources.CollectionAPI.getMediaFile(thumbnailId);
 
-        return mediafile.display_filename || mediafile.filename;
+        return mediafile.display_filename;
       } catch {
         return '';
       }
@@ -2063,7 +2095,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     validation: async (parent, { input }, { dataSources }) => {
       if (!input) return null;
-      
+
       const inputWithRules = input as any;
       if (inputWithRules.rules && typeof inputWithRules.rules === 'string') {
         const validation = parseValidationRulesString(inputWithRules.rules);
@@ -2245,7 +2277,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     endpointUrl: async (_source, { input }, { dataSources }) => {
       return input || '';
-    }
+    },
+    endpointMethod: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
   },
   TaggingExtensionConfiguration: {
     customQuery: async (_source, { input }, { dataSources }) => {
@@ -2332,7 +2367,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         filterOptionsMapping,
         operator,
         facets,
-        bucket
+        bucket,
+        includeDefaultValuesFromIntialValues
       }
     ) => {
       return {
@@ -2362,6 +2398,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         operator,
         facets,
         bucket,
+        includeDefaultValuesFromIntialValues,
       };
     },
   },
@@ -2500,6 +2537,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     bucket: (parent) => {
       return parent.bucket || '';
+    },
+    includeDefaultValuesFromIntialValues: (parent) => {
+      return parent.includeDefaultValuesFromIntialValues || [];
     }
   },
   MapFeatureMetadata: {

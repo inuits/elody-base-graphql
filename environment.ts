@@ -107,6 +107,7 @@ export const baseEnvironment: Environment = {
   damsFrontend:
     process.env.DAMS_FRONTEND_URL || 'http://dashboard.dams.localhost:8100',
   graphqlEndpoint: process.env.GRAPHQL_ENDPOINT || '/api/graphql',
+  corsAllowedOrigins: process.env.CORS_ALLOWED_ORIGINS || '',
   staticToken: process.env.STATIC_JWT || undefined,
   sentryEnabled: process.env.SENTRY_ENABLED === 'true',
   sentryDsn: process.env.SENTRY_DSN || '',

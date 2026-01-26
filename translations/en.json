@@ -436,7 +436,8 @@
     "W5014": "No metadata available for item with id {id}",
     "W5016": "The value {value} is invalid, these are the valid values: {options}",
     "W5017": "Item for key {key} with value {value} doesn't exist.",
-    "W5018": "Following values have to be unique when creating a relation with a {entity_type} entity: {duplicate_entry}"
+    "W5018": "Following values have to be unique when creating a relation with a {entity_type} entity: {duplicate_entry}",
+    "W5018": "Validation error between {entity_type_1} and {entity_type_2}. A part of the fields must be unique. Validation fails for {entity_type_2} with id '{duplicate_entry_title}'"
   },
   "pagination": {
     "page": "page",

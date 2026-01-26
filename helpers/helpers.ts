@@ -18,9 +18,9 @@ const loggedTypes: string[] = [];
 export const getCollectionValueForEntityType = (entityType: string): string => {
   if (!collection.hasOwnProperty(entityType)) {
     if (!loggedTypes.includes(entityType))
-      console.info(
-        `The default collection Entities was used for entity with type '${entityType}', add it to the collectionMapping to use another collection`
-      );
+      // console.info(
+      //   `The default collection Entities was used for entity with type '${entityType}', add it to the collectionMapping to use another collection`
+      // );
     loggedTypes.push(entityType);
     return Collection.Entities;
   }
