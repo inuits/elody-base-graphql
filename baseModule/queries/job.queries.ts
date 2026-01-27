@@ -153,7 +153,6 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.type.value"]
         label: "metadata.labels.type"
         isDisplayedByDefault: true
-        useNewWayToFetchOptions: true
         filterOptionsMapping: {
           label: "intialValues.type"
           value: "intialValues.type"
@@ -176,7 +175,6 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
-        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
@@ -195,7 +193,6 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.name.value"]
         label: "metadata.labels.name"
         isDisplayedByDefault: true
-        useNewWayToFetchOptions: true
         filterOptionsMapping: {
           label: "intialValues.name"
           value: "intialValues.name"
@@ -218,7 +215,6 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
-        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
@@ -237,7 +233,6 @@ export const jobQueries = gql`
         key: ["elody:1|metadata.status.value"]
         label: "metadata.labels.status"
         isDisplayedByDefault: true
-        useNewWayToFetchOptions: true
         filterOptionsMapping: {
           label: "intialValues.status"
           value: "intialValues.status"
@@ -260,7 +255,6 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
-        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key
@@ -307,7 +301,6 @@ export const jobQueries = gql`
         key: ["elody:1|last_editor"]
         label: "metadata.labels.started-by"
         isDisplayedByDefault: true
-        useNewWayToFetchOptions: true
         filterOptionsMapping: {
           label: "intialValues.email"
           value: "intialValues.email"
@@ -329,7 +322,6 @@ export const jobQueries = gql`
         key
         label
         isDisplayedByDefault
-        useNewWayToFetchOptions
         advancedFilterInputForRetrievingOptions {
           type
           key

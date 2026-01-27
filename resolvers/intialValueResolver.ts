@@ -1,14 +1,19 @@
+import {resolveLocationData, resolveMetadata, resolveMetadataItemOfPreferredLanguage,} from './entityResolver';
+import {DataSources, type FormattersConfig} from '../types';
 import {
-  resolveLocationData,
-  resolveMetadata,
-  resolveMetadataItemOfPreferredLanguage,
-} from './entityResolver';
-import { DataSources, type FormattersConfig } from '../types';
-import { Metadata, RelationField} from '../../../generated-types/type-defs';
-import { formatterFactory, ResolverFormatters } from './formatters';
-import { GraphQLError } from "graphql";
-import { CollectionAPIDerivative, CollectionAPIEntity } from "../types/collectionAPITypes";
-import { baseTypePillLabelMapping } from '../sources/typePillLabelMapping';
+  AdvancedFilterInput,
+  AdvancedFilterTypes,
+  Entitytyping,
+  Metadata,
+  RelationField,
+  ParentRelationsConfigInput,
+  EntitiesResults,
+  Entity,
+} from '../../../generated-types/type-defs';
+import {formatterFactory, ResolverFormatters} from './formatters';
+import {GraphQLError} from "graphql";
+import {CollectionAPIDerivative, CollectionAPIEntity} from "../types/collectionAPITypes";
+import {baseTypePillLabelMapping} from '../sources/typePillLabelMapping';
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
@@ -58,8 +63,8 @@ const filterRelationsByProperty = (
   propertyValue: string
 ): any[] => {
   if (!propertyKey) return relations;
-  
-  return relations.filter((relation) => 
+
+  return relations.filter((relation) =>
     String(relation[propertyKey]) === propertyValue
   );
 };
@@ -80,7 +85,7 @@ const fetchRelationEntity = async (
     );
   }
 
-  const shouldFetchEntity = relationEntityType || 
+  const shouldFetchEntity = relationEntityType ||
     metadataKeyAsLabel || rootKeyAsLabel || String(formatter).startsWith("link|");
 
   if (!shouldFetchEntity) return null;
@@ -108,7 +113,7 @@ const extractValueFromEntity = (
 
   if (metadataKeyAsLabel && entity?.metadata) {
     const metadataKeys = String(metadataKeyAsLabel).split('|');
-    const metadataItem = entity.metadata.find((metadata: any) => 
+    const metadataItem = entity.metadata.find((metadata: any) =>
       metadataKeys.includes(metadata.key)
     );
     return metadataItem?.value || relation.key;
@@ -128,15 +133,15 @@ const formatResults = (
   }
 
   const singleResult = results[0];
-  
+
   if (!formatter) {
     return singleResult;
   }
 
   if (formatter === 'pill') {
     return formatterFactory(ResolverFormatters.Metadata)({
-      label: singleResult ?? '', 
-      formatter 
+      label: singleResult ?? '',
+      formatter
     });
   }
 
@@ -394,7 +399,7 @@ export const resolveIntialValueParentRoot = async (
     dataSources: DataSources,
     parent: any,
     key: string,
-    parentRelations: string[],
+    parentRelations: ParentRelationsConfigInput[],
 ): Promise<string> => {
   const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
   if (!finalParent) return '';
@@ -405,7 +410,7 @@ export const resolveIntialValueParentMetadata = async (
     dataSources: DataSources,
     parent: any,
     key: string,
-    parentRelations: string[],
+    parentRelations: ParentRelationsConfigInput[],
 ): Promise<string> => {
   const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
   if (!finalParent) return '';
@@ -427,7 +432,7 @@ export const resolveIntialValueParentRelations = async (
     dataSources: DataSources,
     parent: any,
     key: string,
-    parentRelations: string[],
+    parentRelations: ParentRelationsConfigInput[],
 ): Promise<string[]> => {
   const finalParent = await loopOverParentRelations(dataSources, parent, parentRelations);
   if (!finalParent) return [];
@@ -442,24 +447,76 @@ export const resolveIntialValueParentRelations = async (
 const loopOverParentRelations = async (
     dataSources: DataSources,
     parent: any,
-    parentRelations: string[],
+    parentRelations: ParentRelationsConfigInput[],
 ): Promise<any> => {
   let currentParent = parent;
   for (const parentRelation of parentRelations) {
-    const relations = currentParent?.relations?.filter(
-        (relation: any) => relation.type === parentRelation
-    ) || [];
-    const id = relations[0]?.key || undefined;
-    if (!id) return undefined;
-    currentParent = await fetchEntity(dataSources, id);
+    if (!currentParent) continue;
+    if (parentRelation.relationType) {
+      let id = getIdThroughCurrentRelations(currentParent, parentRelation.relationType);
+      if (!id) return undefined;
+      currentParent = await fetchEntityById(dataSources, id);
+    } else if (parentRelation.key && parentRelation.entityType) {
+      currentParent = await getParentTroughFilter(dataSources, currentParent, parentRelation);
+    }
   }
   return currentParent;
 };
 
-const fetchEntity = async (
-    dataSources: DataSources,
-    id: string,
-) => {  return await dataSources.CollectionAPI.getEntityById(id) };
+const getIdThroughCurrentRelations = (currentParent: any, relationType: string): string | undefined => {
+  const relations = currentParent?.relations?.filter(
+    (relation: any) => relation.type === relationType
+  ) || [];
+  return relations[0]?.key || undefined;
+};
+
+const fetchEntityById = async (
+  dataSources: DataSources,
+  id: string,
+): Promise<Entity | undefined> => {  return await dataSources.CollectionAPI.getEntityById(id) };
+
+const getParentTroughFilter = async (
+  dataSources: DataSources,
+  currentParent: any,
+  parentRelation: ParentRelationsConfigInput
+): Promise<any> => {
+  const filters: AdvancedFilterInput[] = [
+    {
+      type: AdvancedFilterTypes.Selection,
+      key: "type",
+      value: [parentRelation.entityType],
+      match_exact: true,
+    },
+    {
+      type: AdvancedFilterTypes.Text,
+      key: parentRelation.key,
+      value: [currentParent.id],
+      match_exact: true,
+    },
+  ]
+  const entityResult = await fetchEntityByFilter(dataSources, filters);
+  if (entityResult?.results && entityResult?.results?.length > 0)
+    return entityResult?.results[0]
+  return undefined;
+};
+
+const fetchEntityByFilter = async (
+  dataSources: DataSources,
+  filters: AdvancedFilterInput[],
+): Promise<EntitiesResults> => {
+  return await dataSources.CollectionAPI.GetAdvancedEntities(
+    Entitytyping.BaseEntity,
+    1,
+    1,
+    filters,
+    {
+      value: "",
+      isAsc: undefined,
+      key: "title",
+      order_by: "",
+    },
+  );
+};
 
 const extractValueFromKeyParts = (parent: any, key: string) => {
   const keyParts = key.match(/(?:`[^`]+`|[^.])+/g)?.map(part => part.replace(/`/g, ''));

@@ -113,6 +113,13 @@
     "delete-selected": "Delete selected {0}",
     "create-mediafile-with-metadata": "Upload new mediafiles and add metadata"
   },
+  "modals": {
+    "entityEdit": {
+      "title": "Edit entity",
+      "updateBtn": "Update",
+      "noFields": "There are no editable fields for this entity."
+    }
+  },
   "confirm": {
     "discard-edit": {
       "message": "Are you certain you wish to leave the entity editor? Any unsaved changes will be discarded.",

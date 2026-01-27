@@ -446,6 +446,7 @@ export const baseSchema = gql`
     ElodyEntityTaggingModal
     EntityDetailModal
     IiifOperationsModal
+    EntityEditModal
   }
 
   enum ModalStyle {
@@ -728,6 +729,7 @@ export const baseSchema = gql`
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
+    allowCondition: [String]
   }
 
   type RouteMatching {
@@ -751,6 +753,7 @@ export const baseSchema = gql`
     primary: Boolean
     requiresAuth: Boolean
     can: [String!]
+    allowCondition: [String]
   }
 
   type DropzoneEntityToCreate {
@@ -921,7 +924,10 @@ export const baseSchema = gql`
   }
 
   type BulkOperationOptions {
-    options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+    options(
+      condition: String
+      input: [DropdownOptionInput!]!
+    ): [DropdownOption!]!
   }
 
   type DeleteQueryOptions {
@@ -1043,12 +1049,17 @@ export const baseSchema = gql`
       formatter: String
       technicalOrigin: String
       index: Int
-      parentRelations: [String]
+      parentRelations: [ParentRelationsConfigInput]
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
   }
 
+  input ParentRelationsConfigInput {
+    entityType: Entitytyping
+    key: [String]
+    relationType: String
+  }
   input ViewModesWithConfigInput {
     viewMode: ViewModes
     config: [ConfigItemInput]
@@ -1730,6 +1741,8 @@ export const baseSchema = gql`
     DeleteEntity
     Share
     EndpointCall
+    UpdateMetadata
+    CreateEntityFromExternalSource
   }
 
   type ContextMenuGeneralAction {
@@ -1742,6 +1755,7 @@ export const baseSchema = gql`
   type ContextMenuElodyAction {
     label(input: String): String!
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
+    formQuery(input: String): String
     icon(input: String): String!
     can(input: [String]): [String]
   }
@@ -1761,11 +1775,15 @@ export const baseSchema = gql`
     endpointMethod(input: String): String
   }
 
+  type ContextMenuDisplaySettings {
+    showInHeader(input: Boolean): Boolean
+  }
   type ContextMenuActions {
     doLinkAction: ContextMenuLinkAction
     doGeneralAction: ContextMenuGeneralAction
     doElodyAction: ContextMenuElodyAction
     doCustomAction: ContextMenuCustomAction
+    displaySettings: ContextMenuDisplaySettings
   }
 
   type teaserMetadata {
@@ -1774,6 +1792,7 @@ export const baseSchema = gql`
     relationRootData: PanelRelationRootData
     thumbnail: PanelThumbnail
     link: PanelLink
+    forceShowContextMenuActions(input: Boolean): Boolean
     contextMenuActions: ContextMenuActions
   }
 
@@ -2017,13 +2036,14 @@ export const baseSchema = gql`
     distinctBy: String
     metadataKeyAsLabel: String
     filterOptionsMapping: FilterOptionsMappingType
-    useNewWayToFetchOptions: Boolean
+    useOldWayToFetchOptions: Boolean
     entityType: String
     minDropdownSearchCharacters(value: Int): Int
     operator: Operator
     facets: [FacetInputType!]
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
+    defaultMatcher: Matchers
   }
 
   type FacetInputType {
@@ -2080,7 +2100,7 @@ export const baseSchema = gql`
       max: Int
       unit: String
       context: JSON
-      useNewWayToFetchOptions: Boolean
+      useOldWayToFetchOptions: Boolean
       entityType: String
       minDropdownSearchCharacters: Int
       distinctBy: String
@@ -2090,6 +2110,7 @@ export const baseSchema = gql`
       facets: [FacetInputInput!]
       bucket: String
       includeDefaultValuesFromIntialValues: [String]
+      defaultMatcher: Matchers
     ): AdvancedFilter!
   }
 

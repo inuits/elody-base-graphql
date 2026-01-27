@@ -37,6 +37,7 @@ import {
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
+  ContextMenuDisplaySettings,
   DamsIcons,
   DeepRelationsFetchStrategy,
   DropdownOption,
@@ -77,6 +78,7 @@ import {
   MenuTypeLink,
   Metadata,
   Orientations,
+  ParentRelationsConfigInput,
   PanelInfo,
   PanelLink,
   PanelMetaData,
@@ -881,6 +883,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     link: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelLink;
     },
+    forceShowContextMenuActions: async (_source, { input }, { dataSources }) => {
+      return input ? input : false;
+    },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuActions;
     },
@@ -1101,21 +1106,21 @@ export const baseResolver: Resolvers<ContextValue> = {
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[]
               ),
           parentMetadata: () =>
               resolveIntialValueParentMetadata(
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[]
               ),
           parentRelations: () =>
               resolveIntialValueParentRelations(
                   dataSources,
                   parent,
                   key,
-                  parentRelations as string[]
+                  parentRelations as ParentRelationsConfigInput[],
               ),
         };
 
@@ -1884,8 +1889,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   BulkOperationOptions: {
-    options: async (parent, { input }, { dataSources }) => {
-      return input;
+    options: async (parent, { condition, input }, { dataSources }) => {
+      if (!condition) return input;
+      return input.filter((option) => {
+        if (!option.allowCondition) return option;
+        if (option.allowCondition.includes(condition)) return option;
+      });
     },
   },
   DeleteQueryOptions: {
@@ -2224,6 +2233,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     doCustomAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuCustomAction;
     },
+    displaySettings: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuDisplaySettings;
+    },
+  },
+  ContextMenuDisplaySettings: {
+    showInHeader: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    }
   },
   ContextMenuLinkAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2249,6 +2266,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     can: async (_source, { input }, { dataSources }) => {
       return input || [];
     },
+    formQuery: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    }
   },
   ContextMenuGeneralAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2363,14 +2383,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         max,
         unit,
         context,
-        useNewWayToFetchOptions,
+        useOldWayToFetchOptions,
         entityType,
         matchExact,
         filterOptionsMapping,
         operator,
         facets,
         bucket,
-        includeDefaultValuesFromIntialValues
+        includeDefaultValuesFromIntialValues,
+        defaultMatcher,
       }
     ) => {
       return {
@@ -2394,13 +2415,14 @@ export const baseResolver: Resolvers<ContextValue> = {
         unit,
         context,
         matchExact,
-        useNewWayToFetchOptions,
+        useOldWayToFetchOptions,
         entityType,
         filterOptionsMapping,
         operator,
         facets,
         bucket,
         includeDefaultValuesFromIntialValues,
+        defaultMatcher,
       };
     },
   },
@@ -2522,8 +2544,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     minDropdownSearchCharacters: (parent, { value }) => {
       return value ?? 3;
     },
-    useNewWayToFetchOptions: (parent) => {
-      return parent.useNewWayToFetchOptions ?? false;
+    useOldWayToFetchOptions: (parent) => {
+      return parent.useOldWayToFetchOptions ?? false;
     },
     entityType: (parent) => {
       return parent.entityType ?? '';
@@ -2542,6 +2564,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     includeDefaultValuesFromIntialValues: (parent) => {
       return parent.includeDefaultValuesFromIntialValues || [];
+    },
+    defaultMatcher: (parent) => {
+      return parent.defaultMatcher || null;
     }
   },
   MapFeatureMetadata: {

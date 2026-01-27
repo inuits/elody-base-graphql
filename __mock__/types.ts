@@ -146,7 +146,7 @@ export type AdvancedFilter = {
   tooltip?: Maybe<Scalars['Boolean']>;
   type: AdvancedFilterTypes;
   unit?: Maybe<Scalars['String']>;
-  useNewWayToFetchOptions?: Maybe<Scalars['Boolean']>;
+  useOldWayToFetchOptions?: Maybe<Scalars['Boolean']>;
 };
 
 export type AdvancedFilterDefaultValueArgs = {
@@ -250,7 +250,7 @@ export type AdvancedFiltersAdvancedFilterArgs = {
   showTimeForDateFilter?: InputMaybe<Scalars['Boolean']>;
   type: AdvancedFilterTypes;
   unit?: InputMaybe<Scalars['String']>;
-  useNewWayToFetchOptions?: InputMaybe<Scalars['Boolean']>;
+  useOldWayToFetchOptions?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum AdvancedInputType {
@@ -4640,7 +4640,7 @@ export type AdvancedFilterResolvers<
     ContextType
   >;
   unit?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  useNewWayToFetchOptions?: Resolver<
+  useOldWayToFetchOptions?: Resolver<
     Maybe<ResolversTypes['Boolean']>,
     ParentType,
     ContextType
