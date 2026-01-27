@@ -1726,6 +1726,7 @@ export const baseSchema = gql`
         Share
         EndpointCall
         UpdateMetadata
+        CreateEntityFromExternalSource
     }
 
     type ContextMenuGeneralAction {
