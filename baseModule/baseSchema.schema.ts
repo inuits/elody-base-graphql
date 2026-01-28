@@ -546,6 +546,9 @@ export const baseSchema = gql`
         Update
         Upload
         UserSquare
+        Folder
+        FolderPlus
+        ChannelAdd
     }
 
     type Menu {
