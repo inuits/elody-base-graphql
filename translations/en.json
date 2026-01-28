@@ -463,9 +463,11 @@
     "search-saved-searches": "Search Saved Searches"
   },
   "search": {
-    "noresult": "No results",
+    "noresult": "No results match your filters",
     "asset-library": "Search Asset Library...",
-    "mediafile-library": "Search Mediafiles..."
+    "mediafile-library": "Search Mediafiles...",
+    "tipMap": "Try adjusting or removing filters, or moving to another area to see results",
+    "tip": "Try adjusting or removing filters to see results"
   },
   "language": {
     "nl": "Dutch",
