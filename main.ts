@@ -229,6 +229,7 @@ const start = (
               ? [new URL(environment.sentryDsn).origin]
               : []),
           ],
+          'frame-ancestors': ['*'],
         },
       })
     );
