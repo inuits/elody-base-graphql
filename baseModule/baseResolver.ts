@@ -680,6 +680,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType
       );
     },
+    GetPrimaryMediafileFromEntity: async (_source, {entityId}, {dataSources}) => {
+      const entity: CollectionAPIEntity = await dataSources.CollectionAPI.getEntity(entityId, Entitytyping.BaseEntity)  // Todo: Have a look if we can remove the type parameter from the getEntity function
+      const primaryMediafileId = entity.primary_mediafile_id
+      if (!primaryMediafileId) throw new GraphQLError("Entity does not have a primary mediafile")
+      return await dataSources.CollectionAPI.getEntity(primaryMediafileId, Entitytyping.Mediafile)
+    }
   },
   Mutation: {
     linkMediafileToEntity: async (

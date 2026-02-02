@@ -39,25 +39,25 @@ export const baseFragments = gql`
   }
 
   fragment advancedFilter on AdvancedFilter {
+    type
+    key
+    label
+    selectionOption
+    isDisplayedByDefault
+    filterOptionsMapping {
+      label
+      value
+    }
+    useOldWayToFetchOptions
+    advancedFilterInputForRetrievingOptions {
       type
       key
-      label
-      selectionOption
-      isDisplayedByDefault
-      filterOptionsMapping {
-          label
-          value
-      }
-      useOldWayToFetchOptions
-      advancedFilterInputForRetrievingOptions {
-          type
-          key
-          value
-          distinct_by
-          match_exact
-      }
-      tooltip(value: true)
-      includeDefaultValuesFromIntialValues
+      value
+      distinct_by
+      match_exact
+    }
+    tooltip(value: true)
+    includeDefaultValuesFromIntialValues
   }
 
   fragment inputfield on InputField {
@@ -187,14 +187,14 @@ export const baseFragments = gql`
   }
 
   fragment subOptions on DropdownOption {
-      icon
-      label
-      value
-      primary
-      can
-      bulkOperationModal {
-          ...bulkOperationModal
-      }
+    icon
+    label
+    value
+    primary
+    can
+    bulkOperationModal {
+      ...bulkOperationModal
+    }
   }
 
   fragment viewModes on ViewModesWithConfig {
@@ -226,11 +226,7 @@ export const baseFragments = gql`
       id
       filename: keyValue(key: "filename", source: root)
       original_filename: keyValue(key: "original_filename", source: root)
-      transcode_filename: keyValue(
-        key: "filename"
-        source: derivatives
-        technicalOrigin: "transcode"
-      )
+      display_filename: keyValue(key: "display_filename", source: root)
       original_file_location: keyValue(
         key: "original_file_location"
         source: root
