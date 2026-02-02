@@ -9,5 +9,8 @@ include:
     ref: 'v4.14.0'
 
 variables:
-  GRAPHQL_IMAGE: 'pza/iot-dams-graphql'
+  GRAPHQL_IMAGE: 'pza/dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
+
+
+
