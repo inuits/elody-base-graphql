@@ -2035,6 +2035,7 @@ export const baseSchema = gql`
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
     defaultMatcher: Matchers
+    allowedMatchers: [Matchers]
   }
 
   type FacetInputType {
@@ -2102,6 +2103,7 @@ export const baseSchema = gql`
       bucket: String
       includeDefaultValuesFromIntialValues: [String]
       defaultMatcher: Matchers
+      allowedMatchers: [Matchers]
     ): AdvancedFilter!
   }
 

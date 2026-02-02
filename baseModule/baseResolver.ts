@@ -2390,6 +2390,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         bucket,
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
+        allowedMatchers,
       }
     ) => {
       return {
@@ -2421,6 +2422,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         bucket,
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
+        allowedMatchers,
       };
     },
   },
@@ -2565,7 +2567,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     defaultMatcher: (parent) => {
       return parent.defaultMatcher || null;
-    }
+    },
+    allowedMatchers: (parent, rest) => {
+      return parent.allowedMatchers || null;
+    },
   },
   MapFeatureMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
