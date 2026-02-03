@@ -1,4 +1,4 @@
-import {
+  import {
   Metadata,
   LinkFormatter,
   CustomFormatterTypes,
@@ -36,7 +36,7 @@ const handleLinkFormatterFromEntity = ({
   formatterSettings: LinkFormatter;
 }): { label: string; link: string, openInNewTab: boolean, entity: BaseEntity & { metadata: Metadata[] } | string } => {
   let value: string = entity?.[formatterSettings.value as keyof BaseEntity] || "";
-  let label = entity?.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value 
+  let label = entity?.metadata?.find((metadata: Metadata) => metadata.key === formatterSettings.label)?.value
     || formatterSettings.customLabel || entity?.id || "";
   let link = formatterSettings.link;
   if (!label) {
@@ -69,14 +69,35 @@ const handleRegexpFormatter = ({
   const [formatterType, type] = formatter.split("|");
 
   const currentFormatter: Formatters = formatterSettings[formatterType][type] as RegexpMatchFormatter;
+  const key = currentFormatter.value;
+  const jsonString = JSON.stringify(value);
 
-  const regexp = new RegExp(`"${currentFormatter.value}"\\s*:\\s*"([^"]+)"`, "g");
-  const matches = JSON.stringify(value).match(regexp) || [];
+  // Match string values: "key": "value"
+  const stringRegexp = new RegExp(`"${key}"\\s*:\\s*"([^"]+)"`, "g");
+  const stringMatches = jsonString.match(stringRegexp) || [];
 
-  const labels = matches.map((match: string) => {
+  const stringLabels = stringMatches.map((match: string) => {
     const valueMatch = match.match(/"([^"]+)"$/);
     return valueMatch ? valueMatch[1] : "";
   });
+
+  // Match array values: "key": [...]
+  const arrayRegexp = new RegExp(`"${key}"\\s*:\\s*\\[([^\\]]+)\\]`, "g");
+  const arrayMatches = jsonString.match(arrayRegexp) || [];
+
+  const arrayLabels = arrayMatches.flatMap((match: string) => {
+    const arrayMatch = match.match(/\[([^\]]+)\]$/);
+    if (arrayMatch) {
+      return arrayMatch[1].split(',').map(v => {
+        const trimmed = v.trim();
+        const num = parseFloat(trimmed);
+        return isNaN(num) ? trimmed : num;
+      });
+    }
+    return [];
+  });
+
+  const labels = [...stringLabels, ...arrayLabels];
 
   return { label: labels, formatter };
 };
