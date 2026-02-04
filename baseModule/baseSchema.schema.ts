@@ -1493,15 +1493,17 @@ export const baseSchema = gql`
     ): CopyValueFromParentIntialValues!
   }
 
-  type CopyValueFromParentIntialValues {
-    label: String!
-    key: String!
-  }
+    type CopyValueFromParentIntialValues {
+        label: String
+        key: String!
+        autoCopy: Boolean
+    }
 
-  input CopyValueFromParentIntialValuesInput {
-    label: String!
-    key: String!
-  }
+    input CopyValueFromParentIntialValuesInput {
+        label: String
+        key: String!
+        autoCopy: Boolean
+    }
 
   type PanelRelationMetaData {
     label(input: String!): String!
