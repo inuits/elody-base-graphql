@@ -9,8 +9,5 @@ include:
     ref: 'v4.14.0'
 
 variables:
-  GRAPHQL_IMAGE: 'pza/dams-graphql'
+  GRAPHQL_IMAGE: 'inuits/temp-dams-graphql'
   MOVE_SCHEMA: 'baseSchema.schema.ts'
-
-
-
