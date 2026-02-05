@@ -87,12 +87,14 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           throw new Error('Invalid URL returned from helper');
         }
 
-        (req as any).resolvedUrl = new URL(fullUrl);
+        const newUrl: any = new URL(fullUrl);
+        (req as any).resolvedUrl = newUrl;
 
-        if (fullUrl.includes(environment.api.iiifUrlFrontend)) {
-          return environment.api.iiifUrl;
-        }
-        return environment.api.storageApiUrl;
+        return newUrl.origin;
+        // if (fullUrl.includes(environment.api.iiifUrlFrontend)) {
+        //   return environment.api.iiifUrl;
+        // }
+        // return environment.api.storageApiUrl;
       },
       pathRewrite: (path, req) => {
         const resolved = (req as any).resolvedUrl as URL;
