@@ -90,11 +90,7 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         const newUrl: any = new URL(fullUrl);
         (req as any).resolvedUrl = newUrl;
 
-        // return newUrl.origin;
-        if (fullUrl.includes(environment.api.iiifUrlFrontend)) {
-          return environment.api.iiifUrl;
-        }
-        return environment.api.storageApiUrl;
+        return newUrl.origin;
       },
       pathRewrite: (path, req) => {
         const resolved = (req as any).resolvedUrl as URL;
