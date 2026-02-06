@@ -1,6 +1,8 @@
 !/dist
 /tsconfig.json
 *.ts
+.pnpm-store/
+.pnpn-store/
 !*.d.ts
 !*.schema.ts
 !*.queries.ts
