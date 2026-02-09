@@ -21,7 +21,7 @@ export const getCollectionValueForEntityType = (entityType: string): string => {
       // console.info(
       //   `The default collection Entities was used for entity with type '${entityType}', add it to the collectionMapping to use another collection`
       // );
-    loggedTypes.push(entityType);
+      loggedTypes.push(entityType);
     return Collection.Entities;
   }
   return collection[entityType];
@@ -82,18 +82,6 @@ export const getPrimaryMediaFileIDOfEntity = (
   }
 };
 
-export const alterDimensionsOfIIIFUrl = (
-  IIIFUrl: string,
-  height: number | undefined,
-  width: number | undefined
-): string => {
-  const regex = /\/full\/,\d+\/\d+\//;
-  const stringHeight = height ? height.toString() : '';
-  const stringWidth = width ? width.toString() : '';
-
-  return IIIFUrl.replace(regex, `/full/${stringHeight},${stringWidth}/0/`);
-};
-
 export const getEntityId = (entity: any) => {
   const environment: Environment = getCurrentEnvironment();
   const key: string = environment.customization?.entityIdKey || '_id';
@@ -126,8 +114,12 @@ export const normalizeCoordinatesForHeatmap = (coordinates: number[]) => {
   return proj4('EPSG:4326', 'EPSG:3857', coordinates);
 };
 
-export const normalizeWeightForHeatmap = (value: number, minimalValue?: number) => {
-  const valueToNormalize = !!minimalValue && value < minimalValue ? minimalValue : value;
+export const normalizeWeightForHeatmap = (
+  value: number,
+  minimalValue?: number
+) => {
+  const valueToNormalize =
+    !!minimalValue && value < minimalValue ? minimalValue : value;
   return valueToNormalize / 100;
 };
 

@@ -72,18 +72,43 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
     createProxyMiddleware({
       target: environment.api.storageApiUrl,
       changeOrigin: true,
-      pathRewrite: async (path: string, req: Request) => {
-        const filename = path.split('/').at(-1);
+      router: async (req) => {
+        const urlWithoutParams = req.originalUrl.split('?')[0].split('/').filter(Boolean);
+        const filename = urlWithoutParams.at(-1);
         if (!filename)
           throw Error('Unable to request download url for mediafile');
-        const full = await getDownloadUrlForMediafile(
-          filename,
-          req,
-          environment
-        );
-        return full.replace(environment.api.storageApiUrl, '');
+
+        const isOriginal = req.query.original === 'true';
+        const originalFilename = req.query.originalFilename
+        const kind = isOriginal ? 'original' : 'transcode';
+
+        const fullUrl = await getDownloadUrlForMediafile(filename, req, environment, kind);
+
+        if (!fullUrl) {
+          throw new Error('Invalid URL returned from helper');
+        }
+
+        const newUrl: any = new URL(fullUrl);
+        (req as any).resolvedUrl = newUrl;
+        (req as any).originalFilename = originalFilename;
+
+        return newUrl.origin;
       },
-      onError: (err, req, res) => {
+      pathRewrite: (path, req) => {
+        const resolved = (req as any).resolvedUrl as URL;
+        if (!resolved) return path;
+
+        return resolved.pathname + resolved.search;
+      },
+      onProxyRes: (proxyRes, req: any, res) => {
+        const originalFilename = (req as any).originalFilename as string;
+        const contentType = proxyRes.headers['content-type'];
+        const extension = contentType?.split('/')[1] || '';
+        if (originalFilename && extension) {
+          res.setHeader('Content-Disposition', `attachment; filename="${originalFilename}.${extension}"`);
+        }
+      },
+      onError: (err, req, res, next) => {
         console.error('Proxy error:', err);
         res.status(500).send('Proxy error');
       },

@@ -23,7 +23,6 @@ import { baseTypePillLabelMapping } from './sources/typePillLabelMapping';
 import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
-  alterDimensionsOfIIIFUrl,
   checkRequestContentType,
 } from './helpers/helpers';
 import {
@@ -363,7 +362,6 @@ export {
   resolveMetadata,
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
-  alterDimensionsOfIIIFUrl,
   parseIdToGetMoreData,
   applyPromEndpoint,
   AuthRESTDataSource,

@@ -75,4 +75,50 @@ describe("resolverFormatters", () => {
       label: [], formatter: 'regexpMatch|wears'
     });
   });
+
+  it("extracts array values from metadata array structure", () => {
+    const clientConfig: FormattersConfig = {
+      'regexpMatch': {
+        xyxz: { value: 'xyxz' }
+      }
+    }
+
+    // Simulate: keyValue(key: "metadata", source: root)
+    // This is the full entity metadata array structure
+    const metadataArray = [
+      {
+        "key": "model_name",
+        "value": "imec-triton"
+      },
+      {
+        "key": "detection_size",
+        "value": {
+          "xyxz": [
+            282.492431640625,
+            540.0955810546875,
+            445.96014404296875,
+            660.2772216796875
+          ]
+        }
+      },
+      {
+        "key": "label",
+        "value": "Asphalt - Missing material"
+      }
+    ];
+
+    expect(handleRegexpFormatter({
+      value: metadataArray,
+      formatter: 'regexpMatch|xyxz',
+      formatterSettings: clientConfig
+    })).toStrictEqual({
+      label: [
+        282.492431640625,
+        540.0955810546875,
+        445.96014404296875,
+        660.2772216796875
+      ],
+      formatter: 'regexpMatch|xyxz'
+    });
+  });
 });

@@ -680,6 +680,12 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType
       );
     },
+    GetPrimaryMediafileFromEntity: async (_source, {entityId}, {dataSources}) => {
+      const entity: CollectionAPIEntity = await dataSources.CollectionAPI.getEntity(entityId, Entitytyping.BaseEntity)  // Todo: Have a look if we can remove the type parameter from the getEntity function
+      const primaryMediafileId = entity.primary_mediafile_id
+      if (!primaryMediafileId) throw new GraphQLError("Entity does not have a primary mediafile or access has been restricted")
+      return await dataSources.CollectionAPI.getEntity(primaryMediafileId, Entitytyping.Mediafile)
+    }
   },
   Mutation: {
     linkMediafileToEntity: async (
@@ -2392,6 +2398,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         bucket,
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
+        allowedMatchers,
       }
     ) => {
       return {
@@ -2423,6 +2430,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         bucket,
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
+        allowedMatchers,
       };
     },
   },
@@ -2567,7 +2575,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     defaultMatcher: (parent) => {
       return parent.defaultMatcher || null;
-    }
+    },
+    allowedMatchers: (parent, rest) => {
+      return parent.allowedMatchers || null;
+    },
   },
   MapFeatureMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {

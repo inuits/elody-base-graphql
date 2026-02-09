@@ -458,9 +458,11 @@
       "search-saved-searches": "Zoek in bewaarde zoekopdrachten"
     },
     "search": {
-      "noresult": "Geen resultaten",
+      "noresult": "Geen resultaten gevonden voor je filters",
       "asset-library": "Zoek asset library...",
-      "mediafile-library": "Zoek Mediafiles..."
+      "mediafile-library": "Zoek Mediafiles...",
+      "tipMap": "Pas filters aan, verwijder ze of verplaats de kaart om resultaten te zien",
+      "tip": "Pas filters aan of verwijder ze om resultaten te zien"
     },
     "language": {
       "nl": "Nederlands",

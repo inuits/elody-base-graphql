@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.4.63",
+  "version": "0.4.78",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -96,7 +96,10 @@
   },
   "devDependencies": {
     "@types/graphql-depth-limit": "^1.1.6",
+    "@types/supertest": "^6.0.3",
     "husky": "^8.0.1",
+    "nock": "^14.0.10",
+    "supertest": "^7.2.2",
     "vitest": "2.1.9"
   },
   "publishConfig": {

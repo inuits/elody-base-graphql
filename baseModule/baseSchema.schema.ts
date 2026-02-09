@@ -6,7 +6,7 @@ export const baseSchema = gql`
   enum RouteNames {
     Home
     SingleEntity
-    NotFound
+    EmbeddedViewerNotFound
     Unauthorized
     AccessDenied
     Jobs
@@ -546,6 +546,9 @@ export const baseSchema = gql`
     Update
     Upload
     UserSquare
+  Folder
+    FolderPlus
+    ChannelAdd
   }
 
   type Menu {
@@ -1500,14 +1503,16 @@ export const baseSchema = gql`
   }
 
   type CopyValueFromParentIntialValues {
-    label: String!
+    label: String
     key: String!
-  }
+  autoCopy: Boolean
+    }
 
   input CopyValueFromParentIntialValuesInput {
-    label: String!
+    label: String
     key: String!
-  }
+  autoCopy: Boolean
+    }
 
   type PanelRelationMetaData {
     label(input: String!): String!
@@ -2044,6 +2049,7 @@ export const baseSchema = gql`
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
     defaultMatcher: Matchers
+  allowedMatchers: [Matchers]
   }
 
   type FacetInputType {
@@ -2111,7 +2117,7 @@ export const baseSchema = gql`
       bucket: String
       includeDefaultValuesFromIntialValues: [String]
       defaultMatcher: Matchers
-    ): AdvancedFilter!
+    allowedMatchers: [Matchers]): AdvancedFilter!
   }
 
   type FilterMatcherMap {
@@ -2210,6 +2216,7 @@ export const baseSchema = gql`
       limit: Int!
       entityType: String!
     ): [DropdownOption!]!
+  GetPrimaryMediafileFromEntity(entityId: String!): Entity
   }
 
   type Mutation {
