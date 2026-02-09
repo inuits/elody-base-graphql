@@ -79,6 +79,7 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
           throw Error('Unable to request download url for mediafile');
 
         const isOriginal = req.query.original === 'true';
+        const originalFilename = req.query.originalFilename
         const kind = isOriginal ? 'original' : 'transcode';
 
         const fullUrl = await getDownloadUrlForMediafile(filename, req, environment, kind);
@@ -89,6 +90,7 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
 
         const newUrl: any = new URL(fullUrl);
         (req as any).resolvedUrl = newUrl;
+        (req as any).originalFilename = originalFilename;
 
         return newUrl.origin;
       },
@@ -97,6 +99,14 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         if (!resolved) return path;
 
         return resolved.pathname + resolved.search;
+      },
+      onProxyRes: (proxyRes, req: any, res) => {
+        const originalFilename = (req as any).originalFilename as string;
+        const contentType = proxyRes.headers['content-type'];
+        const extension = contentType?.split('/')[1] || '';
+        if (originalFilename && extension) {
+          res.setHeader('Content-Disposition', `attachment; filename="${originalFilename}.${extension}"`);
+        }
       },
       onError: (err, req, res, next) => {
         console.error('Proxy error:', err);
