@@ -77,7 +77,7 @@ export const resolveId = (parent: any) => {
 };
 
 export const resolveRelations = async (parent: any) => {
-  return parseRelations(parent.relations);
+  return parseRelations(parent.relations || []);
 };
 
 export const simpleReturn = (parent: any) => {
