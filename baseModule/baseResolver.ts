@@ -1459,6 +1459,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isCollapsed: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || "";
+    },
     canBeMultipleColumns: async (_source, { input }, { dataSources }) => {
       return input;
     },
