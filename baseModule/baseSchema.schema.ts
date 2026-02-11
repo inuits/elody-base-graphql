@@ -9,6 +9,7 @@ export const baseSchema = gql`
     EmbeddedViewerNotFound
     Unauthorized
     AccessDenied
+    NotFound
     Jobs
   }
 
