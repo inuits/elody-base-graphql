@@ -167,6 +167,40 @@ it('should handle selection filter with multiple types', async () => {
     expect(result.count).toBe(0);
   });
 
+  it('should pass match_all_words through to data source', async () => {
+    const filters: AdvancedFilterInput[] = [
+      {
+        type: AdvancedFilterTypes.Text,
+        key: 'title',
+        value: 'herman brusselmans',
+        match_exact: false,
+        match_all_words: true,
+      },
+    ];
+
+    mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
+      results: [mockEntity('1', 'BaseEntity')],
+      count: 1,
+      facets: [],
+      skip: 0,
+      limit: 20,
+    });
+
+    await resolveAdvancedEntities(
+      mockDataSource as unknown as DataSources,
+      'BaseEntity' as Entitytyping,
+      filters
+    );
+
+    const calledFilters = mockDataSource.CollectionAPI.GetAdvancedEntities.mock.calls[0][3];
+    const textFilter = calledFilters.find(
+      (f: AdvancedFilterInput) => f.type === AdvancedFilterTypes.Text
+    );
+    expect(textFilter).toBeDefined();
+    expect(textFilter.match_all_words).toBe(true);
+    expect(textFilter.match_exact).toBe(false);
+  });
+
   it('should handle custom limit and skip values', async () => {
     mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
       results: [mockEntity('1', 'BaseEntity')],

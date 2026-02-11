@@ -34,7 +34,8 @@ export const resolveAdvancedEntities = async (
     (filter: AdvancedFilterInput) =>
       filter.type === AdvancedFilterTypes.Selection && filter.key === 'type' && filter.value?.length > 1
   );
-  if (containSelectionFilterWithMultipleValues) {
+  const hasMultipleTypeFilters = typesFromFilters.length > 1;
+  if (containSelectionFilterWithMultipleValues || hasMultipleTypeFilters) {
     entityTypesToLoop = [entityTypesToLoop[0]];
   }
 
@@ -56,7 +57,7 @@ export const resolveAdvancedEntities = async (
     if (!containsTypeFilter) {
       iterationFilters.push({
         type: AdvancedFilterTypes.Type,
-        value: entityType as string,
+        value: hasMultipleTypeFilters ? entityTypes : entityType as string,
         match_exact: true,
       });
     }

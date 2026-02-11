@@ -1979,6 +1979,7 @@ export const baseSchema = gql`
     distinct_by: String
     item_types: [String]
     match_exact: Boolean
+    match_all_words: Boolean
     provide_value_options_for_key: Boolean
     inner_exact_matches: JSON
     operator: Operator
