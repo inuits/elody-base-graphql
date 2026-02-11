@@ -1567,6 +1567,7 @@ export const baseSchema = gql`
   type WindowElementPanel {
     label(input: String): String
     panelType(input: PanelType!): PanelType!
+    can(input: String): String
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
     canBeMultipleColumns(input: Boolean!): Boolean!

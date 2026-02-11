@@ -484,7 +484,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       });
       return result.parent_job_id;
     } catch (error) {
-      return '';
+      throw error;
     }
   }
 
