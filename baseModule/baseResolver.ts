@@ -136,6 +136,7 @@ import {
   resolveIntialValueDerivatives,
   resolveIntialValueLocation,
   resolveIntialValueMetadata,
+  resolveIntialValueRepeatableMetadata,
   resolveIntialValueMetadataOrRelation,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelationRootdata,
@@ -1029,6 +1030,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         technicalOrigin,
         index,
         parentRelations,
+        repeatableMetadataKey = ''
       },
       { dataSources, customFormatters }
     ) => {
@@ -1041,6 +1043,14 @@ export const baseResolver: Resolvers<ContextValue> = {
               key,
               keyOnMetadata,
               formatter
+            ),
+          repeatableMetadata: () =>
+            resolveIntialValueRepeatableMetadata(
+              dataSources,
+              parent,
+              key,
+              formatter,
+              repeatableMetadataKey
             ),
           root: () =>
             resolveIntialValueRoot(

@@ -38,6 +38,32 @@ export const resolveIntialValueMetadata = async (
   return formatterFactory(ResolverFormatters.Metadata)({label: metadata[0]?.value, formatter });
 };
 
+export const resolveIntialValueRepeatableMetadata = async (
+  dataSources: DataSources,
+  parent: any,
+  key: string,
+  formatter: string | null,
+  repeatableMetadataKey: string | null
+): Promise<string | { label: string, formatter: string }> => {
+  const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+  const metadata = await resolveMetadata(parent, [key], undefined);
+  if (metadata.length > 1) {
+    const hasLanguage = metadata.some((item: Metadata) => item.lang);
+    const metadataValues = hasLanguage
+      ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)
+          ?.value
+      : metadata.map((item: Metadata) => item.value).join(', ');
+    return metadataValues;
+  }
+  let result = []
+  if (!repeatableMetadataKey){
+    result = metadata[0]?.value;
+  } else {
+    for (const item of metadata[0]?.value) result.push(item[repeatableMetadataKey]);
+  }
+  return formatterFactory(ResolverFormatters.Metadata)({label: result, formatter });
+};
+
 export const resolveIntialValueRoot = async (dataSources: DataSources, parent: any, key: string, formatter: string | null, formatterSettings: any): Promise<string> => {
   try {
     const value = extractValueFromKeyParts(parent, key);
