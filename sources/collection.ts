@@ -23,6 +23,7 @@ import {
 } from '../../../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode';
+import DataLoader from 'dataloader';
 import { Config } from '../types';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
@@ -40,6 +41,10 @@ export class CollectionAPI extends AuthRESTDataSource {
   public config: Config | 'no-config' = 'no-config';
   public preferredLanguage: string =
     this.environment.customization?.applicationLocale || 'en';
+  public entityLoader = new DataLoader<string, any>(
+    async (keys: readonly string[]) => this.batchLoadEntities([...keys]),
+    { maxBatchSize: 100 }
+  );
 
   async getSessionInfo(key: string): Promise<string> {
     const user = jwtDecode(this.session.auth.accessToken!) as {
@@ -281,6 +286,94 @@ export class CollectionAPI extends AuthRESTDataSource {
     }
     setId(data);
     return data;
+  }
+
+  private async batchLoadEntities(keys: string[]): Promise<any[]> {
+    const parsed = keys.map((key, index) => {
+      const sep = key.indexOf('::');
+      const type = sep >= 0 ? key.substring(0, sep) : '';
+      const id = sep >= 0 ? key.substring(sep + 2) : key;
+      return { type, id, index };
+    });
+
+    const groups = new Map<string, { id: string; index: number }[]>();
+    for (const p of parsed) {
+      const group = groups.get(p.type) || [];
+      group.push({ id: p.id, index: p.index });
+      groups.set(p.type, group);
+    }
+
+    const results: any[] = new Array(keys.length).fill(null);
+    const promises: Promise<void>[] = [];
+
+    for (const [type, entries] of groups) {
+      if (type) {
+        promises.push(
+          this.fetchEntitiesBatchByType(type, entries).then((entities) => {
+            entries.forEach((entry, i) => {
+              results[entry.index] = entities[i];
+            });
+          })
+        );
+      } else {
+        for (const entry of entries) {
+          promises.push(
+            this.fetchEntityIndividual(entry.id).then((entity) => {
+              results[entry.index] = entity;
+            })
+          );
+        }
+      }
+    }
+
+    await Promise.all(promises);
+    return results;
+  }
+
+  private async fetchEntitiesBatchByType(
+    type: string,
+    entries: { id: string; index: number }[]
+  ): Promise<any[]> {
+    const cleanIds = entries.map((e) => {
+      const split = e.id.split('/');
+      return split.length > 1 ? split[1] : e.id;
+    });
+
+    try {
+      const data = await this.get(
+        `${Collection.Entities}?ids=${cleanIds.join(',')}&type=${type}&skip_relations=0`
+      );
+
+      const resultsMap = new Map<string, any>();
+      for (const entity of data.results || []) {
+        setId(entity);
+        resultsMap.set(entity.id, entity);
+        if (entity._id) resultsMap.set(entity._id, entity);
+      }
+
+      return entries.map((entry) => {
+        const cleanId = entry.id.split('/').pop()!;
+        return resultsMap.get(cleanId) || resultsMap.get(entry.id) || null;
+      });
+    } catch {
+      return Promise.all(entries.map((e) => this.fetchEntityIndividual(e.id)));
+    }
+  }
+
+  private async fetchEntityIndividual(id: string): Promise<any> {
+    try {
+      const cleanId = id.includes('/') ? id.split('/')[1] : id;
+      const data = await this.get<any>(`${Collection.Entities}/${cleanId}`);
+      setId(data);
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  async getEntityBatched(id: string, type?: string): Promise<any> {
+    const key = type ? `${type}::${id}` : `::${id}`;
+    return this.entityLoader.load(key);
   }
 
   async getNewObjectId(): Promise<string> {

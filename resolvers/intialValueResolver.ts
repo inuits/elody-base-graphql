@@ -90,14 +90,9 @@ const fetchRelationEntity = async (
 
   if (!shouldFetchEntity) return null;
 
-  const entityType = relationEntityType || '';
-  const collection = relationEntityType ? undefined : 'entities';
-
-  return dataSources.CollectionAPI.getEntity(
+  return dataSources.CollectionAPI.getEntityBatched(
     relation.key,
-    entityType,
-    collection,
-    true
+    relationEntityType || undefined
   );
 };
 
@@ -473,7 +468,7 @@ const getIdThroughCurrentRelations = (currentParent: any, relationType: string):
 const fetchEntityById = async (
   dataSources: DataSources,
   id: string,
-): Promise<Entity | undefined> => {  return await dataSources.CollectionAPI.getEntityById(id) };
+): Promise<Entity | undefined> => {  return await dataSources.CollectionAPI.getEntityBatched(id) };
 
 const getParentTroughFilter = async (
   dataSources: DataSources,
