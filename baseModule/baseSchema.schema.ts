@@ -1025,6 +1025,7 @@ export const baseSchema = gql`
   enum KeyValueSource {
     root
     metadata
+    repeatableMetadata
     technicalMetadata
     relations
     relationMetadata
@@ -1054,6 +1055,7 @@ export const baseSchema = gql`
       technicalOrigin: String
       index: Int
       parentRelations: [ParentRelationsConfigInput]
+      repeatableMetadataKey: String
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
