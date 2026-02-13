@@ -13,6 +13,7 @@ import {
   resolveAdvancedEntities,
   resolveSimpleEntities,
 } from '../resolvers/entitiesResolver';
+import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
 import {
   ActionElement,
   ActionProgress,
@@ -120,6 +121,7 @@ import {
   AutocompleteSelectionOptions,
   MapFeatureMetadata,
   ContextMenuCustomAction,
+  ContextMenuFormFlow,
 } from '../../../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -2287,7 +2289,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     formQuery: async (_source, { input }, { dataSources }) => {
       return input || '';
-    }
+    },
+    hidden: async (_source: any, { input }, { dataSources }) => {
+      return evaluateMetadataConditions(_source.metadata, input as string[]);
+    },
+    formFlow: async (_source, { input }, { dataSources }) => {
+      return input || ContextMenuFormFlow.Update;
+    },
   },
   ContextMenuGeneralAction: {
     label: async (_source, { input }, { dataSources }) => {
