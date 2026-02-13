@@ -1578,7 +1578,6 @@ export const baseSchema = gql`
     entityListElement: EntityListElement
     wysiwygElement: WysiwygElement
     repetitionConfig(
-      repeatable: Boolean
       repetitionKey: String
     ): RepetitionConfig
   }
