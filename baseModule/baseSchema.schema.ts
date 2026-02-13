@@ -1470,7 +1470,6 @@ export const baseSchema = gql`
   }
 
   type RepetitionConfig {
-    repeatable: Boolean!
     repetitionKey: String
   }
 
@@ -1497,7 +1496,6 @@ export const baseSchema = gql`
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
     repetitionConfig(
-      repeatable: Boolean
       repetitionKey: String
     ): RepetitionConfig
     copyValueFromParent(
@@ -1580,7 +1578,6 @@ export const baseSchema = gql`
     entityListElement: EntityListElement
     wysiwygElement: WysiwygElement
     repetitionConfig(
-      repeatable: Boolean
       repetitionKey: String
     ): RepetitionConfig
   }

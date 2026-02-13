@@ -1516,9 +1516,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
-    repetitionConfig: async (_source, { repeatable, repetitionKey }, { dataSources }) => {
-      if (repeatable && repetitionKey) return {repeatable, repetitionKey}
-      return {repeatable: false, repetitionKey: undefined}
+    repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
+      if (repetitionKey) return {repetitionKey}
+      return { repetitionKey: undefined}
     },
   },
   ExpandButtonOptions: {
@@ -1598,9 +1598,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     highlightIfPrimaryMediafile: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
-    repetitionConfig: async (_source, { repeatable, repetitionKey }, { dataSources }) => {
-      if (repeatable && repetitionKey) return {repeatable, repetitionKey}
-      return {repeatable: false, repetitionKey: undefined}
+    repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
+      if (repetitionKey) return {repetitionKey}
+      return { repetitionKey: undefined}
     },
     copyValueFromParent: async (_source, { input }, { dataSources }) => {
       return input as CopyValueFromParentIntialValues;
