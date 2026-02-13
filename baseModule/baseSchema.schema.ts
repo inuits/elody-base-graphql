@@ -1738,6 +1738,11 @@ export const baseSchema = gql`
     CreateEntityFromExternalSource
   }
 
+  enum ContextMenuFormFlow {
+    Removal
+    Update
+  }
+
   type ContextMenuGeneralAction {
     label(input: String): String!
     action(input: ContextMenuGeneralActionEnum): ContextMenuGeneralActionEnum!
@@ -1749,8 +1754,10 @@ export const baseSchema = gql`
     label(input: String): String!
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
     formQuery(input: String): String
+    formFlow(input: ContextMenuFormFlow): ContextMenuFormFlow!
     icon(input: String): String!
     can(input: [String]): [String]
+    hidden(input: [String]): Boolean!
   }
 
   type ContextMenuLinkAction {
