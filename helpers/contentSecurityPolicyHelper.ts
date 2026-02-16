@@ -43,7 +43,7 @@ export const enableContentSecurityPolicy = (
     app.use(
       '*/embed/viewer',
       helmet.contentSecurityPolicy({
-        embedDirectives,
+        directives: embedDirectives,
       })
     );
   }
