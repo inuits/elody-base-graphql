@@ -24,7 +24,7 @@ const baseDirectives = {
 };
 
 export const createCspMiddleware = (overrides: any) => {
-  const merged = { ...baseDirectives };
+  const merged:{[key: string]: string[]} = { ...baseDirectives };
 
   for (const key in overrides) {
     if (Array.isArray(merged[key]) && Array.isArray(overrides[key])) {
