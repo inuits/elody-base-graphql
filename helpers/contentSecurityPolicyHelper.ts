@@ -4,33 +4,44 @@ import helmet from 'helmet';
 import { Route } from '../routes/routesHelper';
 import { RouteNames } from '../../../generated-types/type-defs';
 
+const baseDirectives = {
+  ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+  'script-src': ["'self'", "'unsafe-eval'", 'blob:'],
+  'worker-src': ["'self'", 'blob:'],
+  'img-src': [
+    "'self'",
+    'data:',
+    'blob:',
+    'https://server.arcgisonline.com',
+    'https://*.openstreetmap.org',
+  ],
+  'connect-src': [
+    "'self'",
+    'blob:',
+    '*',
+  ],
+  'frame-ancestors': ["'self'"],
+};
+
+export const createCspMiddleware = (overrides: any) => {
+  const merged = { ...baseDirectives };
+
+  for (const key in overrides) {
+    if (Array.isArray(merged[key]) && Array.isArray(overrides[key])) {
+      merged[key] = [...new Set([...merged[key], ...overrides[key]])];
+    } else {
+      merged[key] = overrides[key];
+    }
+  }
+
+  return helmet.contentSecurityPolicy({ directives: merged });
+};
+
 export const enableContentSecurityPolicy = (
   app: Express,
   environment: Environment
 ) => {
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-
-  const directives = {
-    ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-    'script-src': ["'self'", "'unsafe-eval'", 'blob:'],
-    'worker-src': ["'self'", 'blob:'],
-    'img-src': [
-      "'self'",
-      'data:',
-      'blob:',
-      'https://server.arcgisonline.com',
-      'https://*.openstreetmap.org',
-    ],
-    'connect-src': [
-      "'self'",
-      'blob:',
-      '*',
-      ...(environment.sentryEnabled && environment.sentryDsn
-        ? [new URL(environment.sentryDsn).origin]
-        : []),
-    ],
-    'frame-ancestors': ["'self'"],
-  };
 
   const appContainsEmbeddedViewer: boolean =
     environment.routerConfig.find(
@@ -38,7 +49,7 @@ export const enableContentSecurityPolicy = (
     ) !== undefined;
 
   if (appContainsEmbeddedViewer) {
-    const embedDirectives = { ...directives, 'frame-ancestors': ['*'] };
+    const embedDirectives = { ...baseDirectives, 'frame-ancestors': ['*'] };
     app.use(
       '*/embed/viewer',
       helmet.contentSecurityPolicy({
@@ -47,5 +58,5 @@ export const enableContentSecurityPolicy = (
     );
   }
 
-  app.use(helmet.contentSecurityPolicy({ directives }));
+  app.use(helmet.contentSecurityPolicy({ directives: baseDirectives }));
 };

@@ -73,7 +73,10 @@ import {
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import depthLimit from 'graphql-depth-limit';
 import { enableCors } from './helpers/corsHelper';
-import { enableContentSecurityPolicy } from './helpers/contentSecurityPolicyHelper';
+import {
+  enableContentSecurityPolicy,
+  createCspMiddleware,
+} from './helpers/contentSecurityPolicyHelper';
 
 const applyCustomEndpoints = (
   app: Express,
@@ -345,4 +348,5 @@ export {
   simpleReturn,
   getRoutesObject,
   renderPageForEnvironment,
+  createCspMiddleware,
 };
