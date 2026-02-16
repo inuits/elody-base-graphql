@@ -38,8 +38,7 @@ export const enableContentSecurityPolicy = (
     ) !== undefined;
 
   if (appContainsEmbeddedViewer) {
-    const embedDirectives = directives
-    embedDirectives['frame-ancestors'] = ["*"];
+    const embedDirectives = { ...directives, 'frame-ancestors': '*' };
     app.use(
       '*/embed/viewer',
       helmet.contentSecurityPolicy({
