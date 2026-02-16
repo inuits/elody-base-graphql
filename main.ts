@@ -71,9 +71,9 @@ import {
   ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-import helmet from 'helmet';
 import depthLimit from 'graphql-depth-limit';
 import { enableCors } from './helpers/corsHelper';
+import { enableContentSecurityPolicy } from './helpers/contentSecurityPolicyHelper';
 
 const applyCustomEndpoints = (
   app: Express,
@@ -202,36 +202,9 @@ const start = (
     });
 
     enableCors(app, environment);
+    enableContentSecurityPolicy(app, environment);
 
     app.use(compression());
-
-    app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-
-    app.use(
-      helmet.contentSecurityPolicy({
-        directives: {
-          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-          'script-src': ["'self'", "'unsafe-eval'", 'blob:'],
-          'worker-src': ["'self'", 'blob:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'https://server.arcgisonline.com',
-            'https://*.openstreetmap.org',
-          ],
-          'connect-src': [
-            "'self'",
-            'blob:',
-            '*',
-            ...(environment.sentryEnabled && environment.sentryDsn
-              ? [new URL(environment.sentryDsn).origin]
-              : []),
-          ],
-          'frame-ancestors': ['*'],
-        },
-      })
-    );
 
     app.use(
       express.json({ limit: environment.maxUploadSize }),

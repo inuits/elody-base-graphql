@@ -6,7 +6,8 @@ export const baseSchema = gql`
   enum RouteNames {
     Home
     SingleEntity
-    EmbeddedViewerNotFound
+    EmbeddedViewer
+    NotFound
     Unauthorized
     AccessDenied
     NotFound
