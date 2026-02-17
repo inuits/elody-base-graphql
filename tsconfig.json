@@ -26,4 +26,5 @@
     "vitest.setup.ts",
   ],
   "include": ["./**/*.ts", "./**/*.json"],
+  "files": ["../../generated-types/type-defs.ts"],
 }
