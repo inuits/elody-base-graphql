@@ -33,5 +33,13 @@ export const elodyFormattersConfig: FormattersConfig = {
       "background": "#daecdd",
       "text": "#0b8319",
     },
+    modified: {
+      "background": "#ecdada",
+      "text": "#ac1113",
+    },
+    added: {
+      "background": "#daecdd",
+      "text": "#0b8319",
+    },
   }
 };

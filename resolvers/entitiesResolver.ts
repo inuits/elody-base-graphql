@@ -111,3 +111,48 @@ export const resolveSimpleEntities = (
   };
   return entities;
 };
+
+export const resolveAdvancedHistoryEntities = async (
+  dataSources: DataSources,
+  entityType: Entitytyping = Entitytyping.BaseEntity,
+  advancedFilterInputs: AdvancedFilterInput[],
+  limit: number = 20,
+  skip: number = 1,
+  searchValue: SearchFilter = { value: '' }
+): Promise<EntitiesResults> => {
+  const entitiesMap = new Map<string, Entity>();
+  const facetsList: RawFacetGroup[] = [];
+  let limitResult = limit;
+  let totalCount = 0;
+
+  const response = await dataSources.CollectionAPI.GetAdvancedEntities(
+    entityType,
+    limit,
+    skip,
+    advancedFilterInputs,
+    searchValue,
+    true
+  );
+
+  const iterationEntities: Entity[] = response?.results as Entity[];
+  totalCount += response.count ?? 0;
+
+  iterationEntities.forEach((entity, index) => {
+    // @ts-ignore
+    if (entity.id || entity._id) {
+      // @ts-ignore
+      const updatedEntity = { ...entity, id: entity._id || entity.id + `${index}_history` };
+      entitiesMap.set(updatedEntity.id, updatedEntity);
+    }
+  });
+
+  return {
+    results: Array.from(entitiesMap.values()),
+    sortKeys: [],
+    facets: facetsList,
+    limit: limitResult,
+    count: totalCount,
+  };
+};
+
+

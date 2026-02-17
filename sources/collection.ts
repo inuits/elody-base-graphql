@@ -540,7 +540,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: SearchFilter
+    advancedSearchValue: SearchFilter,
+    isHistoryCall: boolean = false
   ): Promise<EntitiesResults> {
     let data: EntetiesCallReturn = 'no-call-is-triggerd';
 
@@ -566,7 +567,8 @@ export class CollectionAPI extends AuthRESTDataSource {
         limit,
         skip,
         advancedFilterInputs,
-        advancedSearchValue
+        advancedSearchValue,
+        isHistoryCall
       );
     }
 
@@ -599,17 +601,22 @@ export class CollectionAPI extends AuthRESTDataSource {
     limit: number,
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: SearchFilter
+    advancedSearchValue: SearchFilter,
+    isHistoryCall: boolean = false
   ): Promise<EntetiesCallReturn> {
-    const body = advancedFilterInputs;
-    return await this.post(
-      `${getCollectionValueForEntityType(
-        type
-      )}/filter?limit=${limit}&skip=${this.getSkip(skip, limit)}&order_by=${
-        advancedSearchValue.order_by
-      }&asc=${advancedSearchValue.isAsc ? 1 : 0}`,
-      { body }
-    );
+    const queryParams = new URLSearchParams({
+      limit: String(limit),
+      skip: String(this.getSkip(skip, limit)),
+      order_by: advancedSearchValue.order_by || '',
+      asc: advancedSearchValue.isAsc ? '1' : '0',
+    });
+
+    if (isHistoryCall) {
+      queryParams.append('history', 'true');
+    }
+
+    const endpoint = `${getCollectionValueForEntityType(type)}/filter?${queryParams.toString()}`;
+    return await this.post(endpoint, { body: advancedFilterInputs });
   }
 
   // TODO: redo or remove after the demo #139636
