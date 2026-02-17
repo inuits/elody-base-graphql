@@ -70,7 +70,7 @@ build-job: # build and publish to nexus
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
         mkdir -p ../../generated-types
 
-        pnpm exec graphql-codegen --config codegen.ci.ts
+        pnpm exec ggraphql-code-generator --config codegen.ci.ts
 
         pnpm exec run build
         pnpm publish
