@@ -68,11 +68,7 @@ build-job: # build and publish to nexus
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
         mkdir -p ../../generated-types
-
-        if [ ! -f "../../generated-types/type-defs.ts" ]; then
-          echo "export type Maybe<T> = T | null; export type Exact<T> = { [K in keyof T]: T[K] }; export type Scalars = any;" > ../../generated-types/type-defs.ts
-          echo "Created placeholder for CI build."
-        fi
+        echo 'declare module "*/generated-types/type-defs";' > ../../generated-types/type-defs.d.ts
 
         pnpm run build
         pnpm publish
