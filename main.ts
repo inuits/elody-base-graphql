@@ -18,7 +18,6 @@ import { applySEOEndpoint } from './endpoints/seoEndpoint';
 import { getRoutesObject } from './routes/routesHelper';
 import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
-import { baseTypeCollectionMapping } from './sources/typeCollectionMapping';
 import { baseTypePillLabelMapping } from './sources/typePillLabelMapping';
 import {
   getRelationsByType,
@@ -103,14 +102,6 @@ const addCustomFieldsToBaseFields = (customInputFields: {
   } catch (e) {
     console.log(e);
   }
-};
-
-const addCustomTypeCollectionMapping = (customTypeCollectionMapping: {
-  [key: string]: Collection;
-}) => {
-  Object.keys(customTypeCollectionMapping).forEach((key: string) => {
-    baseTypeCollectionMapping[key] = customTypeCollectionMapping[key];
-  });
 };
 
 const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
@@ -295,10 +286,6 @@ const start = (
 
     if (customInputFields) {
       addCustomFieldsToBaseFields(customInputFields);
-    }
-
-    if (customTypeCollectionMapping) {
-      addCustomTypeCollectionMapping(customTypeCollectionMapping);
     }
 
     if (customTypePillLabelMapping) {
