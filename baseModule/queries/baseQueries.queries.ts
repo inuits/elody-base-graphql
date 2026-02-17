@@ -134,10 +134,4 @@ export const baseQueries = gql`
   query getGraphData($id: String!, $graph: GraphElementInput!) {
     GraphData(id: $id, graph: $graph)
   }
-
-  query GetPrimaryMediafileFromEntity($entityId: String!) {
-    GetPrimaryMediafileFromEntity(entityId: $entityId) {
-      ...mediafileInEntity
-    }
-  }
 `;
