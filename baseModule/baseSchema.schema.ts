@@ -1943,6 +1943,7 @@ export const baseSchema = gql`
     ColumnList
     MediaViewer
     Map
+    History
   }
 
   enum ListItemCoverageTypes {
@@ -2183,6 +2184,17 @@ export const baseSchema = gql`
       per_page: Int
       facet_by: String!
     ): EntitiesResults!
+    EntitiesHistory(
+      type: Entitytyping
+      limit: Int
+      skip: Int
+      searchInputType: SearchInputType
+      searchValue: SearchFilter!
+      advancedSearchValue: [FilterInput]
+      advancedFilterInputs: [AdvancedFilterInput!]!
+      fetchPolicy: String
+      preferredLanguage: String
+    ): EntitiesResults
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!

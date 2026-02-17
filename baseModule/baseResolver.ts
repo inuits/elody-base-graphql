@@ -12,6 +12,7 @@ import {
 import {
   resolveAdvancedEntities,
   resolveSimpleEntities,
+  resolveAdvancedHistoryEntities,
 } from '../resolvers/entitiesResolver';
 import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
 import {
@@ -301,6 +302,41 @@ export const baseResolver: Resolvers<ContextValue> = {
       //   }
       // }
       // return entities!!;
+    },
+    EntitiesHistory: async (
+      _source,
+      {
+        type,
+        limit,
+        skip,
+        searchValue,
+        advancedSearchValue,
+        advancedFilterInputs,
+        searchInputType,
+        preferredLanguage,
+      },
+      { dataSources }
+    ): Promise<Maybe<EntitiesResults>> => {
+      if (preferredLanguage)
+        setPreferredLanguageForDataSources(dataSources, preferredLanguage);
+
+      const entitiesResolverMapping: Partial<
+        Record<SearchInputType, () => Promise<EntitiesResults>>
+      > = {
+        [SearchInputType.AdvancedInputType]: async () =>
+          await resolveAdvancedHistoryEntities(
+            dataSources,
+            type as Entitytyping | undefined,
+            advancedFilterInputs,
+            limit as number | undefined,
+            skip as number | undefined,
+            searchValue
+          ),
+        [SearchInputType.SimpleInputtype]: async () =>
+          await resolveSimpleEntities(dataSources),
+      };
+
+      return entitiesResolverMapping[searchInputType!!]!!();
     },
     EntitiesByAdvancedSearch: async (
       _source,
