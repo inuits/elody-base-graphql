@@ -776,13 +776,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         await mutateRelations();
       }
 
-      if (collection !== Collection.Mediafiles) {
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id),
           'BaseEntity',
           collection
         );
-      } else return await dataSources.CollectionAPI.getMediaFile(id);
     },
     deleteData: async (
       _source,
@@ -1478,13 +1476,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relation: async (parent: any, {}, { dataSources }) => {
       try {
-        const collection: Collection = parent.uuid.includes(Collection.Entities)
-          ? Collection.Entities
-          : Collection.Mediafiles;
         const relations = (
           await dataSources.CollectionAPI.getRelations(
             removePrefixFromId(parent.uuid),
-            collection
           )
         ).map((rel: Metadata) => {
           return { value: rel.value || rel.key, label: rel.label || '' };
