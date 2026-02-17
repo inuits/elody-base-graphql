@@ -1,0 +1,18 @@
+import { AdvancedFilterInput, Entitytyping, Metadata } from '../../../generated-types/type-defs';
+import { DataSources } from '../types';
+import { CollectionAPIEntity, CollectionAPIRelation } from '../main';
+import type { Request, Response } from 'express';
+export declare const getCollectionValueForEntityType: (entityType: string) => string;
+export declare const customSort: (customSortOrder: string[], arrayToSort: any[], sortKey: string) => any[];
+export declare const setPreferredLanguageForDataSources: (dataSources: DataSources, preferredLanguage: string) => void;
+export declare const getMetadataItemValueByKey: (metadataKey: string, metadata: Metadata[], backupValue?: string) => string;
+export declare const getRelationsByType: (relationType: string, relations: CollectionAPIRelation[]) => CollectionAPIRelation[];
+export declare const getPrimaryMediaFileIDOfEntity: (entity: CollectionAPIEntity) => string | undefined;
+export declare const getEntityId: (entity: any) => any;
+export declare const capitalizeString: (string: string) => string;
+export declare const compareRelationsFilterKey: (key: string, comparison: string) => boolean;
+export declare const extractErrorCode: (error: any) => number;
+export declare const normalizeCoordinatesForHeatmap: (coordinates: number[]) => number[];
+export declare const normalizeWeightForHeatmap: (value: number, minimalValue?: number) => number;
+export declare const getTypesFromFilterInputs: (advancedFilterInputs: AdvancedFilterInput[], entityType?: Entitytyping) => Entitytyping[];
+export declare const checkRequestContentType: (req: Request, res: Response) => boolean;
