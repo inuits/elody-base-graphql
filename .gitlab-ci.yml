@@ -47,6 +47,11 @@ test-job:
       echo "No test files found, skipping tests."
       exit 0
     fi
+  artifacts:
+    paths:
+      - node_modules/
+      - ../../../generated-types/
+    expire_in: 1 hour
 
 build-job: # build and publish to nexus
   tags:
@@ -58,35 +63,14 @@ build-job: # build and publish to nexus
     - corepack enable
     - corepack prepare pnpm@10.29.3 --activate
   script:
-    - echo "Building and publishing the code..."
-    - echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
-    # Alternatively use these 2 lines where `npm config fix` automatically changes (`_authToken=...` to `//nexus.inuits.io/repository/:_authToken=...`) so no hardcoding is needed
-    # - echo _authToken=${NPM_CONFIG__AUTH_TOKEN} >> ~/.npmrc
-    # - npm config fix
+    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name") # extract the package name from package.json
-    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version") # extract the version from package.json
-
-    # Check if the current version is not yet present in the published versions => new version to publish
-    # For node:20 base image use the following line instead
-    # if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"${NPM_PACKAGE_VERSION}"* ]]; then
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
-        mkdir $(pwd)/.pnpm-store/v3 -p
-        pnpm config set store-dir $(pwd)/.pnpn-store/v3
-        echo "Found unpublished version ${NPM_PACKAGE_VERSION} building and publishing now..."
-        pnpm install
-
-        # 1. Satisfy the compiler with mocks
-        if [ -f "./__mock__/types.ts" ]; then
-        mkdir -p ../../../generated-types
-        cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
-        echo "Using mock types for build"
-        fi
 
         pnpm run build
         pnpm publish
-        echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to the Nexus NPM registry."
       else
-        echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
+          echo "Version exists, skipping."
       fi
