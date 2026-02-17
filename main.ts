@@ -148,9 +148,9 @@ const start = (
     modules: fullElodyConfig.modules,
   });
 
-  if (environment.sentryEnabled) {
+  if (environment.glitchtipEnabled) {
     Sentry.init({
-      dsn: environment.sentryDsn,
+      dsn: environment.glitchtipDsn,
       sendClientReports: false,
       environment: environment.nomadNamespace,
     });
