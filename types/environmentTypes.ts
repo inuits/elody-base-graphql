@@ -212,9 +212,9 @@ export interface FullyOptionalEnvironmentInput {
   graphqlEndpoint?: string;
   corsAllowedOrigins?: string;
   staticToken?: string | undefined | null;
-  sentryEnabled?: boolean;
-  sentryDsn?: string;
-  sentryDsnFrontend?: string;
+  glitchtipEnabled?: boolean;
+  glitchtipDsn?: string;
+  glitchtipDsnFrontend?: string;
   nomadNamespace?: string;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
