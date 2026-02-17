@@ -548,7 +548,7 @@ export const baseSchema = gql`
     Update
     Upload
     UserSquare
-  Folder
+    Folder
     FolderPlus
     ChannelAdd
   }
@@ -1496,9 +1496,7 @@ export const baseSchema = gql`
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
-    repetitionConfig(
-      repetitionKey: String
-    ): RepetitionConfig
+    repetitionConfig(repetitionKey: String): RepetitionConfig
     copyValueFromParent(
       input: CopyValueFromParentIntialValuesInput!
     ): CopyValueFromParentIntialValues!
@@ -1507,14 +1505,14 @@ export const baseSchema = gql`
   type CopyValueFromParentIntialValues {
     label: String
     key: String!
-  autoCopy: Boolean
-    }
+    autoCopy: Boolean
+  }
 
   input CopyValueFromParentIntialValuesInput {
     label: String
     key: String!
-  autoCopy: Boolean
-    }
+    autoCopy: Boolean
+  }
 
   type PanelRelationMetaData {
     label(input: String!): String!
@@ -1578,9 +1576,7 @@ export const baseSchema = gql`
     relation: [PanelRelation]
     entityListElement: EntityListElement
     wysiwygElement: WysiwygElement
-    repetitionConfig(
-      repetitionKey: String
-    ): RepetitionConfig
+    repetitionConfig(repetitionKey: String): RepetitionConfig
   }
 
   type WindowElementBulkDataPanel {
@@ -2059,7 +2055,7 @@ export const baseSchema = gql`
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
     defaultMatcher: Matchers
-  allowedMatchers: [Matchers]
+    allowedMatchers: [Matchers]
   }
 
   type FacetInputType {
@@ -2127,7 +2123,8 @@ export const baseSchema = gql`
       bucket: String
       includeDefaultValuesFromIntialValues: [String]
       defaultMatcher: Matchers
-    allowedMatchers: [Matchers]): AdvancedFilter!
+      allowedMatchers: [Matchers]
+    ): AdvancedFilter!
   }
 
   type FilterMatcherMap {
@@ -2237,7 +2234,7 @@ export const baseSchema = gql`
       limit: Int!
       entityType: String!
     ): [DropdownOption!]!
-  GetPrimaryMediafileFromEntity(entityId: String!): Entity
+    GetPrimaryMediafileFromEntity(entityId: String!): Entity
   }
 
   type Mutation {
@@ -2261,7 +2258,7 @@ export const baseSchema = gql`
     linkMediafileToEntity(
       entityId: String!
       mediaFileInput: MediaFileInput!
-    ): MediaFile
+    ): MediaFileEntity
     bulkAddRelations(
       entityIds: [String!]!
       relationEntityId: String!
