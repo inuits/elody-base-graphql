@@ -59,6 +59,8 @@ build-job: # build and publish to nexus
   stage: build
   image: node:18-alpine
   needs: ["test-job"]
+  before_script:
+    - corepack enable
   script:
     - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
