@@ -1,13 +1,92 @@
 ---
 ###############################################################################
-# GRAPHQL MODULE PIPELINE
+# GRAPHQL MODULE
 ###############################################################################
 
-include:
-  - project: 'inuits/gitlab-ci/pipeline-templates'
-    file: 'pipelines/applications/graphql-module-pipeline.yml'
-    ref: 'v4.14.7'
+# Turn of deploy on braches other than master/main.
+workflow:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      when: never
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      when: always
 
-variables:
-  GRAPHQL_IMAGE: 'inuits/temp-dams-graphql'
-  MOVE_SCHEMA: 'baseSchema.schema.ts'
+stages:
+  - test
+  - build
+
+test-job:
+  stage: test
+  image: node:18-alpine
+  tags:
+    - prod
+  variables:
+    NODE_ENV: "testing"
+  script: |
+    echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    npm install -g pnpm
+    pnpm install --include=dev
+
+    if [ -f "./__mock__/types.ts" ]; then
+      mkdir -p ../../../generated-types
+      cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
+      echo "Mock types copied successfully"
+    else
+      echo "Mock types file not found, skipping tests."
+      exit 0
+    fi
+
+    TEST_FILES=$(find . -path ./node_modules -prune -o -path ./.git -prune -o -type f \( -name "*.test.ts" -o -name "*.spec.ts" \) -print)
+
+    if [ -n "$TEST_FILES" ]; then
+      echo "Found test files:"
+      echo "$TEST_FILES"
+      echo "Running vitest..."
+      pnpm exec vitest --run
+    else
+      echo "No test files found, skipping tests."
+      exit 0
+    fi
+
+build-job: # build and publish to nexus
+  tags:
+    - prod
+  stage: build
+  image: node:18-alpine
+  needs: ["test-job"]
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@10.29.3 --activate
+  script:
+    - echo "Building and publishing the code..."
+    - echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
+    # Alternatively use these 2 lines where `npm config fix` automatically changes (`_authToken=...` to `//nexus.inuits.io/repository/:_authToken=...`) so no hardcoding is needed
+    # - echo _authToken=${NPM_CONFIG__AUTH_TOKEN} >> ~/.npmrc
+    # - npm config fix
+
+    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name") # extract the package name from package.json
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version") # extract the version from package.json
+
+    # Check if the current version is not yet present in the published versions => new version to publish
+    # For node:20 base image use the following line instead
+    # if [[ $(npm view "${NPM_PACKAGE_NAME}" versions) != *"${NPM_PACKAGE_VERSION}"* ]]; then
+    - |
+      if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
+        mkdir $(pwd)/.pnpm-store/v3 -p
+        pnpm config set store-dir $(pwd)/.pnpn-store/v3
+        echo "Found unpublished version ${NPM_PACKAGE_VERSION} building and publishing now..."
+        pnpm install
+
+        # 1. Satisfy the compiler with mocks
+        if [ -f "./__mock__/types.ts" ]; then
+        mkdir -p ../../../generated-types
+        cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
+        echo "Using mock types for build"
+        fi
+
+        pnpm run build
+        pnpm publish
+        echo "Successfully published version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} to the Nexus NPM registry."
+      else
+        echo "Version ${NPM_PACKAGE_VERSION} of ${NPM_PACKAGE_NAME} has already been published, so no new version has been published."
+      fi
