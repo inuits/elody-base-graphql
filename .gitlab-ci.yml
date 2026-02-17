@@ -67,8 +67,7 @@ build-job: # build and publish to nexus
 
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
-        mkdir -p ../../generated-types
-        rm -f ../../generated-types/type-defs.ts
+        rm -rf ../../generated-types
 
         echo 'declare module "*/generated-types/type-defs";' > ./ci-type-shield.d.ts
 
