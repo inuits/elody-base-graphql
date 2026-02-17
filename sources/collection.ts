@@ -12,10 +12,7 @@ import {
   FilterMatcherMap,
   GraphElementInput,
   Maybe,
-  MediaFileInput,
-  MediaFileMetadataInput,
   Metadata,
-  MetadataFieldInput,
   MetadataValuesInput,
   SearchFilter,
   PermissionRequestInfo,
@@ -340,61 +337,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return res;
   }
 
-  async getAssetsRelationedWithMediafFile(mediaFileId: String): Promise<any> {
-    const assets = await this.get(
-      `${Collection.Mediafiles}/${mediaFileId}/assets`
-    );
-    assets.forEach((asset: any) => {
-      setId(asset);
-    });
-    return assets;
-  }
-
-  async postMediaFile(mediaFileInput: MediaFileInput): Promise<any> {
-    mediaFileInput.metadata = [
-      { key: 'rights', value: 'niets-geselecteerd' },
-      { key: 'source', value: 'niets-geselecteerd' },
-      { key: 'publication_status', value: 'niet-publiek' },
-    ];
-    const res = await this.post(`${Collection.Mediafiles}`, {
-      body: mediaFileInput,
-    });
-    return res;
-  }
-
-  async linkMediafileToEntity(
-    entityId: String,
-    mediaFileInput: MediaFileInput
-  ): Promise<any> {
-    const res = await this.post(
-      `${Collection.Entities}/${entityId}/mediafiles`,
-      {
-        body: mediaFileInput,
-      }
-    );
-    return res;
-  }
-
-  async patchMetaDataMediaFile(
-    mediafileId: String,
-    mediaFileMetadata: Maybe<MediaFileMetadataInput>[]
-  ): Promise<any> {
-    return await this.patch(`${Collection.Mediafiles}/${mediafileId}`, {
-      body: {
-        metadata: mediaFileMetadata,
-      },
-    });
-  }
-
-  async replaceMetadata(
-    id: String,
-    metadata: Maybe<MetadataFieldInput>[]
-  ): Promise<Metadata[]> {
-    return await this.put(`${Collection.Entities}/${id}/metadata`, {
-      metadata,
-    });
-  }
-
   async patchMetadata(
     id: String,
     metadata: MetadataValuesInput[],
@@ -615,7 +557,9 @@ export class CollectionAPI extends AuthRESTDataSource {
       queryParams.append('history', 'true');
     }
 
-    const endpoint = `${getCollectionValueForEntityType(type)}/filter?${queryParams.toString()}`;
+    const endpoint = `${getCollectionValueForEntityType(
+      type
+    )}/filter?${queryParams.toString()}`;
     return await this.post(endpoint, { body: advancedFilterInputs });
   }
 

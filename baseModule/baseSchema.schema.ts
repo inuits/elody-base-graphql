@@ -16,7 +16,6 @@ export const baseSchema = gql`
 
   enum Collection {
     entities
-    mediafiles
     jobs
   }
 
