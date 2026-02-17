@@ -16,7 +16,7 @@ const getMediafileValueForPugObject = async (
 ): Promise<Object> => {
   try {
     const response = await fetch(
-      `${environment.api.collectionApiUrl}/${Collection.Mediafiles}/${mediafileId}`,
+      `${environment.api.collectionApiUrl}/${Collection.Entities}/${mediafileId}`,
       {
         method: 'get',
         headers: { Authorization: 'Bearer ' + environment.staticToken },
