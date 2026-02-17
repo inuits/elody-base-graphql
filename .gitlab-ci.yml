@@ -67,11 +67,11 @@ build-job: # build and publish to nexus
 
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
-        rm -rf ../../generated-types
+        mkdir -p ../../generated-types
+        touch ../../generated-types/type-defs.ts
 
-        echo 'declare module "*/generated-types/type-defs";' > ./ci-type-shield.d.ts
+        pnpm exec tsc -p tsconfig.ci.json
 
-        pnpm run build
         pnpm publish
       else
           echo "Version exists, skipping."
