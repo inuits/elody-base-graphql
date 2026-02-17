@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: './baseModule/*.schema.ts',
   generates: {
-    '../../generated-types/type-defs.ts:': {
+    '../../generated-types/type-defs.ts': {
       plugins: [{ typescript: {} }],
     },
   },
