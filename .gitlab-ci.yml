@@ -72,7 +72,7 @@ build-job:
 
         pnpm exec graphql-code-generator --config codegen.ci.ts
 
-        pnpm exec run build
+        pnpm build
         pnpm publish
       else
           echo "Version exists, skipping."
