@@ -70,8 +70,7 @@ build-job: # build and publish to nexus
         mkdir -p ../../generated-types
         rm -f ../../generated-types/type-defs.ts
 
-        echo "export {};" > ../../generated-types/type-defs.ts
-        echo "//@ts-nocheck" >> ../../generated-types/type-defs.ts
+        echo 'declare module "*/generated-types/type-defs";' > ./ci-type-shield.d.ts
 
         pnpm run build
         pnpm publish
