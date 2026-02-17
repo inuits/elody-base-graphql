@@ -2255,10 +2255,6 @@ export const baseSchema = gql`
       deleteEntities: DeleteEntitiesInput
       skipItemsWithRelationDuringBulkDelete: [String!]
     ): String
-    linkMediafileToEntity(
-      entityId: String!
-      mediaFileInput: MediaFileInput!
-    ): MediaFileEntity
     bulkAddRelations(
       entityIds: [String!]!
       relationEntityId: String!
