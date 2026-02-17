@@ -16,15 +16,14 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "graphql": ["node_modules/graphql"]
-    }
+      "graphql": ["node_modules/graphql"],
+    },
   },
   "exclude": [
-    "node_modules", 
+    "node_modules",
     "./test/**/*.test.ts",
     "vitest.config.ts",
-    "vitest.setup.ts"
+    "vitest.setup.ts",
   ],
   "include": ["./**/*.ts", "./**/*.json"],
-  "files": ["../../generated-types/type-defs.ts"],
 }
