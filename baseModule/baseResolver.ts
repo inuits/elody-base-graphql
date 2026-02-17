@@ -72,7 +72,6 @@ import {
   MapTypes,
   MarkdownViewerElement,
   Maybe,
-  MediaFile,
   MediaFileElement,
   MediaFileElementTypes,
   MediaFileEntity,
