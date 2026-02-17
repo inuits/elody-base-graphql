@@ -727,18 +727,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     }
   },
   Mutation: {
-    linkMediafileToEntity: async (
-      _source,
-      { entityId, mediaFileInput },
-      { dataSources }
-    ) => {
-      const linkedResult: any =
-        await dataSources.CollectionAPI.linkMediafileToEntity(
-          entityId,
-          mediaFileInput
-        );
-      return linkedResult;
-    },
     mutateEntityValues: async (
       _source,
       { id, formInput, collection, preferredLanguage },
@@ -841,40 +829,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationsInput
       );
       return '';
-    },
-    generateTranscode: async (
-      _source,
-      { mediafileIds, transcodeType, masterEntityId },
-      { dataSources }
-    ) => {
-      const mediafiles: Promise<MediaFile>[] = [];
-      let result = 'no-transcodes';
-
-      try {
-        mediafileIds.forEach((mediafileId: string) => {
-          mediafiles.push(dataSources.CollectionAPI.getMediaFile(mediafileId));
-        });
-
-        Promise.all(mediafiles).then(
-          async (resolvedMediafiles: MediaFile[]) => {
-            if (!dataSources.TranscodeService)
-              throw new GraphQLError(
-                'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
-              );
-            result = await dataSources.TranscodeService.generateTranscode(
-              resolvedMediafiles,
-              transcodeType,
-              masterEntityId as string
-            );
-          }
-        );
-
-        return result;
-      } catch (e) {
-        throw new GraphQLError(
-          `Unable to transcode mediafiles to ${transcodeType}`
-        );
-      }
     },
     updateMetadataWithCsv: async (
       _source,

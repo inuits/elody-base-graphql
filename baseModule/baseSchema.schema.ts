@@ -2260,11 +2260,6 @@ export const baseSchema = gql`
       relationEntityId: String!
       relationType: String!
     ): String
-    generateTranscode(
-      mediafileIds: [String!]!
-      transcodeType: TranscodeType!
-      masterEntityId: String
-    ): String
     updateMetadataWithCsv(entityType: String!, csv: String!): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): Entity!
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): Entity!
