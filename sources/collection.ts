@@ -330,13 +330,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return await this.get(`${collection}/${entityId}/relations`);
   }
 
-  async getMediaFile(mediaFileId: String): Promise<any> {
-    const res = await this.get(`${Collection.Mediafiles}/${mediaFileId}`);
-    setId(res);
-    setType(res, Entitytyping.Mediafile);
-    return res;
-  }
-
   async patchMetadata(
     id: String,
     metadata: MetadataValuesInput[],
@@ -487,15 +480,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<EntitiesResults> {
     let data: EntetiesCallReturn = 'no-call-is-triggerd';
 
-    if (Entitytyping.Mediafile === type) {
-      data = await this.doAdvancedMediaCall(
-        type,
-        limit,
-        skip,
-        advancedFilterInputs,
-        advancedSearchValue
-      );
-    } else if (Entitytyping.History === type) {
+    if (Entitytyping.History === type) {
       data = await this.doAdvancedHistoryEntitiesCall(
         type,
         1000,
@@ -587,54 +572,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       results: data.results.map((item: any) => item.object),
       limit,
     };
-  }
-
-  private async doAdvancedMediaCall(
-    type: Entitytyping,
-    limit: number,
-    skip: number,
-    advancedFilterInputs: AdvancedFilterInput[],
-    advancedSearchValue: SearchFilter
-  ): Promise<EntetiesCallReturn> {
-    const itemWithParentId = advancedFilterInputs.find(
-      (currentValue: AdvancedFilterInput) => {
-        if (currentValue.parent_key === 'relations') {
-          return currentValue;
-        }
-      }
-    );
-    const isFilterCall = advancedFilterInputs.some(
-      (currentValue: AdvancedFilterInput) => {
-        return ['metadata_on_relation'].includes(currentValue.type);
-      }
-    );
-    if (
-      itemWithParentId &&
-      itemWithParentId.parent_key === 'relations' &&
-      !isFilterCall
-    ) {
-      return this.get(
-        `${Collection.Entities}/${
-          itemWithParentId.value[0]
-        }/mediafiles?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&order_by=${advancedSearchValue.order_by}&asc=${
-          advancedSearchValue.isAsc ? 1 : 0
-        }`
-      );
-    } else {
-      const body = advancedFilterInputs;
-      return await this.post(
-        `${Collection.Mediafiles}/filter?limit=${limit}&skip=${this.getSkip(
-          skip,
-          limit
-        )}&order_by=${advancedSearchValue.order_by}&asc=${
-          advancedSearchValue.isAsc ? 1 : 0
-        }`,
-        { body }
-      );
-    }
   }
 
   async updateMetadataWithCsv(entityType: string, csv: any): Promise<any> {

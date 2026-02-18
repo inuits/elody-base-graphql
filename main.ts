@@ -76,6 +76,7 @@ import {
   enableContentSecurityPolicy,
   createCspMiddleware,
 } from './helpers/contentSecurityPolicyHelper';
+import { setId, setType } from './parsers/entity';
 
 const applyCustomEndpoints = (
   app: Express,
@@ -336,4 +337,6 @@ export {
   getRoutesObject,
   renderPageForEnvironment,
   createCspMiddleware,
+  setId,
+  setType,
 };

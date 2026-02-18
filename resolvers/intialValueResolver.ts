@@ -106,8 +106,8 @@ const fetchRelationEntity = async (
   if (!relation?.key) return null;
 
   if (relation.type === 'hasMediafile') {
-    return dataSources.CollectionAPI.getMediaFile(
-      relation.key.replace("mediafiles/", "")
+    return dataSources.CollectionAPI.getEntity(
+      relation.key.replace("mediafiles/", ""), Entitytyping.BaseEntity
     );
   }
 

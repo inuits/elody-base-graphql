@@ -9,6 +9,8 @@ import {
 } from 'http-proxy-middleware';
 import { fetchWithTokenRefresh } from './fetchWithToken';
 
+// TODO: Should be moved to the mediafiles module and loaded in dynamically.
+
 function extractIdFromMediafilePath(path: string): string | null {
   const regex = /\/api\/mediafile\/([a-f\d-]+)-[^\/]+$/;
   const match = path.match(regex);
@@ -22,7 +24,7 @@ export const addHeaders = (proxyReq: any, req: Request, res: Response) => {
   if (mediafileId)
     res.setHeader(
       'Link',
-      `${env?.api.collectionApiUrl}${Collection.Mediafiles}/${mediafileId} ; rel="describedby" type="application/json"`
+      `${env?.api.collectionApiUrl}${Collection.Entities}/${mediafileId} ; rel="describedby" type="application/json"`
     );
 };
 
@@ -73,16 +75,24 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
       target: environment.api.storageApiUrl,
       changeOrigin: true,
       router: async (req) => {
-        const urlWithoutParams = req.originalUrl.split('?')[0].split('/').filter(Boolean);
+        const urlWithoutParams = req.originalUrl
+          .split('?')[0]
+          .split('/')
+          .filter(Boolean);
         const filename = urlWithoutParams.at(-1);
         if (!filename)
           throw Error('Unable to request download url for mediafile');
 
         const isOriginal = req.query.original === 'true';
-        const originalFilename = req.query.originalFilename
+        const originalFilename = req.query.originalFilename;
         const kind = isOriginal ? 'original' : 'transcode';
 
-        const fullUrl = await getDownloadUrlForMediafile(filename, req, environment, kind);
+        const fullUrl = await getDownloadUrlForMediafile(
+          filename,
+          req,
+          environment,
+          kind
+        );
 
         if (!fullUrl) {
           throw new Error('Invalid URL returned from helper');
@@ -105,7 +115,10 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         const contentType = proxyRes.headers['content-type'];
         const extension = contentType?.split('/')[1] || '';
         if (originalFilename && extension) {
-          res.setHeader('Content-Disposition', `attachment; filename="${originalFilename}.${extension}"`);
+          res.setHeader(
+            'Content-Disposition',
+            `attachment; filename="${originalFilename}.${extension}"`
+          );
         }
       },
       onError: (err, req, res, next) => {

@@ -1,4 +1,3 @@
-import { ImportAPI } from 'import-module';
 import { CollectionAPI } from './sources/collection';
 import { StorageAPI } from './sources/storage';
 import {
@@ -10,12 +9,11 @@ import {
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
-import { AuthRESTDataSource } from "./auth/AuthRESTDataSource";
-import {GraphqlAPI} from "./sources/graphql";
+import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
+import { GraphqlAPI } from './sources/graphql';
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
-  ImportAPI?: ImportAPI;
   StorageAPI?: StorageAPI;
   TranscodeService?: TranscodeService;
   OcrService?: OcrService;
@@ -24,7 +22,6 @@ export interface OptionalDataSources {
 
 export interface DataSources {
   CollectionAPI: CollectionAPI;
-  ImportAPI: ImportAPI;
   StorageAPI: StorageAPI;
   TranscodeService: TranscodeService;
   OcrService: OcrService;
@@ -57,8 +54,8 @@ export type FormattersConfig = {
 };
 
 export type TypeUrlMapping = {
-  mapping: { [key: string]: string }, 
-  reverseMapping: { [key: string]: string }
-}
+  mapping: { [key: string]: string };
+  reverseMapping: { [key: string]: string };
+};
 
 export type Config = Record<string, Array<string>> & Filters;

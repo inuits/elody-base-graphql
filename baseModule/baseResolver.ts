@@ -196,14 +196,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
-      if (type.toLowerCase() === 'mediafile') {
-        return await dataSources.CollectionAPI.getMediaFile(id);
-      } else {
         return await dataSources.CollectionAPI.getEntity(
           parseIdToGetMoreData(id),
           type
         );
-      }
     },
     Entities: async (
       _source,
@@ -977,7 +973,7 @@ export const baseResolver: Resolvers<ContextValue> = {
           )
         ) {
           // OCR'ed objects are mediafiles, so use getMediaFile
-          return await dataSources.CollectionAPI.getMediaFile(parent.key);
+          return await dataSources.CollectionAPI.getEntity(parent.key, Entitytyping.BaseEntity);
         } else {
           // use getEntity for the other things
           //        return await dataSources.CollectionAPI.getEntity(
@@ -1723,7 +1719,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         const thumbnailId: string = _source['primary_thumbnail_id'];
         const mediafile: CollectionAPIMediaFile =
-          await dataSources.CollectionAPI.getMediaFile(thumbnailId);
+          await dataSources.CollectionAPI.getEntity(thumbnailId, Entitytyping.BaseEntity);
 
         return mediafile.display_filename;
       } catch {

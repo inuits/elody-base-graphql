@@ -2233,7 +2233,6 @@ export const baseSchema = gql`
       limit: Int!
       entityType: String!
     ): [DropdownOption!]!
-    GetPrimaryMediafileFromEntity(entityId: String!): Entity
   }
 
   type Mutation {
