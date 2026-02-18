@@ -77,6 +77,7 @@ import {
   createCspMiddleware,
 } from './helpers/contentSecurityPolicyHelper';
 import { setId, setType } from './parsers/entity';
+import { TranscodeService } from './sources/transcode';
 
 const applyCustomEndpoints = (
   app: Express,
@@ -339,4 +340,5 @@ export {
   createCspMiddleware,
   setId,
   setType,
+  TranscodeService,
 };

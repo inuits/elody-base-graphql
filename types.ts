@@ -9,23 +9,26 @@ import {
 } from '../../generated-types/type-defs';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
-import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 import { GraphqlAPI } from './sources/graphql';
+import { AuthRESTDataSource } from 'base-graphql';
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
   StorageAPI?: StorageAPI;
   TranscodeService?: TranscodeService;
   OcrService?: OcrService;
-  [key: string]: AuthRESTDataSource;
+  GraphqlAPI?: GraphqlAPI;
 }
 
-export interface DataSources {
+interface DefaultDataSources {
   CollectionAPI: CollectionAPI;
   StorageAPI: StorageAPI;
   TranscodeService: TranscodeService;
   OcrService: OcrService;
   GraphqlAPI: GraphqlAPI;
+}
+
+export interface DataSources extends DefaultDataSources {
   [key: string]: AuthRESTDataSource;
 }
 
