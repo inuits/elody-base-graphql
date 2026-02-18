@@ -1,5 +1,4 @@
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
-import { MediaFile, TranscodeType } from '../../../generated-types/type-defs';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 
