@@ -10,7 +10,7 @@ import {
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
 import { GraphqlAPI } from './sources/graphql';
-import { AuthRESTDataSource } from 'base-graphql';
+import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
