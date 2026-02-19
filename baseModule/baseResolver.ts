@@ -51,6 +51,7 @@ import {
   EntityListElement,
   EntityListViewMode,
   Entitytyping,
+  FrontendEntitytyping,
   EntityViewElements,
   EntityViewerElement,
   ExpandButtonOptions,
@@ -454,8 +455,18 @@ export const baseResolver: Resolvers<ContextValue> = {
         [key: string]: { [permission: string]: boolean };
       } = {};
       let promises: Promise<void>[] = [];
+      const frontendEntities = Object.values(FrontendEntitytyping);
 
       for (const entity of entities as Entitytyping[]) {
+        let shouldCall = true;
+        for (const frontendEntity of frontendEntities as string[]) {
+          if (entity == frontendEntity) {
+            shouldCall = false;
+            break;
+          }
+        }
+        if (!shouldCall) continue;
+
         const permissions: { [permission: string]: boolean } = {
           [Permission.Canread]: false,
           [Permission.Cancreate]: false,
