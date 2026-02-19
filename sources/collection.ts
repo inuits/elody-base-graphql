@@ -513,11 +513,11 @@ export class CollectionAPI extends AuthRESTDataSource {
       // @ts-ignore
       if (data[0].count !== undefined) count = data.shift().count;
       else count = data.length;
-      // @ts-ignore
-      data.forEach(
-        (element: Record<string, unknown>): Record<string, unknown> =>
-          setId(element)
-      );
+
+      data.forEach((element: unknown) => {
+        setId(element as Record<string, unknown>);
+      });
+
       return { results: data as Entity[], count: count, limit: limit };
     }
 
