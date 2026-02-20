@@ -123,7 +123,7 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuFormFlow,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
@@ -149,7 +149,7 @@ import {
   resolveIntialValueTypePillLabel,
   resolveIntialValueParentRoot,
   resolveIntialValueParentMetadata,
-  resolveIntialValueParentRelations
+  resolveIntialValueParentRelations,
 } from '../resolvers/intialValueResolver';
 import {
   prepareLocationFieldForMapData,
@@ -157,7 +157,12 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import { CollectionAPIEntity, CollectionAPIMediaFile, CollectionAPIMetadata, CollectionAPIRelation } from "../types/collectionAPITypes";
+import {
+  CollectionAPIEntity,
+  CollectionAPIMediaFile,
+  CollectionAPIMetadata,
+  CollectionAPIRelation,
+} from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 
 export const baseResolver: Resolvers<ContextValue> = {
@@ -197,10 +202,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
-        return await dataSources.CollectionAPI.getEntity(
-          parseIdToGetMoreData(id),
-          type
-        );
+      return await dataSources.CollectionAPI.getEntity(
+        parseIdToGetMoreData(id),
+        type
+      );
     },
     Entities: async (
       _source,
@@ -783,11 +788,11 @@ export const baseResolver: Resolvers<ContextValue> = {
         await mutateRelations();
       }
 
-        return await dataSources.CollectionAPI.getEntity(
-          parseIdToGetMoreData(id),
-          'BaseEntity',
-          collection
-        );
+      return await dataSources.CollectionAPI.getEntity(
+        parseIdToGetMoreData(id),
+        'BaseEntity',
+        collection
+      );
     },
     deleteData: async (
       _source,
@@ -880,7 +885,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     link: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelLink;
     },
-    forceShowContextMenuActions: async (_source, { input }, { dataSources }) => {
+    forceShowContextMenuActions: async (
+      _source,
+      { input },
+      { dataSources }
+    ) => {
       return input ? input : false;
     },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
@@ -984,7 +993,10 @@ export const baseResolver: Resolvers<ContextValue> = {
           )
         ) {
           // OCR'ed objects are mediafiles, so use getMediaFile
-          return await dataSources.CollectionAPI.getEntity(parent.key, Entitytyping.BaseEntity);
+          return await dataSources.CollectionAPI.getEntity(
+            parent.key,
+            Entitytyping.BaseEntity
+          );
         } else {
           // use getEntity for the other things
           //        return await dataSources.CollectionAPI.getEntity(
@@ -1020,7 +1032,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         technicalOrigin,
         index,
         parentRelations,
-        repeatableMetadataKey = ''
+        repeatableMetadataKey = '',
       },
       { dataSources, customFormatters }
     ) => {
@@ -1098,7 +1110,12 @@ export const baseResolver: Resolvers<ContextValue> = {
               dataSources
             ),
           typePillLabel: () =>
-            resolveIntialValueTypePillLabel(parent, key, index as number, formatter),
+            resolveIntialValueTypePillLabel(
+              parent,
+              key,
+              index as number,
+              formatter
+            ),
           location: () =>
             resolveIntialValueLocation(
               dataSources,
@@ -1108,26 +1125,26 @@ export const baseResolver: Resolvers<ContextValue> = {
               formatter
             ),
           parentRoot: () =>
-              resolveIntialValueParentRoot(
-                  dataSources,
-                  parent,
-                  key,
-                  parentRelations as ParentRelationsConfigInput[]
-              ),
+            resolveIntialValueParentRoot(
+              dataSources,
+              parent,
+              key,
+              parentRelations as ParentRelationsConfigInput[]
+            ),
           parentMetadata: () =>
-              resolveIntialValueParentMetadata(
-                  dataSources,
-                  parent,
-                  key,
-                  parentRelations as ParentRelationsConfigInput[]
-              ),
+            resolveIntialValueParentMetadata(
+              dataSources,
+              parent,
+              key,
+              parentRelations as ParentRelationsConfigInput[]
+            ),
           parentRelations: () =>
-              resolveIntialValueParentRelations(
-                  dataSources,
-                  parent,
-                  key,
-                  parentRelations as ParentRelationsConfigInput[],
-              ),
+            resolveIntialValueParentRelations(
+              dataSources,
+              parent,
+              key,
+              parentRelations as ParentRelationsConfigInput[]
+            ),
         };
 
         const returnObject = await resolveObject[source]();
@@ -1396,8 +1413,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     taggingConfiguration: async (_source, {}, { dataSources }) => {
       return {} as TaggingExtensionConfiguration;
     },
-    wysiwygElementConfiguration: async (_source: any, {  }, { dataSources }) => {
-      return _source as WysiwygElementConfiguration
+    wysiwygElementConfiguration: async (_source: any, {}, { dataSources }) => {
+      return _source as WysiwygElementConfiguration;
     },
   },
   MarkdownViewerElement: {
@@ -1439,7 +1456,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuActions;
-    }
+    },
   },
   ActionElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1460,7 +1477,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input !== undefined ? input : false;
     },
     can: async (_source, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     canBeMultipleColumns: async (_source, { input }, { dataSources }) => {
       return input;
@@ -1485,7 +1502,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         const relations = (
           await dataSources.CollectionAPI.getRelations(
-            removePrefixFromId(parent.uuid),
+            removePrefixFromId(parent.uuid)
           )
         ).map((rel: Metadata) => {
           return { value: rel.value || rel.key, label: rel.label || '' };
@@ -1503,8 +1520,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as WysiwygElement;
     },
     repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
-      if (repetitionKey) return { repetitionKey}
-      return { repetitionKey: undefined}
+      if (repetitionKey) return { repetitionKey };
+      return { repetitionKey: undefined };
     },
   },
   ExpandButtonOptions: {
@@ -1546,7 +1563,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return baseFields[type];
     },
     nonEditableField: async (parent: any, { input }, { dataSources }) => {
-      return input !== undefined ? input : false
+      return input !== undefined ? input : false;
     },
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
@@ -1581,12 +1598,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     onlyForEntityTypes: async (_source, { input }, { dataSources }) => {
       return input ?? [];
     },
-    highlightIfPrimaryMediafile: async (_source, { input }, { dataSources }) => {
+    highlightIfPrimaryMediafile: async (
+      _source,
+      { input },
+      { dataSources }
+    ) => {
       return input ?? false;
     },
     repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
-      if (repetitionKey) return { repetitionKey}
-      return { repetitionKey: undefined}
+      if (repetitionKey) return { repetitionKey };
+      return { repetitionKey: undefined };
     },
     copyValueFromParent: async (_source, { input }, { dataSources }) => {
       return input as CopyValueFromParentIntialValues;
@@ -1730,7 +1751,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       try {
         const thumbnailId: string = _source['primary_thumbnail_id'];
         const mediafile: CollectionAPIMediaFile =
-          await dataSources.CollectionAPI.getEntity(thumbnailId, Entitytyping.BaseEntity);
+          await dataSources.CollectionAPI.getEntity(
+            thumbnailId,
+            Entitytyping.BaseEntity
+          );
 
         return mediafile.display_filename;
       } catch {
@@ -1959,13 +1983,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         location: () =>
           prepareLocationFieldForMapData(parent.location, key, defaultValue),
         root: () =>
-          resolveIntialValueRoot(
-            dataSources,
-            parent,
-            key,
-            null,
-            undefined
-          ),
+          resolveIntialValueRoot(dataSources, parent, key, null, undefined),
         relations: () =>
           prepareRelationFieldForMapData(
             dataSources,
@@ -2245,7 +2263,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   ContextMenuDisplaySettings: {
     showInHeader: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
-    }
+    },
   },
   ContextMenuLinkAction: {
     label: async (_source, { input }, { dataSources }) => {
@@ -2328,32 +2346,47 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WysiwygElementStyleConfiguration: {
-    displayTextItalic: async (_source: any, {input, relationLookup  }, { dataSources }) => {
-      if (input) return input
+    displayTextItalic: async (
+      _source: any,
+      { input, relationLookup },
+      { dataSources }
+    ) => {
+      if (input) return input;
 
       try {
-        if (!relationLookup) return false
+        if (!relationLookup) return false;
 
-        const relation = _source.relations.find((relation: CollectionAPIRelation) => relation.type === relationLookup.relationType)
-        const lookupEntity: CollectionAPIEntity = await dataSources.CollectionAPI.getEntityById(relation.key)
-        const lookupValue:boolean = lookupEntity.metadata.find((metadataItem: CollectionAPIMetadata) => metadataItem.key === relationLookup.metadataKey)?.value as boolean || false
+        const relation = _source.relations.find(
+          (relation: CollectionAPIRelation) =>
+            relation.type === relationLookup.relationType
+        );
+        const lookupEntity: CollectionAPIEntity =
+          await dataSources.CollectionAPI.getEntityById(relation.key);
+        const lookupValue: boolean =
+          (lookupEntity.metadata.find(
+            (metadataItem: CollectionAPIMetadata) =>
+              metadataItem.key === relationLookup.metadataKey
+          )?.value as boolean) || false;
 
-        return lookupValue
-
+        return lookupValue;
       } catch {
-        console.log('Something went wrong during italic text lookup')
-        return false
+        console.log('Something went wrong during italic text lookup');
+        return false;
       }
     },
   },
   WysiwygElementConfiguration: {
-    styleConfiguration: async (_source: any, {  }, { dataSources }) => {
+    styleConfiguration: async (_source: any, {}, { dataSources }) => {
       return _source as WysiwygElementStyleConfiguration;
     },
     showLineNumbers: async (_source: any, { input }, { dataSources }) => {
       return input || false;
     },
-    virtualKeyboardLayouts: async (_source: any, { input }, { dataSources }) => {
+    virtualKeyboardLayouts: async (
+      _source: any,
+      { input },
+      { dataSources }
+    ) => {
       // In order to display different language layouts we need to define that resolver on a client side.
       // So by default we have an English layout and others we can add through that resolver. Simple example below:
       // ----------------------------------------------------

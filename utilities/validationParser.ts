@@ -1,9 +1,10 @@
-import { ValidationRules, 
+import {
+  ValidationRules,
   RequiredRelationValidationInput,
   RequiredOneOfRelationValidationInput,
   RequiredOneOfMetadataValidationInput,
   ConditionalInput,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 
 export interface ParsedValidationRules {
   value: ValidationRules[];
@@ -17,13 +18,15 @@ export interface ParsedValidationRules {
   regex?: string | null;
 }
 
-export const parseValidationRulesString = (rulesString: string): ParsedValidationRules => {
+export const parseValidationRulesString = (
+  rulesString: string
+): ParsedValidationRules => {
   if (!rulesString || typeof rulesString !== 'string') {
     return { value: [] };
   }
 
   const rules: ValidationRules[] = [];
-  const result: ParsedValidationRules = { 
+  const result: ParsedValidationRules = {
     value: rules,
     customValue: null,
     fastValidationMessage: null,
@@ -32,14 +35,14 @@ export const parseValidationRulesString = (rulesString: string): ParsedValidatio
     has_required_relation: null,
     has_one_of_required_relations: null,
     has_one_of_required_metadata: null,
-    regex: null
+    regex: null,
   };
-  
+
   const parts = splitRulesString(rulesString);
-  
+
   for (const part of parts) {
     const trimmedPart = part.trim();
-    
+
     if (trimmedPart.startsWith('regex:')) {
       const regexPart = trimmedPart.substring(6);
       result.regex = regexPart;
@@ -48,47 +51,50 @@ export const parseValidationRulesString = (rulesString: string): ParsedValidatio
       const colonIndex = trimmedPart.indexOf(':');
       const ruleName = trimmedPart.substring(0, colonIndex);
       const params = trimmedPart.substring(colonIndex + 1);
-      
-      switch (ruleName.toLowerCase()) {  
+
+      switch (ruleName.toLowerCase()) {
         case 'customvalue':
           result.customValue = params;
           rules.push(ValidationRules.CustomValue);
           break;
-          
+
         case 'fastvalidationmessage':
         case 'message':
           result.fastValidationMessage = params;
           break;
-          
+
         case 'required_if':
           result.required_if = parseConditional(params);
           break;
-          
+
         case 'available_if':
           result.available_if = parseConditional(params);
           break;
-          
+
         case 'has_required_relation':
-          result.has_required_relation = parseRequiredRelationValidation(params);
+          result.has_required_relation =
+            parseRequiredRelationValidation(params);
           if (result.has_required_relation) {
             rules.push(ValidationRules.HasRequiredRelation);
           }
           break;
-          
+
         case 'has_one_of_required_relations':
-          result.has_one_of_required_relations = parseRequiredOneOfRelationValidation(params);
+          result.has_one_of_required_relations =
+            parseRequiredOneOfRelationValidation(params);
           if (result.has_one_of_required_relations) {
             rules.push(ValidationRules.HasOneOfRequiredRelations);
           }
           break;
-          
+
         case 'has_one_of_required_metadata':
-          result.has_one_of_required_metadata = parseRequiredOneOfMetadataValidation(params);
+          result.has_one_of_required_metadata =
+            parseRequiredOneOfMetadataValidation(params);
           if (result.has_one_of_required_metadata) {
             rules.push(ValidationRules.HasOneOfRequiredMetadata);
           }
           break;
-          
+
         default:
           const enumValue = mapStringToValidationRule(ruleName);
           if (enumValue) {
@@ -102,29 +108,34 @@ export const parseValidationRulesString = (rulesString: string): ParsedValidatio
       }
     }
   }
-  
+
   return result;
-}
+};
 
 const splitRulesString = (rulesString: string): string[] => {
   if (!rulesString) return [];
-  
-  const [sanitizedString, placeholderMap] = isolateRegexRules(rulesString);  
-  const parts = sanitizedString.split('|').map(part => part.trim()).filter(part => part.length > 0);
-  
-  return parts.map(part => {
+
+  const [sanitizedString, placeholderMap] = isolateRegexRules(rulesString);
+  const parts = sanitizedString
+    .split('|')
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+
+  return parts.map((part) => {
     let restoredPart = part;
     for (const [placeholder, originalRegex] of placeholderMap) {
       restoredPart = restoredPart.replace(placeholder, originalRegex);
     }
     return restoredPart;
   });
-}
+};
 
 const REGEX_RULE_PATTERN = /regex:([\/\#\@\!\^\~])(?:[^\\]|\\.)*?\1/g;
 const PLACEHOLDER_PREFIX = '__REGEX_PLACEHOLDER_';
 
-const isolateRegexRules = (rulesString: string): [string, Map<string, string>] => {
+const isolateRegexRules = (
+  rulesString: string
+): [string, Map<string, string>] => {
   const placeholderMap = new Map<string, string>();
   let placeholderIndex = 0;
 
@@ -139,19 +150,19 @@ const isolateRegexRules = (rulesString: string): [string, Map<string, string>] =
 
 const parseConditional = (params: string): ConditionalInput | null => {
   try {
-    // Expected formats: 
-    // 1. "field=value" or "field=value,ifAnyValue=true" 
+    // Expected formats:
+    // 1. "field=value" or "field=value,ifAnyValue=true"
     // 2. "fieldName" (which means ifAnyValue=true)
     // 3. "field=fieldName,value=someValue,ifAnyValue=false"
-    
+
     if (!params || params.trim() === 'invalid') {
       return null;
     }
-    
-    const parts = params.split(',').map(p => p.trim());
+
+    const parts = params.split(',').map((p) => p.trim());
     const result: ConditionalInput = {
       field: '',
-      ifAnyValue: false
+      ifAnyValue: false,
     };
 
     let hasValidField = false;
@@ -161,7 +172,7 @@ const parseConditional = (params: string): ConditionalInput | null => {
         const [key, value] = part.split('=', 2);
         const trimmedKey = key.trim();
         const trimmedValue = value.trim();
-        
+
         if (trimmedKey === 'field') {
           result.field = trimmedValue;
           hasValidField = true;
@@ -183,56 +194,58 @@ const parseConditional = (params: string): ConditionalInput | null => {
   } catch (error) {
     return null;
   }
-}
+};
 
-const parseRequiredRelationValidation = (params: string): RequiredRelationValidationInput | null => {
+const parseRequiredRelationValidation = (
+  params: string
+): RequiredRelationValidationInput | null => {
   try {
     // Support two formats:
     // 1. New format: "relationType=type,amount=1,exact=true"
     // 2. Legacy format: "hasMedia,1,true" (relationType, amount, exact)
-    
+
     if (!params || params.trim() === 'invalid' || params.trim() === '') {
       return null;
     }
-    
-    const parts = params.split(',').map(p => p.trim());
-    
+
+    const parts = params.split(',').map((p) => p.trim());
+
     if (parts.length >= 1 && !parts[0].includes('=')) {
       const relationType = parts[0];
-      
+
       if (relationType === 'invalid' || relationType === '') {
         return null;
       }
-      
+
       const result: RequiredRelationValidationInput = {
         relationType: relationType,
-        amount: 1
+        amount: 1,
       };
-      
+
       if (parts.length >= 2) {
         const amount = parseInt(parts[1], 10);
         if (!isNaN(amount)) {
           result.amount = amount;
         }
       }
-      
+
       if (parts.length >= 3) {
         result.exact = parts[2].toLowerCase() === 'true';
       }
-      
+
       return result;
     }
-    
+
     const result: RequiredRelationValidationInput = {
       relationType: '',
-      amount: 1
+      amount: 1,
     };
 
     for (const part of parts) {
       const [key, value] = part.split('=', 2);
       const trimmedKey = key.trim();
       const trimmedValue = value.trim();
-      
+
       if (trimmedKey === 'relationType') {
         result.relationType = trimmedValue;
       } else if (trimmedKey === 'amount') {
@@ -245,28 +258,37 @@ const parseRequiredRelationValidation = (params: string): RequiredRelationValida
       }
     }
 
-    return result.relationType && result.relationType !== 'invalid' ? result : null;
+    return result.relationType && result.relationType !== 'invalid'
+      ? result
+      : null;
   } catch (error) {
     return null;
   }
-}
+};
 
-const parseRequiredOneOfRelationValidation = (params: string): RequiredOneOfRelationValidationInput | null => {
+const parseRequiredOneOfRelationValidation = (
+  params: string
+): RequiredOneOfRelationValidationInput | null => {
   try {
     // Expected format: "relationTypes=[type1,type2,type3],amount=1"
     const parts = params.split(',amount=');
     if (parts.length !== 2) return null;
 
-    const relationTypesStr = parts[0].replace('relationTypes=[', '').replace(']', '');
+    const relationTypesStr = parts[0]
+      .replace('relationTypes=[', '')
+      .replace(']', '');
     const amountStr = parts[1];
-    
-    const relationTypes = relationTypesStr.split(',').map(t => t.trim()).filter(t => t);
+
+    const relationTypes = relationTypesStr
+      .split(',')
+      .map((t) => t.trim())
+      .filter((t) => t);
     const amount = parseInt(amountStr.trim(), 10);
 
     if (relationTypes.length > 0 && !isNaN(amount)) {
       return {
         relationTypes,
-        amount
+        amount,
       };
     }
 
@@ -274,24 +296,31 @@ const parseRequiredOneOfRelationValidation = (params: string): RequiredOneOfRela
   } catch (error) {
     return null;
   }
-}
+};
 
-const parseRequiredOneOfMetadataValidation = (params: string): RequiredOneOfMetadataValidationInput | null => {
+const parseRequiredOneOfMetadataValidation = (
+  params: string
+): RequiredOneOfMetadataValidationInput | null => {
   try {
     // Expected format: "includedMetadataFields=[field1,field2,field3],amount=1"
     const parts = params.split(',amount=');
     if (parts.length !== 2) return null;
 
-    const fieldsStr = parts[0].replace('includedMetadataFields=[', '').replace(']', '');
+    const fieldsStr = parts[0]
+      .replace('includedMetadataFields=[', '')
+      .replace(']', '');
     const amountStr = parts[1];
-    
-    const includedMetadataFields = fieldsStr.split(',').map(f => f.trim()).filter(f => f);
+
+    const includedMetadataFields = fieldsStr
+      .split(',')
+      .map((f) => f.trim())
+      .filter((f) => f);
     const amount = parseInt(amountStr.trim(), 10);
 
     if (includedMetadataFields.length > 0 && !isNaN(amount)) {
       return {
         includedMetadataFields,
-        amount
+        amount,
       };
     }
 
@@ -299,26 +328,28 @@ const parseRequiredOneOfMetadataValidation = (params: string): RequiredOneOfMeta
   } catch (error) {
     return null;
   }
-}
+};
 
-const mapStringToValidationRule = (ruleName: string): ValidationRules | null => {
+const mapStringToValidationRule = (
+  ruleName: string
+): ValidationRules | null => {
   const ruleMap: { [key: string]: ValidationRules } = {
-    'alpha': ValidationRules.Alpha,
-    'alpha_dash': ValidationRules.AlphaDash,
-    'alpha_num': ValidationRules.AlphaNum,
-    'alpha_spaces': ValidationRules.AlphaSpaces,
-    'required': ValidationRules.Required,
-    'email': ValidationRules.Email,
-    'url': ValidationRules.Url,
-    'regex': ValidationRules.Regex,
-    'no_xss': ValidationRules.NoXss,
-    'existing_date': ValidationRules.ExistingDate,
-    'max_date_today': ValidationRules.MaxDateToday,
-    'customvalue': ValidationRules.CustomValue,
-    'has_required_relation': ValidationRules.HasRequiredRelation,
-    'has_one_of_required_relations': ValidationRules.HasOneOfRequiredRelations,
-    'has_one_of_required_metadata': ValidationRules.HasOneOfRequiredMetadata,
+    alpha: ValidationRules.Alpha,
+    alpha_dash: ValidationRules.AlphaDash,
+    alpha_num: ValidationRules.AlphaNum,
+    alpha_spaces: ValidationRules.AlphaSpaces,
+    required: ValidationRules.Required,
+    email: ValidationRules.Email,
+    url: ValidationRules.Url,
+    regex: ValidationRules.Regex,
+    no_xss: ValidationRules.NoXss,
+    existing_date: ValidationRules.ExistingDate,
+    max_date_today: ValidationRules.MaxDateToday,
+    customvalue: ValidationRules.CustomValue,
+    has_required_relation: ValidationRules.HasRequiredRelation,
+    has_one_of_required_relations: ValidationRules.HasOneOfRequiredRelations,
+    has_one_of_required_metadata: ValidationRules.HasOneOfRequiredMetadata,
   };
-  
+
   return ruleMap[ruleName.toLowerCase()] || null;
-}
+};

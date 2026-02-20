@@ -1,7 +1,7 @@
 import { Express, Response, Request } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
-import { Collection } from '../../../generated-types/type-defs';
+import { Collection } from '@/types';
 import { extractErrorCode } from '../helpers/helpers';
 import {
   createProxyMiddleware,

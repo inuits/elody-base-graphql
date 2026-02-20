@@ -2,7 +2,7 @@ import type { Environment } from '../types/environmentTypes';
 import { Express } from 'express';
 import helmet from 'helmet';
 import { Route } from '../routes/routesHelper';
-import { RouteNames } from '../../../generated-types/type-defs';
+import { RouteNames } from '@/types';
 
 const baseDirectives = {
   ...helmet.contentSecurityPolicy.getDefaultDirectives(),
@@ -15,16 +15,12 @@ const baseDirectives = {
     'https://server.arcgisonline.com',
     'https://*.openstreetmap.org',
   ],
-  'connect-src': [
-    "'self'",
-    'blob:',
-    '*',
-  ],
+  'connect-src': ["'self'", 'blob:', '*'],
   'frame-ancestors': ["'self'"],
 };
 
 export const createCspMiddleware = (overrides: any) => {
-  const merged:{[key: string]: string[]} = { ...baseDirectives };
+  const merged: { [key: string]: string[] } = { ...baseDirectives };
 
   for (const key in overrides) {
     if (Array.isArray(merged[key]) && Array.isArray(overrides[key])) {

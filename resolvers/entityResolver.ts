@@ -2,10 +2,7 @@ import {
   parseMetaDataAndMetaDataRelation,
   parseRelations,
 } from '../parsers/entity';
-import {
-  Maybe,
-  TeaserMetadataOptions,
-} from '../../../generated-types/type-defs';
+import { Maybe, TeaserMetadataOptions } from '@/types';
 import { customSort, getEntityId } from '../helpers/helpers';
 
 export const resolveMetadata = async (
@@ -61,13 +58,10 @@ export const resolveMetadataItemOfPreferredLanguage = (
   return preferredLanguageMetadataItem;
 };
 
-export const resolveLocationData = async (
-    parent: any,
-    key: string,
-) => {
+export const resolveLocationData = async (parent: any, key: string) => {
   let metadataValue: any = undefined;
   if (parent.location) {
-    metadataValue = parent.location[key]
+    metadataValue = parent.location[key];
   }
   return metadataValue;
 };

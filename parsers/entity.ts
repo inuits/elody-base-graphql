@@ -6,7 +6,7 @@ import {
   RelationFieldInput,
   MetadataAndRelation,
   Entitytyping,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 import { capitalizeString } from '../helpers/helpers';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [
@@ -22,8 +22,8 @@ export const setId = (entityRaw: any) => {
       entityRaw.id = entityRaw.object_id
         ? entityRaw.object_id
         : entityRaw._id
-        ? entityRaw._id
-        : entityRaw.identifiers[0];
+          ? entityRaw._id
+          : entityRaw.identifiers[0];
     entityRaw.uuid = entityRaw._id;
     return entityRaw;
   } catch (e) {

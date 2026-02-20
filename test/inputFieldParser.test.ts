@@ -4,8 +4,8 @@ import {
   AdvancedFilterTypes,
   InputField,
   InputFieldTypes,
-  Entitytyping
-} from '../../../generated-types/type-defs';
+  Entitytyping,
+} from '@/types';
 
 test('Get item type from input field', () => {
   const inputField: InputField = {

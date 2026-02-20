@@ -1,4 +1,4 @@
-import { RouteNames } from '../../../generated-types/type-defs';
+import { RouteNames } from '@/types';
 
 export const baseRoutes = [
   {

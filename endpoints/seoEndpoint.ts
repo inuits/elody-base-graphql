@@ -1,11 +1,6 @@
 import { Express, Request, Response } from 'express';
 import { Environment } from '../types/environmentTypes';
-import {
-  BaseEntity,
-  Collection,
-  Metadata,
-  MetadataRelation,
-} from '../../../generated-types/type-defs';
+import { BaseEntity, Collection, Metadata, MetadataRelation } from '@/types';
 import fetch from 'node-fetch';
 import { getMetadataItemValueByKey } from '../helpers/helpers';
 

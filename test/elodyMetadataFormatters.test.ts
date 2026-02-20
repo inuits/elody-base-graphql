@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { CustomFormatterTypes } from '../../../generated-types/type-defs';
-import { getWithDefaultFormatters, elodyFormattersConfig } from '../utilities/elodyMetadataFormatters';
+import { CustomFormatterTypes } from '@/types';
+import {
+  getWithDefaultFormatters,
+  elodyFormattersConfig,
+} from '../utilities/elodyMetadataFormatters';
 import type { FormattersConfig } from '../types';
 
 describe('getWithDefaultFormatters', () => {
@@ -50,7 +53,9 @@ describe('getWithDefaultFormatters', () => {
       },
     };
 
-    const defaultConfigSnapshot = JSON.parse(JSON.stringify(elodyFormattersConfig));
+    const defaultConfigSnapshot = JSON.parse(
+      JSON.stringify(elodyFormattersConfig)
+    );
     const customConfigSnapshot = JSON.parse(JSON.stringify(customConfig));
 
     getWithDefaultFormatters(customConfig);
@@ -73,13 +78,13 @@ describe('getWithDefaultFormatters', () => {
       [CustomFormatterTypes.Pill]: {
         finished: { background: 'blue' },
       },
-      'NewFormatterType': {
+      NewFormatterType: {
         someState: { color: 'red' },
       },
     };
 
     const result = getWithDefaultFormatters(customConfig);
-    
+
     expect(result[CustomFormatterTypes.Pill].finished.background).toBe('blue');
     expect(result.NewFormatterType.someState.color).toBe('red');
   });

@@ -6,11 +6,11 @@ import {
   Entitytyping,
   SearchFilter,
   Entity,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 import { getTypesFromFilterInputs } from '../helpers/helpers';
 
 type RawFacetGroup = {
-  [facetName: string]: { _id: string; count: number; }[];
+  [facetName: string]: { _id: string; count: number }[];
 };
 
 export const resolveAdvancedEntities = async (
@@ -26,13 +26,16 @@ export const resolveAdvancedEntities = async (
   let limitResult = limit;
 
   let typesFromFilters = getTypesFromFilterInputs(advancedFilterInputs);
-  let entityTypes = typesFromFilters.length > 0 ? typesFromFilters : [entityType];
+  let entityTypes =
+    typesFromFilters.length > 0 ? typesFromFilters : [entityType];
   let entityTypesToLoop = entityTypes;
   let totalCount = 0;
 
   const containSelectionFilterWithMultipleValues = advancedFilterInputs.some(
     (filter: AdvancedFilterInput) =>
-      filter.type === AdvancedFilterTypes.Selection && filter.key === 'type' && filter.value?.length > 1
+      filter.type === AdvancedFilterTypes.Selection &&
+      filter.key === 'type' &&
+      filter.value?.length > 1
   );
   if (containSelectionFilterWithMultipleValues) {
     entityTypesToLoop = [entityTypesToLoop[0]];
@@ -40,7 +43,8 @@ export const resolveAdvancedEntities = async (
 
   for await (const entityType of entityTypesToLoop as Entitytyping[]) {
     const iterationFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
-      (filter: AdvancedFilterInput) => filter.type !== AdvancedFilterTypes.Type || filter.facets
+      (filter: AdvancedFilterInput) =>
+        filter.type !== AdvancedFilterTypes.Type || filter.facets
     );
 
     const containsTypeFilter =
@@ -62,8 +66,11 @@ export const resolveAdvancedEntities = async (
     }
 
     if (containSelectionFilterWithMultipleValues) {
-      const selectionFilter = iterationFilters.find(filter => filter.type === AdvancedFilterTypes.Selection && filter.key === 'type')
-      if (selectionFilter) selectionFilter.value = entityTypes
+      const selectionFilter = iterationFilters.find(
+        (filter) =>
+          filter.type === AdvancedFilterTypes.Selection && filter.key === 'type'
+      );
+      if (selectionFilter) selectionFilter.value = entityTypes;
     }
 
     const iterationResult = await dataSources.CollectionAPI.GetAdvancedEntities(
@@ -78,7 +85,6 @@ export const resolveAdvancedEntities = async (
     totalCount += iterationResult.count ?? 0;
 
     if (!iterationEntities) break;
-
 
     if (iterationResult?.facets) {
       facetsList.push(...iterationResult.facets);
@@ -141,7 +147,10 @@ export const resolveAdvancedHistoryEntities = async (
     // @ts-ignore
     if (entity.id || entity._id) {
       // @ts-ignore
-      const updatedEntity = { ...entity, id: entity._id || entity.id + `${index}_history` };
+      const updatedEntity = {
+        ...entity,
+        id: entity._id || entity.id + `${index}_history`,
+      };
       entitiesMap.set(updatedEntity.id, updatedEntity);
     }
   });
@@ -154,5 +163,3 @@ export const resolveAdvancedHistoryEntities = async (
     count: totalCount,
   };
 };
-
-

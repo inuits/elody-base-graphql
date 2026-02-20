@@ -5,7 +5,7 @@ import {
   InputFieldTypes,
   ProgressStepStatus,
   ProgressStepType,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 
 export const baseFields: { [key: string]: InputField } = {
   baseCheckbox: {
@@ -30,7 +30,7 @@ export const baseFields: { [key: string]: InputField } = {
     type: InputFieldTypes.Textarea,
   },
   baseResizableTextareaField: {
-    type: InputFieldTypes.ResizableTextarea
+    type: InputFieldTypes.ResizableTextarea,
   },
   baseFileUploadField: {
     type: InputFieldTypes.FileUpload,
@@ -43,7 +43,7 @@ export const baseFields: { [key: string]: InputField } = {
       FileType.Mp4,
       FileType.Gif,
       FileType.Xml,
-      FileType.Pdf
+      FileType.Pdf,
     ],
     maxAmountOfFiles: 999,
     fileProgressSteps: {

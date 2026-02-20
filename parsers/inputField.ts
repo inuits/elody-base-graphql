@@ -1,4 +1,4 @@
-import { Entitytyping, InputField } from '../../../generated-types/type-defs';
+import { Entitytyping, InputField } from '@/types';
 
 export const parseItemTypesFromInputField = (
   inputField: InputField

@@ -1,7 +1,9 @@
-import { CustomFormatterTypes } from '../../../generated-types/type-defs';
+import { CustomFormatterTypes } from '@/types';
 import { type FormattersConfig } from '../types';
 
-export const getWithDefaultFormatters = (customConfig: FormattersConfig): FormattersConfig => {
+export const getWithDefaultFormatters = (
+  customConfig: FormattersConfig
+): FormattersConfig => {
   const result = { ...elodyFormattersConfig };
 
   for (const key in customConfig) {
@@ -9,37 +11,37 @@ export const getWithDefaultFormatters = (customConfig: FormattersConfig): Format
   }
 
   return result;
-}
+};
 
 export const elodyFormattersConfig: FormattersConfig = {
   [CustomFormatterTypes.Pill]: {
     queued: {
-      "background": "#e6e6e6",
-      "text": "#4a4a4a",
+      background: '#e6e6e6',
+      text: '#4a4a4a',
     },
     running: {
-      "background": "#d9ecf3",
-      "text": "#003366",
+      background: '#d9ecf3',
+      text: '#003366',
     },
     warning: {
-      "background": "#faeecd",
-      "text": "#916807",
+      background: '#faeecd',
+      text: '#916807',
     },
     failed: {
-      "background": "#ecdada",
-      "text": "#ac1113",
+      background: '#ecdada',
+      text: '#ac1113',
     },
     finished: {
-      "background": "#daecdd",
-      "text": "#0b8319",
+      background: '#daecdd',
+      text: '#0b8319',
     },
     modified: {
-      "background": "#ecdada",
-      "text": "#ac1113",
+      background: '#ecdada',
+      text: '#ac1113',
     },
     added: {
-      "background": "#daecdd",
-      "text": "#0b8319",
+      background: '#daecdd',
+      text: '#0b8319',
     },
-  }
+  },
 };

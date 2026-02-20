@@ -17,7 +17,7 @@ import {
   SearchFilter,
   PermissionRequestInfo,
   DeleteEntitiesInput,
-} from '../../../generated-types/type-defs';
+} from '@/types';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode';
 import { Config } from '../types';

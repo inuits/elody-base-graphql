@@ -1,6 +1,6 @@
 import { AuthRESTDataSource } from '../main';
 import { Express, Request, Response } from 'express';
-import { EntityInput, Entitytyping } from '../../../generated-types/type-defs';
+import { EntityInput, Entitytyping } from '@/types';
 import { extractErrorCode } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
