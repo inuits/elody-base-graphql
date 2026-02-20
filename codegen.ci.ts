@@ -11,9 +11,6 @@ const config: CodegenConfig = {
   generates: {
     './generated-types/type-defs.ts': {
       plugins: [{ typescript: {} }, { 'typescript-resolvers': {} }],
-      config: {
-        constEnums: true,
-      },
     },
   },
 };
