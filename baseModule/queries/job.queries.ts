@@ -15,9 +15,7 @@ export const jobQueries = gql`
       type: keyValue(key: "type", source: metadata)
     }
     allowedViewModes {
-      viewModes(input: [
-        { viewMode: ViewModesList }
-      ]) {
+      viewModes(input: [{ viewMode: ViewModesList }]) {
         ...viewModes
       }
     }
@@ -86,7 +84,7 @@ export const jobQueries = gql`
           EntitiesModifiedFromJob: entityListElement {
             label(input: "element-labels.has-job")
             isCollapsed(input: false)
-            entityTypes(input: [asset, mediafile])
+            entityTypes(input: [BaseEntity, mediafile])
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
             customQueryFilters(input: "GetEntitiesModifiedFromJobFilters")
@@ -164,11 +162,8 @@ export const jobQueries = gql`
             distinct_by: "metadata.type.value"
             value: "*"
             match_exact: false
-          },
-          {
-            type: type
-            value: "job"
           }
+          { type: type, value: "job" }
         ]
       ) {
         type
@@ -204,11 +199,8 @@ export const jobQueries = gql`
             distinct_by: "metadata.name.value"
             value: "*"
             match_exact: false
-          },
-          {
-            type: type
-            value: "job"
           }
+          { type: type, value: "job" }
         ]
       ) {
         type
@@ -244,11 +236,8 @@ export const jobQueries = gql`
             distinct_by: "metadata.status.value"
             value: "*"
             match_exact: false
-          },
-          {
-            type: type
-            value: "job"
           }
+          { type: type, value: "job" }
         ]
       ) {
         type
@@ -311,11 +300,8 @@ export const jobQueries = gql`
             key: ["elody:1|metadata.email.value"]
             value: "*"
             match_exact: false
-          },
-          {
-            type: type
-            value: "user"
           }
+          { type: type, value: "user" }
         ]
       ) {
         type
@@ -360,18 +346,14 @@ export const jobQueries = gql`
             icon: NoIcon
             label: "metadata.labels.created-at"
             value: "date_created"
-          },
+          }
           {
             icon: NoIcon
             label: "metadata.labels.started-at"
             value: "started_at"
-          },
-          {
-            icon: NoIcon
-            label: "metadata.labels.status"
-            value: "status"
           }
-        ],
+          { icon: NoIcon, label: "metadata.labels.status", value: "status" }
+        ]
         excludeBaseSortOptions: true
       ) {
         icon
@@ -428,9 +410,7 @@ export const jobQueries = gql`
   query GetJobsBulkOperations {
     CustomBulkOperations {
       bulkOperationOptions {
-        options(
-          input: []
-        ) {
+        options(input: []) {
           icon
           label
           value
@@ -482,9 +462,7 @@ export const jobQueries = gql`
             title: keyValue(key: "name", source: metadata)
           }
           allowedViewModes {
-            viewModes(input: [
-              { viewMode: ViewModesList }
-            ]) {
+            viewModes(input: [{ viewMode: ViewModesList }]) {
               ...viewModes
             }
           }
