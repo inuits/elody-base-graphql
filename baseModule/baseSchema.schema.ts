@@ -554,6 +554,7 @@ export const baseSchema = gql`
     Folder
     FolderPlus
     ChannelAdd
+    Label
   }
 
   type Menu {
@@ -1743,6 +1744,7 @@ export const baseSchema = gql`
   }
 
   enum ContextMenuElodyActionEnum {
+    DownloadQueryResult
     DeleteRelation
     DeleteEntity
     Share
