@@ -23,6 +23,10 @@ const getConfig = (config: Environment) => {
     },
     features: {
       hasTenantSelect: config.features.hasTenantSelect,
+      enableCrossTabAuthSync:
+        config.features.enableCrossTabAuthSync === undefined
+          ? true
+          : config.features.enableCrossTabAuthSync,
       hasBulkOperations:
         config.features.hasBulkSelect === undefined
           ? true

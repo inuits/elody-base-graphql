@@ -223,13 +223,16 @@ const start = (
           const { cache } = server;
           const session = { ...req.session };
           const clientIp: string = req.headers['x-forwarded-for'] as string;
+          const tenantId = req.headers['x-tenant-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
             environment,
             session,
             cache,
-            clientIp
+            clientIp,
+            tenantId,
           );
+
           if (!isRequiredDataSources(dataSources)) {
             throw new Error('All DataSources properties must be defined');
           }
@@ -250,7 +253,6 @@ const start = (
       uploadEndpoint: [app],
       exportEndpoint: [app],
       mediafileEndpoint: [app, environment],
-      tenantEndpoint: [app],
       healthEndpoint: [app],
       configsEndoint: [
         app,

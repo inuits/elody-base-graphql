@@ -58,6 +58,7 @@ export interface Environment {
       tokenToUseForWhiteListedIpAddresses: string;
     };
     hasTenantSelect?: boolean;
+    enableCrossTabAuthSync?: boolean;
     hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
@@ -169,6 +170,7 @@ export interface FullyOptionalEnvironmentInput {
       tokenToUseForWhiteListedIpAddresses?: string;
     };
     hasTenantSelect?: boolean;
+    enableCrossTabAuthSync?: boolean;
     hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;

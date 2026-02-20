@@ -47,7 +47,8 @@ export class AuthRESTDataSource extends RESTDataSource {
     const token = await this.tokenManager.getValidToken();
     if (token) request.headers['Authorization'] = `Bearer ${token}`;
 
-    const tenant = this.session?.tenant;
+    const tenant = this.context?.tenantId;
+
     if (tenant) request.headers['X-tenant-id'] = tenant;
   }
 
