@@ -28,8 +28,8 @@ test-job:
     pnpm install --include=dev
 
     if [ -f "./__mock__/types.ts" ]; then
-      mkdir -p ../../../generated-types
-      cp ./__mock__/types.ts ../../../generated-types/type-defs.ts
+      mkdir -p ./generated-types
+      cp ./__mock__/types.ts ./generated-types/type-defs.ts
       echo "Mock types copied successfully"
     else
       echo "Mock types file not found, skipping tests."
@@ -50,7 +50,7 @@ test-job:
   artifacts:
     paths:
       - node_modules/
-      - ../../../generated-types/
+      - ./generated-types/
     expire_in: 1 hour
 
 build-job:
@@ -68,7 +68,7 @@ build-job:
 
     - |
       if ! npm view "$NPM_PACKAGE_NAME" versions | grep -F "$NPM_PACKAGE_VERSION"; then
-        mkdir -p ../../generated-types
+        mkdir -p ./generated-types
 
         pnpm exec graphql-codegen --config codegen.ci.ts
 

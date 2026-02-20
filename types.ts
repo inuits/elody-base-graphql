@@ -6,7 +6,7 @@ import {
   MetadataFieldOption,
   PermissionRequestInfo,
   Formatters,
-} from '../../generated-types/type-defs';
+} from '@/types';
 import { TranscodeService } from './sources/transcode';
 import { OcrService } from './sources/ocr';
 import { GraphqlAPI } from './sources/graphql';

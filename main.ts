@@ -24,11 +24,7 @@ import {
   getPrimaryMediaFileIDOfEntity,
   checkRequestContentType,
 } from './helpers/helpers';
-import {
-  Collection,
-  InputField,
-  PermissionRequestInfo,
-} from '../../generated-types/type-defs';
+import { Collection, InputField, PermissionRequestInfo } from '@/types';
 import {
   ContextValue,
   DataSources,
@@ -230,7 +226,7 @@ const start = (
             session,
             cache,
             clientIp,
-            tenantId,
+            tenantId
           );
 
           if (!isRequiredDataSources(dataSources)) {
