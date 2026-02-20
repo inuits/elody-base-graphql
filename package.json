@@ -82,8 +82,8 @@
     "vitest": "2.1.9"
   },
   "publishConfig": {
-    "main": "./dist/dams/inuits-dams-base-graphql/main.js",
-    "types": "./types/dams/inuits-dams-base-graphql/main.d.ts",
+    "main": "./dist/main.js",
+    "types": "./types/main.d.ts",
     "registry": "https://nexus.inuits.io/repository/npm-private"
   }
 }
