@@ -1,4 +1,4 @@
-import { PermissionRequestInfo } from '@/types';
+import { PermissionRequestInfo } from '../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';

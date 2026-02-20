@@ -5,7 +5,7 @@ import {
   InputField,
   InputFieldTypes,
   Entitytyping,
-} from '@/types';
+} from '../generated-types/type-defs';
 
 test('Get item type from input field', () => {
   const inputField: InputField = {

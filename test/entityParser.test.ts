@@ -3,7 +3,11 @@ import {
   parseRelations,
 } from '../parsers/entity';
 import { expect, test } from 'vitest';
-import { EditStatus, Entitytyping, RelationFieldInput } from '@/types';
+import {
+  EditStatus,
+  Entitytyping,
+  RelationFieldInput,
+} from '../generated-types/type-defs';
 
 test('Relation parsing', () => {
   const relationSet: RelationFieldInput[] = [

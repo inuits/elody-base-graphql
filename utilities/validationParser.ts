@@ -4,7 +4,7 @@ import {
   RequiredOneOfRelationValidationInput,
   RequiredOneOfMetadataValidationInput,
   ConditionalInput,
-} from '@/types';
+} from '../generated-types/type-defs';
 
 export interface ParsedValidationRules {
   value: ValidationRules[];

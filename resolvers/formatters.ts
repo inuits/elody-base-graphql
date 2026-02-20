@@ -5,7 +5,7 @@ import {
   BaseEntity,
   Formatters,
   RegexpMatchFormatter,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { type FormattersConfig } from '../types';
 
 export enum ResolverFormatters {

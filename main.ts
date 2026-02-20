@@ -24,7 +24,11 @@ import {
   getPrimaryMediaFileIDOfEntity,
   checkRequestContentType,
 } from './helpers/helpers';
-import { Collection, InputField, PermissionRequestInfo } from '@/types';
+import {
+  Collection,
+  InputField,
+  PermissionRequestInfo,
+} from './generated-types/type-defs';
 import {
   ContextValue,
   DataSources,

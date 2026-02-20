@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { CustomFormatterTypes } from '@/types';
+import { CustomFormatterTypes } from '../generated-types/type-defs';
 import {
   getWithDefaultFormatters,
   elodyFormattersConfig,

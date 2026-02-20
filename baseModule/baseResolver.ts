@@ -123,7 +123,7 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuFormFlow,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
 import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';

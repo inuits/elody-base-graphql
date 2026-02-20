@@ -1,7 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { resolveAdvancedEntities } from '../resolvers/entitiesResolver';
-import type { AdvancedFilterInput, Entity, Entitytyping } from '@/types';
-import { AdvancedFilterTypes } from '@/types';
+import type {
+  AdvancedFilterInput,
+  Entity,
+  Entitytyping,
+} from '../generated-types/type-defs';
+import { AdvancedFilterTypes } from '../generated-types/type-defs';
 import { DataSources } from '../types';
 
 const mockEntity = (id: string, type: string): Entity => ({

@@ -2,7 +2,7 @@ import {
   parseMetaDataAndMetaDataRelation,
   parseRelations,
 } from '../parsers/entity';
-import { Maybe, TeaserMetadataOptions } from '@/types';
+import { Maybe, TeaserMetadataOptions } from '../generated-types/type-defs';
 import { customSort, getEntityId } from '../helpers/helpers';
 
 export const resolveMetadata = async (

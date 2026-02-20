@@ -1,4 +1,4 @@
-import { Entitytyping } from '@/types';
+import { Entitytyping } from '../generated-types/type-defs';
 import { Route } from '../routes/routesHelper';
 
 export interface Environment {

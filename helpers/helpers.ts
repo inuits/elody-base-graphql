@@ -4,7 +4,7 @@ import {
   Entitytyping,
   Metadata,
   Collection,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { DataSources } from '../types';
 import { CollectionAPIEntity, CollectionAPIRelation } from '../main';
 import proj4 from 'proj4';

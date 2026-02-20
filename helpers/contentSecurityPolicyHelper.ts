@@ -2,7 +2,7 @@ import type { Environment } from '../types/environmentTypes';
 import { Express } from 'express';
 import helmet from 'helmet';
 import { Route } from '../routes/routesHelper';
-import { RouteNames } from '@/types';
+import { RouteNames } from '../generated-types/type-defs';
 
 const baseDirectives = {
   ...helmet.contentSecurityPolicy.getDefaultDirectives(),

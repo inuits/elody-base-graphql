@@ -6,7 +6,7 @@ import {
   Entitytyping,
   SearchFilter,
   Entity,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { getTypesFromFilterInputs } from '../helpers/helpers';
 
 type RawFacetGroup = {

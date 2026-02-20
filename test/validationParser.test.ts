@@ -1,5 +1,5 @@
 import { parseValidationRulesString } from '../utilities/validationParser';
-import { ValidationRules } from '@/types';
+import { ValidationRules } from '../generated-types/type-defs';
 import { describe, it, expect } from 'vitest';
 
 describe('ValidationParser', () => {

@@ -13,7 +13,7 @@ import {
   ParentRelationsConfigInput,
   EntitiesResults,
   Entity,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
 import { GraphQLError } from 'graphql';
 import {

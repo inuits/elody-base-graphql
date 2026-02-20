@@ -6,7 +6,7 @@ import {
   RelationFieldInput,
   MetadataAndRelation,
   Entitytyping,
-} from '@/types';
+} from '../generated-types/type-defs';
 import { capitalizeString } from '../helpers/helpers';
 
 const PROTECTED_METADATA_RELATION_KEY: string[] = [

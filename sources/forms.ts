@@ -5,7 +5,7 @@ import {
   InputFieldTypes,
   ProgressStepStatus,
   ProgressStepType,
-} from '@/types';
+} from '../generated-types/type-defs';
 
 export const baseFields: { [key: string]: InputField } = {
   baseCheckbox: {

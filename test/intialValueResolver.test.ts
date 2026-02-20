@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Entity } from '@/types';
+import type { Entity } from '../generated-types/type-defs';
 import {
   resolveIntialValueParentRoot,
   resolveIntialValueParentMetadata,

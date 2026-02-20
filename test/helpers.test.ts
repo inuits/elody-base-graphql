@@ -5,7 +5,7 @@ import {
   AdvancedFilterInput,
   Operator,
   AdvancedFilterTypes,
-} from '@/types';
+} from '../generated-types/type-defs';
 
 const assetPartInputs: AdvancedFilterInput[] = [
   {

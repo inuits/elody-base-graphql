@@ -1,4 +1,4 @@
-import { CustomFormatterTypes } from '@/types';
+import { CustomFormatterTypes } from '../generated-types/type-defs';
 import { type FormattersConfig } from '../types';
 
 export const getWithDefaultFormatters = (
