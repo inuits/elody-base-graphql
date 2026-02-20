@@ -2,18 +2,18 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: '/app/schemas/*.schema.ts',
+  schema: [
+    './baseModule/*.schema.ts',
+    './*.schema.ts',
+    './node_modules/**/*.schema.ts',
+  ],
   generates: {
     '../../generated-types/type-defs.ts:': {
       plugins: [{ typescript: {} }],
+      config: {
+        constEnums: true, // The magic bullet!
+      },
     },
-  },
-  config: {
-    enumsAsTypes: false,
-    preResolveTypes: true,
-    scalars: { Void: 'void' },
-    useTypeImports: false,
-    dedupeFragments: true,
   },
 };
 
