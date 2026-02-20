@@ -9,7 +9,7 @@ const config: CodegenConfig = {
   ],
   documents: ['./baseModule/**/*.queries.ts', './queries/**/*.queries.ts'],
   generates: {
-    './generated-types/type-defs.ts:': {
+    './generated-types/type-defs.ts': {
       plugins: [{ typescript: {} }, { 'typescript-resolvers': {} }],
       config: {
         constEnums: true,
