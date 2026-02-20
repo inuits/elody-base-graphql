@@ -9,9 +9,9 @@ const config: CodegenConfig = {
   ],
   generates: {
     './generated-types/type-defs.ts:': {
-      plugins: [{ typescript: {} }],
+      plugins: [{ typescript: {} }, { 'typescript-resolvers': {} }],
       config: {
-        constEnums: true, // The magic bullet!
+        constEnums: true,
       },
     },
   },
