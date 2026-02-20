@@ -144,6 +144,7 @@ export const resolveAdvancedHistoryEntities = async (
   totalCount += response.count ?? 0;
 
   iterationEntities.forEach((entity, index) => {
+    //@ts-ignore
     const mongoId = entity['_id'];
 
     if (entity.id || mongoId) {
