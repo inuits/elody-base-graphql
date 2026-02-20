@@ -144,12 +144,12 @@ export const resolveAdvancedHistoryEntities = async (
   totalCount += response.count ?? 0;
 
   iterationEntities.forEach((entity, index) => {
-    // @ts-ignore
-    if (entity.id || entity._id) {
-      // @ts-ignore
+    const mongoId = entity['_id'];
+
+    if (entity.id || mongoId) {
       const updatedEntity = {
         ...entity,
-        id: entity._id || entity.id + `${index}_history`,
+        id: mongoId || entity.id + `${index}_history`,
       };
       entitiesMap.set(updatedEntity.id, updatedEntity);
     }
