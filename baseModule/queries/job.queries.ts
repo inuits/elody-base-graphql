@@ -84,7 +84,7 @@ export const jobQueries = gql`
           EntitiesModifiedFromJob: entityListElement {
             label(input: "element-labels.has-job")
             isCollapsed(input: false)
-            entityTypes(input: [BaseEntity, mediafile])
+            entityTypes(input: [BaseEntity])
             searchInputType(input: "AdvancedInputType")
             customQuery(input: "GetEntities")
             customQueryFilters(input: "GetEntitiesModifiedFromJobFilters")
