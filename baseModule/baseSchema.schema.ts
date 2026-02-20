@@ -10,7 +10,6 @@ export const baseSchema = gql`
     NotFound
     Unauthorized
     AccessDenied
-    NotFound
     Jobs
   }
 
