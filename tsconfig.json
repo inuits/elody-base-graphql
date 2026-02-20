@@ -10,20 +10,20 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "removeComments": true,
-    "rootDir": "../../",
+    "rootDir": "./",
     "declarationDir": "./types",
     "target": "es6",
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "graphql": ["node_modules/graphql"]
-    }
+      "graphql": ["node_modules/graphql"],
+    },
   },
   "exclude": [
     "node_modules",
     "./test/**/*.test.ts",
     "vitest.config.ts",
-    "vitest.setup.ts"
+    "vitest.setup.ts",
   ],
-  "include": ["./**/*.ts", "./**/*.json", "../../generated-types/type-defs*"]
+  "include": ["./**/*.ts", "./**/*.json"],
 }

@@ -8,7 +8,7 @@ const config: CodegenConfig = {
     './node_modules/**/*.schema.ts',
   ],
   generates: {
-    '../../generated-types/type-defs.ts:': {
+    './generated-types/type-defs.ts:': {
       plugins: [{ typescript: {} }],
       config: {
         constEnums: true, // The magic bullet!
