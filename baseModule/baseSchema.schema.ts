@@ -19,6 +19,11 @@ export const baseSchema = gql`
     jobs
   }
 
+
+  enum FrontendEntitytyping {
+    BaseEntity
+  }
+
   enum Entitytyping {
     BaseEntity
     tenant

@@ -94,6 +94,7 @@ export const baseEnvironment: Environment = {
     hasPersistentSessions: true,
     supportsMultilingualMetadataEditing: false,
     hasRedirectToExternalSites: false,
+    enableCrossTabAuthSync: true,
   },
   customization: {
     applicationTitle: process.env.APPLICATION_TITLE || 'Elody',
