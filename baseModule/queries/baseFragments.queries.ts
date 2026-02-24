@@ -232,12 +232,6 @@ export const baseFragments = gql`
       icon(input: "Trash")
       __typename
     }
-    deleteEntity: doElodyAction {
-      label(input: "contextMenu.contextMenuElodyAction.delete-entity")
-      action(input: DeleteEntity)
-      icon(input: "Trash")
-      __typename
-    }
   }
 
   fragment linkAndDeleteEntityContextMenuActions on ContextMenuActions {
