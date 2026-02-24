@@ -75,7 +75,6 @@ import {
   Maybe,
   MediaFileElement,
   MediaFileElementTypes,
-  MediaFileEntity,
   MenuIcons,
   MenuTypeLink,
   Metadata,
@@ -686,20 +685,6 @@ export const baseResolver: Resolvers<ContextValue> = {
         throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
       }
     },
-    FetchMediafilesOfEntity: async (
-      _source,
-      { entityIds },
-      { dataSources }
-    ) => {
-      const mediafiles: MediaFileEntity[] = [];
-      for (const index in entityIds) {
-        const response = await dataSources.CollectionAPI.getMediafiles(
-          entityIds[index]
-        );
-        mediafiles.push(...response.results);
-      }
-      return mediafiles;
-    },
     GetEntityDetailContextMenuActions: async (
       _source,
       _args,
@@ -944,30 +929,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       return getEntityId(parent);
     },
     intialValues: async (parent: any, _args, { dataSources }) => {
-      return parent;
-    },
-    allowedViewModes: async (parent: any, _args, { dataSources }) => {
-      return parent;
-    },
-    relationValues: async (parent: any, _args, { dataSources }) => {
-      return resolveRelations(parent);
-    },
-    entityView: async (parent: any, _args, { dataSources }) => {
-      return parent;
-    },
-    teaserMetadata: async (parent: any, _args, { dataSources }) => {
-      return parent;
-    },
-  },
-  MediaFileEntity: {
-    id: async (parent: any) => {
-      return getEntityId(parent);
-    },
-    uuid: async (parent: any) => {
-      return getEntityId(parent);
-    },
-    type: async (parent: any) => 'MediaFile',
-    intialValues: async (parent: any, _args) => {
       return parent;
     },
     allowedViewModes: async (parent: any, _args, { dataSources }) => {

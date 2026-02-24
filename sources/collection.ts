@@ -306,16 +306,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
-  async getMediafiles(id: string): Promise<any> {
-    try {
-      return await this.get(
-        `${Collection.Entities}/${id}/mediafiles?non_public=1`
-      );
-    } catch (error) {
-      throw error;
-    }
-  }
-
   async addRelations(id: string, relations: any[]): Promise<any[]> {
     relations.map((relation) => (relation.key = 'entities/' + relation.key));
     return await this.post(`${Collection.Entities}/${id}/relations`, {

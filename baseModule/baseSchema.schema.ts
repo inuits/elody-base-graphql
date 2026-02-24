@@ -18,7 +18,6 @@ export const baseSchema = gql`
     jobs
   }
 
-
   enum FrontendEntitytyping {
     BaseEntity
   }
@@ -1843,23 +1842,6 @@ export const baseSchema = gql`
     mapElement: MapElement
   }
 
-  type MediaFileEntity implements Entity {
-    id: String!
-    uuid: String!
-    type: String!
-    teaserMetadata: teaserMetadata
-    intialValues: IntialValues!
-    allowedViewModes: AllowedViewModes
-    relationValues: JSON
-    entityView: ColumnList!
-    advancedFilters: AdvancedFilters
-    sortOptions: SortOptions
-    bulkOperationOptions: BulkOperationOptions
-    previewComponent: PreviewComponent
-    deleteQueryOptions: DeleteQueryOptions
-    mapElement: MapElement
-  }
-
   type Tenant implements Entity {
     id: String!
     uuid: String!
@@ -2229,7 +2211,6 @@ export const baseSchema = gql`
       operation: [String!]!
       language: String!
     ): JSON
-    FetchMediafilesOfEntity(entityIds: [String!]!): [MediaFileEntity]!
     GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping: FilterMatcherMap!
