@@ -47,7 +47,8 @@
         "start-ocr": "Start OCR",
         "delete-relation-entities": "Wil je volgende {0} ook verwijderen?",
         "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}.",
-        "complete": "Voltooien"
+        "complete": "Voltooien",
+        "add-entry": "Voeg item toe"
       },
       "progress-steps": {
         "actions": {

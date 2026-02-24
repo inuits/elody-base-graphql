@@ -116,6 +116,7 @@ export const baseSchema = gql`
     baseMagazineWithMetsImportField
     baseMagazineWithCsvImportField
     baseMediafilesWithOcrImportField
+    inputFieldWithSubFields
   }
 
   enum BaseFieldType {
@@ -416,11 +417,19 @@ export const baseSchema = gql`
     rules: String
   }
 
+  type SubField {
+    type: InputFieldTypes!
+    key: String!
+    label: String!
+    options: [DropdownOption]
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
+    subFields: [SubField]
     relationType: String
     fromRelationType: String
     canCreateEntityFromOption: Boolean

@@ -125,6 +125,16 @@ export const baseFragments = gql`
     hasVirtualKeyboard
     autoSelectable
     autoAllSelectable
+    subFields {
+      key
+      label
+      type
+      options {
+        icon
+        label
+        value
+      }
+    }
   }
 
   fragment metadataRelation on MetadataRelation {

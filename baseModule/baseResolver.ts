@@ -122,6 +122,7 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuFormFlow,
+  InputFieldTypes,
   FilterMatchers,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
@@ -2138,6 +2139,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     options: async (parent, _args, { dataSources }) => {
       return parent['options'] || [];
     },
+    subFields: async (parent, _args, { dataSources }) => {
+      return parent.subFields || [];
+    },
     relationType: async (parent, _args, { dataSources }) => {
       if (parent.relationType) return parent.relationType;
       const entityType: Entitytyping[] = parseItemTypesFromInputField(
@@ -2216,6 +2220,20 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     entityType: async (parent, _args, { dataSources }) => {
       return parent.entityType || '';
+    },
+  },
+  SubField: {
+    type: async (parent: any, _args: any) => {
+      return parent.type as InputFieldTypes;
+    },
+    key: async (parent: any, _args: any) => {
+      return parent.key;
+    },
+    label: async (parent: any, _args: any) => {
+      return parent.label;
+    },
+    options: async (parent: any, _args: any) => {
+      return parent.options || [];
     },
   },
   Validation: {
