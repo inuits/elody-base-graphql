@@ -286,6 +286,13 @@ export const baseSchema = gql`
     html
   }
 
+  enum PageStatus {
+    NotFound
+    Unauthorized
+    Forbidden
+    Success
+  }
+
   type ActionProgressStep {
     label(input: String!): String!
     stepType(input: ProgressStepType!): ProgressStepType!
