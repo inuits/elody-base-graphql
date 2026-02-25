@@ -463,6 +463,7 @@
     "search-saved-searches": "Search Saved Searches"
   },
   "search": {
+    "simple-search": "Global search in Elody",
     "noresult": "No results match your filters",
     "asset-library": "Search Asset Library...",
     "mediafile-library": "Search Mediafiles...",
