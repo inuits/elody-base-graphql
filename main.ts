@@ -296,6 +296,7 @@ const start = ({
       exportEndpoint: [app],
       mediafileEndpoint: [app, environment],
       healthEndpoint: [app],
+      documentsEndpoint: [app],
       configsEndoint: [
         app,
         environment,
