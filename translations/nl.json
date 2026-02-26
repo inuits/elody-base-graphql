@@ -226,6 +226,7 @@
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
       "noOptionsAvailable": "Geen opties beschikbaar",
+      "custom-search-term": "Eigen zoekterm: \"{0}\"",
       "matcher-labels": {
         "select-filter-type": "Selecteer filter type",
         "AnyMatcher": "is ingevuld",
@@ -595,4 +596,3 @@
     }
   }
 }
-
