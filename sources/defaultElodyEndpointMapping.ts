@@ -6,6 +6,7 @@ import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
 import { applyExportEndpoint } from '../endpoints/exportEndpoint';
 import applyMediaFileEndpoint from '../endpoints/mediafilesEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
+import { applyDocumentsEndpoint } from '../endpoints/documentsEndpoint';
 import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
 import { applyLinkedOpenDataEndpoint } from '../endpoints/linkedOpenDataEndpoint';
@@ -22,6 +23,7 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
   mediafileEndpoint: (app: Express, environment: Environment) =>
     applyMediaFileEndpoint(app, environment),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
+  documentsEndpoint: (app: Express) => applyDocumentsEndpoint(app),
   configsEndoint: (
     app: Express,
     config: Environment,
