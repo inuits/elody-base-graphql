@@ -68,7 +68,7 @@ export const resolveIntialValueRepeatableMetadata = async (
   if (!repeatableMetadataKey) {
     result = metadata[0]?.value;
   } else {
-    for (const item of metadata[0]?.value)
+    for (const item of metadata[0]?.value ?? [])
       result.push(item[repeatableMetadataKey]);
   }
   return formatterFactory(ResolverFormatters.Metadata)({
