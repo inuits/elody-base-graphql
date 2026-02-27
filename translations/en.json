@@ -276,6 +276,9 @@
       "map-element": "Map"
     },
     "panel-labels": {
+      "history-selected-version": "Selected version",
+      "history-previous-version": "Previous version",
+      "history-original-version": "Original version",
       "description": "Description",
       "other-metadata": "Other metadata",
       "history": "History"
