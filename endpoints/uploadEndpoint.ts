@@ -14,37 +14,50 @@ export const applyUploadEndpoint = (app: Express) => {
         const filename: string = request.query['filename'] as string;
         const isDryRun: boolean = !!request.query['dry_run'];
         const mainJobId: string = request.query['main_job_id'] as string;
+        const type: string | undefined = request.query['type'] as string;
         const extraMediafileType: string | undefined = request.query[
           'extra_mediafile_type'
         ] as string;
-        let csv = '';
-        request.on('data', (chunk: any) => {
+
+        const contentType = (request.headers['content-type'] || '').toLowerCase();
+        const isExcel = contentType.includes('spreadsheetml.sheet');
+
+        const chunks: Buffer[] = [];
+
+        request.on('data', (chunk: Buffer) => {
           try {
-            csv += chunk.toString();
+            chunks.push(chunk);
           } catch (e) {
-            console.log('Error while getting csv file:', e);
+            console.log('Error while collecting file chunks:', e);
             response.status(500).end(JSON.stringify(e));
           }
         });
+
         request.on('end', async () => {
           try {
+            const fileBuffer = Buffer.concat(chunks);
+
+            const payload: string | Buffer = isExcel ? fileBuffer : fileBuffer.toString('utf-8');
+
             if (isDryRun) {
               const res = await __batchDryRun(
                 request,
                 response,
-                csv,
+                payload,
                 filename,
-                extraMediafileType
+                extraMediafileType,
+                type
               );
               response.end(JSON.stringify(res));
             } else {
               const result = await __batchEntities(
                 request,
                 response,
-                csv,
+                payload,
                 filename,
                 mainJobId,
-                extraMediafileType
+                extraMediafileType,
+                type
               );
               const uploadUrls = result.links
                 .filter((uploadUrl: string) => uploadUrl !== '')
@@ -54,6 +67,7 @@ export const applyUploadEndpoint = (app: Express) => {
                 );
               response.end(
                 JSON.stringify({
+                  entities: result.entities,
                   links: uploadUrls,
                   parent_job_id: result.parent_job_id,
                 })
@@ -192,31 +206,37 @@ export const applyUploadEndpoint = (app: Express) => {
 const __batchDryRun = async (
   request: Request,
   response: Response,
-  csv: string,
+  payload: string | Buffer,
   filename: string,
-  extraMediafileType: string | undefined
+  extraMediafileType: string | undefined,
+  type: string | undefined
 ): Promise<any> => {
   const env: Environment = getCurrentEnvironment();
   let result = undefined;
   try {
     const clientIp: string = request.headers['x-forwarded-for'] as string;
+    const acceptHeader: string = request.headers['accept'] as string || 'application/json';
+    const contentTypeHeader: string = request.headers['content-type'] as string || 'text/csv';
     const datasource = new AuthRESTDataSource({
       environment: env,
       session: request.session,
       clientIp,
     });
+    const params = new URLSearchParams({
+      filename: filename,
+      dry_run: '1',
+      ...(extraMediafileType && { extra_mediafile_type: extraMediafileType }),
+      ...(type && { type: type }),
+    });
+
     result = await datasource.post(
-      `${env.api.collectionApiUrl}/batch?filename=${filename}&dry_run=1${
-        !!extraMediafileType
-          ? `&extra_mediafile_type=${extraMediafileType}`
-          : ''
-      }`,
+      `${env.api.collectionApiUrl}/batch?${params.toString()}`,
       {
         headers: {
-          'Content-Type': 'text/csv',
-          Accept: 'application/json',
+          'Content-Type': contentTypeHeader,
+          'Accept': acceptHeader,
         },
-        body: csv,
+        body: payload,
       }
     );
     return result;
@@ -228,32 +248,38 @@ const __batchDryRun = async (
 const __batchEntities = async (
   request: Request,
   response: Response,
-  csv: string,
+  payload: string | Buffer,
   filename: string,
   mainJobId: string,
-  extraMediafileType: string | undefined
+  extraMediafileType: string | undefined,
+  type: string | undefined
 ): Promise<any> => {
   const env: Environment = getCurrentEnvironment();
   const clientIp: string = request.headers['x-forwarded-for'] as string;
+  const acceptHeader: string = request.headers['accept'] as string || 'application/json';
+  const contentTypeHeader: string = request.headers['content-type'] as string || 'text/csv';
   const datasource = new AuthRESTDataSource({
     environment: env,
     session: request.session,
     clientIp,
   });
   let result: any;
+  const params = new URLSearchParams({
+    filename,
+    ...(extraMediafileType && { extra_mediafile_type: extraMediafileType }),
+    ...(mainJobId && { main_job_id: mainJobId }),
+    ...(type && { type: type }),
+  });
+
   try {
     result = await datasource.post(
-      `${env.api.collectionApiUrl}/batch?filename=${filename}${
-        !!extraMediafileType
-          ? `&extra_mediafile_type=${extraMediafileType}`
-          : ''
-      }${mainJobId ? `&main_job_id=${mainJobId}` : ''}`,
+      `${env.api.collectionApiUrl}/batch?${params.toString()}`,
       {
         headers: {
-          'Content-Type': 'text/csv',
-          Accept: 'application/json',
+          'Content-Type': contentTypeHeader,
+          'Accept': acceptHeader,
         },
-        body: csv,
+        body: payload,
       }
     );
   } catch (exception: any) {

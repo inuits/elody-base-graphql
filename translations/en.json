@@ -51,6 +51,7 @@
       },
       "progress-steps": {
         "validate": "CSV",
+        "validate-excel": "Excel",
         "validate-labels": {
           "empty": "No CSV",
           "complete": "OK",
@@ -514,6 +515,7 @@
     "upload-fields": {
       "labels": {
         "csv-upload": "Drop your CSV, here.",
+        "excel-upload": "Drop your excel, here.",
         "file-upload": "Drag your files, or click here to add your files"
       },
       "errors": {

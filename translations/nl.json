@@ -505,6 +505,7 @@
     "upload-fields": {
       "labels": {
         "csv-upload": "Zet hier je CSV neer.",
+        "excel-upload": "Zet hier je excel neer.",
         "file-upload": "Sleep je bestanden hierheen of klik hier om je bestanden toe te voegen"
       },
       "errors": {

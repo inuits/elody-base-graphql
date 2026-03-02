@@ -1610,6 +1610,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     infoLabelUrl: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
+    addTypeToEndpoint: async (parent: any, { input }, { dataSources }) => {
+      return input as boolean;
+    },
+    extractTypeFromKey: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
   },
   FormAction: {
     label: async (_source, { input }, { dataSources }) => {

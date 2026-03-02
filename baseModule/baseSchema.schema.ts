@@ -133,6 +133,7 @@ export const baseSchema = gql`
     baseMagazineWithCsvImportField
     baseMediafilesWithOcrImportField
     baseXmlUploadField
+    baseExcelUploadField
   }
 
   enum FileType {
@@ -151,6 +152,7 @@ export const baseSchema = gql`
     tif
     gif
     json
+    xlsx
   }
 
   enum TranscodeType {
@@ -1389,6 +1391,7 @@ export const baseSchema = gql`
   enum UploadFlow {
     updateMetadata
     csvOnly
+    excel
     mediafilesOnly
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
@@ -1443,6 +1446,8 @@ export const baseSchema = gql`
     uploadFieldType(input: UploadFieldType!): UploadFieldType!
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
+    addTypeToEndpoint(input: Boolean): Boolean
+    extractTypeFromKey(input: String): String
     templateCsvs(input: [String!]!): [String]
     infoLabelUrl(input: String): String
     extraMediafileType(input: String): String

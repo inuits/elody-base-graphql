@@ -84,7 +84,22 @@ export const baseFields: { [key: string]: InputField } = {
   },
   baseXmlUploadField: {
     type: InputFieldTypes.XmlUpload,
-    fileTypes: [FileType.Xml, FileType.Json],
+    fileTypes: [FileType.Xml, FileType.Xlsx, FileType.Json],
+    maxAmountOfFiles: 1,
+    fileProgressSteps: {
+      type: ActionProgressIndicatorType.ProgressSteps,
+      steps: [
+        {
+          label: 'actions.progress-steps.validate',
+          status: ProgressStepStatus.Empty,
+          stepType: ProgressStepType.Validate,
+        },
+      ],
+    },
+  },
+  baseExcelUploadField: {
+    type: InputFieldTypes.FileUpload,
+    fileTypes: [FileType.Xlsx],
     maxAmountOfFiles: 1,
     fileProgressSteps: {
       type: ActionProgressIndicatorType.ProgressSteps,
