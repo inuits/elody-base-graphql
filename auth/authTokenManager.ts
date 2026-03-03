@@ -30,6 +30,8 @@ export class AuthTokenManager {
       if (refreshed) {
         this.session.auth = refreshed;
         return refreshed.accessToken;
+      } else {
+        this.session.auth = null;
       }
     }
 
