@@ -7,12 +7,13 @@ import { DataSources, type FormattersConfig } from '../types';
 import {
   AdvancedFilterInput,
   AdvancedFilterTypes,
-  Entitytyping,
-  Metadata,
-  RelationField,
-  ParentRelationsConfigInput,
   EntitiesResults,
   Entity,
+  Entitytyping,
+  Metadata,
+  ParentRelationsConfigInput,
+  RelationDirection,
+  RelationField,
 } from '../generated-types/type-defs';
 import { formatterFactory, ResolverFormatters } from './formatters';
 import { GraphQLError } from 'graphql';
@@ -305,13 +306,15 @@ export const resolveIntialValueRelations = async (
   }
 };
 
-export const resolveIntialValueRelationMetadata = (
+export const resolveIntialValueRelationMetadata = async (
   parent: any,
   key: string,
   uuid: string,
   relationKey: string,
-  formatter: string
-): string | string[] | { label: string; formatter: string } => {
+  formatter: string,
+  relationDirection: RelationDirection,
+  dataSources: DataSources
+): Promise<string | string[] | { label: string; formatter: string }> => {
   try {
     let label: string | string[] = '';
     if (relationKey === 'hasTenant' && key === 'roles') {
@@ -337,6 +340,15 @@ export const resolveIntialValueRelationMetadata = (
       }
       label = roles;
     } else {
+      if (relationDirection === RelationDirection.FromRelatedEntity) {
+        const previousId = parent.id;
+        parent = await dataSources.CollectionAPI.getEntity(
+          uuid,
+          Entitytyping.BaseEntity
+        );
+        uuid = previousId;
+      }
+
       label = parent?.relations
         .find(
           (relation: any) =>

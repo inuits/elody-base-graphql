@@ -1009,6 +1009,11 @@ export const baseSchema = gql`
     big
   }
 
+  enum RelationDirection {
+    fromEntity
+    fromRelatedEntity
+  }
+
   type RelationField {
     key: String!
     label: String
@@ -1069,6 +1074,7 @@ export const baseSchema = gql`
       index: Int
       parentRelations: [ParentRelationsConfigInput]
       repeatableMetadataKey: String
+      relationDirection: RelationDirection
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
