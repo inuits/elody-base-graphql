@@ -336,7 +336,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
     return await this.post(`${collection}/${id}/relations`, {
-      body: relations,
+      body: relations.map(({ editStatus, value, ...rest }) => rest),
     });
   }
 
@@ -347,7 +347,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<any[]> {
     if (relations.length <= 0) return [];
     return await this.patch(`${collection}/${id}/relations`, {
-      body: relations,
+      body: relations.map(({ editStatus, value, ...rest }) => rest),
     });
   }
 
@@ -358,7 +358,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   ): Promise<any> {
     if (relations.length <= 0) return [];
     return await this.delete(`${collection}/${id}/relations`, {
-      body: relations,
+      body: relations.map(({ editStatus, value, ...rest }) => rest),
     });
   }
 
@@ -368,7 +368,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     collection: Collection = Collection.Entities
   ): Promise<any> {
     return await this.put(`${collection}/${id}/relations`, {
-      body: relations,
+      body: relations.map(({ editStatus, value, ...rest }) => rest),
     });
   }
 
@@ -421,7 +421,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     const body: any = {
       type: entity.type,
       metadata,
-      relations,
+      relations: relations.map(({ editStatus, value, ...rest }) => rest),
     };
     const newEntity = await this.post(
       `${getCollectionValueForEntityType(entity.type as Entitytyping)}`,
