@@ -181,10 +181,34 @@ const start = (
       });
     }
 
+    const authExtensionPlugin = {
+      async requestDidStart() {
+        return {
+          async willSendResponse({
+            response,
+            contextValue,
+          }: {
+            response: any;
+            contextValue: any;
+          }) {
+            if (!contextValue.session?.auth) {
+              if (response.body.kind === 'single') {
+                response.body.singleResult.extensions = {
+                  ...response.body.singleResult.extensions,
+                  authStatus: 'UNAUTHENTICATED',
+                };
+              }
+            }
+          },
+        };
+      },
+    };
+
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
       validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 10)],
       introspection: environment?.apollo.introspection || false,
+      plugins: [authExtensionPlugin],
       gateway: {
         async load() {
           return { executor: application.createApolloExecutor() };
@@ -241,6 +265,7 @@ const start = (
             dataSources,
             customPermissions,
             customFormatters,
+            session,
           };
         },
       })

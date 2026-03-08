@@ -133,6 +133,7 @@ export const baseSchema = gql`
     baseMagazineWithCsvImportField
     baseMediafilesWithOcrImportField
     baseXmlUploadField
+    baseExcelUploadField
   }
 
   enum FileType {
@@ -151,6 +152,7 @@ export const baseSchema = gql`
     tif
     gif
     json
+    xlsx
   }
 
   enum TranscodeType {
@@ -284,6 +286,13 @@ export const baseSchema = gql`
   enum SanitizeMode {
     link
     html
+  }
+
+  enum PageStatus {
+    NotFound
+    Unauthorized
+    Forbidden
+    Success
   }
 
   type ActionProgressStep {
@@ -1000,6 +1009,11 @@ export const baseSchema = gql`
     big
   }
 
+  enum RelationDirection {
+    fromEntity
+    fromRelatedEntity
+  }
+
   type RelationField {
     key: String!
     label: String
@@ -1060,6 +1074,7 @@ export const baseSchema = gql`
       index: Int
       parentRelations: [ParentRelationsConfigInput]
       repeatableMetadataKey: String
+      relationDirection: RelationDirection
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
@@ -1382,6 +1397,7 @@ export const baseSchema = gql`
   enum UploadFlow {
     updateMetadata
     csvOnly
+    excel
     mediafilesOnly
     mediafilesWithRequiredCsv
     mediafilesWithOptionalCsv
@@ -1436,6 +1452,8 @@ export const baseSchema = gql`
     uploadFieldType(input: UploadFieldType!): UploadFieldType!
     inputField(type: BaseFieldType!): InputField!
     dryRunUpload(input: Boolean): Boolean
+    addTypeToEndpoint(input: Boolean): Boolean
+    extractTypeFromKey(input: String): String
     templateCsvs(input: [String!]!): [String]
     infoLabelUrl(input: String): String
     extraMediafileType(input: String): String

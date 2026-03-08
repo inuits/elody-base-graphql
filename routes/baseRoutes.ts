@@ -17,6 +17,6 @@ export const baseRoutes = [
     path: '/:pathMatch(.*)*',
     name: RouteNames.NotFound,
     component: 'NotFound',
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: false, ignoreRedirect: true },
   },
 ];

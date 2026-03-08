@@ -28,7 +28,7 @@ import {
   BaseLibraryModes,
   BaseRelationValuesInput,
   BreadCrumbRoute,
-  Collection,
+  RelationDirection,
   Column,
   ColumnSizes,
   CopyValueFromParentIntialValues,
@@ -994,6 +994,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         index,
         parentRelations,
         repeatableMetadataKey = '',
+        relationDirection = RelationDirection.FromEntity,
       },
       { dataSources, customFormatters }
     ) => {
@@ -1042,7 +1043,9 @@ export const baseResolver: Resolvers<ContextValue> = {
               key,
               uuid as string,
               relationKey as string,
-              formatter as string
+              formatter as string,
+              relationDirection as RelationDirection,
+              dataSources
             ),
           relationRootdata: () =>
             resolveIntialValueRelationRootdata(
@@ -1608,6 +1611,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input as string[];
     },
     infoLabelUrl: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
+    addTypeToEndpoint: async (parent: any, { input }, { dataSources }) => {
+      return input as boolean;
+    },
+    extractTypeFromKey: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
   },

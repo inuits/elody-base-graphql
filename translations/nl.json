@@ -226,6 +226,7 @@
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
       "noOptionsAvailable": "Geen opties beschikbaar",
+      "custom-search-term": "Eigen zoekterm: \"{0}\"",
       "matcher-labels": {
         "select-filter-type": "Selecteer filter type",
         "AnyMatcher": "is ingevuld",
@@ -458,6 +459,7 @@
       "search-saved-searches": "Zoek in bewaarde zoekopdrachten"
     },
     "search": {
+      "simple-search": "Globaal zoeken in Elody",
       "noresult": "Geen resultaten gevonden voor je filters",
       "asset-library": "Zoek asset library...",
       "mediafile-library": "Zoek Mediafiles...",
@@ -503,6 +505,7 @@
     "upload-fields": {
       "labels": {
         "csv-upload": "Zet hier je CSV neer.",
+        "excel-upload": "Zet hier je excel neer.",
         "file-upload": "Sleep je bestanden hierheen of klik hier om je bestanden toe te voegen"
       },
       "errors": {
@@ -594,4 +597,3 @@
     }
   }
 }
-

@@ -483,6 +483,7 @@
     "upload-fields": {
       "labels": {
         "csv-upload": "أسقط ملف CSV هنا.",
+        "excel-upload": "أسقط ملف excel هنا.",
         "file-upload": "اسحب ملفاتك، أو اضغط هنا لإضافة ملفاتك"
       },
       "errors": {
