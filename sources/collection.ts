@@ -22,7 +22,10 @@ import jwtDecode from 'jwt-decode';
 import { Config } from '../types';
 import { GraphQLError } from 'graphql/index';
 import { setId, setType } from '../parsers/entity';
-import { getCollectionValueForEntityType } from '../helpers/helpers';
+import {
+  getCollectionValueForEntityType,
+  getEntityCollectionForType,
+} from '../helpers/helpers';
 
 type EntetiesCallReturn =
   | { count: number; results: Array<unknown> }
@@ -253,7 +256,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       if (idSplit.length > 1) id = idSplit[1];
       data = await this.get<any>(
         `${
-          _collection ? _collection : getCollectionValueForEntityType(type)
+          _collection ? _collection : getEntityCollectionForType(type)
         }/${id}`
       );
     } catch (error: any) {
