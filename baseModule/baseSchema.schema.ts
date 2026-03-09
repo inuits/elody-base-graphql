@@ -681,6 +681,8 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
+    customQueryEntityPickerList: String
+    customQueryEntityPickerListFilters: String
   }
 
   type BulkOperationModal {
@@ -693,6 +695,8 @@ export const baseSchema = gql`
     enableImageCrop: Boolean
     keyToSaveCropCoordinates: String
     pageToNavigateToAfterCreation: BulkNavigationPages
+    customQueryEntityPickerList: String
+    customQueryEntityPickerListFilters: String
   }
 
   enum ActionContextEntitiesSelectionType {

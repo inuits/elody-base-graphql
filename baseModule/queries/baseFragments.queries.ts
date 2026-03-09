@@ -184,6 +184,8 @@ export const baseFragments = gql`
     enableImageCrop
     keyToSaveCropCoordinates
     pageToNavigateToAfterCreation
+    customQueryEntityPickerList
+    customQueryEntityPickerListFilters
   }
 
   fragment subOptions on DropdownOption {
