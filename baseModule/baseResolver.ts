@@ -1541,6 +1541,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     lineClamp: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },
+    colSpan: async (_source, { input }) => {
+      return input ?? '';
+    },
     copyToClipboard: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
@@ -1684,6 +1687,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
       return input ? input : false;
     },
+    colSpan: async (_source, { input }) => {
+      return input ?? '';
+    },
   },
   PanelRelationRootData: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1703,6 +1709,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     showOnlyInEditMode: async (_source, { input }, { dataSources }) => {
       return input ? input : false;
+    },
+    colSpan: async (_source, { input }) => {
+      return input ?? '';
     },
   },
   PanelThumbnail: {

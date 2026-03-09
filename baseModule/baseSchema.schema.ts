@@ -1509,6 +1509,7 @@ export const baseSchema = gql`
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
     lineClamp(input: String): String!
+    colSpan(input: String): String!
     copyToClipboard(input: Boolean): Boolean
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
@@ -1542,6 +1543,7 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
+    colSpan(input: String): String!
   }
 
   type PanelRelationRootData {
@@ -1551,6 +1553,7 @@ export const baseSchema = gql`
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
+    colSpan(input: String): String!
   }
 
   type PanelThumbnail {
