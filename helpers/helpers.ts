@@ -12,8 +12,20 @@ import type { Request, Response } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 
+let typeCollectionMapping: { [key: string]: string } = {};
+
+export const setTypeCollectionMapping = (mapping: {
+  [key: string]: string;
+}): void => {
+  typeCollectionMapping = mapping;
+};
+
 export const getCollectionValueForEntityType = (entityType: string): string => {
   return Collection.Entities;
+};
+
+export const getEntityCollectionForType = (entityType: string): string => {
+  return typeCollectionMapping[entityType] || Collection.Entities;
 };
 
 export const customSort = (

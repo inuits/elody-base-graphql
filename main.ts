@@ -23,6 +23,7 @@ import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
   checkRequestContentType,
+  setTypeCollectionMapping,
 } from './helpers/helpers';
 import {
   Collection,
@@ -131,6 +132,9 @@ const start = (
     | undefined = undefined
 ): void => {
   setCurrentEnvironment(createElodyEnvironment(appConfig));
+  if (customTypeCollectionMapping) {
+    setTypeCollectionMapping(customTypeCollectionMapping);
+  }
   const environment = getCurrentEnvironment();
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(
     generateElodyConfig(customModuleConfig)
