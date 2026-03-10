@@ -3,13 +3,19 @@ import path from 'path';
 import fs from 'fs';
 import { ViteDevServer } from 'vite';
 
+const getFrontendPath = (): string => {
+  const __dirname: string = path.resolve();
+  const variant = process.env.USE_LEGACY_FRONTEND === 'false' ? 'dist' : 'dist-legacy';
+  return path.join(__dirname, `dashboard/${variant}`);
+};
+
 export const renderPageForEnvironment = async (
   req: Request,
   res: Response,
   vite?: ViteDevServer
 ): Promise<void> => {
   const __dirname: string = path.resolve();
-  const frontendPath: string = path.join(__dirname, 'dashboard/dist');
+  const frontendPath: string = getFrontendPath();
 
   try {
     if (vite) {
@@ -35,8 +41,7 @@ export const configureFrontendForEnvironment = (
   app: any,
   vite?: ViteDevServer
 ) => {
-  const __dirname: string = path.resolve();
-  const frontendPath: string = path.join(__dirname, 'dashboard/dist');
+  const frontendPath: string = getFrontendPath();
 
   if (vite) {
     app.use(vite.middlewares);
