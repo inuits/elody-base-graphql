@@ -47,10 +47,6 @@ const getConfig = (config: Environment) => {
         config.features.supportsMultilingualMetadataEditing === undefined
           ? false
           : config.features.supportsMultilingualMetadataEditing,
-      useLegacyQueries:
-        config.features.useLegacyQueries === undefined
-          ? true
-          : config.features.useLegacyQueries,
     },
     customization: {
       applicationTitle: config.customization.applicationTitle,

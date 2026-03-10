@@ -81,7 +81,6 @@ export interface Environment {
     };
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
-    useLegacyQueries?: boolean;
     hasRedirectToExternalSites: boolean;
     globalNotification?: {
       title: string;
@@ -194,7 +193,6 @@ export interface FullyOptionalEnvironmentInput {
     };
     hasPersistentSessions?: boolean;
     supportsMultilingualMetadataEditing?: boolean;
-    useLegacyQueries?: boolean;
     hasRedirectToExternalSites?: boolean;
     globalNotification?: {
       title?: string;
