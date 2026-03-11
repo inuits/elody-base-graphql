@@ -166,6 +166,12 @@ export const baseFragments = gql`
     value
     facets {
       key
+      lookups {
+        as
+        foreign_field
+        from
+        local_field
+      }
     }
   }
 
