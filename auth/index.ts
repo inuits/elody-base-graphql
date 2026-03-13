@@ -95,13 +95,19 @@ export function applyAuthEndpoints(
   app.post('/api/auth_code', async (req: any, res: any) => {
     logToken(undefined, `index /api/auth_code`);
     if (req.session.auth && req.session.auth?.accessToken) {
-      logToken(
-        req.session.auth.accessToken,
-        `index /api/auth_code`,
-        `User still authenticated`
-      );
-      res.status(200).end('Session token still present.');
-      return;
+      try {
+        const decoded: any = jwt_decode(req.session.auth.accessToken);
+        if (decoded.exp && Date.now() < decoded.exp * 1000) {
+          logToken(
+            req.session.auth.accessToken,
+            `index /api/auth_code`,
+            `User still authenticated`
+          );
+          res.status(200).end('Session token still present.');
+          return;
+        }
+      } catch {}
+      req.session.auth = undefined;
     }
     const { authCode, clientId, tokenEndpoint, redirectUri, logoutEndpoint } =
       req.body;
