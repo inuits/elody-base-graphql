@@ -12,8 +12,8 @@ import { applyLinkedOpenDataEndpoint } from '../endpoints/linkedOpenDataEndpoint
 import { TypeUrlMapping } from '../types';
 
 export const defaultElodyEndpointMapping: Record<string, Function> = {
-  authEndpoint: (app: Express, oauthBaseUrl: string, clientSecret: string) =>
-    applyAuthEndpoints(app, oauthBaseUrl, clientSecret),
+  authEndpoint: (app: Express, oauthBaseUrl: string, clientSecret: string, environment: Environment) =>
+    applyAuthEndpoints(app, oauthBaseUrl, clientSecret, environment),
   downloadEndpoint: (app: Express) => applyDownloadEndpoint(app),
   uploadEndpoint: (app: Express) => applyUploadEndpoint(app),
   exportEndpoint: (app: Express) => applyExportEndpoint(app),

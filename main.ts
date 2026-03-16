@@ -272,7 +272,7 @@ const start = (
     );
 
     const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
-      authEndpoint: [app, environment.oauth.baseUrl, environment.clientSecret],
+      authEndpoint: [app, environment.oauth.baseUrl, environment.clientSecret, environment],
       versionEndpoint: [app, environment],
       downloadEndpoint: [app],
       uploadEndpoint: [app],

@@ -64,7 +64,8 @@ export let manager: AuthManager | null = null;
 export function applyAuthEndpoints(
   app: any,
   oauthBaseUrl: string,
-  clientSecret: string
+  clientSecret: string,
+  environment: Environment
 ) {
   app.get('/api/logout', async (req: any, res: any) => {
     logToken(undefined, `index /api/logout`);
@@ -75,6 +76,8 @@ export function applyAuthEndpoints(
         )
       : null;
     req.session.auth = undefined;
+    const settings = getSessionCookieSettings(environment);
+    res.clearCookie('connect.sid', { path: '/', ...settings });
     res.status(200).end('Logged out');
   });
 
