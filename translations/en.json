@@ -248,7 +248,8 @@
         "MinMatcher": "on minimum value (not included)",
         "NoneMatcher": "has no value",
         "MetadataOnRelationExactMatcher": "is exactly",
-        "MetadataOnRelationContainsMatcher": "contains"
+        "MetadataOnRelationContainsMatcher": "contains",
+        "RegexMatcher": "regex"
       },
       "matcher-placeholders": {
         "date": "date",
