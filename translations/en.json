@@ -475,6 +475,7 @@
     "search": {
       "simple-search": "Global search in Elody",
       "noresult": "No results match your filters",
+      "noresult-nofilters": "No results found",
       "asset-library": "Search Asset Library...",
       "mediafile-library": "Search Mediafiles...",
       "tipMap": "Try adjusting or removing filters, or moving to another area to see results",

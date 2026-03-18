@@ -464,6 +464,7 @@
     "search": {
       "simple-search": "Globaal zoeken in Elody",
       "noresult": "Geen resultaten gevonden voor je filters",
+      "noresult-nofilters": "Geen resultaten gevonden",
       "asset-library": "Zoek asset library...",
       "mediafile-library": "Zoek Mediafiles...",
       "tipMap": "Pas filters aan, verwijder ze of verplaats de kaart om resultaten te zien",
