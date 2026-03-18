@@ -250,6 +250,9 @@
         "ID": "ID"
       }
     },
+    "autocomplete": {
+      "find-more-options-placeholder": "Typ om meer opties te zoeken"
+    },
     "form": {
       "create": "Creëer"
     },

@@ -259,6 +259,9 @@
         "ID": "ID"
       }
     },
+    "autocomplete": {
+      "find-more-options-placeholder": "Start typing to find more options"
+    },
     "form": {
       "create": "Create"
     },
