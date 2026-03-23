@@ -1470,6 +1470,7 @@ export const baseSchema = gql`
     entityType: Entitytyping
     relationToExtractKey: String
     keyToExtractValue: String
+    value: String
   }
 
   input HiddenFieldInput {
@@ -1479,6 +1480,7 @@ export const baseSchema = gql`
     entityType: Entitytyping
     relationToExtractKey: String
     keyToExtractValue: String
+    value: String
   }
 
   enum PanelMetadataValueTooltipTypes {

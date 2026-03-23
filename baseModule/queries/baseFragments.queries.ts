@@ -226,6 +226,7 @@ export const baseFragments = gql`
     entityType
     relationToExtractKey
     keyToExtractValue
+    value
   }
 
   fragment basicContextMenuActions on ContextMenuActions {
