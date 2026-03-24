@@ -1144,7 +1144,7 @@ export const baseSchema = gql`
 
   input MetadataValuesInput {
     key: String!
-    value: JSON!
+    value: JSON
     lang: String
   }
 
