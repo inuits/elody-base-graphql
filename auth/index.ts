@@ -77,8 +77,19 @@ export function applyAuthEndpoints(
       : null;
     req.session.auth = undefined;
     const settings = getSessionCookieSettings(environment);
-    res.clearCookie('connect.sid', { path: '/', ...settings });
-    res.status(200).end('Logged out');
+    req.session.destroy((err: any) => {
+      if (err) {
+        console.error("Logout error:", err);
+        return res.status(500).send("Could not log out");
+      }
+
+      res.clearCookie('connect.sid', {
+        path: '/',
+        ...settings
+      });
+
+      res.status(200).send('Logged out');
+    });
   });
 
   app.post('/api/auth_code', async (req: any, res: any) => {
