@@ -76,6 +76,7 @@ export const baseSchema = gql`
     SECONDS_DEFAULT
     VOLT
     PX
+    IMAGE
   }
 
   enum Permission {
