@@ -430,7 +430,7 @@
     },
     "error-codes": {
       "R0002": "An unknown error occurred",
-      "R0004": "Item not found",
+      "R0004": "Item with id {id} not found",
       "R0008": "Key {key} not found in document with id {document}",
       "R0009": "Entity has no tenant",
       "R1004": "You have no permission to see this",
