@@ -1,5 +1,5 @@
 import { Response as FetchResponse } from 'node-fetch';
-import { Express, Request, Response } from 'express';
+import { Express, Request, Response as ExResponse} from 'express';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
@@ -7,7 +7,7 @@ import { fetchWithTokenRefresh } from './fetchWithToken';
 
 export const applyExportEndpoint = (app: Express) => {
   const env: Environment = getCurrentEnvironment();
-  app.post(`/api/export/csv`, async (request: Request, response: Response) => {
+  app.post(`/api/export/csv`, async (request: Request, response: ExResponse) => {
     try {
       const { type, order_by, asc, ids, field } = request.body as {
         type: string;
@@ -18,28 +18,44 @@ export const applyExportEndpoint = (app: Express) => {
       };
 
       const collectionPath = getCollectionValueForEntityType(type);
-      const baseUrl = `${env.api.collectionApiUrl}/${collectionPath}`;
+      let upstreamResponse: Response;
 
       const params = new URLSearchParams({
         order_by,
         asc,
         type,
-        ids: ids.join(','),
         limit: String(ids.length),
       });
 
-      if (Array.isArray(field)) {
-        field.forEach((f) => params.append('field', f));
-      }
+      if (env.api.csvExportService?.csvExportServiceEnabled) {
+        const baseUrl = `${env.api.csvExportService.csvExportServiceUrl}/${collectionPath}`;
 
-      const upstreamResponse = await fetchWithTokenRefresh(
-        `${baseUrl}?${params.toString()}`,
-        {
-          method: 'GET',
-          headers: { Accept: 'text/csv' },
-        },
-        request
-      );
+        upstreamResponse = await fetchWithTokenRefresh(
+          `${baseUrl}?${params.toString()}`,
+          {
+            method: 'POST',
+            headers: { Accept: 'text/csv', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ids: ids,
+              fields: field,
+            }),
+          },
+          request
+        );
+      } else {
+        const baseUrl = `${env.api.collectionApiUrl}/${collectionPath}`;
+
+        params.append('ids', ids.join(','));
+
+        upstreamResponse = await fetchWithTokenRefresh(
+          `${baseUrl}?${params.toString()}`,
+          {
+            method: 'GET',
+            headers: { Accept: 'text/csv' },
+          },
+          request
+        );
+      }
 
       if (!upstreamResponse.ok) {
         const errorText = await upstreamResponse.text();
@@ -47,7 +63,6 @@ export const applyExportEndpoint = (app: Express) => {
       }
 
       const csvContent = await upstreamResponse.text();
-      
       response
         .status(200)
         .setHeader('Content-Type', 'text/csv')

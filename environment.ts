@@ -58,6 +58,12 @@ export const baseEnvironment: Environment = {
       process.env.COLLECTION_API_URL || 'http://collection-api-elody:5000/',
     csvImportServiceUrl:
       process.env.CSV_IMPORTER_URL || 'http://dams-csv-import-service:8003',
+    csvExportService: {
+      csvExportServiceUrl:
+        process.env.CSV_EXPORTER_URL || 'http://csv-exporter-service-digipolis-dams:5000',
+      csvExportServiceEnabled:
+        process.env.CSV_EXPORTER_ENABLED === 'true' || false,
+    },
     fileSystemImporterServiceUrl:
       process.env.FILE_SYSTEM_IMPORTER_URL ||
       'http://filesystem-importer-service:5000',

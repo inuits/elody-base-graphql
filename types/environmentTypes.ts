@@ -26,6 +26,10 @@ export interface Environment {
   api: {
     collectionApiUrl: string;
     csvImportServiceUrl: string;
+    csvExportService?: {
+      csvExportServiceUrl?: string;
+      csvExportServiceEnabled?: boolean;
+    }
     fileSystemImporterServiceUrl?: string;
     iiifUrl: string;
     iiifUrlFrontend: string;
