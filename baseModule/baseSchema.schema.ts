@@ -39,6 +39,8 @@ export const baseSchema = gql`
     MinIncludedMatcher
     MaxIncludedMatcher
     InBetweenMatcher
+    RegexMatcher
+    GeoMatcher
   }
 
   enum ElodyServices {
@@ -1978,14 +1980,22 @@ export const baseSchema = gql`
   }
 
   enum AdvancedFilterTypes {
-    id
     text
     date
     number
     selection
     boolean
     type
-    metadata_on_relation
+    geo
+  }
+
+  enum AdvancedFilterMatchersType {
+    text
+    date
+    number
+    selection
+    boolean
+    type
     geo
   }
 
@@ -2071,6 +2081,7 @@ export const baseSchema = gql`
     includeDefaultValuesFromIntialValues: [String]
     defaultMatcher: Matchers
     allowedMatchers: [Matchers]
+    matchersType: AdvancedFilterMatchersType
   }
 
   type FacetInputType {
@@ -2107,6 +2118,7 @@ export const baseSchema = gql`
     operator: Operator
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
+    matchersType: AdvancedFilterMatchersType
   }
 
   type AdvancedFilters {
@@ -2139,18 +2151,13 @@ export const baseSchema = gql`
       includeDefaultValuesFromIntialValues: [String]
       defaultMatcher: Matchers
       allowedMatchers: [Matchers]
+      matchersType: AdvancedFilterMatchersType
     ): AdvancedFilter!
   }
 
-  type FilterMatcherMap {
-    id: [String!]!
-    text: [String!]!
-    date: [String!]!
-    number: [String!]!
-    selection: [String!]!
-    boolean: [String!]!
-    type: [String!]!
-    metadata_on_relation: [String!]!
+  type FilterMatchers {
+    key: String!
+    matchers: [String!]!
   }
 
   type LookupInputType {
@@ -2241,7 +2248,7 @@ export const baseSchema = gql`
     ): JSON
     GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
-    FilterMatcherMapping: FilterMatcherMap!
+    FilterMatcherMapping(keys: [String!]): [FilterMatchers!]!
     EntityTypeFilters(type: String!): Entity!
     FilterOptions(
       input: [AdvancedFilterInput!]!

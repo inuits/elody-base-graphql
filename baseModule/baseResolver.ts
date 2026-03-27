@@ -122,6 +122,7 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuFormFlow,
+  FilterMatchers,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -163,6 +164,7 @@ import {
   CollectionAPIRelation,
 } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
+import { defaultMatchers } from '../sources/filtersMatchers';
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -695,8 +697,18 @@ export const baseResolver: Resolvers<ContextValue> = {
     GeoFilterForMap: async (_source, _args, { dataSources }) => {
       return {} as AdvancedFilters;
     },
-    FilterMatcherMapping: async (_source, {}, { dataSources }) => {
-      return await dataSources.CollectionAPI.getFilterMatcherMapping();
+    FilterMatcherMapping: async (
+      _source,
+      { keys = [] },
+      { customFilterMatchers = {} }
+    ) => {
+      const allMatchers: Record<string, string[]> = { ...defaultMatchers, ...customFilterMatchers };
+      const targetKeys = keys?.length ? keys : Object.keys(allMatchers);
+
+      return targetKeys.map((key: string): FilterMatchers => ({
+        key,
+        matchers: allMatchers[key] || [],
+      })) as FilterMatchers[];
     },
     EntityTypeFilters: async (_source, { type }) => {
       return {
@@ -2416,6 +2428,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
         allowedMatchers,
+        matchersType,
       }
     ) => {
       return {
@@ -2448,6 +2461,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         includeDefaultValuesFromIntialValues,
         defaultMatcher,
         allowedMatchers,
+        matchersType,
       };
     },
   },
@@ -2595,6 +2609,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     allowedMatchers: (parent, rest) => {
       return parent.allowedMatchers || null;
+    },
+    matchersType: (parent) => {
+      return parent.matchersType || null;
     },
   },
   MapFeatureMetadata: {

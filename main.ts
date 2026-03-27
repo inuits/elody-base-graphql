@@ -114,22 +114,33 @@ const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
   });
 };
 
-const start = (
-  customModuleConfig: ElodyModuleConfig,
-  appConfig: FullyOptionalEnvironmentInput,
-  customTranslations: { [key: string]: Object },
-  customEndpoints: ((app: any, environment: Environment) => void)[] = [],
-  customInputFields: { [key: string]: InputField } | undefined = undefined,
-  customTypeCollectionMapping:
-    | { [key: string]: Collection }
-    | undefined = undefined,
-  customPermissions: { [key: string]: PermissionRequestInfo } = {},
-  customFormatters: FormattersConfig = {},
-  customTypeUrlMapping: TypeUrlMapping = { mapping: {}, reverseMapping: {} },
-  customTypePillLabelMapping:
-    | { [key: string]: string[] }
-    | undefined = undefined
-): void => {
+interface StartOptions {
+  customModuleConfig: ElodyModuleConfig;
+  appConfig: FullyOptionalEnvironmentInput;
+  customTranslations: { [key: string]: object };
+  customEndpoints?: ((app: any, environment: Environment) => void)[];
+  customInputFields?: { [key: string]: InputField };
+  customTypeCollectionMapping?: { [key: string]: Collection };
+  customPermissions?: { [key: string]: PermissionRequestInfo };
+  customFormatters?: FormattersConfig;
+  customTypeUrlMapping?: TypeUrlMapping;
+  customTypePillLabelMapping?: { [key: string]: string[] };
+  customFilterMatchers?: { [key: string]: string[] };
+}
+
+const start = ({
+  customModuleConfig,
+  appConfig,
+  customTranslations,
+  customEndpoints = [],
+  customInputFields = undefined,
+  customTypeCollectionMapping = undefined,
+  customPermissions = {},
+  customFormatters = {},
+  customTypeUrlMapping = { mapping: {}, reverseMapping: {} },
+  customTypePillLabelMapping = undefined,
+  customFilterMatchers = undefined,
+}: StartOptions): void => {
   setCurrentEnvironment(createElodyEnvironment(appConfig));
   const environment = getCurrentEnvironment();
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(
@@ -265,6 +276,7 @@ const start = (
             dataSources,
             customPermissions,
             customFormatters,
+            customFilterMatchers,
             session,
           };
         },

@@ -9,7 +9,6 @@ import {
   Entity,
   EntityInput,
   Entitytyping,
-  FilterMatcherMap,
   GraphElementInput,
   Maybe,
   Metadata,
@@ -43,10 +42,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       [key: string]: string;
     };
     return user[key];
-  }
-
-  async getFilterMatcherMapping(): Promise<FilterMatcherMap> {
-    return await this.get(`filter/matchers`);
   }
 
   async getUserPermissions(): Promise<{ payload: string[] }> {

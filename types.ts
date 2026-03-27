@@ -36,6 +36,7 @@ export interface ContextValue {
   dataSources: DataSources;
   customPermissions: { [key: string]: PermissionRequestInfo };
   customFormatters: FormattersConfig;
+  customFilterMatchers?: Record<string, string[]>;
 }
 // TODO: Remove if unused
 export type filter = {
