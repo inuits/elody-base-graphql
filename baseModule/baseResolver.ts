@@ -1591,6 +1591,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     copyValueFromParent: async (_source, { input }, { dataSources }) => {
       return input as CopyValueFromParentIntialValues;
     },
+    defaultValue: async (_source, { input }, { dataSources }) => {
+      return input as string;
+    },
+    disabled: async (_source, { input }, { dataSources }) => {
+      return input || false;
+    },
   },
   UploadContainer: {
     uploadFlow: async (_source, { input }, { dataSources }) => {
@@ -2288,6 +2294,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     formFlow: async (_source, { input }, { dataSources }) => {
       return input || ContextMenuFormFlow.Update;
+    },
+    showAsButton: (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    formTitle: async (_source, { input }, { dataSources }) => {
+      return input || '';
     },
   },
   ContextMenuGeneralAction: {

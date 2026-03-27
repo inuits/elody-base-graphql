@@ -1509,6 +1509,8 @@ export const baseSchema = gql`
     key(input: String!): String!
     hiddenField(input: HiddenFieldInput!): HiddenField
     unit(input: Unit!): Unit!
+    defaultValue(input: String): String
+    disabled(input: Boolean): Boolean
     linkText(input: String!): String
     inputField(type: BaseFieldType!): InputField!
     nonEditableField(input: Boolean): Boolean
@@ -1589,11 +1591,13 @@ export const baseSchema = gql`
     hasButton: Boolean!
     readmodeLabel: String
     editmodeLabel: String
+    hideIfMetadataNotPresent: String
   }
   type EditMetadataButton {
     hasButton: Boolean!
     readmodeLabel: String
     editmodeLabel: String
+    hideIfMetadataNotPresent: String
   }
 
   type WindowElementPanel {
@@ -1799,9 +1803,11 @@ export const baseSchema = gql`
     action(input: ContextMenuElodyActionEnum): ContextMenuElodyActionEnum!
     formQuery(input: String): String
     formFlow(input: ContextMenuFormFlow): ContextMenuFormFlow!
+    formTitle(input: String): String
     icon(input: String): String!
     can(input: [String]): [String]
     hidden(input: [String]): Boolean!
+    showAsButton(input: Boolean): Boolean
   }
 
   type ContextMenuLinkAction {
@@ -1822,6 +1828,7 @@ export const baseSchema = gql`
   type ContextMenuDisplaySettings {
     showInHeader(input: Boolean): Boolean
   }
+
   type ContextMenuActions {
     doLinkAction: ContextMenuLinkAction
     doGeneralAction: ContextMenuGeneralAction

@@ -217,6 +217,7 @@ export const baseFragments = gql`
     hasButton
     readmodeLabel
     editmodeLabel
+    hideIfMetadataNotPresent
   }
 
   fragment hiddenField on HiddenField {
