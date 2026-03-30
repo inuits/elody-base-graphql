@@ -422,6 +422,7 @@ export const baseSchema = gql`
     key: String!
     label: String!
     options: [DropdownOption]
+    validation: Validation
   }
 
   type InputField {
