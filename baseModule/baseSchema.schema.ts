@@ -418,11 +418,9 @@ export const baseSchema = gql`
   }
 
   type SubField {
-    type: InputFieldTypes!
-    key: String!
     label: String!
-    options: [DropdownOption]
-    validation: Validation
+    key: String!
+    inputField: InputField
   }
 
   type MetadataOnRelationFieldConfig {
@@ -828,14 +826,6 @@ export const baseSchema = gql`
     value: JSON
   }
 
-  input RelationFieldInput {
-    key: String!
-    label: String
-    type: String
-    value: String
-    editStatus: EditStatus!
-  }
-
   input MinMaxInput {
     min: Int
     max: Int
@@ -1056,7 +1046,7 @@ export const baseSchema = gql`
     id: String
     type: String
     metadata: [MetadataFieldInput]
-    relations: [RelationFieldInput]
+    relations: [BaseRelationValuesInput]
     identifiers: [String]
   }
 

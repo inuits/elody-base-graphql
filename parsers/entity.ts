@@ -3,7 +3,7 @@ import {
   Metadata,
   MetadataRelation,
   KeyAndValue,
-  RelationFieldInput,
+  BaseRelationValuesInput,
   MetadataAndRelation,
   Entitytyping,
 } from '../generated-types/type-defs';
@@ -66,12 +66,12 @@ export const parseMetaData = (input: any): Metadata => {
 };
 
 export const parseRelations = (
-  relations: RelationFieldInput[]
-): { [key: string]: RelationFieldInput[] } => {
-  const groupedRelations: { [key: string]: RelationFieldInput[] } = {};
+  relations: BaseRelationValuesInput[]
+): { [key: string]: BaseRelationValuesInput[] } => {
+  const groupedRelations: { [key: string]: BaseRelationValuesInput[] } = {};
   const relationTypes: string[] = [];
 
-  const sanitizedRelations: RelationFieldInput[] = [];
+  const sanitizedRelations: BaseRelationValuesInput[] = [];
   for (const relation of relations) {
     if (relation?.key && relation?.type) {
       sanitizedRelations.push(relation);
@@ -82,7 +82,7 @@ export const parseRelations = (
 
   relationTypes?.forEach((relationType: string) => {
     groupedRelations[relationType] = sanitizedRelations.filter(
-      (relation: RelationFieldInput) => relation.type === relationType
+      (relation: BaseRelationValuesInput) => relation.type === relationType
     );
   });
 

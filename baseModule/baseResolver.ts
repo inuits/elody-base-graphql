@@ -122,7 +122,6 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuFormFlow,
-  InputFieldTypes,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
 } from '../generated-types/type-defs';
@@ -2130,7 +2129,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.type;
     },
     validation: async (parent, { input }, { dataSources }) => {
-      if (!input) return null;
+      if (!input) return parent.validation || null;
 
       const inputWithRules = input as any;
       if (inputWithRules.rules && typeof inputWithRules.rules === 'string') {
@@ -2230,17 +2229,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     }
   },
   SubField: {
-    type: async (parent: any, _args: any) => {
-      return parent.type as InputFieldTypes;
+    label: async (parent: any, _args: any) => {
+      return parent.label;
     },
     key: async (parent: any, _args: any) => {
       return parent.key;
     },
-    label: async (parent: any, _args: any) => {
-      return parent.label;
-    },
-    options: async (parent: any, _args: any) => {
-      return parent.options || [];
+    inputField: async (parent: any, _args: any) => {
+      return parent.inputField;
     },
   },
   Validation: {

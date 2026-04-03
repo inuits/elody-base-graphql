@@ -60,7 +60,7 @@ export const baseFragments = gql`
     includeDefaultValuesFromIntialValues
   }
 
-  fragment inputfield on InputField {
+  fragment inputfieldBase on InputField {
     type
     options {
       icon
@@ -129,14 +129,18 @@ export const baseFragments = gql`
       enabled
       key
     }
+  }
+
+  fragment inputfield on InputField {
+    ...inputfieldBase
     subFields {
-      key
       label
-      type
-      options {
-        icon
-        label
-        value
+      key
+      inputField {
+        ...inputfieldBase
+        validation {
+          ...validation
+        }
       }
     }
   }

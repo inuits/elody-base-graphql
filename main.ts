@@ -217,7 +217,7 @@ const start = ({
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
-      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 10)],
+      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 15)],
       introspection: environment?.apollo.introspection || false,
       plugins: [authExtensionPlugin],
       gateway: {
