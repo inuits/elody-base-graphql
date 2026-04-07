@@ -309,7 +309,9 @@
         "editing-metadata": "Bewerken van metadata",
         "delete-entity": "Verwijder entiteit",
         "no-label": "Geen label",
-        "date-created": "Date created"
+        "date-created": "Aangemaakt op",
+        "modified-by": "Gewijzigd door",
+        "modified-at": "Gewijzigd op"
       }
     },
     "notifications": {
