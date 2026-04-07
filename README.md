@@ -79,7 +79,7 @@ To add the gitlab pipeline ([example project](https://gitlab.inuits.io/rnd/inuit
     "@graphql-codegen/typescript": "^2.8.8",
     "@graphql-codegen/typescript-operations": "^2.5.13",
     "@graphql-codegen/typescript-resolvers": "^2.7.13",
-    "@types/node": "^18.11.14",
+    "@types/node": "^22.13.14",
     "typescript": "^4.3.5",
     "graphql": "^16.6.0"
     ```

@@ -70,7 +70,7 @@
     "@types/graphql-depth-limit": "^1.1.6",
     "@types/graphql-upload": "^8.0.12",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^18.19.64",
+    "@types/node": "^22.13.14",
     "@types/node-fetch": "^2.6.12",
     "@types/supertest": "^6.0.3",
     "husky": "^8.0.1",
