@@ -29,17 +29,17 @@ export const resolveIntialValueMetadata = async (
   key: string,
   keyOnMetadata: string | undefined | null,
   formatter: string | null
-): Promise<string | { label: string; formatter: string }> => {
-  const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
+): Promise<string | any | { label: string; formatter: string }> => {
   const metadata = await resolveMetadata(parent, [key], undefined);
+
   if (metadata.length > 1) {
-    const hasLanguage = metadata.some((item: Metadata) => item.lang);
-    const metadataValues = hasLanguage
-      ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)
-          ?.value
-      : metadata.map((item: Metadata) => item.value).join(', ');
-    return metadataValues;
+    return metadata.map((item: Metadata) => ({
+      key: item.key,
+      value: item.value,
+      lang: item.lang,
+    }));
   }
+
   if (keyOnMetadata) return metadata[0]?.[keyOnMetadata] ?? '';
 
   return formatterFactory(ResolverFormatters.Metadata)({

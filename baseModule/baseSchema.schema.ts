@@ -1748,6 +1748,7 @@ export const baseSchema = gql`
     label(input: String!): String!
     metadataKey(input: String!): String!
     extensions(input: [WysiwygExtensions]!): [WysiwygExtensions]!
+    isMultilingual(input: Boolean): Boolean
     taggingConfiguration: TaggingExtensionConfiguration
     wysiwygElementConfiguration: WysiwygElementConfiguration
   }

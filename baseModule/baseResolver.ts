@@ -1393,6 +1393,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     wysiwygElementConfiguration: async (_source: any, {}, { dataSources }) => {
       return _source as WysiwygElementConfiguration;
     },
+    isMultilingual: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    }
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
