@@ -31,8 +31,19 @@ const baseEnvironment: any = {
 };
 
 describe('AuthTokenManager', () => {
+  const originalAllowAnon = process.env.ALLOW_ANONYMOUS_USERS;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.ALLOW_ANONYMOUS_USERS;
+  });
+
+  afterEach(() => {
+    if (originalAllowAnon !== undefined) {
+      process.env.ALLOW_ANONYMOUS_USERS = originalAllowAnon;
+    } else {
+      delete process.env.ALLOW_ANONYMOUS_USERS;
+    }
   });
 
   it('returns valid non-expired token immediately', async () => {
