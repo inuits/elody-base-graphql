@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.7.28",
+  "version": "0.7.29",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -51,12 +51,10 @@
     "mongodb": "6.9.0",
     "node-fetch": "^2.7.0",
     "nodemon": "^2.0.22",
-    "npm": "^8.19.4",
     "prettier": "2.3.2",
     "proj4": "^2.19.2",
     "pug": "3.0.3",
     "saved-search-module": "0.0.x",
-    "ts-jest": "^27.1.5",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.0.0",
