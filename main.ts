@@ -44,7 +44,7 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
-import { expressMiddleware } from '@apollo/server/express4';
+import { expressMiddleware } from '@as-integrations/express5';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
@@ -284,7 +284,12 @@ const start = ({
     );
 
     const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
-      authEndpoint: [app, environment.oauth.baseUrl, environment.clientSecret, environment],
+      authEndpoint: [
+        app,
+        environment.oauth.baseUrl,
+        environment.clientSecret,
+        environment,
+      ],
       versionEndpoint: [app, environment],
       downloadEndpoint: [app],
       uploadEndpoint: [app],
