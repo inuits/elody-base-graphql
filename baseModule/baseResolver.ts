@@ -124,6 +124,7 @@ import {
   ContextMenuFormFlow,
   InputFieldTypes,
   FilterMatchers,
+  MetadataOnRelationFieldConfig,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -2224,6 +2225,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityType: async (parent, _args, { dataSources }) => {
       return parent.entityType || '';
     },
+    metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
+      return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
+    }
   },
   SubField: {
     type: async (parent: any, _args: any) => {

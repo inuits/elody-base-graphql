@@ -125,6 +125,10 @@ export const baseFragments = gql`
     hasVirtualKeyboard
     autoSelectable
     autoAllSelectable
+    metadataOnRelationFieldConfig {
+      enabled
+      key
+    }
     subFields {
       key
       label

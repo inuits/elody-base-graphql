@@ -425,6 +425,11 @@ export const baseSchema = gql`
     validation: Validation
   }
 
+  type MetadataOnRelationFieldConfig {
+    enabled: Boolean!
+    key: String!
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -455,6 +460,7 @@ export const baseSchema = gql`
     lineClamp: String
     entityType: String
     hasVirtualKeyboard: Boolean
+    metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
   }
 
   enum TypeModals {
