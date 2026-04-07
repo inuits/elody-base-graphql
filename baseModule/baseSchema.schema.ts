@@ -572,6 +572,7 @@ export const baseSchema = gql`
     Update
     Upload
     UserSquare
+    UsersAlt
     Folder
     FolderPlus
     ChannelAdd

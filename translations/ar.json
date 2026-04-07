@@ -272,8 +272,8 @@
     "metadata": {
       "labels": {
         "email": "البريد الإلكتروني",
-        "firstName": "الاسم الأول",
-        "lastName": "اسم العائلة",
+        "first-name": "الاسم الأول",
+        "last-name": "اسم العائلة",
         "identifier": "المعرف",
         "user": "مستخدم",
         "expire-date": "تاريخ الانتهاء",

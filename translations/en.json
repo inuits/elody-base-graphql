@@ -291,8 +291,8 @@
     "metadata": {
       "labels": {
         "email": "Email",
-        "firstName": "First name",
-        "lastName": "Last name",
+        "first-name": "First name",
+        "last-name": "Last name",
         "identifier": "Identifier",
         "user": "User",
         "expire-date": "Expire date",

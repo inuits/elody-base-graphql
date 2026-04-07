@@ -281,8 +281,8 @@
     "metadata": {
       "labels": {
         "email": "Email",
-        "firstName": "Voornaam",
-        "lastName": "Achternaam",
+        "first-name": "Voornaam",
+        "last-name": "Achternaam",
         "identifier": "Identificatie",
         "user": "Gebruiker",
         "expire-date": "Vervaldatum",
