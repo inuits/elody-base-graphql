@@ -2129,15 +2129,17 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.type;
     },
     validation: async (parent, { input }, { dataSources }) => {
-      if (!input) return parent.validation || null;
+      if (!parent.validation && !input) return null;
 
-      const inputWithRules = input as any;
+      let inputWithRules;
+      if (parent.validation) inputWithRules = parent.validation as any;
+      else inputWithRules = input as any;
+
       if (inputWithRules.rules && typeof inputWithRules.rules === 'string') {
         const validation = parseValidationRulesString(inputWithRules.rules);
         return validation as Validation;
       }
-
-      return input as Validation;
+      return inputWithRules as Validation;
     },
     options: async (parent, _args, { dataSources }) => {
       return parent['options'] || [];
