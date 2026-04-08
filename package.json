@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.7.30",
+  "version": "0.7.31",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -48,7 +48,6 @@
     "lint-staged": "^11.2.6",
     "mongodb": "6.9.0",
     "node-fetch": "^2.7.0",
-    "nodemon": "^2.0.22",
     "prettier": "2.3.2",
     "proj4": "^2.19.2",
     "pug": "3.0.3",
