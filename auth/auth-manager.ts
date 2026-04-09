@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 import { URLSearchParams } from 'url';
 import jwt_decode from 'jwt-decode';
-import { ForbiddenError } from 'apollo-server-errors';
 import { logToken, logUser } from './debug';
 import {
   AuthenticationBody,
