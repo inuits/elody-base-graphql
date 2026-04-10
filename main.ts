@@ -45,7 +45,7 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
-import { expressMiddleware } from '@as-integrations/express5';
+import { expressMiddleware } from '@as-integrations/express4';
 import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';

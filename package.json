@@ -10,7 +10,7 @@
   "dependencies": {
     "@apollo/datasource-rest": "^6.4.1",
     "@apollo/server": "^5.5.0",
-    "@as-integrations/express5": "^1.1.2",
+    "@as-integrations/express4": "^1.1.2",
     "@apollo/utils.keyvaluecache": "4.0.0",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",

@@ -30,7 +30,7 @@ export const baseEnvironment: Environment = {
     introspection: process.env.APOLLO_INTROSPECTION === 'true',
     playground: process.env.APOLLO_PLAYGROUND === 'true',
     tokenLogging: process.env.APOLLO_TOKEN_LOGGING || 'false',
-    maxQueryDepth: Number(process.env.APOLLO_MAX_QUERY_DEPTH) || 10,
+    maxQueryDepth: Number(process.env.APOLLO_MAX_QUERY_DEPTH) || 15,
   },
   environment: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 4000,
