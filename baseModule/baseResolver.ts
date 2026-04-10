@@ -2095,6 +2095,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     formFields: async (parent: any, {}, { dataSources }) => {
       return parent as FormFields;
     },
+    formKey: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
   },
   Form: {
     label: async (parent: any, { input }, { dataSources }) => {

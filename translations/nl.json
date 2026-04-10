@@ -48,7 +48,9 @@
         "delete-relation-entities": "Wil je volgende {0} ook verwijderen?",
         "blocking-relations": "Er zijn blokkerende relaties: {0} kan niet verwijderd worden wegens volgende {1}.",
         "complete": "Voltooien",
-        "add-entry": "Voeg item toe"
+        "add-entry": "Voeg item toe",
+        "next": "Volgende stap",
+        "previous": "Vorige stap"
       },
       "progress-steps": {
         "actions": {

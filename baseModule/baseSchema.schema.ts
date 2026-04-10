@@ -200,6 +200,7 @@ export const baseSchema = gql`
 
   type FormTab {
     formFields: FormFields!
+    formKey(input: String): String
   }
 
   enum ValidationRules {
@@ -247,6 +248,9 @@ export const baseSchema = gql`
     uploadCsvForReordening
     updateMetadata
     submitWithExtraMetadata
+    nextFormTab
+    previousFormTab
+    submitAllFormTabs
   }
 
   enum ActionProgressIndicatorType {
@@ -672,6 +676,8 @@ export const baseSchema = gql`
     SortDown
     SortUp
     SquareFull
+    Forward
+    Backward
     Swatchbook
     Tag
     Text
