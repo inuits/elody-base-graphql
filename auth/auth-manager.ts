@@ -9,6 +9,7 @@ import {
   RefreshBody,
   TokenResponse,
 } from './types';
+import { GraphQLError } from 'graphql';
 
 export class AuthManager {
   constructor(
@@ -103,13 +104,25 @@ export class AuthManager {
         })
         .catch((error: any) => {
           this.logout(_accessToken, _refreshToken);
-          throw new ForbiddenError(
-            `\n AUTH | REFRESH | AccessToken is undefined \n`
+          throw new GraphQLError(
+            `\n AUTH | REFRESH | AccessToken is undefined \n`,
+            {
+              extensions: {
+                code: 'FORBIDDEN',
+                http: { status: 403 },
+              },
+            }
           );
         });
     } else
-      throw new ForbiddenError(
-        `\n AUTH | REFRESH | AccessToken is undefined \n`
+      throw new GraphQLError(
+        `\n AUTH | REFRESH | AccessToken is undefined \n`,
+        {
+          extensions: {
+            code: 'FORBIDDEN',
+            http: { status: 403 },
+          },
+        }
       );
     return sessionAuthResponse;
   }
