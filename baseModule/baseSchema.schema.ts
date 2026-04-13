@@ -463,6 +463,7 @@ export const baseSchema = gql`
     entityType: String
     hasVirtualKeyboard: Boolean
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
+    readOnlyValueAsPlainText: Boolean
   }
 
   enum TypeModals {

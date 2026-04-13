@@ -129,6 +129,7 @@ export const baseFragments = gql`
       enabled
       key
     }
+    readOnlyValueAsPlainText
   }
 
   fragment inputfield on InputField {
