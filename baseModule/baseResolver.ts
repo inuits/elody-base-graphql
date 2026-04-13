@@ -2223,7 +2223,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     isMetadataField: async (parent, _args, { dataSources }) => {
       return parent.isMetadataField || false;
     },
-    readOnlyValueAsPlainText: async (parent, { input }, { dataSources }) => {
+    readOnlyValueAsPlainText: async (parent, _args, { dataSources }) => {
       return parent.readOnlyValueAsPlainText || false;
     },
     multiple: async (parent, _args, { dataSources }) => {
