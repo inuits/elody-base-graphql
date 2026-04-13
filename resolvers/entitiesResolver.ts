@@ -7,7 +7,7 @@ import {
   SearchFilter,
   Entity,
 } from '../generated-types/type-defs';
-import { getTypesFromFilterInputs } from '../helpers/helpers';
+import { getTypesFromFilterInputs, isTypeKey } from '../helpers/helpers';
 
 type RawFacetGroup = {
   [facetName: string]: { _id: string; count: number }[];
@@ -34,7 +34,7 @@ export const resolveAdvancedEntities = async (
   const containSelectionFilterWithMultipleValues = advancedFilterInputs.some(
     (filter: AdvancedFilterInput) =>
       filter.type === AdvancedFilterTypes.Selection &&
-      filter.key === 'type' &&
+      isTypeKey(filter.key) &&
       filter.value?.length > 1
   );
   if (containSelectionFilterWithMultipleValues) {
@@ -54,7 +54,8 @@ export const resolveAdvancedEntities = async (
       ) ||
       iterationFilters.some(
         (filter: AdvancedFilterInput) =>
-          filter.type === AdvancedFilterTypes.Selection && filter.key === 'type'
+          filter.type === AdvancedFilterTypes.Selection &&
+          isTypeKey(filter.key)
       );
 
     if (!containsTypeFilter) {

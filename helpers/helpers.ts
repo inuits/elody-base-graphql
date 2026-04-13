@@ -14,6 +14,18 @@ import { Environment } from '../types/environmentTypes';
 
 let typeCollectionMapping: { [key: string]: string } = {};
 
+export const isTypeKey = (key: unknown): boolean => {
+  if (key === 'type') return true;
+  if (Array.isArray(key)) {
+    return key.some(
+      (k) =>
+        k === 'type' ||
+        (typeof k === 'string' && k.split('|').pop() === 'type')
+    );
+  }
+  return typeof key === 'string' && key.split('|').pop() === 'type';
+};
+
 export const setTypeCollectionMapping = (mapping: {
   [key: string]: string;
 }): void => {
@@ -142,8 +154,8 @@ export const getTypesFromFilterInputs = (
 
   if (selectionFilters.length) {
     const typeSelectionFilter: AdvancedFilterInput | undefined =
-      selectionFilters.find(
-        (filter: AdvancedFilterInput) => filter.key === 'type'
+      selectionFilters.find((filter: AdvancedFilterInput) =>
+        isTypeKey(filter.key)
       );
     if (typeSelectionFilter) {
       const selectionTypes = Array.isArray(typeSelectionFilter.value)
