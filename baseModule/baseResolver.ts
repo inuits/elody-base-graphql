@@ -121,6 +121,7 @@ import {
   AutocompleteSelectionOptions,
   MapFeatureMetadata,
   ContextMenuCustomAction,
+  ContextMenuQueryAction,
   ContextMenuFormFlow,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
@@ -2282,6 +2283,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     doCustomAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuCustomAction;
     },
+    doQueryAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuQueryAction;
+    },
     displaySettings: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuDisplaySettings;
     },
@@ -2363,6 +2367,23 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     endpointMethod: async (_source, { input }, { dataSources }) => {
       return input || '';
+    },
+  },
+  ContextMenuQueryAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    query: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+    refreshAfterAction: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
     },
   },
   TaggingExtensionConfiguration: {

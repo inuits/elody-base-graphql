@@ -1840,6 +1840,14 @@ export const baseSchema = gql`
     endpointMethod(input: String): String
   }
 
+  type ContextMenuQueryAction {
+    label(input: String): String!
+    icon(input: String): String!
+    query(input: String): String!
+    refreshAfterAction(input: Boolean): Boolean!
+    can(input: [String]): [String]
+  }
+
   type ContextMenuDisplaySettings {
     showInHeader(input: Boolean): Boolean
   }
@@ -1849,6 +1857,7 @@ export const baseSchema = gql`
     doGeneralAction: ContextMenuGeneralAction
     doElodyAction: ContextMenuElodyAction
     doCustomAction: ContextMenuCustomAction
+    doQueryAction: ContextMenuQueryAction
     displaySettings: ContextMenuDisplaySettings
   }
 
