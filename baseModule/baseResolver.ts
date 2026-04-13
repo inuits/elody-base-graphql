@@ -2220,7 +2220,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     fieldKeyToSave: async (parent, { input }, { dataSources }) => {
       return input as string;
     },
-    isMetadataField: async (parent, { input }, { dataSources }) => {
+    isMetadataField: async (parent, _args, { dataSources }) => {
       return parent.isMetadataField || false;
     },
     readOnlyValueAsPlainText: async (parent, { input }, { dataSources }) => {
