@@ -201,6 +201,7 @@ export const baseSchema = gql`
   type FormTab {
     formFields: FormFields!
     formKey(input: String): String
+    relationType(input: String): String
   }
 
   enum ValidationRules {
