@@ -694,6 +694,7 @@ export const baseSchema = gql`
     Keyboard
     Crop
     Cancel
+    Table
   }
 
   input BulkOperationInputModal {
@@ -2313,6 +2314,7 @@ export const baseSchema = gql`
     ViewModesMedia
       @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
+    Table
   }
 
   type PermissionMapping {
