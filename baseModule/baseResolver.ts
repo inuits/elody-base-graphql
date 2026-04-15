@@ -109,7 +109,6 @@ import {
   WindowElementLayout,
   WysiwygElement,
   type WysiwygElementConfiguration,
-  type WysiwygElementStyleConfiguration,
   type TaggingExtensionConfiguration,
   ConfigItem,
   ColumnList,
@@ -159,10 +158,7 @@ import {
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
 import {
-  CollectionAPIEntity,
   CollectionAPIMediaFile,
-  CollectionAPIMetadata,
-  CollectionAPIRelation,
 } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 import { defaultMatchers } from '../sources/filtersMatchers';
@@ -2380,39 +2376,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return configuration;
     },
   },
-  WysiwygElementStyleConfiguration: {
-    displayTextItalic: async (
-      _source: any,
-      { input, relationLookup },
-      { dataSources }
-    ) => {
-      if (input) return input;
-
-      try {
-        if (!relationLookup) return false;
-
-        const relation = _source.relations.find(
-          (relation: CollectionAPIRelation) =>
-            relation.type === relationLookup.relationType
-        );
-        const lookupEntity: CollectionAPIEntity =
-          await dataSources.CollectionAPI.getEntityById(relation.key);
-        const lookupValue: boolean =
-          (lookupEntity.metadata.find(
-            (metadataItem: CollectionAPIMetadata) =>
-              metadataItem.key === relationLookup.metadataKey
-          )?.value as boolean) || false;
-
-        return lookupValue;
-      } catch {
-        console.log('Something went wrong during italic text lookup');
-        return false;
-      }
-    },
-  },
   WysiwygElementConfiguration: {
-    styleConfiguration: async (_source: any, {}, { dataSources }) => {
-      return _source as WysiwygElementStyleConfiguration;
+    customEditorStyles: async (_source: any, { input }) => {
+      return input || null;
     },
     showLineNumbers: async (_source: any, { input }, { dataSources }) => {
       return input || false;

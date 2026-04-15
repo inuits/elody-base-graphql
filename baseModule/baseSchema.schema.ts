@@ -1737,15 +1737,8 @@ export const baseSchema = gql`
     metadataKey: String!
   }
 
-  type WysiwygElementStyleConfiguration {
-    displayTextItalic(
-      input: Boolean
-      relationLookup: RelationLookupInput
-    ): Boolean!
-  }
-
   type WysiwygElementConfiguration {
-    styleConfiguration: WysiwygElementStyleConfiguration
+    customEditorStyles(input: String): String
     showLineNumbers(input: Boolean): Boolean
     virtualKeyboardLayouts(input: [String!]): JSON
   }
