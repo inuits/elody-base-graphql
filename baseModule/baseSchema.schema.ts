@@ -1616,8 +1616,30 @@ export const baseSchema = gql`
     hideIfMetadataNotPresent: String
   }
 
+  type PanelStatus {
+    statusMetadataKey: String!
+    statusInputFieldType: BaseFieldType!
+  }
+
+  input PanelStatusInput {
+    statusMetadataKey: String!
+    statusInputFieldType: BaseFieldType!
+  }
+
+  type PanelHeaderContent {
+    label: String!
+    panelStatus: PanelStatus
+  }
+
+  input PanelHeaderContentInput {
+    label: String!
+    panelStatus: PanelStatusInput
+  }
+
   type WindowElementPanel {
-    label(input: String): String
+    panelHeaderContent(
+      panelHeaderContentInput: PanelHeaderContentInput
+    ): PanelHeaderContent
     panelType(input: PanelType!): PanelType!
     can(input: String): String
     isEditable(input: Boolean!): Boolean!

@@ -1443,8 +1443,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WindowElementPanel: {
-    label: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
+    panelHeaderContent: async (_source, { panelHeaderContentInput }, { dataSources }) => {
+      return panelHeaderContentInput || { label: 'no-input' };
     },
     isEditable: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
