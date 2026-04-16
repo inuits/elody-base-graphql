@@ -123,6 +123,8 @@ import {
   ContextMenuFormFlow,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
+  PanelHeaderContent,
+  PanelStatus,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -157,9 +159,7 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import {
-  CollectionAPIMediaFile,
-} from '../types/collectionAPITypes';
+import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 import { defaultMatchers } from '../sources/filtersMatchers';
 
@@ -699,13 +699,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       { keys = [] },
       { customFilterMatchers = {} }
     ) => {
-      const allMatchers: Record<string, string[]> = { ...defaultMatchers, ...customFilterMatchers };
+      const allMatchers: Record<string, string[]> = {
+        ...defaultMatchers,
+        ...customFilterMatchers,
+      };
       const targetKeys = keys?.length ? keys : Object.keys(allMatchers);
 
-      return targetKeys.map((key: string): FilterMatchers => ({
-        key,
-        matchers: allMatchers[key] || [],
-      })) as FilterMatchers[];
+      return targetKeys.map(
+        (key: string): FilterMatchers => ({
+          key,
+          matchers: allMatchers[key] || [],
+        })
+      ) as FilterMatchers[];
     },
     EntityTypeFilters: async (_source, { type }) => {
       return {
@@ -1391,7 +1396,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
-    }
+    },
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1443,8 +1448,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WindowElementPanel: {
-    panelHeaderContent: async (_source, { panelHeaderContentInput }, { dataSources }) => {
-      return panelHeaderContentInput || { label: 'no-input' };
+    panelHeaderContent: async (
+      _source,
+      { panelHeaderContentInput },
+      { dataSources }
+    ) => {
+      return panelHeaderContentInput as PanelHeaderContent;
     },
     isEditable: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
@@ -1498,6 +1507,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
       if (repetitionKey) return { repetitionKey };
       return { repetitionKey: undefined };
+    },
+  },
+  PanelHeaderContent: {
+    label: async (_source, {}, { dataSources }) => {
+      return _source.label || 'no-input';
+    },
+    panelStatus: async (_source, {}, { dataSources }) => {
+      return _source.panelStatus as PanelStatus;
+    },
+  },
+  PanelStatus: {
+    statusMetadataKey: async (_source, {}, { dataSources }) => {
+      return _source.statusMetadataKey;
+    },
+    statusInputField: async (_source, {}, { dataSources }) => {
+      return baseFields[_source.statusInputFieldType];
     },
   },
   ExpandButtonOptions: {
@@ -2233,7 +2258,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
       return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
-    }
+    },
   },
   SubField: {
     label: async (parent: any, _args: any) => {

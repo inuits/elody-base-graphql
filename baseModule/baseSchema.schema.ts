@@ -1618,7 +1618,7 @@ export const baseSchema = gql`
 
   type PanelStatus {
     statusMetadataKey: String!
-    statusInputFieldType: BaseFieldType!
+    statusInputField: InputField!
   }
 
   input PanelStatusInput {
