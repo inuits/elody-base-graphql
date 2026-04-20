@@ -42,7 +42,9 @@ export const shareLinkQueries = gql`
           windowElement {
             label(input: "Metadata")
             info: panels {
-              label(input: "panel-labels.license-info")
+              panelHeaderContent(panelHeaderContentInput: { label: "panel-labels.license-info" }) {
+                label
+              }
               panelType(input: metadata)
               isEditable(input: true)
               isCollapsed(input: false)

@@ -201,6 +201,7 @@ export const baseSchema = gql`
   type FormTab {
     formFields: FormFields!
     formKey(input: String): String
+    relationType(input: String): String
   }
 
   enum ValidationRules {
@@ -694,6 +695,7 @@ export const baseSchema = gql`
     Keyboard
     Crop
     Cancel
+    Table
   }
 
   input BulkOperationInputModal {
@@ -1614,8 +1616,30 @@ export const baseSchema = gql`
     hideIfMetadataNotPresent: String
   }
 
+  type PanelStatus {
+    statusMetadataKey: String!
+    statusInputField: InputField!
+  }
+
+  input PanelStatusInput {
+    statusMetadataKey: String!
+    statusInputFieldType: BaseFieldType!
+  }
+
+  type PanelHeaderContent {
+    label: String!
+    panelStatus: PanelStatus
+  }
+
+  input PanelHeaderContentInput {
+    label: String!
+    panelStatus: PanelStatusInput
+  }
+
   type WindowElementPanel {
-    label(input: String): String
+    panelHeaderContent(
+      panelHeaderContentInput: PanelHeaderContentInput
+    ): PanelHeaderContent
     panelType(input: PanelType!): PanelType!
     can(input: String): String
     isEditable(input: Boolean!): Boolean!
@@ -1735,15 +1759,8 @@ export const baseSchema = gql`
     metadataKey: String!
   }
 
-  type WysiwygElementStyleConfiguration {
-    displayTextItalic(
-      input: Boolean
-      relationLookup: RelationLookupInput
-    ): Boolean!
-  }
-
   type WysiwygElementConfiguration {
-    styleConfiguration: WysiwygElementStyleConfiguration
+    customEditorStyles(input: String): String
     showLineNumbers(input: Boolean): Boolean
     virtualKeyboardLayouts(input: [String!]): JSON
   }
@@ -2322,6 +2339,7 @@ export const baseSchema = gql`
     ViewModesMedia
       @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
+    Table
   }
 
   type PermissionMapping {

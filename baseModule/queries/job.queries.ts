@@ -98,7 +98,9 @@ export const jobQueries = gql`
           windowElement {
             label(input: "element-labels.metadata-element")
             omschrijving: panels {
-              label(input: "panel-labels.description")
+              panelHeaderContent(panelHeaderContentInput: { label: "panel-labels.description" }) {
+                label
+              }
               panelType(input: metadata)
               isEditable(input: true)
               isCollapsed(input: false)

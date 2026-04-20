@@ -109,7 +109,6 @@ import {
   WindowElementLayout,
   WysiwygElement,
   type WysiwygElementConfiguration,
-  type WysiwygElementStyleConfiguration,
   type TaggingExtensionConfiguration,
   ConfigItem,
   ColumnList,
@@ -125,6 +124,8 @@ import {
   ContextMenuFormFlow,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
+  PanelHeaderContent,
+  PanelStatus,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -159,12 +160,7 @@ import {
   prepareRelationFieldForMapData,
 } from '../resolvers/mapComponentResolver';
 import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
-import {
-  CollectionAPIEntity,
-  CollectionAPIMediaFile,
-  CollectionAPIMetadata,
-  CollectionAPIRelation,
-} from '../types/collectionAPITypes';
+import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 import { defaultMatchers } from '../sources/filtersMatchers';
 
@@ -704,13 +700,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       { keys = [] },
       { customFilterMatchers = {} }
     ) => {
-      const allMatchers: Record<string, string[]> = { ...defaultMatchers, ...customFilterMatchers };
+      const allMatchers: Record<string, string[]> = {
+        ...defaultMatchers,
+        ...customFilterMatchers,
+      };
       const targetKeys = keys?.length ? keys : Object.keys(allMatchers);
 
-      return targetKeys.map((key: string): FilterMatchers => ({
-        key,
-        matchers: allMatchers[key] || [],
-      })) as FilterMatchers[];
+      return targetKeys.map(
+        (key: string): FilterMatchers => ({
+          key,
+          matchers: allMatchers[key] || [],
+        })
+      ) as FilterMatchers[];
     },
     EntityTypeFilters: async (_source, { type }) => {
       return {
@@ -1396,7 +1397,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
-    }
+    },
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1448,8 +1449,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WindowElementPanel: {
-    label: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
+    panelHeaderContent: async (
+      _source,
+      { panelHeaderContentInput },
+      { dataSources }
+    ) => {
+      return panelHeaderContentInput as PanelHeaderContent;
     },
     isEditable: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
@@ -1503,6 +1508,22 @@ export const baseResolver: Resolvers<ContextValue> = {
     repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
       if (repetitionKey) return { repetitionKey };
       return { repetitionKey: undefined };
+    },
+  },
+  PanelHeaderContent: {
+    label: async (_source, {}, { dataSources }) => {
+      return _source.label || 'no-input';
+    },
+    panelStatus: async (_source, {}, { dataSources }) => {
+      return _source.panelStatus as PanelStatus;
+    },
+  },
+  PanelStatus: {
+    statusMetadataKey: async (_source, {}, { dataSources }) => {
+      return _source.statusMetadataKey;
+    },
+    statusInputField: async (_source, {}, { dataSources }) => {
+      return baseFields[_source.statusInputFieldType];
     },
   },
   ExpandButtonOptions: {
@@ -2099,6 +2120,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     formKey: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
   },
   Form: {
     label: async (parent: any, { input }, { dataSources }) => {
@@ -2235,7 +2259,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
       return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
-    }
+    },
   },
   SubField: {
     label: async (parent: any, _args: any) => {
@@ -2398,39 +2422,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return configuration;
     },
   },
-  WysiwygElementStyleConfiguration: {
-    displayTextItalic: async (
-      _source: any,
-      { input, relationLookup },
-      { dataSources }
-    ) => {
-      if (input) return input;
-
-      try {
-        if (!relationLookup) return false;
-
-        const relation = _source.relations.find(
-          (relation: CollectionAPIRelation) =>
-            relation.type === relationLookup.relationType
-        );
-        const lookupEntity: CollectionAPIEntity =
-          await dataSources.CollectionAPI.getEntityById(relation.key);
-        const lookupValue: boolean =
-          (lookupEntity.metadata.find(
-            (metadataItem: CollectionAPIMetadata) =>
-              metadataItem.key === relationLookup.metadataKey
-          )?.value as boolean) || false;
-
-        return lookupValue;
-      } catch {
-        console.log('Something went wrong during italic text lookup');
-        return false;
-      }
-    },
-  },
   WysiwygElementConfiguration: {
-    styleConfiguration: async (_source: any, {}, { dataSources }) => {
-      return _source as WysiwygElementStyleConfiguration;
+    customEditorStyles: async (_source: any, { input }) => {
+      return input || null;
     },
     showLineNumbers: async (_source: any, { input }, { dataSources }) => {
       return input || false;
