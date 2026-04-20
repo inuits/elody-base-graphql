@@ -1454,7 +1454,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       { panelHeaderContentInput },
       { dataSources }
     ) => {
-      return panelHeaderContentInput as PanelHeaderContent;
+      return panelHeaderContentInput as unknown as PanelHeaderContent;
     },
     isEditable: async (_source, { input }, { dataSources }) => {
       return input != undefined ? input : false;
