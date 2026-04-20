@@ -543,6 +543,7 @@ export const baseSchema = gql`
     Bell
     BookOpen
     BrightnessPlus
+    Building
     Car
     Channel
     CloudBookmark
