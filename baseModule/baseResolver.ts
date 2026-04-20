@@ -126,6 +126,7 @@ import {
   MetadataOnRelationFieldConfig,
   PanelHeaderContent,
   PanelStatus,
+  PanelStatusInput,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1523,7 +1524,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return _source.statusMetadataKey;
     },
     statusInputField: async (_source, {}, { dataSources }) => {
-      return baseFields[_source.statusInputFieldType];
+      return baseFields[(_source as unknown as PanelStatusInput).statusInputFieldType];
     },
   },
   ExpandButtonOptions: {
