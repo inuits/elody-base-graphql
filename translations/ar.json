@@ -227,6 +227,7 @@
         "select-filter-type": "اختر نوع المرشح",
         "AnyMatcher": "يحتوي على قيمة",
         "ContainsMatcher": "يحتوي",
+        "ContainsNotMatcher": "لا يحتوي",
         "ExactMatcher": "مساوٍ تمامًا",
         "IdMatcher": "المعرف",
         "InBetweenMatcher": "بين قيمتين",

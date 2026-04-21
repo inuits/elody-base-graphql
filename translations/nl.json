@@ -234,6 +234,7 @@
         "select-filter-type": "Selecteer filter type",
         "AnyMatcher": "is ingevuld",
         "ContainsMatcher": "bevat",
+        "ContainsNotMatcher": "bevat niet",
         "ExactMatcher": "is gelijk aan",
         "IdMatcher": "ID",
         "InBetweenMatcher": "tussen twee waardes",

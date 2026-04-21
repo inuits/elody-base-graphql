@@ -6,6 +6,7 @@ export const defaultMatchers = {
     Matchers.NoneMatcher,
     Matchers.ExactMatcher,
     Matchers.ContainsMatcher,
+    Matchers.ContainsNotMatcher,
     Matchers.RegexMatcher,
   ],
   date: [
@@ -27,6 +28,7 @@ export const defaultMatchers = {
     Matchers.NoneMatcher,
     Matchers.ExactMatcher,
     Matchers.ContainsMatcher,
+    Matchers.ContainsNotMatcher,
   ],
   boolean: [
     Matchers.AnyMatcher,

@@ -36,6 +36,7 @@ export const baseSchema = gql`
     NoneMatcher
     ExactMatcher
     ContainsMatcher
+    ContainsNotMatcher
     MinIncludedMatcher
     MaxIncludedMatcher
     InBetweenMatcher
@@ -2070,6 +2071,7 @@ export const baseSchema = gql`
     distinct_by: String
     item_types: [String]
     match_exact: Boolean
+    match_not: Boolean
     provide_value_options_for_key: Boolean
     inner_exact_matches: JSON
     operator: Operator
@@ -2159,6 +2161,7 @@ export const baseSchema = gql`
     metadata_key_as_label: String
     item_types: [String]
     match_exact: Boolean
+    match_not: Boolean
     inner_exact_matches: JSON
     aggregation: String
     returnIdAtIndex: Int

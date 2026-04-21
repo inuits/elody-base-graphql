@@ -241,6 +241,7 @@
         "select-filter-type": "Select filter type",
         "AnyMatcher": "has a value",
         "ContainsMatcher": "contains",
+        "ContainsNotMatcher": "does not contain",
         "ExactMatcher": "is exactly",
         "IdMatcher": "ID",
         "InBetweenMatcher": "between two values",
