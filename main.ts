@@ -224,6 +224,7 @@ const start = ({
       validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 15)],
       introspection: environment?.apollo.introspection || false,
       plugins: [authExtensionPlugin],
+      nodeEnv: environment.environment,
       gateway: {
         async load() {
           return { executor: application.createApolloExecutor() };
