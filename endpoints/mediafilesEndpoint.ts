@@ -60,7 +60,6 @@ const getDownloadUrlForMediafile = async (
       req
     );
     const response: any = await downloadUrls.json();
-    console.log(response);
     if (kind === 'transcode') return response['transcode_file_location'];
     else return response['original_file_location'];
   } catch (e) {
@@ -103,7 +102,7 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
         (req as any).resolvedUrl = newUrl;
         (req as any).originalFilename = originalFilename;
 
-        return new URL(environment.api.storageApiUrl).origin;
+        return newUrl.origin;
       },
       pathRewrite: (path, req) => {
         const resolved = (req as any).resolvedUrl as URL;
