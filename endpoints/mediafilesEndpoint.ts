@@ -1,4 +1,4 @@
-import { Express, Response, Request } from 'express';
+import { Express, Response, Request, NextFunction } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 import { Collection } from '../generated-types/type-defs';
@@ -8,6 +8,7 @@ import {
   responseInterceptor,
 } from 'http-proxy-middleware';
 import { fetchWithTokenRefresh } from './fetchWithToken';
+import nodeFetch from 'node-fetch';
 
 // TODO: Should be moved to the mediafiles module and loaded in dynamically.
 
@@ -68,64 +69,58 @@ const getDownloadUrlForMediafile = async (
   }
 };
 
+/**
+ * The collection-api returns external (Traefik-facing) download URLs which use
+ * *.localhost domains. These are unreachable from inside the container because
+ * *.localhost always resolves to 127.0.0.1 (RFC 6761). This function maps known
+ * external origins to their internal counterparts so the server-side fetch can
+ * reach the actual service.
+ */
+const resolveExternalDownloadUrlToInternalUrl = (
+  downloadUrl: string,
+  environment: Environment
+): string => {
+  const parsed = new URL(downloadUrl);
+  if (!parsed.hostname.endsWith('.localhost')) return downloadUrl;
+  if (parsed.origin === new URL(environment.api.iiifUrlFrontend).origin) {
+    return new URL(environment.api.iiifUrl).origin + parsed.pathname + parsed.search;
+  }
+  return new URL(environment.api.storageApiUrl).origin + parsed.pathname + parsed.search;
+};
+
 const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   app.use(
     ['/api/mediafile/*', '/api/mediafile/download-with-ticket'],
-    createProxyMiddleware({
-      target: environment.api.storageApiUrl,
-      changeOrigin: true,
-      router: async (req) => {
-        const urlWithoutParams = req.originalUrl
-          .split('?')[0]
-          .split('/')
-          .filter(Boolean);
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const urlWithoutParams = req.originalUrl.split('?')[0].split('/').filter(Boolean);
         const filename = urlWithoutParams.at(-1);
-        if (!filename)
-          throw Error('Unable to request download url for mediafile');
+        if (!filename) throw new Error('Invalid URL');
 
         const isOriginal = req.query.original === 'true';
-        const originalFilename = req.query.originalFilename;
+        const originalFilename = req.query.originalFilename as string | undefined;
         const kind = isOriginal ? 'original' : 'transcode';
 
-        const fullUrl = await getDownloadUrlForMediafile(
-          filename,
-          req,
-          environment,
-          kind
-        );
+        const downloadUrl = await getDownloadUrlForMediafile(filename, req, environment, kind);
+        if (!downloadUrl) throw new Error('Invalid URL returned from helper');
 
-        if (!fullUrl) {
-          throw new Error('Invalid URL returned from helper');
-        }
+        const internalUrl = resolveExternalDownloadUrlToInternalUrl(downloadUrl, environment);
+        const fileResponse = await nodeFetch(internalUrl);
+        if (!fileResponse.ok) throw new Error(`Upstream error: ${fileResponse.status}`);
 
-        const newUrl: any = new URL(fullUrl);
-        (req as any).resolvedUrl = newUrl;
-        (req as any).originalFilename = originalFilename;
+        const contentType = fileResponse.headers.get('content-type') || '';
+        res.setHeader('Content-Type', contentType);
 
-        return newUrl.origin;
-      },
-      pathRewrite: (path, req) => {
-        const resolved = (req as any).resolvedUrl as URL;
-        if (!resolved) return path;
-
-        return resolved.pathname + resolved.search;
-      },
-      onProxyRes: (proxyRes, req: any, res) => {
-        const originalFilename = (req as any).originalFilename as string;
-        const contentType = proxyRes.headers['content-type'];
-        const extension = contentType?.split('/')[1] || '';
+        const extension = contentType.split('/')[1] || '';
         if (originalFilename && extension) {
-          res.setHeader(
-            'Content-Disposition',
-            `attachment; filename="${originalFilename}.${extension}"`
-          );
+          res.setHeader('Content-Disposition', `attachment; filename="${originalFilename}.${extension}"`);
         }
-      },
-      onError: (err, req, res, next) => {
-        console.error('Proxy error:', err);
-        res.status(500).send('Proxy error');
-      },
-    })
+
+        fileResponse.body!.pipe(res);
+      } catch (error) {
+        next(error);
+      }
+    }
   );
 
   app.use(
