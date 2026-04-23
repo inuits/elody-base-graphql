@@ -589,6 +589,7 @@ export const baseSchema = gql`
     FolderPlus
     ChannelAdd
     Label
+    Desktop
   }
 
   type Menu {
