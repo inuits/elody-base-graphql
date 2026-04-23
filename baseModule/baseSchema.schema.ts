@@ -1246,6 +1246,12 @@ export const baseSchema = gql`
     can(input: [String!]): [String!]
     cropMediafileCoordinatesKey(input: String): String
     actionsOnResult: ActionsOnResult
+    displayCondition: DisplayCondition
+  }
+
+  type DisplayCondition {
+    key(input: String!): String!
+    value(input: String!): String!
   }
 
   enum ActionsOnResultTypes {

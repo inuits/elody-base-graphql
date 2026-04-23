@@ -23,6 +23,7 @@ import {
   Actions,
   ActionsOnResult,
   ActionsOnResultTypes,
+  DisplayCondition,
   ActionType,
   AdvancedFilterTypes,
   BaseLibraryModes,
@@ -1332,6 +1333,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     actionsOnResult: async (parent: unknown, {}, { dataSources }) => {
       return parent as ActionsOnResult;
+    },
+    displayCondition: async (parent: unknown, {}, { dataSources }) => {
+      return parent as unknown as DisplayCondition;
+    },
+  },
+  DisplayCondition: {
+    key: async (_source, { input }, { dataSources }) => {
+      return input as string;
+    },
+    value: async (_source, { input }, { dataSources }) => {
+      return input as string;
     },
   },
   ActionsOnResult: {
