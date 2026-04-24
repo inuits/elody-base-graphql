@@ -1252,7 +1252,7 @@ export const baseSchema = gql`
 
   type DisplayCondition {
     key(input: String!): String!
-    value(input: String!): String!
+    value(input: String): String
   }
 
   enum ActionsOnResultTypes {
