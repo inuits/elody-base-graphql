@@ -102,6 +102,7 @@ import {
   UploadField,
   UploadFieldSize,
   UploadFieldType,
+  ValueMapping,
   Validation,
   ValidationRules,
   ViewModes,
@@ -2631,6 +2632,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
       return value;
     },
+    defaultValueMapping: (parent, { value }) => {
+      return value as ValueMapping[];
+    },
     doNotOverrideDefaultValue: (parent, { value }) => {
       return value !== undefined ? value : false;
     },
@@ -2681,6 +2685,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     matchersType: (parent) => {
       return parent.matchersType || null;
+    },
+  },
+  ValueMapping: {
+    value: (parent) => {
+      return parent.value || null;
+    },
+    mapping: (parent) => {
+      return parent.mapping || null;
     },
   },
   MapFeatureMetadata: {

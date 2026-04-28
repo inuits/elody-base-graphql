@@ -55,6 +55,10 @@ export const baseFragments = gql`
       value
       distinct_by
       match_exact
+      defaultValueMapping {
+        value
+        mapping
+      }
     }
     tooltip(value: true)
     includeDefaultValuesFromIntialValues

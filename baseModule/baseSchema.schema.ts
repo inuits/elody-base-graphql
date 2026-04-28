@@ -2086,6 +2086,17 @@ export const baseSchema = gql`
     returnIdAtIndex: Int
     bucket: String
     facets: [FacetInputInput!]
+    defaultValueMapping: [ValueMappingInput]
+  }
+
+  input ValueMappingInput {
+    value: JSON
+    mapping: JSON
+  }
+
+  type ValueMapping {
+    value: JSON
+    mapping: JSON
   }
 
   input LookupInput {
@@ -2119,6 +2130,7 @@ export const baseSchema = gql`
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     aggregation: String
     defaultValue(value: JSON!): JSON!
+    defaultValueMapping(value: [ValueMappingInput]): [ValueMapping]
     doNotOverrideDefaultValue(value: Boolean): Boolean
     hidden(value: Boolean): Boolean!
     tooltip(value: Boolean): Boolean
@@ -2178,6 +2190,7 @@ export const baseSchema = gql`
     bucket: String
     includeDefaultValuesFromIntialValues: [String]
     matchersType: AdvancedFilterMatchersType
+    defaultValueMapping: [ValueMapping]
   }
 
   type AdvancedFilters {
