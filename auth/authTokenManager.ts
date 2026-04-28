@@ -2,6 +2,7 @@ import { GraphQLError } from 'graphql';
 import jwt_decode from 'jwt-decode';
 import { manager } from '.';
 import { Environment } from '../types/environmentTypes';
+import { isIpAddressWhitelisted } from '../helpers/helpers';
 
 // Per-session refresh lock to prevent concurrent refresh attempts
 const refreshLocks = new WeakMap<object, Promise<string | null>>();
@@ -38,7 +39,7 @@ export class AuthTokenManager {
     const ipWhitelistFeature = this.environment?.features?.ipWhiteListing;
     if (
       ipWhitelistFeature &&
-      this.isIpWhitelisted(this.clientIp) &&
+      isIpAddressWhitelisted(this.clientIp, this.environment) &&
       ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses
     ) {
       console.log('Using whitelisted IP token');
@@ -103,11 +104,5 @@ export class AuthTokenManager {
     } catch {
       return true;
     }
-  }
-
-  private isIpWhitelisted(ip?: string): boolean {
-    const list =
-      this.environment?.features?.ipWhiteListing?.whiteListedIpAddresses ?? [];
-    return !!ip && list.includes(ip);
   }
 }

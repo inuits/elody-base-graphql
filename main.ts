@@ -24,6 +24,7 @@ import {
   getPrimaryMediaFileIDOfEntity,
   checkRequestContentType,
   setTypeCollectionMapping,
+  isIpAddressWhitelisted,
 } from './helpers/helpers';
 import {
   Collection,
@@ -391,4 +392,5 @@ export {
   setId,
   setType,
   TranscodeService,
+  isIpAddressWhitelisted,
 };

@@ -19,8 +19,7 @@ export const isTypeKey = (key: unknown): boolean => {
   if (Array.isArray(key)) {
     return key.some(
       (k) =>
-        k === 'type' ||
-        (typeof k === 'string' && k.split('|').pop() === 'type')
+        k === 'type' || (typeof k === 'string' && k.split('|').pop() === 'type')
     );
   }
   return typeof key === 'string' && key.split('|').pop() === 'type';
@@ -176,4 +175,17 @@ export const checkRequestContentType = (req: Request, res: Response) => {
     return true;
   }
   return false;
+};
+
+export const isIpAddressWhitelisted = (
+  ipAddress: string,
+  environment: Environment
+): boolean => {
+  const whitelist: string[] =
+    environment?.features?.ipWhiteListing?.whiteListedIpAddresses ?? [];
+  return whitelist.some((ip) =>
+    ip.includes('*')
+      ? ip.split('*').every((part) => ipAddress.includes(part))
+      : ipAddress === ip
+  );
 };
