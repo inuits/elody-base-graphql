@@ -8,7 +8,28 @@ import {
   responseInterceptor,
 } from 'http-proxy-middleware';
 import { fetchWithTokenRefresh } from './fetchWithToken';
+import { AuthTokenManager } from '../auth/authTokenManager';
 import nodeFetch from 'node-fetch';
+
+// Resolve a token for IIIF passthrough requests: session token if available,
+// otherwise the configured static token. Lets unauthenticated consumers
+// (e.g. the generated Canopy static site) reach Cantaloupe via the proxy
+// without exposing it directly.
+const resolveIiifToken = async (req: any): Promise<string | undefined> => {
+  const env = getCurrentEnvironment();
+  try {
+    const handler = new AuthTokenManager(
+      env,
+      req.session,
+      req.headers['x-forwarded-for']
+    );
+    const token = await handler.getValidToken();
+    if (token) return token;
+  } catch {
+    // fall through to static token
+  }
+  return env.staticToken || undefined;
+};
 
 // TODO: Should be moved to the mediafiles module and loaded in dynamically.
 
@@ -167,10 +188,13 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
 
   app.use('/api/iiif/*', async (req, res) => {
     try {
-      const response = await fetchWithTokenRefresh(
+      const token = await resolveIiifToken(req);
+      const response = await fetch(
         `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`,
-        { method: 'GET' },
-        req
+        {
+          method: 'GET',
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
       );
 
       if (!response.ok) {
