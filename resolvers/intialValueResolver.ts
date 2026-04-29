@@ -32,7 +32,7 @@ export const resolveIntialValueMetadata = async (
 ): Promise<string | any | { label: string; formatter: string }> => {
   const metadata = await resolveMetadata(parent, [key], undefined);
 
-  if (metadata.length > 1) {
+  if (metadata.length > 1 || metadata?.[0]?.lang) {
     return metadata.map((item: Metadata) => ({
       key: item.key,
       value: item.value,
