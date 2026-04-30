@@ -11,24 +11,31 @@ import { fetchWithTokenRefresh } from './fetchWithToken';
 import { AuthTokenManager } from '../auth/authTokenManager';
 import nodeFetch from 'node-fetch';
 
-// Resolve a token for IIIF passthrough requests: session token if available,
-// otherwise the configured static token. Lets unauthenticated consumers
-// (e.g. the generated Canopy static site) reach Cantaloupe via the proxy
-// without exposing it directly.
+// Resolve a token for IIIF passthrough requests.
+//
+// Default behaviour: session token only — unauthenticated requests get 401.
+// When IIIF_ALLOW_STATIC_TOKEN_FALLBACK=true (opt-in per deployment), a
+// missing session falls back to the configured static token. This is for
+// tenants that explicitly want their /api/iiif/* path to be public (e.g.
+// VLIZ Wetenschatten which is fully public). Other tenants sharing this
+// module are unaffected.
 const resolveIiifToken = async (req: any): Promise<string | undefined> => {
   const env = getCurrentEnvironment();
+  const handler = new AuthTokenManager(
+    env,
+    req.session,
+    req.headers['x-forwarded-for']
+  );
   try {
-    const handler = new AuthTokenManager(
-      env,
-      req.session,
-      req.headers['x-forwarded-for']
-    );
     const token = await handler.getValidToken();
     if (token) return token;
-  } catch {
-    // fall through to static token
+  } catch (err) {
+    if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK === 'true') {
+      return env.staticToken || undefined;
+    }
+    throw err;
   }
-  return env.staticToken || undefined;
+  return undefined;
 };
 
 // TODO: Should be moved to the mediafiles module and loaded in dynamically.
