@@ -8,35 +8,7 @@ import {
   responseInterceptor,
 } from 'http-proxy-middleware';
 import { fetchWithTokenRefresh } from './fetchWithToken';
-import { AuthTokenManager } from '../auth/authTokenManager';
 import nodeFetch from 'node-fetch';
-
-// Resolve a token for IIIF passthrough requests.
-//
-// Default behaviour: session token only — unauthenticated requests get 401.
-// When IIIF_ALLOW_STATIC_TOKEN_FALLBACK=true (opt-in per deployment), a
-// missing session falls back to the configured static token. This is for
-// tenants that explicitly want their /api/iiif/* path to be public (e.g.
-// VLIZ Wetenschatten which is fully public). Other tenants sharing this
-// module are unaffected.
-const resolveIiifToken = async (req: any): Promise<string | undefined> => {
-  const env = getCurrentEnvironment();
-  const handler = new AuthTokenManager(
-    env,
-    req.session,
-    req.headers['x-forwarded-for']
-  );
-  try {
-    const token = await handler.getValidToken();
-    if (token) return token;
-  } catch (err) {
-    if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK === 'true') {
-      return env.staticToken || undefined;
-    }
-    throw err;
-  }
-  return undefined;
-};
 
 // TODO: Should be moved to the mediafiles module and loaded in dynamically.
 
@@ -194,15 +166,24 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   );
 
   app.use('/api/iiif/*', async (req, res) => {
+    const target = `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`;
     try {
-      const token = await resolveIiifToken(req);
-      const response = await fetch(
-        `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`,
-        {
-          method: 'GET',
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
+      let response;
+      try {
+        response = await fetchWithTokenRefresh(target, { method: 'GET' }, req);
+      } catch (authErr) {
+        // Tenants that intentionally publish their IIIF path (e.g. VLIZ
+        // Wetenschatten) opt in to a static-token fallback when the caller
+        // has no valid session. Default behaviour stays auth-required.
+        if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK !== 'true') {
+          throw authErr;
         }
-      );
+        const staticToken = environment.staticToken;
+        response = await fetch(target, {
+          method: 'GET',
+          headers: staticToken ? { Authorization: `Bearer ${staticToken}` } : {},
+        });
+      }
 
       if (!response.ok) {
         throw response;
