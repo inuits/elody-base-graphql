@@ -616,6 +616,10 @@
         "between": "{field} must be between {min} and {max}",
         "no_xss": "{field} can not include html"
       }
+    },
+    "text-viewer": {
+      "sanitized-warning": "The preview content has been sanitized for security reasons.",
+      "dismiss": "Dismiss"
     }
   }
 }

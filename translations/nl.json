@@ -604,6 +604,10 @@
         "between": "{field} moet tussen {min} en {max} zijn",
         "no_xss": "{field} kan geen html bevatten"
       }
+    },
+    "text-viewer": {
+      "sanitized-warning": "De voorbeeldinhoud is om veiligheidsredenen opgeschoond.",
+      "dismiss": "Sluiten"
     }
   }
 }
