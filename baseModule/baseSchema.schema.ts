@@ -221,6 +221,7 @@ export const baseSchema = gql`
     email
     url
     no_xss
+    numeric
   }
 
   enum ValidationFields {
