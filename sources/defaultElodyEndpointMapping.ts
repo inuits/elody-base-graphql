@@ -6,6 +6,7 @@ import { applyExportEndpoint } from '../endpoints/exportEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
 import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
+import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
 import { TypeUrlMapping } from '../types';
 
 export const defaultElodyEndpointMapping: Record<string, Function> = {
@@ -15,6 +16,7 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     clientSecret: string,
     environment: Environment
   ) => applyAuthEndpoints(app, oauthBaseUrl, clientSecret, environment),
+  baseUploadEndpoint: (app: Express) => applyUploadEndpoint(app),
   downloadEndpoint: (app: Express) => applyDownloadEndpoint(app),
   exportEndpoint: (app: Express) => applyExportEndpoint(app),
   versionEndpoint: (app: Express, config: Environment) =>
