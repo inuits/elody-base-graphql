@@ -1,11 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import express from 'express';
 import request from 'supertest';
-import { applyDocumentsEndpoint } from '../endpoints/documentsEndpoint';
 
 vi.mock('fs');
 
-const mockDocuments = { GetEntityByIdDocument: { kind: 'Document', definitions: [] } };
+const mockDocuments = {
+  GetEntityByIdDocument: { kind: 'Document', definitions: [] },
+};
 
 describe('applyDocumentsEndpoint', () => {
   let app: express.Express;

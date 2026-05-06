@@ -2,20 +2,25 @@ import { applyAuthEndpoints } from '../auth';
 import { Express } from 'express';
 import { Environment } from '../types/environmentTypes';
 import { applyDownloadEndpoint } from '../endpoints/downloadEndpoint';
+import { applyDownloadZipEndpoint } from '../endpoints/downloadZipEndpoint';
 import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
 import { applyExportEndpoint } from '../endpoints/exportEndpoint';
 import applyMediaFileEndpoint from '../endpoints/mediafilesEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
-import { applyDocumentsEndpoint } from '../endpoints/documentsEndpoint';
 import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
 import { applyLinkedOpenDataEndpoint } from '../endpoints/linkedOpenDataEndpoint';
 import { TypeUrlMapping } from '../types';
 
 export const defaultElodyEndpointMapping: Record<string, Function> = {
-  authEndpoint: (app: Express, oauthBaseUrl: string, clientSecret: string, environment: Environment) =>
-    applyAuthEndpoints(app, oauthBaseUrl, clientSecret, environment),
+  authEndpoint: (
+    app: Express,
+    oauthBaseUrl: string,
+    clientSecret: string,
+    environment: Environment
+  ) => applyAuthEndpoints(app, oauthBaseUrl, clientSecret, environment),
   downloadEndpoint: (app: Express) => applyDownloadEndpoint(app),
+  downloadZipEndpoint: (app: Express) => applyDownloadZipEndpoint(app),
   uploadEndpoint: (app: Express) => applyUploadEndpoint(app),
   exportEndpoint: (app: Express) => applyExportEndpoint(app),
   versionEndpoint: (app: Express, config: Environment) =>
@@ -23,7 +28,6 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
   mediafileEndpoint: (app: Express, environment: Environment) =>
     applyMediaFileEndpoint(app, environment),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),
-  documentsEndpoint: (app: Express) => applyDocumentsEndpoint(app),
   configsEndoint: (
     app: Express,
     config: Environment,
