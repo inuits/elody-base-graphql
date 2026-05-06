@@ -590,7 +590,8 @@
         "delete-relation": "Delete link with {0}",
         "delete-entity": "Delete {0}",
         "share": "Share link"
-      }
+      },
+      "downloadZip": "Download mediafiles as zip"
     },
     "preview-component": {
       "open": "Open preview",

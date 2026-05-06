@@ -123,6 +123,7 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuQueryAction,
+  ContextMenuDownloadZipOfRelatedMediafilesAction,
   ContextMenuFormFlow,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
@@ -2324,6 +2325,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     doQueryAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuQueryAction;
     },
+    doDownloadZipOfRelatedMediafilesAction: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ContextMenuDownloadZipOfRelatedMediafilesAction;
+    },
     displaySettings: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuDisplaySettings;
     },
@@ -2419,6 +2423,26 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     refreshAfterAction: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
+    },
+    can: async (_source, { input }, { dataSources }) => {
+      return input || [];
+    },
+  },
+  ContextMenuDownloadZipOfRelatedMediafilesAction: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    icon: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    endpointUrl: async (_source, { input }, { dataSources }) => {
+      return input || '';
+    },
+    endpointMethod: async (_source, { input }, { dataSources }) => {
+      return input || 'GET';
+    },
+    filename: async (_source, { input }, { dataSources }) => {
+      return input || null;
     },
     can: async (_source, { input }, { dataSources }) => {
       return input || [];

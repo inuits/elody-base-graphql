@@ -1875,6 +1875,15 @@ export const baseSchema = gql`
     can(input: [String]): [String]
   }
 
+  type ContextMenuDownloadZipOfRelatedMediafilesAction {
+    label(input: String): String!
+    icon(input: String): String!
+    endpointUrl(input: String): String!
+    endpointMethod(input: String): String!
+    filename(input: String): String
+    can(input: [String]): [String]
+  }
+
   type ContextMenuDisplaySettings {
     showInHeader(input: Boolean): Boolean
   }
@@ -1885,6 +1894,7 @@ export const baseSchema = gql`
     doElodyAction: ContextMenuElodyAction
     doCustomAction: ContextMenuCustomAction
     doQueryAction: ContextMenuQueryAction
+    doDownloadZipOfRelatedMediafilesAction: ContextMenuDownloadZipOfRelatedMediafilesAction
     displaySettings: ContextMenuDisplaySettings
   }
 

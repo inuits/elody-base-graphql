@@ -578,7 +578,8 @@
         "delete-relation": "Verwijder koppeling met {0}",
         "delete-entity": "Verwijder {0}",
         "share": "Deel link"
-      }
+      },
+      "downloadZip": "Download mediafiles als zip"
     },
     "preview-component": {
       "open": "Preview openen",

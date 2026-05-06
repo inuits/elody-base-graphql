@@ -298,6 +298,7 @@ const start = ({
       ],
       versionEndpoint: [app, environment],
       downloadEndpoint: [app],
+      downloadZipEndpoint: [app],
       uploadEndpoint: [app],
       exportEndpoint: [app],
       mediafileEndpoint: [app, environment],
