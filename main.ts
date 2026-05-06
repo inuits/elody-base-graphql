@@ -370,7 +370,6 @@ export type {
   CollectionAPIRelation,
   ElodyModuleConfig,
 };
-export { AuthTokenManager } from './auth/authTokenManager';
 export {
   loadTranslationsFromDirectory,
   getCurrentEnvironment,
