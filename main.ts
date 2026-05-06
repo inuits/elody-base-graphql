@@ -298,6 +298,7 @@ const start = ({
         environment,
       ],
       versionEndpoint: [app, environment],
+      baseUploadEndpoint: [app],
       downloadEndpoint: [app],
       exportEndpoint: [app],
       healthEndpoint: [app],
