@@ -552,7 +552,9 @@
       "close": "إغلاق المعاينة"
     },
     "media-viewer": {
-      "unsupported-mimetype": "لا يوجد عارض متاح حاليًا للملفات من النوع '{mimetype}'"
+      "unsupported-mimetype": "لا يوجد عارض متاح حاليًا للملفات من النوع '{mimetype}'",
+      "no-viewer": "لا يتوفر عارض لهذا الملف",
+      "download": "تنزيل الملف"
     },
     "iiif-operations-modal": {
       "title": "تغيير حجم الصورة",

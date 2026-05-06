@@ -599,6 +599,8 @@
     },
     "media-viewer": {
       "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'",
+      "no-viewer": "No viewer available for this file",
+      "download": "Download file",
       "processing-image": "Processing the image..."
     },
     "iiif-operations-modal": {

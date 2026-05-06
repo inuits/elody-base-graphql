@@ -587,6 +587,8 @@
     },
     "media-viewer": {
       "unsupported-mimetype": "Er is op dit moment geen weergave beschikbaar voor bestanden van het type '{mimetype}'",
+      "no-viewer": "Geen weergave beschikbaar voor dit bestand",
+      "download": "Bestand downloaden",
       "processing-image": "Bezig met het verwerken van de afbeelding..."
     },
     "iiif-operations-modal": {
