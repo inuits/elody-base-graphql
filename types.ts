@@ -1,5 +1,4 @@
 import { CollectionAPI } from './sources/collection';
-import { StorageAPI } from './sources/storage';
 import {
   AdvancedFilter,
   Maybe,
@@ -7,24 +6,16 @@ import {
   PermissionRequestInfo,
   Formatters,
 } from './generated-types/type-defs';
-import { TranscodeService } from './sources/transcode';
-import { OcrService } from './sources/ocr';
 import { GraphqlAPI } from './sources/graphql';
 import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
-  StorageAPI?: StorageAPI;
-  TranscodeService?: TranscodeService;
-  OcrService?: OcrService;
   GraphqlAPI?: GraphqlAPI;
 }
 
 interface DefaultDataSources {
   CollectionAPI: CollectionAPI;
-  StorageAPI: StorageAPI;
-  TranscodeService: TranscodeService;
-  OcrService: OcrService;
   GraphqlAPI: GraphqlAPI;
 }
 

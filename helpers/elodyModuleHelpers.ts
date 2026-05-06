@@ -1,13 +1,11 @@
 import { Module } from 'graphql-modules';
 import { baseModule } from '../baseModule/baseModule';
-import { StorageAPI } from '../sources/storage';
 import { CollectionAPI } from '../sources/collection';
 import { GraphqlAPI } from '../sources/graphql';
 import { DataSources, OptionalDataSources } from '../types';
 import { AuthRESTDataSource } from '../main';
-import { TranscodeService } from '../sources/transcode';
-import { OcrService } from '../sources/ocr';
 import { Environment } from '../types/environmentTypes';
+import { Express } from 'express';
 
 export type ElodyModuleConfig = {
   modules: Module[];
@@ -25,6 +23,7 @@ export type ElodyModuleConfig = {
         }) => AuthRESTDataSource;
       }
     | undefined;
+  endpoints?: ((app: Express, environment: Environment) => void)[];
 };
 
 export type ElodyConfig = {
@@ -36,6 +35,7 @@ export type ElodyConfig = {
     clientIp: string,
     tenantId?: string
   ) => OptionalDataSources)[];
+  endpoints: ((app: Express, environment: Environment) => void)[];
 };
 
 const baseElodyElodyConfig: ElodyConfig = {
@@ -53,42 +53,13 @@ const baseElodyElodyConfig: ElodyConfig = {
       };
     },
     (environment: Environment, session: any, cache: any, clientIp: string, tenantId?: string) => {
-      return {
-        StorageAPI: new StorageAPI({ environment, session, cache, clientIp, context: { tenantId } }),
-      };
-    },
-    (environment: Environment, session: any, cache: any, clientIp: string, tenantId?: string) => {
       return { GraphqlAPI: new GraphqlAPI({ environment, session, cache, context: { tenantId } }) };
     },
   ],
+  endpoints: [],
 };
 
-export const addAdditionalOptionalDataSources = (environment: Environment) => {
-  if (environment.api.fileSystemImporterServiceUrl) {
-    baseElodyElodyConfig.dataSources.push(
-      (_environment: any, session: any, cache: any, clientIp: string, tenantId?: string) => {
-        return {
-          TranscodeService: new TranscodeService({
-            environment,
-            session,
-            cache,
-            clientIp,
-            context: { tenantId }
-          }),
-        };
-      }
-    );
-  }
-  if (environment.api.ocrService) {
-    baseElodyElodyConfig.dataSources.push(
-      (_environment: any, session: any, cache: any, clientIp: string, tenantId?: string) => {
-        return {
-          OcrService: new OcrService({ environment, session, cache, clientIp, context: { tenantId } }),
-        };
-      }
-    );
-  }
-};
+export const addAdditionalOptionalDataSources = (_environment: Environment) => {};
 
 export const createFullElodyConfig = (
   customElodyConfig: ElodyConfig
@@ -96,6 +67,7 @@ export const createFullElodyConfig = (
   const fullConfig = baseElodyElodyConfig;
   fullConfig.modules.push(...customElodyConfig.modules);
   fullConfig.dataSources.push(...customElodyConfig.dataSources);
+  fullConfig.endpoints.push(...customElodyConfig.endpoints);
   return fullConfig;
 };
 
@@ -118,18 +90,15 @@ export const getDataSourcesFromMapping = (
 export const isRequiredDataSources = (
   dataSources: OptionalDataSources
 ): dataSources is DataSources => {
-  return (
-    dataSources.CollectionAPI !== undefined &&
-    dataSources.StorageAPI !== undefined
-  );
+  return dataSources.CollectionAPI !== undefined;
 };
 
 export const generateElodyConfig = (
   elodyModuleConfig: ElodyModuleConfig
 ): ElodyConfig => {
-  const { dataSources, modules } = elodyModuleConfig;
+  const { dataSources, modules, endpoints = [] } = elodyModuleConfig;
 
-  if (!dataSources) return { modules, dataSources: [] };
+  if (!dataSources) return { modules, dataSources: [], endpoints };
 
   const dataSourceKeys = Object.keys(dataSources);
   const dataSourcesToInitialize = dataSourceKeys.map(
@@ -157,5 +126,6 @@ export const generateElodyConfig = (
   return {
     modules: modules,
     dataSources: dataSourcesToInitialize,
+    endpoints,
   };
 };

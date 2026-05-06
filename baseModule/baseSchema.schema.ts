@@ -1875,15 +1875,6 @@ export const baseSchema = gql`
     can(input: [String]): [String]
   }
 
-  type ContextMenuDownloadZipOfRelatedMediafilesAction {
-    label(input: String): String!
-    icon(input: String): String!
-    endpointUrl(input: String): String!
-    endpointMethod(input: String): String!
-    filename(input: String): String
-    can(input: [String]): [String]
-  }
-
   type ContextMenuDisplaySettings {
     showInHeader(input: Boolean): Boolean
   }
@@ -1894,7 +1885,6 @@ export const baseSchema = gql`
     doElodyAction: ContextMenuElodyAction
     doCustomAction: ContextMenuCustomAction
     doQueryAction: ContextMenuQueryAction
-    doDownloadZipOfRelatedMediafilesAction: ContextMenuDownloadZipOfRelatedMediafilesAction
     displaySettings: ContextMenuDisplaySettings
   }
 
@@ -2317,18 +2307,6 @@ export const baseSchema = gql`
       entityType: String!
     ): [PermissionMapping!]!
     GetDynamicForm: Form!
-    DownloadItemsInZip(
-      entities: [String]!
-      mediafiles: [String]!
-      basicCsv: Boolean!
-      includeAssetCsv: Boolean!
-      downloadEntity: EntityInput!
-    ): Entity
-    GenerateOcrWithAsset(
-      assetId: String!
-      operation: [String!]!
-      language: String!
-    ): JSON
     GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping(keys: [String!]): [FilterMatchers!]!

@@ -47,7 +47,7 @@ import {
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
 import { expressMiddleware } from '@as-integrations/express4';
-import { getMetadataItemValueByKey, getEntityId } from './helpers/helpers';
+import { getMetadataItemValueByKey, getEntityId, extractErrorCode } from './helpers/helpers';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import { parseIdToGetMoreData } from './parsers/entity';
 import {
@@ -61,6 +61,7 @@ import type {
   CollectionAPIRelation,
 } from './types/collectionAPITypes';
 import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
+import { fetchWithTokenRefresh } from './endpoints/fetchWithToken';
 import { createMongoConnectionString } from './sources/mongo';
 import {
   isRequiredDataSources,
@@ -298,10 +299,7 @@ const start = ({
       ],
       versionEndpoint: [app, environment],
       downloadEndpoint: [app],
-      downloadZipEndpoint: [app],
-      uploadEndpoint: [app],
       exportEndpoint: [app],
-      mediafileEndpoint: [app, environment],
       healthEndpoint: [app],
       documentsEndpoint: [app],
       configsEndoint: [
@@ -310,7 +308,6 @@ const start = ({
         customTranslations,
         customTypeUrlMapping,
       ],
-      // linkedOpenDataEndpoint: [app],
     };
 
     Object.keys(defaultElodyEndpointMapping).forEach((key: string) => {
@@ -323,6 +320,8 @@ const start = ({
       }
       applyEndpointFunction(...endpointVariables);
     });
+
+    fullElodyConfig.endpoints.forEach((fn) => fn(app, environment));
 
     app.set('views', path.join(__dirname + '/views'));
     app.set('view engine', 'pug');
@@ -384,6 +383,8 @@ export {
   AuthRESTDataSource,
   getMetadataItemValueByKey,
   getEntityId,
+  extractErrorCode,
+  fetchWithTokenRefresh,
   resolveId,
   resolveRelations,
   simpleReturn,

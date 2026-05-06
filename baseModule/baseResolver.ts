@@ -123,7 +123,6 @@ import {
   MapFeatureMetadata,
   ContextMenuCustomAction,
   ContextMenuQueryAction,
-  ContextMenuDownloadZipOfRelatedMediafilesAction,
   ContextMenuFormFlow,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
@@ -620,74 +619,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
       return {} as Form;
-    },
-    DownloadItemsInZip: async (
-      _source,
-      { entities, mediafiles, basicCsv, includeAssetCsv, downloadEntity },
-      { dataSources }
-    ) => {
-      if (!dataSources.TranscodeService)
-        throw new GraphQLError(
-          'Transcode service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
-        );
-      let createdEntity;
-      try {
-        let mediafilesCsv: string[] = [];
-        let assetsCsv: string[] = [];
-        downloadEntity.relations = (downloadEntity.relations as []).map(
-          (relationInput) => {
-            const relation: any = {};
-            Object.keys(relationInput)
-              .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
-              .forEach((key) => {
-                relation[key] = (relationInput as any)[key];
-              });
-            return relation;
-          }
-        );
-        createdEntity = await dataSources.CollectionAPI.createEntity(
-          downloadEntity,
-          (downloadEntity.metadata as Metadata[]) || [],
-          downloadEntity.relations as []
-        );
-        const result = await dataSources.TranscodeService.downloadItemsInZip({
-          entities: entities,
-          mediafiles: mediafiles,
-          download_entity_id: createdEntity.id,
-          download_entity_title: createdEntity.metadata.filter(
-            (metadata: Metadata) => metadata.key === 'title'
-          )[0].value,
-        });
-      } catch (e) {
-        throw new GraphQLError(
-          `Error while making a downloadable zip for mediafiles: ${e}`
-        );
-      }
-      return createdEntity as Entity;
-    },
-    GenerateOcrWithAsset: async (
-      _source,
-      { assetId, operation, language },
-      { dataSources }
-    ) => {
-      if (!dataSources.OcrService)
-        throw new GraphQLError(
-          'OCR service has not been setup for this Elody GraphQL instance, please add its URL to the appConfig or .env file'
-        );
-      try {
-        operation.push('txt');
-        const response = await dataSources.OcrService.generateOcrWithAsset(
-          assetId,
-          operation,
-          language
-        );
-        return {
-          status: 200,
-          message: response,
-        };
-      } catch (e) {
-        throw new GraphQLError(`Error whilst making OCR of mediafiles: ${e}`);
-      }
     },
     GetEntityDetailContextMenuActions: async (
       _source,
@@ -2325,9 +2256,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     doQueryAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuQueryAction;
     },
-    doDownloadZipOfRelatedMediafilesAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuDownloadZipOfRelatedMediafilesAction;
-    },
     displaySettings: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuDisplaySettings;
     },
@@ -2423,26 +2351,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     refreshAfterAction: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
-    },
-    can: async (_source, { input }, { dataSources }) => {
-      return input || [];
-    },
-  },
-  ContextMenuDownloadZipOfRelatedMediafilesAction: {
-    label: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
-    },
-    icon: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
-    },
-    endpointUrl: async (_source, { input }, { dataSources }) => {
-      return input || '';
-    },
-    endpointMethod: async (_source, { input }, { dataSources }) => {
-      return input || 'GET';
-    },
-    filename: async (_source, { input }, { dataSources }) => {
-      return input || null;
     },
     can: async (_source, { input }, { dataSources }) => {
       return input || [];
