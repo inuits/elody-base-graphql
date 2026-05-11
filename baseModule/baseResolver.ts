@@ -1249,6 +1249,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     baseLibraryMode: async (parent: any, { input }, { dataSources }) => {
       return input ? input : BaseLibraryModes.NormalBaseLibrary;
     },
+    disableLibraryBar: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     entityListElement: async (parent: any, {}, { dataSources }) => {
       return parent as EntityListElement;
     },

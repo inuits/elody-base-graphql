@@ -1242,6 +1242,7 @@ export const baseSchema = gql`
     customQueryEntityPickerListFilters(input: String): String
     searchInputType(input: String): String
     baseLibraryMode(input: BaseLibraryModes): BaseLibraryModes
+    disableLibraryBar(input: Boolean): Boolean
     entityListElement: EntityListElement
     customBulkOperations(input: String): String
     fetchDeepRelations: FetchDeepRelations
