@@ -407,7 +407,7 @@
       "warning": {
         "entity-not-updated": {
           "title": "Opslaan is niet gelukt",
-          "description": "Er zijn errors in het edit forumlier van de huidige entiteit"
+          "description": "Er zijn errors in het edit formulier van de huidige entiteit"
         }
       },
       "graphql-errors": {
