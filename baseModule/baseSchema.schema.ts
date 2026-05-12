@@ -1876,17 +1876,12 @@ export const baseSchema = gql`
     can(input: [String]): [String]
   }
 
-  type ContextMenuDisplaySettings {
-    showInHeader(input: Boolean): Boolean
-  }
-
   type ContextMenuActions {
     doLinkAction: ContextMenuLinkAction
     doGeneralAction: ContextMenuGeneralAction
     doElodyAction: ContextMenuElodyAction
     doCustomAction: ContextMenuCustomAction
     doQueryAction: ContextMenuQueryAction
-    displaySettings: ContextMenuDisplaySettings
   }
 
   type teaserMetadata {
@@ -2385,4 +2380,16 @@ export const baseSchema = gql`
   }
 
   union Formatters = LinkFormatter | PillFormatter | RegexpMatchFormatter
+
+  type EntityButtonStyle {
+    background: String
+    text: String
+  }
+
+  type EntityButtonConfig {
+    label: String!
+    icon: String
+    mutation: String!
+    style: EntityButtonStyle
+  }
 `;

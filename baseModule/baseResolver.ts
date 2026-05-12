@@ -40,7 +40,6 @@ import {
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
-  ContextMenuDisplaySettings,
   DamsIcons,
   DeepRelationsFetchStrategy,
   DropdownOption,
@@ -2258,14 +2257,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     doQueryAction: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuQueryAction;
-    },
-    displaySettings: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuDisplaySettings;
-    },
-  },
-  ContextMenuDisplaySettings: {
-    showInHeader: async (_source, { input }, { dataSources }) => {
-      return input !== undefined ? input : false;
     },
   },
   ContextMenuLinkAction: {
