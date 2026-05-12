@@ -80,6 +80,7 @@ export const baseFragments = gql`
       key
       value
       match_exact
+      operator
       item_types
     }
     advancedFilterInputForRetrievingRelatedOptions {
@@ -87,6 +88,7 @@ export const baseFragments = gql`
       key
       value
       match_exact
+      operator
       item_types
       returnIdAtIndex
     }
@@ -95,6 +97,7 @@ export const baseFragments = gql`
       key
       value
       match_exact
+      operator
       item_types
     }
     advancedFilterInputForSearchingOptions {
@@ -102,6 +105,7 @@ export const baseFragments = gql`
       key
       value
       match_exact
+      operator
       item_types
     }
     fileTypes
