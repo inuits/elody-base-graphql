@@ -1770,10 +1770,20 @@ export const baseSchema = gql`
     metadataKey: String!
   }
 
+  type TransliterationConfigItem {
+    label: String!
+    mapping: JSON
+  }
+
+  type WysiwygTransliterationConfig {
+    transliterationConfigItem(label: String!, mappingKey: String!): TransliterationConfigItem
+  }
+
   type WysiwygElementConfiguration {
     customEditorStyles(input: String): String
     showLineNumbers(input: Boolean): Boolean
     virtualKeyboardLayouts(input: [String!]): JSON
+    transliterationConfig: WysiwygTransliterationConfig
   }
 
   type WysiwygElement {

@@ -2395,6 +2395,22 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return input || {};
     },
+    transliterationConfig: async (_source: any) => {
+      return {};
+    },
+  },
+  WysiwygTransliterationConfig: {
+    transliterationConfigItem: async (_source: any, { label, mappingKey }: { label: string; mappingKey: string }) => {
+      return { label, mappingKey };
+    },
+  },
+  TransliterationConfigItem: {
+    label: async (_source: any) => {
+      return _source.label;
+    },
+    mapping: async (_source: any) => {
+      return null;
+    },
   },
   AdvancedFilters: {
     advancedFilter: async (
