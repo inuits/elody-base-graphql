@@ -138,6 +138,7 @@ import {
   getEntityId,
   getRelationsByType,
   setPreferredLanguageForDataSources,
+  getYesterdayFormatted,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
@@ -2554,6 +2555,12 @@ export const baseResolver: Resolvers<ContextValue> = {
               return [key, 'entities/' + key, 'mediafiles/' + key];
             }
           }
+        }
+        const dateRegex = /^date-\$(.+)$/;
+        match = value.match(dateRegex);
+        if (match && match[1]) {
+          if (match[1] == "yesterdaystart") return getYesterdayFormatted("start");
+          if (match[1] == "yesterdayend") return getYesterdayFormatted("end");
         }
       }
       return value;

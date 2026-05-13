@@ -189,3 +189,33 @@ export const isIpAddressWhitelisted = (
       : ipAddress === ip
   );
 };
+
+export const getFormattedOffset = (date: Date, timeZone: string): string => {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    timeZoneName: 'shortOffset',
+  }).formatToParts(date);
+
+  const offsetPart = parts.find(p => p.type === 'timeZoneName')?.value || "";
+  if (offsetPart === "GMT") return "+00:00";
+
+  let res = offsetPart.replace("GMT", "");
+  if (!res.includes(":")) {
+    const sign = res.substring(0, 1); // + or -
+    const value = res.substring(1).padStart(2, '0');
+    res = `${sign}${value}:00`;
+  }
+  return res;
+}
+
+export const getYesterdayFormatted = (time: 'start' | 'end'): string => {
+  const timeZone = "Europe/Brussels";
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+
+  const datePart = date.toLocaleDateString('sv-SE', { timeZone });
+  const timePart = time === "start" ? "00:01:00" : "23:59:00";
+  const offset = getFormattedOffset(date, timeZone);
+
+  return `${datePart}T${timePart}${offset}`;
+}
