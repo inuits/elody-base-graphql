@@ -4,7 +4,7 @@ export const defaultMatchers = {
   text: [
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
-    Matchers.ExactMatcher,
+    Matchers.ExactInputMatcher,
     Matchers.ContainsMatcher,
     Matchers.ContainsNotMatcher,
     Matchers.RegexMatcher,
@@ -12,13 +12,13 @@ export const defaultMatchers = {
   date: [
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
-    Matchers.ExactMatcher,
+    Matchers.ExactInputMatcher,
     Matchers.MinIncludedMatcher,
     Matchers.MaxIncludedMatcher,
     Matchers.InBetweenMatcher,
   ],
   number: [
-    Matchers.ExactMatcher,
+    Matchers.ExactInputMatcher,
     Matchers.MinIncludedMatcher,
     Matchers.MaxIncludedMatcher,
     Matchers.InBetweenMatcher,
@@ -26,14 +26,29 @@ export const defaultMatchers = {
   selection: [
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
-    Matchers.ExactMatcher,
+    Matchers.ExactAutoCompleteMatcher,
+    Matchers.ContainsMatcher,
+    Matchers.ContainsNotMatcher,
+  ],
+  selectionForMetadata: [
+    Matchers.AnyMatcher,
+    Matchers.NoneMatcher,
+    Matchers.ExactAutoCompleteMatcher,
+    Matchers.ExactInputMatcher,
+    Matchers.ContainsMatcher,
+    Matchers.ContainsNotMatcher,
+  ],
+  selectionForRelation: [
+    Matchers.AnyMatcher,
+    Matchers.NoneMatcher,
+    Matchers.ExactAutoCompleteMatcher,
     Matchers.ContainsMatcher,
     Matchers.ContainsNotMatcher,
   ],
   boolean: [
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
-    Matchers.ExactMatcher
+    Matchers.ExactInputMatcher,
   ],
   geo: [
     Matchers.GeoMatcher
@@ -41,7 +56,7 @@ export const defaultMatchers = {
   type: [
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
-    Matchers.ExactMatcher,
+    Matchers.ExactInputMatcher,
     Matchers.ContainsMatcher,
   ],
 };

@@ -240,9 +240,11 @@
       "matcher-labels": {
         "select-filter-type": "Select filter type",
         "AnyMatcher": "has a value",
-        "ContainsMatcher": "contains",
+        "ContainsMatcher": "contains text",
         "ContainsNotMatcher": "does not contain",
         "ExactMatcher": "is exactly",
+        "ExactInputMatcher": "is exactly",
+        "ExactAutoCompleteMatcher": "is any of",
         "IdMatcher": "ID",
         "InBetweenMatcher": "between two values",
         "MaxIncludedMatcher": "on maximum value",

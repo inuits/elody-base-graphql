@@ -35,6 +35,8 @@ export const baseSchema = gql`
     AnyMatcher
     NoneMatcher
     ExactMatcher
+    ExactInputMatcher
+    ExactAutoCompleteMatcher
     ContainsMatcher
     ContainsNotMatcher
     MinIncludedMatcher
@@ -2058,6 +2060,8 @@ export const baseSchema = gql`
     date
     number
     selection
+    selectionForMetadata
+    selectionForRelation
     boolean
     type
     geo

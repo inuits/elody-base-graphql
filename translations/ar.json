@@ -226,9 +226,11 @@
       "matcher-labels": {
         "select-filter-type": "اختر نوع المرشح",
         "AnyMatcher": "يحتوي على قيمة",
-        "ContainsMatcher": "يحتوي",
+        "ContainsMatcher": "يحتوي نصًّا",
         "ContainsNotMatcher": "لا يحتوي",
         "ExactMatcher": "مساوٍ تمامًا",
+        "ExactInputMatcher": "مساوٍ تمامًا",
+        "ExactAutoCompleteMatcher": "أي من",
         "IdMatcher": "المعرف",
         "InBetweenMatcher": "بين قيمتين",
         "MaxIncludedMatcher": "على القيمة القصوى",

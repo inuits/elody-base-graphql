@@ -233,9 +233,11 @@
       "matcher-labels": {
         "select-filter-type": "Selecteer filter type",
         "AnyMatcher": "is ingevuld",
-        "ContainsMatcher": "bevat",
+        "ContainsMatcher": "bevat tekst",
         "ContainsNotMatcher": "bevat niet",
         "ExactMatcher": "is gelijk aan",
+        "ExactInputMatcher": "is gelijk aan",
+        "ExactAutoCompleteMatcher": "is een van",
         "IdMatcher": "ID",
         "InBetweenMatcher": "tussen twee waardes",
         "MaxIncludedMatcher": "op maximum waarde",
