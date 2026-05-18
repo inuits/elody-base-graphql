@@ -42,6 +42,7 @@ export const baseFragments = gql`
     type
     key
     label
+    operator
     selectionOption
     isDisplayedByDefault
     filterOptionsMapping {
@@ -53,6 +54,7 @@ export const baseFragments = gql`
       type
       key
       value
+      operator
       distinct_by
       match_exact
       defaultValueMapping {
