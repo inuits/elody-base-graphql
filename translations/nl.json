@@ -171,6 +171,12 @@
         "confirm": "Bevestigen",
         "cancel": "Annuleren",
         "title": "Verwijder relatielinks met geselecteerde items"
+      },
+      "bulk-mutation": {
+        "title": "Actie bevestigen",
+        "message": "Weet je zeker dat je deze actie wil uitvoeren op de geselecteerde items?",
+        "confirm": "Bevestigen",
+        "cancel": "Annuleren"
       }
     },
     "dropdown": {

@@ -180,6 +180,12 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "title": "Delete relation links with selected items"
+      },
+      "bulk-mutation": {
+        "title": "Confirm action",
+        "message": "Are you sure you want to perform this action on the selected items?",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
       }
     },
     "dropdown": {
