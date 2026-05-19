@@ -167,22 +167,34 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
 
   app.use('/api/iiif/*', async (req, res) => {
     const target = `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`;
+    const tryStaticTokenFallback = async (): Promise<Response | null> => {
+      // Tenants that intentionally publish their IIIF path (e.g. VLIZ
+      // Wetenschatten) opt in to a static-token fallback when the caller
+      // has no valid session. Default behaviour stays auth-required.
+      if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK !== 'true') return null;
+      const staticToken = environment.staticToken;
+      return fetch(target, {
+        method: 'GET',
+        headers: staticToken ? { Authorization: `Bearer ${staticToken}` } : {},
+      });
+    };
+
     try {
       let response;
       try {
         response = await fetchWithTokenRefresh(target, { method: 'GET' }, req);
       } catch (authErr) {
-        // Tenants that intentionally publish their IIIF path (e.g. VLIZ
-        // Wetenschatten) opt in to a static-token fallback when the caller
-        // has no valid session. Default behaviour stays auth-required.
-        if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK !== 'true') {
-          throw authErr;
-        }
-        const staticToken = environment.staticToken;
-        response = await fetch(target, {
-          method: 'GET',
-          headers: staticToken ? { Authorization: `Bearer ${staticToken}` } : {},
-        });
+        const fallback = await tryStaticTokenFallback();
+        if (!fallback) throw authErr;
+        response = fallback;
+      }
+
+      // fetchWithTokenRefresh succeeds even when upstream returns 401 (e.g.
+      // anonymous browser request → empty session → Bearer undefined upstream).
+      // Retry with STATIC_JWT in that case too.
+      if (response.status === 401 || response.status === 403) {
+        const fallback = await tryStaticTokenFallback();
+        if (fallback) response = fallback;
       }
 
       if (!response.ok) {
