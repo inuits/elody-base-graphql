@@ -1487,7 +1487,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent.statusMetadataKey;
     },
     statusInputField: async (parent, {}, { dataSources }) => {
-      return baseFields[(parent as unknown as WindowStatusInput).statusInputFieldType];
+      // Duck-type to the only field we use; WindowElementStatusInput is defined
+      // in the schema but not yet emitted to generated-types. PanelStatusInput
+      // has the same shape but is semantically a different input — avoid
+      // borrowing it here and just look up the field type directly.
+      return baseFields[(parent as unknown as { statusInputFieldType: string }).statusInputFieldType];
     },
   },
   ExpandButtonOptions: {
