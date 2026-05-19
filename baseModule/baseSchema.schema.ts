@@ -1283,6 +1283,7 @@ export const baseSchema = gql`
   enum MapTypes {
     heatMap
     wktMap
+    pointsMap
   }
 
   enum MapViews {
@@ -1293,6 +1294,7 @@ export const baseSchema = gql`
   enum MapModes {
     heatMode
     default
+    points
   }
 
   type MapMetadata {
