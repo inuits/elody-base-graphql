@@ -167,44 +167,16 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
 
   app.use('/api/iiif/*', async (req, res) => {
     const target = `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`;
-    const tryStaticTokenFallback = async (): Promise<Response | null> => {
-      // Two gates must both pass before a static-token fallback fires:
-      //   1. Tenant opt-in via IIIF_ALLOW_STATIC_TOKEN_FALLBACK=true. Tenants
-      //      without this env var stay fully auth-required.
-      //   2. Request must originate from a published canopy site (Referer
-      //      contains /canopy-generator/). This prevents direct, unsessioned
-      //      API access from leaking access-controlled mediafiles — only
-      //      images embedded in a public canopy build can resolve.
-      // Note: Referer is a UX-level protection, not security-grade (it can
-      // be omitted or spoofed). For stricter scoping, embed per-mediafile
-      // public-readable flags in collection-api.
-      if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK !== 'true') return null;
-      const referer = String(req.headers.referer || req.headers.referrer || '');
-      if (!referer.includes('/canopy-generator/')) return null;
-      const staticToken = environment.staticToken;
-      return fetch(target, {
-        method: 'GET',
-        headers: staticToken ? { Authorization: `Bearer ${staticToken}` } : {},
-      });
-    };
-
     try {
-      let response;
-      try {
-        response = await fetchWithTokenRefresh(target, { method: 'GET' }, req);
-      } catch (authErr) {
-        const fallback = await tryStaticTokenFallback();
-        if (!fallback) throw authErr;
-        response = fallback;
-      }
-
-      // fetchWithTokenRefresh succeeds even when upstream returns 401 (e.g.
-      // anonymous browser request → empty session → Bearer undefined upstream).
-      // Retry with STATIC_JWT in that case too.
-      if (response.status === 401 || response.status === 403) {
-        const fallback = await tryStaticTokenFallback();
-        if (fallback) response = fallback;
-      }
+      // If the caller already provided an Authorization header (e.g. a
+      // service-to-service client like canopy-generator using its own
+      // scoped JWT), pass it through as-is. Otherwise fall back to the
+      // dashboard's session-based token. This keeps the proxy generic —
+      // no tenant flags or referer heuristics in shared baseGraphql.
+      const incomingAuth = req.headers.authorization as string | undefined;
+      const response = incomingAuth
+        ? await fetch(target, { method: 'GET', headers: { Authorization: incomingAuth } })
+        : await fetchWithTokenRefresh(target, { method: 'GET' }, req);
 
       if (!response.ok) {
         throw response;
