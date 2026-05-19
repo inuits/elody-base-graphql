@@ -1651,6 +1651,18 @@ export const baseSchema = gql`
     panelStatus: PanelStatusInput
   }
 
+  type WindowElementStatus {
+    label: String
+    statusMetadataKey: String!
+    statusInputField: InputField!
+  }
+
+  input WindowElementStatusInput {
+    label: String
+    statusMetadataKey: String!
+    statusInputFieldType: BaseFieldType!
+  }
+
   type WindowElementPanel {
     panelHeaderContent(
       panelHeaderContentInput: PanelHeaderContentInput
@@ -1687,6 +1699,9 @@ export const baseSchema = gql`
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
     contextMenuActions: ContextMenuActions
     lineClamp(input: String): String!
+    windowElementStatus(
+      windowElementStatusInput: WindowElementStatusInput
+    ): WindowElementStatus
   }
 
   type ActionElement {

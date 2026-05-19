@@ -128,6 +128,7 @@ import {
   PanelHeaderContent,
   PanelStatus,
   PanelStatusInput,
+  WindowElementStatus,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -1388,6 +1389,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuActions;
     },
+    windowElementStatus: async (_source, { windowElementStatusInput }, { dataSources }) => {
+      return windowElementStatusInput as unknown as WindowElementStatus;
+    },
   },
   ActionElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1473,6 +1477,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     statusInputField: async (_source, {}, { dataSources }) => {
       return baseFields[(_source as unknown as PanelStatusInput).statusInputFieldType];
+    },
+  },
+  WindowElementStatus: {
+    label: async (parent, {}, { dataSources }) => {
+      return parent.label;
+    },
+    statusMetadataKey: async (parent, {}, { dataSources }) => {
+      return parent.statusMetadataKey;
+    },
+    statusInputField: async (parent, {}, { dataSources }) => {
+      return baseFields[(parent as unknown as WindowStatusInput).statusInputFieldType];
     },
   },
   ExpandButtonOptions: {

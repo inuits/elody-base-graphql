@@ -307,4 +307,22 @@ export const baseFragments = gql`
       secondaryAttributeToDetermineTagConfig
     }
   }
+
+  fragment panelHeaderContent on PanelHeaderContent {
+    label
+    panelStatus {
+      statusMetadataKey
+      statusInputField {
+        ...inputfield
+      }
+    }
+  }
+
+  fragment windowElementStatus on WindowElementStatus {
+    label
+    statusMetadataKey
+    statusInputField {
+      ...inputfield
+    }
+  }
 `;
