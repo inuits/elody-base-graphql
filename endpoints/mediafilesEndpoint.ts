@@ -168,10 +168,19 @@ const applyMediaFileEndpoint = (app: Express, environment: Environment) => {
   app.use('/api/iiif/*', async (req, res) => {
     const target = `${environment.api.iiifUrl}${req.originalUrl.replace('/api', '')}`;
     const tryStaticTokenFallback = async (): Promise<Response | null> => {
-      // Tenants that intentionally publish their IIIF path (e.g. VLIZ
-      // Wetenschatten) opt in to a static-token fallback when the caller
-      // has no valid session. Default behaviour stays auth-required.
+      // Two gates must both pass before a static-token fallback fires:
+      //   1. Tenant opt-in via IIIF_ALLOW_STATIC_TOKEN_FALLBACK=true. Tenants
+      //      without this env var stay fully auth-required.
+      //   2. Request must originate from a published canopy site (Referer
+      //      contains /canopy-generator/). This prevents direct, unsessioned
+      //      API access from leaking access-controlled mediafiles — only
+      //      images embedded in a public canopy build can resolve.
+      // Note: Referer is a UX-level protection, not security-grade (it can
+      // be omitted or spoofed). For stricter scoping, embed per-mediafile
+      // public-readable flags in collection-api.
       if (process.env.IIIF_ALLOW_STATIC_TOKEN_FALLBACK !== 'true') return null;
+      const referer = String(req.headers.referer || req.headers.referrer || '');
+      if (!referer.includes('/canopy-generator/')) return null;
       const staticToken = environment.staticToken;
       return fetch(target, {
         method: 'GET',
