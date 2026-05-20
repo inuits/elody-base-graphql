@@ -301,6 +301,7 @@
         "status": "Status",
         "date-updated": "Update datum",
         "last-editor": "Laatst bewerkt door",
+        "last-activity": "Laatste activiteit",
         "title-zip": "Titel zip bestand",
         "basic-csv": "Basis csv bestand",
         "expire-date-zip": "Vervaldatum zip bestand",
