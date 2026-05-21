@@ -23,7 +23,7 @@ export const enableCors = (app: Express, environment: Environment) => {
 
   app.use(
     cors({
-      origin: "*",
+      origin: allowedOrigins,
       credentials: false,
     })
   );
