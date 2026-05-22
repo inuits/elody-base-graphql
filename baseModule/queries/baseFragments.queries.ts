@@ -140,6 +140,11 @@ export const baseFragments = gql`
       key
     }
     readOnlyValueAsPlainText
+    relationMetadataFromFormFields {
+      formMetadataKey
+      relationMetadataKey
+      asArray
+    }
   }
 
   fragment inputfield on InputField {

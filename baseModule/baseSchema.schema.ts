@@ -204,6 +204,7 @@ export const baseSchema = gql`
   type FormTab {
     formFields: FormFields!
     formKey(input: String): String
+    label(input: String): String
     relationType(input: String): String
   }
 
@@ -437,6 +438,12 @@ export const baseSchema = gql`
     key: String!
   }
 
+  type RelationMetadataFromFormField {
+    formMetadataKey: String!
+    relationMetadataKey: String!
+    asArray: Boolean
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -469,6 +476,7 @@ export const baseSchema = gql`
     hasVirtualKeyboard: Boolean
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
     readOnlyValueAsPlainText: Boolean
+    relationMetadataFromFormFields: [RelationMetadataFromFormField]
   }
 
   enum TypeModals {

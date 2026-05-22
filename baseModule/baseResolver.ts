@@ -2088,6 +2088,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     formKey: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input as string;
+    },
     relationType: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
@@ -2228,6 +2231,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
       return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
     },
+    relationMetadataFromFormFields: (parent) =>
+      parent.relationMetadataFromFormFields ?? null,
   },
   SubField: {
     label: async (parent: any, _args: any) => {
