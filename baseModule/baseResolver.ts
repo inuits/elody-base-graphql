@@ -140,6 +140,7 @@ import {
   getRelationsByType,
   setPreferredLanguageForDataSources,
   getYesterdayFormatted,
+  buildMergedRelations,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
@@ -675,31 +676,33 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
-      const filterEditStatus = (
-        excludeEditStatus: EditStatus
-      ): BaseRelationValuesInput[] => {
-        return formInput.relations
-          .filter(
-            (relationInput) => relationInput.editStatus !== excludeEditStatus
-          )
-          .map((relationInput) => {
-            const relation: any = {};
-            Object.keys(relationInput)
-              .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
-              .forEach((key) => {
-                relation[key] = (relationInput as any)[key];
-              });
-            return relation;
-          });
-      };
-
       const mutateRelations = async () => {
         if (formInput.relations.length <= 0) return;
-        await dataSources.CollectionAPI.putRelations(
-          id,
-          filterEditStatus(EditStatus.Deleted),
-          collection
+
+        const hasDeleted = formInput.relations.some(
+          (r) => r.editStatus === EditStatus.Deleted
         );
+
+        if (hasDeleted) {
+          const merged = buildMergedRelations(formInput.relations, []);
+          await dataSources.CollectionAPI.putRelations(id, merged, collection);
+        } else {
+          const toUpsert = buildMergedRelations(
+            formInput.relations.filter(
+              (r) =>
+                r.editStatus === EditStatus.New ||
+                r.editStatus === EditStatus.Changed
+            ),
+            []
+          );
+          if (toUpsert.length > 0) {
+            await dataSources.CollectionAPI.patchRelations(
+              id,
+              toUpsert,
+              collection
+            );
+          }
+        }
       };
 
       const mutateMetadata = async () => {
@@ -1389,7 +1392,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
       return parent as ContextMenuActions;
     },
-    windowElementStatus: async (_source, { windowElementStatusInput }, { dataSources }) => {
+    windowElementStatus: async (
+      _source,
+      { windowElementStatusInput },
+      { dataSources }
+    ) => {
       return windowElementStatusInput as unknown as WindowElementStatus;
     },
   },
@@ -1476,7 +1483,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return _source.statusMetadataKey;
     },
     statusInputField: async (_source, {}, { dataSources }) => {
-      return baseFields[(_source as unknown as PanelStatusInput).statusInputFieldType];
+      return baseFields[
+        (_source as unknown as PanelStatusInput).statusInputFieldType
+      ];
     },
   },
   WindowElementStatus: {
@@ -1491,7 +1500,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       // in the schema but not yet emitted to generated-types. PanelStatusInput
       // has the same shape but is semantically a different input — avoid
       // borrowing it here and just look up the field type directly.
-      return baseFields[(parent as unknown as { statusInputFieldType: string }).statusInputFieldType];
+      return baseFields[
+        (parent as unknown as { statusInputFieldType: string })
+          .statusInputFieldType
+      ];
     },
   },
   ExpandButtonOptions: {
@@ -2424,7 +2436,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   WysiwygTransliterationConfig: {
-    transliterationConfigItem: async (_source: any, { label, mappingKey }: { label: string; mappingKey: string }) => {
+    transliterationConfigItem: async (
+      _source: any,
+      { label, mappingKey }: { label: string; mappingKey: string }
+    ) => {
       return { label, mappingKey };
     },
   },
@@ -2599,8 +2614,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         const dateRegex = /^date-\$(.+)$/;
         match = value.match(dateRegex);
         if (match && match[1]) {
-          if (match[1] == "yesterdaystart") return getYesterdayFormatted("start");
-          if (match[1] == "yesterdayend") return getYesterdayFormatted("end");
+          if (match[1] == 'yesterdaystart')
+            return getYesterdayFormatted('start');
+          if (match[1] == 'yesterdayend') return getYesterdayFormatted('end');
         }
       }
       return value;

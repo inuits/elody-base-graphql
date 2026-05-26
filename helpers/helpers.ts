@@ -1,6 +1,8 @@
 import {
   AdvancedFilterInput,
   AdvancedFilterTypes,
+  BaseRelationValuesInput,
+  EditStatus,
   Entitytyping,
   Metadata,
   Collection,
@@ -219,3 +221,32 @@ export const getYesterdayFormatted = (time: 'start' | 'end'): string => {
 
   return `${datePart}T${timePart}${offset}`;
 }
+
+export const buildMergedRelations = (
+  formRelations: BaseRelationValuesInput[],
+  existingRelations: any[]
+): any[] => {
+  const strip = (r: any) => {
+    const result: any = {};
+    Object.keys(r)
+      .filter((k) => k !== 'editStatus' && k !== 'teaserMetadata')
+      .forEach((k) => (result[k] = r[k]));
+    return result;
+  };
+
+  const deleted = formRelations
+    .filter((r) => r.editStatus === EditStatus.Deleted)
+    .map(strip);
+
+  const incoming = formRelations
+    .filter((r) => r.editStatus !== EditStatus.Deleted)
+    .map(strip);
+
+  const surviving = existingRelations.filter(
+    (existing) =>
+      !deleted.some((d) => d.type === existing.type && d.key === existing.key) &&
+      !incoming.some((inc) => inc.type === existing.type && inc.key === existing.key)
+  );
+
+  return [...surviving, ...incoming];
+};
