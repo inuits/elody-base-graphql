@@ -129,6 +129,7 @@ import {
   PanelStatus,
   PanelStatusInput,
   WindowElementStatus,
+  VirtualKeyboardConfig,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -2210,6 +2211,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     hasVirtualKeyboard: async (parent, _args, { dataSources }) => {
       return parent.hasVirtualKeyboard || false;
     },
+    virtualKeyboardConfig: async (parent, { input }, { dataSources }) => {
+      return input as VirtualKeyboardConfig;
+    },
     metadataKeyToCreateEntityFromOption: async (
       parent,
       _args,
@@ -2237,6 +2241,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationMetadataFromFormFields: (parent) =>
       parent.relationMetadataFromFormFields ?? null,
+  },
+  VirtualKeyboardConfig: {
+    layouts: async (parent: any, _args: any) => {
+      return parent.layouts;
+    },
   },
   SubField: {
     label: async (parent: any, _args: any) => {

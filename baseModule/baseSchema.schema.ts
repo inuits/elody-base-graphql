@@ -444,6 +444,14 @@ export const baseSchema = gql`
     asArray: Boolean
   }
 
+  type VirtualKeyboardConfig {
+    layouts: JSON
+  }
+
+  input VirtualKeyboardConfigInput {
+    layouts: JSON
+  }
+
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -477,6 +485,7 @@ export const baseSchema = gql`
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
     readOnlyValueAsPlainText: Boolean
     relationMetadataFromFormFields: [RelationMetadataFromFormField]
+    virtualKeyboardConfig(input: VirtualKeyboardConfigInput): VirtualKeyboardConfig
   }
 
   enum TypeModals {
