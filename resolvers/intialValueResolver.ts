@@ -437,29 +437,6 @@ export const resolveIntialValueMetadataOrRelation = async (
   }
 };
 
-export const resolveIntialValueDerivatives = async (
-  parent: CollectionAPIEntity,
-  key: string,
-  technicalOrigin: string,
-  dataSources: DataSources
-): Promise<string> => {
-  if (parent.type !== 'mediafile')
-    throw new GraphQLError(
-      'The derivatives source can only be used on mediafiles'
-    );
-  const derivativesResult = await dataSources.CollectionAPI.getDerivatives(
-    parent._id
-  );
-  const derivatives: CollectionAPIDerivative[] = derivativesResult.results;
-  const derivativeFromTechnicalOrigin: { [key: string]: any } | undefined =
-    derivatives.find(
-      (derivative: CollectionAPIDerivative) =>
-        derivative.technical_origin === technicalOrigin
-    );
-  if (!derivativeFromTechnicalOrigin) return '';
-  return derivativeFromTechnicalOrigin[key] as string;
-};
-
 export const resolveIntialValueTypePillLabel = (
   parent: any,
   key: string,

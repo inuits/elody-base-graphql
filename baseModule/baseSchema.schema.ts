@@ -1086,7 +1086,6 @@ export const baseSchema = gql`
     relationMetadata
     relationRootdata
     metadataOrRelation
-    derivatives
     typePillLabel
     parentRoot
     parentMetadata
@@ -1803,7 +1802,10 @@ export const baseSchema = gql`
   }
 
   type WysiwygTransliterationConfig {
-    transliterationConfigItem(label: String!, mappingKey: String!): TransliterationConfigItem
+    transliterationConfigItem(
+      label: String!
+      mappingKey: String!
+    ): TransliterationConfigItem
   }
 
   type WysiwygElementConfiguration {

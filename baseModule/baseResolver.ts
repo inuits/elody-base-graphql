@@ -144,7 +144,6 @@ import {
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
-  resolveIntialValueDerivatives,
   resolveIntialValueLocation,
   resolveIntialValueMetadata,
   resolveIntialValueRepeatableMetadata,
@@ -1019,13 +1018,6 @@ export const baseResolver: Resolvers<ContextValue> = {
               relationKey as string,
               formatter as string,
               customFormatters
-            ),
-          derivatives: () =>
-            resolveIntialValueDerivatives(
-              parent,
-              key,
-              technicalOrigin as string,
-              dataSources
             ),
           typePillLabel: () =>
             resolveIntialValueTypePillLabel(
