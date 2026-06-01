@@ -329,6 +329,7 @@
         "one-of-required": "1 of these fields are required",
         "edit-metadata": "Edit metadata",
         "editing-metadata": "Editing metadata",
+        "open-detail-page": "Open detail page",
         "delete-entity": "Delete entity",
         "no-label": "No label",
         "date-created": "Date created",

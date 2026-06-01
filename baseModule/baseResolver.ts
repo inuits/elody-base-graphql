@@ -2085,6 +2085,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     showCurrentPreviewFlow: async (parent, { input }, { dataSources }) => {
       return input !== undefined ? input : true;
     },
+    previewConfiguration: async (parent, {}, { dataSources }) => {
+      return {};
+    },
+  },
+  PreviewConfiguration: {
+    keepLastActiveItemHighlighted: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    displayOpenDetailPageButton: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
   },
   FormTab: {
     formFields: async (parent: any, {}, { dataSources }) => {

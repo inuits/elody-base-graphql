@@ -2074,6 +2074,12 @@ export const baseSchema = gql`
     openByDefault(input: Boolean): Boolean
     metadataPreviewQuery(input: String): String
     showCurrentPreviewFlow(input: Boolean): Boolean
+    previewConfiguration: PreviewConfiguration
+  }
+
+  type PreviewConfiguration {
+    keepLastActiveItemHighlighted(input: Boolean): Boolean
+    displayOpenDetailPageButton(input: Boolean): Boolean
   }
 
   type PermissionResult {
