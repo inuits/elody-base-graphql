@@ -2493,6 +2493,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         defaultMatcher,
         allowedMatchers,
         matchersType,
+        minDropdownSearchCharacters,
       }
     ) => {
       return {
@@ -2507,6 +2508,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         showTimeForDateFilter: showTimeForDateFilter,
         options: [],
         advancedFilterInputForRetrievingOptions,
+        minDropdownSearchCharacters,
         aggregation,
         defaultValue: '',
         doNotOverrideValue: false,

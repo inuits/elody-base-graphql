@@ -2244,6 +2244,7 @@ export const baseSchema = gql`
     includeDefaultValuesFromIntialValues: [String]
     matchersType: AdvancedFilterMatchersType
     defaultValueMapping: [ValueMapping]
+    minDropdownSearchCharacters: Int
   }
 
   type AdvancedFilters {
