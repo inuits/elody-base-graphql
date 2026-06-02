@@ -220,7 +220,7 @@
       "active": "نشط",
       "clear": "مسح الكل",
       "apply": "تطبيق المرشح(ات)",
-      "minDropdownSearchCharacters": "اكتب 3 أحرف على الأقل",
+      "minDropdownSearchCharacters": "اكتب {count} أحرف على الأقل",
       "rangeFilterFromInputError": "لا يمكن أن يكون 'من' أكبر من 'إلى'",
       "rangeFilterToInputError": "لا يمكن أن يكون 'إلى' أصغر من 'من'",
       "matcher-labels": {

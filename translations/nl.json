@@ -231,7 +231,7 @@
       "active": "actief",
       "clear": "Alles wissen",
       "apply": "Filter(s) toepassen",
-      "minDropdownSearchCharacters": "Typ ten minste 3 karakters",
+      "minDropdownSearchCharacters": "Typ ten minste {count} karakter | Typ ten minste {count} karakters",
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
       "noOptionsAvailable": "Geen opties beschikbaar",

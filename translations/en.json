@@ -238,7 +238,7 @@
       "active": "active",
       "clear": "Clear all",
       "apply": "Apply filter(s)",
-      "minDropdownSearchCharacters": "Type at least 3 characters",
+      "minDropdownSearchCharacters": "Type at least {count} character | Type at least {count} characters",
       "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
       "rangeFilterToInputError": "'To' cannot be less than 'from'",
       "noOptionsAvailable": "No options available",
