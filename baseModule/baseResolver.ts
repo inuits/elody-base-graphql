@@ -1344,6 +1344,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    infoPanel: async (_source, { title, content }) => {
+      if (!content) return null;
+      return { title: title ?? '', content };
+    },
   },
   MarkdownViewerElement: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1546,6 +1550,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     tooltip: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },
+    infoPanel: async (_source, { title, content }) => {
+      if (!content) return null;
+      return { title: title ?? '', content };
+    },
     valueTooltip: async (_source, { input }, { dataSources }) => {
       return (input ?? {}) as PanelMetadataValueTooltipInput;
     },
@@ -1707,6 +1715,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     colSpan: async (_source, { input }) => {
       return input ?? '';
     },
+    infoPanel: async (_source, { title, content }) => {
+      if (!content) return null;
+      return { title: title ?? '', content };
+    },
   },
   PanelRelationRootData: {
     label: async (_source, { input }, { dataSources }) => {
@@ -1729,6 +1741,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     colSpan: async (_source, { input }) => {
       return input ?? '';
+    },
+    infoPanel: async (_source, { title, content }) => {
+      if (!content) return null;
+      return { title: title ?? '', content };
     },
   },
   PanelThumbnail: {

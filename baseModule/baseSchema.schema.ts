@@ -1551,6 +1551,11 @@ export const baseSchema = gql`
     repetitionKey: String
   }
 
+  type InfoPanel {
+    title: String
+    content: String
+  }
+
   type PanelMetaData {
     label(input: String): String
     key(input: String!): String!
@@ -1563,6 +1568,7 @@ export const baseSchema = gql`
     nonEditableField(input: Boolean): Boolean
     showOnlyInEditMode(input: Boolean): Boolean
     tooltip(input: String!): String!
+    infoPanel(title: String, content: String): InfoPanel
     valueTooltip(
       input: PanelMetadataValueTooltipInput
     ): PanelMetadataValueTooltip
@@ -1602,6 +1608,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
     colSpan(input: String): String!
+    infoPanel(title: String, content: String): InfoPanel
   }
 
   type PanelRelationRootData {
@@ -1612,6 +1619,7 @@ export const baseSchema = gql`
     inputField(type: BaseFieldType!): InputField!
     showOnlyInEditMode(input: Boolean): Boolean
     colSpan(input: String): String!
+    infoPanel(title: String, content: String): InfoPanel
   }
 
   type PanelThumbnail {
@@ -1831,6 +1839,7 @@ export const baseSchema = gql`
     isMultilingual(input: Boolean): Boolean
     taggingConfiguration: TaggingExtensionConfiguration
     wysiwygElementConfiguration: WysiwygElementConfiguration
+    infoPanel(title: String, content: String): InfoPanel
   }
 
   type ColumnList {
