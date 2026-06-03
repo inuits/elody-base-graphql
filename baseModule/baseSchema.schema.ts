@@ -2259,6 +2259,7 @@ export const baseSchema = gql`
       isDisplayedByDefault: Boolean
       showTimeForDateFilter: Boolean
       advancedFilterInputForRetrievingOptions: [AdvancedFilterInput!]
+      options: [DropdownOptionInput!]
       aggregation: String
       matchExact: Boolean
       min: Int

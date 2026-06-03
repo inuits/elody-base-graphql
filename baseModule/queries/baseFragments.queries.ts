@@ -45,6 +45,11 @@ export const baseFragments = gql`
     operator
     selectionOption
     isDisplayedByDefault
+    options {
+      icon
+      label
+      value
+    }
     filterOptionsMapping {
       label
       value

@@ -2477,6 +2477,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         isDisplayedByDefault,
         showTimeForDateFilter,
         advancedFilterInputForRetrievingOptions,
+        options,
         aggregation,
         min,
         max,
@@ -2506,7 +2507,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         label: label || '',
         isDisplayedByDefault: isDisplayedByDefault || false,
         showTimeForDateFilter: showTimeForDateFilter,
-        options: [],
+        options: options ?? [],
         advancedFilterInputForRetrievingOptions,
         minDropdownSearchCharacters,
         aggregation,
@@ -2562,9 +2563,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         : true;
     },
     options: async (parent) => {
-      return [
-        { icon: DamsIcons.NoIcon, label: 'IotDevice', value: 'IotDevice' },
-      ];
+      return parent.options ?? [];
     },
     advancedFilterInputForRetrievingOptions: async (
       parent,
