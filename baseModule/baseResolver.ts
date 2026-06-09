@@ -1466,6 +1466,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       if (repetitionKey) return { repetitionKey };
       return { repetitionKey: undefined };
     },
+    displayCondition: async (parent: unknown, {}, { dataSources }) => {
+      return parent as unknown as DisplayCondition;
+    },
   },
   PanelHeaderContent: {
     label: async (_source, {}, { dataSources }) => {

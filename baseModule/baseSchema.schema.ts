@@ -1703,6 +1703,7 @@ export const baseSchema = gql`
     entityListElement: EntityListElement
     wysiwygElement: WysiwygElement
     repetitionConfig(repetitionKey: String): RepetitionConfig
+    displayCondition: DisplayCondition
   }
 
   type WindowElementBulkDataPanel {
