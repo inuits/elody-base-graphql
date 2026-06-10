@@ -496,6 +496,7 @@ export const baseSchema = gql`
     Confirm
     Delete
     DynamicForm
+    GuidedFlow
     Search
     SearchAi
     SaveSearch
@@ -2371,6 +2372,7 @@ export const baseSchema = gql`
       entityType: String!
     ): [PermissionMapping!]!
     GetDynamicForm: Form!
+    GetRepetitiveForm(name: String!): RepetitiveForm
     GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping(keys: [String!]): [FilterMatchers!]!
@@ -2459,5 +2461,46 @@ export const baseSchema = gql`
     icon: String
     mutation: String!
     style: EntityButtonStyle
+  }
+
+  type RepetitiveStepScope {
+    step: String!
+    relationType: String!
+  }
+
+  type RepetitiveStepRelation {
+    to: String!
+    relationType: String!
+    createWhen: String!
+  }
+
+  type RepetitiveStep {
+    key: String!
+    entityType: String!
+    createForm: String!
+    scopeToRelationOf: RepetitiveStepScope
+    skipSearchIfPriorIsNew: Boolean
+    relations: [RepetitiveStepRelation!]
+    acceptedTypes: [String!]
+    pickerQuery: String
+    pickerFiltersQuery: String
+  }
+
+  type RepetitiveFinalizeRelation {
+    toAllOf: String!
+    relationType: String!
+    createWhen: String!
+  }
+
+  type RepetitiveFinalize {
+    entityType: String!
+    createForm: String!
+    relations: [RepetitiveFinalizeRelation!]!
+  }
+
+  type RepetitiveForm {
+    repeatable: Boolean!
+    steps: [RepetitiveStep!]!
+    finalize: RepetitiveFinalize
   }
 `;

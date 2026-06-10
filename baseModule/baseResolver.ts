@@ -622,6 +622,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     GetDynamicForm: async (_source: any, _args, { dataSources }) => {
       return {} as Form;
     },
+    GetRepetitiveForm: async (_source: any, _args, { dataSources }) => {
+      return null;
+    },
     GetEntityDetailContextMenuActions: async (
       _source,
       _args,
