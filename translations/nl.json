@@ -252,7 +252,8 @@
         "MinMatcher": "op minimum waarde (exclusief)",
         "NoneMatcher": "is niet ingevuld",
         "MetadataOnRelationExactMatcher": "is gelijk aan",
-        "MetadataOnRelationContainsMatcher": "bevat"
+        "MetadataOnRelationContainsMatcher": "bevat",
+        "RegexMatcher": "regex"
       },
       "matcher-placeholders": {
         "date": "datum",

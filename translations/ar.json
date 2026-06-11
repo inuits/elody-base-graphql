@@ -239,7 +239,8 @@
         "MinMatcher": "على القيمة الدنيا (غير مشمولة)",
         "NoneMatcher": "بدون قيمة",
         "MetadataOnRelationExactMatcher": "مساوٍ تمامًا",
-        "MetadataOnRelationContainsMatcher": "يحتوي"
+        "MetadataOnRelationContainsMatcher": "يحتوي",
+        "RegexMatcher": "regex"
       },
       "matcher-placeholders": {
         "date": "تاريخ",
