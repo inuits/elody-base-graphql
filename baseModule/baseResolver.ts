@@ -130,6 +130,12 @@ import {
   PanelStatusInput,
   WindowElementStatus,
   VirtualKeyboardConfig,
+  RepetitiveStep,
+  RepetitiveFinalize,
+  RepetitiveStepScope,
+  RepetitiveStepRelation,
+  RepetitiveFinalizeRelation,
+  RepetitiveMetadataPrefill,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -623,7 +629,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return {} as Form;
     },
     GetRepetitiveForm: async (_source: any, _args, { dataSources }) => {
-      return null;
+      return {} as Form;
     },
     GetEntityDetailContextMenuActions: async (
       _source,
@@ -2722,6 +2728,111 @@ export const baseResolver: Resolvers<ContextValue> = {
   MapFeatureMetadata: {
     metaData: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelMetaData;
+    },
+  },
+  RepetitiveForm: {
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    repeatable: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    steps: async (parent: any, {}, { dataSources }) => {
+      // each aliased `steps` field in the self-describing query yields one step
+      return [parent ?? {}] as RepetitiveStep[];
+    },
+    finalize: async (parent: any, {}, { dataSources }) => {
+      return parent as RepetitiveFinalize;
+    },
+  },
+  RepetitiveStep: {
+    key: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    entityType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    createForm: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    skipSearchIfPriorIsNew: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    acceptedTypes: async (parent: any, { input }, { dataSources }) => {
+      return input || [];
+    },
+    pickerQuery: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    pickerFiltersQuery: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
+      return parent as RepetitiveStepScope;
+    },
+    relations: async (parent: any, {}, { dataSources }) => {
+      return [parent ?? {}] as RepetitiveStepRelation[];
+    },
+  },
+  RepetitiveFinalize: {
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    entityType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    createForm: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    relations: async (parent: any, {}, { dataSources }) => {
+      return [parent ?? {}] as RepetitiveFinalizeRelation[];
+    },
+    prefillMetadata: async (parent: any, {}, { dataSources }) => {
+      return [parent ?? {}] as RepetitiveMetadataPrefill[];
+    },
+  },
+  RepetitiveStepScope: {
+    step: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    filterKey: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+  },
+  RepetitiveStepRelation: {
+    to: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    createWhen: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+  },
+  RepetitiveFinalizeRelation: {
+    toAllOf: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    createWhen: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+  },
+  RepetitiveMetadataPrefill: {
+    key: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    value: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
     },
   },
 };

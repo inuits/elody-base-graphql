@@ -2372,7 +2372,7 @@ export const baseSchema = gql`
       entityType: String!
     ): [PermissionMapping!]!
     GetDynamicForm: Form!
-    GetRepetitiveForm(name: String!): RepetitiveForm
+    GetRepetitiveForm: RepetitiveForm
     GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping(keys: [String!]): [FilterMatchers!]!
@@ -2464,42 +2464,52 @@ export const baseSchema = gql`
   }
 
   type RepetitiveStepScope {
-    step: String!
-    relationType: String!
+    step(input: String!): String!
+    relationType(input: String!): String!
+    filterKey(input: String): String
   }
 
   type RepetitiveStepRelation {
-    to: String!
-    relationType: String!
-    createWhen: String!
+    to(input: String!): String!
+    relationType(input: String!): String!
+    createWhen(input: String!): String!
   }
 
   type RepetitiveStep {
-    key: String!
-    entityType: String!
-    createForm: String!
+    key(input: String!): String!
+    label(input: String): String
+    entityType(input: String!): String!
+    createForm(input: String!): String!
+    skipSearchIfPriorIsNew(input: Boolean): Boolean
+    acceptedTypes(input: [String!]): [String!]
+    pickerQuery(input: String!): String
+    pickerFiltersQuery(input: String): String
     scopeToRelationOf: RepetitiveStepScope
-    skipSearchIfPriorIsNew: Boolean
     relations: [RepetitiveStepRelation!]
-    acceptedTypes: [String!]
-    pickerQuery: String
-    pickerFiltersQuery: String
   }
 
   type RepetitiveFinalizeRelation {
-    toAllOf: String!
-    relationType: String!
-    createWhen: String!
+    toAllOf(input: String!): String!
+    relationType(input: String!): String!
+    createWhen(input: String!): String!
+  }
+
+  type RepetitiveMetadataPrefill {
+    key(input: String!): String!
+    value(input: JSON!): JSON!
   }
 
   type RepetitiveFinalize {
-    entityType: String!
-    createForm: String!
+    label(input: String): String
+    entityType(input: String!): String!
+    createForm(input: String!): String!
     relations: [RepetitiveFinalizeRelation!]!
+    prefillMetadata: [RepetitiveMetadataPrefill!]
   }
 
   type RepetitiveForm {
-    repeatable: Boolean!
+    label(input: String): String
+    repeatable(input: Boolean!): Boolean!
     steps: [RepetitiveStep!]!
     finalize: RepetitiveFinalize
   }
