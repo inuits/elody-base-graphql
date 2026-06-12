@@ -2484,6 +2484,7 @@ export const baseSchema = gql`
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String
+    maxSelection(input: Int): Int
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
   }

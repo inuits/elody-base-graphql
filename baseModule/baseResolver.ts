@@ -2770,6 +2770,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     pickerFiltersQuery: async (parent: any, { input }, { dataSources }) => {
       return input || "";
     },
+    maxSelection: async (parent: any, { input }, { dataSources }) => {
+      return input ?? 0;
+    },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveStepScope;
     },
