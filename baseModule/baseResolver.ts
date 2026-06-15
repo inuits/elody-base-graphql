@@ -130,6 +130,7 @@ import {
   PanelStatusInput,
   WindowElementStatus,
   VirtualKeyboardConfig,
+  RepetitiveForm,
   RepetitiveStep,
   RepetitiveFinalize,
   RepetitiveStepScope,
@@ -629,7 +630,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return {} as Form;
     },
     GetRepetitiveForm: async (_source: any, _args, { dataSources }) => {
-      return {} as Form;
+      return {} as RepetitiveForm;
     },
     GetEntityDetailContextMenuActions: async (
       _source,
