@@ -2773,6 +2773,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     maxSelection: async (parent: any, { input }, { dataSources }) => {
       return input ?? 0;
     },
+    overviewFields: async (parent: any, { input }, { dataSources }) => {
+      // echoes the configured list; each element { key, label } resolves
+      // through the default field resolver on RepetitiveStepOverviewField
+      return input || [];
+    },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveStepScope;
     },

@@ -160,6 +160,12 @@
         "cancel": "Annuleren",
         "title": "Formulier verlaten"
       },
+      "close-guided-flow": {
+        "message": "Ben je zeker dat je de begeleide flow wilt verlaten? Reeds aangemaakte entiteiten blijven bewaard, maar de flow wordt niet afgerond.",
+        "confirm": "Verlaten",
+        "cancel": "Annuleren",
+        "title": "Begeleide flow verlaten"
+      },
       "logout-modal": {
         "message": "Ben je zeker dat je wilt uitloggen?",
         "confirm": "Log uit",

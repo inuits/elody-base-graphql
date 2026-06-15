@@ -2475,6 +2475,16 @@ export const baseSchema = gql`
     createWhen(input: String!): String!
   }
 
+  input RepetitiveStepOverviewFieldInput {
+    key: String!
+    label: String!
+  }
+
+  type RepetitiveStepOverviewField {
+    key: String!
+    label: String!
+  }
+
   type RepetitiveStep {
     key(input: String!): String!
     label(input: String): String
@@ -2485,6 +2495,7 @@ export const baseSchema = gql`
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String
     maxSelection(input: Int): Int
+    overviewFields(input: [RepetitiveStepOverviewFieldInput!]): [RepetitiveStepOverviewField!]
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
   }

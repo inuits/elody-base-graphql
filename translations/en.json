@@ -169,6 +169,12 @@
         "cancel": "Cancel",
         "title": "Leave form"
       },
+      "close-guided-flow": {
+        "message": "Are you sure you want to leave the guided flow? Already created entities are kept, but the flow will not be finalized.",
+        "confirm": "Leave",
+        "cancel": "Cancel",
+        "title": "Leave guided flow"
+      },
       "logout-modal": {
         "message": "Are you certain you wish to log out?",
         "confirm": "Confirm",
