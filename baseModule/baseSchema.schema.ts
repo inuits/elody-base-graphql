@@ -2485,6 +2485,18 @@ export const baseSchema = gql`
     label: String!
   }
 
+  input RepetitiveCreatableTypeInput {
+    label: String!
+    entityType: String!
+    createForm: String!
+  }
+
+  type RepetitiveCreatableType {
+    label: String!
+    entityType: String!
+    createForm: String!
+  }
+
   type RepetitiveStep {
     key(input: String!): String!
     label(input: String): String
@@ -2496,6 +2508,7 @@ export const baseSchema = gql`
     pickerFiltersQuery(input: String): String
     maxSelection(input: Int): Int
     overviewFields(input: [RepetitiveStepOverviewFieldInput!]): [RepetitiveStepOverviewField!]
+    creatableTypes(input: [RepetitiveCreatableTypeInput!]): [RepetitiveCreatableType!]
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
   }
@@ -2515,6 +2528,7 @@ export const baseSchema = gql`
     label(input: String): String
     entityType(input: String!): String!
     createForm(input: String!): String!
+    creatableTypes(input: [RepetitiveCreatableTypeInput!]): [RepetitiveCreatableType!]
     relations: [RepetitiveFinalizeRelation!]!
     prefillMetadata: [RepetitiveMetadataPrefill!]
   }

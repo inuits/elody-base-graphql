@@ -2774,8 +2774,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ?? 0;
     },
     overviewFields: async (parent: any, { input }, { dataSources }) => {
-      // echoes the configured list; each element { key, label } resolves
-      // through the default field resolver on RepetitiveStepOverviewField
+      return input || [];
+    },
+    creatableTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
@@ -2794,6 +2795,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     createForm: async (parent: any, { input }, { dataSources }) => {
       return input || "";
+    },
+    creatableTypes: async (parent: any, { input }, { dataSources }) => {
+      return input || [];
     },
     relations: async (parent: any, {}, { dataSources }) => {
       return [parent ?? {}] as RepetitiveFinalizeRelation[];
