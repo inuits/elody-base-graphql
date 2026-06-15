@@ -19,7 +19,10 @@ const getSessionCookieSettings = (appconfig: Environment): CookieOptions => {
   const cookieSettings: CookieOptions = {
     httpOnly: true,
     secure: false,
-    sameSite: 'strict',
+    // 'lax' (not 'strict') so the session cookie is sent on the top-level
+    // navigation back from the OIDC provider; 'strict' drops it and breaks
+    // the local HTTP login (code consumed but session never persisted).
+    sameSite: 'lax',
   };
 
   const isProdEnvironment: boolean = appconfig.environment === 'production';
