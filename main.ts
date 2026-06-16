@@ -73,7 +73,6 @@ import {
   ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
-import depthLimit from 'graphql-depth-limit';
 import { enableCors } from './helpers/corsHelper';
 import {
   enableContentSecurityPolicy,
@@ -223,7 +222,12 @@ const start = ({
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
-      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 15)],
+      // NOTE: graphql-depth-limit crashes (throws) on deep union/fragment
+      // documents (e.g. dishacled's fullEntity → per-type fragments), which
+      // Apollo surfaces as a generic 500 "Internal server error" instead of a
+      // clean validation error — and it crashes regardless of the configured
+      // limit. Disabled until replaced with a resilient depth limiter.
+      validationRules: [],
       introspection: environment?.apollo.introspection || false,
       plugins: [authExtensionPlugin],
       nodeEnv: environment.environment,
