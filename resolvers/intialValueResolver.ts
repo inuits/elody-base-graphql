@@ -114,10 +114,23 @@ const filterRelationsByProperty = (
   propertyValue: string
 ): any[] => {
   if (!propertyKey) return relations;
-
-  return relations.filter(
+  const foundRelations = relations.filter(
     (relation) => String(relation[propertyKey]) === propertyValue
   );
+  if (foundRelations?.length > 0) return foundRelations;
+
+  return relations.filter(
+    (relation) => {
+      if (!relation.metadata || relation.metadata?.length === 0) return false;
+      return relation.metadata.some((relationMetadata) => {
+        if (relationMetadata.key === propertyKey) {
+          return String(relationMetadata.value) === propertyValue;
+        }
+        return false;
+      })
+    }
+  )
+
 };
 
 const fetchRelationEntity = async (
