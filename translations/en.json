@@ -503,7 +503,8 @@
       "asset-library": "Search Asset Library...",
       "mediafile-library": "Search Mediafiles...",
       "tipMap": "Try adjusting or removing filters, or moving to another area to see results",
-      "tip": "Try adjusting or removing filters to see results"
+      "tip": "Try adjusting or removing filters to see results",
+      "search-placeholder": "Type to search..."
     },
     "language": {
       "nl": "Dutch",

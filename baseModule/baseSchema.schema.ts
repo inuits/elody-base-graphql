@@ -486,6 +486,8 @@ export const baseSchema = gql`
     readOnlyValueAsPlainText: Boolean
     relationMetadataFromFormFields: [RelationMetadataFromFormField]
     virtualKeyboardConfig(input: VirtualKeyboardConfigInput): VirtualKeyboardConfig
+    searchMode(input: EntityPickerSearchMode): EntityPickerSearchMode
+    searchMetadataKeys(input: [String]): [String]
   }
 
   enum TypeModals {
@@ -890,6 +892,11 @@ export const baseSchema = gql`
     MinMaxInput
     TextInput
     SelectionInput
+  }
+
+  enum EntityPickerSearchMode {
+    Search
+    Filters
   }
 
   input MetadataInput {
