@@ -1,5 +1,5 @@
-import { Entitytyping } from '../generated-types/type-defs';
-import { Route } from '../routes/routesHelper';
+import { Entitytyping } from "../generated-types/type-defs";
+import { Route } from "../routes/routesHelper";
 
 export interface Environment {
   apollo: {
@@ -29,13 +29,13 @@ export interface Environment {
     csvExportService?: {
       csvExportServiceUrl?: string;
       csvExportServiceEnabled?: boolean;
-    }
+    };
     fileSystemImporterServiceUrl?: string;
     iiifUrl: string;
     iiifUrlFrontend: string;
     storageApiUrl: string;
     storageApiUrlExt: string;
-    promUrl: 'no-prom' | string;
+    promUrl: "no-prom" | string;
     transcodeService?: string;
     ocrService?: string;
   };
@@ -110,9 +110,9 @@ export interface Environment {
   graphqlEndpoint: string;
   corsAllowedOrigins: string;
   staticToken: string | undefined | null;
-  sentryEnabled: boolean;
-  sentryDsn: string;
-  sentryDsnFrontend: string;
+  glitchtipEnabled: boolean;
+  glitchtipDsn: string;
+  glitchtipDsnFrontend: string;
   nomadNamespace: string;
   ignorePermissions: boolean;
   maxUploadSize: number;
@@ -151,7 +151,7 @@ export interface FullyOptionalEnvironmentInput {
     iiifUrlFrontend?: string;
     storageApiUrl?: string;
     storageApiUrlExt?: string;
-    promUrl?: 'no-prom' | string;
+    promUrl?: "no-prom" | string;
     transcodeService?: string;
     ocrService?: string;
   };
@@ -226,9 +226,9 @@ export interface FullyOptionalEnvironmentInput {
   graphqlEndpoint?: string;
   corsAllowedOrigins?: string;
   staticToken?: string | undefined | null;
-  sentryEnabled?: boolean;
-  sentryDsn?: string;
-  sentryDsnFrontend?: string;
+  glitchtipEnabled?: boolean;
+  glitchtipDsn?: string;
+  glitchtipDsnFrontend?: string;
   nomadNamespace?: string;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
