@@ -67,6 +67,10 @@ export interface Environment {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
+    savedSearch?: {
+      enabled?: boolean;
+      permission?: string[];
+    };
     advancedSearch?: {
       queryBy: string;
       queryByWeights?: string;
@@ -179,6 +183,10 @@ export interface FullyOptionalEnvironmentInput {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
+    savedSearch?: {
+      enabled?: boolean;
+      permission?: string[];
+    };
     advancedSearch?: {
       queryBy?: string;
       queryByWeights?: string;

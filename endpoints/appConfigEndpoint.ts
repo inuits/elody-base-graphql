@@ -39,10 +39,13 @@ const getConfig = (config: Environment) => {
         config.features.hideSuperTenant === undefined
           ? false
           : config.features.hideSuperTenant,
-      hasSavedSearch:
-        config.features.hasSavedSearch === undefined
-          ? false
-          : config.features.hasSavedSearch,
+      savedSearch: {
+        enabled:
+          config.features.savedSearch?.enabled
+          ?? config.features.hasSavedSearch
+          ?? false,
+        permission: config.features.savedSearch?.permission ?? [],
+      },
       supportsMultilingualMetadataEditing:
         config.features.supportsMultilingualMetadataEditing === undefined
           ? false
