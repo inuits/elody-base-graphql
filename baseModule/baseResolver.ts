@@ -207,6 +207,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   }),
   Query: {
+    getElodyUser: async (_source, _args, { dataSources }) => {
+      return await dataSources.CollectionAPI.getElodyUser();
+    },
     Entity: async (
       _source,
       { id, type, preferredLanguage },

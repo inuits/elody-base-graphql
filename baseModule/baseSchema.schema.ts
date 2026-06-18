@@ -2314,6 +2314,7 @@ export const baseSchema = gql`
 
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
+    getElodyUser: Entity
     Entities(
       type: Entitytyping
       limit: Int

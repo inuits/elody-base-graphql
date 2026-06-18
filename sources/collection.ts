@@ -276,6 +276,29 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
+  async getElodyUser(): Promise<Entity | undefined> {
+    const email = await this.getSessionInfo('email');
+    const emailMetadataKey =
+      this.environment.customization?.userEmailMetadataKey ??
+      'elody:1|metadata.email.value';
+    const filters = [
+      { type: 'type', value: Entitytyping.User, match_exact: true },
+      { type: 'text', key: [emailMetadataKey], value: email, match_exact: true },
+    ];
+    const queryParams = new URLSearchParams({ limit: '2', skip: '0', order_by: '', asc: '1' });
+    const data: any = await this.post(
+      `${getCollectionValueForEntityType(Entitytyping.User)}/filter?${queryParams.toString()}`,
+      { body: filters }
+    );
+    const results: Entity[] = Array.isArray(data) ? data : data?.results ?? [];
+    if (results.length > 1) {
+      throw new GraphQLError(`Multiple users found with email: ${email}`);
+    }
+    if (results.length === 0) return undefined;
+    setId(results[0]);
+    return results[0];
+  }
+
   async getNewObjectId(): Promise<string> {
     const data = await this.get(`${Collection.Entities}/sixthcollection/id`);
     return data;

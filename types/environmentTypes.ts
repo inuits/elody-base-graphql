@@ -102,6 +102,7 @@ export interface Environment {
     availableLanguages?: string[];
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
+    userEmailMetadataKey?: string;
   };
   allowAnonymousUsers: boolean;
   tenantDefiningTypes?: string;
@@ -218,6 +219,7 @@ export interface FullyOptionalEnvironmentInput {
     availableLanguages?: string[];
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
+    userEmailMetadataKey?: string;
   };
   allowAnonymousUsers?: boolean;
   tenantDefiningTypes?: string;
