@@ -137,6 +137,7 @@ import {
   RepetitiveStepRelation,
   RepetitiveFinalizeRelation,
   RepetitiveMetadataPrefill,
+  EntityPickerSearchMode,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -2119,7 +2120,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   PreviewConfiguration: {
-    keepLastActiveItemHighlighted: async (parent, { input }, { dataSources }) => {
+    keepLastActiveItemHighlighted: async (
+      parent,
+      { input },
+      { dataSources }
+    ) => {
       return input !== undefined ? input : false;
     },
     displayOpenDetailPageButton: async (parent, { input }, { dataSources }) => {
@@ -2282,7 +2287,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     relationMetadataFromFormFields: (parent) =>
       parent.relationMetadataFromFormFields ?? null,
     searchMode: (_parent: any, { input }: { input?: string }) =>
-      input ?? 'Filters',
+      input ?? EntityPickerSearchMode.Filters,
     searchMetadataKeys: (_parent: any, { input }: { input?: string[] }) =>
       input ?? null,
   },
@@ -2737,7 +2742,7 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   RepetitiveForm: {
     label: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     repeatable: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
@@ -2752,16 +2757,16 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   RepetitiveStep: {
     key: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     label: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     entityType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     createForm: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     skipSearchIfPriorIsNew: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
@@ -2770,10 +2775,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || [];
     },
     pickerQuery: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     pickerFiltersQuery: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     maxSelection: async (parent: any, { input }, { dataSources }) => {
       return input ?? 0;
@@ -2793,13 +2798,13 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   RepetitiveFinalize: {
     label: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     entityType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     createForm: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     creatableTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
@@ -2813,43 +2818,43 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   RepetitiveStepScope: {
     step: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     relationType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     filterKey: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
   RepetitiveStepRelation: {
     to: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     relationType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
   RepetitiveFinalizeRelation: {
     toAllOf: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     relationType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
   RepetitiveMetadataPrefill: {
     key: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     value: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
   },
 };
