@@ -488,6 +488,7 @@ export const baseSchema = gql`
     virtualKeyboardConfig(input: VirtualKeyboardConfigInput): VirtualKeyboardConfig
     searchMode(input: EntityPickerSearchMode): EntityPickerSearchMode
     searchMetadataKeys(input: [String]): [String]
+    searchAcceptedTypes(input: [String]): [String]
   }
 
   enum TypeModals {

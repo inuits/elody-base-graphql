@@ -2293,6 +2293,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       input ?? EntityPickerSearchMode.Filters,
     searchMetadataKeys: (_parent: any, { input }: { input?: string[] }) =>
       input ?? null,
+    searchAcceptedTypes: (_parent: any, { input }: { input?: string[] }) =>
+      input ?? null,
   },
   VirtualKeyboardConfig: {
     layouts: async (parent: any, _args: any) => {
