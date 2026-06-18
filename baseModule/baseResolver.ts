@@ -2286,7 +2286,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationMetadataFromFormFields: (parent) =>
       parent.relationMetadataFromFormFields ?? null,
-    searchMode: (_parent: any, { input }: { input?: string }) =>
+    searchMode: (_parent: any, { input }: { input?: EntityPickerSearchMode }) =>
       input ?? EntityPickerSearchMode.Filters,
     searchMetadataKeys: (_parent: any, { input }: { input?: string[] }) =>
       input ?? null,
