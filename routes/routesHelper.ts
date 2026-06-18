@@ -1,10 +1,11 @@
 import { baseRoutes } from './baseRoutes';
 
 type routeMetaQueries = {
-  getEntities: string;
-  getFilters: string;
-  getSortOptions: string;
-  getBulkOperations: string;
+  getEntities?: string;
+  getFilters?: string;
+  getSortOptions?: string;
+  getBulkOperations?: string;
+  getMultiEntity?: string;
 };
 
 export type Route = {
@@ -17,6 +18,7 @@ export type Route = {
     type?: string;
     entityType?: string;
     breadcrumbs?: Array<object>;
+    multiEntityLayout?: boolean;
   };
   children?: Array<Route>;
   redirect?: string;
