@@ -1277,6 +1277,7 @@ export const baseSchema = gql`
     cropMediafileCoordinatesKey(input: String): String
     actionsOnResult: ActionsOnResult
     displayCondition: DisplayCondition
+    addEntitiesToForms(input: Boolean): Boolean
   }
 
   type DisplayCondition {
@@ -1601,12 +1602,14 @@ export const baseSchema = gql`
     label: String
     key: String!
     autoCopy: Boolean
+    fromRelationType: String
   }
 
   input CopyValueFromParentIntialValuesInput {
     label: String
     key: String!
     autoCopy: Boolean
+    fromRelationType: String
   }
 
   type PanelRelationMetaData {

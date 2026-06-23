@@ -1284,6 +1284,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     displayCondition: async (parent: unknown, {}, { dataSources }) => {
       return parent as unknown as DisplayCondition;
     },
+    addEntitiesToForms: async (parent, { input }, { dataSources }) => {
+      return input !== undefined ? input : false
+    },
   },
   DisplayCondition: {
     key: async (_source, { input }, { dataSources }) => {
