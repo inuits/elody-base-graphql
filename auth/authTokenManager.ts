@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 import jwt_decode from 'jwt-decode';
-import { manager } from '.';
+import { getManager } from '.';
 import { Environment } from '../types/environmentTypes';
 import { isIpAddressWhitelisted } from '../helpers/helpers';
 
@@ -82,7 +82,7 @@ export class AuthTokenManager {
 
   private async doRefresh(): Promise<string | null> {
     try {
-      const refreshed = await manager?.refresh(
+      const refreshed = await getManager(this.environment).refresh(
         this.accessToken,
         this.refreshToken
       );

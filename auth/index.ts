@@ -61,6 +61,19 @@ export async function applyAuthSession(
 
 export let manager: AuthManager | null = null;
 
+export function getManager(environment: Environment): AuthManager {
+  if (!manager) {
+    manager = new AuthManager(
+      environment.oauth.baseUrl,
+      environment.oauth.clientId,
+      environment.clientSecret,
+      environment.oauth.tokenEndpoint,
+      environment.oauth.logoutEndpoint,
+    );
+  }
+  return manager;
+}
+
 export function applyAuthEndpoints(
   app: any,
   oauthBaseUrl: string,
@@ -69,12 +82,11 @@ export function applyAuthEndpoints(
 ) {
   app.get('/api/logout', async (req: any, res: any) => {
     logToken(undefined, `index /api/logout`);
-    req.session.auth != null && manager != null
-      ? manager?.logout(
-          req.session.auth.accessToken,
-          req.session.auth.refreshToken
-        )
-      : null;
+    if (req.session.auth != null)
+      getManager(environment).logout(
+        req.session.auth.accessToken,
+        req.session.auth.refreshToken
+      );
     req.session.auth = undefined;
     const settings = getSessionCookieSettings(environment);
     req.session.destroy((err: any) => {

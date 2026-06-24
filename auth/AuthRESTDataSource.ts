@@ -1,7 +1,7 @@
 import { RESTDataSource, AugmentedRequest } from '@apollo/datasource-rest';
 import { BodyInit, RequestInit } from 'apollo-server-env';
 import { KeyValueCache } from '@apollo/utils.keyvaluecache';
-import { manager } from '.';
+import { getManager } from '.';
 import { RequestWithBody } from '@apollo/datasource-rest/dist/RESTDataSource';
 import { GraphQLError } from 'graphql/index';
 import { Environment } from '../types/environmentTypes';
@@ -60,7 +60,7 @@ export class AuthRESTDataSource extends RESTDataSource {
       return await fn(...args);
     } catch (error: any) {
       if (this.session.auth && error?.extensions?.response?.status === 401) {
-        const response = await manager?.refresh(
+        const response = await getManager(this.environment).refresh(
           this.session.auth.accessToken,
           this.session.auth.refreshToken
         );
