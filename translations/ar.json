@@ -47,7 +47,8 @@
         "start-ocr": "بدء OCR",
         "delete-relation-entities": "هل تريد حذف {0} التالية أيضًا؟",
         "blocking-relations": "هناك علاقات تمنع الحذف: لا يمكن حذف {0} بسبب {1} التالية.",
-        "complete": "مكتمل"
+        "complete": "مكتمل",
+        "create-entity-from-dropdown": "إنشاء \"{0}\""
       },
       "progress-steps": {
         "validate": "CSV",
@@ -174,6 +175,12 @@
         "confirm": "تأكيد",
         "cancel": "إلغاء",
         "title": "حذف الروابط مع العناصر المحددة"
+      },
+      "create-entity-from-dropdown": {
+        "title": "إنشاء \"{0}\"",
+        "message": "هل أنت متأكد أنك تريد إنشاء \"{0}\"؟",
+        "confirm": "إنشاء",
+        "cancel": "إلغاء"
       }
     },
     "dropdown": {

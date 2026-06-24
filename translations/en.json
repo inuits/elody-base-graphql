@@ -49,7 +49,8 @@
         "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}.",
         "complete": "Complete",
         "next": "Next step",
-        "previous": "Previous step"
+        "previous": "Previous step",
+        "create-entity-from-dropdown": "Create: \"{0}\""
       },
       "progress-steps": {
         "validate": "CSV",
@@ -191,6 +192,12 @@
         "title": "Confirm action",
         "message": "Are you sure you want to perform this action on the selected items?",
         "confirm": "Confirm",
+        "cancel": "Cancel"
+      },
+      "create-entity-from-dropdown": {
+        "title": "Create \"{0}\"",
+        "message": "Are you sure you want to create \"{0}\"?",
+        "confirm": "Create",
         "cancel": "Cancel"
       }
     },

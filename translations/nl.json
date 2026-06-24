@@ -50,7 +50,8 @@
         "complete": "Voltooien",
         "add-entry": "Voeg item toe",
         "next": "Volgende stap",
-        "previous": "Vorige stap"
+        "previous": "Vorige stap",
+        "create-entity-from-dropdown": "Maak \"{0}\" aan"
       },
       "progress-steps": {
         "actions": {
@@ -182,6 +183,12 @@
         "title": "Actie bevestigen",
         "message": "Weet je zeker dat je deze actie wil uitvoeren op de geselecteerde items?",
         "confirm": "Bevestigen",
+        "cancel": "Annuleren"
+      },
+      "create-entity-from-dropdown": {
+        "title": "Maak \"{0}\" aan",
+        "message": "Weet je zeker dat je \"{0}\" wilt aanmaken?",
+        "confirm": "Aanmaken",
         "cancel": "Annuleren"
       }
     },
