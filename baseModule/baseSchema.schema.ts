@@ -496,6 +496,7 @@ export const baseSchema = gql`
     searchMode(input: EntityPickerSearchMode): EntityPickerSearchMode
     searchMetadataKeys(input: [String]): [String]
     searchAcceptedTypes(input: [String]): [String]
+    searchStaticFilters(input: [AdvancedFilterInput]): JSON
   }
 
   enum TypeModals {

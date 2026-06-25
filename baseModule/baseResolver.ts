@@ -2298,6 +2298,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       input ?? null,
     searchAcceptedTypes: (_parent: any, { input }: { input?: string[] }) =>
       input ?? null,
+    searchStaticFilters: (_parent: any, { input }: { input?: any[] }) =>
+      input ?? null,
   },
   VirtualKeyboardConfig: {
     layouts: async (parent: any, _args: any) => {
