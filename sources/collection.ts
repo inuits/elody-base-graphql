@@ -41,7 +41,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     this.environment.customization?.applicationLocale || 'en';
 
   async getSessionInfo(key: string): Promise<string> {
-    const user = jwtDecode(this.session.auth.accessToken!) as {
+    const user = jwtDecode(this.session.auth?.accessToken!) as {
       [key: string]: string;
     };
     return user[key];
@@ -277,6 +277,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async getElodyUser(): Promise<Entity | undefined> {
+    if (!this.session.auth?.accessToken) return undefined;
     const email = await this.getSessionInfo('email');
     const emailMetadataKey =
       this.environment.customization?.userEmailMetadataKey ??
