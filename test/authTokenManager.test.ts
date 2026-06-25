@@ -3,9 +3,7 @@ import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 // Mock the manager import before importing AuthTokenManager
 const mockRefresh = vi.fn();
 vi.mock('../auth', () => ({
-  get manager() {
-    return { refresh: mockRefresh };
-  },
+  getManager: () => ({ refresh: mockRefresh }),
 }));
 
 import { AuthTokenManager } from '../auth/authTokenManager';
