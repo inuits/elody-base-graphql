@@ -2186,6 +2186,7 @@ export const baseSchema = gql`
     local_field: String!
     foreign_field: String!
     as: String!
+    resolve_to_source_ids: Boolean
   }
 
   type FilterOptionsMappingType {
@@ -2321,6 +2322,7 @@ export const baseSchema = gql`
     local_field: String!
     foreign_field: String!
     as: String!
+    resolve_to_source_ids: Boolean
   }
 
   type Query {

@@ -362,12 +362,31 @@ export const resolveIntialValueRelationMetadata = async (
         uuid = previousId;
       }
 
-      label = parent?.relations
-        .find(
-          (relation: any) =>
-            relation.type === relationKey && relation.key === uuid
-        )
-        .metadata.find((metadata: any) => metadata.key === key).value;
+      const findRelationMetadata = (entity: any, relatedKey: string) =>
+        entity?.relations
+          ?.find(
+            (relation: any) =>
+              relation.type === relationKey && relation.key === relatedKey
+          )
+          ?.metadata?.find((metadata: any) => metadata.key === key)?.value;
+
+      label = findRelationMetadata(parent, uuid);
+
+      // The relation may be stored only on the other side (a one-sided relation
+      // surfaced on both entities). If it isn't on this entity, read it from the
+      // related entity, keyed back to this one.
+      if (
+        label === undefined &&
+        relationDirection !== RelationDirection.FromRelatedEntity
+      ) {
+        const relatedEntity = await dataSources.CollectionAPI.getEntity(
+          uuid,
+          Entitytyping.BaseEntity
+        );
+        label = findRelationMetadata(relatedEntity, parent.id);
+      }
+
+      if (label === undefined) label = '';
     }
 
     return formatterFactory(ResolverFormatters.RelationMetadata)({
