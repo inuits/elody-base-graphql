@@ -2849,7 +2849,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || '';
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
-      return input || '';
+      return input !== undefined ? input : undefined;
     },
   },
   RepetitiveFinalizeRelation: {
@@ -2860,7 +2860,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || '';
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
-      return input || '';
+      return input !== undefined ? input : undefined;
     },
   },
   RepetitiveMetadataPrefill: {
