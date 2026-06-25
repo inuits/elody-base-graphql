@@ -56,6 +56,13 @@ export const baseSchema = gql`
     mediafile
   }
 
+  enum RepetitiveRelationTrigger {
+    onCreate
+    onSelect
+    onFinalize
+    always
+  }
+
   enum VisibilityLevels {
     public
     not_public
@@ -2484,7 +2491,7 @@ export const baseSchema = gql`
   type RepetitiveStepRelation {
     to(input: String!): String!
     relationType(input: String!): String!
-    createWhen(input: String!): String!
+    createWhen(input: RepetitiveRelationTrigger!): RepetitiveRelationTrigger!
   }
 
   input RepetitiveStepOverviewFieldInput {
@@ -2528,7 +2535,7 @@ export const baseSchema = gql`
   type RepetitiveFinalizeRelation {
     toAllOf(input: String!): String!
     relationType(input: String!): String!
-    createWhen(input: String!): String!
+    createWhen(input: RepetitiveRelationTrigger!): RepetitiveRelationTrigger!
   }
 
   type RepetitiveMetadataPrefill {
@@ -2548,6 +2555,8 @@ export const baseSchema = gql`
   type RepetitiveForm {
     label(input: String): String
     repeatable(input: Boolean!): Boolean!
+    linear(input: Boolean): Boolean
+    routeToStep(input: String): String
     steps: [RepetitiveStep!]!
     finalize: RepetitiveFinalize
   }

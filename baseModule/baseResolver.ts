@@ -2755,6 +2755,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     repeatable: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    linear: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+    routeToStep: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
     steps: async (parent: any, {}, { dataSources }) => {
       // each aliased `steps` field in the self-describing query yields one step
       return [parent ?? {}] as RepetitiveStep[];
