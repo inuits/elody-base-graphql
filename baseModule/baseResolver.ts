@@ -2784,6 +2784,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     createForm: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
+    showBackButton: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : true;
+    },
     skipSearchIfPriorIsNew: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },

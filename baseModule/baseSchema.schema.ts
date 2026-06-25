@@ -2535,6 +2535,7 @@ export const baseSchema = gql`
     label(input: String): String
     entityType(input: String!): String!
     createForm(input: String!): String!
+    showBackButton(input: Boolean): Boolean
     skipSearchIfPriorIsNew(input: Boolean): Boolean
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
