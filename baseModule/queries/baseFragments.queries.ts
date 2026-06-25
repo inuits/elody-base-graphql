@@ -335,4 +335,11 @@ export const baseFragments = gql`
       ...inputfield
     }
   }
+
+  fragment entityPickerSearchConfigFragment on EntityPickerSearchConfig {
+    mode
+    metadataKeys
+    acceptedTypes
+    staticFilters
+  }
 `;
