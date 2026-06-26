@@ -94,6 +94,7 @@
       "edit": "Edit",
       "items": "items",
       "selected": "selected",
+      "capped-items-tooltip": "More results exist than shown. Refine your search for an exact count.",
       "save": "save",
       "cancel": "cancel",
       "delete": "delete",
@@ -489,7 +490,8 @@
     },
     "pagination": {
       "page": "page",
-      "of": "of"
+      "of": "of",
+      "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."
     },
     "saved-searches": {
       "new": "Save as new",

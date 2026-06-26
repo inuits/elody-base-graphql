@@ -98,6 +98,7 @@
       "edit": "Bewerken",
       "items": "items",
       "selected": "geselecteerd",
+      "capped-items-tooltip": "Er zijn meer resultaten dan getoond. Verfijn je zoekopdracht voor een exact aantal.",
       "save": "opslaan",
       "cancel": "annuleren",
       "delete": "verwijderen",
@@ -478,7 +479,8 @@
     },
     "pagination": {
       "page": "pagina",
-      "of": "van"
+      "of": "van",
+      "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
     },
     "saved-searches": {
       "new": "Opslaan als nieuw",
