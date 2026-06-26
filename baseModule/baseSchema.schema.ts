@@ -2543,6 +2543,7 @@ export const baseSchema = gql`
     maxSelection(input: Int): Int
     overviewFields(input: [RepetitiveStepOverviewFieldInput!]): [RepetitiveStepOverviewField!]
     creatableTypes(input: [RepetitiveCreatableTypeInput!]): [RepetitiveCreatableType!]
+    creatableTypeFromParentKey(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
   }

@@ -2808,6 +2808,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     creatableTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
+    creatableTypeFromParentKey: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveStepScope;
     },
