@@ -2292,14 +2292,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     relationMetadataFromFormFields: (parent) =>
       parent.relationMetadataFromFormFields ?? null,
-    entityPickerSearchConfig: (_parent: any, { input }: { input?: any }) =>
+    searchMode: (_parent: any, { input }: { input?: EntityPickerSearchMode }) =>
+      input ?? EntityPickerSearchMode.Filters,
+    searchMetadataKeys: (_parent: any, { input }: { input?: string[] }) =>
       input ?? null,
-  },
-  EntityPickerSearchConfig: {
-    mode: (parent: any) => parent?.mode ?? null,
-    metadataKeys: (parent: any) => parent?.metadataKeys ?? null,
-    acceptedTypes: (parent: any) => parent?.acceptedTypes ?? null,
-    staticFilters: (parent: any) => parent?.staticFilters ?? null,
+    searchAcceptedTypes: (_parent: any, { input }: { input?: string[] }) =>
+      input ?? null,
+    searchStaticFilters: (_parent: any, { input }: { input?: any[] }) =>
+      input ?? null,
   },
   VirtualKeyboardConfig: {
     layouts: async (parent: any, _args: any) => {

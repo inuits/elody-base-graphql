@@ -459,20 +459,6 @@ export const baseSchema = gql`
     layouts: JSON
   }
 
-  input EntityPickerSearchConfigInput {
-    mode: EntityPickerSearchMode
-    metadataKeys: [String]
-    acceptedTypes: [String]
-    staticFilters: [AdvancedFilterInput]
-  }
-
-  type EntityPickerSearchConfig {
-    mode: EntityPickerSearchMode
-    metadataKeys: [String]
-    acceptedTypes: [String]
-    staticFilters: JSON
-  }
-
   type InputField {
     fieldName(input: String): String
     type: String!
@@ -507,7 +493,10 @@ export const baseSchema = gql`
     readOnlyValueAsPlainText: Boolean
     relationMetadataFromFormFields: [RelationMetadataFromFormField]
     virtualKeyboardConfig(input: VirtualKeyboardConfigInput): VirtualKeyboardConfig
-    entityPickerSearchConfig(input: EntityPickerSearchConfigInput): EntityPickerSearchConfig
+    searchMode(input: EntityPickerSearchMode): EntityPickerSearchMode
+    searchMetadataKeys(input: [String]): [String]
+    searchAcceptedTypes(input: [String]): [String]
+    searchStaticFilters(input: [AdvancedFilterInput]): JSON
   }
 
   enum TypeModals {
