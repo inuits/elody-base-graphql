@@ -2316,6 +2316,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     inputField: async (parent: any, _args: any) => {
       return parent.inputField;
     },
+    hidden: async (parent: any, _args: any) => {
+      return parent.hidden ?? false;
+    },
   },
   Validation: {
     value: async (parent: any, _args: any) => {

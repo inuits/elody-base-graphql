@@ -157,6 +157,7 @@ export const baseFragments = gql`
     subFields {
       label
       key
+      hidden
       inputField {
         ...inputfieldBase
         validation {

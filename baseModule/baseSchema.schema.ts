@@ -438,6 +438,7 @@ export const baseSchema = gql`
     label: String!
     key: String!
     inputField: InputField
+    hidden: Boolean
   }
 
   type MetadataOnRelationFieldConfig {
