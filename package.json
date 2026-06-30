@@ -72,7 +72,7 @@
     "husky": "^8.0.1",
     "nock": "^14.0.10",
     "supertest": "^7.2.2",
-    "vitest": "2.1.9"
+    "vitest": "3.2.6"
   },
   "publishConfig": {
     "main": "./dist/main.js",
