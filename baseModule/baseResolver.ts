@@ -2319,6 +2319,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     hidden: async (parent: any, _args: any) => {
       return parent.hidden ?? false;
     },
+    entitySourceKey: async (parent: any, _args: any) => {
+      return parent.entitySourceKey ?? null;
+    },
   },
   Validation: {
     value: async (parent: any, _args: any) => {

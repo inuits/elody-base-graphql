@@ -158,6 +158,7 @@ export const baseFragments = gql`
       label
       key
       hidden
+      entitySourceKey
       inputField {
         ...inputfieldBase
         validation {
