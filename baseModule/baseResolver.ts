@@ -786,6 +786,14 @@ export const baseResolver: Resolvers<ContextValue> = {
       );
       return '';
     },
+    addEntityRelations: async (
+      _source,
+      { id, relations, collection },
+      { dataSources }
+    ) => {
+      await dataSources.CollectionAPI.postRelations(id, relations, collection);
+      return '';
+    },
     updateMetadataWithCsv: async (
       _source,
       { entityType, csv },

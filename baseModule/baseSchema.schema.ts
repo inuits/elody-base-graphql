@@ -2443,6 +2443,11 @@ export const baseSchema = gql`
       relationEntityId: String!
       relationType: String!
     ): String
+    addEntityRelations(
+      id: String!
+      relations: [BaseRelationValuesInput!]!
+      collection: Collection!
+    ): String
     updateMetadataWithCsv(entityType: String!, csv: String!): String
     setPrimaryMediafile(entityId: String!, mediafileId: String!): Entity!
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): Entity!
