@@ -484,6 +484,7 @@ export const baseSchema = gql`
     relationType: String
     fromRelationType: String
     canCreateEntityFromOption: Boolean
+    deferEntityCreation: Boolean
     metadataKeyToCreateEntityFromOption: String
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]

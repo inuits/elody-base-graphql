@@ -81,6 +81,7 @@ export const baseFragments = gql`
     relationType
     fromRelationType
     canCreateEntityFromOption
+    deferEntityCreation
     metadataKeyToCreateEntityFromOption
     advancedFilterInputForRetrievingOptions {
       type
