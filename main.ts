@@ -264,7 +264,7 @@ const start = ({
           if (checkRequestContentType(req, res)) return {} as ContextValue;
           const { cache } = server;
           const session = { ...req.session };
-          const clientIp: string = req.headers['x-forwarded-for'] as string;
+          const clientIp: string = req.ip;
           const tenantId = req.headers['x-tenant-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
