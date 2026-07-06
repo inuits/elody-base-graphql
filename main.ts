@@ -265,6 +265,8 @@ const start = ({
           const { cache } = server;
           const session = { ...req.session };
           const clientIp: string = req.ip;
+          if (environment.features?.ipWhiteListing)
+            console.log(`[GraphQL] clientIp: ${clientIp}, path: ${req.path}`);
           const tenantId = req.headers['x-tenant-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,

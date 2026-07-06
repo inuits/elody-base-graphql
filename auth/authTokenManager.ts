@@ -37,13 +37,15 @@ export class AuthTokenManager {
     }
 
     const ipWhitelistFeature = this.environment?.features?.ipWhiteListing;
-    if (
-      ipWhitelistFeature &&
-      isIpAddressWhitelisted(this.clientIp, this.environment) &&
-      ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses
-    ) {
-      console.log('Using whitelisted IP token');
-      return ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
+    if (ipWhitelistFeature) {
+      if (
+        isIpAddressWhitelisted(this.clientIp, this.environment) &&
+        ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses
+      ) {
+        console.log('Using whitelisted IP token');
+        return ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
+      }
+      console.log(`[AuthTokenManager] IP whitelist miss: ${this.clientIp ?? 'undefined'}`);
     }
 
     if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() === 'true') {
