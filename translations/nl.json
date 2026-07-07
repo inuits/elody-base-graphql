@@ -558,7 +558,8 @@
       "tag-existing": "Selecteer bestaand {entityType}",
       "tag-selected-button": "Tag geselecteerd {entityType}",
       "tag-new": "Maak een nieuw {entityType}",
-      "configuration-entity-required": "Een {entityType} is nodig om te kunnen starten met taggen"
+      "configuration-entity-required": "Een {entityType} is nodig om te kunnen starten met taggen",
+      "untag": "Tag verwijderen"
     },
     "tooltip": {
       "advancedFilterTypes": {

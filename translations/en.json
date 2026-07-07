@@ -570,7 +570,8 @@
       "tag-existing": "Select existing {entityType}",
       "tag-selected-button": "Tag selected {entityType}",
       "tag-new": "Create new {entityType}",
-      "configuration-entity-required": "A {entityType} is required to be able to start tagging"
+      "configuration-entity-required": "A {entityType} is required to be able to start tagging",
+      "untag": "Untag"
     },
     "tooltip": {
       "advancedFilterTypes": {

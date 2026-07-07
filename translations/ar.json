@@ -519,7 +519,8 @@
       "tag-existing": "اختر {entityType} موجود",
       "tag-selected-button": "إضافة وسم لـ {entityType} المحدد",
       "tag-new": "إنشاء {entityType} جديد",
-      "configuration-entity-required": "يتطلب {entityType} للبدء في الوسم"
+      "configuration-entity-required": "يتطلب {entityType} للبدء في الوسم",
+      "untag": "إزالة الوسم"
     },
     "tooltip": {
       "advancedFilterTypes": {
