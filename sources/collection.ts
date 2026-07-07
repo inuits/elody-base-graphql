@@ -604,11 +604,17 @@ export class CollectionAPI extends AuthRESTDataSource {
       headers: {
         Accept: 'text/csv',
       },
+      params: {
+        type: entityType,
+        exclude_non_editable_fields: 1,
+      ...(entityType === 'mediafile' && { q: 'technical_origin==original' }),
+      },
     };
+
     const csvData = await this.get(
-      `${getCollectionValueForEntityType(
+      getCollectionValueForEntityType(
         entityType
-      )}?type=${entityType}&exclude_non_editable_fields=1`,
+      ),
       options
     );
     const lines = csvData.split('\n');
