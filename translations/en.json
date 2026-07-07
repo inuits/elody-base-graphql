@@ -349,7 +349,9 @@
         "date-created": "Date created",
         "modified-by": "Modified by",
         "modified-at": "Modified at",
-        "virtual-keyboard": "Virtual keyboard"
+        "virtual-keyboard": "Virtual keyboard",
+        "yes": "Yes",
+        "no": "No"
       }
     },
     "notifications": {

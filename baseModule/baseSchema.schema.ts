@@ -1851,12 +1851,14 @@ export const baseSchema = gql`
   type TransliterationConfigItem {
     label: String!
     mapping: JSON
+    insertSpaces: Boolean
   }
 
   type WysiwygTransliterationConfig {
     transliterationConfigItem(
       label: String!
       mappingKey: String!
+      insertSpaces: Boolean
     ): TransliterationConfigItem
   }
 

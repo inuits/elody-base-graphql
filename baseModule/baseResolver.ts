@@ -2515,9 +2515,13 @@ export const baseResolver: Resolvers<ContextValue> = {
   WysiwygTransliterationConfig: {
     transliterationConfigItem: async (
       _source: any,
-      { label, mappingKey }: { label: string; mappingKey: string }
+      {
+        label,
+        mappingKey,
+        insertSpaces,
+      }: { label: string; mappingKey: string; insertSpaces?: boolean }
     ) => {
-      return { label, mappingKey };
+      return { label, mappingKey, insertSpaces };
     },
   },
   TransliterationConfigItem: {
@@ -2526,6 +2530,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     mapping: async (_source: any) => {
       return null;
+    },
+    insertSpaces: async (_source: any) => {
+      return _source.insertSpaces ?? false;
     },
   },
   AdvancedFilters: {

@@ -339,7 +339,9 @@
         "no-label": "Geen label",
         "date-created": "Aangemaakt op",
         "modified-by": "Gewijzigd door",
-        "modified-at": "Gewijzigd op"
+        "modified-at": "Gewijzigd op",
+        "yes": "Ja",
+        "no": "Nee"
       }
     },
     "notifications": {

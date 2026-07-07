@@ -316,7 +316,9 @@
         "delete-entity": "حذف الكيان",
         "no-label": "بدون تسمية",
         "date-created": "تاريخ الإنشاء",
-        "virtual-keyboard": "لوحة مفاتيح افتراضية"
+        "virtual-keyboard": "لوحة مفاتيح افتراضية",
+        "yes": "نعم",
+        "no": "لا"
       }
     },
     "notifications": {
