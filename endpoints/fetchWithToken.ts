@@ -6,6 +6,11 @@ export const fetchWithTokenRefresh = async (
   options: any,
   req: any
 ): Promise<Response> => {
+  if (!req?.session) {
+    throw new Error(
+      'fetchWithTokenRefresh: req with an attached session is required as the 3rd argument. Signature: fetchWithTokenRefresh(url, options, req).'
+    );
+  }
   const env = getCurrentEnvironment();
   const handler = new AuthTokenManager(
     env,
