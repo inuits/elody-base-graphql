@@ -2305,6 +2305,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       parent.relationMetadataFromFormFields ?? null,
     entityPickerSearchConfig: (_parent: any, { input }: { input?: any }) =>
       input ?? null,
+    visibleIf: (_parent: any, { input }: { input?: any }) => input ?? null,
+  },
+  VisibleIf: {
+    dependsOn: (parent: any) => parent.dependsOn,
+    values: (parent: any) => parent.values ?? [],
   },
   EntityPickerSearchConfig: {
     mode: (parent: any) => parent?.mode ?? null,

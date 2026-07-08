@@ -379,6 +379,16 @@ export const baseSchema = gql`
     ifAnyValue: Boolean
   }
 
+  type VisibleIf {
+    dependsOn: String!
+    values: [String!]!
+  }
+
+  input VisibleIfInput {
+    dependsOn: String!
+    values: [String!]!
+  }
+
   type RequiredRelationValidation {
     relationType: String!
     amount: Int!
@@ -509,8 +519,13 @@ export const baseSchema = gql`
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
     readOnlyValueAsPlainText: Boolean
     relationMetadataFromFormFields: [RelationMetadataFromFormField]
-    virtualKeyboardConfig(input: VirtualKeyboardConfigInput): VirtualKeyboardConfig
-    entityPickerSearchConfig(input: EntityPickerSearchConfigInput): EntityPickerSearchConfig
+    virtualKeyboardConfig(
+      input: VirtualKeyboardConfigInput
+    ): VirtualKeyboardConfig
+    entityPickerSearchConfig(
+      input: EntityPickerSearchConfigInput
+    ): EntityPickerSearchConfig
+    visibleIf(input: VisibleIfInput): VisibleIf
   }
 
   enum TypeModals {
@@ -2553,8 +2568,12 @@ export const baseSchema = gql`
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String
     maxSelection(input: Int): Int
-    overviewFields(input: [RepetitiveStepOverviewFieldInput!]): [RepetitiveStepOverviewField!]
-    creatableTypes(input: [RepetitiveCreatableTypeInput!]): [RepetitiveCreatableType!]
+    overviewFields(
+      input: [RepetitiveStepOverviewFieldInput!]
+    ): [RepetitiveStepOverviewField!]
+    creatableTypes(
+      input: [RepetitiveCreatableTypeInput!]
+    ): [RepetitiveCreatableType!]
     creatableTypeFromParentKey(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
@@ -2575,7 +2594,9 @@ export const baseSchema = gql`
     label(input: String): String
     entityType(input: String!): String!
     createForm(input: String!): String!
-    creatableTypes(input: [RepetitiveCreatableTypeInput!]): [RepetitiveCreatableType!]
+    creatableTypes(
+      input: [RepetitiveCreatableTypeInput!]
+    ): [RepetitiveCreatableType!]
     relations: [RepetitiveFinalizeRelation!]!
     prefillMetadata: [RepetitiveMetadataPrefill!]
   }
