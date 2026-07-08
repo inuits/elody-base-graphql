@@ -38,6 +38,7 @@
         "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
         "upload-csv-metadata": "Upload the modified csv to adjust metadata",
         "create": "Create",
+        "send": "Send",
         "success": "{0} Items imported",
         "csv-success": "CSV successfully imported",
         "csv-errors": "Errors during CSV import",

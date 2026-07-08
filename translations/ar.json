@@ -38,6 +38,7 @@
         "upload-csv-ordering": "رفع ملف CSV معدل لإعادة ترتيب ملفات الوسائط",
         "upload-csv-metadata": "رفع ملف CSV معدل لتعديل البيانات الوصفية",
         "create": "إنشاء",
+        "send": "إرسال",
         "success": "تم استيراد {0} عنصر",
         "csv-success": "تم استيراد CSV بنجاح",
         "csv-errors": "حدثت أخطاء أثناء استيراد CSV",

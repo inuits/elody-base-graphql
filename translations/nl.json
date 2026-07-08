@@ -38,6 +38,7 @@
         "upload-csv-ordering": "Upload de aangepaste csv voor mediafiles opnieuw te ordenen",
         "upload-csv-metadata": "Upload de aangepaste csv voor metadata aan te passen",
         "create": "Creëer",
+        "send": "Verstuur",
         "success": "{0} Items geïmporteerd",
         "csv-success": "CSV succesvol geïmporteerd",
         "csv-errors": "Errors tijdens CSV import",
