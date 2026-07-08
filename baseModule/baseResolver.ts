@@ -2523,6 +2523,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return { label, mappingKey, insertSpaces };
     },
+    enabledByProperty: async (_source: any, { input }: { input?: string }) => {
+      return input || null;
+    },
   },
   TransliterationConfigItem: {
     label: async (_source: any) => {

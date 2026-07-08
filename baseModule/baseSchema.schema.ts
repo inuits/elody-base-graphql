@@ -1860,6 +1860,7 @@ export const baseSchema = gql`
       mappingKey: String!
       insertSpaces: Boolean
     ): TransliterationConfigItem
+    enabledByProperty(input: String): String
   }
 
   type WysiwygElementConfiguration {
