@@ -709,6 +709,7 @@ export const baseSchema = gql`
     ListOl
     LocationArrowAlt
     Map
+    Message
     Minus
     Music
     NoImage
