@@ -6,10 +6,10 @@ Client GraphQL services import the `start()` function from this package, pass a 
 
 ## Quick start
 
-The smallest runnable server lives in [`examples/minimal`](../../examples/minimal). Clone the repo, then:
+`baseGraphql` is a library, not a runnable service on its own — every real deployment is a *client-side GraphQL service* that imports `start()` and layers on modules, translations, permissions, etc. A minimal, runnable one lives in [`examples/starter-client-graphql-service`](../../examples/starter-client-graphql-service) — copy it as a starting point for a new client.
 
 ```bash
-cd examples/minimal
+cd examples/starter-client-graphql-service
 cp .env.dist .env
 pnpm install
 pnpm dev
