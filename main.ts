@@ -25,6 +25,8 @@ import {
   checkRequestContentType,
   setTypeCollectionMapping,
   isIpAddressWhitelisted,
+  getClientOrigin,
+  isDomainWhitelisted,
 } from './helpers/helpers';
 import {
   Collection,
@@ -265,8 +267,13 @@ const start = ({
           const { cache } = server;
           const session = { ...req.session };
           const clientIp: string = req.ip;
+          const clientOrigin: string | undefined = getClientOrigin(req.headers);
           if (environment.features?.ipWhiteListing)
             console.log(`[GraphQL] clientIp: ${clientIp}, path: ${req.path}`);
+          if (environment.features?.domainWhiteListing)
+            console.log(
+              `[GraphQL] clientOrigin: ${clientOrigin ?? 'undefined'}, path: ${req.path}`
+            );
           const tenantId = req.headers['x-tenant-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
@@ -274,6 +281,7 @@ const start = ({
             session,
             cache,
             clientIp,
+            clientOrigin,
             tenantId
           );
 
@@ -398,4 +406,6 @@ export {
   setType,
   TranscodeService,
   isIpAddressWhitelisted,
+  getClientOrigin,
+  isDomainWhitelisted,
 };

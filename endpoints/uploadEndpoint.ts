@@ -1,6 +1,6 @@
 import { AuthRESTDataSource } from '../main';
 import { Express, Request, Response } from 'express';
-import { extractErrorCode } from '../helpers/helpers';
+import { extractErrorCode, getClientOrigin } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
 
@@ -68,10 +68,14 @@ export const applyUploadEndpoint = (app: Express) => {
       const env: Environment = getCurrentEnvironment();
       try {
         const clientIp: string = request.headers['x-forwarded-for'] as string;
+        const clientOrigin: string | undefined = getClientOrigin(
+          request.headers
+        );
         const datasource = new AuthRESTDataSource({
           environment: env,
           session: request.session,
           clientIp,
+          clientOrigin,
         });
         const result = await datasource.post(
           `${env.api.collectionApiUrl}/entities/${request.query.parentId}/order`,

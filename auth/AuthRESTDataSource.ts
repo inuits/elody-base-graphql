@@ -11,6 +11,7 @@ export class AuthRESTDataSource extends RESTDataSource {
   protected environment: Environment;
   protected session: any;
   protected clientIp: string | undefined;
+  protected clientOrigin: string | undefined;
   protected context: any;
   private requestId?: string;
   private tokenManager: AuthTokenManager;
@@ -20,17 +21,20 @@ export class AuthRESTDataSource extends RESTDataSource {
     session: any;
     cache?: KeyValueCache;
     clientIp?: string;
+    clientOrigin?: string;
     context?: any;
   }) {
     super(options);
     this.environment = options.environment;
     this.session = options.session;
     this.clientIp = options.clientIp;
+    this.clientOrigin = options.clientOrigin;
     this.context = options.context;
     this.tokenManager = new AuthTokenManager(
       this.environment,
       this.session,
-      this.clientIp
+      this.clientIp,
+      this.clientOrigin
     );
   }
 

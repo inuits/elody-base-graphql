@@ -250,4 +250,87 @@ describe('AuthTokenManager', () => {
     expect(result).toBe('');
     delete process.env.ALLOW_ANONYMOUS_USERS;
   });
+
+  it('returns the whitelisted IP token when the client IP matches', async () => {
+    const session = createSession();
+    const env: any = {
+      features: {
+        ipWhiteListing: {
+          whiteListedIpAddresses: ['10.0.0.1'],
+          tokenToUseForWhiteListedIpAddresses: 'ip-token',
+        },
+      },
+    };
+
+    const manager = new AuthTokenManager(env, session, '10.0.0.1');
+    const result = await manager.getValidToken();
+
+    expect(result).toBe('ip-token');
+  });
+
+  it('returns the whitelisted domain token when the client origin matches', async () => {
+    const session = createSession();
+    const env: any = {
+      features: {
+        domainWhiteListing: {
+          whiteListedDomainAddresses: ['museum.example.com'],
+          tokenToUseForWhiteListedDomainAddresses: 'domain-token',
+        },
+      },
+    };
+
+    const manager = new AuthTokenManager(
+      env,
+      session,
+      undefined,
+      'museum.example.com'
+    );
+    const result = await manager.getValidToken();
+
+    expect(result).toBe('domain-token');
+  });
+
+  it('throws when the client origin is not whitelisted', async () => {
+    const session = createSession();
+    const env: any = {
+      features: {
+        domainWhiteListing: {
+          whiteListedDomainAddresses: ['museum.example.com'],
+          tokenToUseForWhiteListedDomainAddresses: 'domain-token',
+        },
+      },
+    };
+
+    const manager = new AuthTokenManager(env, session, undefined, 'evil.com');
+
+    await expect(manager.getValidToken()).rejects.toThrow(
+      'AUTH | NO VALID TOKEN'
+    );
+  });
+
+  it('prefers the IP token over the domain token when both match', async () => {
+    const session = createSession();
+    const env: any = {
+      features: {
+        ipWhiteListing: {
+          whiteListedIpAddresses: ['10.0.0.1'],
+          tokenToUseForWhiteListedIpAddresses: 'ip-token',
+        },
+        domainWhiteListing: {
+          whiteListedDomainAddresses: ['museum.example.com'],
+          tokenToUseForWhiteListedDomainAddresses: 'domain-token',
+        },
+      },
+    };
+
+    const manager = new AuthTokenManager(
+      env,
+      session,
+      '10.0.0.1',
+      'museum.example.com'
+    );
+    const result = await manager.getValidToken();
+
+    expect(result).toBe('ip-token');
+  });
 });

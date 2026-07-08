@@ -2,7 +2,7 @@ import { GraphQLError } from 'graphql';
 import jwt_decode from 'jwt-decode';
 import { getManager } from '.';
 import { Environment } from '../types/environmentTypes';
-import { isIpAddressWhitelisted } from '../helpers/helpers';
+import { isIpAddressWhitelisted, isDomainWhitelisted } from '../helpers/helpers';
 
 // Per-session refresh lock to prevent concurrent refresh attempts
 const refreshLocks = new WeakMap<object, Promise<string | null>>();
@@ -11,7 +11,8 @@ export class AuthTokenManager {
   constructor(
     private environment: Environment,
     private session: any,
-    private clientIp?: string
+    private clientIp?: string,
+    private clientOrigin?: string
   ) {}
 
   private get accessToken() {
@@ -46,6 +47,20 @@ export class AuthTokenManager {
         return ipWhitelistFeature.tokenToUseForWhiteListedIpAddresses;
       }
       console.log(`[AuthTokenManager] IP whitelist miss: ${this.clientIp ?? 'undefined'}`);
+    }
+
+    const domainWhitelistFeature = this.environment?.features?.domainWhiteListing;
+    if (domainWhitelistFeature) {
+      if (
+        isDomainWhitelisted(this.clientOrigin, this.environment) &&
+        domainWhitelistFeature.tokenToUseForWhiteListedDomainAddresses
+      ) {
+        console.log('Using whitelisted domain token');
+        return domainWhitelistFeature.tokenToUseForWhiteListedDomainAddresses;
+      }
+      console.log(
+        `[AuthTokenManager] Domain whitelist miss: ${this.clientOrigin ?? 'undefined'}`
+      );
     }
 
     if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() === 'true') {

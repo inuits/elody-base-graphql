@@ -19,6 +19,7 @@ export type ElodyModuleConfig = {
           session: any;
           cache: any;
           clientIp: string;
+          clientOrigin?: string;
           context: { tenantId?: string };
         }) => AuthRESTDataSource;
       }
@@ -33,6 +34,7 @@ export type ElodyConfig = {
     session: any,
     cache: any,
     clientIp: string,
+    clientOrigin: string | undefined,
     tenantId?: string
   ) => OptionalDataSources)[];
   endpoints: ((app: Express, environment: Environment) => void)[];
@@ -41,18 +43,33 @@ export type ElodyConfig = {
 const baseElodyElodyConfig: ElodyConfig = {
   modules: [baseModule],
   dataSources: [
-    (environment: Environment, session: any, cache: any, clientIp: string, tenantId?: string) => {
+    (
+      environment: Environment,
+      session: any,
+      cache: any,
+      clientIp: string,
+      clientOrigin: string | undefined,
+      tenantId?: string
+    ) => {
       return {
         CollectionAPI: new CollectionAPI({
           environment,
           session,
           cache,
           clientIp,
+          clientOrigin,
           context: { tenantId }
         }),
       };
     },
-    (environment: Environment, session: any, cache: any, clientIp: string, tenantId?: string) => {
+    (
+      environment: Environment,
+      session: any,
+      cache: any,
+      clientIp: string,
+      clientOrigin: string | undefined,
+      tenantId?: string
+    ) => {
       return { GraphqlAPI: new GraphqlAPI({ environment, session, cache, context: { tenantId } }) };
     },
   ],
@@ -77,10 +94,11 @@ export const getDataSourcesFromMapping = (
   session: any,
   cache: any,
   clientIp: string,
+  clientOrigin: string | undefined,
   tenantId: string
 ): DataSources => {
   const dataSourceArray = ElodyConfig.dataSources.map((mappingItem) =>
-    mappingItem(environment, session, cache, clientIp, tenantId)
+    mappingItem(environment, session, cache, clientIp, clientOrigin, tenantId)
   );
   return dataSourceArray.reduce((acc, curr) => {
     return { ...acc, ...curr };
@@ -108,6 +126,7 @@ export const generateElodyConfig = (
         session: any,
         cache: any,
         clientIp: string,
+        clientOrigin: string | undefined,
         tenantId?: string
       ) => {
         return {
@@ -116,6 +135,7 @@ export const generateElodyConfig = (
             session,
             cache,
             clientIp,
+            clientOrigin,
             context: { tenantId }
           }),
         };

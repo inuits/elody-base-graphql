@@ -61,6 +61,10 @@ export interface Environment {
       whiteListedIpAddresses: string[];
       tokenToUseForWhiteListedIpAddresses: string;
     };
+    domainWhiteListing?: {
+      whiteListedDomainAddresses: string[];
+      tokenToUseForWhiteListedDomainAddresses: string;
+    };
     hasTenantSelect?: boolean;
     enableCrossTabAuthSync?: boolean;
     hasBulkOperations?: boolean;
@@ -177,6 +181,10 @@ export interface FullyOptionalEnvironmentInput {
     ipWhiteListing?: {
       whiteListedIpAddresses?: string[];
       tokenToUseForWhiteListedIpAddresses?: string;
+    };
+    domainWhiteListing?: {
+      whiteListedDomainAddresses?: string[];
+      tokenToUseForWhiteListedDomainAddresses?: string;
     };
     hasTenantSelect?: boolean;
     enableCrossTabAuthSync?: boolean;

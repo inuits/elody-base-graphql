@@ -192,6 +192,41 @@ export const isIpAddressWhitelisted = (
   );
 };
 
+export const getClientOrigin = (
+  headers: Record<string, string | string[] | undefined>
+): string | undefined => {
+  const pick = (value: string | string[] | undefined): string | undefined =>
+    Array.isArray(value) ? value[0] : value;
+  const rawOrigin = pick(headers?.origin) ?? pick(headers?.referer);
+  if (!rawOrigin) return undefined;
+  try {
+    return new URL(rawOrigin).hostname.toLowerCase();
+  } catch {
+    return undefined;
+  }
+};
+
+const toHostname = (value: string): string => {
+  const trimmed = value.trim().toLowerCase();
+  try {
+    return new URL(trimmed.includes('://') ? trimmed : `https://${trimmed}`)
+      .hostname;
+  } catch {
+    return trimmed;
+  }
+};
+
+export const isDomainWhitelisted = (
+  origin: string | undefined,
+  environment: Environment
+): boolean => {
+  if (!origin) return false;
+  const whitelist: string[] =
+    environment?.features?.domainWhiteListing?.whiteListedDomainAddresses ?? [];
+  const normalizedOrigin = toHostname(origin);
+  return whitelist.some((domain) => toHostname(domain) === normalizedOrigin);
+};
+
 export const getFormattedOffset = (date: Date, timeZone: string): string => {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone,

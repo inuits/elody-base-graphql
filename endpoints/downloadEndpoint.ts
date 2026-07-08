@@ -2,6 +2,7 @@ import { AuthRESTDataSource } from '../main';
 import { Express, Request, Response } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
+import { getClientOrigin } from '../helpers/helpers';
 
 export const applyDownloadEndpoint = (app: Express) => {
   app.post(
@@ -11,10 +12,14 @@ export const applyDownloadEndpoint = (app: Express) => {
         const environment: Environment = getCurrentEnvironment();
         const returnType = request.query['return_type'];
         const clientIp: string = request.headers['x-forwarded-for'] as string;
+        const clientOrigin: string | undefined = getClientOrigin(
+          request.headers
+        );
         const datasource = new AuthRESTDataSource({
           environment,
           session: request.session,
           clientIp,
+          clientOrigin,
         });
         const result = await datasource.post(
           `${environment.api.collectionApiUrl}/entities/${
