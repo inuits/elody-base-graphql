@@ -4,17 +4,38 @@ The foundation module for every Elody GraphQL service. It boots an Apollo Server
 
 Client GraphQL services import the `start()` function from this package, pass a `customModuleConfig` (with additional modules and data sources — e.g. from `mediafile-module`, `import-module`, `advanced-filters-module`), and get a fully wired server.
 
+## Quick start
+
+The smallest runnable server lives in [`examples/minimal`](../../examples/minimal). Clone the repo, then:
+
+```bash
+cd examples/minimal
+cp .env.dist .env
+pnpm install
+pnpm dev
+```
+
+In development mode, `APOLLO_SESSION_SECRET` and `APOLLO_CLIENT_SECRET` are auto-defaulted to random hex values with a startup warning — no env setup required to see the server boot. In production (`NODE_ENV=production`) they are still required and boot throws if unset.
+
 ## What's included
 
 | Layer | What it adds |
 |-------|-------------|
-| Bootstrapper | `start({ customModuleConfig, appConfig, customTranslations, ... })` — creates Express + Apollo, applies auth, mounts default endpoints, serves the PWA (Vite in dev, static in prod) |
+| Bootstrapper | `start({ customModuleConfig, appConfig, customTranslations, ... })` — creates Express + Apollo, applies auth, runs OIDC discovery, mounts default endpoints, serves the PWA (Vite in dev, static in prod), prints a startup banner |
 | GraphQL schema | `baseModule` — Entity, Metadata, Relations, Form, User, Permissions, Menu, BulkOperations, Formatters, and many more shared types |
 | GraphQL resolvers | Base resolvers for entities, metadata, initial values, context menu, map component, formatters |
 | DataSources | `CollectionAPI`, `TranscodeService`, `StorageAPI`, `OcrService`, `GraphQLAPI` — extendable via declaration merging on `DataSources` |
-| Auth | Keycloak/OAuth flow, session (in-memory or MongoDB), token refresh, static-token fallback, `AuthRESTDataSource` for downstream calls |
+| Auth | OIDC flow with optional `.well-known/openid-configuration` auto-discovery, session (in-memory or MongoDB), token refresh, static-token fallback, `AuthRESTDataSource` for downstream calls |
 | Express endpoints | `/api/graphql`, `/api/auth_code`, `/api/logout`, `/api/me`, `/api/upload/*`, `/api/download/csv`, `/api/download/zip/:id`, `/api/export/csv`, `/api/app-configs`, `/api/version`, `/api/health`, `/api/seo`, `/api/prom/query_range` |
 | Middleware | CORS, CSP, compression, JSON/urlencoded body limits, session cookies, depth-limit query validation |
+
+### Startup banner
+
+On boot the server prints a titled banner listing mode, version, port, GraphQL path, collection-api URL, and the OIDC source (`manual` or `discovery`). The title reads `${APPLICATION_TITLE} GraphQL`, so a client extending baseGraphql sets `APPLICATION_TITLE=digipolis-dams` (or similar) and sees its own name. Any env var that was auto-defaulted for dev is called out below the info rows.
+
+### Required data sources
+
+`CollectionAPI` is the only required data source. If it's missing at request time the server responds with `Missing required data sources: CollectionAPI`. Extension modules (`mediafileModule`, `importModule`, ...) contribute *optional* data sources — if a future extension needs its data source to be mandatory, promote it to base rather than extending the required list from outside.
 
 ---
 
@@ -195,14 +216,17 @@ start({
 
 ### `oauth`
 
+Endpoint defaults have Keycloak's URL shape but any OIDC-compliant IdP (Auth0, Okta, Cognito, Google, Azure AD, ...) works. Recommended path for a new deployment: set `OIDC_DISCOVERY_URL` only, and the four endpoints below are auto-populated from `.well-known/openid-configuration` at boot. Individual `OAUTH_*_ENDPOINT` env vars still take precedence over discovered values, so existing setups keep working unchanged.
+
 | Key | Description |
 |-----|-------------|
+| `discoveryUrl` | Optional. OIDC issuer URL (env: `OIDC_DISCOVERY_URL`). When set, base URL and endpoints are resolved from the issuer's discovery document at boot. Falls back to the manual env vars below on failure — non-fatal. |
 | `baseUrl` | Backend base URL of the OAuth provider (env: `OAUTH_BASE_URL`). |
 | `baseUrlFrontend` | Frontend-facing base URL (env: `OAUTH_BASE_URL_FRONTEND`). |
 | `clientId` | OAuth client id (env: `OAUTH_CLIENT_ID`). |
 | `tokenEndpoint` | Default `/protocol/openid-connect/token` (env: `OAUTH_TOKEN_ENDPOINT`). |
 | `logoutEndpoint` | Default `/protocol/openid-connect/logout` (env: `OAUTH_LOGOUT_ENDPOINT`). |
-| `authEndpoint` | Default `protocol/openid-connect/auth` (env: `OAUTH_AUTH_ENDPOINT`). |
+| `authEndpoint` | Default `/protocol/openid-connect/auth` (env: `OAUTH_AUTH_ENDPOINT`). |
 | `apiCodeEndpoint` | Default `/api/auth_code` (env: `OAUTH_API_CODE_ENDPOINT`). |
 
 ### `api`

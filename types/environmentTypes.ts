@@ -22,6 +22,7 @@ export interface Environment {
     authEndpoint: string;
     apiCodeEndpoint: string;
     logoutEndpoint: string;
+    discoveryUrl?: string;
   };
   api: {
     collectionApiUrl: string;
@@ -147,6 +148,7 @@ export interface FullyOptionalEnvironmentInput {
     authEndpoint?: string;
     apiCodeEndpoint?: string;
     logoutEndpoint?: string;
+    discoveryUrl?: string;
   };
   api?: {
     collectionApiUrl?: string;

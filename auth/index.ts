@@ -68,7 +68,7 @@ export function getManager(environment: Environment): AuthManager {
       environment.oauth.clientId,
       environment.clientSecret,
       environment.oauth.tokenEndpoint,
-      environment.oauth.logoutEndpoint,
+      environment.oauth.logoutEndpoint
     );
   }
   return manager;
@@ -91,13 +91,13 @@ export function applyAuthEndpoints(
     const settings = getSessionCookieSettings(environment);
     req.session.destroy((err: any) => {
       if (err) {
-        console.error("Logout error:", err);
-        return res.status(500).send("Could not log out");
+        console.error('Logout error:', err);
+        return res.status(500).send('Could not log out');
       }
 
       res.clearCookie('connect.sid', {
         path: '/',
-        ...settings
+        ...settings,
       });
 
       res.status(200).send('Logged out');
@@ -121,14 +121,13 @@ export function applyAuthEndpoints(
       } catch {}
       req.session.auth = undefined;
     }
-    const { authCode, clientId, tokenEndpoint, redirectUri, logoutEndpoint } =
-      req.body;
+    const { authCode, clientId, redirectUri } = req.body;
     manager = new AuthManager(
       oauthBaseUrl,
       clientId,
       clientSecret,
-      tokenEndpoint,
-      logoutEndpoint
+      environment.oauth.tokenEndpoint,
+      environment.oauth.logoutEndpoint
     );
     try {
       req.session.auth = await manager.authenticate(authCode, redirectUri);

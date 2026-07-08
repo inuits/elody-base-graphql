@@ -1,9 +1,14 @@
+import { randomBytes } from 'crypto';
 import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
 
 export let currentEnvironment: Environment | undefined = undefined;
+
+// Names of required env vars that were auto-defaulted at load time in dev mode.
+// main.ts reads this to print a startup warning.
+export const autoDefaultedSecrets: string[] = [];
 
 export const setCurrentEnvironment = (environment: Environment): void => {
   currentEnvironment = environment;
@@ -19,6 +24,12 @@ const getRequiredEnv = (key: string): string => {
 
   if (typeof value === 'undefined') {
     if (process.env.NODE_ENV === 'testing') return 'placeholder-value';
+    if (process.env.NODE_ENV !== 'production') {
+      // ponytail: dev-only random fallback so first-time consumers can boot.
+      // Prod still throws (branch below).
+      autoDefaultedSecrets.push(key);
+      return randomBytes(32).toString('hex');
+    }
     throw new Error(`Environment variable "${key}" is required and not set.`);
   }
   return value;
@@ -38,8 +49,12 @@ export const baseEnvironment: Environment = {
   clientSecret: getRequiredEnv('APOLLO_CLIENT_SECRET'),
   version: process.env.VERSION || 'development-version',
   oauth: {
+    // Defaults below assume Keycloak's URL shape. Any OIDC-compliant IdP works —
+    // either override each *_ENDPOINT env var manually, or set OIDC_DISCOVERY_URL
+    // and endpoints get auto-populated from .well-known/openid-configuration at boot.
     baseUrl:
       process.env.OAUTH_BASE_URL || 'http://keycloak:8080/auth/realms/elody',
+    discoveryUrl: process.env.OIDC_DISCOVERY_URL || undefined,
     baseUrlFrontend:
       process.env.OAUTH_BASE_URL_FRONTEND ||
       'http://keycloak.elody.localhost:8100/auth/realms/elody',

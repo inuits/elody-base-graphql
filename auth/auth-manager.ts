@@ -75,7 +75,6 @@ export class AuthManager {
         refresh_token: _refreshToken,
         client_secret: this.clientSecret,
         client_id: this.clientId,
-        oidc_url: this.tokenEndpoint,
       } as RefreshBody);
       await fetch(refreshEndpoint, {
         method: 'POST',
@@ -138,7 +137,7 @@ export class AuthManager {
       prompt: 'none',
     } as LogoutBody);
     if (_accessToken) {
-      fetch(`${this.oauthBaseUrl}/protocol/openid-connect/logout`, {
+      fetch(`${this.oauthBaseUrl}${this.logoutEndpoint}`, {
         method: 'POST',
         headers: {
           Authorization: _accessToken,

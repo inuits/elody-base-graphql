@@ -44,6 +44,8 @@ import {
   getCurrentEnvironment,
   setCurrentEnvironment,
 } from './environment';
+import { applyOidcDiscovery } from './auth/oidcDiscovery';
+import { printStartupBanner } from './helpers/startupBanner';
 import {
   Environment,
   FullyOptionalEnvironmentInput,
@@ -67,6 +69,7 @@ import { fetchWithTokenRefresh } from './endpoints/fetchWithToken';
 import { createMongoConnectionString } from './sources/mongo';
 import {
   isRequiredDataSources,
+  findMissingRequiredDataSources,
   createFullElodyConfig,
   getDataSourcesFromMapping,
   ElodyConfig,
@@ -286,7 +289,10 @@ const start = ({
           );
 
           if (!isRequiredDataSources(dataSources)) {
-            throw new Error('All DataSources properties must be defined');
+            const missing = findMissingRequiredDataSources(dataSources);
+            throw new Error(
+              `Missing required data sources: ${missing.join(', ')}`
+            );
           }
 
           return {
@@ -359,13 +365,17 @@ const start = ({
     configureFrontendForEnvironment(app, viteServer);
 
     httpServer.listen(environment.port, () => {
-      console.log(`Server is running on port ${environment.port}`);
+      printStartupBanner(environment);
     });
 
     return { app };
   };
 
-  startApolloServer();
+  const boot = async () => {
+    await applyOidcDiscovery(environment);
+    await startApolloServer();
+  };
+  boot();
 };
 
 export default start;

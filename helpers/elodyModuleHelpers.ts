@@ -105,10 +105,22 @@ export const getDataSourcesFromMapping = (
   }, {}) as DataSources;
 };
 
+// Required data sources live in base. Optional ones (transcode, storage, ocr,
+// import, etc.) belong in extension modules and are never listed here.
+// If a future extension needs a data source to be required, promote it to base.
+export const REQUIRED_DATA_SOURCES = ['CollectionAPI'] as const;
+
+export const findMissingRequiredDataSources = (
+  dataSources: OptionalDataSources
+): string[] =>
+  REQUIRED_DATA_SOURCES.filter(
+    (key) => (dataSources as any)[key] === undefined
+  );
+
 export const isRequiredDataSources = (
   dataSources: OptionalDataSources
 ): dataSources is DataSources => {
-  return dataSources.CollectionAPI !== undefined;
+  return findMissingRequiredDataSources(dataSources).length === 0;
 };
 
 export const generateElodyConfig = (

@@ -27,7 +27,6 @@ export type LogoutBody = TokenBody & {
 export type RefreshBody = TokenBody & {
   prompt: "none";
   refresh_token: string;
-  oidc_url: string;
 };
 
 export type AuthSessionResponse = {
