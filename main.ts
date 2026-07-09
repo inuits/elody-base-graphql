@@ -273,10 +273,6 @@ const start = ({
           const clientOrigin: string | undefined = getClientOrigin(req.headers);
           if (environment.features?.ipWhiteListing)
             console.log(`[GraphQL] clientIp: ${clientIp}, path: ${req.path}`);
-          if (environment.features?.domainWhiteListing)
-            console.log(
-              `[GraphQL] clientOrigin: ${clientOrigin ?? 'undefined'}, path: ${req.path}`
-            );
           const tenantId = req.headers['x-tenant-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
