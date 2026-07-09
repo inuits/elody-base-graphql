@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://elody.eu"><img src="https://elody.eu/images/logo.svg" alt="Elody" width="96" /></a>
+</p>
+
+<p align="center">Part of <a href="https://elody.eu">Elody</a> — the open semantic data platform.</p>
+
 # Base GraphQL
 
 The foundation module for every Elody GraphQL service. It boots an Apollo Server on top of Express, wires in the shared `baseModule` schema, handles Keycloak/OAuth session auth, ships the default REST endpoints (upload, download, export, health, version, app configs, auth, SEO, Prometheus), and exposes the `AuthRESTDataSource` base class that every other module extends.
