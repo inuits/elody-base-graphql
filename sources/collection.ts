@@ -40,7 +40,7 @@ export class CollectionAPI extends AuthRESTDataSource {
   public preferredLanguage: string =
     this.environment.customization?.applicationLocale || 'en';
 
-  async getSessionInfo(key: string): Promise<string> {
+  async getSessionInfo(key?: string): Promise<string> {
     const user = jwtDecode(this.session.auth?.accessToken!) as {
       [key: string]: string;
     };
@@ -253,8 +253,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     let data;
     try {
       const idSplit = id.split('/');
-      if (idSplit.length > 1){
-        id = idSplit.slice(1).join("/");
+      if (idSplit.length > 1) {
+        id = idSplit.slice(1).join('/');
       }
       data = await this.get<any>(
         `${_collection ? _collection : getEntityCollectionForType(type)}/${id}`
@@ -286,9 +286,19 @@ export class CollectionAPI extends AuthRESTDataSource {
       'elody:1|metadata.email.value';
     const filters = [
       { type: 'type', value: Entitytyping.User, match_exact: true },
-      { type: 'text', key: [emailMetadataKey], value: email, match_exact: true },
+      {
+        type: 'text',
+        key: [emailMetadataKey],
+        value: email,
+        match_exact: true,
+      },
     ];
-    const queryParams = new URLSearchParams({ limit: '2', skip: '0', order_by: '', asc: '1' });
+    const queryParams = new URLSearchParams({
+      limit: '2',
+      skip: '0',
+      order_by: '',
+      asc: '1',
+    });
     const data: any = await this.post(
       `${getCollectionValueForEntityType(Entitytyping.User)}/filter?${queryParams.toString()}`,
       { body: filters }
@@ -607,14 +617,12 @@ export class CollectionAPI extends AuthRESTDataSource {
       params: {
         type: entityType,
         exclude_non_editable_fields: 1,
-      ...(entityType === 'mediafile' && { q: 'technical_origin==original' }),
+        ...(entityType === 'mediafile' && { q: 'technical_origin==original' }),
       },
     };
 
     const csvData = await this.get(
-      getCollectionValueForEntityType(
-        entityType
-      ),
+      getCollectionValueForEntityType(entityType),
       options
     );
     const lines = csvData.split('\n');
