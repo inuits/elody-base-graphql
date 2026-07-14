@@ -2231,7 +2231,19 @@ export const baseResolver: Resolvers<ContextValue> = {
       _args,
       { dataSources }
     ) => {
-      return parent.advancedFilterInputForRetrievingOptions || [];
+      const sessionRegex = /^session-\$(.+)$/;
+      const filters = parent.advancedFilterInputForRetrievingOptions || [];
+      return Promise.all(
+        filters.map(async (item: AdvancedFilterInputType) => {
+          const { value, ...rest } = item;
+          if (typeof value !== 'string') return { ...rest, value };
+          const match = value.match(sessionRegex);
+          if (!match?.[1]) return { ...rest, value };
+          const sessionValue =
+            await dataSources.CollectionAPI.getSessionInfo(match[1]);
+          return { ...rest, value: sessionValue };
+        })
+      );
     },
     advancedFilterInputForRetrievingRelatedOptions: async (
       parent,

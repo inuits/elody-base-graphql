@@ -62,6 +62,12 @@ export const baseFragments = gql`
       operator
       distinct_by
       match_exact
+      lookup {
+        from
+        local_field
+        foreign_field
+        as
+      }
       defaultValueMapping {
         value
         mapping
@@ -90,6 +96,12 @@ export const baseFragments = gql`
       match_exact
       operator
       item_types
+      lookup {
+        from
+        local_field
+        foreign_field
+        as
+      }
     }
     advancedFilterInputForRetrievingRelatedOptions {
       type
