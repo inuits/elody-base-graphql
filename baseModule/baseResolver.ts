@@ -2807,6 +2807,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     routeToStep: async (parent: any, { input }, { dataSources }) => {
       return input || "";
     },
+    routeToRoute: async (parent: any, { input }, { dataSources }) => {
+      return input || "SingleEntity";
+    },
     steps: async (parent: any, {}, { dataSources }) => {
       // each aliased `steps` field in the self-describing query yields one step
       return [parent ?? {}] as RepetitiveStep[];

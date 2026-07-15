@@ -2606,6 +2606,7 @@ export const baseSchema = gql`
     repeatable(input: Boolean!): Boolean!
     linear(input: Boolean): Boolean
     routeToStep(input: String): String
+    routeToRoute(input: String): String
     steps: [RepetitiveStep!]!
     finalize: RepetitiveFinalize
   }
