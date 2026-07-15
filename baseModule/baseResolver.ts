@@ -2844,7 +2844,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input || '';
     },
     maxSelection: async (parent: any, { input }, { dataSources }) => {
-      return input ?? 0;
+      return input ?? -1;
     },
     overviewFields: async (parent: any, { input }, { dataSources }) => {
       return input || [];
