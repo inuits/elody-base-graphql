@@ -72,6 +72,7 @@ export const baseFragments = gql`
         value
         mapping
       }
+      resolveDefaultValueToOptionIds
     }
     tooltip(value: true)
     includeDefaultValuesFromIntialValues

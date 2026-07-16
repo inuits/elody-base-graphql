@@ -2203,6 +2203,7 @@ export const baseSchema = gql`
     bucket: String
     facets: [FacetInputInput!]
     defaultValueMapping: [ValueMappingInput]
+    resolveDefaultValueToOptionIds: Boolean
   }
 
   input ValueMappingInput {
@@ -2309,6 +2310,7 @@ export const baseSchema = gql`
     matchersType: AdvancedFilterMatchersType
     defaultValueMapping: [ValueMapping]
     minDropdownSearchCharacters: Int
+    resolveDefaultValueToOptionIds: Boolean
   }
 
   type AdvancedFilters {
