@@ -1,4 +1,3 @@
-import { Response as FetchResponse } from 'node-fetch';
 import { Express, Request, Response as ExResponse} from 'express';
 import { getCollectionValueForEntityType } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
@@ -9,22 +8,38 @@ export const applyExportEndpoint = (app: Express) => {
   const env: Environment = getCurrentEnvironment();
   app.post(`/api/export/csv`, async (request: Request, response: ExResponse) => {
     try {
-      const { type, order_by, asc, ids, field } = request.body as {
+      const { type, order_by, asc, ids: rawIds, field, parentId, relation } = request.body as {
         type: string;
         order_by: string;
         asc: string;
         ids: string[];
         field: string[];
+        parentId?: string;
+        relation?: string;
       };
+
+      let ids = rawIds;
+      if (parentId && relation && (!rawIds || rawIds.length === 0)) {
+        const entityUrl = `${env.api.collectionApiUrl}/entities/${parentId}`;
+        const entityResponse = await fetchWithTokenRefresh(entityUrl, { method: 'GET' }, request);
+        if (!entityResponse.ok) {
+          const errorText = await entityResponse.text();
+          return response.status(entityResponse.status).send(errorText);
+        }
+        const entity = await entityResponse.json() as { relations?: { type: string; key: string }[] };
+        ids = (entity.relations ?? [])
+          .filter((r) => r.type === relation)
+          .map((r) => r.key);
+      }
 
       const collectionPath = getCollectionValueForEntityType(type);
       let upstreamResponse: Response;
 
       const params = new URLSearchParams({
-        order_by,
-        asc,
         type,
         limit: String(ids.length),
+        order_by: order_by || 'date_created',
+        asc: asc !== undefined && asc !== null ? String(asc) : '1',
       });
 
       if (env.api.csvExportService?.csvExportServiceEnabled) {
