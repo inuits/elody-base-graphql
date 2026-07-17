@@ -247,6 +247,8 @@ export const baseFragments = gql`
     pageToNavigateToAfterCreation
     customQueryEntityPickerList
     customQueryEntityPickerListFilters
+    replaceExistingRelations
+    selectionLimit
   }
 
   fragment subOptions on DropdownOption {

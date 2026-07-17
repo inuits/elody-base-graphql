@@ -775,6 +775,8 @@ export const baseSchema = gql`
     pageToNavigateToAfterCreation: BulkNavigationPages
     customQueryEntityPickerList: String
     customQueryEntityPickerListFilters: String
+    replaceExistingRelations: Boolean
+    selectionLimit: Int
   }
 
   type BulkOperationModal {
@@ -789,6 +791,8 @@ export const baseSchema = gql`
     pageToNavigateToAfterCreation: BulkNavigationPages
     customQueryEntityPickerList: String
     customQueryEntityPickerListFilters: String
+    replaceExistingRelations: Boolean
+    selectionLimit: Int
   }
 
   enum ActionContextEntitiesSelectionType {
