@@ -2531,10 +2531,25 @@ export const baseSchema = gql`
     filterKey(input: String): String
   }
 
+  input RepetitiveRelationMetadataFieldInput {
+    formMetadataKey: String!
+    relationMetadataKey: String!
+    asArray: Boolean
+  }
+
+  type RepetitiveRelationMetadataField {
+    formMetadataKey: String!
+    relationMetadataKey: String!
+    asArray: Boolean
+  }
+
   type RepetitiveStepRelation {
     to(input: String!): String!
     relationType(input: String!): String!
     createWhen(input: RepetitiveRelationTrigger!): RepetitiveRelationTrigger!
+    metadataFields(
+      input: [RepetitiveRelationMetadataFieldInput!]
+    ): [RepetitiveRelationMetadataField!]
   }
 
   input RepetitiveStepOverviewFieldInput {
@@ -2566,6 +2581,11 @@ export const baseSchema = gql`
     createForm(input: String!): String!
     showBackButton(input: Boolean): Boolean
     skipSearchIfPriorIsNew(input: Boolean): Boolean
+    # a step with no entity of its own: it renders createForm's fields only
+    # (no picker, no entity created) and its relations link an earlier
+    # step's entity to the flow's host entity, carrying these field values
+    # as relation metadata via relations[].metadataFields
+    metadataOnly(input: Boolean): Boolean
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String

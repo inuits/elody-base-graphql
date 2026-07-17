@@ -2837,6 +2837,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     skipSearchIfPriorIsNew: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    metadataOnly: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     acceptedTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
@@ -2905,6 +2908,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : undefined;
+    },
+    metadataFields: async (parent: any, { input }, { dataSources }) => {
+      return input || [];
     },
   },
   RepetitiveFinalizeRelation: {

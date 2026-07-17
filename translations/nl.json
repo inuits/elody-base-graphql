@@ -164,7 +164,7 @@
         "title": "Formulier verlaten"
       },
       "close-guided-flow": {
-        "message": "Ben je zeker dat je de begeleide flow wilt verlaten? Reeds aangemaakte entiteiten blijven bewaard, maar de flow wordt niet afgerond.",
+        "message": "Ben je zeker dat je de begeleide flow wilt verlaten? Reeds aangemaakte entiteiten blijven bewaard, maar alles wat nog niet opgeslagen is (waaronder toegevoegde relaties) gaat verloren, en de flow wordt niet afgerond.",
         "confirm": "Verlaten",
         "cancel": "Annuleren",
         "title": "Begeleide flow verlaten"
@@ -643,6 +643,19 @@
     "text-viewer": {
       "sanitized-warning": "De voorbeeldinhoud is om veiligheidsredenen opgeschoond.",
       "dismiss": "Sluiten"
+    },
+    "repetitiveForm": {
+      "add-another": "Nog een toevoegen",
+      "finish": "Afronden",
+      "create-new": "Nieuw aanmaken",
+      "change-type": "Ander type kiezen",
+      "back-to-search": "Terug naar zoeken",
+      "back-to-overview": "Terug naar overzicht",
+      "back-to-previous-step": "Vorige stap",
+      "step-of": "Stap {current} van {total}: {label}",
+      "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
+      "finish-failed-title": "Opslaan mislukt",
+      "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
     }
   }
 }

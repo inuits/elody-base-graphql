@@ -173,7 +173,7 @@
         "title": "Leave form"
       },
       "close-guided-flow": {
-        "message": "Are you sure you want to leave the guided flow? Already created entities are kept, but the flow will not be finalized.",
+        "message": "Are you sure you want to leave the guided flow? Already created entities are kept, but anything not yet saved (including added relations) will be lost, and the flow will not be finalized.",
         "confirm": "Leave",
         "cancel": "Cancel",
         "title": "Leave guided flow"
@@ -657,6 +657,19 @@
     "text-viewer": {
       "sanitized-warning": "The preview content has been sanitized for security reasons.",
       "dismiss": "Dismiss"
+    },
+    "repetitiveForm": {
+      "add-another": "Add another",
+      "finish": "Finish",
+      "create-new": "Create new",
+      "change-type": "Choose another type",
+      "back-to-search": "Back to search",
+      "back-to-overview": "Back to overview",
+      "back-to-previous-step": "Previous step",
+      "step-of": "Step {current} of {total}: {label}",
+      "no-entities-yet": "Nothing added yet. Click \"Add another\" to start.",
+      "finish-failed-title": "Could not save",
+      "finish-failed-description": "Something went wrong while saving. Your added items are still here — please try again."
     }
   }
 }
