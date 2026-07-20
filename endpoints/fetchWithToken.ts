@@ -1,5 +1,6 @@
 import { getCurrentEnvironment } from '../environment';
 import { AuthTokenManager } from '../auth/authTokenManager';
+import { getClientOrigin } from '../helpers/helpers';
 
 export const fetchWithTokenRefresh = async (
   url: string,
@@ -15,7 +16,8 @@ export const fetchWithTokenRefresh = async (
   const handler = new AuthTokenManager(
     env,
     req.session,
-    req.headers['x-forwarded-for']
+    req.headers['x-forwarded-for'],
+    getClientOrigin(req.headers)
   );
 
   const token = await handler.getValidToken();
