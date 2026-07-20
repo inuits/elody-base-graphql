@@ -2592,6 +2592,11 @@ export const baseSchema = gql`
     creatableTypeFromParentKey(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
+    # reuses InputField's entity-picker search config so a step's picker can
+    # use the same simple search-bar mode instead of the default filters UI
+    entityPickerSearchConfig(
+      input: EntityPickerSearchConfigInput
+    ): EntityPickerSearchConfig
   }
 
   type RepetitiveFinalizeRelation {

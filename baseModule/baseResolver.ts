@@ -2865,6 +2865,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     relations: async (parent: any, {}, { dataSources }) => {
       return [parent ?? {}] as RepetitiveStepRelation[];
     },
+    entityPickerSearchConfig: async (parent: any, { input }: { input?: any }) =>
+      input ?? null,
   },
   RepetitiveFinalize: {
     label: async (parent: any, { input }, { dataSources }) => {
