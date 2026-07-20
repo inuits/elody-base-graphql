@@ -15,9 +15,6 @@ export const baseQueries = gql`
     GraphData(id: $id, graph: $graph)
   }
 
-  # backs useManageEntities().addRelations, used by guided flow
-  # (useRepetitiveForm.ts) to link a step's entity to another entity
-  # without resubmitting the whole form.
   mutation AddEntityRelations(
     $id: String!
     $relations: [BaseRelationValuesInput!]!

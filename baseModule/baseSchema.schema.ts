@@ -2574,10 +2574,6 @@ export const baseSchema = gql`
     createForm(input: String!): String!
     showBackButton(input: Boolean): Boolean
     skipSearchIfPriorIsNew(input: Boolean): Boolean
-    # a step with no entity of its own: it renders createForm's fields only
-    # (no picker, no entity created) and its relations link an earlier
-    # step's entity to the flow's host entity, carrying these field values
-    # as relation metadata via relations[].metadataFields
     metadataOnly(input: Boolean): Boolean
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
@@ -2592,8 +2588,6 @@ export const baseSchema = gql`
     creatableTypeFromParentKey(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
-    # reuses InputField's entity-picker search config so a step's picker can
-    # use the same simple search-bar mode instead of the default filters UI
     entityPickerSearchConfig(
       input: EntityPickerSearchConfigInput
     ): EntityPickerSearchConfig
