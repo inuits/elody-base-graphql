@@ -2313,8 +2313,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
       return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
     },
-    relationMetadataFromFormFields: (parent) =>
-      parent.relationMetadataFromFormFields ?? null,
     entityPickerSearchConfig: (_parent: any, { input }: { input?: any }) =>
       input ?? null,
     visibleIf: (_parent: any, { input }: { input?: any }) => input ?? null,
