@@ -1935,6 +1935,7 @@ export const baseSchema = gql`
     EndpointCall
     UpdateMetadata
     CreateEntityFromExternalSource
+    ReplaceRelation
   }
 
   enum ContextMenuFormFlow {
@@ -2619,6 +2620,12 @@ export const baseSchema = gql`
     prefillMetadata: [RepetitiveMetadataPrefill!]
   }
 
+  type RepetitiveHostFinalize {
+    fromStep(input: String!): String!
+    relationType(input: String!): String!
+    replaceExisting(input: Boolean): Boolean
+  }
+
   type RepetitiveForm {
     label(input: String): String
     repeatable(input: Boolean!): Boolean!
@@ -2627,5 +2634,6 @@ export const baseSchema = gql`
     routeToRoute(input: String): String
     steps: [RepetitiveStep!]!
     finalize: RepetitiveFinalize
+    finalizeOnHost: RepetitiveHostFinalize
   }
 `;
