@@ -133,6 +133,7 @@ import {
   RepetitiveForm,
   RepetitiveStep,
   RepetitiveFinalize,
+  RepetitiveHostFinalize,
   RepetitiveStepScope,
   RepetitiveStepRelation,
   RepetitiveFinalizeRelation,
@@ -2816,6 +2817,20 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     finalize: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveFinalize;
+    },
+    finalizeOnHost: async (parent: any, {}, { dataSources }) => {
+      return parent as RepetitiveHostFinalize;
+    },
+  },
+  RepetitiveHostFinalize: {
+    fromStep: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input || "";
+    },
+    replaceExisting: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
     },
   },
   RepetitiveStep: {
