@@ -2803,6 +2803,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     linear: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    refetchOnFinish: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     routeToStep: async (parent: any, { input }, { dataSources }) => {
       return input || "";
     },

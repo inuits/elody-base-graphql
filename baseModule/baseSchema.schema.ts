@@ -2630,6 +2630,7 @@ export const baseSchema = gql`
     label(input: String): String
     repeatable(input: Boolean!): Boolean!
     linear(input: Boolean): Boolean
+    refetchOnFinish(input: Boolean): Boolean
     routeToStep(input: String): String
     routeToRoute(input: String): String
     steps: [RepetitiveStep!]!
