@@ -14,4 +14,12 @@ export const baseQueries = gql`
   query getGraphData($id: String!, $graph: GraphElementInput!) {
     GraphData(id: $id, graph: $graph)
   }
+
+  mutation AddEntityRelations(
+    $id: String!
+    $relations: [BaseRelationValuesInput!]!
+    $collection: Collection!
+  ) {
+    addEntityRelations(id: $id, relations: $relations, collection: $collection)
+  }
 `;

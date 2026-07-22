@@ -2314,8 +2314,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     metadataOnRelationFieldConfig: async (parent, _args, { dataSources }) => {
       return parent.metadataOnRelationFieldConfig as MetadataOnRelationFieldConfig;
     },
-    relationMetadataFromFormFields: (parent) =>
-      parent.relationMetadataFromFormFields ?? null,
     entityPickerSearchConfig: (_parent: any, { input }: { input?: any }) =>
       input ?? null,
     visibleIf: (_parent: any, { input }: { input?: any }) => input ?? null,
@@ -2852,6 +2850,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     skipSearchIfPriorIsNew: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    metadataOnly: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     acceptedTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
@@ -2879,6 +2880,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     relations: async (parent: any, {}, { dataSources }) => {
       return [parent ?? {}] as RepetitiveStepRelation[];
     },
+    entityPickerSearchConfig: async (parent: any, { input }: { input?: any }) =>
+      input ?? null,
   },
   RepetitiveFinalize: {
     label: async (parent: any, { input }, { dataSources }) => {
@@ -2920,6 +2923,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     createWhen: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : undefined;
+    },
+    metadataFields: async (parent: any, { input }, { dataSources }) => {
+      return input || [];
     },
   },
   RepetitiveFinalizeRelation: {

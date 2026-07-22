@@ -457,12 +457,6 @@ export const baseSchema = gql`
     key: String!
   }
 
-  type RelationMetadataFromFormField {
-    formMetadataKey: String!
-    relationMetadataKey: String!
-    asArray: Boolean
-  }
-
   type VirtualKeyboardConfig {
     layouts: JSON
   }
@@ -518,7 +512,6 @@ export const baseSchema = gql`
     hasVirtualKeyboard: Boolean
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
     readOnlyValueAsPlainText: Boolean
-    relationMetadataFromFormFields: [RelationMetadataFromFormField]
     virtualKeyboardConfig(
       input: VirtualKeyboardConfigInput
     ): VirtualKeyboardConfig
@@ -2536,10 +2529,25 @@ export const baseSchema = gql`
     filterKey(input: String): String
   }
 
+  input RepetitiveRelationMetadataFieldInput {
+    formMetadataKey: String!
+    relationMetadataKey: String!
+    asArray: Boolean
+  }
+
+  type RepetitiveRelationMetadataField {
+    formMetadataKey: String!
+    relationMetadataKey: String!
+    asArray: Boolean
+  }
+
   type RepetitiveStepRelation {
     to(input: String!): String!
     relationType(input: String!): String!
     createWhen(input: RepetitiveRelationTrigger!): RepetitiveRelationTrigger!
+    metadataFields(
+      input: [RepetitiveRelationMetadataFieldInput!]
+    ): [RepetitiveRelationMetadataField!]
   }
 
   input RepetitiveStepOverviewFieldInput {
@@ -2571,6 +2579,7 @@ export const baseSchema = gql`
     createForm(input: String!): String!
     showBackButton(input: Boolean): Boolean
     skipSearchIfPriorIsNew(input: Boolean): Boolean
+    metadataOnly(input: Boolean): Boolean
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String
@@ -2584,6 +2593,9 @@ export const baseSchema = gql`
     creatableTypeFromParentKey(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
+    entityPickerSearchConfig(
+      input: EntityPickerSearchConfigInput
+    ): EntityPickerSearchConfig
   }
 
   type RepetitiveFinalizeRelation {
