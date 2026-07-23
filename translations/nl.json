@@ -244,6 +244,7 @@
       "filter": "Filters",
       "add-filter": "Filter toevoegen",
       "active": "actief",
+      "disabled-simple-search": "Onderbroken tijdens het zoeken",
       "clear": "Alles wissen",
       "apply": "Filter(s) toepassen",
       "minDropdownSearchCharacters": "Typ ten minste {count} karakter | Typ ten minste {count} karakters",
@@ -515,6 +516,7 @@
     },
     "library": {
       "search": "Zoeken",
+      "simple-search-placeholder": "Zoeken in {entity}",
       "items": "Items",
       "sort": "Ordenen op",
       "sort-direction": "Sorteer richting",

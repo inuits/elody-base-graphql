@@ -232,6 +232,7 @@
       "filter": "مرشحات",
       "add-filter": "إضافة مرشح",
       "active": "نشط",
+      "disabled-simple-search": "متوقف أثناء البحث",
       "clear": "مسح الكل",
       "apply": "تطبيق المرشح(ات)",
       "minDropdownSearchCharacters": "اكتب {count} أحرف على الأقل",
@@ -476,6 +477,7 @@
     },
     "library": {
       "search": "بحث",
+      "simple-search-placeholder": "البحث في {entity}",
       "items": "عناصر",
       "sort": "ترتيب حسب",
       "sort-direction": "اتجاه الترتيب",

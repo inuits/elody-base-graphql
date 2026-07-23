@@ -251,6 +251,7 @@
       "filter": "Filters",
       "add-filter": "Add filter",
       "active": "active",
+      "disabled-simple-search": "Paused while searching",
       "clear": "Clear all",
       "apply": "Apply filter(s)",
       "minDropdownSearchCharacters": "Type at least {count} character | Type at least {count} characters",
@@ -527,6 +528,7 @@
     },
     "library": {
       "search": "Search",
+      "simple-search-placeholder": "Search in {entity}",
       "items": "Items",
       "sort": "Order by",
       "sort-direction": "Order direction",
