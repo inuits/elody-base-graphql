@@ -2583,6 +2583,7 @@ export const baseSchema = gql`
     acceptedTypes(input: [String!]): [String!]
     pickerQuery(input: String!): String
     pickerFiltersQuery(input: String): String
+    pickerFiltersCollapsed(input: Boolean): Boolean
     maxSelection(input: Int): Int
     overviewFields(
       input: [RepetitiveStepOverviewFieldInput!]

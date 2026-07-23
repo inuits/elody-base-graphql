@@ -2865,6 +2865,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     pickerFiltersQuery: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
+    pickerFiltersCollapsed: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : true;
+    },
     maxSelection: async (parent: any, { input }, { dataSources }) => {
       return input ?? -1;
     },
