@@ -125,7 +125,8 @@
         "title": "Edit entity",
         "updateBtn": "Update",
         "noFields": "There are no editable fields for this entity."
-      }
+      },
+      "reorderingEntities": "Reordering entities, this may take a while..."
     },
     "confirm": {
       "discard-edit": {
