@@ -264,6 +264,7 @@ export const baseSchema = gql`
     nextFormTab
     previousFormTab
     submitAllFormTabs
+    bulkUpdateMetadata
   }
 
   enum ActionProgressIndicatorType {
@@ -882,6 +883,7 @@ export const baseSchema = gql`
     addRelation
     deleteEntities
     deleteRelations
+    bulkUpdateMetadata
   }
 
   type BulkOperations {
