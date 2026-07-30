@@ -1629,6 +1629,7 @@ export const baseSchema = gql`
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
+    highlightIfPrimaryThumbnail(input: Boolean): Boolean
     repetitionConfig(repetitionKey: String): RepetitionConfig
     copyValueFromParent(
       input: CopyValueFromParentIntialValuesInput!

@@ -1620,6 +1620,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return input ?? false;
     },
+    highlightIfPrimaryThumbnail: async (
+      _source,
+      { input },
+      { dataSources }
+    ) => {
+      return input ?? false;
+    },
     repetitionConfig: async (_source, { repetitionKey }, { dataSources }) => {
       if (repetitionKey) return { repetitionKey };
       return { repetitionKey: undefined };
