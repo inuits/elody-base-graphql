@@ -64,6 +64,7 @@ const getConfig = (config: Environment) => {
     tenantDefiningTypes: config.tenantDefiningTypes,
     routerConfig: config.routerConfig,
     bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
+    listingCountCap: config.listingCountCap,
     GLITCH_TIP_ENABLED: config.glitchtipEnabled,
     GLITCH_TIP_DSN_FRONTEND: config.glitchtipDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,

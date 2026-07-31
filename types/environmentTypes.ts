@@ -123,6 +123,7 @@ export interface Environment {
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
+  listingCountCap: number;
   skeletonLayouts?: Record<string, string[]>;
 }
 
@@ -245,5 +246,6 @@ export interface FullyOptionalEnvironmentInput {
   ignorePermissions?: boolean;
   maxUploadSize?: number;
   bulkSelectAllSizeLimit?: number;
+  listingCountCap?: number;
   skeletonLayouts?: Record<string, string[]>;
 }

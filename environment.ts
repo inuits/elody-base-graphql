@@ -138,6 +138,10 @@ export const baseEnvironment: Environment = {
   ignorePermissions: false,
   maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250 * 1024000,
   bulkSelectAllSizeLimit: 1000,
+  // Mirrors collection-api's LISTING_COUNT_CAP so the frontend can tell a
+  // genuinely small count apart from a backend-capped "<cap>+" sentinel. Must
+  // stay in sync with the backend env var value (0 = capping disabled).
+  listingCountCap: Number(process.env.LISTING_COUNT_CAP) || 0,
 };
 
 const deepMerge = <TBase, TOverride>(
