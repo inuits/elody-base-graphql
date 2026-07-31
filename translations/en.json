@@ -96,6 +96,7 @@
       "items": "items",
       "selected": "selected",
       "capped-items-tooltip": "More results exist than shown. Refine your search for an exact count.",
+      "reveal-exact-count": "Click to load the exact count",
       "save": "save",
       "cancel": "cancel",
       "delete": "delete",

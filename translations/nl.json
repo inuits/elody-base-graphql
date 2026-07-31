@@ -100,6 +100,7 @@
       "items": "items",
       "selected": "geselecteerd",
       "capped-items-tooltip": "Er zijn meer resultaten dan getoond. Verfijn je zoekopdracht voor een exact aantal.",
+      "reveal-exact-count": "Klik om het exacte aantal te laden",
       "save": "opslaan",
       "cancel": "annuleren",
       "delete": "verwijderen",
