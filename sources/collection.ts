@@ -498,7 +498,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: SearchFilter,
-    isHistoryCall: boolean = false
+    isHistoryCall: boolean = false,
+    exactCount: boolean = false
   ): Promise<EntitiesResults> {
     let data: EntetiesCallReturn = 'no-call-is-triggerd';
 
@@ -517,7 +518,8 @@ export class CollectionAPI extends AuthRESTDataSource {
         skip,
         advancedFilterInputs,
         advancedSearchValue,
-        isHistoryCall
+        isHistoryCall,
+        exactCount
       );
     }
 
@@ -552,7 +554,8 @@ export class CollectionAPI extends AuthRESTDataSource {
     skip: number,
     advancedFilterInputs: AdvancedFilterInput[],
     advancedSearchValue: SearchFilter,
-    isHistoryCall: boolean = false
+    isHistoryCall: boolean = false,
+    exactCount: boolean = false
   ): Promise<EntetiesCallReturn> {
     const queryParams = new URLSearchParams({
       limit: String(limit),
@@ -563,6 +566,10 @@ export class CollectionAPI extends AuthRESTDataSource {
 
     if (isHistoryCall) {
       queryParams.append('history', 'true');
+    }
+
+    if (exactCount) {
+      queryParams.append('exact_count', '1');
     }
 
     const endpoint = `${getCollectionValueForEntityType(

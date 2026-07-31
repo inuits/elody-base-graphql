@@ -63,7 +63,9 @@ describe('resolveAdvancedEntities', () => {
           match_exact: true,
         },
       ]),
-      { value: '' }
+      { value: '' },
+      false,
+      false
     );
   });
 
@@ -213,8 +215,47 @@ describe('resolveAdvancedEntities', () => {
     expect(result.limit).toBe(10);
     expect(
       mockDataSource.CollectionAPI.GetAdvancedEntities
-    ).toHaveBeenCalledWith('BaseEntity', 10, 5, expect.any(Array), {
-      value: '',
+    ).toHaveBeenCalledWith(
+      'BaseEntity',
+      10,
+      5,
+      expect.any(Array),
+      { value: '' },
+      false,
+      false
+    );
+  });
+
+  it('forwards exactCount=true to GetAdvancedEntities when requested on demand', async () => {
+    mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
+      results: [mockEntity('1', 'BaseEntity')],
+      count: 700712,
+      facets: [],
+      skip: 0,
+      limit: 20,
     });
+
+    const result = await resolveAdvancedEntities(
+      mockDataSource as unknown as DataSources,
+      'BaseEntity' as Entitytyping,
+      [],
+      20,
+      1,
+      { value: '' },
+      true
+    );
+
+    expect(result.count).toBe(700712);
+    expect(
+      mockDataSource.CollectionAPI.GetAdvancedEntities
+    ).toHaveBeenCalledWith(
+      'BaseEntity',
+      20,
+      1,
+      expect.any(Array),
+      { value: '' },
+      false,
+      true
+    );
   });
 });

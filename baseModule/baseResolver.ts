@@ -234,6 +234,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedFilterInputs,
         searchInputType,
         preferredLanguage,
+        exactCount,
       },
       { dataSources }
     ): Promise<Maybe<EntitiesResults>> => {
@@ -250,7 +251,8 @@ export const baseResolver: Resolvers<ContextValue> = {
             advancedFilterInputs,
             limit as number | undefined,
             skip as number | undefined,
-            searchValue
+            searchValue,
+            exactCount as boolean | undefined
           ),
         [SearchInputType.SimpleInputtype]: async () =>
           await resolveSimpleEntities(dataSources),

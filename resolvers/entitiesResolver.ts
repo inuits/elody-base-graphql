@@ -19,7 +19,8 @@ export const resolveAdvancedEntities = async (
   advancedFilterInputs: AdvancedFilterInput[],
   limit: number = 20,
   skip: number = 1,
-  searchValue: SearchFilter = { value: '' }
+  searchValue: SearchFilter = { value: '' },
+  exactCount: boolean = false
 ): Promise<EntitiesResults> => {
   const entitiesMap = new Map<string, Entity>();
   const facetsList: RawFacetGroup[] = [];
@@ -79,7 +80,9 @@ export const resolveAdvancedEntities = async (
       limit,
       skip,
       iterationFilters,
-      searchValue
+      searchValue,
+      false,
+      exactCount
     );
 
     const iterationEntities: Entity[] = iterationResult?.results as Entity[];

@@ -2375,6 +2375,7 @@ export const baseSchema = gql`
       advancedFilterInputs: [AdvancedFilterInput!]!
       fetchPolicy: String
       preferredLanguage: String
+      exactCount: Boolean
     ): EntitiesResults
     Tenants: EntitiesResults
     User: User
