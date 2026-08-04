@@ -54,6 +54,10 @@ export const baseFragments = gql`
       label
       value
     }
+    limitConfig {
+      optionsLimit
+      facetsLimit
+    }
     useOldWayToFetchOptions
     advancedFilterInputForRetrievingOptions {
       type
@@ -228,6 +232,11 @@ export const baseFragments = gql`
   fragment filterOptionsMappingFields on FilterOptionsMappingType {
     label
     value
+  }
+
+  fragment limitConfigFields on AdvancedFilterLimitConfigType {
+    optionsLimit
+    facetsLimit
   }
 
   fragment bulkOperationModal on BulkOperationModal {
