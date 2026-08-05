@@ -330,6 +330,10 @@ export const baseFragments = gql`
     }
     metadataKeysToSetAsAttribute
     tag
+    inlineTrigger {
+      character
+      minCharacters
+    }
     tagConfigurationByEntity {
       configurationEntityType
       configurationEntityRelationType

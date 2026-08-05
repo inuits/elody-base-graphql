@@ -1830,26 +1830,42 @@ export const baseSchema = gql`
     characterToReplaceWith: String!
   }
 
+  # Presence of a trigger character switches a taggable entity configuration from the
+  # default "select text, press the Tag button" flow to inline autocomplete while
+  # typing. The character is consumed by the insertion and never remains in the
+  # document, so clients that omit this block show no trigger character at all.
+  input InlineTriggerInput {
+    character: String!
+    minCharacters: Int
+  }
+
+  type InlineTrigger {
+    character: String!
+    minCharacters: Int
+  }
+
   input TaggableEntityConfigurationInput {
     taggableEntityType: Entitytyping!
-    createNewEntityFormQuery: String!
+    createNewEntityFormQuery: String # Not needed by the inline-trigger flow, which has no create-new step
     relationType: String!
     metadataFilterForTagContent: String!
     replaceCharacterFromTagSettings: [CharacterReplacementSettingsInput]
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntityInput
+    inlineTrigger: InlineTriggerInput
   }
 
   type TaggableEntityConfiguration {
     taggableEntityType: Entitytyping!
-    createNewEntityFormQuery: String!
+    createNewEntityFormQuery: String
     relationType: String!
     metadataFilterForTagContent: String!
     replaceCharacterFromTagSettings: [CharacterReplacementSettings]
     metadataKeysToSetAsAttribute: [String]
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntity
+    inlineTrigger: InlineTrigger
   }
 
   type TaggingExtensionConfiguration {
