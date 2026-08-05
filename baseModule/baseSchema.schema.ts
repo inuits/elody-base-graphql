@@ -2235,6 +2235,16 @@ export const baseSchema = gql`
     value: String
   }
 
+  type MatcherLabelType {
+    matcher: Matchers!
+    label: String!
+  }
+
+  input MatcherLabelInput {
+    matcher: Matchers!
+    label: String!
+  }
+
   type AdvancedFilterLimitConfigType {
     optionsLimit: Int
     facetsLimit: Int
@@ -2282,6 +2292,7 @@ export const baseSchema = gql`
     defaultMatcher: Matchers
     allowedMatchers: [Matchers]
     matchersType: AdvancedFilterMatchersType
+    matcherLabels: [MatcherLabelType!]
   }
 
   type FacetInputType {
@@ -2358,6 +2369,7 @@ export const baseSchema = gql`
       defaultMatcher: Matchers
       allowedMatchers: [Matchers]
       matchersType: AdvancedFilterMatchersType
+      matcherLabels: [MatcherLabelInput!]
     ): AdvancedFilter!
   }
 

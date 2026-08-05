@@ -2596,6 +2596,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         defaultMatcher,
         allowedMatchers,
         matchersType,
+        matcherLabels,
         minDropdownSearchCharacters,
       }
     ) => {
@@ -2632,6 +2633,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         defaultMatcher,
         allowedMatchers,
         matchersType,
+        matcherLabels,
       };
     },
   },
@@ -2793,6 +2795,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     matchersType: (parent) => {
       return parent.matchersType || null;
+    },
+    matcherLabels: (parent) => {
+      return parent.matcherLabels || null;
     },
   },
   ValueMapping: {
