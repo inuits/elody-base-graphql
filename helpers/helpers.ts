@@ -96,6 +96,16 @@ export const getPrimaryMediaFileIDOfEntity = (
   }
 };
 
+export const getPrimaryThumbnailIDOfEntity = (
+  entity: CollectionAPIEntity
+): string | undefined => {
+  try {
+    return entity.primary_thumbnail_id;
+  } catch {
+    return undefined;
+  }
+};
+
 export const getEntityId = (entity: any) => {
   const environment: Environment = getCurrentEnvironment();
   const key: string = environment.customization?.entityIdKey || '_id';

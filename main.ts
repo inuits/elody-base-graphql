@@ -22,6 +22,7 @@ import { baseTypePillLabelMapping } from './sources/typePillLabelMapping';
 import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
+  getPrimaryThumbnailIDOfEntity,
   checkRequestContentType,
   setTypeCollectionMapping,
   isIpAddressWhitelisted,
@@ -395,6 +396,7 @@ export {
   resolveMetadata,
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
+  getPrimaryThumbnailIDOfEntity,
   parseIdToGetMoreData,
   applyPromEndpoint,
   AuthRESTDataSource,
