@@ -1,5 +1,25 @@
 {
   "nl": {
+    "comments": {
+      "new-thread": "Nieuwe discussie",
+      "post": "Plaatsen",
+      "reply": "Antwoorden",
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "edit": "Aanpassen",
+      "resolve": "Afsluiten",
+      "reopen": "Heropenen",
+      "thread-title": "Discussie",
+      "empty": "Nog geen opmerkingen",
+      "loading": "Opmerkingen laden...",
+      "unknown-author": "Onbekende auteur",
+      "resolved-hint": "Deze discussie is afgesloten. Heropen ze om te kunnen antwoorden.",
+      "reply-count": "{n} antwoord | {n} antwoord | {n} antwoorden",
+      "status": {
+        "open": "Open",
+        "resolved": "Afgesloten"
+      }
+    },
     "entity-translations": {
       "singular": {
         "BaseEntity": "basis entiteit",

@@ -539,6 +539,7 @@ export const baseSchema = gql`
     EntityDetailModal
     IiifOperationsModal
     EntityEditModal
+    CommentThread
   }
 
   enum ModalStyle {
@@ -1916,6 +1917,14 @@ export const baseSchema = gql`
     column: Column!
   }
 
+  # Threaded comments on an entity detail page. The composer is a full WysiwygElement
+  # so tagging is configured once, on the element, and the thread modal receives that
+  # same configuration through the modal payload.
+  type CommentsElement {
+    label(input: String!): String!
+    composer: WysiwygElement!
+  }
+
   type EntityViewElements {
     entityViewerElement: EntityViewerElement
     markdownViewerElement: MarkdownViewerElement
@@ -1929,6 +1938,7 @@ export const baseSchema = gql`
     wysiwygElement: WysiwygElement
     mapElement: MapElement
     hierarchyListElement: HierarchyListElement
+    commentsElement: CommentsElement
   }
 
   type Column {

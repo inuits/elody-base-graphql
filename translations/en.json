@@ -1,5 +1,25 @@
 {
   "en": {
+    "comments": {
+      "new-thread": "New discussion",
+      "post": "Post",
+      "reply": "Reply",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "resolve": "Resolve",
+      "reopen": "Reopen",
+      "thread-title": "Discussion",
+      "empty": "No comments yet",
+      "loading": "Loading comments...",
+      "unknown-author": "Unknown author",
+      "resolved-hint": "This discussion is resolved. Reopen it to reply.",
+      "reply-count": "{n} reply | {n} reply | {n} replies",
+      "status": {
+        "open": "Open",
+        "resolved": "Resolved"
+      }
+    },
     "entity-translations": {
       "singular": {
         "baseEntity": "base entity",

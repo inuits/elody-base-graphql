@@ -61,6 +61,7 @@ import {
   FormFields,
   FormTab,
   GraphElement,
+  CommentsElement,
   HiddenField,
   IntialValues,
   KeyValueSource,
@@ -1882,6 +1883,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as HierarchyListElement;
+    },
+    commentsElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as CommentsElement;
+    },
+  },
+  CommentsElement: {
+    label: async (_parent: unknown, { input }) => {
+      return input;
+    },
+    composer: async (parent: unknown, {}, { dataSources }) => {
+      return parent as WysiwygElement;
     },
   },
   MenuWrapper: {

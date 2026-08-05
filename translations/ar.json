@@ -1,5 +1,25 @@
 {
   "ar": {
+    "comments": {
+      "new-thread": "مناقشة جديدة",
+      "post": "نشر",
+      "reply": "رد",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "edit": "تعديل",
+      "resolve": "إغلاق",
+      "reopen": "إعادة فتح",
+      "thread-title": "مناقشة",
+      "empty": "لا توجد تعليقات بعد",
+      "loading": "جارٍ تحميل التعليقات...",
+      "unknown-author": "مؤلف غير معروف",
+      "resolved-hint": "تم إغلاق هذه المناقشة. أعد فتحها للرد.",
+      "reply-count": "{n} رد | {n} رد | {n} ردود",
+      "status": {
+        "open": "مفتوح",
+        "resolved": "مغلق"
+      }
+    },
     "entity-translations": {
       "singular": {
         "baseEntity": "كيان أساسي",
