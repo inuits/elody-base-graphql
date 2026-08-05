@@ -115,6 +115,7 @@ import {
   ColumnList,
   AdvancedFilters,
   FilterOptionsMappingType,
+  AdvancedFilterLimitConfigType,
   Operator,
   AdvancedFilterInputType,
   LookupInputType,
@@ -2587,6 +2588,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType,
         matchExact,
         filterOptionsMapping,
+        limitConfig,
         operator,
         facets,
         bucket,
@@ -2622,6 +2624,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         useOldWayToFetchOptions,
         entityType,
         filterOptionsMapping,
+        limitConfig,
         operator,
         facets,
         bucket,
@@ -2766,6 +2769,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     filterOptionsMapping: (parent) => {
       return parent.filterOptionsMapping as FilterOptionsMappingType;
+    },
+    limitConfig: (parent) => {
+      return parent.limitConfig as AdvancedFilterLimitConfigType;
     },
     operator: (parent) => {
       return parent.operator as Operator;

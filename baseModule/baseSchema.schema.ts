@@ -2235,6 +2235,16 @@ export const baseSchema = gql`
     value: String
   }
 
+  type AdvancedFilterLimitConfigType {
+    optionsLimit: Int
+    facetsLimit: Int
+  }
+
+  input AdvancedFilterLimitConfigInput {
+    optionsLimit: Int
+    facetsLimit: Int
+  }
+
   type AdvancedFilter {
     lookup: LookupInputType
     type: AdvancedFilterTypes!
@@ -2261,6 +2271,7 @@ export const baseSchema = gql`
     distinctBy: String
     metadataKeyAsLabel: String
     filterOptionsMapping: FilterOptionsMappingType
+    limitConfig: AdvancedFilterLimitConfigType
     useOldWayToFetchOptions: Boolean
     entityType: String
     minDropdownSearchCharacters(value: Int): Int
@@ -2339,6 +2350,7 @@ export const baseSchema = gql`
       distinctBy: String
       metadataKeyAsLabel: String
       filterOptionsMapping: FilterOptionsMappingInput
+      limitConfig: AdvancedFilterLimitConfigInput
       operator: Operator
       facets: [FacetInputInput!]
       bucket: String

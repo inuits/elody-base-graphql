@@ -42,8 +42,6 @@ export const defaultMatchers = {
     Matchers.AnyMatcher,
     Matchers.NoneMatcher,
     Matchers.ExactAutoCompleteMatcher,
-    Matchers.ContainsMatcher,
-    Matchers.ContainsNotMatcher,
   ],
   boolean: [
     Matchers.AnyMatcher,
