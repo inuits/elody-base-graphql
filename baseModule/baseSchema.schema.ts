@@ -1845,7 +1845,7 @@ export const baseSchema = gql`
     taggableEntityType: Entitytyping!
     createNewEntityFormQuery: String # Not needed by the inline-trigger flow, which has no create-new step
     relationType: String!
-    metadataFilterForTagContent: String!
+    metadataFilterForTagContent: String # Unused by a BaseEntity configuration, which searches and labels via the client's simple-search setup
     replaceCharacterFromTagSettings: [CharacterReplacementSettingsInput]
     metadataKeysToSetAsAttribute: [String]
     tag: String
@@ -1857,7 +1857,7 @@ export const baseSchema = gql`
     taggableEntityType: Entitytyping!
     createNewEntityFormQuery: String
     relationType: String!
-    metadataFilterForTagContent: String!
+    metadataFilterForTagContent: String # Unused by a BaseEntity configuration, which searches and labels via the client's simple-search setup
     replaceCharacterFromTagSettings: [CharacterReplacementSettings]
     metadataKeysToSetAsAttribute: [String]
     tag: String
