@@ -1831,10 +1831,6 @@ export const baseSchema = gql`
     characterToReplaceWith: String!
   }
 
-  # Presence of a trigger character switches a taggable entity configuration from the
-  # default "select text, press the Tag button" flow to inline autocomplete while
-  # typing. The character is consumed by the insertion and never remains in the
-  # document, so clients that omit this block show no trigger character at all.
   input InlineTriggerInput {
     character: String!
     minCharacters: Int
@@ -1917,15 +1913,9 @@ export const baseSchema = gql`
     column: Column!
   }
 
-  # Threaded comments on an entity detail page. The composer is a full WysiwygElement
-  # so tagging is configured once, on the element, and the thread modal receives that
-  # same configuration through the modal payload.
   type CommentsElement {
     label(input: String!): String!
     composer: WysiwygElement!
-    # Filter key the comments of one entity are looked up by, e.g.
-    # "vlacc:1|properties.ref_parent_entity.value". Both the schema prefix and the
-    # property path are client-specific, so the PWA cannot know it.
     parentEntityFilterKey(input: String!): String!
   }
 

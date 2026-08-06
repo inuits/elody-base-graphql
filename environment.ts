@@ -6,8 +6,6 @@ import {
 
 export let currentEnvironment: Environment | undefined = undefined;
 
-// Names of required env vars that were auto-defaulted at load time in dev mode.
-// main.ts reads this to print a startup warning.
 export const autoDefaultedSecrets: string[] = [];
 
 export const setCurrentEnvironment = (environment: Environment): void => {
@@ -19,12 +17,6 @@ export const getCurrentEnvironment = (): Environment => {
   return currentEnvironment;
 };
 
-/**
- * Whether the comments/threads UI is served at all.
- *
- * Reads currentEnvironment rather than getCurrentEnvironment(): that one throws when the
- * environment was never set, and a feature flag must degrade to off, never to a 500.
- */
 export const commentsEnabled = (): boolean =>
   currentEnvironment?.features?.hasComments === true;
 
@@ -34,8 +26,6 @@ const getRequiredEnv = (key: string): string => {
   if (typeof value === 'undefined') {
     if (process.env.NODE_ENV === 'testing') return 'placeholder-value';
     if (process.env.NODE_ENV !== 'production') {
-      // ponytail: dev-only random fallback so first-time consumers can boot.
-      // Prod still throws (branch below).
       autoDefaultedSecrets.push(key);
       return randomBytes(32).toString('hex');
     }

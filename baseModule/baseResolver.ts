@@ -1299,7 +1299,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as unknown as DisplayCondition;
     },
     addEntitiesToForms: async (parent, { input }, { dataSources }) => {
-      return input !== undefined ? input : false
+      return input !== undefined ? input : false;
     },
   },
   DisplayCondition: {
@@ -1885,11 +1885,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as HierarchyListElement;
     },
-    // Feature-flagged so the element can be tested on UAT while production stays
-    // without it. null is valid: the field is nullable, so GraphQL never resolves the
-    // non-null label/composer inside it, and the PWA's element collectors all skip a
-    // nullish child, so no comments UI is mounted at all.
     commentsElement: async (parent: unknown, {}, { dataSources }) => {
+      // Feature flag
       return commentsEnabled() ? (parent as CommentsElement) : null;
     },
   },
@@ -2270,8 +2267,9 @@ export const baseResolver: Resolvers<ContextValue> = {
           if (typeof value !== 'string') return { ...rest, value };
           const match = value.match(sessionRegex);
           if (!match?.[1]) return { ...rest, value };
-          const sessionValue =
-            await dataSources.CollectionAPI.getSessionInfo(match[1]);
+          const sessionValue = await dataSources.CollectionAPI.getSessionInfo(
+            match[1]
+          );
           return { ...rest, value: sessionValue };
         })
       );
@@ -2850,10 +2848,10 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input !== undefined ? input : false;
     },
     routeToStep: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     routeToRoute: async (parent: any, { input }, { dataSources }) => {
-      return input || "SingleEntity";
+      return input || 'SingleEntity';
     },
     steps: async (parent: any, {}, { dataSources }) => {
       // each aliased `steps` field in the self-describing query yields one step
@@ -2868,10 +2866,10 @@ export const baseResolver: Resolvers<ContextValue> = {
   },
   RepetitiveHostFinalize: {
     fromStep: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     relationType: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+      return input || '';
     },
     replaceExisting: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
@@ -2920,8 +2918,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     creatableTypes: async (parent: any, { input }, { dataSources }) => {
       return input || [];
     },
-    creatableTypeFromParentKey: async (parent: any, { input }, { dataSources }) => {
-      return input || "";
+    creatableTypeFromParentKey: async (
+      parent: any,
+      { input },
+      { dataSources }
+    ) => {
+      return input || '';
     },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveStepScope;
