@@ -19,6 +19,15 @@ export const getCurrentEnvironment = (): Environment => {
   return currentEnvironment;
 };
 
+/**
+ * Whether the comments/threads UI is served at all.
+ *
+ * Reads currentEnvironment rather than getCurrentEnvironment(): that one throws when the
+ * environment was never set, and a feature flag must degrade to off, never to a 500.
+ */
+export const commentsEnabled = (): boolean =>
+  currentEnvironment?.features?.hasComments === true;
+
 const getRequiredEnv = (key: string): string => {
   const value = process.env[key];
 
@@ -113,6 +122,7 @@ export const baseEnvironment: Environment = {
     hasBulkSelect: true,
     hideSuperTenant: true,
     hasSavedSearch: false,
+    hasComments: false,
     hasPersistentSessions: true,
     supportsMultilingualMetadataEditing: false,
     hasRedirectToExternalSites: false,

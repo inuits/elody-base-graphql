@@ -72,6 +72,7 @@ export interface Environment {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
+    hasComments?: boolean;
     savedSearch?: {
       enabled?: boolean;
       permission?: string[];
@@ -195,6 +196,7 @@ export interface FullyOptionalEnvironmentInput {
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
+    hasComments?: boolean;
     savedSearch?: {
       enabled?: boolean;
       permission?: string[];

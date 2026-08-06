@@ -15,6 +15,7 @@ import {
   resolveAdvancedHistoryEntities,
 } from '../resolvers/entitiesResolver';
 import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
+import { commentsEnabled } from '../environment';
 import {
   ActionElement,
   ActionProgress,
@@ -1884,8 +1885,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as HierarchyListElement;
     },
+    // Feature-flagged so the element can be tested on UAT while production stays
+    // without it. null is valid: the field is nullable, so GraphQL never resolves the
+    // non-null label/composer inside it, and the PWA's element collectors all skip a
+    // nullish child, so no comments UI is mounted at all.
     commentsElement: async (parent: unknown, {}, { dataSources }) => {
-      return parent as CommentsElement;
+      return commentsEnabled() ? (parent as CommentsElement) : null;
     },
   },
   CommentsElement: {
