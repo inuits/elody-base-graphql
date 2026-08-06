@@ -1897,6 +1897,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_parent: unknown, { input }) => {
       return input;
     },
+    parentEntityFilterKey: async (_parent: unknown, { input }) => {
+      return input;
+    },
     composer: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },

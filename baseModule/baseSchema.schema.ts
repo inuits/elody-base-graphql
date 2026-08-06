@@ -1923,6 +1923,10 @@ export const baseSchema = gql`
   type CommentsElement {
     label(input: String!): String!
     composer: WysiwygElement!
+    # Filter key the comments of one entity are looked up by, e.g.
+    # "vlacc:1|properties.ref_parent_entity.value". Both the schema prefix and the
+    # property path are client-specific, so the PWA cannot know it.
+    parentEntityFilterKey(input: String!): String!
   }
 
   type EntityViewElements {
