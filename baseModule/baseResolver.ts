@@ -1807,7 +1807,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             Entitytyping.BaseEntity
           );
 
-        return mediafile.display_filename;
+        return mediafile.thumbnail_filename || mediafile.display_filename;
       } catch {
         return '';
       }
