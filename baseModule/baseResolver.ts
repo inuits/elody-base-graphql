@@ -171,6 +171,7 @@ import {
   resolveIntialValueParentMetadata,
   resolveIntialValueParentRelations,
 } from '../resolvers/intialValueResolver';
+import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
 import {
   prepareLocationFieldForMapData,
   prepareMetadataFieldForMapData,
@@ -359,6 +360,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       };
 
       return entitiesResolverMapping[searchInputType!!]!!();
+    },
+    RelationLabelsForIds: async (
+      _source,
+      { ids, type, metadataKeyAsLabel, rootKeyAsLabel },
+      { dataSources }
+    ) => {
+      return resolveRelationLabelsForIds(dataSources, ids, type, metadataKeyAsLabel, rootKeyAsLabel);
     },
     EntitiesByAdvancedSearch: async (
       _source,

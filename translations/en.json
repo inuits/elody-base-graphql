@@ -317,6 +317,12 @@
     "history-view": {
       "search": "Search History"
     },
+    "history": {
+      "select-version": "Select version",
+      "current-version": "Current version",
+      "no-items": "No items",
+      "view-history": "View history"
+    },
     "jobs": {
       "finished": "finished",
       "failed": "failed",

@@ -2455,6 +2455,12 @@ export const baseSchema = gql`
       fetchPolicy: String
       preferredLanguage: String
     ): EntitiesResults
+    RelationLabelsForIds(
+      ids: [String!]!
+      type: String!
+      metadataKeyAsLabel: String
+      rootKeyAsLabel: String
+    ): [KeyAndValue!]!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!

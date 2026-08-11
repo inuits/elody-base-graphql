@@ -291,6 +291,12 @@
     "history-view": {
       "search": "بحث في السجل"
     },
+    "history": {
+      "select-version": "اختيار الإصدار",
+      "current-version": "الإصدار الحالي",
+      "no-items": "لا توجد عناصر",
+      "view-history": "عرض السجل"
+    },
     "jobs": {
       "finished": "منتهية",
       "failed": "فشلت",

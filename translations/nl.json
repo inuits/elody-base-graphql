@@ -309,6 +309,12 @@
     "history-view": {
       "search": "Zoek geschiedenis"
     },
+    "history": {
+      "select-version": "Selecteer versie",
+      "current-version": "Huidige versie",
+      "no-items": "Geen items",
+      "view-history": "Geschiedenis bekijken"
+    },
     "jobs": {
       "finished": "klaar",
       "failed": "mislukt",
