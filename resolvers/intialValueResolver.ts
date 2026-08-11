@@ -133,7 +133,7 @@ const filterRelationsByProperty = (
 
 };
 
-const fetchRelationEntity = async (
+export const fetchRelationEntity = async (
   dataSources: DataSources,
   relation: any,
   relationEntityType: string,
@@ -169,7 +169,7 @@ const fetchRelationEntity = async (
   );
 };
 
-const extractValueFromEntity = (
+export const extractValueFromEntity = (
   entity: any,
   relation: any,
   metadataKeyAsLabel: string,
