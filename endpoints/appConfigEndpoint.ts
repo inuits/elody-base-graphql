@@ -41,9 +41,9 @@ const getConfig = (config: Environment) => {
           : config.features.hideSuperTenant,
       savedSearch: {
         enabled:
-          config.features.savedSearch?.enabled
-          ?? config.features.hasSavedSearch
-          ?? false,
+          config.features.savedSearch?.enabled ??
+          config.features.hasSavedSearch ??
+          false,
         permission: config.features.savedSearch?.permission ?? [],
       },
       supportsMultilingualMetadataEditing:
@@ -68,8 +68,6 @@ const getConfig = (config: Environment) => {
     GLITCH_TIP_ENABLED: config.glitchtipEnabled,
     GLITCH_TIP_DSN_FRONTEND: config.glitchtipDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,
-    // Read straight from the env: every client hand-builds its own Environment
-    // object, so a typed field would need touching all of them.
     DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT || '',
     IGNORE_PERMISSIONS: config.ignorePermissions,
     skeletonLayouts: config.skeletonLayouts,
