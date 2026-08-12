@@ -350,6 +350,9 @@ export const baseFragments = gql`
       statusMetadataKey
       statusInputField {
         ...inputfield
+        validation {
+          ...validation
+        }
       }
     }
   }
@@ -359,6 +362,9 @@ export const baseFragments = gql`
     statusMetadataKey
     statusInputField {
       ...inputfield
+      validation {
+        ...validation
+      }
     }
   }
 
