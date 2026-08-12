@@ -680,5 +680,24 @@
       "finish-failed-title": "Opslaan mislukt",
       "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
     }
+  },
+  "split-button": {
+    "open-record": "Open record",
+    "open": "Open"
+  },
+  "context-menu": {
+    "actions": "Acties",
+    "more-actions": "Meer acties"
+  },
+  "inline-edit": {
+    "hint": "Enter bewaart · Esc annuleert",
+    "undo": "Ongedaan maken",
+    "saved": "Bewaard",
+    "required": "Dit veld is verplicht",
+    "invalid-format": "Waarde voldoet niet aan het verwachte formaat",
+    "save-failed": "Bewaren mislukt, probeer opnieuw",
+    "edit-field": "Bewerk",
+    "save-field": "Bewaar",
+    "cancel-field": "Annuleer"
   }
 }
