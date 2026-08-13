@@ -290,7 +290,8 @@
         "NoneMatcher": "is niet ingevuld",
         "MetadataOnRelationExactMatcher": "is gelijk aan",
         "MetadataOnRelationContainsMatcher": "bevat",
-        "RegexMatcher": "regex"
+        "RegexMatcher": "regex",
+        "clear-filter": "Wis filter"
       },
       "matcher-placeholders": {
         "date": "datum",
@@ -545,7 +546,9 @@
       "add": "Toevoegen",
       "asc": "Oplopend",
       "desc": "Aflopend",
-      "language": "Kies taal"
+      "language": "Kies taal",
+      "no-linked-objects": "Geen gekoppelde objecten",
+      "actions-column": "Acties"
     },
     "navigation": {
       "title": "Elody",
@@ -679,50 +682,41 @@
       "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
       "finish-failed-title": "Opslaan mislukt",
       "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
-    }
-  },
-  "split-button": {
-    "open-record": "Open record",
-    "open": "Open"
-  },
-  "context-menu": {
-    "actions": "Acties",
-    "more-actions": "Meer acties"
-  },
-  "inline-edit": {
-    "hint": "Enter bewaart · Esc annuleert",
-    "undo": "Ongedaan maken",
-    "saved": "Bewaard",
-    "required": "Dit veld is verplicht",
-    "invalid-format": "Waarde voldoet niet aan het verwachte formaat",
-    "save-failed": "Bewaren mislukt, probeer opnieuw",
-    "edit-field": "Bewerk",
-    "save-field": "Bewaar",
-    "cancel-field": "Annuleer",
-    "select-hint": "Kiezen bewaart · Esc annuleert"
-  },
-  "block-edit": {
-    "edit-block": "Bewerk blok",
-    "save-block": "Bewaar blok",
-    "edit-row": "Bewerk rij",
-    "save-row": "Bewaar rij",
-    "add-row": "Voeg rij toe",
-    "delete-row": "Verwijder rij",
-    "cancel": "Annuleer",
-    "row-note": "Schrijft de hele rij in één mutatie.",
-    "block-note": "Bewaart het hele blok in één mutatie."
-  },
-  "library": {
-    "no-linked-objects": "Geen gekoppelde objecten",
-    "actions-column": "Acties"
-  },
-  "quality-status": {
-    "blocked": "Nog niet controleerbaar — verplicht en leeg:",
-    "clear": "Alle verplichte velden zijn ingevuld."
-  },
-  "filters": {
-    "matcher-labels": {
-      "clear-filter": "Wis filter"
+    },
+    "split-button": {
+      "open-record": "Open record",
+      "open": "Open"
+    },
+    "context-menu": {
+      "actions": "Acties",
+      "more-actions": "Meer acties"
+    },
+    "inline-edit": {
+      "hint": "Enter bewaart · Esc annuleert",
+      "undo": "Ongedaan maken",
+      "saved": "Bewaard",
+      "required": "Dit veld is verplicht",
+      "invalid-format": "Waarde voldoet niet aan het verwachte formaat",
+      "save-failed": "Bewaren mislukt, probeer opnieuw",
+      "edit-field": "Bewerk",
+      "save-field": "Bewaar",
+      "cancel-field": "Annuleer",
+      "select-hint": "Kiezen bewaart · Esc annuleert"
+    },
+    "block-edit": {
+      "edit-block": "Bewerk blok",
+      "save-block": "Bewaar blok",
+      "edit-row": "Bewerk rij",
+      "save-row": "Bewaar rij",
+      "add-row": "Voeg rij toe",
+      "delete-row": "Verwijder rij",
+      "cancel": "Annuleer",
+      "row-note": "Schrijft de hele rij in één mutatie.",
+      "block-note": "Bewaart het hele blok in één mutatie."
+    },
+    "quality-status": {
+      "blocked": "Nog niet controleerbaar — verplicht en leeg:",
+      "clear": "Alle verplichte velden zijn ingevuld."
     }
   }
 }

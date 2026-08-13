@@ -298,7 +298,8 @@
         "NoneMatcher": "has no value",
         "MetadataOnRelationExactMatcher": "is exactly",
         "MetadataOnRelationContainsMatcher": "contains",
-        "RegexMatcher": "regex"
+        "RegexMatcher": "regex",
+        "clear-filter": "Clear filter"
       },
       "matcher-placeholders": {
         "date": "date",
@@ -557,7 +558,9 @@
       "add": "Add",
       "asc": "Ascending",
       "desc": "Descending",
-      "language": "Choose language"
+      "language": "Choose language",
+      "no-linked-objects": "No linked objects",
+      "actions-column": "Actions"
     },
     "navigation": {
       "title": "Elody",
@@ -693,50 +696,41 @@
       "no-entities-yet": "Nothing added yet. Click \"Add another\" to start.",
       "finish-failed-title": "Could not save",
       "finish-failed-description": "Something went wrong while saving. Your added items are still here — please try again."
-    }
-  },
-  "split-button": {
-    "open-record": "Open record",
-    "open": "Open"
-  },
-  "context-menu": {
-    "actions": "Actions",
-    "more-actions": "More actions"
-  },
-  "inline-edit": {
-    "hint": "Enter saves · Esc cancels",
-    "undo": "Undo",
-    "saved": "Saved",
-    "required": "This field is required",
-    "invalid-format": "Value does not match the expected format",
-    "save-failed": "Saving failed, try again",
-    "edit-field": "Edit",
-    "save-field": "Save",
-    "cancel-field": "Cancel",
-    "select-hint": "Choosing saves · Esc cancels"
-  },
-  "block-edit": {
-    "edit-block": "Edit block",
-    "save-block": "Save block",
-    "edit-row": "Edit row",
-    "save-row": "Save row",
-    "add-row": "Add row",
-    "delete-row": "Delete row",
-    "cancel": "Cancel",
-    "row-note": "Writes the whole row in one mutation.",
-    "block-note": "Saves the whole block in one mutation."
-  },
-  "library": {
-    "no-linked-objects": "No linked objects",
-    "actions-column": "Actions"
-  },
-  "quality-status": {
-    "blocked": "Not checkable yet — required and empty:",
-    "clear": "All required fields are filled."
-  },
-  "filters": {
-    "matcher-labels": {
-      "clear-filter": "Clear filter"
+    },
+    "split-button": {
+      "open-record": "Open record",
+      "open": "Open"
+    },
+    "context-menu": {
+      "actions": "Actions",
+      "more-actions": "More actions"
+    },
+    "inline-edit": {
+      "hint": "Enter saves · Esc cancels",
+      "undo": "Undo",
+      "saved": "Saved",
+      "required": "This field is required",
+      "invalid-format": "Value does not match the expected format",
+      "save-failed": "Saving failed, try again",
+      "edit-field": "Edit",
+      "save-field": "Save",
+      "cancel-field": "Cancel",
+      "select-hint": "Choosing saves · Esc cancels"
+    },
+    "block-edit": {
+      "edit-block": "Edit block",
+      "save-block": "Save block",
+      "edit-row": "Edit row",
+      "save-row": "Save row",
+      "add-row": "Add row",
+      "delete-row": "Delete row",
+      "cancel": "Cancel",
+      "row-note": "Writes the whole row in one mutation.",
+      "block-note": "Saves the whole block in one mutation."
+    },
+    "quality-status": {
+      "blocked": "Not checkable yet — required and empty:",
+      "clear": "All required fields are filled."
     }
   }
 }
