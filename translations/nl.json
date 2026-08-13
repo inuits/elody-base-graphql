@@ -698,7 +698,8 @@
     "save-failed": "Bewaren mislukt, probeer opnieuw",
     "edit-field": "Bewerk",
     "save-field": "Bewaar",
-    "cancel-field": "Annuleer"
+    "cancel-field": "Annuleer",
+    "select-hint": "Kiezen bewaart · Esc annuleert"
   },
   "block-edit": {
     "edit-block": "Bewerk blok",
@@ -710,5 +711,12 @@
     "cancel": "Annuleer",
     "row-note": "Schrijft de hele rij in één mutatie.",
     "block-note": "Bewaart het hele blok in één mutatie."
+  },
+  "library": {
+    "no-linked-objects": "Geen gekoppelde objecten"
+  },
+  "quality-status": {
+    "blocked": "Nog niet controleerbaar — verplicht en leeg:",
+    "clear": "Alle verplichte velden zijn ingevuld."
   }
 }

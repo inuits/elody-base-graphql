@@ -712,7 +712,8 @@
     "save-failed": "Saving failed, try again",
     "edit-field": "Edit",
     "save-field": "Save",
-    "cancel-field": "Cancel"
+    "cancel-field": "Cancel",
+    "select-hint": "Choosing saves · Esc cancels"
   },
   "block-edit": {
     "edit-block": "Edit block",
@@ -724,5 +725,12 @@
     "cancel": "Cancel",
     "row-note": "Writes the whole row in one mutation.",
     "block-note": "Saves the whole block in one mutation."
+  },
+  "library": {
+    "no-linked-objects": "No linked objects"
+  },
+  "quality-status": {
+    "blocked": "Not checkable yet — required and empty:",
+    "clear": "All required fields are filled."
   }
 }
