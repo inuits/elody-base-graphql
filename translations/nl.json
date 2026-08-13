@@ -699,5 +699,16 @@
     "edit-field": "Bewerk",
     "save-field": "Bewaar",
     "cancel-field": "Annuleer"
+  },
+  "block-edit": {
+    "edit-block": "Bewerk blok",
+    "save-block": "Bewaar blok",
+    "edit-row": "Bewerk rij",
+    "save-row": "Bewaar rij",
+    "add-row": "Voeg rij toe",
+    "delete-row": "Verwijder rij",
+    "cancel": "Annuleer",
+    "row-note": "Schrijft de hele rij in één mutatie.",
+    "block-note": "Bewaart het hele blok in één mutatie."
   }
 }

@@ -713,5 +713,16 @@
     "edit-field": "Edit",
     "save-field": "Save",
     "cancel-field": "Cancel"
+  },
+  "block-edit": {
+    "edit-block": "Edit block",
+    "save-block": "Save block",
+    "edit-row": "Edit row",
+    "save-row": "Save row",
+    "add-row": "Add row",
+    "delete-row": "Delete row",
+    "cancel": "Cancel",
+    "row-note": "Writes the whole row in one mutation.",
+    "block-note": "Saves the whole block in one mutation."
   }
 }
