@@ -732,5 +732,10 @@
   "quality-status": {
     "blocked": "Not checkable yet — required and empty:",
     "clear": "All required fields are filled."
+  },
+  "filters": {
+    "matcher-labels": {
+      "clear-filter": "Clear filter"
+    }
   }
 }

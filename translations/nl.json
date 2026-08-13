@@ -718,5 +718,10 @@
   "quality-status": {
     "blocked": "Nog niet controleerbaar — verplicht en leeg:",
     "clear": "Alle verplichte velden zijn ingevuld."
+  },
+  "filters": {
+    "matcher-labels": {
+      "clear-filter": "Wis filter"
+    }
   }
 }
