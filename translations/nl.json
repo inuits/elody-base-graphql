@@ -713,7 +713,8 @@
     "block-note": "Bewaart het hele blok in één mutatie."
   },
   "library": {
-    "no-linked-objects": "Geen gekoppelde objecten"
+    "no-linked-objects": "Geen gekoppelde objecten",
+    "actions-column": "Acties"
   },
   "quality-status": {
     "blocked": "Nog niet controleerbaar — verplicht en leeg:",

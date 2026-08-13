@@ -727,7 +727,8 @@
     "block-note": "Saves the whole block in one mutation."
   },
   "library": {
-    "no-linked-objects": "No linked objects"
+    "no-linked-objects": "No linked objects",
+    "actions-column": "Actions"
   },
   "quality-status": {
     "blocked": "Not checkable yet — required and empty:",
