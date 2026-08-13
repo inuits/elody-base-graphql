@@ -4,6 +4,7 @@ import {
   isTypeKey,
   getClientOrigin,
   isDomainWhitelisted,
+  isIpAddressWhitelisted,
 } from '../helpers/helpers';
 import {
   Entitytyping,
@@ -122,6 +123,64 @@ describe('getClientOrigin', () => {
   });
 });
 
+describe('isIpAddressWhitelisted', () => {
+  const envWith = (whiteListedIpAddresses: string[]): any => ({
+    features: { ipWhiteListing: { whiteListedIpAddresses } },
+  });
+
+  test('returns true for an exact match', () => {
+    expect(isIpAddressWhitelisted('10.0.1.1', envWith(['10.0.1.1']))).toBe(true);
+  });
+
+  test('returns false for a non-whitelisted address', () => {
+    expect(isIpAddressWhitelisted('10.0.1.2', envWith(['10.0.1.1']))).toBe(
+      false
+    );
+  });
+
+  test('matches a trailing wildcard', () => {
+    expect(isIpAddressWhitelisted('10.0.1.1', envWith(['10.0.*']))).toBe(true);
+  });
+
+  test('anchors the wildcard so a prefixed address does not match', () => {
+    expect(isIpAddressWhitelisted('210.0.1.1', envWith(['10.0.*']))).toBe(false);
+  });
+
+  test('anchors the wildcard so a suffixed address does not match', () => {
+    expect(isIpAddressWhitelisted('10.0.1.1.5', envWith(['*.1.1']))).toBe(false);
+  });
+
+  test('treats dots as literals, not regex wildcards', () => {
+    expect(isIpAddressWhitelisted('10a0b1c1', envWith(['10.0.1.*']))).toBe(
+      false
+    );
+  });
+
+  test('matches a wildcard in the middle', () => {
+    expect(isIpAddressWhitelisted('10.0.42.1', envWith(['10.0.*.1']))).toBe(
+      true
+    );
+  });
+
+  test('matches an IPv4-mapped IPv6 address against an IPv4 entry', () => {
+    expect(
+      isIpAddressWhitelisted('::ffff:10.0.1.1', envWith(['10.0.1.1']))
+    ).toBe(true);
+  });
+
+  test('matches an IPv4-mapped IPv6 address against a wildcard entry', () => {
+    expect(isIpAddressWhitelisted('::ffff:10.0.1.1', envWith(['10.0.*']))).toBe(
+      true
+    );
+  });
+
+  test('returns false when no whitelist is configured', () => {
+    expect(isIpAddressWhitelisted('10.0.1.1', { features: {} } as any)).toBe(
+      false
+    );
+  });
+});
+
 describe('isDomainWhitelisted', () => {
   const envWith = (whiteListedDomainAddresses: string[]): any => ({
     features: { domainWhiteListing: { whiteListedDomainAddresses } },
@@ -186,6 +245,48 @@ describe('isDomainWhitelisted', () => {
       isDomainWhitelisted(
         'museum.example.com',
         envWith([' museum.example.com '])
+      )
+    ).toBe(true);
+  });
+
+  test('matches a subdomain against a wildcard entry', () => {
+    expect(
+      isDomainWhitelisted('museum.example.com', envWith(['*.example.com']))
+    ).toBe(true);
+  });
+
+  test('matches a nested subdomain against a wildcard entry', () => {
+    expect(
+      isDomainWhitelisted('a.b.example.com', envWith(['*.example.com']))
+    ).toBe(true);
+  });
+
+  test('does not match the apex against a wildcard subdomain entry', () => {
+    expect(isDomainWhitelisted('example.com', envWith(['*.example.com']))).toBe(
+      false
+    );
+  });
+
+  test('anchors the wildcard so a lookalike domain does not match', () => {
+    expect(
+      isDomainWhitelisted(
+        'museum.example.com.evil.com',
+        envWith(['*.example.com'])
+      )
+    ).toBe(false);
+  });
+
+  test('treats dots in a wildcard entry as literals', () => {
+    expect(
+      isDomainWhitelisted('museumXexample.com', envWith(['*.example.com']))
+    ).toBe(false);
+  });
+
+  test('matches a wildcard entry that includes a scheme', () => {
+    expect(
+      isDomainWhitelisted(
+        'museum.example.com',
+        envWith(['https://*.example.com'])
       )
     ).toBe(true);
   });

@@ -189,16 +189,26 @@ export const checkRequestContentType = (req: Request, res: Response) => {
   return false;
 };
 
+const globToRegExp = (pattern: string): RegExp =>
+  new RegExp(
+    `^${pattern
+      .split('*')
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('.*')}$`
+  );
+
 export const isIpAddressWhitelisted = (
   ipAddress: string,
   environment: Environment
 ): boolean => {
   const whitelist: string[] =
     environment?.features?.ipWhiteListing?.whiteListedIpAddresses ?? [];
+  // req.ip arrives as ::ffff:10.0.0.1 when the socket accepted IPv4 over IPv6
+  const normalizedIpAddress = ipAddress?.replace(/^::ffff:/i, '');
   return whitelist.some((ip) =>
     ip.includes('*')
-      ? ip.split('*').every((part) => ipAddress.includes(part))
-      : ipAddress === ip
+      ? globToRegExp(ip).test(normalizedIpAddress)
+      : normalizedIpAddress === ip
   );
 };
 
@@ -234,7 +244,12 @@ export const isDomainWhitelisted = (
   const whitelist: string[] =
     environment?.features?.domainWhiteListing?.whiteListedDomainAddresses ?? [];
   const normalizedOrigin = toHostname(origin);
-  return whitelist.some((domain) => toHostname(domain) === normalizedOrigin);
+  return whitelist.some((domain) => {
+    const normalizedDomain = toHostname(domain);
+    return normalizedDomain.includes('*')
+      ? globToRegExp(normalizedDomain).test(normalizedOrigin)
+      : normalizedDomain === normalizedOrigin;
+  });
 };
 
 export const getFormattedOffset = (date: Date, timeZone: string): string => {
