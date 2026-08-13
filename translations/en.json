@@ -726,7 +726,8 @@
       "delete-row": "Delete row",
       "cancel": "Cancel",
       "row-note": "Writes the whole row in one mutation.",
-      "block-note": "Saves the whole block in one mutation."
+      "block-note": "Saves the whole block in one mutation.",
+      "group-note": "These fields belong together and save as one."
     },
     "quality-status": {
       "blocked": "Not checkable yet — required and empty:",

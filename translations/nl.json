@@ -712,7 +712,8 @@
       "delete-row": "Verwijder rij",
       "cancel": "Annuleer",
       "row-note": "Schrijft de hele rij in één mutatie.",
-      "block-note": "Bewaart het hele blok in één mutatie."
+      "block-note": "Bewaart het hele blok in één mutatie.",
+      "group-note": "Deze velden horen bij elkaar en bewaren als één geheel."
     },
     "quality-status": {
       "blocked": "Nog niet controleerbaar — verplicht en leeg:",
