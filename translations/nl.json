@@ -266,8 +266,8 @@
       "add-filter": "Filter toevoegen",
       "active": "actief",
       "disabled-simple-search": "Onderbroken tijdens het zoeken",
-      "clear": "Alles wissen",
-      "apply": "Filter(s) toepassen",
+      "clear": "Wis alles",
+      "apply": "Pas toe",
       "minDropdownSearchCharacters": "Typ ten minste {count} karakter | Typ ten minste {count} karakters",
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
@@ -365,7 +365,8 @@
         "modified-by": "Gewijzigd door",
         "modified-at": "Gewijzigd op",
         "yes": "Ja",
-        "no": "Nee"
+        "no": "Nee",
+        "no-value": "Geen waarde"
       }
     },
     "notifications": {

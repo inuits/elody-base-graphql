@@ -275,7 +275,7 @@
       "active": "active",
       "disabled-simple-search": "Paused while searching",
       "clear": "Clear all",
-      "apply": "Apply filter(s)",
+      "apply": "Apply",
       "minDropdownSearchCharacters": "Type at least {count} character | Type at least {count} characters",
       "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
       "rangeFilterToInputError": "'To' cannot be less than 'from'",
@@ -376,7 +376,8 @@
         "modified-at": "Modified at",
         "virtual-keyboard": "Virtual keyboard",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "no-value": "No value"
       }
     },
     "notifications": {
