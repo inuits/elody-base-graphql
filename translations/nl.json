@@ -703,7 +703,8 @@
       "edit-field": "bewerken",
       "save-field": "Bewaar",
       "cancel-field": "Annuleer",
-      "select-hint": "Kiezen bewaart · Esc annuleert"
+      "select-hint": "Kiezen bewaart · Esc annuleert",
+      "textarea-hint": "Ctrl+Enter bewaart · Esc annuleert"
     },
     "block-edit": {
       "edit-block": "Bewerk blok",
@@ -718,7 +719,8 @@
       "group-note": "Deze velden horen bij elkaar en bewaren als één geheel.",
       "add-typed": "Voeg {type} toe",
       "check-fields": "Controleer de gemarkeerde velden",
-      "empty-hint": "Nog geen rijen"
+      "empty-hint": "Nog geen rijen",
+      "row-removed": "Rij verwijderd"
     },
     "quality-status": {
       "blocked": "Nog niet controleerbaar — verplicht en leeg:",

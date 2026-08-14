@@ -717,7 +717,8 @@
       "edit-field": "edit",
       "save-field": "Save",
       "cancel-field": "Cancel",
-      "select-hint": "Choosing saves · Esc cancels"
+      "select-hint": "Choosing saves · Esc cancels",
+      "textarea-hint": "Ctrl+Enter saves · Esc cancels"
     },
     "block-edit": {
       "edit-block": "Edit block",
@@ -732,7 +733,8 @@
       "group-note": "These fields belong together and save as one.",
       "add-typed": "Add {type}",
       "check-fields": "Check the marked fields",
-      "empty-hint": "No rows yet"
+      "empty-hint": "No rows yet",
+      "row-removed": "Row removed"
     },
     "quality-status": {
       "blocked": "Not checkable yet — required and empty:",
