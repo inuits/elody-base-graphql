@@ -567,7 +567,8 @@
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
       "delete-entity-window": "Verwijder {0}",
-      "create-share-link": "Maak share link"
+      "create-share-link": "Maak share link",
+      "breadcrumb": "Kruimelpad"
     },
     "upload-fields": {
       "labels": {
@@ -694,11 +695,11 @@
     "inline-edit": {
       "hint": "Enter bewaart · Esc annuleert",
       "undo": "Ongedaan maken",
-      "saved": "Bewaard",
-      "required": "Dit veld is verplicht",
+      "saved": "Opgeslagen",
+      "required": "{field} is verplicht",
       "invalid-format": "Waarde voldoet niet aan het verwachte formaat",
-      "save-failed": "Bewaren mislukt, probeer opnieuw",
-      "edit-field": "Bewerk",
+      "save-failed": "Opslaan mislukt, probeer opnieuw",
+      "edit-field": "bewerken",
       "save-field": "Bewaar",
       "cancel-field": "Annuleer",
       "select-hint": "Kiezen bewaart · Esc annuleert"
@@ -713,7 +714,10 @@
       "cancel": "Annuleer",
       "row-note": "Schrijft de hele rij in één mutatie.",
       "block-note": "Bewaart het hele blok in één mutatie.",
-      "group-note": "Deze velden horen bij elkaar en bewaren als één geheel."
+      "group-note": "Deze velden horen bij elkaar en bewaren als één geheel.",
+      "add-typed": "Voeg {type} toe",
+      "check-fields": "Controleer de gemarkeerde velden",
+      "empty-hint": "Nog geen rijen"
     },
     "quality-status": {
       "blocked": "Nog niet controleerbaar — verplicht en leeg:",

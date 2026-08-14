@@ -579,7 +579,8 @@
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
       "delete-entity-window": "Delete {0}",
-      "create-share-link": "Create share link"
+      "create-share-link": "Create share link",
+      "breadcrumb": "Breadcrumb"
     },
     "upload-fields": {
       "labels": {
@@ -709,10 +710,10 @@
       "hint": "Enter saves · Esc cancels",
       "undo": "Undo",
       "saved": "Saved",
-      "required": "This field is required",
+      "required": "{field} is required",
       "invalid-format": "Value does not match the expected format",
       "save-failed": "Saving failed, try again",
-      "edit-field": "Edit",
+      "edit-field": "edit",
       "save-field": "Save",
       "cancel-field": "Cancel",
       "select-hint": "Choosing saves · Esc cancels"
@@ -727,7 +728,10 @@
       "cancel": "Cancel",
       "row-note": "Writes the whole row in one mutation.",
       "block-note": "Saves the whole block in one mutation.",
-      "group-note": "These fields belong together and save as one."
+      "group-note": "These fields belong together and save as one.",
+      "add-typed": "Add {type}",
+      "check-fields": "Check the marked fields",
+      "empty-hint": "No rows yet"
     },
     "quality-status": {
       "blocked": "Not checkable yet — required and empty:",
