@@ -519,7 +519,8 @@
     "pagination": {
       "page": "page",
       "of": "of",
-      "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."
+      "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results.",
+      "label": "Pagination"
     },
     "saved-searches": {
       "new": "Save as new",
@@ -581,7 +582,8 @@
       "edit-csv": "Update metadata with CSV",
       "delete-entity-window": "Delete {0}",
       "create-share-link": "Create share link",
-      "breadcrumb": "Breadcrumb"
+      "breadcrumb": "Breadcrumb",
+      "main": "Main navigation"
     },
     "upload-fields": {
       "labels": {
@@ -740,6 +742,9 @@
     "quality-status": {
       "blocked": "Not checkable yet — required and empty:",
       "clear": "All required fields are filled."
+    },
+    "dynamic-form": {
+      "actions": "Form actions"
     }
   }
 }

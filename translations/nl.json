@@ -508,7 +508,8 @@
     "pagination": {
       "page": "pagina",
       "of": "van",
-      "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
+      "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken.",
+      "label": "Paginering"
     },
     "saved-searches": {
       "new": "Opslaan als nieuw",
@@ -569,7 +570,8 @@
       "edit-csv": "Update metadata met CSV",
       "delete-entity-window": "Verwijder {0}",
       "create-share-link": "Maak share link",
-      "breadcrumb": "Kruimelpad"
+      "breadcrumb": "Kruimelpad",
+      "main": "Hoofdnavigatie"
     },
     "upload-fields": {
       "labels": {
@@ -726,6 +728,9 @@
     "quality-status": {
       "blocked": "Nog niet controleerbaar — verplicht en leeg:",
       "clear": "Alle verplichte velden zijn ingevuld."
+    },
+    "dynamic-form": {
+      "actions": "Formulier-acties"
     }
   }
 }
