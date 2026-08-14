@@ -704,7 +704,8 @@
       "save-field": "Bewaar",
       "cancel-field": "Annuleer",
       "select-hint": "Kiezen bewaart · Esc annuleert",
-      "textarea-hint": "Ctrl+Enter bewaart · Esc annuleert"
+      "textarea-hint": "Ctrl+Enter bewaart · Esc annuleert",
+      "relation-hint": "Wijzigingen bewaren met Bewaar · Esc annuleert"
     },
     "block-edit": {
       "edit-block": "Bewerk blok",

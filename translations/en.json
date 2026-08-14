@@ -718,7 +718,8 @@
       "save-field": "Save",
       "cancel-field": "Cancel",
       "select-hint": "Choosing saves · Esc cancels",
-      "textarea-hint": "Ctrl+Enter saves · Esc cancels"
+      "textarea-hint": "Ctrl+Enter saves · Esc cancels",
+      "relation-hint": "Save commits your changes · Esc cancels"
     },
     "block-edit": {
       "edit-block": "Edit block",
