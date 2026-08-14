@@ -588,7 +588,8 @@
       "errors": {
         "missing": "{0} is missing",
         "extraneous": "{0} not found in CSV",
-        "dry-run-failed": "Something went wrong while running CSV validation"
+        "dry-run-failed": "Something went wrong while running CSV validation",
+        "csv-rows-failed": "{0} row(s) could not be updated, see the details on the file"
       },
       "csv-template-link": "Download example with instructions for",
       "link-to-documentation": "Link to Elody CSV documentation"

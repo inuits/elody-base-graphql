@@ -575,7 +575,8 @@
       "errors": {
         "missing": "{0} ontbreekt",
         "extraneous": "{0} niet gevonden in CSV",
-        "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV"
+        "dry-run-failed": "Er is iets mis gegaan tijdens het valideren van de CSV",
+        "csv-rows-failed": "{0} rij(en) konden niet worden bijgewerkt, zie de details bij het bestand"
       },
       "csv-template-link": "Download voorbeeld met instructies voor",
       "link-to-documentation": "Link naar de Elody CSV documentatie"
