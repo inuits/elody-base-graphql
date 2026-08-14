@@ -302,7 +302,8 @@
       }
     },
     "autocomplete": {
-      "find-more-options-placeholder": "Typ om meer opties te zoeken"
+      "find-more-options-placeholder": "Typ om meer opties te zoeken",
+      "remove-chip": "Verwijder"
     },
     "form": {
       "create": "Creëer"

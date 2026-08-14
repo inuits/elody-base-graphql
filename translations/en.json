@@ -310,7 +310,8 @@
       }
     },
     "autocomplete": {
-      "find-more-options-placeholder": "Start typing to find more options"
+      "find-more-options-placeholder": "Start typing to find more options",
+      "remove-chip": "Remove"
     },
     "form": {
       "create": "Create"
