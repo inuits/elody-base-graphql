@@ -275,7 +275,7 @@
       "active": "active",
       "disabled-simple-search": "Paused while searching",
       "clear": "Clear all",
-      "apply": "Apply",
+      "apply": "Apply filter(s)",
       "minDropdownSearchCharacters": "Type at least {count} character | Type at least {count} characters",
       "rangeFilterFromInputError": "'From' cannot be greater than 'to'",
       "rangeFilterToInputError": "'To' cannot be less than 'from'",
@@ -298,8 +298,7 @@
         "NoneMatcher": "has no value",
         "MetadataOnRelationExactMatcher": "is exactly",
         "MetadataOnRelationContainsMatcher": "contains",
-        "RegexMatcher": "regex",
-        "clear-filter": "Clear filter"
+        "RegexMatcher": "regex"
       },
       "matcher-placeholders": {
         "date": "date",
@@ -310,8 +309,7 @@
       }
     },
     "autocomplete": {
-      "find-more-options-placeholder": "Start typing to find more options",
-      "remove-chip": "Remove"
+      "find-more-options-placeholder": "Start typing to find more options"
     },
     "form": {
       "create": "Create"
@@ -377,8 +375,7 @@
         "modified-at": "Modified at",
         "virtual-keyboard": "Virtual keyboard",
         "yes": "Yes",
-        "no": "No",
-        "no-value": "No value"
+        "no": "No"
       }
     },
     "notifications": {
@@ -514,14 +511,14 @@
       "W5014": "No metadata available for item with id {id}",
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
       "W5017": "Item for key {key} with value {value} doesn't exist.",
+      "W5018": "Following values have to be unique when creating a relation with a {entity_type} entity: {duplicate_entry}",
       "W5018": "Validation error between {entity_type_1} and {entity_type_2}. A part of the fields must be unique. Validation fails for {entity_type_2} with id '{duplicate_entry_title}'",
       "A4011": "Ignoring empty file {filename}"
     },
     "pagination": {
       "page": "page",
       "of": "of",
-      "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results.",
-      "label": "Pagination"
+      "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."
     },
     "saved-searches": {
       "new": "Save as new",
@@ -561,9 +558,7 @@
       "add": "Add",
       "asc": "Ascending",
       "desc": "Descending",
-      "language": "Choose language",
-      "no-linked-objects": "No linked objects",
-      "actions-column": "Actions"
+      "language": "Choose language"
     },
     "navigation": {
       "title": "Elody",
@@ -582,9 +577,7 @@
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
       "delete-entity-window": "Delete {0}",
-      "create-share-link": "Create share link",
-      "breadcrumb": "Breadcrumb",
-      "main": "Main navigation"
+      "create-share-link": "Create share link"
     },
     "upload-fields": {
       "labels": {
@@ -702,51 +695,6 @@
       "no-entities-yet": "Nothing added yet. Click \"Add another\" to start.",
       "finish-failed-title": "Could not save",
       "finish-failed-description": "Something went wrong while saving. Your added items are still here — please try again."
-    },
-    "split-button": {
-      "open-record": "Open record",
-      "open": "Open"
-    },
-    "context-menu": {
-      "actions": "Actions",
-      "more-actions": "More actions"
-    },
-    "inline-edit": {
-      "hint": "Enter saves · Esc cancels",
-      "undo": "Undo",
-      "saved": "Saved",
-      "required": "{field} is required",
-      "invalid-format": "Value does not match the expected format",
-      "save-failed": "Saving failed, try again",
-      "edit-field": "edit",
-      "save-field": "Save",
-      "cancel-field": "Cancel",
-      "select-hint": "Choosing saves · Esc cancels",
-      "textarea-hint": "Ctrl+Enter saves · Esc cancels",
-      "relation-hint": "Save commits your changes · Esc cancels"
-    },
-    "block-edit": {
-      "edit-block": "Edit block",
-      "save-block": "Save block",
-      "edit-row": "Edit row",
-      "save-row": "Save row",
-      "add-row": "Add row",
-      "delete-row": "Delete row",
-      "cancel": "Cancel",
-      "row-note": "Writes the whole row in one mutation.",
-      "block-note": "Saves the whole block in one mutation.",
-      "group-note": "These fields belong together and save as one.",
-      "add-typed": "Add {type}",
-      "check-fields": "Check the marked fields",
-      "empty-hint": "No rows yet",
-      "row-removed": "Row removed"
-    },
-    "quality-status": {
-      "blocked": "Not checkable yet — required and empty:",
-      "clear": "All required fields are filled."
-    },
-    "dynamic-form": {
-      "actions": "Form actions"
     }
   }
 }
