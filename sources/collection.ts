@@ -605,12 +605,16 @@ export class CollectionAPI extends AuthRESTDataSource {
   }
 
   async updateMetadataWithCsv(entityType: string, csv: any): Promise<any> {
-    await this.put(`${getCollectionValueForEntityType(entityType)}`, {
-      headers: {
-        'Content-Type': 'text/csv',
-      },
-      body: csv,
-    });
+    const result = await this.put(
+      `${getCollectionValueForEntityType(entityType)}`,
+      {
+        headers: {
+          'Content-Type': 'text/csv',
+        },
+        body: csv,
+      }
+    );
+    return typeof result === 'string' ? result : JSON.stringify(result ?? {});
   }
 
   async GetCsvExportKeysPerEntityType(

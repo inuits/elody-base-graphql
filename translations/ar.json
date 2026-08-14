@@ -535,7 +535,8 @@
       "errors": {
         "missing": "{0} مفقود",
         "extraneous": "{0} غير موجود في CSV",
-        "dry-run-failed": "حدث خطأ أثناء التحقق من CSV"
+        "dry-run-failed": "حدث خطأ أثناء التحقق من CSV",
+        "csv-rows-failed": "{0} row(s) could not be updated, see the details on the file"
       },
       "csv-template-link": "تنزيل مثال مع تعليمات لـ",
       "link-to-documentation": "رابط إلى وثائق Elody الخاصة بـ CSV"

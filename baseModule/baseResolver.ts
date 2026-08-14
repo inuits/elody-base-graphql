@@ -439,7 +439,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return await dataSources.CollectionAPI.GetCsvExportKeysPerEntityType(
         entityType,
-        ['identifiers']
+        ['identifiers', 'id', 'type']
       );
     },
     GraphData: async (_source, { id, graph }, { dataSources }) => {
