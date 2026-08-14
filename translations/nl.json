@@ -129,6 +129,8 @@
       "add-new-relation": "Voeg nieuwe {0} toe",
       "add-existing-relation": "Voeg bestaande {0} toe",
       "delete-relations": "Verwijder relatielinks met geselecteerde items",
+      "mark-as-seen": "Markeer geselecteerde items als gezien",
+      "mark-as-unseen": "Markeer geselecteerde items als niet gezien",
       "csv-export": {
         "assets": "Exporteer een csv bestand van assets",
         "mediafiles": "Exporteer een csv bestand van mediafiles",
@@ -206,6 +208,18 @@
         "title": "Actie bevestigen",
         "message": "Weet je zeker dat je deze actie wil uitvoeren op de geselecteerde items?",
         "confirm": "Bevestigen",
+        "cancel": "Annuleren"
+      },
+      "mark-as-seen": {
+        "title": "Items als gezien markeren",
+        "message": "Weet je zeker dat je {0} items als gezien wil markeren?",
+        "confirm": "Markeer als gezien",
+        "cancel": "Annuleren"
+      },
+      "mark-as-unseen": {
+        "title": "Items als niet gezien markeren",
+        "message": "Weet je zeker dat je {0} items als niet gezien wil markeren?",
+        "confirm": "Markeer als niet gezien",
         "cancel": "Annuleren"
       },
       "create-entity-from-dropdown": {
@@ -414,6 +428,14 @@
         "items-deleted": {
           "title": "Items succesvol verwijderd",
           "description": "Items die gekoppeld zijn aan de entiteit zijn verwijderd"
+        },
+        "mark-as-seen": {
+          "title": "Items als gezien gemarkeerd",
+          "description": "{0} items zijn als gezien gemarkeerd"
+        },
+        "mark-as-unseen": {
+          "title": "Items als niet gezien gemarkeerd",
+          "description": "{0} items zijn als niet gezien gemarkeerd"
         },
         "entity-deleted": {
           "title": "Entiteit succesvol verwijderd",

@@ -125,6 +125,8 @@
       "add-new-relation": "Add new {0}",
       "add-existing-relation": "Add existing {0}",
       "delete-relations": "Delete relation links with selected items",
+      "mark-as-seen": "Mark selected items as seen",
+      "mark-as-unseen": "Mark selected items as unseen",
       "csv-export": {
         "assets": "Export a csv file of assets",
         "mediafiles": "Export a csv file of mediafiles",
@@ -216,6 +218,18 @@
         "title": "Confirm action",
         "message": "Are you sure you want to perform this action on the selected items?",
         "confirm": "Confirm",
+        "cancel": "Cancel"
+      },
+      "mark-as-seen": {
+        "title": "Mark items as seen",
+        "message": "Are you sure you want to mark {0} items as seen?",
+        "confirm": "Mark as seen",
+        "cancel": "Cancel"
+      },
+      "mark-as-unseen": {
+        "title": "Mark items as unseen",
+        "message": "Are you sure you want to mark {0} items as unseen?",
+        "confirm": "Mark as unseen",
         "cancel": "Cancel"
       },
       "create-entity-from-dropdown": {
@@ -425,6 +439,14 @@
         "items-deleted": {
           "title": "Items successfully deleted",
           "description": "Items related to entity were deleted"
+        },
+        "mark-as-seen": {
+          "title": "Items marked as seen",
+          "description": "{0} items were marked as seen"
+        },
+        "mark-as-unseen": {
+          "title": "Items marked as unseen",
+          "description": "{0} items were marked as unseen"
         },
         "entity-deleted": {
           "title": "Entity successfully deleted",
