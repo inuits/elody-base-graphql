@@ -885,6 +885,8 @@ export const baseSchema = gql`
     deleteEntities
     deleteRelations
     bulkUpdateMetadata
+    markAsSeen
+    markAsUnseen
   }
 
   type BulkOperations {
