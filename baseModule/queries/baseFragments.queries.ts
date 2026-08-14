@@ -45,6 +45,8 @@ export const baseFragments = gql`
     operator
     selectionOption
     isDisplayedByDefault
+    defaultMatcher
+    allowedMatchers
     options {
       icon
       label

@@ -266,8 +266,8 @@
       "add-filter": "Filter toevoegen",
       "active": "actief",
       "disabled-simple-search": "Onderbroken tijdens het zoeken",
-      "clear": "Alles wissen",
-      "apply": "Filter(s) toepassen",
+      "clear": "Wis alles",
+      "apply": "Pas toe",
       "minDropdownSearchCharacters": "Typ ten minste {count} karakter | Typ ten minste {count} karakters",
       "rangeFilterFromInputError": "'Van' kan niet groter zijn dan 'tot'",
       "rangeFilterToInputError": "'Tot' kan niet kleiner zijn dan 'van'",
@@ -290,7 +290,8 @@
         "NoneMatcher": "is niet ingevuld",
         "MetadataOnRelationExactMatcher": "is gelijk aan",
         "MetadataOnRelationContainsMatcher": "bevat",
-        "RegexMatcher": "regex"
+        "RegexMatcher": "regex",
+        "clear-filter": "Wis filter"
       },
       "matcher-placeholders": {
         "date": "datum",
@@ -301,7 +302,8 @@
       }
     },
     "autocomplete": {
-      "find-more-options-placeholder": "Typ om meer opties te zoeken"
+      "find-more-options-placeholder": "Typ om meer opties te zoeken",
+      "remove-chip": "Verwijder"
     },
     "form": {
       "create": "Creëer"
@@ -364,7 +366,8 @@
         "modified-by": "Gewijzigd door",
         "modified-at": "Gewijzigd op",
         "yes": "Ja",
-        "no": "Nee"
+        "no": "Nee",
+        "no-value": "Geen waarde"
       }
     },
     "notifications": {
@@ -506,7 +509,8 @@
     "pagination": {
       "page": "pagina",
       "of": "van",
-      "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
+      "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken.",
+      "label": "Paginering"
     },
     "saved-searches": {
       "new": "Opslaan als nieuw",
@@ -545,7 +549,9 @@
       "add": "Toevoegen",
       "asc": "Oplopend",
       "desc": "Aflopend",
-      "language": "Kies taal"
+      "language": "Kies taal",
+      "no-linked-objects": "Geen gekoppelde objecten",
+      "actions-column": "Acties"
     },
     "navigation": {
       "title": "Elody",
@@ -564,7 +570,9 @@
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
       "delete-entity-window": "Verwijder {0}",
-      "create-share-link": "Maak share link"
+      "create-share-link": "Maak share link",
+      "breadcrumb": "Kruimelpad",
+      "main": "Hoofdnavigatie"
     },
     "upload-fields": {
       "labels": {
@@ -679,6 +687,51 @@
       "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
       "finish-failed-title": "Opslaan mislukt",
       "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
+    },
+    "split-button": {
+      "open-record": "Open record",
+      "open": "Open"
+    },
+    "context-menu": {
+      "actions": "Acties",
+      "more-actions": "Meer acties"
+    },
+    "inline-edit": {
+      "hint": "Enter bewaart · Esc annuleert",
+      "undo": "Ongedaan maken",
+      "saved": "Opgeslagen",
+      "required": "{field} is verplicht",
+      "invalid-format": "Waarde voldoet niet aan het verwachte formaat",
+      "save-failed": "Opslaan mislukt, probeer opnieuw",
+      "edit-field": "bewerken",
+      "save-field": "Bewaar",
+      "cancel-field": "Annuleer",
+      "select-hint": "Kiezen bewaart · Esc annuleert",
+      "textarea-hint": "Ctrl+Enter bewaart · Esc annuleert",
+      "relation-hint": "Wijzigingen bewaren met Bewaar · Esc annuleert"
+    },
+    "block-edit": {
+      "edit-block": "Bewerk blok",
+      "save-block": "Bewaar blok",
+      "edit-row": "Bewerk rij",
+      "save-row": "Bewaar rij",
+      "add-row": "Voeg rij toe",
+      "delete-row": "Verwijder rij",
+      "cancel": "Annuleer",
+      "row-note": "Schrijft de hele rij in één mutatie.",
+      "block-note": "Bewaart het hele blok in één mutatie.",
+      "group-note": "Deze velden horen bij elkaar en bewaren als één geheel.",
+      "add-typed": "Voeg {type} toe",
+      "check-fields": "Controleer de gemarkeerde velden",
+      "empty-hint": "Nog geen rijen",
+      "row-removed": "Rij verwijderd"
+    },
+    "quality-status": {
+      "blocked": "Nog niet controleerbaar — verplicht en leeg:",
+      "clear": "Alle verplichte velden zijn ingevuld."
+    },
+    "dynamic-form": {
+      "actions": "Formulier-acties"
     }
   }
 }
