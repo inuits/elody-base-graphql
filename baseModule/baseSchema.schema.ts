@@ -1748,6 +1748,13 @@ export const baseSchema = gql`
     can(input: String): String
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
+    """
+    Marks the panel's fields as interdependent: they open, validate and save as
+    one group instead of each row editing on its own. Use it only for fields
+    that make no sense apart (publisher + place + year); independent fields stay
+    field rows.
+    """
+    isGroup(input: Boolean): Boolean
     canBeMultipleColumns(input: Boolean!): Boolean!
     bulkData(bulkDataSource: String!): JSON
     info: PanelInfo!
