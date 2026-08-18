@@ -357,6 +357,29 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
+  async getEntityHistoryVersions(
+    id: string,
+    type: string,
+    limit?: number,
+    skip?: number
+  ): Promise<any> {
+    const queryParams = new URLSearchParams();
+    if (limit !== undefined && limit !== null) queryParams.set('limit', String(limit));
+    if (skip !== undefined && skip !== null) queryParams.set('skip', String(skip));
+    const query = queryParams.toString();
+    return await this.get<any>(
+      `history/${type}/${id}/versions${query ? `?${query}` : ''}`
+    );
+  }
+
+  async getEntityHistoryVersionDetail(
+    id: string,
+    type: string,
+    versionId: string
+  ): Promise<any> {
+    return await this.get<any>(`history/${type}/${id}/versions/${versionId}`);
+  }
+
   async getEntityById(id: string): Promise<any> {
     let data: any;
     try {

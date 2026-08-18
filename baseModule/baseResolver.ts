@@ -194,6 +194,10 @@ import {
 } from '../resolvers/intialValueResolver';
 import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
 import {
+  resolveEntityHistoryVersions,
+  resolveEntityHistoryVersionDetail,
+} from '../resolvers/entityHistoryResolver';
+import {
   prepareLocationFieldForMapData,
   prepareMetadataFieldForMapData,
   prepareRelationFieldForMapData,
@@ -403,6 +407,20 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return resolveRelationLabelsForIds(dataSources, ids, type, metadataKeyAsLabel, rootKeyAsLabel);
+    },
+    EntityHistoryVersions: async (
+      _source,
+      { id, type, limit, skip },
+      { dataSources }
+    ) => {
+      return resolveEntityHistoryVersions(dataSources, id, type, limit, skip);
+    },
+    EntityHistoryVersionDetail: async (
+      _source,
+      { id, type, versionId },
+      { dataSources }
+    ) => {
+      return resolveEntityHistoryVersionDetail(dataSources, id, type, versionId);
     },
     EntitiesByAdvancedSearch: async (
       _source,
