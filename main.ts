@@ -314,6 +314,7 @@ const start = ({
       baseUploadEndpoint: [app],
       downloadEndpoint: [app],
       exportEndpoint: [app],
+      exportXlsxEndpoint: [app],
       healthEndpoint: [app],
       documentsEndpoint: [app],
       configsEndoint: [

@@ -3,6 +3,7 @@ import { Express } from 'express';
 import { Environment } from '../types/environmentTypes';
 import { applyDownloadEndpoint } from '../endpoints/downloadEndpoint';
 import { applyExportEndpoint } from '../endpoints/exportEndpoint';
+import { applyExportXlsxEndpoint } from '../endpoints/exportXlsxEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
 import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
@@ -19,6 +20,7 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
   baseUploadEndpoint: (app: Express) => applyUploadEndpoint(app),
   downloadEndpoint: (app: Express) => applyDownloadEndpoint(app),
   exportEndpoint: (app: Express) => applyExportEndpoint(app),
+  exportXlsxEndpoint: (app: Express) => applyExportXlsxEndpoint(app),
   versionEndpoint: (app: Express, config: Environment) =>
     applyVersionEndpoint(app, config),
   healthEndpoint: (app: Express) => applyHealthEndpoint(app),

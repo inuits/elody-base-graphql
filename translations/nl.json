@@ -139,9 +139,19 @@
           "title": "Export mislukt"
         }
       },
+      "xlsx-export": {
+        "in-progress-title": "Bezig met exporteren...",
+        "in-progress-description": "Sluit of vernieuw dit tabblad niet totdat de export voltooid is.",
+        "success-title": "Export voltooid",
+        "success-description": "Je Excel-bestand is gedownload.",
+        "error": {
+          "title": "Export mislukt"
+        }
+      },
       "download-mediafiles": "Download media bestanden",
       "reorder-entities-with-csv": "Opnieuw orderen van entiteiten met csv",
       "export-to-csv": "Exporteer naar CSV",
+      "export-to-xlsx": "Exporteer alle entiteiten naar Excel",
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan",
       "delete-selected": "Geselecteerde {0} verwijderen",
