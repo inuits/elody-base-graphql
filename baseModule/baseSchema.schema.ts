@@ -2008,7 +2008,14 @@ export const baseSchema = gql`
     parentEntityFilterKey(input: String!): String!
   }
 
+  type ShaclShapeElement {
+    label(input: String): String
+    fieldsKey(input: String!): String!
+    isCollapsed(input: Boolean): Boolean
+  }
+
   type EntityViewElements {
+    shaclShapeElement: ShaclShapeElement
     entityViewerElement: EntityViewerElement
     markdownViewerElement: MarkdownViewerElement
     manifestViewerElement: ManifestViewerElement

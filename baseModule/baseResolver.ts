@@ -99,6 +99,7 @@ import {
   ProgressStepStatus,
   Resolvers,
   SearchInputType,
+  ShaclShapeElement,
   SingleMediaFileElement,
   SortingDirection,
   TimeUnit,
@@ -2018,7 +2019,21 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as Column;
     },
   },
+  ShaclShapeElement: {
+    label: async (_source, { input }, { dataSources }) => {
+      return input ? input : 'no-input';
+    },
+    fieldsKey: async (_source, { input }, { dataSources }) => {
+      return input;
+    },
+    isCollapsed: async (_source, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
+  },
   EntityViewElements: {
+    shaclShapeElement: async (parent: unknown, {}, { dataSources }) => {
+      return parent as ShaclShapeElement;
+    },
     entityViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as EntityViewerElement;
     },
