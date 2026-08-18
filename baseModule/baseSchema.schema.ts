@@ -223,6 +223,7 @@ export const baseSchema = gql`
     customValue
     has_one_of_required_relations
     has_required_relation
+    has_min_max_amount_of_relations
     required
     has_one_of_required_metadata
     max_date_today
@@ -401,6 +402,17 @@ export const baseSchema = gql`
     exact: Boolean
   }
 
+  type MinMaxAmountOfRelationsValidation {
+    relationType: String!
+    min: Int!
+    max: Int!
+  }
+  input MinMaxAmountOfRelationsValidationInput {
+    relationType: String!
+    min: Int!
+    max: Int!
+  }
+
   type RequiredOneOfRelationValidation {
     relationTypes: [String!]!
     amount: Int!
@@ -426,6 +438,7 @@ export const baseSchema = gql`
     required_if: Conditional
     available_if: Conditional
     has_required_relation: RequiredRelationValidation
+    has_min_max_amount_of_relations: MinMaxAmountOfRelationsValidation
     has_one_of_required_relations: RequiredOneOfRelationValidation
     has_one_of_required_metadata: RequiredOneOfMetadataValidation
     regex: String
@@ -439,6 +452,7 @@ export const baseSchema = gql`
     required_if: ConditionalInput
     available_if: ConditionalInput
     has_required_relation: RequiredRelationValidationInput
+    has_min_max_amount_of_relations: MinMaxAmountOfRelationsValidationInput
     has_one_of_required_relations: RequiredOneOfRelationValidationInput
     has_one_of_required_metadata: RequiredOneOfMetadataValidationInput
     regex: String

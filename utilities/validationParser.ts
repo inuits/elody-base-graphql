@@ -13,6 +13,7 @@ export interface ParsedValidationRules {
   required_if?: ConditionalInput | null;
   available_if?: ConditionalInput | null;
   has_required_relation?: RequiredRelationValidationInput | null;
+  has_min_max_amount_of_relations?: RequiredRelationValidationInput | null;
   has_one_of_required_relations?: RequiredOneOfRelationValidationInput | null;
   has_one_of_required_metadata?: RequiredOneOfMetadataValidationInput | null;
   regex?: string | null;
@@ -33,6 +34,7 @@ export const parseValidationRulesString = (
     required_if: null,
     available_if: null,
     has_required_relation: null,
+    has_min_max_amount_of_relations: null,
     has_one_of_required_relations: null,
     has_one_of_required_metadata: null,
     regex: null,
@@ -76,6 +78,14 @@ export const parseValidationRulesString = (
             parseRequiredRelationValidation(params);
           if (result.has_required_relation) {
             rules.push(ValidationRules.HasRequiredRelation);
+          }
+          break;
+
+        case 'has_min_max_amount_of_relations':
+          result.has_min_max_amount_of_relations =
+            parseRequiredRelationValidation(params);
+          if (result.has_min_max_amount_of_relations) {
+            rules.push(ValidationRules.HasMinMaxAmountOfRelations);
           }
           break;
 
@@ -347,6 +357,7 @@ const mapStringToValidationRule = (
     max_date_today: ValidationRules.MaxDateToday,
     customvalue: ValidationRules.CustomValue,
     has_required_relation: ValidationRules.HasRequiredRelation,
+    has_min_max_amount_of_relations: ValidationRules.HasMinMaxAmountOfRelations,
     has_one_of_required_relations: ValidationRules.HasOneOfRequiredRelations,
     has_one_of_required_metadata: ValidationRules.HasOneOfRequiredMetadata,
   };

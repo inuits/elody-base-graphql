@@ -27,6 +27,11 @@ export const baseFragments = gql`
       amount
       exact
     }
+    has_min_max_amount_of_relations {
+      relationType
+      min
+      max
+    }
     has_one_of_required_relations {
       relationTypes
       amount
