@@ -1,6 +1,7 @@
 import {
   ValidationRules,
   RequiredRelationValidationInput,
+  MinMaxAmountOfRelationsValidationInput,
   RequiredOneOfRelationValidationInput,
   RequiredOneOfMetadataValidationInput,
   ConditionalInput,
@@ -13,7 +14,7 @@ export interface ParsedValidationRules {
   required_if?: ConditionalInput | null;
   available_if?: ConditionalInput | null;
   has_required_relation?: RequiredRelationValidationInput | null;
-  has_min_max_amount_of_relations?: RequiredRelationValidationInput | null;
+  has_min_max_amount_of_relations?: MinMaxAmountOfRelationsValidationInput | null;
   has_one_of_required_relations?: RequiredOneOfRelationValidationInput | null;
   has_one_of_required_metadata?: RequiredOneOfMetadataValidationInput | null;
   regex?: string | null;
@@ -83,7 +84,7 @@ export const parseValidationRulesString = (
 
         case 'has_min_max_amount_of_relations':
           result.has_min_max_amount_of_relations =
-            parseRequiredRelationValidation(params);
+            parseMinMaxAmountOfRelationsValidation(params);
           if (result.has_min_max_amount_of_relations) {
             rules.push(ValidationRules.HasMinMaxAmountOfRelations);
           }
@@ -265,6 +266,72 @@ const parseRequiredRelationValidation = (
         }
       } else if (trimmedKey === 'exact') {
         result.exact = trimmedValue.toLowerCase() === 'true';
+      }
+    }
+
+    return result.relationType && result.relationType !== 'invalid'
+      ? result
+      : null;
+  } catch (error) {
+    return null;
+  }
+};
+
+const parseMinMaxAmountOfRelationsValidation = (
+  params: string
+): MinMaxAmountOfRelationsValidationInput | null => {
+  try {
+    // Support two formats:
+    // 1. New format: "relationType=type,min=0,max=1"
+    // 2. Legacy format: "hasMedia,0,1" (relationType, min, max)
+
+    if (!params || params.trim() === 'invalid' || params.trim() === '') {
+      return null;
+    }
+
+    const parts = params.split(',').map((p) => p.trim());
+
+    const result: MinMaxAmountOfRelationsValidationInput = {
+      relationType: '',
+      min: 0,
+      max: 1,
+    };
+
+    if (!parts[0].includes('=')) {
+      result.relationType = parts[0];
+
+      if (parts.length >= 2) {
+        const min = parseInt(parts[1], 10);
+        if (!isNaN(min)) {
+          result.min = min;
+        }
+      }
+
+      if (parts.length >= 3) {
+        const max = parseInt(parts[2], 10);
+        if (!isNaN(max)) {
+          result.max = max;
+        }
+      }
+    } else {
+      for (const part of parts) {
+        const [key, value] = part.split('=', 2);
+        const trimmedKey = key.trim();
+        const trimmedValue = value?.trim() ?? '';
+
+        if (trimmedKey === 'relationType') {
+          result.relationType = trimmedValue;
+        } else if (trimmedKey === 'min') {
+          const min = parseInt(trimmedValue, 10);
+          if (!isNaN(min)) {
+            result.min = min;
+          }
+        } else if (trimmedKey === 'max') {
+          const max = parseInt(trimmedValue, 10);
+          if (!isNaN(max)) {
+            result.max = max;
+          }
+        }
       }
     }
 
