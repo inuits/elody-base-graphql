@@ -88,6 +88,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { payload: data };
   }
 
+  /**
+   * The form fields a client derives from a SHACL shape, keyed by field name.
+   *
+   * Lets a view be generated from a shape instead of enumerating its fields.
+   * The client exposes `/shapes/<name>`; what a shape contains is entirely the
+   * client's business.
+   */
+  async getShapeFields(shape: string): Promise<any> {
+    return await this.get<any>(`shapes/${shape}`);
+  }
+
   async getEntities(
     limit: number,
     skip: number,
