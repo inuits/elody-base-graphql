@@ -282,25 +282,57 @@ export const getYesterdayFormatted = (time: 'start' | 'end'): string => {
   return `${datePart}T${timePart}${offset}`;
 }
 
+export const stripRelation = (relation: any) => {
+  const result: any = {};
+  Object.keys(relation)
+    .filter((key) => key !== 'editStatus' && key !== 'teaserMetadata')
+    .forEach((key) => (result[key] = relation[key]));
+  return result;
+};
+
+/**
+ * Relation list an entity should end up with after a bulk edit: drop the
+ * explicitly removed (type, key) pairs, drop everything of a replaced type, then
+ * append the incoming relations. Additions go through patchRelations instead,
+ * which upserts without needing the existing list.
+ */
+export const buildRelationsAfterBulkEdit = (
+  existingRelations: any[],
+  {
+    relationsToRemove,
+    relationsToReplace,
+  }: {
+    relationsToRemove: BaseRelationValuesInput[];
+    relationsToReplace: BaseRelationValuesInput[];
+  }
+): any[] => {
+  const removed = relationsToRemove.map(stripRelation);
+  const incoming = relationsToReplace.map(stripRelation);
+  const replacedTypes = new Set(incoming.map((relation) => relation.type));
+
+  const surviving = existingRelations.filter(
+    (existing) =>
+      !replacedTypes.has(existing.type) &&
+      !removed.some(
+        (relation) =>
+          relation.type === existing.type && relation.key === existing.key
+      )
+  );
+
+  return [...surviving, ...incoming];
+};
+
 export const buildMergedRelations = (
   formRelations: BaseRelationValuesInput[],
   existingRelations: any[]
 ): any[] => {
-  const strip = (r: any) => {
-    const result: any = {};
-    Object.keys(r)
-      .filter((k) => k !== 'editStatus' && k !== 'teaserMetadata')
-      .forEach((k) => (result[k] = r[k]));
-    return result;
-  };
-
   const deleted = formRelations
     .filter((r) => r.editStatus === EditStatus.Deleted)
-    .map(strip);
+    .map(stripRelation);
 
   const incoming = formRelations
     .filter((r) => r.editStatus !== EditStatus.Deleted)
-    .map(strip);
+    .map(stripRelation);
 
   const surviving = existingRelations.filter(
     (existing) =>
