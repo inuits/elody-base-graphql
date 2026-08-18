@@ -577,10 +577,10 @@
         "disabled-export-csv-button": "تم تعطيل هذا الزر لأنه لم يتم تحديد أي كيان."
       },
       "required": "هذا المربع مطلوب",
-        "manifest-viewer-add-to-comparison": "يمكنك الآن إضافة هذا العمل وعرضه في وضع المقارنة. اضغط للانتقال."
-      },
-      "contextMenu": {
-        "contextMenuLinkAction": {
+      "manifest-viewer-add-to-comparison": "يمكنك الآن إضافة هذا العمل وعرضه في وضع المقارنة. اضغط للانتقال."
+    },
+    "contextMenu": {
+      "contextMenuLinkAction": {
         "followLink": "فتح {0} في تبويب جديد"
       },
       "contextMenuGeneralAction": {
@@ -614,6 +614,9 @@
     "text-viewer": {
       "sanitized-warning": "تمت معالجة محتوى المعاينة لأسباب أمنية.",
       "dismiss": "إغلاق"
+    },
+    "shacl-shape": {
+      "no-fields": "No fields in this shape"
     }
   }
 }
