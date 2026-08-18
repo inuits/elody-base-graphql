@@ -58,6 +58,8 @@
         "upload-csv-ordering": "Upload de aangepaste csv voor mediafiles opnieuw te ordenen",
         "upload-csv-metadata": "Upload de aangepaste csv voor metadata aan te passen",
         "create": "Creëer",
+        "apply": "Toepassen",
+        "delete": "Verwijderen",
         "send": "Verstuur",
         "success": "{0} Items geïmporteerd",
         "csv-success": "CSV succesvol geïmporteerd",
@@ -155,7 +157,18 @@
       "bulk-select-all-size-limit-reached": "De selecteer alles knop is uitgeschakeld omdat het maximum selecteer limiet {0} is",
       "create-share-link": "Maak share link aan",
       "delete-selected": "Geselecteerde {0} verwijderen",
-      "create-mediafile-with-metadata": "Upload nieuwe mediafiles en voeg metadata toe"
+      "create-mediafile-with-metadata": "Upload nieuwe mediafiles en voeg metadata toe",
+      "relation-mode": {
+        "label": "Relaties",
+        "add": "toevoegen",
+        "replace": "vervangen",
+        "remove": "verwijderen"
+      },
+      "field-partial-scope": "Van toepassing op {0} van {1} geselecteerde items",
+      "bulk-edit": "Bulk bewerken",
+      "bulk-edit-info": "Enkel de velden die je invult worden aangepast. Kies bij relaties of ze toegevoegd, vervangen of verwijderd worden.",
+      "bulk-edit-unmatched-types": "Voor deze types is geen formulier geconfigureerd, ze worden niet aangepast: {0}",
+      "bulk-edit-field-conflict": "Het veld '{0}' werkt anders voor {1} en wordt daar niet aangepast."
     },
     "confirm": {
       "discard-edit": {
@@ -213,6 +226,12 @@
         "confirm": "Bevestigen",
         "cancel": "Annuleren",
         "title": "Verwijder relatielinks met geselecteerde items"
+      },
+      "bulk-edit": {
+        "title": "Bulk bewerking bevestigen",
+        "message": "Je staat op het punt {0} veld(en) aan te passen op {1} geselecteerde entiteiten. Gekozen relatie-actie: {2}. Wil je doorgaan?",
+        "confirm": "Toepassen",
+        "cancel": "Annuleren"
       },
       "bulk-mutation": {
         "title": "Actie bevestigen",
@@ -411,6 +430,10 @@
           "title": "Entiteiten succesvol verwijderd",
           "description": "Wijzigingen succesvol opgeslagen"
         },
+        "entitiesUpdated": {
+          "title": "Entiteiten succesvol aangepast",
+          "description": "{0} entiteiten werden aangepast"
+        },
         "entitiesDeleted": {
           "title": "Entiteit succesvol verwijderd",
           "description": "Wijzigingen succesvol opgeslagen"
@@ -457,6 +480,10 @@
         }
       },
       "errors": {
+        "bulk-edit-partially-failed": {
+          "title": "Bulk bewerking gedeeltelijk mislukt",
+          "description": "{0} entiteiten werden niet aangepast en blijven geselecteerd"
+        },
         "no-url-error": {
           "title": "Waarde is geen URL"
         },
@@ -484,12 +511,28 @@
         "import": {
           "title": "Import",
           "description": "Imort kon net gestart worden"
+        },
+        "bulk-edit-untyped-items": {
+          "title": "Bulk bewerking geweigerd",
+          "description": "{0} geselecteerde items hebben geen type; herlaad de lijst en selecteer opnieuw"
+        },
+        "bulk-edit-without-selection": {
+          "title": "Geen selectie",
+          "description": "Selecteer eerst items om aan te passen"
         }
       },
       "warning": {
         "entity-not-updated": {
           "title": "Opslaan is niet gelukt",
           "description": "Er zijn errors in het edit formulier van de huidige entiteit"
+        },
+        "bulk-edit-without-changes": {
+          "title": "Geen wijzigingen",
+          "description": "Vul minstens één veld in om toe te passen op de geselecteerde entiteiten"
+        },
+        "bulk-edit-skipped-items": {
+          "title": "Items overgeslagen",
+          "description": "{0} items hebben geen van de aangepaste velden en bleven ongewijzigd"
         }
       },
       "graphql-errors": {

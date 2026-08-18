@@ -58,6 +58,8 @@
         "upload-csv-ordering": "Upload the modified csv to reorder mediafiles",
         "upload-csv-metadata": "Upload the modified csv to adjust metadata",
         "create": "Create",
+        "apply": "Apply",
+        "delete": "Delete",
         "send": "Send",
         "success": "{0} Items imported",
         "csv-success": "CSV successfully imported",
@@ -151,7 +153,18 @@
       "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
       "create-share-link": "Create share link",
       "delete-selected": "Delete selected {0}",
-      "create-mediafile-with-metadata": "Upload new mediafiles and add metadata"
+      "create-mediafile-with-metadata": "Upload new mediafiles and add metadata",
+      "relation-mode": {
+        "label": "Relations",
+        "add": "add",
+        "replace": "replace",
+        "remove": "remove"
+      },
+      "field-partial-scope": "Applies to {0} of {1} selected items",
+      "bulk-edit": "Bulk edit",
+      "bulk-edit-info": "Only the fields you fill in are changed. For relations, choose whether they are added, replaced or removed.",
+      "bulk-edit-unmatched-types": "No form is configured for these types, they will not be changed: {0}",
+      "bulk-edit-field-conflict": "The field '{0}' behaves differently for {1} and is not changed there."
     },
     "modals": {
       "entityEdit": {
@@ -223,6 +236,12 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "title": "Delete relation links with selected items"
+      },
+      "bulk-edit": {
+        "title": "Confirm bulk edit",
+        "message": "You are about to change {0} field(s) on {1} selected entities. Chosen relation action: {2}. Do you want to continue?",
+        "confirm": "Apply",
+        "cancel": "Cancel"
       },
       "bulk-mutation": {
         "title": "Confirm action",
@@ -422,6 +441,10 @@
           "title": "Entity successfully deleted",
           "description": "Changes have been saved successfully"
         },
+        "entitiesUpdated": {
+          "title": "Entities successfully updated",
+          "description": "{0} entities were updated"
+        },
         "entitiesDeleted": {
           "title": "Entities successfully deleted",
           "description": "Changes have been saved successfully"
@@ -468,6 +491,10 @@
         }
       },
       "errors": {
+        "bulk-edit-partially-failed": {
+          "title": "Bulk edit partially failed",
+          "description": "{0} entities were not updated and stay selected"
+        },
         "no-url-error": {
           "title": "Value is no URL"
         },
@@ -495,12 +522,28 @@
         "import": {
           "title": "Import",
           "description": "Failed to start import"
+        },
+        "bulk-edit-untyped-items": {
+          "title": "Bulk edit refused",
+          "description": "{0} selected items have no type; reload the list and select them again"
+        },
+        "bulk-edit-without-selection": {
+          "title": "Nothing selected",
+          "description": "Select the items to change first"
         }
       },
       "warning": {
         "entity-not-updated": {
           "title": "Saving failed",
           "description": "There are errors in the edit form of the current entity"
+        },
+        "bulk-edit-without-changes": {
+          "title": "No changes",
+          "description": "Fill in at least one field to apply to the selected entities"
+        },
+        "bulk-edit-skipped-items": {
+          "title": "Items skipped",
+          "description": "{0} items have none of the changed fields and were left unchanged"
         }
       },
       "graphql-errors": {
@@ -543,7 +586,6 @@
       "W5014": "No metadata available for item with id {id}",
       "W5016": "The value {value} is invalid, these are the valid values: {options}",
       "W5017": "Item for key {key} with value {value} doesn't exist.",
-      "W5018": "Following values have to be unique when creating a relation with a {entity_type} entity: {duplicate_entry}",
       "W5018": "Validation error between {entity_type_1} and {entity_type_2}. A part of the fields must be unique. Validation fails for {entity_type_2} with id '{duplicate_entry_title}'",
       "A4011": "Ignoring empty file {filename}"
     },
