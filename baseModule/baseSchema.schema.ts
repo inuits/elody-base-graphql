@@ -775,6 +775,7 @@ export const baseSchema = gql`
   input BulkOperationInputModal {
     typeModal: TypeModals!
     formQuery: String
+    formQueries: [String!]
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
@@ -791,6 +792,7 @@ export const baseSchema = gql`
   type BulkOperationModal {
     typeModal: TypeModals!
     formQuery: String
+    formQueries: [String!]
     formRelationType: String
     askForCloseConfirmation: Boolean
     neededPermission: Permission
@@ -906,6 +908,21 @@ export const baseSchema = gql`
 
   type BulkOperations {
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
+  }
+
+  """
+  How a bulk-edit form field is applied to every selected entity. Metadata fields
+  are always replaced by key; relation fields default to 'add'.
+  """
+  enum BulkEditModes {
+    add
+    remove
+    replace
+  }
+
+  type BulkEditResult {
+    succeededIds: [String!]!
+    failedIds: [String!]!
   }
 
   type BulkOperationCsvExportKeys {
@@ -2532,7 +2549,16 @@ export const baseSchema = gql`
       relations: [BaseRelationValuesInput!]!
       collection: Collection!
     ): String
+    bulkEditEntities(
+      ids: [String!]!
+      metadata: [MetadataValuesInput!]!
+      relationsToAdd: [BaseRelationValuesInput!]!
+      relationsToRemove: [BaseRelationValuesInput!]!
+      relationsToReplace: [BaseRelationValuesInput!]!
+      collection: Collection
+    ): BulkEditResult!
     updateMetadataWithCsv(entityType: String!, csv: String!): String
+    bulkUpdateEntitiesWithJson(documents: [JSON!]!): BulkEditResult!
     setPrimaryMediafile(entityId: String!, mediafileId: String!): Entity!
     setPrimaryThumbnail(entityId: String!, mediafileId: String!): Entity!
   }

@@ -247,6 +247,7 @@ export const baseFragments = gql`
   fragment bulkOperationModal on BulkOperationModal {
     typeModal
     formQuery
+    formQueries
     formRelationType
     askForCloseConfirmation
     neededPermission

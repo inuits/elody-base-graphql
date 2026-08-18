@@ -31,6 +31,7 @@ import {
   BaseRelationValuesInput,
   BreadCrumbRoute,
   RelationDirection,
+  Collection,
   Column,
   ColumnSizes,
   CopyValueFromParentIntialValues,
@@ -154,6 +155,8 @@ import {
   setPreferredLanguageForDataSources,
   getYesterdayFormatted,
   buildMergedRelations,
+  buildRelationsAfterBulkEdit,
+  stripRelation,
 } from '../helpers/helpers';
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
@@ -772,6 +775,99 @@ export const baseResolver: Resolvers<ContextValue> = {
         (skipItemsWithRelationDuringBulkDelete as string[]) ?? []
       );
     },
+    bulkEditEntities: async (
+      _source,
+      {
+        ids,
+        metadata,
+        relationsToAdd,
+        relationsToRemove,
+        relationsToReplace,
+        collection,
+      },
+      { dataSources }
+    ) => {
+      const targetCollection = collection ?? Collection.Entities;
+      const needsRelationRewrite =
+        relationsToRemove.length > 0 || relationsToReplace.length > 0;
+
+      const editEntity = async (id: string) => {
+        if (metadata.length > 0)
+          await dataSources.CollectionAPI.patchMetadata(
+            id,
+            metadata,
+            targetCollection
+          );
+
+        // POST, not PATCH: the collection-api merges the posted relations with
+        // the ones already on the entity, and unlike PATCH it is implemented for
+        // the relations route on every client.
+        if (relationsToAdd.length > 0)
+          await dataSources.CollectionAPI.postRelations(
+            id,
+            relationsToAdd.map(stripRelation),
+            targetCollection
+          );
+
+        // ponytail: read-modify-write because the relations route has no DELETE,
+        // so removals race the backend's own relation-sync hook — the same
+        // exposure the detail page already has (see useDeleteRelations.ts).
+        // Fix both together if an atomic relation endpoint ever lands.
+        if (needsRelationRewrite) {
+          // The whole document, not GET .../relations: that sub-route is not
+          // implemented on every client, while the entity itself always carries
+          // its relations.
+          const entity = await dataSources.CollectionAPI.getEntity(
+            id,
+            'BaseEntity',
+            targetCollection
+          );
+          // putRelations replaces the entity's whole relation list, so a read that
+          // came back empty because it failed would wipe every relation. Fail this
+          // entity instead; the caller keeps it selected and can retry.
+          if (!entity)
+            throw new Error(
+              `Could not read ${id} to rewrite its relations, nothing was changed`
+            );
+          const existingRelations = entity.relations ?? [];
+          await dataSources.CollectionAPI.putRelations(
+            id,
+            buildRelationsAfterBulkEdit(existingRelations as any[], {
+              relationsToRemove,
+              relationsToReplace,
+            }),
+            targetCollection
+          );
+        }
+      };
+
+      // One request set per entity, so the per-entity entity_changed event the
+      // history and aggregation consumers rely on still fires — but in bounded
+      // batches, because a selection can be a few hundred entities wide.
+      const concurrency = 10;
+      const results: PromiseSettledResult<void>[] = [];
+      for (let index = 0; index < ids.length; index += concurrency) {
+        results.push(
+          ...(await Promise.allSettled(
+            ids
+              .slice(index, index + concurrency)
+              .map((id: string) => editEntity(id))
+          ))
+        );
+      }
+
+      const succeededIds: string[] = [];
+      const failedIds: string[] = [];
+      results.forEach((result, index) => {
+        if (result.status === 'fulfilled') succeededIds.push(ids[index]);
+        else {
+          failedIds.push(ids[index]);
+          console.error(`bulkEditEntities failed for ${ids[index]}:`, result.reason);
+        }
+      });
+
+      return { succeededIds, failedIds };
+    },
     bulkAddRelations: async (
       _source,
       { entityIds, relationEntityId, relationType },
@@ -809,6 +905,47 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType,
         csv
       );
+    },
+    bulkUpdateEntitiesWithJson: async (
+      _source,
+      { documents },
+      { dataSources }
+    ) => {
+      const requestedIds: string[] = documents.map(
+        (document: any) => document.id ?? document.identifiers?.[0]
+      );
+
+      // The batch endpoint answers 400 on a partial failure, which the data source
+      // turns into a throw — but the good rows were still written, and the body
+      // says which. Read the body instead of failing the whole call.
+      let result: any;
+      try {
+        result = await dataSources.CollectionAPI.updateEntitiesWithJson(documents);
+      } catch (error: any) {
+        result = error?.extensions?.response?.body ?? error?.response?.body;
+        if (!result) {
+          console.error('bulkUpdateEntitiesWithJson failed outright:', error);
+          return { succeededIds: [], failedIds: requestedIds };
+        }
+      }
+
+      // Match the way the collection-api reports what it wrote: a patched document
+      // can carry the id under id, _id or identifiers.
+      const patchedIds = new Set<string>(
+        (result?.entities ?? []).flatMap((entity: any) =>
+          [entity?.id, entity?._id, ...(entity?.identifiers ?? [])].filter(Boolean)
+        )
+      );
+      const succeededIds = requestedIds.filter((id) => patchedIds.has(id));
+      const failedIds = requestedIds.filter((id) => !patchedIds.has(id));
+
+      if (failedIds.length > 0)
+        console.error('bulkUpdateEntitiesWithJson failed for', failedIds, {
+          errors: result?.errors,
+          warnings: result?.warnings,
+        });
+
+      return { succeededIds, failedIds };
     },
     setPrimaryMediafile: async (
       _source,

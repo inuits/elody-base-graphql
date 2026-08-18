@@ -617,6 +617,21 @@ export class CollectionAPI extends AuthRESTDataSource {
     return typeof result === 'string' ? result : JSON.stringify(result ?? {});
   }
 
+  /**
+   * Same bulk-update endpoint as updateMetadataWithCsv, but with a json body: one
+   * elody-shaped document per entity. Metadata is merged by key and a relation type
+   * present in a document replaces that type's relations; a document without a
+   * relations key leaves relations untouched.
+   */
+  async updateEntitiesWithJson(documents: any[]): Promise<any> {
+    return await this.put(`${Collection.Entities}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: documents,
+    });
+  }
+
   async GetCsvExportKeysPerEntityType(
     entityType: string,
     requiredKeys: string[] = []

@@ -46,4 +46,32 @@ export const baseQueries = gql`
   ) {
     addEntityRelations(id: $id, relations: $relations, collection: $collection)
   }
+
+  mutation BulkUpdateEntitiesWithJson($documents: [JSON!]!) {
+    bulkUpdateEntitiesWithJson(documents: $documents) {
+      succeededIds
+      failedIds
+    }
+  }
+
+  mutation BulkEditEntities(
+    $ids: [String!]!
+    $metadata: [MetadataValuesInput!]!
+    $relationsToAdd: [BaseRelationValuesInput!]!
+    $relationsToRemove: [BaseRelationValuesInput!]!
+    $relationsToReplace: [BaseRelationValuesInput!]!
+    $collection: Collection
+  ) {
+    bulkEditEntities(
+      ids: $ids
+      metadata: $metadata
+      relationsToAdd: $relationsToAdd
+      relationsToRemove: $relationsToRemove
+      relationsToReplace: $relationsToReplace
+      collection: $collection
+    ) {
+      succeededIds
+      failedIds
+    }
+  }
 `;
