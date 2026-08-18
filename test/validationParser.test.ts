@@ -115,6 +115,33 @@ describe('ValidationParser', () => {
           amount: 1,
           exact: true,
         },
+        has_min_max_amount_of_relations: null,
+        has_one_of_required_relations: null,
+        has_one_of_required_metadata: null,
+        regex: '/^(?=.{1,20}$)[a-zA-Z0-9._-]+$/',
+      });
+    });
+
+    it('should simulate resolver behavior', () => {
+      const inputWithRules = {
+        rules:
+          'required|regex:/^(?=.{1,20}$)[a-zA-Z0-9._-]+$/|has_min_max_amount_of_relations:hasMedia,0,1',
+      };
+
+      const parsed = parseValidationRulesString(inputWithRules.rules);
+
+      expect(parsed).toEqual({
+        value: ['required', 'regex', 'has_min_max_amount_of_relations'],
+        customValue: null,
+        fastValidationMessage: null,
+        required_if: null,
+        available_if: null,
+        has_required_relation: null,
+        has_min_max_amount_of_relations: {
+          relationType: 'hasMedia',
+          min: 0,
+          max: 1,
+        },
         has_one_of_required_relations: null,
         has_one_of_required_metadata: null,
         regex: '/^(?=.{1,20}$)[a-zA-Z0-9._-]+$/',
