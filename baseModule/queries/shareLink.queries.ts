@@ -147,7 +147,7 @@ export const shareLinkQueries = gql`
             primary: true
             bulkOperationModal: {
               typeModal: DynamicForm
-              formQuery: "GetShareLinkCreateForm"
+              formQueries: ["GetShareLinkCreateForm"]
               askForCloseConfirmation: true
               neededPermission: cancreate
             }

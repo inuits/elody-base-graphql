@@ -774,7 +774,6 @@ export const baseSchema = gql`
 
   input BulkOperationInputModal {
     typeModal: TypeModals!
-    formQuery: String
     formQueries: [String!]
     formRelationType: String
     askForCloseConfirmation: Boolean
@@ -791,7 +790,6 @@ export const baseSchema = gql`
 
   type BulkOperationModal {
     typeModal: TypeModals!
-    formQuery: String
     formQueries: [String!]
     formRelationType: String
     askForCloseConfirmation: Boolean

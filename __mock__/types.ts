@@ -438,7 +438,7 @@ export type BulkOperationCsvExportKeys = {
 
 export type BulkOperationInputModal = {
   askForCloseConfirmation?: InputMaybe<Scalars['Boolean']>;
-  formQuery?: InputMaybe<Scalars['String']>;
+  formQueries?: InputMaybe<Array<Scalars['String']>>;
   formRelationType?: InputMaybe<Scalars['String']>;
   neededPermission?: InputMaybe<Permission>;
   skipItemsWithRelationDuringBulkDelete?: InputMaybe<
@@ -450,7 +450,7 @@ export type BulkOperationInputModal = {
 export type BulkOperationModal = {
   __typename?: 'BulkOperationModal';
   askForCloseConfirmation?: Maybe<Scalars['Boolean']>;
-  formQuery?: Maybe<Scalars['String']>;
+  formQueries?: Maybe<Array<Scalars['String']>>;
   formRelationType?: Maybe<Scalars['String']>;
   neededPermission?: Maybe<Permission>;
   skipItemsWithRelationDuringBulkDelete?: Maybe<
