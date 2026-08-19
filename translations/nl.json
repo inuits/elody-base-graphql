@@ -176,8 +176,7 @@
       "bulk-edit-unmatched-types": "Voor deze types is geen formulier geconfigureerd, ze worden niet aangepast: {0}",
       "bulk-edit-field-conflict": "Het veld '{0}' werkt anders voor {1} en wordt daar niet aangepast.",
       "clear-field": "Veld leegmaken",
-      "keep-field": "Leegmaken ongedaan maken",
-      "field-will-be-emptied": "Dit veld wordt leeggemaakt op alle geselecteerde items"
+      "keep-field": "Leegmaken ongedaan maken"
     },
     "confirm": {
       "discard-edit": {

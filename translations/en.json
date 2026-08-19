@@ -172,8 +172,7 @@
       "bulk-edit-unmatched-types": "No form is configured for these types, they will not be changed: {0}",
       "bulk-edit-field-conflict": "The field '{0}' behaves differently for {1} and is not changed there.",
       "clear-field": "Empty field",
-      "keep-field": "Undo emptying",
-      "field-will-be-emptied": "This field will be emptied on every selected item"
+      "keep-field": "Undo emptying"
     },
     "modals": {
       "entityEdit": {
