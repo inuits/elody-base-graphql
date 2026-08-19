@@ -127,9 +127,19 @@
           "title": "فشل التصدير"
         }
       },
+      "xlsx-export": {
+        "in-progress-title": "جارٍ التصدير...",
+        "in-progress-description": "الرجاء عدم إغلاق أو تحديث هذا التبويب حتى اكتمال التصدير.",
+        "success-title": "اكتمل التصدير",
+        "success-description": "تم تنزيل ملف Excel الخاص بك.",
+        "error": {
+          "title": "فشل التصدير"
+        }
+      },
       "download-mediafiles": "تنزيل ملفات الوسائط",
       "reorder-entities-with-csv": "إعادة ترتيب الكيانات باستخدام CSV",
       "export-to-csv": "تصدير إلى CSV",
+      "export-to-xlsx": "تصدير جميع الكيانات إلى Excel",
       "bulk-select-all-size-limit-reached": "تم تعطيل زر تحديد الكل لأن الحد الأقصى للاختيار هو {0}",
       "create-share-link": "إنشاء رابط مشاركة",
       "delete-selected": "حذف {0} المحددة"

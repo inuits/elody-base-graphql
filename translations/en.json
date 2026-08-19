@@ -135,9 +135,19 @@
           "title": "Export failed"
         }
       },
+      "xlsx-export": {
+        "in-progress-title": "Exporting entities...",
+        "in-progress-description": "Please do not close or refresh this tab until the export is complete.",
+        "success-title": "Export complete",
+        "success-description": "Your Excel file has been downloaded.",
+        "error": {
+          "title": "Export failed"
+        }
+      },
       "download-mediafiles": "Download mediafiles",
       "reorder-entities-with-csv": "Reorder entities with csv",
       "export-to-csv": "Export to CSV",
+      "export-to-xlsx": "Export all entities to Excel",
       "bulk-select-all-size-limit-reached": "The select all button is disabled because the maximum selection limit is {0}",
       "create-share-link": "Create share link",
       "delete-selected": "Delete selected {0}",
