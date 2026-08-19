@@ -156,6 +156,7 @@ import {
   getRelationsByType,
   setPreferredLanguageForDataSources,
   getYesterdayFormatted,
+  getDaysAgoFormatted,
   buildMergedRelations,
   buildRelationsAfterBulkEdit,
   stripRelation,
@@ -2929,6 +2930,15 @@ export const baseResolver: Resolvers<ContextValue> = {
           if (match[1] == 'yesterdaystart')
             return getYesterdayFormatted('start');
           if (match[1] == 'yesterdayend') return getYesterdayFormatted('end');
+          if (match[1] == 'todaystart') return getDaysAgoFormatted(0, 'start');
+          if (match[1] == 'todayend') return getDaysAgoFormatted(0, 'end');
+          // date-$last<n>daysstart / date-$last<n>daysend, e.g. date-$last7daysstart
+          const daysAgo = match[1].match(/^last(\d+)days(start|end)$/);
+          if (daysAgo)
+            return getDaysAgoFormatted(
+              Number(daysAgo[1]),
+              daysAgo[2] as 'start' | 'end'
+            );
         }
       }
       return value;
