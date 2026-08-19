@@ -178,6 +178,10 @@
       "clear-field": "Veld leegmaken",
       "keep-field": "Leegmaken ongedaan maken"
     },
+    "modals": {
+      "bulkEditingEntities": "Je aanpassingen worden toegepast, dit kan even duren...",
+      "reorderingEntities": "Entiteiten worden herordend, dit kan even duren..."
+    },
     "confirm": {
       "discard-edit": {
         "message": "Ben je zeker dat je de entiteit-editor wilt verlaten? Eventuele niet-opgeslagen wijzigingen zullen worden verwijderd.",
