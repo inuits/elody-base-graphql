@@ -270,10 +270,16 @@ export const getFormattedOffset = (date: Date, timeZone: string): string => {
   return res;
 };
 
-export const getYesterdayFormatted = (time: 'start' | 'end'): string => {
+export const getYesterdayFormatted = (time: 'start' | 'end'): string =>
+  getDaysAgoFormatted(1, time);
+
+export const getDaysAgoFormatted = (
+  days: number,
+  time: 'start' | 'end'
+): string => {
   const timeZone = 'Europe/Brussels';
   const date = new Date();
-  date.setDate(date.getDate() - 1);
+  date.setDate(date.getDate() - days);
 
   const datePart = date.toLocaleDateString('sv-SE', { timeZone });
   const timePart = time === 'start' ? '00:01:00' : '23:59:00';
