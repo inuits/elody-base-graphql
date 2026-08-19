@@ -20,6 +20,9 @@ export const getCurrentEnvironment = (): Environment => {
 export const commentsEnabled = (): boolean =>
   currentEnvironment?.features?.hasComments === true;
 
+export const jsonBulkEditEnabled = (): boolean =>
+  currentEnvironment?.features?.supportsJsonBulkEdit === true;
+
 const getRequiredEnv = (key: string): string => {
   const value = process.env[key];
 

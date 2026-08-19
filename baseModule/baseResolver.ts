@@ -15,7 +15,7 @@ import {
   resolveAdvancedHistoryEntities,
 } from '../resolvers/entitiesResolver';
 import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
-import { commentsEnabled } from '../environment';
+import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
   ActionElement,
   ActionProgress,
@@ -919,6 +919,12 @@ export const baseResolver: Resolvers<ContextValue> = {
       const requestedIds: string[] = documents.map(
         (document: any) => document.id ?? document.identifiers?.[0]
       );
+
+      // Opt-in per client: where PUT /entities is not the patch-only batch resource it
+      // is a full document replace that answers 201, which would wipe every field this
+      // partial document does not carry. Reporting nothing written makes the caller
+      // write the same edit through the per-entity mutation, which every client has.
+      if (!jsonBulkEditEnabled()) return { succeededIds: [], failedIds: [] };
 
       // The batch endpoint answers 400 on a partial failure, which the data source
       // turns into a throw — but the good rows were still written, and the body

@@ -73,6 +73,13 @@ export interface Environment {
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
     hasComments?: boolean;
+    /**
+     * The client's collection api routes PUT /entities through the patch-only batch
+     * resource and has a json batch serializer for its schema type. Without both, that
+     * same request is a full document replace, so bulk edit keeps to the per-entity
+     * mutation instead.
+     */
+    supportsJsonBulkEdit?: boolean;
     savedSearch?: {
       enabled?: boolean;
       permission?: string[];
@@ -197,6 +204,7 @@ export interface FullyOptionalEnvironmentInput {
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
     hasComments?: boolean;
+    supportsJsonBulkEdit?: boolean;
     savedSearch?: {
       enabled?: boolean;
       permission?: string[];
