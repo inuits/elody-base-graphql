@@ -783,13 +783,17 @@ export const baseResolver: Resolvers<ContextValue> = {
         relationsToAdd,
         relationsToRemove,
         relationsToReplace,
+        relationTypesToClear,
         collection,
       },
       { dataSources }
     ) => {
       const targetCollection = collection ?? Collection.Entities;
+      const typesToClear: string[] = relationTypesToClear ?? [];
       const needsRelationRewrite =
-        relationsToRemove.length > 0 || relationsToReplace.length > 0;
+        relationsToRemove.length > 0 ||
+        relationsToReplace.length > 0 ||
+        typesToClear.length > 0;
 
       const editEntity = async (id: string) => {
         if (metadata.length > 0)
@@ -835,6 +839,7 @@ export const baseResolver: Resolvers<ContextValue> = {
             buildRelationsAfterBulkEdit(existingRelations as any[], {
               relationsToRemove,
               relationsToReplace,
+              relationTypesToClear: typesToClear,
             }),
             targetCollection
           );

@@ -65,6 +65,33 @@ describe('buildRelationsAfterBulkEdit', () => {
     ]);
   });
 
+  it('empties every relation of a cleared type', () => {
+    const result = buildRelationsAfterBulkEdit(existing, {
+      relationsToRemove: [],
+      relationsToReplace: [],
+      relationTypesToClear: ['refAuthors'],
+    });
+
+    expect(result).toEqual([
+      { type: 'refOtherGenres', key: 'genre-1' },
+      { type: 'refLanguages', key: 'lang-nl' },
+    ]);
+  });
+
+  it('leaves other types alone when clearing, and clears alongside a replace', () => {
+    const result = buildRelationsAfterBulkEdit(existing, {
+      relationsToRemove: [],
+      relationsToReplace: [{ type: 'refLanguages', key: 'lang-fr' }],
+      relationTypesToClear: ['refOtherGenres'],
+    });
+
+    expect(result).toEqual([
+      { type: 'refAuthors', key: 'person-1' },
+      { type: 'refAuthors', key: 'person-2' },
+      { type: 'refLanguages', key: 'lang-fr' },
+    ]);
+  });
+
   it('combines remove and replace in one pass', () => {
     const result = buildRelationsAfterBulkEdit(existing, {
       relationsToRemove: [{ type: 'refAuthors', key: 'person-1' }],

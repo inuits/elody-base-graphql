@@ -60,6 +60,7 @@ export const baseQueries = gql`
     $relationsToAdd: [BaseRelationValuesInput!]!
     $relationsToRemove: [BaseRelationValuesInput!]!
     $relationsToReplace: [BaseRelationValuesInput!]!
+    $relationTypesToClear: [String!]
     $collection: Collection
   ) {
     bulkEditEntities(
@@ -68,6 +69,7 @@ export const baseQueries = gql`
       relationsToAdd: $relationsToAdd
       relationsToRemove: $relationsToRemove
       relationsToReplace: $relationsToReplace
+      relationTypesToClear: $relationTypesToClear
       collection: $collection
     ) {
       succeededIds

@@ -2555,6 +2555,7 @@ export const baseSchema = gql`
       relationsToAdd: [BaseRelationValuesInput!]!
       relationsToRemove: [BaseRelationValuesInput!]!
       relationsToReplace: [BaseRelationValuesInput!]!
+      relationTypesToClear: [String!]
       collection: Collection
     ): BulkEditResult!
     updateMetadataWithCsv(entityType: String!, csv: String!): String

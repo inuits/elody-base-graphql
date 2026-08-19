@@ -292,8 +292,8 @@ export const stripRelation = (relation: any) => {
 
 /**
  * Relation list an entity should end up with after a bulk edit: drop the
- * explicitly removed (type, key) pairs, drop everything of a replaced type, then
- * append the incoming relations. Additions go through patchRelations instead,
+ * explicitly removed (type, key) pairs, drop everything of a replaced or cleared
+ * type, then append the incoming relations. Additions go through patchRelations instead,
  * which upserts without needing the existing list.
  */
 export const buildRelationsAfterBulkEdit = (
@@ -301,14 +301,19 @@ export const buildRelationsAfterBulkEdit = (
   {
     relationsToRemove,
     relationsToReplace,
+    relationTypesToClear = [],
   }: {
     relationsToRemove: BaseRelationValuesInput[];
     relationsToReplace: BaseRelationValuesInput[];
+    relationTypesToClear?: string[];
   }
 ): any[] => {
   const removed = relationsToRemove.map(stripRelation);
   const incoming = relationsToReplace.map(stripRelation);
-  const replacedTypes = new Set(incoming.map((relation) => relation.type));
+  const replacedTypes = new Set([
+    ...incoming.map((relation) => relation.type),
+    ...relationTypesToClear,
+  ]);
 
   const surviving = existingRelations.filter(
     (existing) =>
