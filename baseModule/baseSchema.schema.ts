@@ -908,10 +908,6 @@ export const baseSchema = gql`
     options(input: [DropdownOptionInput!]!): [DropdownOption!]!
   }
 
-  """
-  How a bulk-edit form field is applied to every selected entity. Metadata fields
-  are always replaced by key; relation fields default to 'add'.
-  """
   enum BulkEditModes {
     add
     remove

@@ -258,29 +258,29 @@ export const getFormattedOffset = (date: Date, timeZone: string): string => {
     timeZoneName: 'shortOffset',
   }).formatToParts(date);
 
-  const offsetPart = parts.find(p => p.type === 'timeZoneName')?.value || "";
-  if (offsetPart === "GMT") return "+00:00";
+  const offsetPart = parts.find((p) => p.type === 'timeZoneName')?.value || '';
+  if (offsetPart === 'GMT') return '+00:00';
 
-  let res = offsetPart.replace("GMT", "");
-  if (!res.includes(":")) {
+  let res = offsetPart.replace('GMT', '');
+  if (!res.includes(':')) {
     const sign = res.substring(0, 1); // + or -
     const value = res.substring(1).padStart(2, '0');
     res = `${sign}${value}:00`;
   }
   return res;
-}
+};
 
 export const getYesterdayFormatted = (time: 'start' | 'end'): string => {
-  const timeZone = "Europe/Brussels";
+  const timeZone = 'Europe/Brussels';
   const date = new Date();
   date.setDate(date.getDate() - 1);
 
   const datePart = date.toLocaleDateString('sv-SE', { timeZone });
-  const timePart = time === "start" ? "00:01:00" : "23:59:00";
+  const timePart = time === 'start' ? '00:01:00' : '23:59:00';
   const offset = getFormattedOffset(date, timeZone);
 
   return `${datePart}T${timePart}${offset}`;
-}
+};
 
 export const stripRelation = (relation: any) => {
   const result: any = {};
@@ -290,12 +290,6 @@ export const stripRelation = (relation: any) => {
   return result;
 };
 
-/**
- * Relation list an entity should end up with after a bulk edit: drop the
- * explicitly removed (type, key) pairs, drop everything of a replaced or cleared
- * type, then append the incoming relations. Additions go through patchRelations instead,
- * which upserts without needing the existing list.
- */
 export const buildRelationsAfterBulkEdit = (
   existingRelations: any[],
   {
@@ -341,8 +335,12 @@ export const buildMergedRelations = (
 
   const surviving = existingRelations.filter(
     (existing) =>
-      !deleted.some((d) => d.type === existing.type && d.key === existing.key) &&
-      !incoming.some((inc) => inc.type === existing.type && inc.key === existing.key)
+      !deleted.some(
+        (d) => d.type === existing.type && d.key === existing.key
+      ) &&
+      !incoming.some(
+        (inc) => inc.type === existing.type && inc.key === existing.key
+      )
   );
 
   return [...surviving, ...incoming];

@@ -1,5 +1,5 @@
-import { Entitytyping } from "../generated-types/type-defs";
-import { Route } from "../routes/routesHelper";
+import { Entitytyping } from '../generated-types/type-defs';
+import { Route } from '../routes/routesHelper';
 
 export interface Environment {
   apollo: {
@@ -36,7 +36,7 @@ export interface Environment {
     iiifUrlFrontend: string;
     storageApiUrl: string;
     storageApiUrlExt: string;
-    promUrl: "no-prom" | string;
+    promUrl: 'no-prom' | string;
     transcodeService?: string;
     ocrService?: string;
   };
@@ -73,12 +73,6 @@ export interface Environment {
     hideSuperTenant?: boolean;
     hasSavedSearch?: boolean;
     hasComments?: boolean;
-    /**
-     * The client's collection api routes PUT /entities through the patch-only batch
-     * resource and has a json batch serializer for its schema type. Without both, that
-     * same request is a full document replace, so bulk edit keeps to the per-entity
-     * mutation instead.
-     */
     supportsJsonBulkEdit?: boolean;
     savedSearch?: {
       enabled?: boolean;
@@ -167,7 +161,7 @@ export interface FullyOptionalEnvironmentInput {
     iiifUrlFrontend?: string;
     storageApiUrl?: string;
     storageApiUrlExt?: string;
-    promUrl?: "no-prom" | string;
+    promUrl?: 'no-prom' | string;
     transcodeService?: string;
     ocrService?: string;
   };
