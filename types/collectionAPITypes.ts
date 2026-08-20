@@ -10,6 +10,9 @@ export type CollectionAPIEntity = {
   metadata: [CollectionAPIMetadata];
   relations: [CollectionAPIRelation];
   last_editor: string;
+  lock?: {
+    properties: string[];
+  };
 };
 
 export type CollectionAPIMediaFile = {

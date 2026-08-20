@@ -1198,6 +1198,7 @@ export const baseSchema = gql`
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
+    lockedProperties: [String!]!
   }
 
   input ParentRelationsConfigInput {
@@ -1663,6 +1664,7 @@ export const baseSchema = gql`
     copyValueFromParent(
       input: CopyValueFromParentIntialValuesInput!
     ): CopyValueFromParentIntialValues!
+    lockedTooltip(input: String): String
   }
 
   type CopyValueFromParentIntialValues {
@@ -1935,6 +1937,7 @@ export const baseSchema = gql`
     taggingConfiguration: TaggingExtensionConfiguration
     wysiwygElementConfiguration: WysiwygElementConfiguration
     infoPanel(title: String, content: String): InfoPanel
+    lockedTooltip(input: String): String
   }
 
   type ColumnList {

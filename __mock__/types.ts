@@ -6639,6 +6639,11 @@ export type IntialValuesResolvers<
     ContextType,
     RequireFields<IntialValuesKeyValueArgs, 'key' | 'source'>
   >;
+  lockedProperties?: Resolver<
+    Array<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   relationMetadata?: Resolver<
     Maybe<ResolversTypes['IntialValues']>,
     ParentType,

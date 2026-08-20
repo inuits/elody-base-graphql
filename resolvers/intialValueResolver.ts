@@ -419,6 +419,12 @@ export const resolveIntialValueRelationRootdata = (
   }
 };
 
+export const resolveIntialValueLockedProperties = (
+  parent: any
+): string[] => {
+  return parent?.lock?.properties ?? [];
+};
+
 export const resolveIntialValueTechnicalMetadata = (
   parent: any,
   key: string

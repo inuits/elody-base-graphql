@@ -4,6 +4,7 @@ import {
   resolveIntialValueParentRoot,
   resolveIntialValueParentMetadata,
   resolveIntialValueParentRelations,
+  resolveIntialValueLockedProperties,
 } from '../resolvers/intialValueResolver';
 import { DataSources } from '../types';
 
@@ -122,5 +123,34 @@ describe('IntialValueResolver', () => {
 
     expect(mockDataSource.CollectionAPI.getEntityById).toHaveBeenCalledTimes(2);
     expect(result).toStrictEqual(['789', '456']);
+  });
+
+  describe('resolveIntialValueLockedProperties', () => {
+    it('Should return an empty array when the entity has no lock', () => {
+      const entity = mockEntity('1', 'inscription');
+
+      const result = resolveIntialValueLockedProperties(entity);
+
+      expect(result).toStrictEqual([]);
+    });
+
+    it('Should return an empty array when lock.properties is empty', () => {
+      const entity = { ...mockEntity('1', 'inscription'), lock: { properties: [] } };
+
+      const result = resolveIntialValueLockedProperties(entity);
+
+      expect(result).toStrictEqual([]);
+    });
+
+    it('Should return the locked property keys', () => {
+      const entity = {
+        ...mockEntity('1', 'inscription'),
+        lock: { properties: ['reading'] },
+      };
+
+      const result = resolveIntialValueLockedProperties(entity);
+
+      expect(result).toStrictEqual(['reading']);
+    });
   });
 });
