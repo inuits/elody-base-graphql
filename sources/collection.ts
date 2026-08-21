@@ -540,7 +540,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (!Array.isArray(data)) {
       data?.results?.forEach((element: unknown): unknown => setId(element));
       applyTypesenseHighlights(data?.results, data?.highlights);
-      console.log(JSON.stringify(data.highlights, null, 2));
       //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
     }
@@ -553,6 +552,7 @@ export class CollectionAPI extends AuthRESTDataSource {
       data.forEach((element: unknown) => {
         setId(element as Record<string, unknown>);
       });
+
       return { results: data as Entity[], count: count, limit: limit };
     }
 
