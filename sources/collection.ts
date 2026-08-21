@@ -21,14 +21,23 @@ import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import jwtDecode from 'jwt-decode';
 import { Config } from '../types';
 import { GraphQLError } from 'graphql/index';
-import { setId, setType } from '../parsers/entity';
+import {
+  applyTypesenseHighlights,
+  setId,
+  setType,
+  TypesenseHighlight,
+} from '../parsers/entity';
 import {
   getCollectionValueForEntityType,
   getEntityCollectionForType,
 } from '../helpers/helpers';
 
 type EntetiesCallReturn =
-  | { count: number; results: Array<unknown> }
+  | {
+      count: number;
+      results: Array<unknown>;
+      highlights?: Record<string, Record<string, TypesenseHighlight>>;
+    }
   | Array<unknown>
   | 'no-call-is-triggerd';
 let sixthCollectionId: string | 'no-id' = 'no-id';
@@ -527,8 +536,11 @@ export class CollectionAPI extends AuthRESTDataSource {
       throw Error('No call triggerd wen trying to search for entities');
     }
 
+
     if (!Array.isArray(data)) {
       data?.results?.forEach((element: unknown): unknown => setId(element));
+      applyTypesenseHighlights(data?.results, data?.highlights);
+      console.log(JSON.stringify(data.highlights, null, 2));
       //Todo write typescheker for EntitieResults
       return data as EntitiesResults;
     }
@@ -541,7 +553,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       data.forEach((element: unknown) => {
         setId(element as Record<string, unknown>);
       });
-
       return { results: data as Entity[], count: count, limit: limit };
     }
 

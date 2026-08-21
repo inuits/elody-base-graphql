@@ -1,4 +1,5 @@
 import {
+  applyTypesenseHighlights,
   parseRelationTypesForEntityType,
   parseRelations,
 } from '../parsers/entity';
@@ -76,4 +77,88 @@ test('Get relationTypes based on Entity type', () => {
     relationType: 'hasPerson',
     fromRelationType: 'isPersonFor',
   });
+});
+
+test('applyTypesenseHighlights replaces matching metadata value with the highlight snippet', () => {
+  const results = [
+    {
+      _id: '6a3727e5-b57b-4b7e-899f-7f3bda951e93',
+      metadata: [
+        { key: 'reading', value: '<p><i>l ddt w ṯl bn lʿ{.}</i><br></p>' },
+        { key: 'title', value: 'Untouched' },
+      ],
+    },
+  ];
+  const highlights = {
+    '6a3727e5-b57b-4b7e-899f-7f3bda951e93': {
+      properties_reading_value: {
+        matched_tokens: ['dd'],
+        snippet: '<p><i>l <mark>dd</mark>t w ṯl bn lʿ{.}</i><br></p>',
+      },
+    },
+  };
+
+  applyTypesenseHighlights(results, highlights);
+
+  expect(results[0].metadata).toStrictEqual([
+    {
+      key: 'reading',
+      value: '<p><i>l <mark>dd</mark>t w ṯl bn lʿ{.}</i><br></p>',
+    },
+    { key: 'title', value: 'Untouched' },
+  ]);
+});
+
+test('applyTypesenseHighlights leaves entities without a highlight entry untouched', () => {
+  const results = [
+    {
+      _id: 'entity-without-highlight',
+      metadata: [{ key: 'reading', value: 'original' }],
+    },
+  ];
+
+  applyTypesenseHighlights(results, {
+    'some-other-id': {
+      properties_reading_value: { matched_tokens: ['x'], snippet: 'x' },
+    },
+  });
+
+  expect(results[0].metadata).toStrictEqual([
+    { key: 'reading', value: 'original' },
+  ]);
+});
+
+test('applyTypesenseHighlights ignores highlight keys that do not match the properties_*_value pattern', () => {
+  const results = [
+    {
+      _id: '6a3727e5-b57b-4b7e-899f-7f3bda951e93',
+      metadata: [{ key: 'reading', value: 'original' }],
+    },
+  ];
+
+  applyTypesenseHighlights(results, {
+    '6a3727e5-b57b-4b7e-899f-7f3bda951e93': {
+      reading: { matched_tokens: ['x'], snippet: 'should not apply' },
+    },
+  });
+
+  expect(results[0].metadata).toStrictEqual([
+    { key: 'reading', value: 'original' },
+  ]);
+});
+
+test('applyTypesenseHighlights is a no-op when highlights is undefined or empty', () => {
+  const results = [
+    {
+      _id: '6a3727e5-b57b-4b7e-899f-7f3bda951e93',
+      metadata: [{ key: 'reading', value: 'original' }],
+    },
+  ];
+
+  applyTypesenseHighlights(results, undefined);
+  applyTypesenseHighlights(results, {});
+
+  expect(results[0].metadata).toStrictEqual([
+    { key: 'reading', value: 'original' },
+  ]);
 });
