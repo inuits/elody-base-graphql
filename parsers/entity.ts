@@ -36,6 +36,46 @@ export const setType = (entityRaw: any, type: string) => {
   return entityRaw;
 };
 
+const HIGHLIGHT_KEY_PREFIX = 'properties_';
+const HIGHLIGHT_KEY_SUFFIX = '_value';
+
+export type TypesenseHighlight = {
+  matched_tokens: string[];
+  snippet?: string;
+};
+
+export const applyTypesenseHighlights = (
+  results: any[],
+  highlights?: Record<string, Record<string, TypesenseHighlight>>
+) => {
+  if (!highlights) return;
+
+  for (const entityRaw of results) {
+    const entityHighlights = highlights[entityRaw?._id];
+    if (!entityHighlights || !Array.isArray(entityRaw.metadata)) continue;
+
+    for (const [highlightKey, highlight] of Object.entries(
+      entityHighlights
+    )) {
+      if (
+        !highlightKey.startsWith(HIGHLIGHT_KEY_PREFIX) ||
+        !highlightKey.endsWith(HIGHLIGHT_KEY_SUFFIX) ||
+        highlight.snippet === undefined
+      )
+        continue;
+
+      const metadataKey = highlightKey.slice(
+        HIGHLIGHT_KEY_PREFIX.length,
+        -HIGHLIGHT_KEY_SUFFIX.length
+      );
+      const metadataItem = entityRaw.metadata.find(
+        (metadata: any) => metadata.key === metadataKey
+      );
+      if (metadataItem) metadataItem.value = highlight.snippet;
+    }
+  }
+};
+
 export const isMetaDataRelation = (input: {
   type?: string;
 }): 'MetadataRelation' | 'Metadata' => {
