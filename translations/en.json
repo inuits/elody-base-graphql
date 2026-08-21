@@ -577,6 +577,7 @@
       "R0009": "Entity has no tenant",
       "R1004": "You have no permission to see this",
       "R1008": "You don't have the permission to create/update/delete this resource.",
+      "R1003": "You don't have the permission to create/update/delete one of locked properties",
       "R5014": "There is no metadata available for item with id {id}",
       "W0004": "Item not found",
       "W0011": "Item with id {id} doesn't exist in the collection {collection} in the uploaded csv.",

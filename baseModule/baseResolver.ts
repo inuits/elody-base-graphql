@@ -161,6 +161,7 @@ import {
 import { parseItemTypesFromInputField } from '../parsers/inputField';
 import {
   resolveIntialValueLocation,
+  resolveIntialValueLockedProperties,
   resolveIntialValueMetadata,
   resolveIntialValueRepeatableMetadata,
   resolveIntialValueMetadataOrRelation,
@@ -1266,6 +1267,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         relation.key
       )) as IntialValues;
     },
+    lockedProperties: async (parent: any) => {
+      return resolveIntialValueLockedProperties(parent);
+    },
   },
   AllowedViewModes: {
     viewModes: async (parent, { input }, { dataSources }) => {
@@ -1526,6 +1530,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     infoPanel: async (_source, { title, content }) => {
       if (!content) return null;
       return { title: title ?? '', content };
+    },
+    lockedTooltip: async (_source, { input }, { dataSources }) => {
+      return input ?? null;
     },
   },
   MarkdownViewerElement: {
@@ -1792,6 +1799,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     disabled: async (_source, { input }, { dataSources }) => {
       return input || false;
+    },
+    lockedTooltip: async (_source, { input }, { dataSources }) => {
+      return input ?? null;
     },
   },
   UploadContainer: {
