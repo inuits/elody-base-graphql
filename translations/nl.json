@@ -748,7 +748,8 @@
         "_default": "{field} is niet geldig",
         "required": "{field} is verplicht",
         "between": "{field} moet tussen {min} en {max} zijn",
-        "no_xss": "{field} kan geen html bevatten"
+        "no_xss": "{field} kan geen html bevatten",
+        "has_min_max_amount_of_relations": "{field} moet tussen 1:{min} en 2:{max} relaties bevatten"
       }
     },
     "text-viewer": {

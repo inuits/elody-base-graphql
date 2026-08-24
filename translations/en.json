@@ -760,7 +760,8 @@
         "_default": "{field} is not valid",
         "required": "{field} is required",
         "between": "{field} must be between {min} and {max}",
-        "no_xss": "{field} can not include html"
+        "no_xss": "{field} can not include html",
+        "has_min_max_amount_of_relations": "{field} must contain between 1:{min} and 2:{max} relations"
       }
     },
     "text-viewer": {
