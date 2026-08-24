@@ -2437,6 +2437,12 @@ export const baseSchema = gql`
     resolve_to_source_ids: Boolean
   }
 
+  type JobPollResult {
+    hasJob: Boolean!
+    jobId: String
+    status: String
+  }
+
   type Query {
     Entity(id: String!, type: String!, preferredLanguage: String): Entity
     getElodyUser: Entity
@@ -2516,6 +2522,7 @@ export const baseSchema = gql`
       limit: Int!
       entityType: String!
     ): [DropdownOption!]!
+    jobStatusForEntity(id: String!, type: String!): JobPollResult!
   }
 
   type Mutation {

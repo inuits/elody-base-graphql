@@ -14,6 +14,7 @@ import {
   resolveSimpleEntities,
   resolveAdvancedHistoryEntities,
 } from '../resolvers/entitiesResolver';
+import { resolveJobStatusForEntity } from '../resolvers/jobStatusResolver';
 import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
 import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
@@ -690,6 +691,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         limit,
         entityType
       );
+    },
+    jobStatusForEntity: async (_source, { id }, { dataSources }) => {
+      return await resolveJobStatusForEntity(dataSources, id);
     },
   },
   Mutation: {

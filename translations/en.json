@@ -374,6 +374,16 @@
       "failed": "failed",
       "pending": "pending"
     },
+    "job-status-polling": {
+      "in-progress-title": "Preparing your download...",
+      "in-progress-description": "Please do not close or refresh this tab until the download is ready.",
+      "finished-title": "Download ready",
+      "finished-description": "Your file is ready to download.",
+      "warning-title": "Download ready, with warnings",
+      "warning-description": "Your file is ready, but some items could not be included.",
+      "failed-title": "Download failed",
+      "failed-description": "Something went wrong while preparing your file. Please try again."
+    },
     "element-labels": {
       "sub-job": "Sub jobs",
       "has-job": "Items created and modified by this job",
