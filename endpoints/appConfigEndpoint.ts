@@ -3,9 +3,10 @@ import { Environment } from '../types/environmentTypes';
 import { TypeUrlMapping } from '../types';
 import { mergeObjects } from 'json-merger';
 import { loadTranslationsFromDirectory } from '../translations/loadTranslations';
+import { resolveKeyboardLayouts } from '../sources/virtualKeyboardLayouts';
 import path from 'path';
 
-const getConfig = (config: Environment) => {
+export const getConfig = (config: Environment) => {
   const baseConfig = {
     graphQlLink: config.graphqlEndpoint,
     iiifLink: config.api.iiifUrlFrontend,
@@ -93,6 +94,9 @@ const getConfig = (config: Environment) => {
         simpleSearchMetadataKey:
           config.features.simpleSearch.simpleSearchMetadataKey,
         clientKeyFormat: config.features.simpleSearch.clientKeyFormat,
+        virtualKeyboardLayouts: resolveKeyboardLayouts(
+          config.features.simpleSearch.virtualKeyboardLayouts
+        ),
       },
     });
 

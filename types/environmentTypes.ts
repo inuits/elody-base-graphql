@@ -57,6 +57,7 @@ export interface Environment {
       itemTypes: Entitytyping[];
       simpleSearchMetadataKey: string[];
       clientKeyFormat?: string[];
+      virtualKeyboardLayouts?: string[];
     };
     ipWhiteListing?: {
       whiteListedIpAddresses: string[];
@@ -182,6 +183,7 @@ export interface FullyOptionalEnvironmentInput {
       itemTypes?: Entitytyping[];
       simpleSearchMetadataKey?: string[];
       clientKeyFormat?: string[];
+      virtualKeyboardLayouts?: string[];
     };
     ipWhiteListing?: {
       whiteListedIpAddresses?: string[];

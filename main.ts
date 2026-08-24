@@ -54,6 +54,10 @@ import {
 import { expressMiddleware } from '@as-integrations/express4';
 import { getMetadataItemValueByKey, getEntityId, extractErrorCode } from './helpers/helpers';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
+import {
+  allKeyboardLayouts,
+  resolveKeyboardLayouts,
+} from './sources/virtualKeyboardLayouts';
 import { parseIdToGetMoreData } from './parsers/entity';
 import {
   configureFrontendForEnvironment,
@@ -417,4 +421,6 @@ export {
   isIpAddressWhitelisted,
   getClientOrigin,
   isDomainWhitelisted,
+  allKeyboardLayouts,
+  resolveKeyboardLayouts,
 };
