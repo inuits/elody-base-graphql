@@ -711,4 +711,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getDerivatives(mediafileId: string): Promise<any> {
     return this.get(`mediafiles/${mediafileId}/derivatives`);
   }
+
+  async GetJobStatus(id: string): Promise<{ status: string }> {
+    return this.get(`job/status/${id}`);
+  }
 }

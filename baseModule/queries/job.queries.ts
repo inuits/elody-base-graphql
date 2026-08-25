@@ -505,4 +505,12 @@ export const jobQueries = gql`
       }
     }
   }
+
+  query JobStatusForEntity($id: String!, $type: String!) {
+    jobStatusForEntity(id: $id, type: $type) {
+      hasJob
+      jobId
+      status
+    }
+  }
 `;

@@ -369,6 +369,16 @@
       "failed": "mislukt",
       "pending": "in behandeling"
     },
+    "job-status-polling": {
+      "in-progress-title": "Bezig met voorbereiden van je download...",
+      "in-progress-description": "Sluit of vernieuw dit tabblad niet totdat de download gereed is.",
+      "finished-title": "Download gereed",
+      "finished-description": "Je bestand is klaar om te downloaden.",
+      "warning-title": "Download gereed, met waarschuwingen",
+      "warning-description": "Je bestand is klaar, maar sommige items konden niet worden toegevoegd.",
+      "failed-title": "Download mislukt",
+      "failed-description": "Er is iets misgegaan bij het voorbereiden van je bestand. Probeer het opnieuw."
+    },
     "element-labels": {
       "sub-job": "Onderliggende opdrachten",
       "has-job": "Items aangemaakt en gewijzigd door deze opdracht",
