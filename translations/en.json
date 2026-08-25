@@ -743,6 +743,8 @@
     "media-viewer": {
       "unsupported-mimetype": "There is currently no viewer available for files with type '{mimetype}'",
       "no-viewer": "No viewer available for this file",
+      "external-url": "This item links to an external location",
+      "open-url": "Open link",
       "download": "Download file",
       "processing-image": "Processing the image..."
     },

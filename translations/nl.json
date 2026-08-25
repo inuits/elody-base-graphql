@@ -731,6 +731,8 @@
     "media-viewer": {
       "unsupported-mimetype": "Er is op dit moment geen weergave beschikbaar voor bestanden van het type '{mimetype}'",
       "no-viewer": "Geen weergave beschikbaar voor dit bestand",
+      "external-url": "Dit item verwijst naar een externe locatie",
+      "open-url": "Link openen",
       "download": "Bestand downloaden",
       "processing-image": "Bezig met het verwerken van de afbeelding..."
     },
