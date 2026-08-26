@@ -13,9 +13,6 @@ export const loadTranslationsFromDirectory = (
     const translationKey = fileName.replace('.json', '');
     const fileContents = loadTranslations(path.join(directory, `${fileName}`));
 
-    // The locale comes from the filename, so the file has to be wrapped in a
-    // top-level key of the same name. Skip rather than register undefined:
-    // a missing locale is easier to spot than an empty one.
     if (!(translationKey in fileContents)) {
       console.warn(
         `Skipping translation file ${fileName} in ${directory}: expected a top-level "${translationKey}" key, found ${
