@@ -186,6 +186,28 @@ export const baseFragments = gql`
     }
   }
 
+  fragment copyFromParent on CopyFromParentConfig {
+    autoCopy
+    showCopyButtons
+    copyAllLabel
+    labelPrefix
+    fromRelationType
+    keys
+    excludeKeys
+    keyMap {
+      key
+      fromKey
+      fromRelationType
+    }
+  }
+
+  fragment copyValueFromParent on CopyValueFromParentIntialValues {
+    label
+    key
+    autoCopy
+    fromRelationType
+  }
+
   fragment metadataRelation on MetadataRelation {
     key
     value

@@ -35,6 +35,7 @@ import {
   Collection,
   Column,
   ColumnSizes,
+  CopyFromParentConfig,
   CopyValueFromParentIntialValues,
   Conditional,
   ContextMenuActions,
@@ -2348,6 +2349,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     relationType: async (parent: any, { input }, { dataSources }) => {
       return input as string;
     },
+    copyFromParent: async (parent: any, { input }, { dataSources }) => {
+      return input as CopyFromParentConfig;
+    },
   },
   Form: {
     label: async (parent: any, { input }, { dataSources }) => {
@@ -2358,6 +2362,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     modalStyle: async (parent: any, { input }, { dataSources }) => {
       return input;
+    },
+    copyFromParent: async (parent: any, { input }, { dataSources }) => {
+      return input as CopyFromParentConfig;
     },
     formTab: async (parent: any, {}, { dataSources }) => {
       return parent as FormTab;

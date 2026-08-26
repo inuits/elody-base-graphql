@@ -205,6 +205,7 @@ export const baseSchema = gql`
     label(input: String): String!
     infoLabel(input: String): String
     modalStyle(input: ModalStyle!): ModalStyle!
+    copyFromParent(input: CopyFromParentConfigInput!): CopyFromParentConfig!
     formTab: FormTab!
   }
 
@@ -213,6 +214,7 @@ export const baseSchema = gql`
     formKey(input: String): String
     label(input: String): String
     relationType(input: String): String
+    copyFromParent(input: CopyFromParentConfigInput!): CopyFromParentConfig!
   }
 
   enum ValidationRules {
@@ -1678,6 +1680,40 @@ export const baseSchema = gql`
     label: String
     key: String!
     autoCopy: Boolean
+    fromRelationType: String
+  }
+
+  type CopyFromParentConfig {
+    autoCopy: Boolean
+    showCopyButtons: Boolean
+    copyAllLabel: String
+    labelPrefix: String
+    fromRelationType: String
+    keys: [String!]
+    excludeKeys: [String!]
+    keyMap: [CopyFromParentKeyMap!]
+  }
+
+  type CopyFromParentKeyMap {
+    key: String!
+    fromKey: String!
+    fromRelationType: String
+  }
+
+  input CopyFromParentConfigInput {
+    autoCopy: Boolean
+    showCopyButtons: Boolean
+    copyAllLabel: String
+    labelPrefix: String
+    fromRelationType: String
+    keys: [String!]
+    excludeKeys: [String!]
+    keyMap: [CopyFromParentKeyMapInput!]
+  }
+
+  input CopyFromParentKeyMapInput {
+    key: String!
+    fromKey: String!
     fromRelationType: String
   }
 
