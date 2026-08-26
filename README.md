@@ -32,7 +32,7 @@ In development mode, `APOLLO_SESSION_SECRET` and `APOLLO_CLIENT_SECRET` are auto
 | GraphQL resolvers | Base resolvers for entities, metadata, initial values, context menu, map component, formatters |
 | DataSources | `CollectionAPI`, `TranscodeService`, `StorageAPI`, `OcrService`, `GraphQLAPI` — extendable via declaration merging on `DataSources` |
 | Auth | OIDC flow with optional `.well-known/openid-configuration` auto-discovery, session (in-memory or MongoDB), token refresh, static-token fallback, `AuthRESTDataSource` for downstream calls |
-| Express endpoints | `/api/graphql`, `/api/auth_code`, `/api/logout`, `/api/me`, `/api/upload/*`, `/api/download/csv`, `/api/download/zip/:id`, `/api/export/csv`, `/api/app-configs`, `/api/version`, `/api/health`, `/api/seo`, `/api/prom/query_range` |
+| Express endpoints | `/api/graphql`, `/api/auth_code`, `/api/logout`, `/api/me`, `/api/upload/xml`, `/api/upload/csv`, `/api/download/csv`, `/api/export/csv`, `/api/app-configs`, `/api/version`, `/api/health`, `/api/seo`, `/api/prom/query_range` |
 | Middleware | CORS, CSP, compression, JSON/urlencoded body limits, session cookies, depth-limit query validation |
 
 ### Startup banner
@@ -64,13 +64,14 @@ On boot the server prints a titled banner listing mode, version, port, GraphQL p
 
 > Batch/single file uploads for mediafiles live in `mediafileModule` (`/api/upload/batch`, `/api/upload/single`).
 
-### Download & Export — `endpoints/downloadEndpoint.ts`, `downloadZipEndpoint.ts`, `exportEndpoint.ts`
+### Download & Export — `endpoints/downloadEndpoint.ts`, `exportEndpoint.ts`
 
 | Method | Path | Purpose |
 |--------|------|---------|
 | `POST` | `/api/download/csv` | Stream a CSV export of the requested entities. |
-| `GET`  | `/api/download/zip/:id` | Trigger a zip build (via transcode-service) and stream the result. |
 | `POST` | `/api/export/csv` | Kick off a CSV export job on collection-api. |
+
+> Mediafile downloads live in `mediafileModule` (`/api/download/zip/:id`, `/api/mediafile/*`, `/api/iiif/*`).
 
 ### App configuration — `endpoints/appConfigEndpoint.ts`
 
