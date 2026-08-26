@@ -618,6 +618,7 @@ export const baseSchema = gql`
     BrightnessPlus
     Building
     Car
+    Comments
     Channel
     CloudBookmark
     CloudDataConnection

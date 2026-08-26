@@ -18,7 +18,9 @@
       "status": {
         "open": "Open",
         "resolved": "Afgesloten"
-      }
+      },
+      "creator": "Maker discussie",
+      "tagged-on": "Getagd op"
     },
     "entity-translations": {
       "singular": {
