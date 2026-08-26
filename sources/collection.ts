@@ -30,6 +30,7 @@ import {
 import {
   getCollectionValueForEntityType,
   getEntityCollectionForType,
+  getMetadataItemValueByKey,
 } from '../helpers/helpers';
 
 type EntetiesCallReturn =
@@ -41,6 +42,7 @@ type EntetiesCallReturn =
   | Array<unknown>
   | 'no-call-is-triggerd';
 let sixthCollectionId: string | 'no-id' = 'no-id';
+const UNRESOLVED_SESSION_VALUE = '__unresolved-session-value__';
 type CRUDMethod = 'get' | 'post' | 'put' | 'delete';
 
 export class CollectionAPI extends AuthRESTDataSource {
@@ -49,11 +51,36 @@ export class CollectionAPI extends AuthRESTDataSource {
   public preferredLanguage: string =
     this.environment.customization?.applicationLocale || 'en';
 
+  private elodyUserPromise: Promise<Entity | undefined> | undefined;
+
+  private getTokenClaims(): { [key: string]: any } {
+    if (!this.session.auth?.accessToken) return {};
+    return jwtDecode(this.session.auth.accessToken) as { [key: string]: any };
+  }
+
+  private async getElodyUserOnce(): Promise<Entity | undefined> {
+    if (!this.elodyUserPromise) {
+      this.elodyUserPromise = this.getElodyUser().catch((error: any) => {
+        console.error('[getSessionInfo] could not resolve the elody user', error);
+        return undefined;
+      });
+    }
+    return this.elodyUserPromise;
+  }
+
   async getSessionInfo(key?: string): Promise<string> {
-    const user = jwtDecode(this.session.auth?.accessToken!) as {
-      [key: string]: string;
-    };
-    return user[key];
+    if (!key) return '';
+
+    const claims = this.getTokenClaims();
+    if (claims[key] !== undefined) return claims[key];
+
+    const user: any = await this.getElodyUserOnce();
+    if (!user) return UNRESOLVED_SESSION_VALUE;
+    if (key === 'id') return user.id || UNRESOLVED_SESSION_VALUE;
+    return (
+      getMetadataItemValueByKey(key, user.metadata || []) ||
+      UNRESOLVED_SESSION_VALUE
+    );
   }
 
   async getUserPermissions(): Promise<{ payload: string[] }> {
@@ -289,7 +316,7 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   async getElodyUser(): Promise<Entity | undefined> {
     if (!this.session.auth?.accessToken) return undefined;
-    const email = await this.getSessionInfo('email');
+    const email = this.getTokenClaims().email;
     const emailMetadataKey =
       this.environment.customization?.userEmailMetadataKey ??
       'elody:1|metadata.email.value';
