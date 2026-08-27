@@ -686,7 +686,8 @@
       "tag-selected-button": "Tag geselecteerd {entityType}",
       "tag-new": "Maak een nieuw {entityType}",
       "configuration-entity-required": "Een {entityType} is nodig om te kunnen starten met taggen",
-      "untag": "Tag verwijderen"
+      "untag": "Tag verwijderen",
+      "tag-via-flow": "Tag via begeleide stappen"
     },
     "tooltip": {
       "advancedFilterTypes": {

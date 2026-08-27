@@ -3016,6 +3016,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     refetchOnFinish: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    returnsSelection: async (parent: any, { input }, { dataSources }) => {
+      return input !== undefined ? input : false;
+    },
     routeToStep: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
@@ -3092,6 +3095,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       { input },
       { dataSources }
     ) => {
+      return input || '';
+    },
+    terminalActionLabel: async (parent: any, { input }, { dataSources }) => {
       return input || '';
     },
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {

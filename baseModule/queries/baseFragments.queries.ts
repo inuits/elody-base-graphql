@@ -361,6 +361,8 @@ export const baseFragments = gql`
       character
       minCharacters
     }
+    guidedFlowQuery
+    guidedFlowButtonLabel
     tagConfigurationByEntity {
       configurationEntityType
       configurationEntityRelationType

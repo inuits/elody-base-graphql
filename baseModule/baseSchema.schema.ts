@@ -1918,6 +1918,8 @@ export const baseSchema = gql`
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntityInput
     inlineTrigger: InlineTriggerInput
+    guidedFlowQuery: String
+    guidedFlowButtonLabel: String
   }
 
   type TaggableEntityConfiguration {
@@ -1930,6 +1932,8 @@ export const baseSchema = gql`
     tag: String
     tagConfigurationByEntity: TagConfigurationByEntity
     inlineTrigger: InlineTrigger
+    guidedFlowQuery: String
+    guidedFlowButtonLabel: String
   }
 
   type TaggingExtensionConfiguration {
@@ -2725,6 +2729,7 @@ export const baseSchema = gql`
       input: [RepetitiveCreatableTypeInput!]
     ): [RepetitiveCreatableType!]
     creatableTypeFromParentKey(input: String): String
+    terminalActionLabel(input: String): String
     scopeToRelationOf: RepetitiveStepScope
     relations: [RepetitiveStepRelation!]
     entityPickerSearchConfig(
@@ -2766,6 +2771,7 @@ export const baseSchema = gql`
     linear(input: Boolean): Boolean
     startOnFirstStep(input: Boolean): Boolean
     refetchOnFinish(input: Boolean): Boolean
+    returnsSelection(input: Boolean): Boolean
     routeToStep(input: String): String
     routeToRoute(input: String): String
     steps: [RepetitiveStep!]!

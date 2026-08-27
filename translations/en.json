@@ -694,7 +694,8 @@
       "tag-selected-button": "Tag selected {entityType}",
       "tag-new": "Create new {entityType}",
       "configuration-entity-required": "A {entityType} is required to be able to start tagging",
-      "untag": "Untag"
+      "untag": "Untag",
+      "tag-via-flow": "Tag through a guided flow"
     },
     "tooltip": {
       "advancedFilterTypes": {
