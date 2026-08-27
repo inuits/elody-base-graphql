@@ -280,6 +280,7 @@ export const baseFragments = gql`
     customQueryEntityPickerListFilters
     replaceExistingRelations
     selectionLimit
+    allowDuplicateRelations
   }
 
   fragment subOptions on DropdownOption {
