@@ -789,6 +789,11 @@ export const baseSchema = gql`
     customQueryEntityPickerListFilters: String
     replaceExistingRelations: Boolean
     selectionLimit: Int
+    # Offer entities the parent is already related to. Off by default: for most
+    # relations the same entity twice is a mistake. A pipeline is the exception
+    # -- a step is a *use* of a component, and one component can be used twice
+    # (two loggers, two mappers), which the RDF-Connect model expects.
+    allowDuplicateRelations: Boolean
   }
 
   type BulkOperationModal {
@@ -805,6 +810,11 @@ export const baseSchema = gql`
     customQueryEntityPickerListFilters: String
     replaceExistingRelations: Boolean
     selectionLimit: Int
+    # Offer entities the parent is already related to. Off by default: for most
+    # relations the same entity twice is a mistake. A pipeline is the exception
+    # -- a step is a *use* of a component, and one component can be used twice
+    # (two loggers, two mappers), which the RDF-Connect model expects.
+    allowDuplicateRelations: Boolean
   }
 
   enum ActionContextEntitiesSelectionType {
