@@ -773,6 +773,7 @@ export const baseSchema = gql`
     Crop
     Cancel
     Table
+    Sitemap
   }
 
   input BulkOperationInputModal {
@@ -2636,6 +2637,7 @@ export const baseSchema = gql`
     ViewModesMedia
       @deprecated(reason: "We use the new mediaviewer integrated in previews")
     ViewModesMap
+    ViewModesPipeline
     Table
   }
 
