@@ -172,7 +172,20 @@
       "bulk-edit-unmatched-types": "No form is configured for these types, they will not be changed: {0}",
       "bulk-edit-field-conflict": "The field '{0}' behaves differently for {1} and is not changed there.",
       "clear-field": "Empty field",
-      "keep-field": "Undo emptying"
+      "keep-field": "Undo emptying",
+      "merge": "Merge",
+      "merge-modal": {
+        "title": "Merge records",
+        "description": "Choose which value to keep for each field. Fields with the same value are not shown.",
+        "survivor-label": "Which record should remain?",
+        "keep-this": "Keep this record",
+        "no-differences": "These records have no differing values.",
+        "empty-value": "(empty)",
+        "inbound-references": "{count} linked record(s) will be moved to the surviving record.",
+        "confirm": "Merge",
+        "cancel": "Cancel",
+        "warning": "The other record will be permanently deleted."
+      }
     },
     "modals": {
       "entityEdit": {
@@ -507,6 +520,10 @@
         "action-started": {
           "title": "Action started",
           "description": "The action has started successfully"
+        },
+        "merge-entities": {
+          "title": "Records merged",
+          "description": "The records have been merged."
         }
       },
       "errors": {
@@ -730,7 +747,12 @@
         "remove-selected-area": "Clear current selection"
       },
       "required": "This checkbox is required",
-      "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate."
+      "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate.",
+      "bulkOperations": {
+        "too-few-items": "Select more items to use this action.",
+        "too-many-items": "You have selected too many items for this action.",
+        "mixed-types": "The selected items are of a different type and cannot be merged."
+      }
     },
     "contextMenu": {
       "contextMenuLinkAction": {

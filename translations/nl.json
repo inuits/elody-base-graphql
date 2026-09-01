@@ -178,7 +178,20 @@
       "bulk-edit-unmatched-types": "Voor deze types is geen formulier geconfigureerd, ze worden niet aangepast: {0}",
       "bulk-edit-field-conflict": "Het veld '{0}' werkt anders voor {1} en wordt daar niet aangepast.",
       "clear-field": "Veld leegmaken",
-      "keep-field": "Leegmaken ongedaan maken"
+      "keep-field": "Leegmaken ongedaan maken",
+      "merge": "Samenvoegen",
+      "merge-modal": {
+        "title": "Records samenvoegen",
+        "description": "Kies per veld welke waarde je wil behouden. Velden met dezelfde waarde worden niet getoond.",
+        "survivor-label": "Welk record blijft bestaan?",
+        "keep-this": "Dit record behouden",
+        "no-differences": "Deze records hebben geen verschillende waarden.",
+        "empty-value": "(leeg)",
+        "inbound-references": "{count} gekoppelde record(s) worden verplaatst naar het behouden record.",
+        "confirm": "Samenvoegen",
+        "cancel": "Annuleren",
+        "warning": "Het andere record wordt definitief verwijderd."
+      }
     },
     "modals": {
       "bulkEditingEntities": "Je aanpassingen worden toegepast, dit kan even duren...",
@@ -501,6 +514,10 @@
         "action-started": {
           "title": "Actie gestart",
           "description": "De actie is succesvol gestart"
+        },
+        "merge-entities": {
+          "title": "Records samengevoegd",
+          "description": "De records zijn samengevoegd."
         }
       },
       "errors": {
@@ -720,7 +737,12 @@
         "remove-selected-area": "Huidige selectie wissen"
       },
       "required": "Deze checkbox is verplicht",
-      "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren."
+      "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren.",
+      "bulkOperations": {
+        "too-few-items": "Selecteer meer items om deze actie te gebruiken.",
+        "too-many-items": "Je hebt te veel items geselecteerd voor deze actie.",
+        "mixed-types": "De geselecteerde items zijn van een verschillend type en kunnen niet samengevoegd worden."
+      }
     },
     "contextMenu": {
       "contextMenuLinkAction": {

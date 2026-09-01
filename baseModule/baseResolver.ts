@@ -762,6 +762,24 @@ export const baseResolver: Resolvers<ContextValue> = {
         collection
       );
     },
+    mergeEntities: async (
+      _source,
+      { survivorId, victimId, formInput, collection },
+      { dataSources }
+    ) => {
+      await dataSources.CollectionAPI.mergeEntities(
+        survivorId,
+        victimId,
+        formInput.metadata,
+        formInput.relations,
+        collection
+      );
+      return await dataSources.CollectionAPI.getEntity(
+        parseIdToGetMoreData(survivorId),
+        'BaseEntity',
+        collection
+      );
+    },
     deleteData: async (
       _source,
       { id, path, deleteMediafiles },

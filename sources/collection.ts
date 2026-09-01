@@ -440,6 +440,32 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
+  async mergeEntities(
+    survivorId: string,
+    victimId: string,
+    metadata: MetadataValuesInput[],
+    relations: BaseRelationValuesInput[],
+    collection: Collection = Collection.Entities
+  ): Promise<any> {
+    return await this.post(`${collection}/${survivorId}/merge`, {
+      body: {
+        victim_id: victimId,
+        metadata,
+        relations: relations.map(({ editStatus, value, ...rest }) => rest),
+      },
+    });
+  }
+
+  async getInboundReferenceCount(
+    id: string,
+    collection: Collection = Collection.Entities
+  ): Promise<number> {
+    const result = await this.get(
+      `${collection}/${id}/inbound-reference-count`
+    );
+    return result?.count ?? 0;
+  }
+
   async deleteData(
     id: string,
     path: Collection,
