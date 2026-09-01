@@ -696,6 +696,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     jobStatusForEntity: async (_source, { id }, { dataSources }) => {
       return await resolveJobStatusForEntity(dataSources, id);
     },
+    inboundReferenceCount: async (
+      _source,
+      { id, collection },
+      { dataSources }
+    ) => {
+      return await dataSources.CollectionAPI.getInboundReferenceCount(
+        id,
+        collection
+      );
+    },
   },
   Mutation: {
     mutateEntityValues: async (

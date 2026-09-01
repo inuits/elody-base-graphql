@@ -39,6 +39,27 @@ export const baseQueries = gql`
     }
   }
 
+  query GetInboundReferenceCount($id: String!, $collection: Collection!) {
+    inboundReferenceCount(id: $id, collection: $collection)
+  }
+
+  mutation MergeEntities(
+    $survivorId: String!
+    $victimId: String!
+    $formInput: EntityFormInput!
+    $collection: Collection!
+  ) {
+    mergeEntities(
+      survivorId: $survivorId
+      victimId: $victimId
+      formInput: $formInput
+      collection: $collection
+    ) {
+      id
+      uuid
+    }
+  }
+
   mutation AddEntityRelations(
     $id: String!
     $relations: [BaseRelationValuesInput!]!
