@@ -557,6 +557,7 @@ export const baseSchema = gql`
     IiifOperationsModal
     EntityEditModal
     CommentThread
+    BulkOperationsMerge
   }
 
   enum ModalStyle {
@@ -837,12 +838,18 @@ export const baseSchema = gql`
     activeViewMode: [ActionContextViewModeTypes]
     matchMetadataValue: [MatchMetadataValue]
     labelForTooltip: String
+    requiresSameType: Boolean
+    minSelectedItems: Int
+    maxSelectedItems: Int
   }
   input ActionContextInput {
     entitiesSelectionType: ActionContextEntitiesSelectionType
     activeViewMode: [ActionContextViewModeTypes]
     matchMetadataValue: [MatchMetadataValueInput]
     labelForTooltip: String
+    requiresSameType: Boolean
+    minSelectedItems: Int
+    maxSelectedItems: Int
   }
 
   scalar StringOrInt
@@ -906,6 +913,7 @@ export const baseSchema = gql`
     bulkUpdateMetadata
     markAsSeen
     markAsUnseen
+    mergeEntities
   }
 
   type BulkOperations {
@@ -2594,6 +2602,12 @@ export const baseSchema = gql`
       formInput: EntityFormInput!
       collection: Collection!
       preferredLanguage: String
+    ): Entity
+    mergeEntities(
+      survivorId: String!
+      victimId: String!
+      formInput: EntityFormInput!
+      collection: Collection!
     ): Entity
     deleteData(
       id: String!

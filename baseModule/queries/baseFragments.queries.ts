@@ -235,6 +235,9 @@ export const baseFragments = gql`
       matchValue
     }
     labelForTooltip
+    requiresSameType
+    minSelectedItems
+    maxSelectedItems
   }
 
   fragment menuModalLink on MenuTypeLinkModal {
@@ -290,6 +293,9 @@ export const baseFragments = gql`
     value
     primary
     can
+    actionContext {
+      ...actionContext
+    }
     bulkOperationModal {
       ...bulkOperationModal
     }
