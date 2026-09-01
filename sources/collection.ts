@@ -456,14 +456,20 @@ export class CollectionAPI extends AuthRESTDataSource {
     });
   }
 
-  async getInboundReferenceCount(
+  async getMergePreview(
     id: string,
     collection: Collection = Collection.Entities
-  ): Promise<number> {
+  ): Promise<{
+    inboundReferenceCount: number;
+    automaticRelationTypes: string[];
+  }> {
     const result = await this.get(
       `${collection}/${id}/inbound-reference-count`
     );
-    return result?.count ?? 0;
+    return {
+      inboundReferenceCount: result?.count ?? 0,
+      automaticRelationTypes: result?.automatic_relation_types ?? [],
+    };
   }
 
   async deleteData(

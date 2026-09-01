@@ -39,8 +39,11 @@ export const baseQueries = gql`
     }
   }
 
-  query GetInboundReferenceCount($id: String!, $collection: Collection!) {
-    inboundReferenceCount(id: $id, collection: $collection)
+  query GetMergePreview($id: String!, $collection: Collection!) {
+    mergePreview(id: $id, collection: $collection) {
+      inboundReferenceCount
+      automaticRelationTypes
+    }
   }
 
   mutation MergeEntities(
