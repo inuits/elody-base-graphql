@@ -2594,6 +2594,7 @@ export const baseSchema = gql`
       entityType: String!
     ): [DropdownOption!]!
     jobStatusForEntity(id: String!, type: String!): JobPollResult!
+    inboundReferenceCount(id: String!, collection: Collection!): Int!
   }
 
   type Mutation {

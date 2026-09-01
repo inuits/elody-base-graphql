@@ -175,7 +175,8 @@
         "inbound-references": "{count} gekoppelde record(s) worden verplaatst naar het behouden record.",
         "confirm": "Samenvoegen",
         "cancel": "Annuleren",
-        "warning": "Het andere record wordt definitief verwijderd."
+        "warning": "Het andere record wordt definitief verwijderd.",
+        "field": "Veld"
       }
     },
     "modals": {
@@ -549,6 +550,10 @@
         "bulk-edit-without-selection": {
           "title": "Geen selectie",
           "description": "Selecteer eerst items om aan te passen"
+        },
+        "merge-entities": {
+          "title": "Samenvoegen mislukt",
+          "description": "De records konden niet samengevoegd worden."
         }
       },
       "warning": {

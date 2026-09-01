@@ -169,7 +169,8 @@
         "inbound-references": "{count} linked record(s) will be moved to the surviving record.",
         "confirm": "Merge",
         "cancel": "Cancel",
-        "warning": "The other record will be permanently deleted."
+        "warning": "The other record will be permanently deleted.",
+        "field": "Field"
       }
     },
     "modals": {
@@ -555,6 +556,10 @@
         "bulk-edit-without-selection": {
           "title": "Nothing selected",
           "description": "Select the items to change first"
+        },
+        "merge-entities": {
+          "title": "Merge failed",
+          "description": "The records could not be merged."
         }
       },
       "warning": {
