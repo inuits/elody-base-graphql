@@ -539,6 +539,11 @@ export const baseSchema = gql`
     visibleIf(input: VisibleIfInput): VisibleIf
   }
 
+  type MergePreview {
+    inboundReferenceCount: Int!
+    automaticRelationTypes: [String!]!
+  }
+
   enum TypeModals {
     BulkOperationsEdit
     BulkOperations
@@ -2594,7 +2599,7 @@ export const baseSchema = gql`
       entityType: String!
     ): [DropdownOption!]!
     jobStatusForEntity(id: String!, type: String!): JobPollResult!
-    inboundReferenceCount(id: String!, collection: Collection!): Int!
+    mergePreview(id: String!, collection: Collection!): MergePreview!
   }
 
   type Mutation {
