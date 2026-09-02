@@ -180,6 +180,7 @@
         "survivor-label": "Which record should remain?",
         "keep-this": "Keep this record",
         "no-differences": "These records have no differing values.",
+        "relations-note": "Links of both records are combined.",
         "empty-value": "(empty)",
         "inbound-references": "{count} linked record(s) will be moved to the surviving record.",
         "confirm": "Merge",

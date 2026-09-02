@@ -459,17 +459,11 @@ export class CollectionAPI extends AuthRESTDataSource {
   async getMergePreview(
     id: string,
     collection: Collection = Collection.Entities
-  ): Promise<{
-    inboundReferenceCount: number;
-    automaticRelationTypes: string[];
-  }> {
+  ): Promise<{ inboundReferenceCount: number }> {
     const result = await this.get(
       `${collection}/${id}/inbound-reference-count`
     );
-    return {
-      inboundReferenceCount: result?.count ?? 0,
-      automaticRelationTypes: result?.automatic_relation_types ?? [],
-    };
+    return { inboundReferenceCount: result?.count ?? 0 };
   }
 
   async deleteData(
