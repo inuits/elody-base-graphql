@@ -1783,14 +1783,28 @@ export const baseSchema = gql`
     statusInputFieldType: BaseFieldType!
   }
 
+  type PanelLibraryData {
+    queryName: String!
+    dataKey: String!
+    label: String
+  }
+
+  input PanelLibraryDataInput {
+    queryName: String!
+    dataKey: String!
+    label: String
+  }
+
   type PanelHeaderContent {
     label: String!
     panelStatus: PanelStatus
+    libraryData: PanelLibraryData
   }
 
   input PanelHeaderContentInput {
     label: String!
     panelStatus: PanelStatusInput
+    libraryData: PanelLibraryDataInput
   }
 
   type WindowElementStatus {

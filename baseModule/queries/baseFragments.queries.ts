@@ -384,6 +384,11 @@ export const baseFragments = gql`
         }
       }
     }
+    libraryData {
+      queryName
+      dataKey
+      label
+    }
   }
 
   fragment windowElementStatus on WindowElementStatus {

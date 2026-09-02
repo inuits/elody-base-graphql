@@ -392,7 +392,8 @@
       "description": "Omschrijving",
       "other-metadata": "Andere metadata",
       "history": "Geschiedenis",
-      "audit-panel": "Audit"
+      "audit-panel": "Audit",
+      "file-count": "Geen bestanden | {count} bestand | {count} bestanden"
     },
     "metadata": {
       "labels": {
