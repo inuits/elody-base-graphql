@@ -744,8 +744,9 @@
       "required": "Deze checkbox is verplicht",
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren.",
       "bulkOperations": {
-        "too-few-items": "Selecteer meer items om deze actie te gebruiken.",
-        "too-many-items": "Je hebt te veel items geselecteerd voor deze actie.",
+        "exact-items": "Selecteer exact {maximum} items om deze actie te gebruiken.",
+        "too-few-items": "Selecteer minstens {minimum} items om deze actie te gebruiken.",
+        "too-many-items": "Selecteer maximaal {maximum} items om deze actie te gebruiken.",
         "mixed-types": "De geselecteerde items zijn van een verschillend type en kunnen niet samengevoegd worden."
       }
     },

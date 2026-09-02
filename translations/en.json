@@ -754,8 +754,9 @@
       "required": "This checkbox is required",
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate.",
       "bulkOperations": {
-        "too-few-items": "Select more items to use this action.",
-        "too-many-items": "You have selected too many items for this action.",
+        "exact-items": "Select exactly {maximum} items to use this action.",
+        "too-few-items": "Select at least {minimum} items to use this action.",
+        "too-many-items": "Select at most {maximum} items to use this action.",
         "mixed-types": "The selected items are of a different type and cannot be merged."
       }
     },
