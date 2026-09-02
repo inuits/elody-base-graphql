@@ -186,7 +186,6 @@
         "survivor-label": "Welk record blijft bestaan?",
         "keep-this": "Dit record behouden",
         "no-differences": "Deze records hebben geen verschillende waarden.",
-        "relations-note": "Koppelingen van beide records worden samengevoegd.",
         "empty-value": "(leeg)",
         "inbound-references": "{count} gekoppelde record(s) worden verplaatst naar het behouden record.",
         "confirm": "Samenvoegen",
