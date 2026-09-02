@@ -42,7 +42,6 @@ export const baseQueries = gql`
   query GetMergePreview($id: String!, $collection: Collection!) {
     mergePreview(id: $id, collection: $collection) {
       inboundReferenceCount
-      automaticRelationTypes
     }
   }
 

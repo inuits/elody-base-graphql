@@ -541,7 +541,6 @@ export const baseSchema = gql`
 
   type MergePreview {
     inboundReferenceCount: Int!
-    automaticRelationTypes: [String!]!
   }
 
   enum TypeModals {
