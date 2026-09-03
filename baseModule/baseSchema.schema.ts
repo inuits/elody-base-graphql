@@ -1655,6 +1655,8 @@ export const baseSchema = gql`
     lineClamp(input: String): String!
     colSpan(input: String): String!
     copyToClipboard(input: Boolean): Boolean
+    masked(input: Boolean): Boolean
+    revealQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
     can(input: [String!]): [String]
@@ -2499,7 +2501,12 @@ export const baseSchema = gql`
   }
 
   type Query {
-    Entity(id: String!, type: String!, preferredLanguage: String): Entity
+    Entity(
+      id: String!
+      type: String!
+      collection: Collection
+      preferredLanguage: String
+    ): Entity
     getElodyUser: Entity
     Entities(
       type: Entitytyping

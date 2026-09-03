@@ -432,7 +432,11 @@
         "modified-by": "Gewijzigd door",
         "modified-at": "Gewijzigd op",
         "yes": "Ja",
-        "no": "Nee"
+        "no": "Nee",
+        "show-value": "Veld tonen",
+        "loading-value": "Ophalen…",
+        "value-unavailable": "Niet meer op te vragen",
+        "hide-value": "Veld verbergen"
       }
     },
     "notifications": {

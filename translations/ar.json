@@ -350,7 +350,11 @@
         "date-created": "تاريخ الإنشاء",
         "virtual-keyboard": "لوحة مفاتيح افتراضية",
         "yes": "نعم",
-        "no": "لا"
+        "no": "لا",
+        "show-value": "إظهار القيمة",
+        "loading-value": "جارٍ الجلب…",
+        "value-unavailable": "لم تعد قابلة للاسترجاع",
+        "hide-value": "إخفاء القيمة"
       }
     },
     "notifications": {

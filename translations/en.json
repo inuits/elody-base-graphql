@@ -438,7 +438,11 @@
         "modified-at": "Modified at",
         "virtual-keyboard": "Virtual keyboard",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "show-value": "Show value",
+        "loading-value": "Fetching…",
+        "value-unavailable": "No longer retrievable",
+        "hide-value": "Hide value"
       }
     },
     "notifications": {

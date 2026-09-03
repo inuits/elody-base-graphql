@@ -222,14 +222,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     Entity: async (
       _source,
-      { id, type, preferredLanguage },
+      { id, type, collection, preferredLanguage },
       { dataSources }
     ) => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
       return await dataSources.CollectionAPI.getEntity(
         parseIdToGetMoreData(id),
-        type
+        type,
+        collection ?? undefined
       );
     },
     Entities: async (
@@ -1759,6 +1760,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     copyToClipboard: async (_source, { input }, { dataSources }) => {
       return input ?? false;
+    },
+    masked: async (_source, { input }) => {
+      return input ?? false;
+    },
+    revealQuery: async (_source, { input }) => {
+      return input ?? '';
     },
     customValue: async (_source, { input }, { dataSources }) => {
       return input ?? '';
