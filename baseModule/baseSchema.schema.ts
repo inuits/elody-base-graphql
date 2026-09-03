@@ -2662,6 +2662,8 @@ export const baseSchema = gql`
   type PillFormatter {
     background: String!
     text: String!
+    icon: DamsIcons
+    spin: Boolean
   }
 
   type RegexpMatchFormatter {
