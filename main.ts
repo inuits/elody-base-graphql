@@ -233,7 +233,15 @@ const start = ({
 
     const server = new ApolloServer<ContextValue>({
       csrfPrevention: true,
-      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 15)],
+      // maxQueryDepth: unset/positive = enforce (default 15); explicit 0 turns
+      // the rule off. The opt-out exists because graphql-depth-limit throws
+      // (instead of failing validation) on deep union/fragment documents —
+      // e.g. a fullEntity fragment fanning out per entity type — which Apollo
+      // then surfaces as a generic 500, regardless of the configured limit.
+      validationRules:
+        environment?.apollo.maxQueryDepth === 0
+          ? []
+          : [depthLimit(environment?.apollo.maxQueryDepth || 15)],
       introspection: environment?.apollo.introspection || false,
       plugins: [authExtensionPlugin],
       nodeEnv: environment.environment,
