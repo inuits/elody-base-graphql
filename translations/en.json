@@ -397,8 +397,7 @@
       "history-original-version": "Original version",
       "description": "Description",
       "other-metadata": "Other metadata",
-      "history": "History",
-      "file-count": "No files | {count} file | {count} files"
+      "history": "History"
     },
     "metadata": {
       "labels": {
