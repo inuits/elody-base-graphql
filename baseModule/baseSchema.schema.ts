@@ -522,6 +522,7 @@ export const baseSchema = gql`
     fieldKeyToSave(input: String): String
     isMetadataField(input: Boolean): Boolean
     relationFilter: AdvancedFilterInputType
+    resolveOptionsFilterOnModalParent: Boolean
     dependsOn: String
     multiple: Boolean
     lineClamp: String

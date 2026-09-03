@@ -106,6 +106,7 @@ export const baseFragments = gql`
       match_exact
       operator
       item_types
+      returnIdAtIndex
       lookup {
         from
         local_field
@@ -143,6 +144,7 @@ export const baseFragments = gql`
     maxAmountOfFiles
     uploadMultiple
     isMetadataField
+    resolveOptionsFilterOnModalParent
     relationFilter {
       lookup {
         as
