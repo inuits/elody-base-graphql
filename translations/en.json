@@ -21,28 +21,13 @@
       }
     },
     "entity-translations": {
-      "singular": {
-        "baseEntity": "base entity",
-        "tenant": "tenant",
-        "user": "user",
-        "job": "job",
-        "shareLink": "share link",
-        "asset": "asset",
-        "mediafile": "mediafile",
-        "mediaFile": "mediafile",
-        "MediaFile": "mediafile"
-      },
-      "plural": {
-        "baseEntity": "base entities",
-        "tenant": "tenants",
-        "user": "users",
-        "job": "jobs",
-        "shareLink": "share links",
-        "asset": "assets",
-        "mediafile": "mediafiles",
-        "mediaFile": "mediafiles",
-        "MediaFile": "mediafiles"
-      }
+      "baseentity": "base entity | base entities",
+      "tenant": "tenant | tenants",
+      "user": "user | users",
+      "job": "job | jobs",
+      "sharelink": "share link | share links",
+      "asset": "asset | assets",
+      "mediafile": "mediafile | mediafiles"
     },
     "audio": {
       "no-support": "Your browser does not support the audio element."

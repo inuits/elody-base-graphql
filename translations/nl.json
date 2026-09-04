@@ -23,28 +23,13 @@
       "tagged-on": "Getagd op"
     },
     "entity-translations": {
-      "singular": {
-        "BaseEntity": "basis entiteit",
-        "Tenant": "tenant",
-        "User": "gebruiker",
-        "Job": "job",
-        "ShareLink": "deel link",
-        "Asset": "asset",
-        "mediafile": "mediafile",
-        "Mediafile": "mediafile",
-        "MediaFile": "mediafile"
-      },
-      "plural": {
-        "BaseEntity": "basis entiteiten",
-        "Tenant": "tenants",
-        "User": "gebruikers",
-        "Job": "opdrachten",
-        "ShareLink": "deel linken",
-        "Asset": "assets",
-        "mediafile": "mediafiles",
-        "Mediafile": "mediafiles",
-        "MediaFile": "mediafiles"
-      }
+      "baseentity": "basis entiteit | basis entiteiten",
+      "tenant": "tenant | tenants",
+      "user": "gebruiker | gebruikers",
+      "job": "job | opdrachten",
+      "sharelink": "deel link | deel linken",
+      "asset": "asset | assets",
+      "mediafile": "mediafile | mediafiles"
     },
     "audio": {
       "no-support": "Uw browser ondersteund het audio element niet"

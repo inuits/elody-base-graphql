@@ -21,28 +21,13 @@
       }
     },
     "entity-translations": {
-      "singular": {
-        "baseEntity": "كيان أساسي",
-        "tenant": "مستأجر",
-        "user": "مستخدم",
-        "job": "مهمة",
-        "shareLink": "رابط مشاركة",
-        "asset": "مورد",
-        "mediafile": "ملف وسائط",
-        "mediaFile": "ملف وسائط",
-        "MediaFile": "ملف وسائط"
-      },
-      "plural": {
-        "baseEntity": "كيانات أساسية",
-        "tenant": "مستأجرون",
-        "user": "مستخدمون",
-        "job": "مهام",
-        "shareLink": "روابط مشاركة",
-        "asset": "موارد",
-        "mediafile": "ملفات وسائط",
-        "mediaFile": "ملفات وسائط",
-        "MediaFile": "ملفات وسائط"
-      }
+      "baseentity": "كيان أساسي | كيانات أساسية",
+      "tenant": "مستأجر | مستأجرون",
+      "user": "مستخدم | مستخدمون",
+      "job": "مهمة | مهام",
+      "sharelink": "رابط مشاركة | روابط مشاركة",
+      "asset": "مورد | موارد",
+      "mediafile": "ملف وسائط | ملفات وسائط"
     },
     "audio": {
       "no-support": "متصفحك لا يدعم عنصر الصوت."
