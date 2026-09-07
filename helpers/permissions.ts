@@ -70,6 +70,64 @@ export const isEntityTypePermitted = async (
   return false;
 };
 
+// A panel `can` names an advanced permission, but the ones clients configure
+// substitute an entity id the panel path never had, so a denial falls back to
+// what the user may do with the entity itself. That fallback is what actually
+// decides those panels today.
+// ponytail: the advanced check is deliberately evaluated without an entity id,
+// exactly as the frontend did. Give it `getEntityId(parent)` only together with
+// a decision about which branch should then win.
+export const isPanelPermitted = async (
+  info: GraphQLResolveInfo,
+  parent: unknown,
+  dataSources: DataSources,
+  customPermissions: CustomPermissions
+): Promise<boolean> => {
+  const can = readSubFieldArgument(info, 'can', 'input');
+  const permission = (Array.isArray(can) ? can[0] : can) as string | undefined;
+  if (!permission) return true;
+
+  if (
+    await evaluateAdvancedPermission(
+      permission,
+      dataSources,
+      customPermissions
+    )
+  )
+    return true;
+
+  return isEntityActionPermitted(permission, parent, dataSources);
+};
+
+// `update:<type>` and `delete:<type>` are answered by a dry-run on the entity
+// itself. `read:` never was: the mapping the frontend read carried no such
+// verdict, so it always denied.
+const isEntityActionPermitted = async (
+  permission: string,
+  parent: unknown,
+  dataSources: DataSources
+): Promise<boolean> => {
+  const entity = parent as { type?: string };
+  const [action, targetEntityType] = permission.split(':');
+  if (!targetEntityType || targetEntityType !== entity?.type) return false;
+
+  if (action === 'update')
+    return (
+      (await dataSources.CollectionAPI.patchEntityDetailSoftCall(
+        getEntityId(entity),
+        entity.type as string
+      )) === '200'
+    );
+  if (action === 'delete')
+    return (
+      (await dataSources.CollectionAPI.delEntityDetailSoftCall(
+        getEntityId(entity),
+        entity.type as string
+      )) === '200'
+    );
+  return false;
+};
+
 // Posting a comment needs both a comment to create and a parent to hang it on.
 export const isCommentPostingPermitted = async (
   parent: unknown,

@@ -22,6 +22,7 @@ import {
   filterPermittedOptions,
   isCommentPostingPermitted,
   isElementPermitted,
+  isPanelPermitted,
   isEntityTypePermitted,
   isMenuItemPermitted,
 } from '../helpers/permissions';
@@ -1578,8 +1579,16 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    panels: async (parent: unknown, {}, { dataSources }) => {
-      return parent as WindowElementPanel;
+    // GraphQL leaves out a panel the user has no permission for, so the
+    // frontend renders whichever panels it was handed.
+    panels: async (parent: unknown, {}, { dataSources, customPermissions }, info) => {
+      const isPermitted = await isPanelPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions
+      );
+      return isPermitted ? (parent as WindowElementPanel) : null;
     },
     layout: async (_source, { input }, { dataSources }) => {
       return input ? input : WindowElementLayout.Vertical;

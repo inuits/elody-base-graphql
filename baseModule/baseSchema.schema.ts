@@ -1867,7 +1867,7 @@ export const baseSchema = gql`
 
   type WindowElement {
     label(input: String): String!
-    panels: WindowElementPanel!
+    panels: WindowElementPanel
     layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions
     editMetadataButton(input: EditMetadataButtonInput!): EditMetadataButton
