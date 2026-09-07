@@ -18,6 +18,10 @@ import { resolveJobStatusForEntity } from '../resolvers/jobStatusResolver';
 import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
 import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
+  evaluateAdvancedPermission,
+  isMenuItemPermitted,
+} from '../helpers/permissions';
+import {
   ActionElement,
   ActionProgress,
   ActionProgressIndicatorType,
@@ -534,63 +538,31 @@ export const baseResolver: Resolvers<ContextValue> = {
       { permission, parentEntityId, childEntityId },
       { dataSources, customPermissions }
     ) => {
-      const permissionConfig: PermissionRequestInfo =
-        customPermissions[permission];
-      if (!permissionConfig) return false;
-
-      let response: any;
-      if (permissionConfig.datasource === 'CollectionAPI')
-        response = await dataSources.CollectionAPI.checkAdvancedPermission(
-          permissionConfig,
-          parentEntityId,
-          childEntityId
-        );
-      if (permissionConfig.datasource === 'GraphqlAPI')
-        response =
-          await dataSources.GraphqlAPI.checkAdvancedPermission(
-            permissionConfig
-          );
-      return response;
+      return evaluateAdvancedPermission(
+        permission,
+        dataSources,
+        customPermissions,
+        parentEntityId,
+        childEntityId
+      );
     },
     AdvancedPermissions: async (
       _source,
       { permissions, parentEntityId, childEntityId },
       { dataSources, customPermissions }
     ) => {
-      const permissionPromises = permissions.map(async (permission) => {
-        const permissionConfig = customPermissions[permission];
-        if (!permissionConfig) {
-          return { permission, hasPermission: false };
-        }
-
-        try {
-          let hasPermission: boolean;
-          if (permissionConfig.datasource === 'CollectionAPI') {
-            hasPermission =
-              await dataSources.CollectionAPI.checkAdvancedPermission(
-                permissionConfig,
-                parentEntityId,
-                childEntityId
-              );
-          } else if (permissionConfig.datasource === 'GraphqlAPI') {
-            hasPermission =
-              await dataSources.GraphqlAPI.checkAdvancedPermission(
-                permissionConfig
-              );
-          } else {
-            hasPermission = false;
-          }
-
-          return { permission, hasPermission };
-        } catch (error) {
-          console.error(`Error checking permission ${permission}:`, error);
-          return { permission, hasPermission: false };
-        }
-      });
-
-      const results = await Promise.all(permissionPromises);
-
-      return results;
+      return Promise.all(
+        permissions.map(async (permission) => ({
+          permission,
+          hasPermission: await evaluateAdvancedPermission(
+            permission,
+            dataSources,
+            customPermissions,
+            parentEntityId,
+            childEntityId
+          ),
+        }))
+      );
     },
     PermissionMappingPerEntityType: async (
       _source,
@@ -2102,8 +2074,20 @@ export const baseResolver: Resolvers<ContextValue> = {
     menuItem: async (
       _source,
       { label, entityType, icon, isLoggedIn, typeLink, requiresAuth, can },
-      { dataSources }
+      { dataSources, customPermissions }
     ) => {
+      const isPermitted = await isMenuItemPermitted(
+        {
+          can,
+          entityType,
+          requiresAuth,
+          neededPermission: typeLink?.modal?.neededPermission,
+        },
+        dataSources,
+        customPermissions
+      );
+      if (!isPermitted) return null;
+
       return {
         label,
         entityType,
