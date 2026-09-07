@@ -53,6 +53,7 @@ import {
 } from './types/environmentTypes';
 import { expressMiddleware } from '@as-integrations/express4';
 import { getMetadataItemValueByKey, getEntityId, extractErrorCode } from './helpers/helpers';
+import { mayUpdateEntity, mayDeleteEntity } from './helpers/permissions';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import {
   allKeyboardLayouts,
@@ -456,4 +457,6 @@ export {
   isDomainWhitelisted,
   allKeyboardLayouts,
   resolveKeyboardLayouts,
+  mayUpdateEntity,
+  mayDeleteEntity,
 };

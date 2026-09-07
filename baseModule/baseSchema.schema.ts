@@ -1216,6 +1216,8 @@ export const baseSchema = gql`
     keyLabel(key: String!, source: KeyValueSource!): JSON
     relationMetadata(type: String!): IntialValues
     lockedProperties: [String!]!
+    canUpdate: Boolean!
+    canDelete: Boolean!
   }
 
   input ParentRelationsConfigInput {

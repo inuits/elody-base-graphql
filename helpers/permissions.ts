@@ -99,6 +99,24 @@ export const isPanelPermitted = async (
   return isEntityActionPermitted(permission, parent, dataSources);
 };
 
+export const mayUpdateEntity = async (
+  entity: any,
+  dataSources: DataSources
+): Promise<boolean> =>
+  (await dataSources.CollectionAPI.patchEntityDetailSoftCall(
+    getEntityId(entity),
+    entity.type
+  )) === '200';
+
+export const mayDeleteEntity = async (
+  entity: any,
+  dataSources: DataSources
+): Promise<boolean> =>
+  (await dataSources.CollectionAPI.delEntityDetailSoftCall(
+    getEntityId(entity),
+    entity.type
+  )) === '200';
+
 // `update:<type>` and `delete:<type>` are answered by a dry-run on the entity
 // itself. `read:` never was: the mapping the frontend read carried no such
 // verdict, so it always denied.
@@ -111,20 +129,8 @@ const isEntityActionPermitted = async (
   const [action, targetEntityType] = permission.split(':');
   if (!targetEntityType || targetEntityType !== entity?.type) return false;
 
-  if (action === 'update')
-    return (
-      (await dataSources.CollectionAPI.patchEntityDetailSoftCall(
-        getEntityId(entity),
-        entity.type as string
-      )) === '200'
-    );
-  if (action === 'delete')
-    return (
-      (await dataSources.CollectionAPI.delEntityDetailSoftCall(
-        getEntityId(entity),
-        entity.type as string
-      )) === '200'
-    );
+  if (action === 'update') return mayUpdateEntity(entity, dataSources);
+  if (action === 'delete') return mayDeleteEntity(entity, dataSources);
   return false;
 };
 

@@ -25,6 +25,8 @@ import {
   isPanelPermitted,
   isEntityTypePermitted,
   isMenuItemPermitted,
+  mayUpdateEntity,
+  mayDeleteEntity,
 } from '../helpers/permissions';
 import {
   ActionElement,
@@ -1290,6 +1292,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     lockedProperties: async (parent: any) => {
       return resolveIntialValueLockedProperties(parent);
+    },
+    canUpdate: async (parent: any, {}, { dataSources }) => {
+      return mayUpdateEntity(parent, dataSources);
+    },
+    canDelete: async (parent: any, {}, { dataSources }) => {
+      return mayDeleteEntity(parent, dataSources);
     },
   },
   AllowedViewModes: {
