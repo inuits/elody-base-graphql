@@ -3,7 +3,10 @@ import {
   collectModuleFeatures,
   collectModulePermissions,
 } from '../helpers/moduleContributions';
-import { resolveModuleFeatures } from '../endpoints/appConfigEndpoint';
+import {
+  resolveModuleFeatures,
+  resolveReadableSimpleSearchTypes,
+} from '../endpoints/appConfigEndpoint';
 
 const savedSearchPermission = {
   datasource: 'CollectionAPI',
@@ -85,5 +88,55 @@ describe('resolveModuleFeatures', () => {
 
   it('contributes nothing when no module is installed', async () => {
     expect(await resolveModuleFeatures(request, undefined)).toEqual({});
+  });
+});
+
+describe('resolveReadableSimpleSearchTypes', () => {
+  const request = { session: {}, headers: {}, ip: '10.0.0.1' } as any;
+
+  const contextReading = (readable: string[]) => {
+    const postEntitiesFilterSoftCall = vi.fn(async (itemType: string) =>
+      readable.includes(itemType) ? '200' : '403'
+    );
+    return {
+      context: {
+        buildDataSources: vi.fn(() => ({
+          CollectionAPI: { postEntitiesFilterSoftCall },
+        })) as any,
+        permissions: {} as any,
+        features: {},
+      },
+      postEntitiesFilterSoftCall,
+    };
+  };
+
+  it('keeps only the item types the user may read', async () => {
+    const { context } = contextReading(['production']);
+
+    expect(
+      await resolveReadableSimpleSearchTypes(
+        request,
+        ['production', 'mediafile'],
+        context
+      )
+    ).toEqual(['production']);
+  });
+
+  it('offers nothing when no item type is readable', async () => {
+    const { context } = contextReading([]);
+
+    expect(
+      await resolveReadableSimpleSearchTypes(request, ['production'], context)
+    ).toEqual([]);
+  });
+
+  it('never calls out for a client without simple search', async () => {
+    const { context, postEntitiesFilterSoftCall } = contextReading([]);
+
+    expect(
+      await resolveReadableSimpleSearchTypes(request, [], context)
+    ).toEqual([]);
+    expect(postEntitiesFilterSoftCall).not.toHaveBeenCalled();
+    expect(context.buildDataSources).not.toHaveBeenCalled();
   });
 });

@@ -10,7 +10,7 @@ import { PermissionRequestInfo } from '../generated-types/type-defs';
 import { evaluateAdvancedPermission } from '../helpers/permissions';
 import type { ModuleFeature } from '../helpers/moduleContributions';
 
-export type AppConfigModuleContext = {
+export type AppConfigRequestContext = {
   buildDataSources: (req: any) => DataSources;
   permissions: { [key: string]: PermissionRequestInfo };
   features: { [key: string]: ModuleFeature };
@@ -155,26 +155,26 @@ const getAvailableTranslations = (
 // on the flag alone.
 export const resolveModuleFeatures = async (
   req: any,
-  moduleContext?: AppConfigModuleContext
+  requestContext?: AppConfigRequestContext
 ): Promise<{ [key: string]: { enabled: boolean } }> => {
-  if (!moduleContext) return {};
+  if (!requestContext) return {};
 
-  const featureNames = Object.keys(moduleContext.features);
+  const featureNames = Object.keys(requestContext.features);
   const dataSources = featureNames.some(
-    (name) => moduleContext.features[name].permission
+    (name) => requestContext.features[name].permission
   )
-    ? moduleContext.buildDataSources(req)
+    ? requestContext.buildDataSources(req)
     : undefined;
 
   const resolved = await Promise.all(
     featureNames.map(async (name) => {
-      const feature = moduleContext.features[name];
+      const feature = requestContext.features[name];
       if (!feature.enabled || !feature.permission || !dataSources)
         return [name, { enabled: feature.enabled }] as const;
       const isPermitted = await evaluateAdvancedPermission(
         feature.permission,
         dataSources,
-        moduleContext.permissions
+        requestContext.permissions
       );
       return [name, { enabled: isPermitted }] as const;
     })
@@ -183,21 +183,65 @@ export const resolveModuleFeatures = async (
   return Object.fromEntries(resolved);
 };
 
+// Simple search offers only the item types the user may read, so the frontend
+// builds its filter off the config it was handed.
+export const resolveReadableSimpleSearchTypes = async (
+  req: any,
+  itemTypes: string[],
+  requestContext?: AppConfigRequestContext
+): Promise<string[]> => {
+  if (!itemTypes.length || !requestContext) return itemTypes;
+
+  const dataSources = requestContext.buildDataSources(req);
+  const verdicts = await Promise.all(
+    itemTypes.map((itemType) =>
+      dataSources.CollectionAPI.postEntitiesFilterSoftCall(itemType)
+    )
+  );
+  return itemTypes.filter((_itemType, index) => verdicts[index] === '200');
+};
+
+const resolveSimpleSearch = async (
+  req: any,
+  simpleSearch: { itemTypes?: string[] } | undefined,
+  requestContext?: AppConfigRequestContext
+) => {
+  if (!simpleSearch) return {};
+  return {
+    simpleSearch: {
+      ...simpleSearch,
+      itemTypes: await resolveReadableSimpleSearchTypes(
+        req,
+        simpleSearch.itemTypes ?? [],
+        requestContext
+      ),
+    },
+  };
+};
+
 export const applyAppConfigsEndpoint = (
   app: Express,
   config: Environment,
   translations: { [key: string]: Object },
   urlMapping: TypeUrlMapping,
-  moduleContext?: AppConfigModuleContext
+  requestContext?: AppConfigRequestContext
 ) => {
   app.get('/api/app-configs', async (req, res) => {
     const appConfig = getConfig(config);
-    const moduleFeatures = await resolveModuleFeatures(req, moduleContext);
+    const [moduleFeatures, simpleSearch] = await Promise.all([
+      resolveModuleFeatures(req, requestContext),
+      resolveSimpleSearch(
+        req,
+        (appConfig.features as { simpleSearch?: { itemTypes?: string[] } })
+          .simpleSearch,
+        requestContext
+      ),
+    ]);
     res.end(
       JSON.stringify({
         config: {
           ...appConfig,
-          features: { ...appConfig.features, ...moduleFeatures },
+          features: { ...appConfig.features, ...moduleFeatures, ...simpleSearch },
         },
         translations: getAvailableTranslations(config, translations),
         urlMapping,

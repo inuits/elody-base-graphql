@@ -7,7 +7,7 @@ import { applyExportXlsxEndpoint } from '../endpoints/exportXlsxEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
 import {
   applyAppConfigsEndpoint,
-  AppConfigModuleContext,
+  AppConfigRequestContext,
 } from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
 import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
@@ -32,13 +32,13 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     config: Environment,
     appTranslations: { [key: string]: string },
     urlMapping: TypeUrlMapping,
-    moduleContext?: AppConfigModuleContext
+    requestContext?: AppConfigRequestContext
   ) =>
     applyAppConfigsEndpoint(
       app,
       config,
       appTranslations,
       urlMapping,
-      moduleContext
+      requestContext
     ),
 };
