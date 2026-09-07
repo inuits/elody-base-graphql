@@ -32,6 +32,11 @@ import {
   getEntityCollectionForType,
   getMetadataItemValueByKey,
 } from '../helpers/helpers';
+import {
+  buildPermissionCacheKey,
+  getCachedPermission,
+  principalKeyFromToken,
+} from '../helpers/permissionCache';
 
 type EntetiesCallReturn =
   | {
@@ -52,6 +57,19 @@ export class CollectionAPI extends AuthRESTDataSource {
     this.environment.customization?.applicationLocale || 'en';
 
   private elodyUserPromise: Promise<Entity | undefined> | undefined;
+
+  private cachedPermissionCall<T>(
+    keyParts: (string | undefined)[],
+    call: () => Promise<T>,
+    isGranted: (value: T) => boolean
+  ): Promise<T> {
+    const key = buildPermissionCacheKey(
+      principalKeyFromToken(this.session.auth?.accessToken),
+      this.context?.tenantId,
+      ...keyParts
+    );
+    return getCachedPermission(key, call, isGranted);
+  }
 
   private getTokenClaims(): { [key: string]: any } {
     if (!this.session.auth?.accessToken) return {};
@@ -189,95 +207,128 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
       if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
-      let data;
-      if ((config.crud as CRUDMethod) == 'get') {
-        data = await this[config.crud as CRUDMethod](config.uri);
-      } else {
-        data = await this[config.crud as CRUDMethod](config.uri, {
-          body: config.body,
-        });
-      }
-      return data === 'good';
+      return await this.cachedPermissionCall(
+        [
+          'advanced',
+          config.crud,
+          config.uri,
+          JSON.stringify(config.body ?? null),
+        ],
+        async () => {
+          let data;
+          if ((config.crud as CRUDMethod) == 'get') {
+            data = await this[config.crud as CRUDMethod](config.uri);
+          } else {
+            data = await this[config.crud as CRUDMethod](config.uri, {
+              body: config.body,
+            });
+          }
+          return data === 'good';
+        },
+        (hasPermission) => hasPermission
+      );
     } catch (e) {
       return false;
     }
   }
 
   async postEntitiesFilterSoftCall(entityType: string): Promise<string> {
-    let data;
-    const body = [
-      {
-        type: 'type',
-        value: entityType,
+    return this.cachedPermissionCall(
+      ['entitiesFilter', entityType],
+      async () => {
+        let data;
+        const body = [
+          {
+            type: 'type',
+            value: entityType,
+          },
+        ];
+        try {
+          data = await this.post(
+            `${getCollectionValueForEntityType(entityType)}/filter?soft=1`,
+            { body }
+          );
+        } catch (e) {
+          return '401';
+        }
+        if (data) return '200';
+        return data;
       },
-    ];
-    try {
-      data = await this.post(
-        `${getCollectionValueForEntityType(entityType)}/filter?soft=1`,
-        { body }
-      );
-    } catch (e) {
-      return '401';
-    }
-    if (data) return '200';
-    return data;
+      (status) => status === '200'
+    );
   }
 
   async postEntitySoftCall(entityType: string): Promise<string> {
-    let data;
-    try {
-      data = await this.post(
-        `${getCollectionValueForEntityType(entityType)}?soft=1`,
-        {
-          body: { type: entityType },
+    return this.cachedPermissionCall(
+      ['entityCreate', entityType],
+      async () => {
+        let data;
+        try {
+          data = await this.post(
+            `${getCollectionValueForEntityType(entityType)}?soft=1`,
+            {
+              body: { type: entityType },
+            }
+          );
+        } catch (e) {
+          return '401';
         }
-      );
-    } catch (e) {
-      return '401';
-    }
-    if (data === 'good') return '200';
-    return data;
+        if (data === 'good') return '200';
+        return data;
+      },
+      (status) => status === '200'
+    );
   }
 
   async patchEntityDetailSoftCall(
-    id: String,
-    entityType: string,
-    collection: Collection = Collection.Entities
+    rawId: String,
+    entityType: string
   ): Promise<string> {
-    let data;
-    try {
-      const idSplit = id.split('/');
-      if (idSplit.length > 1) id = idSplit[1];
-      data = await this.patch(
-        `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
-        {
-          body: {},
+    const idSplit = String(rawId).split('/');
+    const id = idSplit.length > 1 ? idSplit[1] : idSplit[0];
+    return this.cachedPermissionCall(
+      ['entityUpdate', entityType, id],
+      async () => {
+        let data;
+        try {
+          data = await this.patch(
+            `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`,
+            {
+              body: {},
+            }
+          );
+        } catch (e) {
+          return '401';
         }
-      );
-    } catch (e) {
-      return '401';
-    }
-    if (data === 'good') return '200';
-    return data;
+        if (data === 'good') return '200';
+        return data;
+      },
+      (status) => status === '200'
+    );
   }
 
   async delEntityDetailSoftCall(
-    id: String,
-    entityType: string,
-    collection: Collection = Collection.Entities
+    rawId: String,
+    entityType: string
   ): Promise<string> {
-    let data;
-    try {
-      const idSplit = id.split('/');
-      if (idSplit.length > 1) id = idSplit[1];
-      data = await this.delete(
-        `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
-      );
-    } catch (e) {
-      return '401';
-    }
-    if (data === 'good') return '200';
-    return data;
+    const idSplit = String(rawId).split('/');
+    const id = idSplit.length > 1 ? idSplit[1] : idSplit[0];
+    return this.cachedPermissionCall(
+      ['entityDelete', entityType, id],
+      async () => {
+        let data;
+        try {
+          data = await this.delete(
+            `${getCollectionValueForEntityType(entityType)}/${id}?soft=1`
+          );
+        } catch (e) {
+          return '401';
+        }
+        if (data === 'good') return '200';
+        return data;
+      },
+      (status) => status === '200'
+    );
   }
 
   async getEntity(
