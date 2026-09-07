@@ -19,6 +19,7 @@ import { evaluateMetadataConditions } from '../resolvers/contextMenuResolver';
 import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
   evaluateAdvancedPermission,
+  filterPermittedOptions,
   isMenuItemPermitted,
 } from '../helpers/permissions';
 import {
@@ -2162,12 +2163,24 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   BulkOperationOptions: {
-    options: async (parent, { condition, input }, { dataSources }) => {
-      if (!condition) return input;
-      return input.filter((option) => {
-        if (!option.allowCondition) return option;
-        if (option.allowCondition.includes(condition)) return option;
-      });
+    options: async (
+      parent,
+      { condition, input },
+      { dataSources, customPermissions, parentEntityId }
+    ) => {
+      const allowedByCondition = !condition
+        ? input
+        : input.filter(
+            (option) =>
+              !option.allowCondition ||
+              option.allowCondition.includes(condition)
+          );
+      return filterPermittedOptions(
+        allowedByCondition,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
     },
   },
   DeleteQueryOptions: {

@@ -74,3 +74,27 @@ export const isMenuItemPermitted = async (
   // client actually needs one.
   return false;
 };
+
+export const filterPermittedOptions = async <
+  T extends { can?: (string | null)[] | null }
+>(
+  options: T[],
+  dataSources: DataSources,
+  customPermissions: CustomPermissions,
+  parentEntityId?: string
+): Promise<T[]> => {
+  const verdicts = await Promise.all(
+    options.map((option) =>
+      // Only the first entry is evaluated, which is what the frontend did.
+      option.can?.length
+        ? evaluateAdvancedPermission(
+            option.can[0] as string,
+            dataSources,
+            customPermissions,
+            parentEntityId
+          )
+        : true
+    )
+  );
+  return options.filter((_option, index) => verdicts[index]);
+};

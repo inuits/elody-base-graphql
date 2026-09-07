@@ -28,6 +28,7 @@ export interface ContextValue {
   customPermissions: { [key: string]: PermissionRequestInfo };
   customFormatters: FormattersConfig;
   customFilterMatchers?: Record<string, string[]>;
+  parentEntityId?: string;
 }
 // TODO: Remove if unused
 export type filter = {
