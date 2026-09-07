@@ -1,5 +1,12 @@
+import {
+  type GraphQLResolveInfo,
+  type SelectionNode,
+  Kind,
+  valueFromASTUntyped,
+} from 'graphql';
 import { Permission, PermissionRequestInfo } from '../generated-types/type-defs';
 import { DataSources } from '../types';
+import { getEntityId } from './helpers';
 
 export type CustomPermissions = { [key: string]: PermissionRequestInfo };
 
@@ -97,4 +104,60 @@ export const filterPermittedOptions = async <
     )
   );
   return options.filter((_option, index) => verdicts[index]);
+};
+
+// The `can` of an element sits on a sub-field of that element, so the resolver
+// that has to leave the element out has to read it back off the query itself.
+// Fragment spreads and variables are resolved, because client query documents
+// use both.
+export const readSubFieldArgument = (
+  info: GraphQLResolveInfo,
+  fieldName: string,
+  argumentName: string
+): unknown => {
+  const selections: SelectionNode[] = info.fieldNodes.flatMap(
+    (fieldNode) => fieldNode.selectionSet?.selections ?? []
+  );
+
+  while (selections.length) {
+    const selection = selections.shift() as SelectionNode;
+    if (selection.kind === Kind.FIELD) {
+      if (selection.name.value !== fieldName) continue;
+      const argument = selection.arguments?.find(
+        (candidate) => candidate.name.value === argumentName
+      );
+      if (argument)
+        return valueFromASTUntyped(argument.value, info.variableValues);
+      continue;
+    }
+    if (selection.kind === Kind.INLINE_FRAGMENT) {
+      selections.push(...selection.selectionSet.selections);
+      continue;
+    }
+    const fragment = info.fragments[selection.name.value];
+    if (fragment) selections.push(...fragment.selectionSet.selections);
+  }
+
+  return undefined;
+};
+
+// Every element resolver receives the entity document as its source, so the
+// `$parentEntityId` an element permission substitutes needs no request header.
+export const isElementPermitted = async (
+  info: GraphQLResolveInfo,
+  parent: unknown,
+  dataSources: DataSources,
+  customPermissions: CustomPermissions
+): Promise<boolean> => {
+  const can = readSubFieldArgument(info, 'can', 'input');
+  const permissions = Array.isArray(can) ? can : can ? [can] : [];
+  if (!permissions.length) return true;
+
+  // Only the first entry is evaluated, which is what the frontend did.
+  return evaluateAdvancedPermission(
+    permissions[0] as string,
+    dataSources,
+    customPermissions,
+    parent ? getEntityId(parent) : undefined
+  );
 };

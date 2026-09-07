@@ -20,6 +20,7 @@ import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
   evaluateAdvancedPermission,
   filterPermittedOptions,
+  isElementPermitted,
   isMenuItemPermitted,
 } from '../helpers/permissions';
 import {
@@ -192,6 +193,22 @@ import { getWithDefaultFormatters } from '../utilities/elodyMetadataFormatters';
 import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 import { defaultMatchers } from '../sources/filtersMatchers';
+
+// GraphQL leaves out any view element the user has no permission for, so the
+// frontend can render on presence alone.
+const resolvePermittedElement = async (
+  parent: any,
+  { dataSources, customPermissions }: any,
+  info: any
+) => {
+  const isPermitted = await isElementPermitted(
+    info,
+    parent,
+    dataSources,
+    customPermissions
+  );
+  return isPermitted ? parent : null;
+};
 
 export const baseResolver: Resolvers<ContextValue> = {
   StringOrInt: new GraphQLScalarType({
@@ -1430,9 +1447,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     disableLibraryBar: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
-    entityListElement: async (parent: any, {}, { dataSources }) => {
-      return parent as EntityListElement;
-    },
+    entityListElement: async (parent: any, {}, context, info) =>
+      resolvePermittedElement(parent, context, info) as Promise<
+        EntityListElement | null
+      >,
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
@@ -1643,9 +1661,10 @@ export const baseResolver: Resolvers<ContextValue> = {
         return [];
       }
     },
-    entityListElement: async (parent: unknown, {}, { dataSources }) => {
-      return parent as EntityListElement;
-    },
+    entityListElement: async (parent: any, {}, context, info) =>
+      resolvePermittedElement(parent, context, info) as Promise<
+        EntityListElement | null
+      >,
     wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
@@ -2017,9 +2036,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     entityViewerElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as EntityViewerElement;
     },
-    entityListElement: async (parent: unknown, {}, { dataSources }) => {
-      return parent as EntityListElement;
-    },
+    entityListElement: async (parent: any, {}, context, info) =>
+      resolvePermittedElement(parent, context, info) as Promise<
+        EntityListElement | null
+      >,
     mediaFileElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MediaFileElement;
     },
@@ -2047,9 +2067,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
-    hierarchyListElement: async (parent: unknown, {}, { dataSources }) => {
-      return parent as HierarchyListElement;
-    },
+    hierarchyListElement: async (parent: any, {}, context, info) =>
+      resolvePermittedElement(parent, context, info) as Promise<
+        HierarchyListElement | null
+      >,
     commentsElement: async (parent: unknown, {}, { dataSources }) => {
       // Feature flag
       return commentsEnabled() ? (parent as CommentsElement) : null;
