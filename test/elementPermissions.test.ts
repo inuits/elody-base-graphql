@@ -207,3 +207,82 @@ describe('isElementPermitted resolves the entity id off its source', () => {
       expect(call[1]).toBeUndefined();
   });
 });
+
+describe('canEdit as the read field', () => {
+  const editPermissions = {
+    'update:organization:field:types': {
+      datasource: 'CollectionAPI',
+      crud: 'put',
+      uri: '/entities/$parentEntityId',
+      body: {},
+    },
+  } as any;
+
+  it('reads the canEdit of an aliased metaData selection', async () => {
+    const info = infoFor(
+      '{ isVenue: metaData { key(input: "is_venue") canEdit(input: ["update:organization:field:types"]) } }'
+    );
+    const { dataSources } = dataSourcesGranting(['/entities/ORG-1']);
+
+    expect(
+      await isElementPermitted(
+        info,
+        { _id: 'ORG-1' },
+        dataSources,
+        editPermissions,
+        'canEdit'
+      )
+    ).toBe(true);
+  });
+
+  it('denies the field of an entity the user may not update', async () => {
+    const info = infoFor(
+      '{ isVenue: metaData { canEdit(input: ["update:organization:field:types"]) } }'
+    );
+    const { dataSources } = dataSourcesGranting(['/entities/ORG-1']);
+
+    expect(
+      await isElementPermitted(
+        info,
+        { _id: 'ORG-2' },
+        dataSources,
+        editPermissions,
+        'canEdit'
+      )
+    ).toBe(false);
+  });
+
+  it('leaves a field without canEdit editable, and never calls out for it', async () => {
+    const info = infoFor('{ label: metaData { key(input: "label") } }');
+    const { dataSources, checkAdvancedPermission } = dataSourcesGranting([]);
+
+    expect(
+      await isElementPermitted(
+        info,
+        { _id: 'ORG-1' },
+        dataSources,
+        editPermissions,
+        'canEdit'
+      )
+    ).toBe(true);
+    expect(checkAdvancedPermission).not.toHaveBeenCalled();
+  });
+
+  it('ignores the view permission of the same field', async () => {
+    const info = infoFor(
+      '{ isVenue: metaData { can(input: ["read:organization"]) } }'
+    );
+    const { dataSources, checkAdvancedPermission } = dataSourcesGranting([]);
+
+    expect(
+      await isElementPermitted(
+        info,
+        { _id: 'ORG-1' },
+        dataSources,
+        editPermissions,
+        'canEdit'
+      )
+    ).toBe(true);
+    expect(checkAdvancedPermission).not.toHaveBeenCalled();
+  });
+});

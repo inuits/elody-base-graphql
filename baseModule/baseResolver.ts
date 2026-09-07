@@ -1643,8 +1643,25 @@ export const baseResolver: Resolvers<ContextValue> = {
     info: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelInfo;
     },
-    metaData: async (parent: unknown, {}, { dataSources }) => {
-      return parent as PanelMetaData;
+    // A field the user may see but not change cannot be left out, so its
+    // `canEdit` is resolved here into `readOnly` and the frontend renders off
+    // that alone.
+    // ponytail: only panel metadata is resolved this way, the only place
+    // clients configure `canEdit` today. Teaser, map and form field metadata
+    // have no entity document to substitute `$parentEntityId` with; give them
+    // one before wiring them up too.
+    metaData: async (parent: unknown, {}, context, info) => {
+      const isEditable = await isElementPermitted(
+        info,
+        parent,
+        context.dataSources,
+        context.customPermissions,
+        'canEdit'
+      );
+      return {
+        ...(parent as object),
+        readOnly: !isEditable,
+      } as unknown as PanelMetaData;
     },
     relation: async (parent: any, {}, { dataSources }) => {
       try {

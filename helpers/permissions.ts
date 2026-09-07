@@ -147,9 +147,10 @@ export const isElementPermitted = async (
   info: GraphQLResolveInfo,
   parent: unknown,
   dataSources: DataSources,
-  customPermissions: CustomPermissions
+  customPermissions: CustomPermissions,
+  fieldName: string = 'can'
 ): Promise<boolean> => {
-  const can = readSubFieldArgument(info, 'can', 'input');
+  const can = readSubFieldArgument(info, fieldName, 'input');
   const permissions = Array.isArray(can) ? can : can ? [can] : [];
   if (!permissions.length) return true;
 

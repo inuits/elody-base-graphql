@@ -1675,6 +1675,7 @@ export const baseSchema = gql`
     customValue(input: String): String
     can(input: [String!]): [String]
     canEdit(input: [String!]): [String]
+    readOnly: Boolean
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
