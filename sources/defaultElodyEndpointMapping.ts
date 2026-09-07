@@ -5,7 +5,10 @@ import { applyDownloadEndpoint } from '../endpoints/downloadEndpoint';
 import { applyExportEndpoint } from '../endpoints/exportEndpoint';
 import { applyExportXlsxEndpoint } from '../endpoints/exportXlsxEndpoint';
 import { applyHealthEndpoint } from '../endpoints/healthEndpoint';
-import { applyAppConfigsEndpoint } from '../endpoints/appConfigEndpoint';
+import {
+  applyAppConfigsEndpoint,
+  AppConfigModuleContext,
+} from '../endpoints/appConfigEndpoint';
 import { applyVersionEndpoint } from '../endpoints/versionEndpoint';
 import { applyUploadEndpoint } from '../endpoints/uploadEndpoint';
 import { TypeUrlMapping } from '../types';
@@ -28,6 +31,14 @@ export const defaultElodyEndpointMapping: Record<string, Function> = {
     app: Express,
     config: Environment,
     appTranslations: { [key: string]: string },
-    urlMapping: TypeUrlMapping
-  ) => applyAppConfigsEndpoint(app, config, appTranslations, urlMapping),
+    urlMapping: TypeUrlMapping,
+    moduleContext?: AppConfigModuleContext
+  ) =>
+    applyAppConfigsEndpoint(
+      app,
+      config,
+      appTranslations,
+      urlMapping,
+      moduleContext
+    ),
 };

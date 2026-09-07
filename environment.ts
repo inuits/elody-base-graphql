@@ -114,7 +114,6 @@ export const baseEnvironment: Environment = {
     hasBulkOperations: true,
     hasBulkSelect: true,
     hideSuperTenant: true,
-    hasSavedSearch: false,
     hasComments: false,
     hasPersistentSessions: true,
     supportsMultilingualMetadataEditing: false,

@@ -72,13 +72,8 @@ export interface Environment {
     hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
-    hasSavedSearch?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
-    savedSearch?: {
-      enabled?: boolean;
-      permission?: string[];
-    };
     advancedSearch?: {
       queryBy: string;
       queryByWeights?: string;
@@ -198,13 +193,8 @@ export interface FullyOptionalEnvironmentInput {
     hasBulkOperations?: boolean;
     hasBulkSelect?: boolean;
     hideSuperTenant?: boolean;
-    hasSavedSearch?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
-    savedSearch?: {
-      enabled?: boolean;
-      permission?: string[];
-    };
     advancedSearch?: {
       queryBy?: string;
       queryByWeights?: string;

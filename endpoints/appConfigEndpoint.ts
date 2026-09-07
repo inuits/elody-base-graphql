@@ -5,6 +5,16 @@ import { mergeObjects } from 'json-merger';
 import { loadTranslationsFromDirectory } from '../translations/loadTranslations';
 import { resolveKeyboardLayouts } from '../sources/virtualKeyboardLayouts';
 import path from 'path';
+import { DataSources } from '../types';
+import { PermissionRequestInfo } from '../generated-types/type-defs';
+import { evaluateAdvancedPermission } from '../helpers/permissions';
+import type { ModuleFeature } from '../helpers/moduleContributions';
+
+export type AppConfigModuleContext = {
+  buildDataSources: (req: any) => DataSources;
+  permissions: { [key: string]: PermissionRequestInfo };
+  features: { [key: string]: ModuleFeature };
+};
 
 export const getConfig = (config: Environment) => {
   const baseConfig = {
@@ -40,13 +50,6 @@ export const getConfig = (config: Environment) => {
         config.features.hideSuperTenant === undefined
           ? false
           : config.features.hideSuperTenant,
-      savedSearch: {
-        enabled:
-          config.features.savedSearch?.enabled ??
-          config.features.hasSavedSearch ??
-          false,
-        permission: config.features.savedSearch?.permission ?? [],
-      },
       supportsMultilingualMetadataEditing:
         config.features.supportsMultilingualMetadataEditing === undefined
           ? false
@@ -147,16 +150,55 @@ const getAvailableTranslations = (
   return availableTranslations;
 };
 
+// Features an installed module contributes. One that names a permission is
+// reported as enabled only to a user who passes it, so the frontend can render
+// on the flag alone.
+export const resolveModuleFeatures = async (
+  req: any,
+  moduleContext?: AppConfigModuleContext
+): Promise<{ [key: string]: { enabled: boolean } }> => {
+  if (!moduleContext) return {};
+
+  const featureNames = Object.keys(moduleContext.features);
+  const dataSources = featureNames.some(
+    (name) => moduleContext.features[name].permission
+  )
+    ? moduleContext.buildDataSources(req)
+    : undefined;
+
+  const resolved = await Promise.all(
+    featureNames.map(async (name) => {
+      const feature = moduleContext.features[name];
+      if (!feature.enabled || !feature.permission || !dataSources)
+        return [name, { enabled: feature.enabled }] as const;
+      const isPermitted = await evaluateAdvancedPermission(
+        feature.permission,
+        dataSources,
+        moduleContext.permissions
+      );
+      return [name, { enabled: isPermitted }] as const;
+    })
+  );
+
+  return Object.fromEntries(resolved);
+};
+
 export const applyAppConfigsEndpoint = (
   app: Express,
   config: Environment,
   translations: { [key: string]: Object },
-  urlMapping: TypeUrlMapping
+  urlMapping: TypeUrlMapping,
+  moduleContext?: AppConfigModuleContext
 ) => {
   app.get('/api/app-configs', async (req, res) => {
+    const appConfig = getConfig(config);
+    const moduleFeatures = await resolveModuleFeatures(req, moduleContext);
     res.end(
       JSON.stringify({
-        config: getConfig(config),
+        config: {
+          ...appConfig,
+          features: { ...appConfig.features, ...moduleFeatures },
+        },
         translations: getAvailableTranslations(config, translations),
         urlMapping,
         version: { 'apollo-graphql-version': config.version },

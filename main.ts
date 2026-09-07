@@ -82,6 +82,10 @@ import {
   generateElodyConfig,
   ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
+import {
+  collectModuleFeatures,
+  collectModulePermissions,
+} from './helpers/moduleContributions';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import depthLimit from 'graphql-depth-limit';
 import { enableCors } from './helpers/corsHelper';
@@ -162,6 +166,12 @@ const start = ({
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(
     generateElodyConfig(customModuleConfig)
   );
+  // Installed modules bring their own permission definitions; a client that
+  // declares the same key overrides them.
+  const permissions = {
+    ...collectModulePermissions(fullElodyConfig.modules),
+    ...customPermissions,
+  };
   addAdditionalOptionalDataSources(environment);
 
   const application = createApplication({
@@ -306,7 +316,7 @@ const start = ({
 
           return {
             dataSources,
-            customPermissions,
+            customPermissions: permissions,
             customFormatters,
             customFilterMatchers,
             session,
@@ -335,6 +345,20 @@ const start = ({
         environment,
         customTranslations,
         customTypeUrlMapping,
+        {
+          buildDataSources: (req: any) =>
+            getDataSourcesFromMapping(
+              fullElodyConfig,
+              environment,
+              { ...req.session },
+              server.cache,
+              req.ip,
+              getClientOrigin(req.headers),
+              req.headers['x-tenant-id'] as string
+            ),
+          permissions,
+          features: collectModuleFeatures(fullElodyConfig.modules),
+        },
       ],
     };
 
