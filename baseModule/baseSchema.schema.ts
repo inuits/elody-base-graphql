@@ -2020,6 +2020,7 @@ export const baseSchema = gql`
     label(input: String!): String!
     composer: WysiwygElement!
     parentEntityFilterKey(input: String!): String!
+    readOnly: Boolean
   }
 
   type EntityViewElements {

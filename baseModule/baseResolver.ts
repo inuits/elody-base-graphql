@@ -20,7 +20,9 @@ import { commentsEnabled, jsonBulkEditEnabled } from '../environment';
 import {
   evaluateAdvancedPermission,
   filterPermittedOptions,
+  isCommentPostingPermitted,
   isElementPermitted,
+  isEntityTypePermitted,
   isMenuItemPermitted,
 } from '../helpers/permissions';
 import {
@@ -2089,8 +2091,15 @@ export const baseResolver: Resolvers<ContextValue> = {
         HierarchyListElement | null
       >,
     commentsElement: async (parent: unknown, {}, { dataSources }) => {
-      // Feature flag
-      return commentsEnabled() ? (parent as CommentsElement) : null;
+      if (!commentsEnabled()) return null;
+      // `comment` is declared by the clients that enable the feature, so it
+      // is not a member of base's own entity type enum.
+      const mayReadComments = await isEntityTypePermitted(
+        'comment',
+        Permission.Canread,
+        dataSources
+      );
+      return mayReadComments ? (parent as CommentsElement) : null;
     },
   },
   CommentsElement: {
@@ -2100,6 +2109,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     parentEntityFilterKey: async (_parent: unknown, { input }) => {
       return input;
     },
+    // A user who may read comments but not write them gets the thread list only.
+    readOnly: async (parent: unknown, {}, { dataSources }) =>
+      !(await isCommentPostingPermitted(parent, dataSources)),
     composer: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },

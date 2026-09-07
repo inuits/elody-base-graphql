@@ -45,6 +45,47 @@ type MenuItemPermissionInput = {
   neededPermission?: string | null;
 };
 
+// Whether the user may read or create this entity type at all, which is a
+// dry-run call to collection-api rather than a named permission.
+export const isEntityTypePermitted = async (
+  entityType: string,
+  neededPermission: string,
+  dataSources: DataSources
+): Promise<boolean> => {
+  if (neededPermission === Permission.Cancreate)
+    return (
+      (await dataSources.CollectionAPI.postEntitySoftCall(entityType)) === '200'
+    );
+  if (neededPermission === Permission.Canread)
+    return (
+      (await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
+        entityType
+      )) === '200'
+    );
+
+  // ponytail: canupdate/candelete were always false here, because the mapping
+  // the frontend read only ever carried canread and cancreate. Kept false so
+  // nothing silently gains entries; give them a real soft call when a client
+  // actually needs one.
+  return false;
+};
+
+// Posting a comment needs both a comment to create and a parent to hang it on.
+export const isCommentPostingPermitted = async (
+  parent: unknown,
+  dataSources: DataSources
+): Promise<boolean> => {
+  const entity = parent as { type: string };
+  const [mayCreateComment, parentUpdateStatus] = await Promise.all([
+    isEntityTypePermitted('comment', Permission.Cancreate, dataSources),
+    dataSources.CollectionAPI.patchEntityDetailSoftCall(
+      getEntityId(entity),
+      entity.type
+    ),
+  ]);
+  return mayCreateComment && parentUpdateStatus === '200';
+};
+
 export const isMenuItemPermitted = async (
   item: MenuItemPermissionInput,
   dataSources: DataSources,
@@ -62,24 +103,11 @@ export const isMenuItemPermitted = async (
 
   if (!item.entityType) return true;
 
-  const neededPermission = item.neededPermission || Permission.Canread;
-  if (neededPermission === Permission.Cancreate)
-    return (
-      (await dataSources.CollectionAPI.postEntitySoftCall(item.entityType)) ===
-      '200'
-    );
-  if (neededPermission === Permission.Canread)
-    return (
-      (await dataSources.CollectionAPI.postEntitiesFilterSoftCall(
-        item.entityType
-      )) === '200'
-    );
-
-  // ponytail: canupdate/candelete were always false here, because the mapping
-  // the frontend read only ever carried canread and cancreate. Kept false so
-  // menus do not silently gain entries; give them a real soft call when a
-  // client actually needs one.
-  return false;
+  return isEntityTypePermitted(
+    item.entityType,
+    item.neededPermission || Permission.Canread,
+    dataSources
+  );
 };
 
 export const filterPermittedOptions = async <
