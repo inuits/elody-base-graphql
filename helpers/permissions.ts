@@ -134,6 +134,43 @@ const isEntityActionPermitted = async (
   return false;
 };
 
+// A context menu hangs off a listing row or off a detail window, and the two
+// mean different things to a permission: the row is the child of the container
+// the request names, while a detail window entity *is* the parent and has no
+// child. Which one it is only the resolver handing out the menu knows, so it
+// says so here.
+type ContextMenuEntityRole = 'child' | 'parent';
+const contextMenuEntityRoleKey = '__contextMenuEntityRole';
+
+export const tagContextMenuEntityRole = (
+  entity: unknown,
+  role: ContextMenuEntityRole
+): unknown => ({ ...(entity as object), [contextMenuEntityRoleKey]: role });
+
+export const isContextMenuActionPermitted = async (
+  info: GraphQLResolveInfo,
+  parent: unknown,
+  dataSources: DataSources,
+  customPermissions: CustomPermissions,
+  requestParentEntityId?: string
+): Promise<boolean> => {
+  const can = readSubFieldArgument(info, 'can', 'input');
+  const permission = (Array.isArray(can) ? can[0] : can) as string | undefined;
+  if (!permission) return true;
+
+  const entityId = parent ? getEntityId(parent) : undefined;
+  const isDetailWindow =
+    (parent as any)?.[contextMenuEntityRoleKey] === 'parent';
+
+  return evaluateAdvancedPermission(
+    permission,
+    dataSources,
+    customPermissions,
+    isDetailWindow ? entityId : requestParentEntityId,
+    isDetailWindow ? undefined : entityId
+  );
+};
+
 // Posting a comment needs both a comment to create and a parent to hang it on.
 export const isCommentPostingPermitted = async (
   parent: unknown,

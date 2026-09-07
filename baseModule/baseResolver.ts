@@ -27,6 +27,8 @@ import {
   isMenuItemPermitted,
   mayUpdateEntity,
   mayDeleteEntity,
+  isContextMenuActionPermitted,
+  tagContextMenuEntityRole,
 } from '../helpers/permissions';
 import {
   ActionElement,
@@ -1032,7 +1034,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : false;
     },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuActions;
+      return tagContextMenuEntityRole(parent, 'child') as ContextMenuActions;
     },
   },
   Job: {
@@ -1611,7 +1613,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : 'no-input';
     },
     contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuActions;
+      return tagContextMenuEntityRole(parent, 'parent') as ContextMenuActions;
     },
     windowElementStatus: async (
       _source,
@@ -2663,20 +2665,80 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuActions: {
-    doLinkAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuLinkAction;
+    doLinkAction: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ContextMenuLinkAction) : null;
     },
-    doGeneralAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuGeneralAction;
+    doGeneralAction: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ContextMenuGeneralAction) : null;
     },
-    doElodyAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuElodyAction;
+    doElodyAction: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ContextMenuElodyAction) : null;
     },
-    doCustomAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuCustomAction;
+    doCustomAction: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ContextMenuCustomAction) : null;
     },
-    doQueryAction: async (parent: unknown, {}, { dataSources }) => {
-      return parent as ContextMenuQueryAction;
+    doQueryAction: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ContextMenuQueryAction) : null;
     },
   },
   ContextMenuLinkAction: {
