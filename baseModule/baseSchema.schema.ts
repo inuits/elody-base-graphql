@@ -509,6 +509,7 @@ export const baseSchema = gql`
     metadataKeyToCreateEntityFromOption: String
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]
+    optionsOrderByKey: String
     advancedFilterInputForRetrievingAllOptions: [AdvancedFilterInputType!]
     advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]

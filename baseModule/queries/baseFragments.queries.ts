@@ -99,6 +99,7 @@ export const baseFragments = gql`
     canCreateEntityFromOption
     deferEntityCreation
     metadataKeyToCreateEntityFromOption
+    optionsOrderByKey
     advancedFilterInputForRetrievingOptions {
       type
       key
