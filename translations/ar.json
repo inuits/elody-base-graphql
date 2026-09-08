@@ -609,7 +609,9 @@
       "scale": "مقياس",
       "width": "العرض",
       "height": "الارتفاع",
-      "get-resized-image": "الحصول على صورة معدلة الحجم"
+      "get-resized-image": "الحصول على صورة معدلة الحجم",
+      "missing-dimensions-title": "الأبعاد مفقودة",
+      "missing-dimensions-description": "أدخل العرض أو الارتفاع لتغيير حجم هذه الصورة."
     },
     "text-viewer": {
       "sanitized-warning": "تمت معالجة محتوى المعاينة لأسباب أمنية.",

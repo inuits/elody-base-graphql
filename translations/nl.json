@@ -773,7 +773,9 @@
       "scale": "Schaal",
       "width": "Breedte",
       "height": "Hoogte",
-      "get-resized-image": "Aangepaste afbeelding ophalen"
+      "get-resized-image": "Aangepaste afbeelding ophalen",
+      "missing-dimensions-title": "Afmetingen ontbreken",
+      "missing-dimensions-description": "Geef een breedte of een hoogte op om deze afbeelding te schalen."
     },
     "input-validation": {
       "messages": {

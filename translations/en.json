@@ -783,7 +783,9 @@
       "scale": "Scale",
       "width": "Width",
       "height": "Height",
-      "get-resized-image": "Get resized image"
+      "get-resized-image": "Get resized image",
+      "missing-dimensions-title": "Missing dimensions",
+      "missing-dimensions-description": "Enter a width or a height to resize this image."
     },
     "input-validation": {
       "messages": {
