@@ -1498,8 +1498,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     type: async (_source, { input }, { dataSources }) => {
       return input as ActionsOnResultTypes;
     },
-    options: async (_source, { input }, { dataSources }) => {
-      return input;
+    options: async (
+      _source,
+      { input },
+      { dataSources, customPermissions, parentEntityId }
+    ) => {
+      return filterPermittedOptions(
+        input,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
     },
   },
   ManifestViewerElement: {
@@ -2229,6 +2238,21 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
+    },
+  },
+  DropdownOption: {
+    subOptions: async (
+      parent,
+      {},
+      { dataSources, customPermissions, parentEntityId }
+    ) => {
+      if (!parent.subOptions?.length) return parent.subOptions ?? null;
+      return filterPermittedOptions(
+        parent.subOptions.filter(Boolean) as DropdownOption[],
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
     },
   },
   BulkOperationOptions: {

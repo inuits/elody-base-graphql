@@ -6,6 +6,12 @@ const GRANTED_TTL_MS = 30_000;
 // short TTL. Upgrade path: inspect the response status in the callers and give
 // genuine 403s the full TTL.
 const DENIED_TTL_MS = 5_000;
+// A soft call that never settles must not pin its key for the process lifetime,
+// so a pending entry expires too. The trade is that a call slower than this
+// lets a second caller start a duplicate.
+// ponytail: this bounds the *entry*, not the request — nothing here cancels a
+// hung fetch. Give the REST data source an HTTP timeout for that.
+const PENDING_TTL_MS = 10_000;
 const MAX_ENTRIES = 5_000;
 const ABSENT_KEY_PART = '<absent>';
 
@@ -48,12 +54,10 @@ export const getCachedPermission = <T>(
   if (cached && cached.expiresAt > Date.now()) return cached.promise;
 
   const promise = fetchPermission();
-  // ponytail: a pending entry never expires, so concurrent callers for the same
-  // key share one request however slow it is. A permanently hung fetch would
-  // pin the entry; the underlying HTTP client is what times out.
+  // Concurrent callers for the same key share one request, up to PENDING_TTL_MS.
   const entry: CacheEntry<T> = {
     promise,
-    expiresAt: Number.POSITIVE_INFINITY,
+    expiresAt: Date.now() + PENDING_TTL_MS,
   };
   evictWhenFull();
   entries.set(key, entry);

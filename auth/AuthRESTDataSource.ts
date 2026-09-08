@@ -38,6 +38,18 @@ export class AuthRESTDataSource extends RESTDataSource {
     );
   }
 
+  // The token that will actually authorize the request, which is not always
+  // the session's: a whitelisted IP or domain gets a configured static token
+  // and ALLOW_ANONYMOUS_USERS gets none. Anything keyed on the caller's
+  // identity has to key on this, not on `session.auth`.
+  protected async resolveEffectiveToken(): Promise<string | undefined> {
+    try {
+      return await this.tokenManager.getValidToken();
+    } catch {
+      return undefined;
+    }
+  }
+
   async willSendRequest(_path: string, request: AugmentedRequest) {
     const requestId =
       this.context?.requestId ||

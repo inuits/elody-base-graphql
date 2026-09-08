@@ -6,8 +6,11 @@ import { loadTranslationsFromDirectory } from '../translations/loadTranslations'
 import { resolveKeyboardLayouts } from '../sources/virtualKeyboardLayouts';
 import path from 'path';
 import { DataSources } from '../types';
-import { PermissionRequestInfo } from '../generated-types/type-defs';
-import { evaluateAdvancedPermission } from '../helpers/permissions';
+import { Permission, PermissionRequestInfo } from '../generated-types/type-defs';
+import {
+  evaluateAdvancedPermission,
+  isEntityTypePermitted,
+} from '../helpers/permissions';
 import type { ModuleFeature } from '../helpers/moduleContributions';
 
 export type AppConfigRequestContext = {
@@ -73,7 +76,6 @@ export const getConfig = (config: Environment) => {
     GLITCH_TIP_DSN_FRONTEND: config.glitchtipDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,
     DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT || '',
-    IGNORE_PERMISSIONS: config.ignorePermissions,
     skeletonLayouts: config.skeletonLayouts,
   };
 
@@ -195,10 +197,10 @@ export const resolveReadableSimpleSearchTypes = async (
   const dataSources = requestContext.buildDataSources(req);
   const verdicts = await Promise.all(
     itemTypes.map((itemType) =>
-      dataSources.CollectionAPI.postEntitiesFilterSoftCall(itemType)
+      isEntityTypePermitted(itemType, Permission.Canread, dataSources)
     )
   );
-  return itemTypes.filter((_itemType, index) => verdicts[index] === '200');
+  return itemTypes.filter((_itemType, index) => verdicts[index]);
 };
 
 const resolveSimpleSearch = async (

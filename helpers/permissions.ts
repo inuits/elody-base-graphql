@@ -7,6 +7,7 @@ import {
 import { Permission, PermissionRequestInfo } from '../generated-types/type-defs';
 import { DataSources } from '../types';
 import { getEntityId } from './helpers';
+import { permissionsIgnored } from '../environment';
 
 export type CustomPermissions = { [key: string]: PermissionRequestInfo };
 
@@ -52,6 +53,11 @@ export const isEntityTypePermitted = async (
   neededPermission: string,
   dataSources: DataSources
 ): Promise<boolean> => {
+  // IGNORE_PERMISSIONS only ever bypassed the read/create verdict on an entity
+  // type; advanced permissions and the update/delete dry runs were always
+  // enforced through it, so they stay enforced here.
+  if (permissionsIgnored()) return true;
+
   if (neededPermission === Permission.Cancreate)
     return (
       (await dataSources.CollectionAPI.postEntitySoftCall(entityType)) === '200'

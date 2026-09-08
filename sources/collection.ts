@@ -58,13 +58,13 @@ export class CollectionAPI extends AuthRESTDataSource {
 
   private elodyUserPromise: Promise<Entity | undefined> | undefined;
 
-  private cachedPermissionCall<T>(
+  private async cachedPermissionCall<T>(
     keyParts: (string | undefined)[],
     call: () => Promise<T>,
     isGranted: (value: T) => boolean
   ): Promise<T> {
     const key = buildPermissionCacheKey(
-      principalKeyFromToken(this.session.auth?.accessToken),
+      principalKeyFromToken(await this.resolveEffectiveToken()),
       this.context?.tenantId,
       ...keyParts
     );
@@ -207,6 +207,11 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
       if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
+      // The key is the *substituted* request, so a config that never mentions
+      // $childEntityId collapses every row of a listing onto one call.
+      // ponytail: a config that does substitute it genuinely differs per row,
+      // so a 20-row listing with M gated actions costs up to 20xM soft calls.
+      // Upgrade path: a batch soft-call endpoint in collection-api.
       return await this.cachedPermissionCall(
         [
           'advanced',

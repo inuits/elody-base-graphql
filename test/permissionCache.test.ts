@@ -88,6 +88,19 @@ describe('getCachedPermission', () => {
     expect(fetchPermission).toHaveBeenCalledTimes(2);
   });
 
+  it('stops a hung call from pinning its key forever', async () => {
+    vi.useFakeTimers();
+    // Never settles, the way a soft call against an unreachable collection-api
+    // would before anything times out.
+    const fetchPermission = vi.fn(() => new Promise<string>(() => {}));
+
+    void getCachedPermission('key', fetchPermission, granted);
+    vi.advanceTimersByTime(10_001);
+    void getCachedPermission('key', fetchPermission, granted);
+
+    expect(fetchPermission).toHaveBeenCalledTimes(2);
+  });
+
   it('never caches a rejection', async () => {
     const fetchPermission = vi
       .fn()

@@ -1,20 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-// AuthRESTDataSource pulls in express-session, which baseGraphql only declares
-// the types for -- the real dependency comes from the service that hosts the
-// module, so it cannot be imported from here.
-vi.mock('../auth/AuthRESTDataSource', () => ({
-  AuthRESTDataSource: class {
-    protected environment: any;
-    protected session: any;
-    protected context: any;
-
-    constructor(options: any) {
-      this.environment = options.environment;
-      this.session = options.session;
-      this.context = options.context;
-    }
-  },
+// Only the session store pulls in express-session, which baseGraphql declares
+// the types for but does not depend on -- the real one comes from the service
+// hosting the module. The rest of the auth stack is the real thing, so the
+// cache key is built by the token resolution that runs in production.
+vi.mock('../auth', () => ({
+  getManager: () => ({ refresh: async () => null }),
 }));
 
 const { CollectionAPI } = await import('../sources/collection');
@@ -39,21 +30,39 @@ class TestCollectionAPI extends CollectionAPI {
   }
 }
 
-const collectionApiFor = (accessToken?: string, tenantId = 'tenant-a') =>
+// AuthTokenManager only hands back the session token when it decodes and has
+// not expired, so a cache key test needs a token shaped like a real one.
+const unexpiredTokenFor = (subject: string) => {
+  const encode = (part: object) =>
+    Buffer.from(JSON.stringify(part)).toString('base64url');
+  return `${encode({ alg: 'none' })}.${encode({
+    sub: subject,
+    exp: Math.floor(Date.now() / 1000) + 3600,
+  })}.signature`;
+};
+
+const collectionApiFor = (
+  accessToken?: string,
+  tenantId = 'tenant-a',
+  environmentOverrides: any = {},
+  clientIp?: string
+) =>
   new TestCollectionAPI({
     environment: {
       api: { collectionApiUrl: 'http://collection-api' },
       customization: {},
+      ...environmentOverrides,
     } as any,
     session: accessToken ? { auth: { accessToken } } : {},
     context: { tenantId },
+    clientIp,
   } as any);
 
 describe('CollectionAPI permission soft calls are cached', () => {
   beforeEach(() => clearPermissionCache());
 
   it('issues one request for a repeated read check on the same type', async () => {
-    const collectionApi = collectionApiFor('token');
+    const collectionApi = collectionApiFor(unexpiredTokenFor('user'));
 
     await collectionApi.postEntitiesFilterSoftCall('production');
     await collectionApi.postEntitiesFilterSoftCall('production');
@@ -62,7 +71,7 @@ describe('CollectionAPI permission soft calls are cached', () => {
   });
 
   it('collapses a whole listing worth of concurrent update checks', async () => {
-    const collectionApi = collectionApiFor('token');
+    const collectionApi = collectionApiFor(unexpiredTokenFor('user'));
     const rows = Array.from({ length: 100 }, () => 'PROD-1');
 
     const statuses = await Promise.all(
@@ -74,7 +83,7 @@ describe('CollectionAPI permission soft calls are cached', () => {
   });
 
   it('keeps a separate entry per entity id', async () => {
-    const collectionApi = collectionApiFor('token');
+    const collectionApi = collectionApiFor(unexpiredTokenFor('user'));
 
     await collectionApi.delEntityDetailSoftCall('PROD-1', 'production');
     await collectionApi.delEntityDetailSoftCall('PROD-2', 'production');
@@ -83,7 +92,7 @@ describe('CollectionAPI permission soft calls are cached', () => {
   });
 
   it('normalizes a prefixed id onto the same entry', async () => {
-    const collectionApi = collectionApiFor('token');
+    const collectionApi = collectionApiFor(unexpiredTokenFor('user'));
 
     await collectionApi.patchEntityDetailSoftCall('PROD-1', 'production');
     await collectionApi.patchEntityDetailSoftCall(
@@ -95,8 +104,8 @@ describe('CollectionAPI permission soft calls are cached', () => {
   });
 
   it('never serves one user a decision made for another', async () => {
-    const firstUser = collectionApiFor('token-a');
-    const secondUser = collectionApiFor('token-b');
+    const firstUser = collectionApiFor(unexpiredTokenFor('user-a'));
+    const secondUser = collectionApiFor(unexpiredTokenFor('user-b'));
     const anonymous = collectionApiFor(undefined);
 
     await firstUser.postEntitySoftCall('production');
@@ -108,9 +117,38 @@ describe('CollectionAPI permission soft calls are cached', () => {
     expect(anonymous.calls).toHaveLength(1);
   });
 
+  it('never serves a whitelisted-IP decision to an anonymous caller', async () => {
+    const whitelistEnvironment = {
+      features: {
+        ipWhiteListing: {
+          whiteListedIpAddresses: ['10.0.0.1'],
+          tokenToUseForWhiteListedIpAddresses: unexpiredTokenFor('leeszaal'),
+        },
+      },
+    };
+    const whitelistedVisitor = collectionApiFor(
+      undefined,
+      'tenant-a',
+      whitelistEnvironment,
+      '10.0.0.1'
+    );
+    const otherVisitor = collectionApiFor(
+      undefined,
+      'tenant-a',
+      whitelistEnvironment,
+      '10.0.0.2'
+    );
+
+    await whitelistedVisitor.postEntitiesFilterSoftCall('production');
+    await otherVisitor.postEntitiesFilterSoftCall('production');
+
+    expect(whitelistedVisitor.calls).toHaveLength(1);
+    expect(otherVisitor.calls).toHaveLength(1);
+  });
+
   it('never serves one tenant a decision made for another', async () => {
-    const tenantA = collectionApiFor('token', 'tenant-a');
-    const tenantB = collectionApiFor('token', 'tenant-b');
+    const tenantA = collectionApiFor(unexpiredTokenFor('user'), 'tenant-a');
+    const tenantB = collectionApiFor(unexpiredTokenFor('user'), 'tenant-b');
 
     await tenantA.postEntitiesFilterSoftCall('production');
     await tenantB.postEntitiesFilterSoftCall('production');
@@ -120,7 +158,7 @@ describe('CollectionAPI permission soft calls are cached', () => {
   });
 
   it('separates the advanced permission checks by resolved entity id', async () => {
-    const collectionApi = collectionApiFor('token');
+    const collectionApi = collectionApiFor(unexpiredTokenFor('user'));
     const permissionRequestInfo = {
       datasource: 'CollectionAPI',
       crud: 'post',
