@@ -1675,9 +1675,6 @@ export const baseSchema = gql`
     revealQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
-    # The verdicts the frontend renders off. Each takes the permission it is
-    # resolved from as its own argument; selecting one without an argument means
-    # no permission was configured, which resolves to visible/editable.
     permitted(input: [String!]): Boolean
     readOnly(input: [String!]): Boolean
     valueTranslationKey(input: String): String

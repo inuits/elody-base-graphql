@@ -52,7 +52,11 @@ import {
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
 import { expressMiddleware } from '@as-integrations/express4';
-import { getMetadataItemValueByKey, getEntityId, extractErrorCode } from './helpers/helpers';
+import {
+  getMetadataItemValueByKey,
+  getEntityId,
+  extractErrorCode,
+} from './helpers/helpers';
 import { mayUpdateEntity, mayDeleteEntity } from './helpers/permissions';
 import { loadTranslationsFromDirectory } from './translations/loadTranslations';
 import {
@@ -167,8 +171,6 @@ const start = ({
   const fullElodyConfig: ElodyConfig = createFullElodyConfig(
     generateElodyConfig(customModuleConfig)
   );
-  // Installed modules bring their own permission definitions; a client that
-  // declares the same key overrides them.
   const permissions = {
     ...collectModulePermissions(fullElodyConfig.modules),
     ...customPermissions,
@@ -290,14 +292,7 @@ const start = ({
           if (environment.features?.ipWhiteListing)
             console.log(`[GraphQL] clientIp: ${clientIp}, path: ${req.path}`);
           const tenantId = req.headers['x-tenant-id'] as string;
-          // ponytail: the entity a permission like `/entities/$parentEntityId`
-          // resolves against travels as a header because the alternative is a new
-          // variable in ~95 client query documents. One parent context per request
-          // is what the PWA does today; queries that send it must stay uncached,
-          // since Apollo keys its cache on variables and ignores headers.
-          const parentEntityId = req.headers[
-            'x-parent-entity-id'
-          ] as string;
+          const parentEntityId = req.headers['x-parent-entity-id'] as string;
           const dataSources = getDataSourcesFromMapping(
             fullElodyConfig,
             environment,

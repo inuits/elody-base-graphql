@@ -79,7 +79,10 @@ export class CollectionAPI extends AuthRESTDataSource {
   private async getElodyUserOnce(): Promise<Entity | undefined> {
     if (!this.elodyUserPromise) {
       this.elodyUserPromise = this.getElodyUser().catch((error: any) => {
-        console.error('[getSessionInfo] could not resolve the elody user', error);
+        console.error(
+          '[getSessionInfo] could not resolve the elody user',
+          error
+        );
         return undefined;
       });
     }
@@ -207,11 +210,6 @@ export class CollectionAPI extends AuthRESTDataSource {
       }
       if (config.uri.startsWith('/')) config.uri = config.uri.slice(1);
 
-      // The key is the *substituted* request, so a config that never mentions
-      // $childEntityId collapses every row of a listing onto one call.
-      // ponytail: a config that does substitute it genuinely differs per row,
-      // so a 20-row listing with M gated actions costs up to 20xM soft calls.
-      // Upgrade path: a batch soft-call endpoint in collection-api.
       return await this.cachedPermissionCall(
         [
           'advanced',
@@ -644,7 +642,6 @@ export class CollectionAPI extends AuthRESTDataSource {
     if (data === 'no-call-is-triggerd') {
       throw Error('No call triggerd wen trying to search for entities');
     }
-
 
     if (!Array.isArray(data)) {
       data?.results?.forEach((element: unknown): unknown => setId(element));

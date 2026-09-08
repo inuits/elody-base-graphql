@@ -6,7 +6,10 @@ import { loadTranslationsFromDirectory } from '../translations/loadTranslations'
 import { resolveKeyboardLayouts } from '../sources/virtualKeyboardLayouts';
 import path from 'path';
 import { DataSources } from '../types';
-import { Permission, PermissionRequestInfo } from '../generated-types/type-defs';
+import {
+  Permission,
+  PermissionRequestInfo,
+} from '../generated-types/type-defs';
 import {
   evaluateAdvancedPermission,
   isEntityTypePermitted,
@@ -152,9 +155,6 @@ const getAvailableTranslations = (
   return availableTranslations;
 };
 
-// Features an installed module contributes. One that names a permission is
-// reported as enabled only to a user who passes it, so the frontend can render
-// on the flag alone.
 export const resolveModuleFeatures = async (
   req: any,
   requestContext?: AppConfigRequestContext
@@ -210,10 +210,6 @@ type RouteConfig = {
   children?: RouteConfig[];
 };
 
-// A route is guarded before the entity behind it has been fetched, so a route
-// `can` never substitutes an entity id and can be answered once, here, instead
-// of on every navigation. The verdict replaces `can` in the shipped config so
-// nothing client-side is tempted to re-check it.
 export const resolveRoutePermissions = async (
   req: any,
   routerConfig: RouteConfig[] | undefined,
@@ -225,7 +221,7 @@ export const resolveRoutePermissions = async (
   const resolveMeta = async (meta: RouteConfig['meta']) => {
     if (!meta?.can?.length) return meta;
     const { can, ...rest } = meta;
-    // Only the first entry is evaluated, which is what the frontend did.
+
     return {
       ...rest,
       permitted: await evaluateAdvancedPermission(
@@ -299,7 +295,11 @@ export const applyAppConfigsEndpoint = (
         config: {
           ...appConfig,
           routerConfig,
-          features: { ...appConfig.features, ...moduleFeatures, ...simpleSearch },
+          features: {
+            ...appConfig.features,
+            ...moduleFeatures,
+            ...simpleSearch,
+          },
         },
         translations: getAvailableTranslations(config, translations),
         urlMapping,

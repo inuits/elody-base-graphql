@@ -4,7 +4,10 @@ import {
   Kind,
   valueFromASTUntyped,
 } from 'graphql';
-import { Permission, PermissionRequestInfo } from '../generated-types/type-defs';
+import {
+  Permission,
+  PermissionRequestInfo,
+} from '../generated-types/type-defs';
 import { DataSources } from '../types';
 import { getEntityId } from './helpers';
 import { permissionsIgnored } from '../environment';
@@ -46,16 +49,11 @@ type MenuItemPermissionInput = {
   neededPermission?: string | null;
 };
 
-// Whether the user may read or create this entity type at all, which is a
-// dry-run call to collection-api rather than a named permission.
 export const isEntityTypePermitted = async (
   entityType: string,
   neededPermission: string,
   dataSources: DataSources
 ): Promise<boolean> => {
-  // IGNORE_PERMISSIONS only ever bypassed the read/create verdict on an entity
-  // type; advanced permissions and the update/delete dry runs were always
-  // enforced through it, so they stay enforced here.
   if (permissionsIgnored()) return true;
 
   if (neededPermission === Permission.Cancreate)
@@ -69,20 +67,9 @@ export const isEntityTypePermitted = async (
       )) === '200'
     );
 
-  // ponytail: canupdate/candelete were always false here, because the mapping
-  // the frontend read only ever carried canread and cancreate. Kept false so
-  // nothing silently gains entries; give them a real soft call when a client
-  // actually needs one.
   return false;
 };
 
-// A panel `can` names an advanced permission, but the ones clients configure
-// substitute an entity id the panel path never had, so a denial falls back to
-// what the user may do with the entity itself. That fallback is what actually
-// decides those panels today.
-// ponytail: the advanced check is deliberately evaluated without an entity id,
-// exactly as the frontend did. Give it `getEntityId(parent)` only together with
-// a decision about which branch should then win.
 export const isPanelPermitted = async (
   info: GraphQLResolveInfo,
   parent: unknown,
@@ -94,11 +81,7 @@ export const isPanelPermitted = async (
   if (!permission) return true;
 
   if (
-    await evaluateAdvancedPermission(
-      permission,
-      dataSources,
-      customPermissions
-    )
+    await evaluateAdvancedPermission(permission, dataSources, customPermissions)
   )
     return true;
 
@@ -123,9 +106,6 @@ export const mayDeleteEntity = async (
     entity.type
   )) === '200';
 
-// `update:<type>` and `delete:<type>` are answered by a dry-run on the entity
-// itself. `read:` never was: the mapping the frontend read carried no such
-// verdict, so it always denied.
 const isEntityActionPermitted = async (
   permission: string,
   parent: unknown,
@@ -140,11 +120,6 @@ const isEntityActionPermitted = async (
   return false;
 };
 
-// A context menu hangs off a listing row or off a detail window, and the two
-// mean different things to a permission: the row is the child of the container
-// the request names, while a detail window entity *is* the parent and has no
-// child. Which one it is only the resolver handing out the menu knows, so it
-// says so here.
 type ContextMenuEntityRole = 'child' | 'parent';
 const contextMenuEntityRoleKey = '__contextMenuEntityRole';
 
@@ -177,7 +152,6 @@ export const isContextMenuActionPermitted = async (
   );
 };
 
-// Posting a comment needs both a comment to create and a parent to hang it on.
 export const isCommentPostingPermitted = async (
   parent: unknown,
   dataSources: DataSources
@@ -200,7 +174,6 @@ export const isMenuItemPermitted = async (
 ): Promise<boolean> => {
   if (item.requiresAuth === false) return true;
 
-  // Only the first entry is evaluated, which is what the frontend did.
   if (item.can?.length)
     return evaluateAdvancedPermission(
       item.can[0],
@@ -218,7 +191,7 @@ export const isMenuItemPermitted = async (
 };
 
 export const filterPermittedOptions = async <
-  T extends { can?: (string | null)[] | null }
+  T extends { can?: (string | null)[] | null },
 >(
   options: T[],
   dataSources: DataSources,
@@ -227,7 +200,6 @@ export const filterPermittedOptions = async <
 ): Promise<T[]> => {
   const verdicts = await Promise.all(
     options.map((option) =>
-      // Only the first entry is evaluated, which is what the frontend did.
       option.can?.length
         ? evaluateAdvancedPermission(
             option.can[0] as string,
@@ -241,10 +213,6 @@ export const filterPermittedOptions = async <
   return options.filter((_option, index) => verdicts[index]);
 };
 
-// The `can` of an element sits on a sub-field of that element, so the resolver
-// that has to leave the element out has to read it back off the query itself.
-// Fragment spreads and variables are resolved, because client query documents
-// use both.
 export const readSubFieldArgument = (
   info: GraphQLResolveInfo,
   fieldName: string,
@@ -285,7 +253,6 @@ export const isPermissionListSatisfied = async (
   const permissions = Array.isArray(can) ? can : can ? [can] : [];
   if (!permissions.length) return true;
 
-  // Only the first entry is evaluated, which is what the frontend did.
   return evaluateAdvancedPermission(
     permissions[0] as string,
     dataSources,
