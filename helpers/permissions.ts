@@ -276,16 +276,12 @@ export const readSubFieldArgument = (
   return undefined;
 };
 
-// Every element resolver receives the entity document as its source, so the
-// `$parentEntityId` an element permission substitutes needs no request header.
-export const isElementPermitted = async (
-  info: GraphQLResolveInfo,
+export const isPermissionListSatisfied = async (
+  can: unknown,
   parent: unknown,
   dataSources: DataSources,
-  customPermissions: CustomPermissions,
-  fieldName: string = 'can'
+  customPermissions: CustomPermissions
 ): Promise<boolean> => {
-  const can = readSubFieldArgument(info, fieldName, 'input');
   const permissions = Array.isArray(can) ? can : can ? [can] : [];
   if (!permissions.length) return true;
 
@@ -297,3 +293,17 @@ export const isElementPermitted = async (
     parent ? getEntityId(parent) : undefined
   );
 };
+
+export const isElementPermitted = async (
+  info: GraphQLResolveInfo,
+  parent: unknown,
+  dataSources: DataSources,
+  customPermissions: CustomPermissions,
+  fieldName: string = 'can'
+): Promise<boolean> =>
+  isPermissionListSatisfied(
+    readSubFieldArgument(info, fieldName, 'input'),
+    parent,
+    dataSources,
+    customPermissions
+  );

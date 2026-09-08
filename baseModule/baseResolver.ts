@@ -23,6 +23,7 @@ import {
   isCommentPostingPermitted,
   isElementPermitted,
   isPanelPermitted,
+  isPermissionListSatisfied,
   isEntityTypePermitted,
   isMenuItemPermitted,
   mayUpdateEntity,
@@ -201,8 +202,6 @@ import { CollectionAPIMediaFile } from '../types/collectionAPITypes';
 import { parseValidationRulesString } from '../utilities/validationParser';
 import { defaultMatchers } from '../sources/filtersMatchers';
 
-// GraphQL leaves out any view element the user has no permission for, so the
-// frontend can render on presence alone.
 const resolvePermittedElement = async (
   parent: any,
   { dataSources, customPermissions }: any,
@@ -893,7 +892,10 @@ export const baseResolver: Resolvers<ContextValue> = {
         if (result.status === 'fulfilled') succeededIds.push(ids[index]);
         else {
           failedIds.push(ids[index]);
-          console.error(`bulkEditEntities failed for ${ids[index]}:`, result.reason);
+          console.error(
+            `bulkEditEntities failed for ${ids[index]}:`,
+            result.reason
+          );
         }
       });
 
@@ -957,7 +959,8 @@ export const baseResolver: Resolvers<ContextValue> = {
       // says which. Read the body instead of failing the whole call.
       let result: any;
       try {
-        result = await dataSources.CollectionAPI.updateEntitiesWithJson(documents);
+        result =
+          await dataSources.CollectionAPI.updateEntitiesWithJson(documents);
       } catch (error: any) {
         result = error?.extensions?.response?.body ?? error?.response?.body;
         if (!result) {
@@ -970,7 +973,9 @@ export const baseResolver: Resolvers<ContextValue> = {
       // can carry the id under id, _id or identifiers.
       const patchedIds = new Set<string>(
         (result?.entities ?? []).flatMap((entity: any) =>
-          [entity?.id, entity?._id, ...(entity?.identifiers ?? [])].filter(Boolean)
+          [entity?.id, entity?._id, ...(entity?.identifiers ?? [])].filter(
+            Boolean
+          )
         )
       );
       const succeededIds = requestedIds.filter((id) => patchedIds.has(id));
@@ -1461,9 +1466,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input !== undefined ? input : false;
     },
     entityListElement: async (parent: any, {}, context, info) =>
-      resolvePermittedElement(parent, context, info) as Promise<
-        EntityListElement | null
-      >,
+      resolvePermittedElement(
+        parent,
+        context,
+        info
+      ) as Promise<EntityListElement | null>,
     customBulkOperations: async (parent, { input }, { dataSources }) => {
       return input ? input : 'undefined';
     },
@@ -1598,9 +1605,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    // GraphQL leaves out a panel the user has no permission for, so the
-    // frontend renders whichever panels it was handed.
-    panels: async (parent: unknown, {}, { dataSources, customPermissions }, info) => {
+    panels: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions },
+      info
+    ) => {
       const isPermitted = await isPanelPermitted(
         info,
         parent,
@@ -1673,35 +1683,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     info: async (parent: unknown, {}, { dataSources }) => {
       return parent as PanelInfo;
     },
-    // A metadata field is a non-null field of its panel, so neither verdict can
-    // be left out: `canEdit` resolves into `readOnly` and `can` into
-    // `permitted`, and the frontend renders off those alone.
-    // ponytail: only panel metadata is resolved this way, the only place
-    // clients configure either today. Teaser, map and form field metadata have
-    // no entity document to substitute `$parentEntityId` with; give them one
-    // before wiring them up too.
-    metaData: async (parent: unknown, {}, context, info) => {
-      const [isEditable, isPermitted] = await Promise.all([
-        isElementPermitted(
-          info,
-          parent,
-          context.dataSources,
-          context.customPermissions,
-          'canEdit'
-        ),
-        isElementPermitted(
-          info,
-          parent,
-          context.dataSources,
-          context.customPermissions,
-          'can'
-        ),
-      ]);
-      return {
-        ...(parent as object),
-        readOnly: !isEditable,
-        permitted: isPermitted,
-      } as unknown as PanelMetaData;
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
     },
     relation: async (parent: any, {}, { dataSources }) => {
       try {
@@ -1719,9 +1702,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       }
     },
     entityListElement: async (parent: any, {}, context, info) =>
-      resolvePermittedElement(parent, context, info) as Promise<
-        EntityListElement | null
-      >,
+      resolvePermittedElement(
+        parent,
+        context,
+        info
+      ) as Promise<EntityListElement | null>,
     wysiwygElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
@@ -1841,11 +1826,29 @@ export const baseResolver: Resolvers<ContextValue> = {
     customValue: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },
-    can: async (_source, { input }, { dataSources }) => {
-      return input ?? [];
+    permitted: async (
+      parent: unknown,
+      { input },
+      { dataSources, customPermissions }
+    ) => {
+      return isPermissionListSatisfied(
+        input,
+        parent,
+        dataSources,
+        customPermissions
+      );
     },
-    canEdit: async (_source, { input }, { dataSources }) => {
-      return input ?? [];
+    readOnly: async (
+      parent: unknown,
+      { input },
+      { dataSources, customPermissions }
+    ) => {
+      return !(await isPermissionListSatisfied(
+        input,
+        parent,
+        dataSources,
+        customPermissions
+      ));
     },
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input ?? false;
@@ -2094,9 +2097,11 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as EntityViewerElement;
     },
     entityListElement: async (parent: any, {}, context, info) =>
-      resolvePermittedElement(parent, context, info) as Promise<
-        EntityListElement | null
-      >,
+      resolvePermittedElement(
+        parent,
+        context,
+        info
+      ) as Promise<EntityListElement | null>,
     mediaFileElement: async (parent: unknown, {}, { dataSources }) => {
       return parent as MediaFileElement;
     },
@@ -2125,13 +2130,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as WysiwygElement;
     },
     hierarchyListElement: async (parent: any, {}, context, info) =>
-      resolvePermittedElement(parent, context, info) as Promise<
-        HierarchyListElement | null
-      >,
+      resolvePermittedElement(
+        parent,
+        context,
+        info
+      ) as Promise<HierarchyListElement | null>,
     commentsElement: async (parent: unknown, {}, { dataSources }) => {
       if (!commentsEnabled()) return null;
-      // `comment` is declared by the clients that enable the feature, so it
-      // is not a member of base's own entity type enum.
       const mayReadComments = await isEntityTypePermitted(
         'comment',
         Permission.Canread,
@@ -2147,7 +2152,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     parentEntityFilterKey: async (_parent: unknown, { input }) => {
       return input;
     },
-    // A user who may read comments but not write them gets the thread list only.
     readOnly: async (parent: unknown, {}, { dataSources }) =>
       !(await isCommentPostingPermitted(parent, dataSources)),
     composer: async (parent: unknown, {}, { dataSources }) => {

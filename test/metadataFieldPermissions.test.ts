@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from 'vitest';
-import { parse } from 'graphql';
 import { baseResolver } from '../baseModule/baseResolver';
 import { setCurrentEnvironment } from '../environment';
 
@@ -36,90 +35,81 @@ const contextGranting = (granted: string[]) => ({
   customPermissions,
 });
 
-// The metaData fields of a panel are aliased siblings, so the resolver is asked
-// about one alias at a time — info.fieldNodes groups by response key.
-const infoForAlias = (query: string, alias: string) => {
-  const document: any = parse(query);
-  const panel = document.definitions[0].selectionSet.selections[0];
-  const fieldNodes = panel.selectionSet.selections.filter(
-    (selection: any) => (selection.alias ?? selection.name).value === alias
-  );
-  return { fieldNodes, fragments: {}, variableValues: {} } as any;
+const resolvePanelMetaData = (
+  field: 'permitted' | 'readOnly',
+  input: string[] | undefined,
+  granted: string[]
+) => {
+  const context = contextGranting(granted);
+  return {
+    verdict: (baseResolver.PanelMetaData as any)[field](
+      { _id: 'SITE-1', type: 'site' },
+      { input },
+      context
+    ) as Promise<boolean>,
+    checkAdvancedPermission:
+      context.dataSources.CollectionAPI.checkAdvancedPermission,
+  };
 };
-
-const query = `{
-  panel {
-    gps: metaData {
-      key(input: "gps_coordinates")
-      can(input: ["read:gps_coordinates:field"])
-      permitted
-    }
-    label: metaData {
-      key(input: "label")
-      permitted
-    }
-    access: metaData {
-      key(input: "access")
-      canEdit(input: ["update:asset:field:access"])
-      readOnly
-    }
-  }
-}`;
-
-const resolveMetaData = (alias: string, granted: string[]) =>
-  (baseResolver.WindowElementPanel!.metaData as any)(
-    { _id: 'SITE-1', type: 'site' },
-    {},
-    contextGranting(granted),
-    infoForAlias(query, alias)
-  );
 
 describe('panel metadata field permissions', () => {
   it('marks a field the user may read as permitted', async () => {
-    const field = await resolveMetaData('gps', [
-      '/entities/SITE-1/fields/gps',
-    ]);
+    const { verdict } = resolvePanelMetaData(
+      'permitted',
+      ['read:gps_coordinates:field'],
+      ['/entities/SITE-1/fields/gps']
+    );
 
-    expect(field.permitted).toBe(true);
+    expect(await verdict).toBe(true);
   });
 
   it('marks a field the user may not read as not permitted', async () => {
-    const field = await resolveMetaData('gps', []);
-
-    expect(field.permitted).toBe(false);
-  });
-
-  it('leaves a field that configures no read gate permitted, without calling out', async () => {
-    const context = contextGranting([]);
-    const field = await (baseResolver.WindowElementPanel!.metaData as any)(
-      { _id: 'SITE-1', type: 'site' },
-      {},
-      context,
-      infoForAlias(query, 'label')
+    const { verdict } = resolvePanelMetaData(
+      'permitted',
+      ['read:gps_coordinates:field'],
+      []
     );
 
-    expect(field.permitted).toBe(true);
-    expect(
-      context.dataSources.CollectionAPI.checkAdvancedPermission
-    ).not.toHaveBeenCalled();
+    expect(await verdict).toBe(false);
   });
 
-  it('reads the can of the alias it was asked about, not of its sibling', async () => {
-    // 'access' configures canEdit but no can, so it must not inherit the gps
-    // field's read gate just because they share a panel.
-    const field = await resolveMetaData('access', []);
+  it('marks a field the user may not change as read only', async () => {
+    const { verdict } = resolvePanelMetaData(
+      'readOnly',
+      ['update:asset:field:access'],
+      []
+    );
 
-    expect(field.permitted).toBe(true);
-    expect(field.key).toBeUndefined();
+    expect(await verdict).toBe(true);
   });
 
-  it('keeps the two verdicts apart', async () => {
-    // gps gates reading only, so it stays writable; access gates writing only,
-    // so it stays visible. Neither gate may answer for the other.
-    const gps = await resolveMetaData('gps', ['/entities/SITE-1/fields/gps']);
-    const access = await resolveMetaData('access', []);
+  it('leaves a field the user may change writable', async () => {
+    const { verdict } = resolvePanelMetaData(
+      'readOnly',
+      ['update:asset:field:access'],
+      ['/entities/SITE-1']
+    );
 
-    expect(gps).toMatchObject({ permitted: true, readOnly: false });
-    expect(access).toMatchObject({ permitted: true, readOnly: true });
+    expect(await verdict).toBe(false);
+  });
+
+  it('keeps a field selecting no permission visible and writable, without calling out', async () => {
+    const permitted = resolvePanelMetaData('permitted', undefined, []);
+    const readOnly = resolvePanelMetaData('readOnly', [], []);
+
+    expect(await permitted.verdict).toBe(true);
+    expect(await readOnly.verdict).toBe(false);
+    expect(permitted.checkAdvancedPermission).not.toHaveBeenCalled();
+    expect(readOnly.checkAdvancedPermission).not.toHaveBeenCalled();
+  });
+
+  it('resolves each verdict against its own permission, not the other one', async () => {
+    const readable = resolvePanelMetaData(
+      'permitted',
+      ['read:gps_coordinates:field'],
+      ['/entities/SITE-1']
+    );
+
+    expect(await readable.verdict).toBe(false);
   });
 });

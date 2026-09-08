@@ -1675,14 +1675,11 @@ export const baseSchema = gql`
     revealQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
-    # can and canEdit are the *inputs* permitted and readOnly are resolved from,
-    # not values the frontend reads. Selecting one without its input means "no
-    # permission configured", which resolves to visible/editable — so do not
-    # drop can or canEdit as unused.
-    can(input: [String!]): [String]
-    canEdit(input: [String!]): [String]
-    permitted: Boolean
-    readOnly: Boolean
+    # The verdicts the frontend renders off. Each takes the permission it is
+    # resolved from as its own argument; selecting one without an argument means
+    # no permission was configured, which resolves to visible/editable.
+    permitted(input: [String!]): Boolean
+    readOnly(input: [String!]): Boolean
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
     highlightIfPrimaryMediafile(input: Boolean): Boolean
