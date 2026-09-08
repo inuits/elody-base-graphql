@@ -203,6 +203,56 @@ export const resolveReadableSimpleSearchTypes = async (
   return itemTypes.filter((_itemType, index) => verdicts[index]);
 };
 
+type RouteConfig = {
+  name?: string;
+  path?: string;
+  meta?: { can?: string[]; [key: string]: any };
+  children?: RouteConfig[];
+};
+
+// A route is guarded before the entity behind it has been fetched, so a route
+// `can` never substitutes an entity id and can be answered once, here, instead
+// of on every navigation. The verdict replaces `can` in the shipped config so
+// nothing client-side is tempted to re-check it.
+export const resolveRoutePermissions = async (
+  req: any,
+  routerConfig: RouteConfig[] | undefined,
+  requestContext?: AppConfigRequestContext
+): Promise<RouteConfig[] | undefined> => {
+  if (!routerConfig?.length || !requestContext) return routerConfig;
+  const dataSources = requestContext.buildDataSources(req);
+
+  const resolveMeta = async (meta: RouteConfig['meta']) => {
+    if (!meta?.can?.length) return meta;
+    const { can, ...rest } = meta;
+    // Only the first entry is evaluated, which is what the frontend did.
+    return {
+      ...rest,
+      permitted: await evaluateAdvancedPermission(
+        can[0],
+        dataSources,
+        requestContext.permissions
+      ),
+    };
+  };
+
+  const resolveRoute = async (route: RouteConfig): Promise<RouteConfig> => {
+    const [meta, children] = await Promise.all([
+      resolveMeta(route.meta),
+      route.children
+        ? Promise.all(route.children.map(resolveRoute))
+        : Promise.resolve(undefined),
+    ]);
+    return {
+      ...route,
+      ...(meta ? { meta } : {}),
+      ...(children ? { children } : {}),
+    };
+  };
+
+  return Promise.all(routerConfig.map(resolveRoute));
+};
+
 const resolveSimpleSearch = async (
   req: any,
   simpleSearch: { itemTypes?: string[] } | undefined,
@@ -230,7 +280,7 @@ export const applyAppConfigsEndpoint = (
 ) => {
   app.get('/api/app-configs', async (req, res) => {
     const appConfig = getConfig(config);
-    const [moduleFeatures, simpleSearch] = await Promise.all([
+    const [moduleFeatures, simpleSearch, routerConfig] = await Promise.all([
       resolveModuleFeatures(req, requestContext),
       resolveSimpleSearch(
         req,
@@ -238,11 +288,17 @@ export const applyAppConfigsEndpoint = (
           .simpleSearch,
         requestContext
       ),
+      resolveRoutePermissions(
+        req,
+        appConfig.routerConfig as RouteConfig[] | undefined,
+        requestContext
+      ),
     ]);
     res.end(
       JSON.stringify({
         config: {
           ...appConfig,
+          routerConfig,
           features: { ...appConfig.features, ...moduleFeatures, ...simpleSearch },
         },
         translations: getAvailableTranslations(config, translations),
