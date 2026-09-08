@@ -1675,11 +1675,13 @@ export const baseSchema = gql`
     revealQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
+    # can and canEdit are the *inputs* permitted and readOnly are resolved from,
+    # not values the frontend reads. Selecting one without its input means "no
+    # permission configured", which resolves to visible/editable — so do not
+    # drop can or canEdit as unused.
     can(input: [String!]): [String]
-    # canEdit is the *input* readOnly is resolved from, not a value the frontend
-    # reads. Selecting readOnly without it means "no permission configured",
-    # which resolves to editable — do not drop canEdit as unused.
     canEdit(input: [String!]): [String]
+    permitted: Boolean
     readOnly: Boolean
     valueTranslationKey(input: String): String
     onlyForEntityTypes(input: [Entitytyping!]): [Entitytyping!]
