@@ -520,6 +520,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     return { inboundReferenceCount: result?.count ?? 0 };
   }
 
+  async getMergeEvaluation(
+    id: string,
+    strategy: string,
+    collection: Collection = Collection.Entities
+  ): Promise<any> {
+    const document = await this.get<any>(
+      `${collection}/${id}?merge_evaluation=${encodeURIComponent(strategy)}`
+    );
+    return { id, ...document?.merge_evaluation };
+  }
+
   async deleteData(
     id: string,
     path: Collection,

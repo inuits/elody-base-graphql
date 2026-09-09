@@ -45,6 +45,20 @@ export const baseQueries = gql`
     }
   }
 
+  query GetMergeEvaluations(
+    $ids: [String!]!
+    $collection: Collection!
+    $strategy: MergeSurvivorStrategy!
+  ) {
+    mergeEvaluations(ids: $ids, collection: $collection, strategy: $strategy) {
+      id
+      strategy
+      status
+      score
+      details
+    }
+  }
+
   mutation MergeEntities(
     $survivorId: String!
     $victimId: String!

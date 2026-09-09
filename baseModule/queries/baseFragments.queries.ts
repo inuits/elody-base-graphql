@@ -286,6 +286,12 @@ export const baseFragments = gql`
     customQueryEntityPickerListFilters
     replaceExistingRelations
     selectionLimit
+    survivorSuggestion {
+      strategy
+      autoSelect
+      requireRecommendedSurvivor
+      hiddenVerdicts
+    }
   }
 
   fragment subOptions on DropdownOption {

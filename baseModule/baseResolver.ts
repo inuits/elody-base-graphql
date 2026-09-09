@@ -697,6 +697,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     mergePreview: async (_source, { id, collection }, { dataSources }) => {
       return await dataSources.CollectionAPI.getMergePreview(id, collection);
     },
+    mergeEvaluations: async (
+      _source,
+      { ids, collection, strategy },
+      { dataSources }
+    ) => {
+      return await Promise.all(
+        ids.map((id: string) =>
+          dataSources.CollectionAPI.getMergeEvaluation(id, strategy, collection)
+        )
+      );
+    },
   },
   Mutation: {
     mutateEntityValues: async (
