@@ -544,6 +544,44 @@ export const baseSchema = gql`
     inboundReferenceCount: Int!
   }
 
+  enum MergeSurvivorStrategy {
+    identifierIntegrity
+  }
+
+  enum MergeEvaluationStatus {
+    valid
+    invalid
+    unknown
+  }
+
+  type MergeEvaluation {
+    id: String!
+    strategy: MergeSurvivorStrategy!
+    status: MergeEvaluationStatus!
+    score: Int!
+    details: JSON
+  }
+
+  type MergeSurvivorSuggestionConfig {
+    strategy: MergeSurvivorStrategy!
+    autoSelect: Boolean
+    requireRecommendedSurvivor: Boolean
+    recommendedLabel: String
+    invalidLabel: String
+    unknownLabel: String
+    noRecommendationLabel: String
+  }
+
+  input MergeSurvivorSuggestionConfigInput {
+    strategy: MergeSurvivorStrategy!
+    autoSelect: Boolean
+    requireRecommendedSurvivor: Boolean
+    recommendedLabel: String
+    invalidLabel: String
+    unknownLabel: String
+    noRecommendationLabel: String
+  }
+
   enum TypeModals {
     BulkOperationsEdit
     BulkOperations
@@ -796,6 +834,7 @@ export const baseSchema = gql`
     customQueryEntityPickerListFilters: String
     replaceExistingRelations: Boolean
     selectionLimit: Int
+    survivorSuggestion: MergeSurvivorSuggestionConfigInput
   }
 
   type BulkOperationModal {
@@ -812,6 +851,7 @@ export const baseSchema = gql`
     customQueryEntityPickerListFilters: String
     replaceExistingRelations: Boolean
     selectionLimit: Int
+    survivorSuggestion: MergeSurvivorSuggestionConfig
   }
 
   enum ActionContextEntitiesSelectionType {
@@ -2603,6 +2643,11 @@ export const baseSchema = gql`
     ): [DropdownOption!]!
     jobStatusForEntity(id: String!, type: String!): JobPollResult!
     mergePreview(id: String!, collection: Collection!): MergePreview!
+    mergeEvaluations(
+      ids: [String!]!
+      collection: Collection!
+      strategy: MergeSurvivorStrategy!
+    ): [MergeEvaluation!]!
   }
 
   type Mutation {
