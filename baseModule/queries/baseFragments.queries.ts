@@ -290,10 +290,7 @@ export const baseFragments = gql`
       strategy
       autoSelect
       requireRecommendedSurvivor
-      recommendedLabel
-      invalidLabel
-      unknownLabel
-      noRecommendationLabel
+      hiddenVerdicts
     }
   }
 

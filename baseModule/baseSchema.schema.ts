@@ -566,20 +566,14 @@ export const baseSchema = gql`
     strategy: MergeSurvivorStrategy!
     autoSelect: Boolean
     requireRecommendedSurvivor: Boolean
-    recommendedLabel: String
-    invalidLabel: String
-    unknownLabel: String
-    noRecommendationLabel: String
+    hiddenVerdicts: [MergeEvaluationStatus!]
   }
 
   input MergeSurvivorSuggestionConfigInput {
     strategy: MergeSurvivorStrategy!
     autoSelect: Boolean
     requireRecommendedSurvivor: Boolean
-    recommendedLabel: String
-    invalidLabel: String
-    unknownLabel: String
-    noRecommendationLabel: String
+    hiddenVerdicts: [MergeEvaluationStatus!]
   }
 
   enum TypeModals {

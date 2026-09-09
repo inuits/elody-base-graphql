@@ -171,11 +171,13 @@
         "cancel": "Cancel",
         "warning": "The other record will be permanently deleted.",
         "field": "Field",
-        "recommended": "Recommended",
-        "invalid": "Identifier should be {expectedId}",
-        "unknown": "Identifier cannot be checked",
-        "no-recommendation": "Neither record holds the identifier its content generates ({expectedId}). Merging these will not stop new duplicates from appearing.",
-        "must-keep-recommended": "Keep the recommended record: merging into the other one leaves its identifier free, so the duplicate comes back on the next import."
+        "identifier-integrity": {
+          "recommended": "Recommended",
+          "invalid": "Identifier should be {expectedId}",
+          "unknown": "Identifier cannot be checked",
+          "no-recommendation": "Neither record holds the identifier its content generates ({expectedId}). Merging these will not stop new duplicates from appearing.",
+          "must-keep-recommended": "Keep the recommended record: merging into the other one leaves its identifier free, so the duplicate comes back on the next import."
+        }
       }
     },
     "modals": {

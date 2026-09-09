@@ -177,11 +177,13 @@
         "cancel": "Annuleren",
         "warning": "Het andere record wordt definitief verwijderd.",
         "field": "Veld",
-        "recommended": "Aanbevolen",
-        "invalid": "Identifier zou {expectedId} moeten zijn",
-        "unknown": "Identifier niet te controleren",
-        "no-recommendation": "Geen van beide records heeft de identifier die uit zijn inhoud wordt gegenereerd ({expectedId}). Samenvoegen voorkomt niet dat er nieuwe duplicaten bijkomen.",
-        "must-keep-recommended": "Behoud het aanbevolen record: samenvoegen naar het andere laat zijn identifier vrij, waardoor het duplicaat bij de volgende aanmaak/import terugkomt."
+        "identifier-integrity": {
+          "recommended": "Aanbevolen",
+          "invalid": "Identifier zou {expectedId} moeten zijn",
+          "unknown": "Identifier niet te controleren",
+          "no-recommendation": "Geen van beide records heeft de identifier die uit zijn inhoud wordt gegenereerd ({expectedId}). Samenvoegen voorkomt niet dat er nieuwe duplicaten bijkomen.",
+          "must-keep-recommended": "Behoud het aanbevolen record: samenvoegen naar het andere laat zijn identifier vrij, waardoor het duplicaat bij de volgende aanmaak/import terugkomt."
+        }
       }
     },
     "modals": {
