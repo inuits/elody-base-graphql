@@ -684,6 +684,10 @@
       "delete-entity-window": "Delete {0}",
       "create-share-link": "Create share link"
     },
+    "entity-navigation": {
+      "open-previous": "Open previous",
+      "open-next": "Open next"
+    },
     "upload-fields": {
       "labels": {
         "csv-upload": "Drop your CSV, here.",

@@ -525,6 +525,10 @@
       "delete-entity-window": "حذف {0}",
       "create-share-link": "إنشاء رابط مشاركة"
     },
+    "entity-navigation": {
+      "open-previous": "فتح السابق",
+      "open-next": "فتح التالي"
+    },
     "upload-fields": {
       "labels": {
         "csv-upload": "أسقط ملف CSV هنا.",

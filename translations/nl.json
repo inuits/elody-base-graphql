@@ -676,6 +676,10 @@
       "delete-entity-window": "Verwijder {0}",
       "create-share-link": "Maak share link"
     },
+    "entity-navigation": {
+      "open-previous": "Open vorige",
+      "open-next": "Open volgende"
+    },
     "upload-fields": {
       "labels": {
         "csv-upload": "Zet hier je CSV neer.",
