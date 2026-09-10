@@ -618,7 +618,8 @@
       "W5016": "De waarde {value} is ongeldig, dit zijn de geldige waarden: {options}",
       "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
       "W5018": "Validatie fout tussen {entity_type_1} en {entity_type_2}. Een deel van de velden moet uniek zijn. Validatie faalt voor {entity_type_2} met id '{duplicate_entry_title}'",
-      "A4011": "Leeg bestand {filename} wordt genegeerd"
+      "A4011": "Leeg bestand {filename} wordt genegeerd",
+      "A4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload. Klik om te navigeren naar de mediafile $LINK(mediafile, {existing_file})"
     },
     "pagination": {
       "page": "pagina",
