@@ -93,7 +93,7 @@ export const mayUpdateEntity = async (
   dataSources: DataSources
 ): Promise<boolean> =>
   (await dataSources.CollectionAPI.patchEntityDetailSoftCall(
-    getEntityId(entity),
+    entity.id,
     entity.type
   )) === '200';
 
@@ -102,7 +102,7 @@ export const mayDeleteEntity = async (
   dataSources: DataSources
 ): Promise<boolean> =>
   (await dataSources.CollectionAPI.delEntityDetailSoftCall(
-    getEntityId(entity),
+    entity.id,
     entity.type
   )) === '200';
 
