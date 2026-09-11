@@ -528,7 +528,17 @@ export class CollectionAPI extends AuthRESTDataSource {
     const document = await this.get<any>(
       `${collection}/${id}?merge_evaluation=${encodeURIComponent(strategy)}`
     );
-    return { id, ...document?.merge_evaluation };
+    const evaluation = document?.merge_evaluation ?? {};
+    return {
+      id,
+      ...evaluation,
+      immutableFields: (evaluation.immutable_fields ?? []).map(
+        (field: any) => ({
+          key: field.key,
+          identityValue: field.identity_value ?? null,
+        })
+      ),
+    };
   }
 
   async deleteData(

@@ -554,12 +554,18 @@ export const baseSchema = gql`
     unknown
   }
 
+  type MergeImmutableField {
+    key: String!
+    identityValue: String
+  }
+
   type MergeEvaluation {
     id: String!
     strategy: MergeSurvivorStrategy!
     status: MergeEvaluationStatus!
     score: Int!
     details: JSON
+    immutableFields: [MergeImmutableField!]!
   }
 
   type MergeSurvivorSuggestionConfig {

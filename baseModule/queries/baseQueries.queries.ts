@@ -56,6 +56,10 @@ export const baseQueries = gql`
       status
       score
       details
+      immutableFields {
+        key
+        identityValue
+      }
     }
   }
 
