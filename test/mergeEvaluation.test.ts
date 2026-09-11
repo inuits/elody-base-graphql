@@ -15,7 +15,10 @@ const verdict = {
   status: 'invalid',
   score: 0,
   details: { expected_id: CANONICAL },
-  immutable_fields: ['title', 'audience_type'],
+  immutable_fields: [
+    { key: 'title', identity_value: 'voedingsleer' },
+    { key: 'audience_type', identity_value: null },
+  ],
 };
 
 const sourceReturning = (document: unknown) => {
@@ -67,7 +70,10 @@ describe('getMergeEvaluation', () => {
       Collection.Entities
     );
 
-    expect(evaluation.immutableFields).toEqual(['title', 'audience_type']);
+    expect(evaluation.immutableFields).toEqual([
+      { key: 'title', identityValue: 'voedingsleer' },
+      { key: 'audience_type', identityValue: null },
+    ]);
   });
 
   it('reports no immutable fields rather than nothing at all', async () => {
