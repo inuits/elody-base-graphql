@@ -1,4 +1,3 @@
-import { applyAuthSession, applyEnvironmentConfig } from './auth';
 import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 import {
   resolveMetadata,
@@ -6,52 +5,24 @@ import {
   resolveRelations,
   simpleReturn,
 } from './resolvers/entityResolver';
-import * as Sentry from '@sentry/node';
 import applyPromEndpoint from './endpoints/promEndpoint';
-import express, { Express } from 'express';
-import compression from 'compression';
-import http from 'http';
 import path from 'path';
-import { ApolloServer } from '@apollo/server';
-import { createApplication } from 'graphql-modules';
-import { applySEOEndpoint } from './endpoints/seoEndpoint';
 import { getRoutesObject } from './routes/routesHelper';
-import { baseFields } from './sources/forms';
 import { baseModule, baseSchema } from './baseModule/baseModule';
-import { baseTypePillLabelMapping } from './sources/typePillLabelMapping';
 import {
   getRelationsByType,
   getPrimaryMediaFileIDOfEntity,
   getPrimaryThumbnailIDOfEntity,
-  checkRequestContentType,
-  setTypeCollectionMapping,
   isIpAddressWhitelisted,
   getClientOrigin,
   isDomainWhitelisted,
 } from './helpers/helpers';
-import {
-  Collection,
-  InputField,
-  PermissionRequestInfo,
-} from './generated-types/type-defs';
-import {
-  ContextValue,
-  DataSources,
-  FormattersConfig,
-  TypeUrlMapping,
-} from './types';
-import {
-  createElodyEnvironment,
-  getCurrentEnvironment,
-  setCurrentEnvironment,
-} from './environment';
-import { applyOidcDiscovery } from './auth/oidcDiscovery';
-import { printStartupBanner } from './helpers/startupBanner';
+import { ContextValue, DataSources, FormattersConfig } from './types';
+import { getCurrentEnvironment } from './environment';
 import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
-import { expressMiddleware } from '@as-integrations/express4';
 import {
   getMetadataItemValueByKey,
   getEntityId,
@@ -64,351 +35,25 @@ import {
   resolveKeyboardLayouts,
 } from './sources/virtualKeyboardLayouts';
 import { parseIdToGetMoreData } from './parsers/entity';
-import {
-  configureFrontendForEnvironment,
-  renderPageForEnvironment,
-} from './endpoints/frontendEndpoint';
+import { renderPageForEnvironment } from './endpoints/frontendEndpoint';
 import type {
   CollectionAPIEntity,
   CollectionAPIMediaFile,
   CollectionAPIMetadata,
   CollectionAPIRelation,
 } from './types/collectionAPITypes';
-import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
 import { fetchWithTokenRefresh } from './endpoints/fetchWithToken';
-import { createMongoConnectionString } from './sources/mongo';
-import {
-  isRequiredDataSources,
-  findMissingRequiredDataSources,
-  createFullElodyConfig,
-  getDataSourcesFromMapping,
-  ElodyConfig,
-  addAdditionalOptionalDataSources,
-  generateElodyConfig,
-  ElodyModuleConfig,
-} from './helpers/elodyModuleHelpers';
-import {
-  collectModuleFeatures,
-  collectModulePermissions,
-} from './helpers/moduleContributions';
-import { createServer as createViteServer, ViteDevServer } from 'vite';
-import depthLimit from 'graphql-depth-limit';
-import { enableCors } from './helpers/corsHelper';
-import {
-  enableContentSecurityPolicy,
-  createCspMiddleware,
-} from './helpers/contentSecurityPolicyHelper';
+import { ElodyModuleConfig } from './helpers/elodyModuleHelpers';
 import { setId, setType } from './parsers/entity';
+import { createCspMiddleware } from './helpers/contentSecurityPolicyHelper';
+import { ElodyInstance, ElodyInstanceOptions } from './elodyInstance';
 import { TranscodeService } from './sources/transcode';
 
-const applyCustomEndpoints = (
-  app: Express,
-  environment: Environment,
-  customEndpoints: ((app: any, environment: Environment) => void)[] = []
-) => {
-  customEndpoints.forEach((customEndpoint: Function) => {
-    customEndpoint(app, environment);
-  });
-};
+const start = (options: ElodyInstanceOptions) =>
+  new ElodyInstance(options).start();
 
-const addCustomFieldsToBaseFields = (customInputFields: {
-  [key: string]: InputField;
-}) => {
-  try {
-    Object.keys(customInputFields).forEach((fieldKey: string) => {
-      if (baseFields[fieldKey]) {
-        throw Error(
-          `The key ${fieldKey} does already exist in baseFields, please choose another one`
-        );
-      }
-      baseFields[fieldKey] = customInputFields[fieldKey];
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const addCustomTypePillLabelMapping = (customTypePillLabelMapping: {
-  [key: string]: string[];
-}) => {
-  Object.keys(customTypePillLabelMapping).forEach((key: string) => {
-    baseTypePillLabelMapping[key] = customTypePillLabelMapping[key];
-  });
-};
-
-interface StartOptions {
-  customModuleConfig: ElodyModuleConfig;
-  appConfig: FullyOptionalEnvironmentInput;
-  customTranslations: { [key: string]: object };
-  customEndpoints?: ((app: any, environment: Environment) => void)[];
-  customInputFields?: { [key: string]: InputField };
-  customTypeCollectionMapping?: { [key: string]: Collection };
-  customPermissions?: { [key: string]: PermissionRequestInfo };
-  customFormatters?: FormattersConfig;
-  customTypeUrlMapping?: TypeUrlMapping;
-  customTypePillLabelMapping?: { [key: string]: string[] };
-  customFilterMatchers?: { [key: string]: string[] };
-}
-
-const start = ({
-  customModuleConfig,
-  appConfig,
-  customTranslations,
-  customEndpoints = [],
-  customInputFields = undefined,
-  customTypeCollectionMapping = undefined,
-  customPermissions = {},
-  customFormatters = {},
-  customTypeUrlMapping = { mapping: {}, reverseMapping: {} },
-  customTypePillLabelMapping = undefined,
-  customFilterMatchers = undefined,
-}: StartOptions): void => {
-  setCurrentEnvironment(createElodyEnvironment(appConfig));
-  if (customTypeCollectionMapping) {
-    setTypeCollectionMapping(customTypeCollectionMapping);
-  }
-  const environment = getCurrentEnvironment();
-  const fullElodyConfig: ElodyConfig = createFullElodyConfig(
-    generateElodyConfig(customModuleConfig)
-  );
-  const permissions = {
-    ...collectModulePermissions(fullElodyConfig.modules),
-    ...customPermissions,
-  };
-  addAdditionalOptionalDataSources(environment);
-
-  const application = createApplication({
-    modules: fullElodyConfig.modules,
-  });
-
-  if (environment.glitchtipEnabled) {
-    Sentry.init({
-      dsn: environment.glitchtipDsn,
-      sendClientReports: false,
-      environment: environment.nomadNamespace,
-    });
-  }
-
-  const configureMiddleware = (app: any, environment: Environment) => {
-    applyAuthSession(
-      app,
-      createMongoConnectionString(environment),
-      environment
-    );
-    applyEnvironmentConfig({
-      tokenLogging: environment.apollo.tokenLogging,
-      staticJWT: environment.staticToken,
-    });
-  };
-
-  const startApolloServer = async () => {
-    const app = express();
-    const httpServer = http.createServer(app);
-    httpServer.setTimeout(120000);
-
-    let viteServer: ViteDevServer | undefined;
-    if (environment.environment !== 'production') {
-      viteServer = await createViteServer({
-        server: {
-          middlewareMode: true,
-          hmr: {
-            port: 24678,
-            clientPort: 24678,
-          },
-        },
-        appType: 'spa',
-        root: path.join(__dirname, '../dashboard'),
-      });
-    }
-
-    const authExtensionPlugin = {
-      async requestDidStart() {
-        return {
-          async willSendResponse({
-            response,
-            contextValue,
-          }: {
-            response: any;
-            contextValue: any;
-          }) {
-            if (!contextValue.session?.auth) {
-              if (response.body.kind === 'single') {
-                response.body.singleResult.extensions = {
-                  ...response.body.singleResult.extensions,
-                  authStatus: 'UNAUTHENTICATED',
-                };
-              }
-            }
-          },
-        };
-      },
-    };
-
-    const server = new ApolloServer<ContextValue>({
-      csrfPrevention: true,
-      validationRules: [depthLimit(environment?.apollo.maxQueryDepth || 15)],
-      introspection: environment?.apollo.introspection || false,
-      plugins: [authExtensionPlugin],
-      nodeEnv: environment.environment,
-      gateway: {
-        async load() {
-          return { executor: application.createApolloExecutor() };
-        },
-        onSchemaLoadOrUpdate(callback) {
-          callback({ apiSchema: application.schema } as any);
-          return () => {};
-        },
-        async stop() {},
-      },
-    });
-
-    enableCors(app, environment);
-    enableContentSecurityPolicy(app, environment);
-
-    app.use(compression());
-
-    app.use(
-      express.json({ limit: environment.maxUploadSize }),
-      express.urlencoded({
-        extended: true,
-        limit: environment.maxUploadSize,
-        parameterLimit: 1000000,
-      })
-    );
-
-    await server.start();
-
-    configureMiddleware(app, environment);
-
-    app.use(
-      environment.apollo.graphqlPath,
-      expressMiddleware(server, {
-        context: async ({ req, res }) => {
-          if (checkRequestContentType(req, res)) return {} as ContextValue;
-          const { cache } = server;
-          const session = { ...req.session };
-          const clientIp: string = req.ip;
-          const clientOrigin: string | undefined = getClientOrigin(req.headers);
-          if (environment.features?.ipWhiteListing)
-            console.log(`[GraphQL] clientIp: ${clientIp}, path: ${req.path}`);
-          const tenantId = req.headers['x-tenant-id'] as string;
-          const parentEntityId = req.headers['x-parent-entity-id'] as string;
-          const dataSources = getDataSourcesFromMapping(
-            fullElodyConfig,
-            environment,
-            session,
-            cache,
-            clientIp,
-            clientOrigin,
-            tenantId
-          );
-
-          if (!isRequiredDataSources(dataSources)) {
-            const missing = findMissingRequiredDataSources(dataSources);
-            throw new Error(
-              `Missing required data sources: ${missing.join(', ')}`
-            );
-          }
-
-          return {
-            dataSources,
-            customPermissions: permissions,
-            customFormatters,
-            customFilterMatchers,
-            session,
-            parentEntityId,
-          };
-        },
-      })
-    );
-
-    const defaultElodyEndpointVariableMapping: Record<string, any[]> = {
-      authEndpoint: [
-        app,
-        environment.oauth.baseUrl,
-        environment.clientSecret,
-        environment,
-      ],
-      versionEndpoint: [app, environment],
-      baseUploadEndpoint: [app],
-      downloadEndpoint: [app],
-      exportEndpoint: [app],
-      exportXlsxEndpoint: [app],
-      healthEndpoint: [app],
-      documentsEndpoint: [app],
-      configsEndoint: [
-        app,
-        environment,
-        customTranslations,
-        customTypeUrlMapping,
-        {
-          buildDataSources: (req: any) =>
-            getDataSourcesFromMapping(
-              fullElodyConfig,
-              environment,
-              { ...req.session },
-              server.cache,
-              req.ip,
-              getClientOrigin(req.headers),
-              req.headers['x-tenant-id'] as string
-            ),
-          permissions,
-          features: collectModuleFeatures(fullElodyConfig.modules),
-        },
-      ],
-    };
-
-    Object.keys(defaultElodyEndpointMapping).forEach((key: string) => {
-      const applyEndpointFunction: Function = defaultElodyEndpointMapping[key];
-      const endpointVariables: any[] = defaultElodyEndpointVariableMapping[key];
-      if (!endpointVariables) {
-        console.warn(
-          `Variables for endpoint with key ${key} not found, please add them to the defaultElodyEndpointVariableMapping`
-        );
-      }
-      applyEndpointFunction(...endpointVariables);
-    });
-
-    fullElodyConfig.endpoints.forEach((fn) => fn(app, environment));
-
-    app.set('views', path.join(__dirname + '/views'));
-    app.set('view engine', 'pug');
-
-    if (environment.features.SEO)
-      applySEOEndpoint(app, environment as Environment);
-
-    if (environment.api.promUrl !== 'no-prom') {
-      applyPromEndpoint(app, environment.api.promUrl);
-    }
-
-    if (customEndpoints) {
-      applyCustomEndpoints(app, environment, customEndpoints);
-    }
-
-    if (customInputFields) {
-      addCustomFieldsToBaseFields(customInputFields);
-    }
-
-    if (customTypePillLabelMapping) {
-      addCustomTypePillLabelMapping(customTypePillLabelMapping);
-    }
-
-    configureFrontendForEnvironment(app, viteServer);
-
-    httpServer.listen(environment.port, () => {
-      printStartupBanner(environment);
-    });
-
-    return { app };
-  };
-
-  const boot = async () => {
-    await applyOidcDiscovery(environment);
-    await startApolloServer();
-  };
-  boot();
-};
-
+export { ElodyInstance };
+export type { ElodyInstanceOptions };
 export default start;
 export type {
   ContextValue,

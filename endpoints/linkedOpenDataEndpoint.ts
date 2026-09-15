@@ -1,5 +1,6 @@
 import { Request, Response, Express } from 'express';
-import { Environment, renderPageForEnvironment } from '../main';
+import { Environment } from '../types/environmentTypes';
+import { renderPageForEnvironment } from './frontendEndpoint';
 import fetch from 'node-fetch';
 import { getCurrentEnvironment } from '../environment';
 

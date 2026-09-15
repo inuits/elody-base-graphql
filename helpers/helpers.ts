@@ -8,7 +8,10 @@ import {
   Collection,
 } from '../generated-types/type-defs';
 import { DataSources } from '../types';
-import { CollectionAPIEntity, CollectionAPIRelation } from '../main';
+import {
+  CollectionAPIEntity,
+  CollectionAPIRelation,
+} from '../types/collectionAPITypes';
 import proj4 from 'proj4';
 import type { Request, Response } from 'express';
 import { getCurrentEnvironment } from '../environment';

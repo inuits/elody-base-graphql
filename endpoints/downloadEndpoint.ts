@@ -1,4 +1,4 @@
-import { AuthRESTDataSource } from '../main';
+import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Express, Request, Response } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';

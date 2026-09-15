@@ -3,7 +3,7 @@ import { baseModule } from '../baseModule/baseModule';
 import { CollectionAPI } from '../sources/collection';
 import { GraphqlAPI } from '../sources/graphql';
 import { DataSources, OptionalDataSources } from '../types';
-import { AuthRESTDataSource } from '../main';
+import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Environment } from '../types/environmentTypes';
 import { Express } from 'express';
 
@@ -58,7 +58,7 @@ const baseElodyElodyConfig: ElodyConfig = {
           cache,
           clientIp,
           clientOrigin,
-          context: { tenantId }
+          context: { tenantId },
         }),
       };
     },
@@ -70,13 +70,22 @@ const baseElodyElodyConfig: ElodyConfig = {
       clientOrigin: string | undefined,
       tenantId?: string
     ) => {
-      return { GraphqlAPI: new GraphqlAPI({ environment, session, cache, context: { tenantId } }) };
+      return {
+        GraphqlAPI: new GraphqlAPI({
+          environment,
+          session,
+          cache,
+          context: { tenantId },
+        }),
+      };
     },
   ],
   endpoints: [],
 };
 
-export const addAdditionalOptionalDataSources = (_environment: Environment) => {};
+export const addAdditionalOptionalDataSources = (
+  _environment: Environment
+) => {};
 
 export const createFullElodyConfig = (
   customElodyConfig: ElodyConfig
@@ -148,7 +157,7 @@ export const generateElodyConfig = (
             cache,
             clientIp,
             clientOrigin,
-            context: { tenantId }
+            context: { tenantId },
           }),
         };
       };
