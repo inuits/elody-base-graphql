@@ -80,8 +80,6 @@ type ResolvedOptions = ElodyInstanceOptions &
     >
   >;
 
-// ponytail: one instance per process — createFullElodyConfig and setCurrentEnvironment
-// both mutate module-level singletons, so a second instance duplicates modules.
 export class ElodyInstance {
   private options: ResolvedOptions;
   private environment!: Environment;
