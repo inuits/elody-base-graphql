@@ -754,8 +754,8 @@
         "selection": "Select an area to crop",
         "remove-selected-area": "Clear current selection",
         "recrop": "Recrop image",
-        "show-original": "Show original image",
-        "show-cropped": "Show cropped image"
+        "show-original": "Show original",
+        "show-cropped": "Show cropped"
       },
       "required": "This checkbox is required",
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate.",
