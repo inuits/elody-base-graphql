@@ -186,7 +186,8 @@
         "noFields": "There are no editable fields for this entity."
       },
       "reorderingEntities": "Reordering entities, this may take a while...",
-      "bulkEditingEntities": "Applying your changes, this may take a while..."
+      "bulkEditingEntities": "Applying your changes, this may take a while...",
+      "mergingEntities": "Merging the records, this may take a while..."
     },
     "confirm": {
       "discard-edit": {
