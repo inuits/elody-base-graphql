@@ -752,7 +752,10 @@
       "media-viewer": {
         "selection-disabled": "Select an item first to enable this tool",
         "selection": "Select an area to crop",
-        "remove-selected-area": "Clear current selection"
+        "remove-selected-area": "Clear current selection",
+        "recrop": "Recrop image",
+        "show-original": "Show original",
+        "show-cropped": "Show cropped"
       },
       "required": "This checkbox is required",
       "manifest-viewer-add-to-comparison": "You can now add and view this work in the comparison mode. Click to navigate.",
@@ -788,7 +791,11 @@
       "external-url": "This item links to an external location",
       "open-url": "Open link",
       "download": "Download file",
-      "processing-image": "Processing the image..."
+      "processing-image": "Processing the image...",
+      "recrop-modal": {
+        "title": "Recrop image",
+        "save": "Save crop"
+      }
     },
     "iiif-operations-modal": {
       "title": "Resize image",

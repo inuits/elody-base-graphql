@@ -604,7 +604,11 @@
     "media-viewer": {
       "unsupported-mimetype": "لا يوجد عارض متاح حاليًا للملفات من النوع '{mimetype}'",
       "no-viewer": "لا يتوفر عارض لهذا الملف",
-      "download": "تنزيل الملف"
+      "download": "تنزيل الملف",
+      "recrop-modal": {
+        "title": "إعادة قص الصورة",
+        "save": "حفظ القص"
+      }
     },
     "iiif-operations-modal": {
       "title": "تغيير حجم الصورة",

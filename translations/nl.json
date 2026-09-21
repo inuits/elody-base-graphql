@@ -742,7 +742,10 @@
       "media-viewer": {
         "selection-disabled": "Selecteer eerst een item om deze tool te activeren",
         "selection": "Selecteer een gebied om bij te snijden",
-        "remove-selected-area": "Huidige selectie wissen"
+        "remove-selected-area": "Huidige selectie wissen",
+        "recrop": "Afbeelding opnieuw bijsnijden",
+        "show-original": "Toon origineel",
+        "show-cropped": "Toon bijgesneden"
       },
       "required": "Deze checkbox is verplicht",
       "manifest-viewer-add-to-comparison": "Je kan dit werk nu toevoegen en bekijken in de vergelijkingsweergave. Klik om te navigeren.",
@@ -778,7 +781,11 @@
       "external-url": "Dit item verwijst naar een externe locatie",
       "open-url": "Link openen",
       "download": "Bestand downloaden",
-      "processing-image": "Bezig met het verwerken van de afbeelding..."
+      "processing-image": "Bezig met het verwerken van de afbeelding...",
+      "recrop-modal": {
+        "title": "Afbeelding opnieuw bijsnijden",
+        "save": "Bijsnijding opslaan"
+      }
     },
     "iiif-operations-modal": {
       "title": "Afbeelding schalen",
