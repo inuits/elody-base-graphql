@@ -102,6 +102,7 @@ export const getConfig = (config: Environment) => {
         simpleSearchMetadataKey:
           config.features.simpleSearch.simpleSearchMetadataKey,
         clientKeyFormat: config.features.simpleSearch.clientKeyFormat,
+        relationKeys: config.features.simpleSearch.relationKeys,
         virtualKeyboardLayouts: resolveKeyboardLayouts(
           config.features.simpleSearch.virtualKeyboardLayouts
         ),

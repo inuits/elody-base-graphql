@@ -2355,6 +2355,7 @@ export const baseSchema = gql`
     selectionOption: AutocompleteSelectionOptions
     parent_key: String
     key: JSON
+    relation_keys: JSON
     value: JSON!
     metadata_key_as_label: String
     distinct_by: String
