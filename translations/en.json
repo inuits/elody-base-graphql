@@ -527,6 +527,10 @@
         }
       },
       "errors": {
+        "generic": {
+          "title": "Something went wrong",
+          "description": "The action could not be completed"
+        },
         "bulk-edit-partially-failed": {
           "title": "Bulk edit partially failed",
           "description": "{0} entities were not updated and stay selected"

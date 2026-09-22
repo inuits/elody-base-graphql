@@ -521,6 +521,10 @@
         }
       },
       "errors": {
+        "generic": {
+          "title": "Er is iets misgegaan",
+          "description": "De actie kon niet worden uitgevoerd"
+        },
         "bulk-edit-partially-failed": {
           "title": "Bulk bewerking gedeeltelijk mislukt",
           "description": "{0} entiteiten werden niet aangepast en blijven geselecteerd"
