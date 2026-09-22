@@ -57,6 +57,7 @@ export interface Environment {
       itemTypes: Entitytyping[];
       simpleSearchMetadataKey: string[];
       clientKeyFormat?: string[];
+      relationKeys?: string[];
       virtualKeyboardLayouts?: string[];
     };
     ipWhiteListing?: {
