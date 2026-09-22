@@ -511,6 +511,7 @@ export const jobQueries = gql`
       hasJob
       jobId
       status
+      info
     }
   }
 `;

@@ -5,6 +5,7 @@ export interface JobPollResult {
   hasJob: boolean;
   jobId: string | null;
   status: string | null;
+  info: string | null;
 }
 
 export const resolveJobStatusForEntity = async (
@@ -29,9 +30,9 @@ export const resolveJobStatusForEntity = async (
 
   const job = results?.[0];
   if (!job) {
-    return { hasJob: false, jobId: null, status: null };
+    return { hasJob: false, jobId: null, status: null, info: null };
   }
 
-  const { status } = await dataSources.CollectionAPI.GetJobStatus(job.id);
-  return { hasJob: true, jobId: job.id, status };
+  const { status, info } = await dataSources.CollectionAPI.GetJobStatus(job.id);
+  return { hasJob: true, jobId: job.id, status, info: info ?? null };
 };

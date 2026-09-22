@@ -622,7 +622,9 @@
       "W5017": "Item voor key {key} met waarde {value} bestaat niet.",
       "W5018": "Validatie fout tussen {entity_type_1} en {entity_type_2}. Een deel van de velden moet uniek zijn. Validatie faalt voor {entity_type_2} met id '{duplicate_entry_title}'",
       "A4011": "Leeg bestand {filename} wordt genegeerd",
-      "A4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload. Klik om te navigeren naar de mediafile $LINK(mediafile, {existing_file})"
+      "A4009": "Dubbel bestand gedetecteerd, de afbeelding die je probeert te uploaden werd al eerder geüpload. Klik om te navigeren naar de mediafile $LINK(mediafile, {existing_file})",
+      "W4012": "Deze download bevat geen mediabestanden.",
+      "W4013": "Geen enkel mediabestand kon gedownload worden. Mediabestanden met enkel een externe link kunnen niet in een zip opgenomen worden."
     },
     "pagination": {
       "page": "pagina",

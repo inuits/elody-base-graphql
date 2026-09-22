@@ -2555,6 +2555,7 @@ export const baseSchema = gql`
     hasJob: Boolean!
     jobId: String
     status: String
+    info: String
   }
 
   type Query {

@@ -629,7 +629,9 @@
       "W5017": "Item for key {key} with value {value} doesn't exist.",
       "W5018": "Validation error between {entity_type_1} and {entity_type_2}. A part of the fields must be unique. Validation fails for {entity_type_2} with id '{duplicate_entry_title}'",
       "A4011": "Ignoring empty file {filename}",
-      "A4009": "Duplicate file detected, the image you are trying to upload has already been uploaded. Click to navigate to the mediafile $LINK(mediafile, {existing_file})"
+      "A4009": "Duplicate file detected, the image you are trying to upload has already been uploaded. Click to navigate to the mediafile $LINK(mediafile, {existing_file})",
+      "W4012": "This download has no mediafiles to include.",
+      "W4013": "None of the mediafiles could be downloaded. Mediafiles that only carry an external link cannot be included in a zip."
     },
     "pagination": {
       "page": "page",

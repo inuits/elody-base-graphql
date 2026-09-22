@@ -839,7 +839,7 @@ export class CollectionAPI extends AuthRESTDataSource {
     return this.get(`mediafiles/${mediafileId}/derivatives`);
   }
 
-  async GetJobStatus(id: string): Promise<{ status: string }> {
+  async GetJobStatus(id: string): Promise<{ status: string; info?: string }> {
     return this.get(`job/status/${id}`);
   }
 }
