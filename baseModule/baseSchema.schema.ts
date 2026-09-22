@@ -2726,6 +2726,9 @@ export const baseSchema = gql`
     value: String!
     customLabel: String
     openInNewTab: Boolean
+    icon: DamsIcons
+    background: String
+    text: String
   }
 
   type PillFormatter {
