@@ -44,7 +44,12 @@ describe('resolveJobStatusForEntity', () => {
       'DL-XEF0OV79J',
     );
 
-    expect(result).toEqual({ hasJob: true, jobId: 'job-1', status: 'running' });
+    expect(result).toEqual({
+      hasJob: true,
+      jobId: 'job-1',
+      status: 'running',
+      info: null,
+    });
     expect(mockDataSource.CollectionAPI.GetAdvancedEntities).toHaveBeenCalledWith(
       Entitytyping.Job,
       1,
@@ -63,6 +68,30 @@ describe('resolveJobStatusForEntity', () => {
     expect(mockDataSource.CollectionAPI.GetJobStatus).toHaveBeenCalledWith('job-1');
   });
 
+  it('passes the job info message through', async () => {
+    mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
+      results: [{ id: 'job-1' }],
+      count: 1,
+      limit: 1,
+    });
+    mockDataSource.CollectionAPI.GetJobStatus.mockResolvedValueOnce({
+      status: 'failed',
+      info: 'W4012 - There are no mediafiles to download',
+    });
+
+    const result = await resolveJobStatusForEntity(
+      mockDataSource as unknown as DataSources,
+      'DL-XEF0OV79J',
+    );
+
+    expect(result).toEqual({
+      hasJob: true,
+      jobId: 'job-1',
+      status: 'failed',
+      info: 'W4012 - There are no mediafiles to download',
+    });
+  });
+
   it('returns hasJob: false without checking status when no job is found', async () => {
     mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
       results: [],
@@ -75,7 +104,12 @@ describe('resolveJobStatusForEntity', () => {
       'DL-DOES-NOT-EXIST',
     );
 
-    expect(result).toEqual({ hasJob: false, jobId: null, status: null });
+    expect(result).toEqual({
+      hasJob: false,
+      jobId: null,
+      status: null,
+      info: null,
+    });
     expect(mockDataSource.CollectionAPI.GetJobStatus).not.toHaveBeenCalled();
   });
 });
