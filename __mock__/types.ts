@@ -2987,6 +2987,11 @@ export type RelationFieldInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+export enum RelationDirection {
+  FromEntity = 'fromEntity',
+  FromRelatedEntity = 'fromRelatedEntity',
+}
+
 export enum RelationFieldViewMode {
   Big = 'big',
   Small = 'small',
