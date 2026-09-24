@@ -2170,6 +2170,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     composer: async (parent: unknown, {}, { dataSources }) => {
       return parent as WysiwygElement;
     },
+    createFields: async (parent: unknown, {}, { dataSources }) => {
+      return parent;
+    },
+  },
+  CommentCreateFields: {
+    metaData: async (parent: unknown, {}, { dataSources }) => {
+      return parent as PanelMetaData;
+    },
   },
   MenuWrapper: {
     menu: async (parent, {}, { dataSources }) => {

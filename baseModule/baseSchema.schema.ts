@@ -2063,6 +2063,11 @@ export const baseSchema = gql`
     composer: WysiwygElement!
     parentEntityFilterKey(input: String!): String!
     readOnly: Boolean
+    createFields: CommentCreateFields
+  }
+
+  type CommentCreateFields {
+    metaData: PanelMetaData!
   }
 
   type EntityViewElements {
