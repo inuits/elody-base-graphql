@@ -223,13 +223,14 @@ const formatResults = (
 const collectRelationMetadataValues = (
   relation: any,
   nestedMetadataKeys: string[]
-): string[] =>
+): { key: string; value: string }[] =>
   nestedMetadataKeys.flatMap((metadataKey: string) => {
     const value = relation.metadata?.find(
       (metadataItem: any) => metadataItem.key === metadataKey
     )?.value;
     if (value === undefined || value === null) return [];
-    return Array.isArray(value) ? value : [value];
+    const values = Array.isArray(value) ? value : [value];
+    return values.map((item: string) => ({ key: metadataKey, value: item }));
   });
 
 const processRelations = async (

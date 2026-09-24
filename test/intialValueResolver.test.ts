@@ -237,10 +237,45 @@ describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
     expect(value).toEqual({
       formatter: 'pill|organization',
       label: [
-        { label: 'Org A', values: ['programmer', 'technician'] },
+        {
+          label: 'Org A',
+          values: [
+            { key: 'function', value: 'programmer' },
+            { key: 'function', value: 'technician' },
+          ],
+        },
         { label: 'Org B', values: [] },
       ],
     });
+  });
+
+  it('keeps every value tagged with the metadata key it came from', async () => {
+    const value: any = await resolveIntialValueRelations(
+      dataSources,
+      {
+        id: 'user:1',
+        relations: [
+          relationTo('organization:1', [
+            { key: 'roles', value: ['admin'] },
+            { key: 'function', value: ['programmer'] },
+          ]),
+        ],
+      },
+      'refOrganizations',
+      'name',
+      '',
+      '',
+      '',
+      '',
+      'pill|organization',
+      undefined,
+      ['roles', 'function']
+    );
+
+    expect(value.label[0].values).toEqual([
+      { key: 'roles', value: 'admin' },
+      { key: 'function', value: 'programmer' },
+    ]);
   });
 
   it('keeps the nested shape for a single relation', async () => {
@@ -250,7 +285,9 @@ describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
 
     expect(value).toEqual({
       formatter: 'pill|organization',
-      label: [{ label: 'Org A', values: ['programmer'] }],
+      label: [
+        { label: 'Org A', values: [{ key: 'function', value: 'programmer' }] },
+      ],
     });
   });
 });
