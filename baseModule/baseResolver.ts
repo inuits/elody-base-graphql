@@ -58,6 +58,7 @@ import {
   ContextMenuGeneralAction,
   ContextMenuGeneralActionEnum,
   ContextMenuLinkAction,
+  CommentCreateFields,
   DamsIcons,
   DeepRelationsFetchStrategy,
   DropdownOption,
@@ -2171,7 +2172,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent as WysiwygElement;
     },
     createFields: async (parent: unknown, {}, { dataSources }) => {
-      return parent;
+      return parent as CommentCreateFields;
     },
   },
   CommentCreateFields: {
