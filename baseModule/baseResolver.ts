@@ -1155,6 +1155,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         source,
         uuid,
         metadataKeyAsLabel,
+        nestedMetadataKeys,
         rootKeyAsLabel,
         containsRelationPropertyKey,
         containsRelationPropertyValue,
@@ -1207,7 +1208,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               containsRelationPropertyValue as string,
               relationEntityType as string,
               formatter as string,
-              customFormatters
+              customFormatters,
+              nestedMetadataKeys as string[]
             ),
           relationMetadata: () =>
             resolveIntialValueRelationMetadata(

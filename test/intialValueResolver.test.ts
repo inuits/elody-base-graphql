@@ -5,6 +5,8 @@ import {
   resolveIntialValueParentMetadata,
   resolveIntialValueParentRelations,
   resolveIntialValueLockedProperties,
+  resolveIntialValueRelationMetadata,
+  resolveIntialValueRelations,
 } from '../resolvers/intialValueResolver';
 import { DataSources } from '../types';
 
@@ -151,6 +153,104 @@ describe('IntialValueResolver', () => {
       const result = resolveIntialValueLockedProperties(entity);
 
       expect(result).toStrictEqual(['reading']);
+    });
+  });
+});
+
+describe('resolveIntialValueRelationMetadata', () => {
+  const userWithTwoOrganizations = {
+    id: 'user:1',
+    relations: [
+      {
+        type: 'refOrganizations',
+        key: 'organization:1',
+        metadata: [{ key: 'function', value: ['programmer'] }],
+      },
+      {
+        type: 'refOrganizations',
+        key: 'organization:2',
+        metadata: [{ key: 'function', value: ['technician'] }],
+      },
+    ],
+  };
+  const dataSources = {
+    CollectionAPI: { getEntity: vi.fn() },
+  } as unknown as DataSources;
+
+  beforeEach(() => vi.clearAllMocks());
+
+  it('returns only the metadata of the given relation when a uuid is given', async () => {
+    const label = await resolveIntialValueRelationMetadata(
+      userWithTwoOrganizations,
+      'function',
+      'organization:2',
+      'refOrganizations',
+      '',
+      undefined as any,
+      dataSources
+    );
+
+    expect(label).toEqual(['technician']);
+  });
+});
+
+describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
+  const organizations: Record<string, any> = {
+    'organization:1': { id: 'organization:1', metadata: [{ key: 'name', value: 'Org A' }] },
+    'organization:2': { id: 'organization:2', metadata: [{ key: 'name', value: 'Org B' }] },
+  };
+  const dataSources = {
+    CollectionAPI: {
+      getEntity: vi.fn(async (key: string) => organizations[key]),
+    },
+  } as unknown as DataSources;
+
+  const relationTo = (key: string, metadata: any[] = []) => ({
+    type: 'refOrganizations',
+    key,
+    metadata,
+  });
+
+  const resolve = (relations: any[]) =>
+    resolveIntialValueRelations(
+      dataSources,
+      { id: 'user:1', relations },
+      'refOrganizations',
+      'name',
+      '',
+      '',
+      '',
+      '',
+      'pill|organization',
+      undefined,
+      ['function']
+    );
+
+  beforeEach(() => vi.clearAllMocks());
+
+  it('pairs every organization with its own relation metadata', async () => {
+    const value = await resolve([
+      relationTo('organization:1', [{ key: 'function', value: ['programmer', 'technician'] }]),
+      relationTo('organization:2'),
+    ]);
+
+    expect(value).toEqual({
+      formatter: 'pill|organization',
+      label: [
+        { label: 'Org A', values: ['programmer', 'technician'] },
+        { label: 'Org B', values: [] },
+      ],
+    });
+  });
+
+  it('keeps the nested shape for a single relation', async () => {
+    const value = await resolve([
+      relationTo('organization:1', [{ key: 'function', value: 'programmer' }]),
+    ]);
+
+    expect(value).toEqual({
+      formatter: 'pill|organization',
+      label: [{ label: 'Org A', values: ['programmer'] }],
     });
   });
 });

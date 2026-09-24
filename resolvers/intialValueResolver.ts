@@ -119,18 +119,15 @@ const filterRelationsByProperty = (
   );
   if (foundRelations?.length > 0) return foundRelations;
 
-  return relations.filter(
-    (relation) => {
-      if (!relation.metadata || relation.metadata?.length === 0) return false;
-      return relation.metadata.some((relationMetadata) => {
-        if (relationMetadata.key === propertyKey) {
-          return String(relationMetadata.value) === propertyValue;
-        }
-        return false;
-      })
-    }
-  )
-
+  return relations.filter((relation) => {
+    if (!relation.metadata || relation.metadata?.length === 0) return false;
+    return relation.metadata.some((relationMetadata) => {
+      if (relationMetadata.key === propertyKey) {
+        return String(relationMetadata.value) === propertyValue;
+      }
+      return false;
+    });
+  });
 };
 
 const fetchRelationEntity = async (
@@ -223,6 +220,18 @@ const formatResults = (
   };
 };
 
+const collectRelationMetadataValues = (
+  relation: any,
+  nestedMetadataKeys: string[]
+): string[] =>
+  nestedMetadataKeys.flatMap((metadataKey: string) => {
+    const value = relation.metadata?.find(
+      (metadataItem: any) => metadataItem.key === metadataKey
+    )?.value;
+    if (value === undefined || value === null) return [];
+    return Array.isArray(value) ? value : [value];
+  });
+
 const processRelations = async (
   dataSources: DataSources,
   relations: any[],
@@ -230,7 +239,8 @@ const processRelations = async (
   rootKeyAsLabel: string,
   relationEntityType: string,
   formatter: string,
-  formatterSettings?: FormattersConfig
+  formatterSettings?: FormattersConfig,
+  nestedMetadataKeys?: string[]
 ): Promise<any> => {
   if (relations.length === 0) {
     return '';
@@ -248,6 +258,28 @@ const processRelations = async (
   );
 
   const entityResults = await Promise.all(entityPromises);
+
+  const relationsWithEntity = entityResults.filter(
+    ({ entity }) => entity !== null
+  );
+
+  if (
+    nestedMetadataKeys?.length &&
+    relationsWithEntity.length > 0 &&
+    !formatter.startsWith('link')
+  )
+    return {
+      formatter: formatter || 'pill',
+      label: relationsWithEntity.map(({ entity, relation }) => ({
+        label: extractValueFromEntity(
+          entity,
+          relation,
+          metadataKeyAsLabel,
+          rootKeyAsLabel
+        ),
+        values: collectRelationMetadataValues(relation, nestedMetadataKeys),
+      })),
+    };
 
   const entities = entityResults
     .filter(({ entity }) => entity !== null)
@@ -284,7 +316,8 @@ export const resolveIntialValueRelations = async (
   containsRelationPropertyValue: string,
   relationEntityType: string,
   formatter: string = '',
-  formatterSettings?: FormattersConfig
+  formatterSettings?: FormattersConfig,
+  nestedMetadataKeys?: string[]
 ): Promise<string | any> => {
   try {
     const relations =
@@ -311,7 +344,8 @@ export const resolveIntialValueRelations = async (
       rootKeyAsLabel,
       relationEntityType,
       formatter,
-      formatterSettings
+      formatterSettings,
+      nestedMetadataKeys
     );
   } catch (error) {
     console.error('Error resolving relations:', error);
@@ -419,9 +453,7 @@ export const resolveIntialValueRelationRootdata = (
   }
 };
 
-export const resolveIntialValueLockedProperties = (
-  parent: any
-): string[] => {
+export const resolveIntialValueLockedProperties = (parent: any): string[] => {
   return parent?.lock?.properties ?? [];
 };
 
