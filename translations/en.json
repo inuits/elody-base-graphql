@@ -18,7 +18,9 @@
       "status": {
         "open": "Open",
         "resolved": "Resolved"
-      }
+      },
+      "replies": "Replies",
+      "last-activity": "Last activity"
     },
     "entity-translations": {
       "baseentity": "base entity | base entities",

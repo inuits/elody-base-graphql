@@ -20,7 +20,9 @@
         "resolved": "Afgesloten"
       },
       "creator": "Maker opmerking",
-      "tagged-on": "Getagd op"
+      "tagged-on": "Getagd op",
+      "replies": "Reacties",
+      "last-activity": "Laatste activiteit"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",
