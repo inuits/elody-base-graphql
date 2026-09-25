@@ -830,6 +830,11 @@
       "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
       "finish-failed-title": "Opslaan mislukt",
       "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
+    },
+    "pipeline": {
+      "fit": "Passend",
+      "zoom-in": "Inzoomen",
+      "zoom-out": "Uitzoomen"
     }
   }
 }
