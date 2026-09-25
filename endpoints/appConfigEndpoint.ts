@@ -204,11 +204,48 @@ export const resolveReadableSimpleSearchTypes = async (
   return itemTypes.filter((_itemType, index) => verdicts[index]);
 };
 
+type LandingRedirect = {
+  route: string;
+  entityType: string;
+  filters: any[];
+};
+
 type RouteConfig = {
   name?: string;
   path?: string;
-  meta?: { can?: string[]; [key: string]: any };
+  meta?: {
+    can?: string[];
+    landingRedirect?: LandingRedirect;
+    [key: string]: any;
+  };
   children?: RouteConfig[];
+};
+
+const SESSION_VALUE = /^session-\$(.+)$/;
+
+const resolveLandingRoute = async (
+  landingRedirect: LandingRedirect,
+  dataSources: DataSources
+): Promise<string | undefined> => {
+  const filters = await Promise.all(
+    landingRedirect.filters.map(async (filter: any) => {
+      const sessionKey =
+        typeof filter?.value === 'string'
+          ? filter.value.match(SESSION_VALUE)?.[1]
+          : undefined;
+      if (!sessionKey) return filter;
+      return {
+        ...filter,
+        value: await dataSources.CollectionAPI.getSessionInfo(sessionKey),
+      };
+    })
+  );
+
+  const matches = await dataSources.CollectionAPI.hasMatchingEntities(
+    landingRedirect.entityType,
+    filters
+  );
+  return matches ? landingRedirect.route : undefined;
 };
 
 export const resolveRoutePermissions = async (
@@ -220,16 +257,26 @@ export const resolveRoutePermissions = async (
   const dataSources = requestContext.buildDataSources(req);
 
   const resolveMeta = async (meta: RouteConfig['meta']) => {
-    if (!meta?.can?.length) return meta;
-    const { can, ...rest } = meta;
+    if (!meta?.can?.length && !meta?.landingRedirect) return meta;
+    const { can, landingRedirect, ...rest } = meta;
+
+    const [permitted, landingRoute] = await Promise.all([
+      can?.length
+        ? evaluateAdvancedPermission(
+            can[0],
+            dataSources,
+            requestContext.permissions
+          )
+        : Promise.resolve(undefined),
+      landingRedirect
+        ? resolveLandingRoute(landingRedirect, dataSources)
+        : Promise.resolve(undefined),
+    ]);
 
     return {
       ...rest,
-      permitted: await evaluateAdvancedPermission(
-        can[0],
-        dataSources,
-        requestContext.permissions
-      ),
+      ...(permitted !== undefined ? { permitted } : {}),
+      ...(landingRoute !== undefined ? { landingRoute } : {}),
     };
   };
 

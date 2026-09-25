@@ -39,7 +39,11 @@ const routerConfig = [
       slug: 'devices-anpr',
     },
     children: [
-      { path: '/:tenant?/:type/:id', name: 'SingleEntity', meta: { slug: 'x' } },
+      {
+        path: '/:tenant?/:type/:id',
+        name: 'SingleEntity',
+        meta: { slug: 'x' },
+      },
       {
         path: '/:tenant?/devices-anpr',
         name: 'navigation.devices-anpr',
@@ -116,5 +120,120 @@ describe('resolveRoutePermissions', () => {
       routerConfig
     );
     expect(await resolveRoutePermissions({}, undefined)).toBeUndefined();
+  });
+});
+
+const landingRedirect = {
+  route: '/notifications',
+  entityType: 'user',
+  filters: [
+    { type: 'type', value: 'user', match_exact: true },
+    {
+      type: 'text',
+      key: ['podiumnet:1|identifiers'],
+      value: 'session-$id',
+      match_exact: true,
+    },
+    {
+      type: 'boolean',
+      key: 'lookup.virtual_relations.ref_organizations.properties.is_venue.value',
+      value: true,
+    },
+  ],
+};
+
+const requestContextMatching = (matches: boolean) => {
+  const hasMatchingEntities = vi.fn(async () => matches);
+  const getSessionInfo = vi.fn(async (key?: string) =>
+    key === 'id' ? 'US-85LGT5F93' : ''
+  );
+  return {
+    requestContext: {
+      buildDataSources: () => ({
+        CollectionAPI: {
+          hasMatchingEntities,
+          getSessionInfo,
+          checkAdvancedPermission: vi.fn(async () => false),
+        },
+        GraphqlAPI: { checkAdvancedPermission: vi.fn() },
+      }),
+      permissions,
+      features: {},
+    } as any,
+    hasMatchingEntities,
+    getSessionInfo,
+  };
+};
+
+describe('resolveRoutePermissions landing redirect', () => {
+  it('ships the landing route when the predicate matches', async () => {
+    const { requestContext } = requestContextMatching(true);
+
+    const resolved: any = await resolveRoutePermissions(
+      {},
+      [{ path: '/', name: 'Home', meta: { landingRedirect } }] as any,
+      requestContext
+    );
+
+    expect(resolved[0].meta.landingRoute).toBe('/notifications');
+    expect(resolved[0].meta.landingRedirect).toBeUndefined();
+  });
+
+  it('ships no landing route when the predicate does not match', async () => {
+    const { requestContext } = requestContextMatching(false);
+
+    const resolved: any = await resolveRoutePermissions(
+      {},
+      [{ path: '/', name: 'Home', meta: { landingRedirect } }] as any,
+      requestContext
+    );
+
+    expect('landingRoute' in resolved[0].meta).toBe(false);
+    expect(resolved[0].meta.landingRedirect).toBeUndefined();
+  });
+
+  it('substitutes session values into the filters before asking', async () => {
+    const { requestContext, hasMatchingEntities, getSessionInfo } =
+      requestContextMatching(true);
+
+    await resolveRoutePermissions(
+      {},
+      [{ path: '/', name: 'Home', meta: { landingRedirect } }] as any,
+      requestContext
+    );
+
+    expect(getSessionInfo).toHaveBeenCalledWith('id');
+    expect(hasMatchingEntities).toHaveBeenCalledWith('user', [
+      landingRedirect.filters[0],
+      { ...landingRedirect.filters[1], value: 'US-85LGT5F93' },
+      landingRedirect.filters[2],
+    ]);
+  });
+
+  // The route it is configured on carries no `can` at all, so the permission
+  // short-circuit must not swallow it.
+  it('resolves a route that carries a landing redirect but no permission', async () => {
+    const { requestContext, hasMatchingEntities } =
+      requestContextMatching(true);
+
+    const resolved: any = await resolveRoutePermissions(
+      {},
+      [
+        {
+          path: '/',
+          name: 'Home',
+          meta: { slug: 'home', landingRedirect },
+          children: [
+            { path: '/notifications', name: 'Notifications', meta: {} },
+          ],
+        },
+      ] as any,
+      requestContext
+    );
+
+    expect(hasMatchingEntities).toHaveBeenCalledOnce();
+    expect(resolved[0].meta.slug).toBe('home');
+    expect(resolved[0].meta.landingRoute).toBe('/notifications');
+    expect(resolved[0].children[0].meta).toEqual({});
   });
 });

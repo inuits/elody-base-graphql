@@ -368,6 +368,22 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
+  async hasMatchingEntities(
+    entityType: string,
+    filters: any[]
+  ): Promise<boolean> {
+    try {
+      const data: any = await this.post(
+        `${getCollectionValueForEntityType(entityType)}/filter?limit=1&skip=0`,
+        { body: filters }
+      );
+      const results = Array.isArray(data) ? data : data?.results ?? [];
+      return results.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
   async getElodyUser(): Promise<Entity | undefined> {
     if (!this.session.auth?.accessToken) return undefined;
     const email = this.getTokenClaims().email;
@@ -390,7 +406,9 @@ export class CollectionAPI extends AuthRESTDataSource {
       asc: '1',
     });
     const data: any = await this.post(
-      `${getCollectionValueForEntityType(Entitytyping.User)}/filter?${queryParams.toString()}`,
+      `${getCollectionValueForEntityType(
+        Entitytyping.User
+      )}/filter?${queryParams.toString()}`,
       { body: filters }
     );
     const results: Entity[] = Array.isArray(data) ? data : data?.results ?? [];

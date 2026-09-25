@@ -19,6 +19,11 @@ export type Route = {
     entityType?: string;
     breadcrumbs?: Array<object>;
     multiEntityLayout?: boolean;
+    landingRedirect?: {
+      route: string;
+      entityType: string;
+      filters: Array<object>;
+    };
   };
   children?: Array<Route>;
   redirect?: string;
