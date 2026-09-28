@@ -2433,6 +2433,7 @@ export const baseSchema = gql`
     selectionOption: AutocompleteSelectionOptions
     parentKey: String
     key: JSON
+    relationKeys: JSON
     itemTypes: [String]
     label: String
     isDisplayedByDefault: Boolean!
