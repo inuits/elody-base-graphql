@@ -1,7 +1,12 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { ViteDevServer } from 'vite';
+import {
+  getEntityIdFromPath,
+  negotiatedMimetype,
+  proxyEntityInFormat,
+} from './linkedOpenDataEndpoint';
 
 export const renderPageForEnvironment = async (
   req: Request,
@@ -37,6 +42,14 @@ export const configureFrontendForEnvironment = (
 ) => {
   const __dirname: string = path.resolve();
   const frontendPath: string = path.join(__dirname, 'dashboard/dist');
+
+  app.get('*', async (req: Request, res: Response, next: NextFunction) => {
+    const mimetype = negotiatedMimetype(req);
+    const entityId = getEntityIdFromPath(req.path);
+    if (!mimetype || !entityId) return next();
+
+    await proxyEntityInFormat(entityId, mimetype, req, res);
+  });
 
   if (vite) {
     app.use(vite.middlewares);

@@ -36,6 +36,10 @@ import {
 } from './sources/virtualKeyboardLayouts';
 import { parseIdToGetMoreData } from './parsers/entity';
 import { renderPageForEnvironment } from './endpoints/frontendEndpoint';
+import {
+  entityFormats,
+  proxyEntityInFormat,
+} from './endpoints/linkedOpenDataEndpoint';
 import type {
   CollectionAPIEntity,
   CollectionAPIMediaFile,
@@ -88,6 +92,8 @@ export {
   simpleReturn,
   getRoutesObject,
   renderPageForEnvironment,
+  entityFormats,
+  proxyEntityInFormat,
   createCspMiddleware,
   setId,
   setType,
