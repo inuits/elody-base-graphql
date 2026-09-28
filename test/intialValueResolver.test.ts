@@ -7,6 +7,7 @@ import {
   resolveIntialValueLockedProperties,
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelations,
+  resolveIntialValueRepeatableMetadata,
 } from '../resolvers/intialValueResolver';
 import { DataSources } from '../types';
 
@@ -289,5 +290,69 @@ describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
         { label: 'Org A', values: [{ key: 'function', value: 'programmer' }] },
       ],
     });
+  });
+});
+
+describe('resolveIntialValueRepeatableMetadata', () => {
+  const dataSources = {
+    CollectionAPI: { preferredLanguage: 'en' },
+  } as unknown as DataSources;
+
+  const parent = {
+    metadata: [
+      { key: 'updated_keys', value: 'description' },
+      { key: 'updated_keys', value: 'title' },
+    ],
+  };
+
+  it('joins multiple values into a comma-separated string by default', async () => {
+    const result = await resolveIntialValueRepeatableMetadata(
+      dataSources,
+      parent,
+      'updated_keys',
+      null,
+      null
+    );
+
+    expect(result).toBe('description, title');
+  });
+
+  it('returns multiple values as an array when asArray is set', async () => {
+    const result = await resolveIntialValueRepeatableMetadata(
+      dataSources,
+      parent,
+      'updated_keys',
+      null,
+      null,
+      true
+    );
+
+    expect(result).toStrictEqual(['description', 'title']);
+  });
+
+  it('still picks the preferred language when asArray is set', async () => {
+    const result = await resolveIntialValueRepeatableMetadata(
+      dataSources,
+      {
+        metadata: [
+          {
+            key: 'title',
+            value: 'Titel',
+            metadata: [{ key: 'lang', value: 'nl' }],
+          },
+          {
+            key: 'title',
+            value: 'Title',
+            metadata: [{ key: 'lang', value: 'en' }],
+          },
+        ],
+      },
+      'title',
+      null,
+      null,
+      true
+    );
+
+    expect(result).toBe('Title');
   });
 });

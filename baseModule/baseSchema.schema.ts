@@ -1253,6 +1253,7 @@ export const baseSchema = gql`
       index: Int
       parentRelations: [ParentRelationsConfigInput]
       repeatableMetadataKey: String
+      asArray: Boolean
       relationDirection: RelationDirection
     ): JSON
     keyLabel(key: String!, source: KeyValueSource!): JSON

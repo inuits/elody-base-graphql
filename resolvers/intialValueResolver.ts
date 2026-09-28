@@ -53,17 +53,18 @@ export const resolveIntialValueRepeatableMetadata = async (
   parent: any,
   key: string,
   formatter: string | null,
-  repeatableMetadataKey: string | null
-): Promise<string | { label: string; formatter: string }> => {
+  repeatableMetadataKey: string | null,
+  asArray: boolean = false
+): Promise<string | string[] | { label: string; formatter: string }> => {
   const preferredLanguage = dataSources.CollectionAPI.preferredLanguage;
   const metadata = await resolveMetadata(parent, [key], undefined);
   if (metadata.length > 1) {
     const hasLanguage = metadata.some((item: Metadata) => item.lang);
-    const metadataValues = hasLanguage
-      ? resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)
-          ?.value
-      : metadata.map((item: Metadata) => item.value).join(', ');
-    return metadataValues;
+    if (hasLanguage)
+      return resolveMetadataItemOfPreferredLanguage(metadata, preferredLanguage)
+        ?.value;
+    const values = metadata.map((item: Metadata) => item.value);
+    return asArray ? values : values.join(', ');
   }
   let result = [];
   if (!repeatableMetadataKey) {

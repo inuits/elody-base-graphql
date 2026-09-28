@@ -1168,6 +1168,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         index,
         parentRelations,
         repeatableMetadataKey = '',
+        asArray = false,
         relationDirection = RelationDirection.FromEntity,
       },
       { dataSources, customFormatters }
@@ -1188,7 +1189,8 @@ export const baseResolver: Resolvers<ContextValue> = {
               parent,
               key,
               formatter,
-              repeatableMetadataKey
+              repeatableMetadataKey,
+              asArray
             ),
           root: () =>
             resolveIntialValueRoot(
