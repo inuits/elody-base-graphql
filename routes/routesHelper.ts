@@ -8,6 +8,14 @@ type routeMetaQueries = {
   getMultiEntity?: string;
 };
 
+export type LandingRedirect = {
+  route: string;
+  sessionKey?: string;
+  matches?: Array<string>;
+  entityType?: string;
+  filters?: Array<object>;
+};
+
 export type Route = {
   path: string;
   name?: string;
@@ -19,11 +27,7 @@ export type Route = {
     entityType?: string;
     breadcrumbs?: Array<object>;
     multiEntityLayout?: boolean;
-    landingRedirect?: {
-      route: string;
-      entityType: string;
-      filters: Array<object>;
-    };
+    landingRedirect?: LandingRedirect | Array<LandingRedirect>;
   };
   children?: Array<Route>;
   redirect?: string;

@@ -79,6 +79,34 @@ On boot the server prints a titled banner listing mode, version, port, GraphQL p
 |--------|------|---------|
 | `GET`  | `/api/app-configs` | Return runtime config the PWA needs at boot: translations, feature flags, type→URL mapping, OAuth endpoints, custom formatters. |
 
+#### Per-user landing routes
+
+A route's `meta.landingRedirect` hands its landing page to another route for the
+users a rule applies to. The endpoint resolves the rules per request and ships
+`meta.landingRoute`; the PWA guard redirects to it. Rules are tried in config
+order and the first that applies wins.
+
+A rule takes either condition, or both (then both must hold):
+
+| Field | Meaning |
+|-------|---------|
+| `route` | Where to send the user. |
+| `sessionKey` + `matches` | The user holds one of `matches` under `sessionKey`. `sessionKey` is a token claim — dotted for a nested one, e.g. `resource_access.<client>-dashboard.roles` — falling back to a metadata key on the user entity. |
+| `entityType` + `filters` | A `POST <collection>/filter` with `filters` returns at least one result. `session-$<key>` in a filter value is substituted the same way. |
+
+```ts
+meta: {
+  landingRedirect: [
+    {
+      route: '/reports',
+      sessionKey: 'resource_access.dams-dashboard.roles',
+      matches: ['dams_admin'],
+    },
+    { route: '/notifications', entityType: 'user', filters: [...] },
+  ],
+}
+```
+
 ### Ops — `endpoints/versionEndpoint.ts`, `healthEndpoint.ts`, `promEndpoint.ts`, `seoEndpoint.ts`
 
 | Method | Path | Purpose |

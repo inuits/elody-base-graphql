@@ -237,3 +237,121 @@ describe('resolveRoutePermissions landing redirect', () => {
     expect(resolved[0].children[0].meta).toEqual({});
   });
 });
+
+const requestContextForRoles = (
+  sessionValues: { [key: string]: any },
+  entitiesMatch = false
+) => {
+  const getSessionInfo = vi.fn(async (key?: string) =>
+    key && key in sessionValues ? sessionValues[key] : '__unresolved__'
+  );
+  const hasMatchingEntities = vi.fn(async () => entitiesMatch);
+  return {
+    requestContext: {
+      buildDataSources: () => ({
+        CollectionAPI: {
+          getSessionInfo,
+          hasMatchingEntities,
+          checkAdvancedPermission: vi.fn(async () => false),
+        },
+        GraphqlAPI: { checkAdvancedPermission: vi.fn() },
+      }),
+      permissions,
+      features: {},
+    } as any,
+    getSessionInfo,
+    hasMatchingEntities,
+  };
+};
+
+const resolveLanding = async (requestContext: any, landingRedirect: any) => {
+  const resolved: any = await resolveRoutePermissions(
+    {},
+    [{ path: '/', name: 'Home', meta: { landingRedirect } }] as any,
+    requestContext
+  );
+  return resolved[0].meta.landingRoute;
+};
+
+describe('resolveRoutePermissions landing redirect on a role', () => {
+  const roleRule = {
+    route: '/reports',
+    sessionKey: 'resource_access.dams-dashboard.roles',
+    matches: ['dams_admin'],
+  };
+
+  it('matches a role in a multi-valued claim', async () => {
+    const { requestContext } = requestContextForRoles({
+      'resource_access.dams-dashboard.roles': ['editor', 'dams_admin'],
+    });
+
+    expect(await resolveLanding(requestContext, roleRule)).toBe('/reports');
+  });
+
+  it('matches a role held as a bare string', async () => {
+    const { requestContext } = requestContextForRoles({
+      'resource_access.dams-dashboard.roles': 'dams_admin',
+    });
+
+    expect(await resolveLanding(requestContext, roleRule)).toBe('/reports');
+  });
+
+  it('does not match a role the user does not hold', async () => {
+    const { requestContext } = requestContextForRoles({
+      'resource_access.dams-dashboard.roles': ['editor'],
+    });
+
+    expect(await resolveLanding(requestContext, roleRule)).toBeUndefined();
+  });
+
+  it('does not match when the session value cannot be resolved', async () => {
+    const { requestContext } = requestContextForRoles({});
+
+    expect(await resolveLanding(requestContext, roleRule)).toBeUndefined();
+  });
+
+  it('takes the first rule in config order, not the first to answer', async () => {
+    const { requestContext } = requestContextForRoles({
+      role: ['editor', 'dams_admin'],
+    });
+
+    const landingRoute = await resolveLanding(requestContext, [
+      { route: '/editing', sessionKey: 'role', matches: ['editor'] },
+      { route: '/reports', sessionKey: 'role', matches: ['dams_admin'] },
+    ]);
+
+    expect(landingRoute).toBe('/editing');
+  });
+
+  it('skips a rule whose role matches but whose filter does not', async () => {
+    const { requestContext, hasMatchingEntities } = requestContextForRoles(
+      { role: ['dams_admin'] },
+      false
+    );
+
+    const landingRoute = await resolveLanding(requestContext, [
+      {
+        route: '/reports',
+        sessionKey: 'role',
+        matches: ['dams_admin'],
+        entityType: 'user',
+        filters: [{ type: 'type', value: 'user' }],
+      },
+      { route: '/editing', sessionKey: 'role', matches: ['dams_admin'] },
+    ]);
+
+    expect(landingRoute).toBe('/editing');
+    expect(hasMatchingEntities).toHaveBeenCalled();
+  });
+
+  it('asks nothing for a rule that states no condition', async () => {
+    const { requestContext, getSessionInfo, hasMatchingEntities } =
+      requestContextForRoles({});
+
+    expect(
+      await resolveLanding(requestContext, { route: '/reports' })
+    ).toBeUndefined();
+    expect(getSessionInfo).not.toHaveBeenCalled();
+    expect(hasMatchingEntities).not.toHaveBeenCalled();
+  });
+});

@@ -206,8 +206,10 @@ export const resolveReadableSimpleSearchTypes = async (
 
 type LandingRedirect = {
   route: string;
-  entityType: string;
-  filters: any[];
+  sessionKey?: string;
+  matches?: string[];
+  entityType?: string;
+  filters?: any[];
 };
 
 type RouteConfig = {
@@ -215,7 +217,7 @@ type RouteConfig = {
   path?: string;
   meta?: {
     can?: string[];
-    landingRedirect?: LandingRedirect;
+    landingRedirect?: LandingRedirect | LandingRedirect[];
     [key: string]: any;
   };
   children?: RouteConfig[];
@@ -223,12 +225,25 @@ type RouteConfig = {
 
 const SESSION_VALUE = /^session-\$(.+)$/;
 
-const resolveLandingRoute = async (
-  landingRedirect: LandingRedirect,
+const holdsOneOf = async (
+  rule: LandingRedirect,
   dataSources: DataSources
-): Promise<string | undefined> => {
+): Promise<boolean> => {
+  const sessionValue = await dataSources.CollectionAPI.getSessionInfo(
+    rule.sessionKey
+  );
+  const heldValues = Array.isArray(sessionValue)
+    ? sessionValue
+    : [sessionValue];
+  return heldValues.some((value) => rule.matches!.includes(value));
+};
+
+const hasMatchingEntities = async (
+  rule: LandingRedirect,
+  dataSources: DataSources
+): Promise<boolean> => {
   const filters = await Promise.all(
-    landingRedirect.filters.map(async (filter: any) => {
+    rule.filters!.map(async (filter: any) => {
       const sessionKey =
         typeof filter?.value === 'string'
           ? filter.value.match(SESSION_VALUE)?.[1]
@@ -241,11 +256,37 @@ const resolveLandingRoute = async (
     })
   );
 
-  const matches = await dataSources.CollectionAPI.hasMatchingEntities(
-    landingRedirect.entityType,
+  return dataSources.CollectionAPI.hasMatchingEntities(
+    rule.entityType!,
     filters
   );
-  return matches ? landingRedirect.route : undefined;
+};
+
+const ruleApplies = async (
+  rule: LandingRedirect,
+  dataSources: DataSources
+): Promise<boolean> => {
+  const conditions: Array<Promise<boolean>> = [];
+  if (rule.matches?.length) conditions.push(holdsOneOf(rule, dataSources));
+  if (rule.filters?.length)
+    conditions.push(hasMatchingEntities(rule, dataSources));
+  if (!conditions.length) return false;
+
+  return (await Promise.all(conditions)).every(Boolean);
+};
+
+const resolveLandingRoute = async (
+  landingRedirect: LandingRedirect | LandingRedirect[],
+  dataSources: DataSources
+): Promise<string | undefined> => {
+  const rules = Array.isArray(landingRedirect)
+    ? landingRedirect
+    : [landingRedirect];
+  const verdicts = await Promise.all(
+    rules.map((rule) => ruleApplies(rule, dataSources))
+  );
+
+  return rules[verdicts.indexOf(true)]?.route;
 };
 
 export const resolveRoutePermissions = async (

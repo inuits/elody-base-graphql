@@ -96,6 +96,11 @@ export class CollectionAPI extends AuthRESTDataSource {
     const claims = this.getTokenClaims();
     if (claims[key] !== undefined) return claims[key];
 
+    const nestedClaim = key
+      .split('.')
+      .reduce((value: any, part: string) => value?.[part], claims as any);
+    if (nestedClaim !== undefined) return nestedClaim;
+
     const user: any = await this.getElodyUserOnce();
     if (!user) return UNRESOLVED_SESSION_VALUE;
     if (key === 'id') return user.id || UNRESOLVED_SESSION_VALUE;
