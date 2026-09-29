@@ -86,7 +86,8 @@ users a rule applies to. The endpoint resolves the rules per request and ships
 `meta.landingRoute`; the PWA guard redirects to it. Rules are tried in config
 order and the first that applies wins.
 
-A rule takes either condition, or both (then both must hold):
+A rule takes either condition, or both (then both must hold) — the type rejects
+a half-filled pair:
 
 | Field | Meaning |
 |-------|---------|

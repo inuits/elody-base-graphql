@@ -8,13 +8,21 @@ type routeMetaQueries = {
   getMultiEntity?: string;
 };
 
-export type LandingRedirect = {
-  route: string;
-  sessionKey?: string;
-  matches?: Array<string>;
-  entityType?: string;
-  filters?: Array<object>;
+type RoleCondition = {
+  sessionKey: string;
+  matches: Array<string>;
 };
+
+type EntityCondition = {
+  entityType: string;
+  filters: Array<object>;
+};
+
+export type LandingRedirect = { route: string } & (
+  | (RoleCondition & { entityType?: never; filters?: never })
+  | (EntityCondition & { sessionKey?: never; matches?: never })
+  | (RoleCondition & EntityCondition)
+);
 
 export type Route = {
   path: string;

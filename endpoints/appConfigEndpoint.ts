@@ -15,6 +15,7 @@ import {
   isEntityTypePermitted,
 } from '../helpers/permissions';
 import type { ModuleFeature } from '../helpers/moduleContributions';
+import type { LandingRedirect } from '../routes/routesHelper';
 
 export type AppConfigRequestContext = {
   buildDataSources: (req: any) => DataSources;
@@ -202,14 +203,6 @@ export const resolveReadableSimpleSearchTypes = async (
     )
   );
   return itemTypes.filter((_itemType, index) => verdicts[index]);
-};
-
-type LandingRedirect = {
-  route: string;
-  sessionKey?: string;
-  matches?: string[];
-  entityType?: string;
-  filters?: any[];
 };
 
 type RouteConfig = {
