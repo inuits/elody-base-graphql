@@ -83,7 +83,8 @@ describe('isContextMenuActionPermitted', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:mediafile'],
       'PROD-1',
-      'MF-1'
+      'MF-1',
+      undefined
     );
   });
 
@@ -106,6 +107,7 @@ describe('isContextMenuActionPermitted', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:production'],
       'PROD-1',
+      undefined,
       undefined
     );
   });
@@ -145,7 +147,8 @@ describe('isContextMenuActionPermitted', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:mediafile'],
       'PROD-1',
-      'MF-1'
+      'MF-1',
+      undefined
     );
   });
 

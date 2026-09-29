@@ -124,7 +124,8 @@ describe('context menu omission', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:mediafile'],
       'PROD-1',
-      'MF-1'
+      'MF-1',
+      undefined
     );
   });
 
@@ -140,6 +141,7 @@ describe('context menu omission', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:production'],
       'PROD-1',
+      undefined,
       undefined
     );
     expect(data.window.contextMenuActions.drop).not.toBeNull();

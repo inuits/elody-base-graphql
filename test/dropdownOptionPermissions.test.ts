@@ -85,6 +85,7 @@ describe('filterPermittedOptions', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['delete:production'],
       'PROD-1',
+      undefined,
       undefined
     );
   });

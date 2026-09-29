@@ -189,6 +189,7 @@ describe('isElementPermitted resolves the entity id off its source', () => {
     expect(checkAdvancedPermission).toHaveBeenCalledWith(
       customPermissions['read:gps_coordinates:field'],
       'INS-1',
+      undefined,
       undefined
     );
   });

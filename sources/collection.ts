@@ -18,6 +18,7 @@ import {
   DeleteEntitiesInput,
 } from '../generated-types/type-defs';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
+import { substitutePermissionPlaceholders } from '../helpers/permissionPlaceholders';
 import jwtDecode from 'jwt-decode';
 import { Config } from '../types';
 import { GraphQLError } from 'graphql/index';
@@ -192,22 +193,14 @@ export class CollectionAPI extends AuthRESTDataSource {
     queryVariables: Record<string, unknown> = {}
   ): Promise<boolean> {
     try {
-      let parsedRequestInfo = JSON.stringify(permissionRequestInfo);
-      if (parentEntityId)
-        parsedRequestInfo = parsedRequestInfo.replace(
-          /\$parentEntityId/g,
-          parentEntityId
-        );
-      if (childEntityId)
-        parsedRequestInfo = parsedRequestInfo.replace(
-          /\$childEntityId/g,
-          childEntityId
-        );
-      for (const [name, value] of Object.entries(queryVariables)) {
-        if (typeof value !== 'string' || !value) continue;
-        parsedRequestInfo = parsedRequestInfo.replaceAll(`$${name}`, value);
-      }
-      const config = JSON.parse(parsedRequestInfo);
+      const config = JSON.parse(
+        substitutePermissionPlaceholders(
+          permissionRequestInfo,
+          parentEntityId,
+          childEntityId,
+          queryVariables
+        )
+      );
 
       const hasNoSoftParam = !config.uri.includes('soft=1');
       if (hasNoSoftParam) {

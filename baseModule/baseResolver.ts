@@ -3007,13 +3007,13 @@ export const baseResolver: Resolvers<ContextValue> = {
         minDropdownSearchCharacters,
         can,
       },
-      { dataSources, customPermissions }
+      resolverContext
     ) => {
       if (can?.length) {
         const permitted = await evaluateAdvancedPermission(
           can[0] as string,
-          dataSources,
-          customPermissions
+          resolverContext.dataSources,
+          resolverContext.customPermissions
         );
         if (!permitted) return null;
       }
