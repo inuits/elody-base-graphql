@@ -2544,7 +2544,8 @@ export const baseSchema = gql`
       allowedMatchers: [Matchers]
       matchersType: AdvancedFilterMatchersType
       matcherLabels: [MatcherLabelInput!]
-    ): AdvancedFilter!
+      can: [String!]
+    ): AdvancedFilter
   }
 
   type FilterMatchers {

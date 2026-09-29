@@ -19,7 +19,8 @@ export const evaluateAdvancedPermission = async (
   dataSources: DataSources,
   customPermissions: CustomPermissions,
   parentEntityId?: string,
-  childEntityId?: string
+  childEntityId?: string,
+  queryVariables?: Record<string, unknown>
 ): Promise<boolean> => {
   const permissionConfig = customPermissions?.[permission];
   if (!permissionConfig) return false;
@@ -29,7 +30,8 @@ export const evaluateAdvancedPermission = async (
       return await dataSources.CollectionAPI.checkAdvancedPermission(
         permissionConfig,
         parentEntityId,
-        childEntityId
+        childEntityId,
+        queryVariables
       );
     if (permissionConfig.datasource === 'GraphqlAPI')
       return await dataSources.GraphqlAPI.checkAdvancedPermission(
@@ -248,7 +250,8 @@ export const isPermissionListSatisfied = async (
   can: unknown,
   parent: unknown,
   dataSources: DataSources,
-  customPermissions: CustomPermissions
+  customPermissions: CustomPermissions,
+  queryVariables?: Record<string, unknown>
 ): Promise<boolean> => {
   const permissions = Array.isArray(can) ? can : can ? [can] : [];
   if (!permissions.length) return true;
@@ -257,7 +260,9 @@ export const isPermissionListSatisfied = async (
     permissions[0] as string,
     dataSources,
     customPermissions,
-    parent ? getEntityId(parent) : undefined
+    parent ? getEntityId(parent) : undefined,
+    undefined,
+    queryVariables
   );
 };
 

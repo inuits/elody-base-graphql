@@ -1843,25 +1843,29 @@ export const baseResolver: Resolvers<ContextValue> = {
     permitted: async (
       parent: unknown,
       { input },
-      { dataSources, customPermissions }
+      { dataSources, customPermissions },
+      info
     ) => {
       return isPermissionListSatisfied(
         input,
         parent,
         dataSources,
-        customPermissions
+        customPermissions,
+        info?.variableValues
       );
     },
     readOnly: async (
       parent: unknown,
       { input },
-      { dataSources, customPermissions }
+      { dataSources, customPermissions },
+      info
     ) => {
       return !(await isPermissionListSatisfied(
         input,
         parent,
         dataSources,
-        customPermissions
+        customPermissions,
+        info?.variableValues
       ));
     },
     isMultilingual: async (_source, { input }, { dataSources }) => {
@@ -3001,8 +3005,18 @@ export const baseResolver: Resolvers<ContextValue> = {
         matchersType,
         matcherLabels,
         minDropdownSearchCharacters,
-      }
+        can,
+      },
+      { dataSources, customPermissions }
     ) => {
+      if (can?.length) {
+        const permitted = await evaluateAdvancedPermission(
+          can[0] as string,
+          dataSources,
+          customPermissions
+        );
+        if (!permitted) return null;
+      }
       return {
         lookup,
         type,

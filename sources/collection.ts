@@ -188,7 +188,8 @@ export class CollectionAPI extends AuthRESTDataSource {
   async checkAdvancedPermission(
     permissionRequestInfo: PermissionRequestInfo,
     parentEntityId: Maybe<string> | undefined,
-    childEntityId: Maybe<string> | undefined
+    childEntityId: Maybe<string> | undefined,
+    queryVariables: Record<string, unknown> = {}
   ): Promise<boolean> {
     try {
       let parsedRequestInfo = JSON.stringify(permissionRequestInfo);
@@ -202,6 +203,10 @@ export class CollectionAPI extends AuthRESTDataSource {
           /\$childEntityId/g,
           childEntityId
         );
+      for (const [name, value] of Object.entries(queryVariables)) {
+        if (typeof value !== 'string' || !value) continue;
+        parsedRequestInfo = parsedRequestInfo.replaceAll(`$${name}`, value);
+      }
       const config = JSON.parse(parsedRequestInfo);
 
       const hasNoSoftParam = !config.uri.includes('soft=1');
