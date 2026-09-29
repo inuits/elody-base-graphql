@@ -38,6 +38,7 @@ export interface Environment {
     storageApiUrlExt: string;
     promUrl: 'no-prom' | string;
     transcodeService?: string;
+    historyServiceUrl?: string;
     ocrService?: string;
   };
   db: {
@@ -160,6 +161,7 @@ export interface FullyOptionalEnvironmentInput {
     storageApiUrlExt?: string;
     promUrl?: 'no-prom' | string;
     transcodeService?: string;
+    historyServiceUrl?: string;
     ocrService?: string;
   };
   db?: {

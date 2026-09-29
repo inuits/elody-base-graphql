@@ -99,6 +99,7 @@ export const baseEnvironment: Environment = {
     transcodeService:
       process.env.TRANSCODE_SERVICE_URL || 'http://transcode-service:5000/',
     ocrService: process.env.OCR_SERVICE_URL || 'http://ocr-service:5000/',
+    historyServiceUrl: process.env.HISTORY_SERVICE_URL,
   },
   db: {
     mongodb: {
