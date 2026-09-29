@@ -1,6 +1,6 @@
 import { baseRoutes } from './baseRoutes';
 
-type routeMetaQueries = {
+export type RouteQueries = {
   getEntities?: string;
   getFilters?: string;
   getSortOptions?: string;
@@ -37,21 +37,60 @@ type LandingCondition =
 
 export type LandingRedirect = { route: string } & LandingCondition;
 
+export type BreadcrumbTitle = {
+  type: string;
+  key: string;
+};
+
+export type Breadcrumb = {
+  overviewPage?: string;
+  title?: string | BreadcrumbTitle;
+  entityType?: string;
+  key?: Array<string>;
+  relation?: string;
+  current?: boolean;
+  pillLabel?: string;
+};
+
+export type SimpleSearch = {
+  keys: Array<string>;
+  relationKeys?: Array<string>;
+};
+
+export type RouteLogo = {
+  src: string;
+  alt?: string;
+};
+
+export type RouteMeta = {
+  requiresAuth?: boolean;
+  ignoreRedirect?: boolean;
+  type?: string;
+  entityType?: string;
+  slug?: string;
+  title?: string;
+  logo?: RouteLogo;
+  queries?: RouteQueries;
+  breadcrumbs?: Array<Breadcrumb>;
+  simpleSearch?: SimpleSearch;
+  multiEntityLayout?: boolean;
+  hasEditMetadataButton?: boolean;
+  hasDeleteButton?: boolean;
+  entityPageConfig?: object;
+  can?: Array<string>;
+  alternativeRoutes?: { [role: string]: string };
+  landingRedirect?: LandingRedirect | Array<LandingRedirect>;
+  permitted?: boolean;
+  landingRoute?: string;
+};
+
 export type Route = {
   path: string;
   name?: string;
   component?: string;
-  meta?: {
-    queries?: routeMetaQueries;
-    requiresAuth?: boolean;
-    type?: string;
-    entityType?: string;
-    breadcrumbs?: Array<object>;
-    multiEntityLayout?: boolean;
-    landingRedirect?: LandingRedirect | Array<LandingRedirect>;
-  };
-  children?: Array<Route>;
   redirect?: string;
+  meta?: RouteMeta;
+  children?: Array<Route>;
 };
 
 export const getRoutesObject = (customRoutesObject: Route[]): Route[] => {
@@ -102,7 +141,7 @@ const mapRouteChildren = (routeChildren: Route[]) => {
   });
 };
 
-const createDefaultQueriesForRoute = (): routeMetaQueries => {
+const createDefaultQueriesForRoute = (): RouteQueries => {
   return {
     getEntities: 'GetEntities',
     getFilters: 'GetAdvancedFilters',

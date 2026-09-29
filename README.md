@@ -79,6 +79,54 @@ On boot the server prints a titled banner listing mode, version, port, GraphQL p
 |--------|------|---------|
 | `GET`  | `/api/app-configs` | Return runtime config the PWA needs at boot: translations, feature flags, type→URL mapping, OAuth endpoints, custom formatters. |
 
+### Route configuration — `routes/routesHelper.ts`
+
+A client or module passes its routes through `getRoutesObject`, which fills in
+default `meta.queries` and appends the base routes. Annotate the array to get
+checking and autocomplete while writing it:
+
+```ts
+import { getRoutesObject, type Route } from 'base-graphql';
+
+export const myRoutes: Route[] = [
+  {
+    path: '/',
+    name: RouteNames.Home,
+    component: 'HomeWrapper',
+    meta: { type: Collection.Entities, entityType: Entitytyping.Asset },
+  },
+];
+```
+
+`Route` is `path`, `name`, `component`, `redirect`, `children` and `meta`.
+`name`, `component`, `type` and `entityType` are `string` on purpose — each
+client generates its own `RouteNames` / `Entitytyping` / `Collection` enums, and
+those are not assignable to base-graphql's copies.
+
+`RouteMeta` — every field optional:
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `requiresAuth` | `boolean` | Route needs an authenticated session. |
+| `ignoreRedirect` | `boolean` | Do not store this route as the post-login redirect. |
+| `type` | `string` | Collection the route lists (`Collection.Entities`). |
+| `entityType` | `string` | Entity type the route lists. |
+| `slug` | `string` | URL segment used to resolve the route from a type. |
+| `title` | `string` | Page title. |
+| `logo` | `RouteLogo` | `{ src, alt? }`, shown by the embedded viewer. |
+| `queries` | `RouteQueries` | Overrides for `getEntities`, `getFilters`, `getSortOptions`, `getBulkOperations`, `getMultiEntity`. Defaults are filled in. |
+| `breadcrumbs` | `Breadcrumb[]` | `overviewPage`, `title` (a string or `{ type, key }`), `entityType`, `key`, `relation`, `current`, `pillLabel`. |
+| `simpleSearch` | `SimpleSearch` | `{ keys, relationKeys? }` searched from this route. |
+| `multiEntityLayout` | `boolean` | Render the multi-entity layout. |
+| `hasEditMetadataButton` / `hasDeleteButton` | `boolean` | Show those buttons. |
+| `entityPageConfig` | `object` | Per-type single-entity page config. |
+| `can` | `string[]` | Permission resolved into `meta.permitted`. |
+| `alternativeRoutes` | `{ [role]: string }` | Where to send a user `permitted` denies, by role. |
+| `landingRedirect` | `LandingRedirect \| LandingRedirect[]` | See below. |
+
+`permitted` and `landingRoute` are also on `RouteMeta`, but the app-config
+endpoint writes them — a client does not set them.
+
 #### Per-user landing routes
 
 A route's `meta.landingRedirect` hands its landing page to another route for the

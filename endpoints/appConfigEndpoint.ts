@@ -15,7 +15,7 @@ import {
   isEntityTypePermitted,
 } from '../helpers/permissions';
 import type { ModuleFeature } from '../helpers/moduleContributions';
-import type { LandingRedirect } from '../routes/routesHelper';
+import type { LandingRedirect, Route } from '../routes/routesHelper';
 
 export type AppConfigRequestContext = {
   buildDataSources: (req: any) => DataSources;
@@ -205,17 +205,6 @@ export const resolveReadableSimpleSearchTypes = async (
   return itemTypes.filter((_itemType, index) => verdicts[index]);
 };
 
-type RouteConfig = {
-  name?: string;
-  path?: string;
-  meta?: {
-    can?: string[];
-    landingRedirect?: LandingRedirect | LandingRedirect[];
-    [key: string]: any;
-  };
-  children?: RouteConfig[];
-};
-
 const SESSION_VALUE = /^session-\$(.+)$/;
 
 const holdsOneOf = async (
@@ -284,13 +273,13 @@ const resolveLandingRoute = async (
 
 export const resolveRoutePermissions = async (
   req: any,
-  routerConfig: RouteConfig[] | undefined,
+  routerConfig: Route[] | undefined,
   requestContext?: AppConfigRequestContext
-): Promise<RouteConfig[] | undefined> => {
+): Promise<Route[] | undefined> => {
   if (!routerConfig?.length || !requestContext) return routerConfig;
   const dataSources = requestContext.buildDataSources(req);
 
-  const resolveMeta = async (meta: RouteConfig['meta']) => {
+  const resolveMeta = async (meta: Route['meta']) => {
     if (!meta?.can?.length && !meta?.landingRedirect) return meta;
     const { can, landingRedirect, ...rest } = meta;
 
@@ -314,7 +303,7 @@ export const resolveRoutePermissions = async (
     };
   };
 
-  const resolveRoute = async (route: RouteConfig): Promise<RouteConfig> => {
+  const resolveRoute = async (route: Route): Promise<Route> => {
     const [meta, children] = await Promise.all([
       resolveMeta(route.meta),
       route.children
@@ -368,7 +357,7 @@ export const applyAppConfigsEndpoint = (
       ),
       resolveRoutePermissions(
         req,
-        appConfig.routerConfig as RouteConfig[] | undefined,
+        appConfig.routerConfig as Route[] | undefined,
         requestContext
       ),
     ]);

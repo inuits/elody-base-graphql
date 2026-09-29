@@ -8,6 +8,16 @@ import {
 import applyPromEndpoint from './endpoints/promEndpoint';
 import path from 'path';
 import { getRoutesObject } from './routes/routesHelper';
+import type {
+  Route,
+  RouteMeta,
+  RouteQueries,
+  RouteLogo,
+  Breadcrumb,
+  BreadcrumbTitle,
+  SimpleSearch,
+  LandingRedirect,
+} from './routes/routesHelper';
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import {
   getRelationsByType,
@@ -70,6 +80,14 @@ export type {
   CollectionAPIMetadata,
   CollectionAPIRelation,
   ElodyModuleConfig,
+  Route,
+  RouteMeta,
+  RouteQueries,
+  RouteLogo,
+  Breadcrumb,
+  BreadcrumbTitle,
+  SimpleSearch,
+  LandingRedirect,
 };
 export {
   loadTranslationsFromDirectory,
