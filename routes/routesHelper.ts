@@ -18,11 +18,24 @@ type EntityCondition = {
   filters: Array<object>;
 };
 
-export type LandingRedirect = { route: string } & (
-  | (RoleCondition & { entityType?: never; filters?: never })
-  | (EntityCondition & { sessionKey?: never; matches?: never })
-  | (RoleCondition & EntityCondition)
-);
+type RoleConditionOnly = RoleCondition & {
+  entityType?: never;
+  filters?: never;
+};
+
+type EntityConditionOnly = EntityCondition & {
+  sessionKey?: never;
+  matches?: never;
+};
+
+type BothConditions = RoleCondition & EntityCondition;
+
+type LandingCondition =
+  | RoleConditionOnly
+  | EntityConditionOnly
+  | BothConditions;
+
+export type LandingRedirect = { route: string } & LandingCondition;
 
 export type Route = {
   path: string;
