@@ -91,6 +91,7 @@
       }
     },
     "bulk-operations": {
+      "download-title": "تنزيل {title}",
       "undo-selection": "إلغاء التحديد",
       "select-page": "تحديد الصفحة",
       "select-all": "تحديد الكل",

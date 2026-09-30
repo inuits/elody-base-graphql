@@ -105,6 +105,7 @@
       }
     },
     "bulk-operations": {
+      "download-title": "Download van {title}",
       "undo-selection": "selectie ongedaan maken",
       "select-page": "pagina selecteren",
       "select-all": "alles selecteren",

@@ -910,6 +910,7 @@ export const baseSchema = gql`
     bulkOperationModal(input: BulkOperationInputModal): BulkOperationModal
     subOptions: [DropdownOption]
     primary: Boolean
+    primaryFallback: Boolean
     requiresAuth: Boolean
     can: [String!]
     allowCondition: [String]
@@ -934,6 +935,7 @@ export const baseSchema = gql`
     bulkOperationModal: BulkOperationInputModal
     subOptions: [DropdownOptionInput]
     primary: Boolean
+    primaryFallback: Boolean
     requiresAuth: Boolean
     can: [String!]
     allowCondition: [String]
@@ -947,6 +949,7 @@ export const baseSchema = gql`
     openDropdown
     createEntity
     downloadMediafiles
+    downloadMediafilesDirectly
     reorderEntities
     exportCsv
     exportXlsx

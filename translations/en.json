@@ -99,6 +99,7 @@
       }
     },
     "bulk-operations": {
+      "download-title": "Download of {title}",
       "undo-selection": "undo selection",
       "select-page": "select page",
       "select-all": "select all",
