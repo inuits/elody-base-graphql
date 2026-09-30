@@ -7,11 +7,13 @@ import {
   Formatters,
 } from './generated-types/type-defs';
 import { GraphqlAPI } from './sources/graphql';
+import { HistoryServiceAPI } from './sources/historyService';
 import { AuthRESTDataSource } from './auth/AuthRESTDataSource';
 
 export interface OptionalDataSources {
   CollectionAPI?: CollectionAPI;
   GraphqlAPI?: GraphqlAPI;
+  HistoryServiceAPI?: HistoryServiceAPI;
 }
 
 interface DefaultDataSources {
