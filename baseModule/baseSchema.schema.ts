@@ -2172,6 +2172,27 @@ export const baseSchema = gql`
     doQueryAction: ContextMenuQueryAction
   }
 
+  enum ActionButtonResult {
+    None
+    RefetchParent
+    DownloadFile
+  }
+
+  type ActionButton {
+    label(input: String): String!
+    icon(input: String): String!
+    can(input: [String]): [String]
+    query(input: String): String
+    variables(input: JSON): JSON
+    hideIf(input: [String]): [String]
+    onResult(input: ActionButtonResult): ActionButtonResult!
+  }
+
+  type Buttons {
+    contextMenu: ContextMenuActions
+    button: ActionButton
+  }
+
   type teaserMetadata {
     metaData: PanelMetaData
     relationMetaData: PanelRelationMetaData
@@ -2179,7 +2200,7 @@ export const baseSchema = gql`
     thumbnail: PanelThumbnail
     link: PanelLink
     forceShowContextMenuActions(input: Boolean): Boolean
-    contextMenuActions: ContextMenuActions
+    buttons: Buttons
   }
 
   interface Entity {

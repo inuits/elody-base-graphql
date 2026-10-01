@@ -491,13 +491,15 @@ export const jobQueries = gql`
               key(input: "started_at")
               unit(input: DATETIME_DEFAULT)
             }
-            contextMenuActions {
-              doLinkAction {
-                label(input: "contextMenu.contextMenuLinkAction.followLink")
-                icon(input: "AngleRight")
+            buttons {
+              contextMenu {
+                doLinkAction {
+                  label(input: "contextMenu.contextMenuLinkAction.followLink")
+                  icon(input: "AngleRight")
+                  __typename
+                }
                 __typename
               }
-              __typename
             }
           }
           ...minimalBaseEntity

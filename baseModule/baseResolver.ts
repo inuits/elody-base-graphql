@@ -32,6 +32,8 @@ import {
   tagContextMenuEntityRole,
 } from '../helpers/permissions';
 import {
+  ActionButton,
+  ActionButtonResult,
   ActionElement,
   ActionProgress,
   ActionProgressIndicatorType,
@@ -45,6 +47,7 @@ import {
   BaseLibraryModes,
   BaseRelationValuesInput,
   BreadCrumbRoute,
+  Buttons,
   RelationDirection,
   Collection,
   Column,
@@ -1050,9 +1053,39 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       return input ? input : false;
     },
-    contextMenuActions: async (parent: unknown, {}, { dataSources }) => {
-      return tagContextMenuEntityRole(parent, 'child') as ContextMenuActions;
+    buttons: async (parent: unknown) => {
+      return tagContextMenuEntityRole(parent, 'child') as Buttons;
     },
+  },
+  Buttons: {
+    contextMenu: async (parent: unknown) => {
+      return parent as ContextMenuActions;
+    },
+    button: async (
+      parent: unknown,
+      {},
+      { dataSources, customPermissions, parentEntityId },
+      info
+    ) => {
+      const isPermitted = await isContextMenuActionPermitted(
+        info,
+        parent,
+        dataSources,
+        customPermissions,
+        parentEntityId
+      );
+      return isPermitted ? (parent as ActionButton) : null;
+    },
+  },
+  ActionButton: {
+    label: async (_parent, { input }) => (input ? input : 'no-input'),
+    icon: async (_parent, { input }) => (input ? input : 'no-input'),
+    can: async (_parent, { input }) => input || [],
+    query: async (_parent, { input }) => input as string,
+    variables: async (_parent, { input }) => input,
+    hideIf: async (_parent, { input }) => input || [],
+    onResult: async (_parent, { input }) =>
+      (input ?? ActionButtonResult.None) as ActionButtonResult,
   },
   Job: {
     id: async (parent: any, _args, { dataSources }) => {

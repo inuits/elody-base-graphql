@@ -15,8 +15,16 @@ const typeDefs = `
   type ContextMenuActions {
     doElodyAction: ContextMenuElodyAction
   }
+  type ActionButton {
+    label(input: String): String!
+    can(input: [String]): [String]
+  }
+  type Buttons {
+    contextMenu: ContextMenuActions
+    button: ActionButton
+  }
   type teaserMetadata {
-    contextMenuActions: ContextMenuActions
+    buttons: Buttons
   }
   type WindowElement {
     contextMenuActions: ContextMenuActions
@@ -62,8 +70,10 @@ const run = async (
     window: () => ({ _id: 'PROD-1', type: 'production' }),
   });
   attach('teaserMetadata', {
-    contextMenuActions: baseResolver.teaserMetadata!.contextMenuActions,
+    buttons: baseResolver.teaserMetadata!.buttons,
   });
+  attach('Buttons', baseResolver.Buttons as any);
+  attach('ActionButton', baseResolver.ActionButton as any);
   attach('WindowElement', {
     contextMenuActions: baseResolver.WindowElement!.contextMenuActions,
   });
@@ -90,34 +100,36 @@ describe('context menu omission', () => {
   it('leaves out a denied row action and keeps a permitted one', async () => {
     const source = `{
       row {
-        contextMenuActions {
-          keep: doElodyAction { label(input: "keep") can(input: ["delete:mediafile"]) }
-          drop: doElodyAction { label(input: "drop") can(input: ["delete:production"]) }
+        buttons {
+          contextMenu {
+            keep: doElodyAction { label(input: "keep") can(input: ["delete:mediafile"]) }
+            drop: doElodyAction { label(input: "drop") can(input: ["delete:production"]) }
+          }
         }
       }
     }`;
     const { data } = await run(source, ['/entities/$childEntityId'], 'PROD-1');
 
-    expect(data.row.contextMenuActions.keep).toEqual({
+    expect(data.row.buttons.contextMenu.keep).toEqual({
       label: 'keep',
       can: ['delete:mediafile'],
     });
-    expect(data.row.contextMenuActions.drop).toBeNull();
+    expect(data.row.buttons.contextMenu.drop).toBeNull();
   });
 
   it('keeps an action that configures no permission at all', async () => {
     const source = `{
-      row { contextMenuActions { open: doElodyAction { label(input: "open") } } }
+      row { buttons { contextMenu { open: doElodyAction { label(input: "open") } } } }
     }`;
     const { data, checkAdvancedPermission } = await run(source, []);
 
-    expect(data.row.contextMenuActions.open).toEqual({ label: 'open' });
+    expect(data.row.buttons.contextMenu.open).toEqual({ label: 'open' });
     expect(checkAdvancedPermission).not.toHaveBeenCalled();
   });
 
   it('resolves a row action against the request container and the row', async () => {
     const source = `{
-      row { contextMenuActions { drop: doElodyAction { can(input: ["delete:mediafile"]) } } }
+      row { buttons { contextMenu { drop: doElodyAction { can(input: ["delete:mediafile"]) } } } }
     }`;
     const { checkAdvancedPermission } = await run(source, [], 'PROD-1');
 
@@ -145,5 +157,35 @@ describe('context menu omission', () => {
       undefined
     );
     expect(data.window.contextMenuActions.drop).not.toBeNull();
+  });
+
+  it('judges each aliased row button by its own permission', async () => {
+    const source = `{
+      row {
+        buttons {
+          keep: button { label(input: "keep") can(input: ["delete:mediafile"]) }
+          drop: button { label(input: "drop") can(input: ["delete:production"]) }
+          open: button { label(input: "open") }
+        }
+      }
+    }`;
+    const { data, checkAdvancedPermission } = await run(
+      source,
+      ['/entities/$childEntityId'],
+      'PROD-1'
+    );
+
+    expect(data.row.buttons.keep).toEqual({
+      label: 'keep',
+      can: ['delete:mediafile'],
+    });
+    expect(data.row.buttons.drop).toBeNull();
+    expect(data.row.buttons.open).toEqual({ label: 'open' });
+    expect(checkAdvancedPermission).toHaveBeenCalledWith(
+      customPermissions['delete:mediafile'],
+      'PROD-1',
+      'MF-1',
+      undefined
+    );
   });
 });
