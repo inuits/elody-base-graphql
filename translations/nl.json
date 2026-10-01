@@ -379,7 +379,8 @@
       "select-version": "Selecteer versie",
       "current-version": "Huidige versie",
       "no-items": "Geen items",
-      "view-history": "Geschiedenis bekijken"
+      "view-history": "Geschiedenis bekijken",
+      "edited-by": "Gewijzigd door {author} op {date}"
     },
     "jobs": {
       "finished": "klaar",

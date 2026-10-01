@@ -382,7 +382,8 @@
       "select-version": "Select version",
       "current-version": "Current version",
       "no-items": "No items",
-      "view-history": "View history"
+      "view-history": "View history",
+      "edited-by": "Edited by {author} on {date}"
     },
     "jobs": {
       "finished": "finished",
