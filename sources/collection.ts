@@ -371,6 +371,41 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
+  private async filterByTypesAndKey(
+    types: string[],
+    key: 'id' | '_id',
+    values: string[],
+    history: boolean
+  ): Promise<any[]> {
+    if (values.length === 0) return [];
+    try {
+      const query = `${history ? 'history=true&' : ''}limit=${values.length}&skip=0`;
+      const data: any = await this.post(
+        `${getCollectionValueForEntityType(types[0] ?? '')}/filter?${query}`,
+        {
+          body: [
+            { type: 'selection', key: 'type', value: types, match_exact: true },
+            { type: 'selection', key, value: values, match_exact: true },
+          ],
+        }
+      );
+      return Array.isArray(data) ? data : data?.results ?? [];
+    } catch {
+      return [];
+    }
+  }
+
+  async getEntitiesByIds(types: string[], ids: string[]): Promise<any[]> {
+    return this.filterByTypesAndKey(types, 'id', ids, false);
+  }
+
+  async getHistoryEntitiesByIds(
+    types: string[],
+    historyIds: string[]
+  ): Promise<any[]> {
+    return this.filterByTypesAndKey(types, '_id', historyIds, true);
+  }
+
   async getHistoryEntity(
     type: string,
     historyId: string
