@@ -383,7 +383,14 @@
       "current-version": "Current version",
       "no-items": "No items",
       "view-history": "View history",
-      "edited-by": "Edited by {author} on {date}"
+      "edited-by": "Edited by {author} on {date}",
+      "title": "History",
+      "version-label": "Version {number} ({date})",
+      "version-label-undated": "Version {number}",
+      "no-history": "This item has no history yet.",
+      "versions-load-error": "The history could not be loaded. Please try again later.",
+      "version-load-error": "This version could not be loaded.",
+      "renamed": "renamed"
     },
     "jobs": {
       "finished": "finished",

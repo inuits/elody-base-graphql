@@ -371,6 +371,32 @@ export class CollectionAPI extends AuthRESTDataSource {
     return data;
   }
 
+  async getHistoryEntity(
+    type: string,
+    historyId: string
+  ): Promise<any | undefined> {
+    try {
+      const data: any = await this.post(
+        `${getCollectionValueForEntityType(type)}/filter?history=true&limit=1&skip=0`,
+        {
+          body: [
+            { type: 'type', value: type },
+            {
+              type: 'selection',
+              key: '_id',
+              value: [historyId],
+              match_exact: true,
+            },
+          ],
+        }
+      );
+      const results = Array.isArray(data) ? data : data?.results ?? [];
+      return results[0];
+    } catch {
+      return undefined;
+    }
+  }
+
   async hasMatchingEntities(
     entityType: string,
     filters: any[]
