@@ -381,7 +381,14 @@
       "current-version": "Huidige versie",
       "no-items": "Geen items",
       "view-history": "Geschiedenis bekijken",
-      "edited-by": "Gewijzigd door {author} op {date}"
+      "edited-by": "Gewijzigd door {author} op {date}",
+      "title": "Geschiedenis",
+      "version-label": "Versie {number} ({date})",
+      "version-label-undated": "Versie {number}",
+      "no-history": "Dit item heeft nog geen geschiedenis.",
+      "versions-load-error": "De geschiedenis kon niet geladen worden. Probeer het later opnieuw.",
+      "version-load-error": "Deze versie kon niet geladen worden.",
+      "renamed": "hernoemd"
     },
     "jobs": {
       "finished": "klaar",

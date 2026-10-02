@@ -293,7 +293,14 @@
       "current-version": "الإصدار الحالي",
       "no-items": "لا توجد عناصر",
       "view-history": "عرض السجل",
-      "edited-by": "عدّله {author} في {date}"
+      "edited-by": "عدّله {author} في {date}",
+      "title": "السجل",
+      "version-label": "الإصدار {number} ({date})",
+      "version-label-undated": "الإصدار {number}",
+      "no-history": "لا يوجد سجل لهذا العنصر بعد.",
+      "versions-load-error": "تعذّر تحميل السجل. يرجى المحاولة لاحقًا.",
+      "version-load-error": "تعذّر تحميل هذا الإصدار.",
+      "renamed": "أُعيدت تسميته"
     },
     "jobs": {
       "finished": "منتهية",
