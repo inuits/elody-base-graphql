@@ -987,6 +987,7 @@ export const baseSchema = gql`
   input MetadataFieldInput {
     key: String!
     value: JSON
+    lang: String
   }
 
   input MinMaxInput {
