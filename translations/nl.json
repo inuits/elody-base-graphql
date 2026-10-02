@@ -378,6 +378,7 @@
     "history": {
       "select-version": "Selecteer versie",
       "current-version": "Huidige versie",
+      "current-version-number": "Huidige versie (Versie {number})",
       "no-items": "Geen items",
       "view-history": "Geschiedenis bekijken",
       "edited-by": "Gewijzigd door {author} op {date}",
@@ -385,6 +386,7 @@
       "version-label": "Versie {number} ({date})",
       "version-label-undated": "Versie {number}",
       "no-history": "Dit item heeft nog geen geschiedenis.",
+      "no-previous-versions": "Er zijn nog geen eerdere versies.",
       "versions-load-error": "De geschiedenis kon niet geladen worden. Probeer het later opnieuw.",
       "version-load-error": "Deze versie kon niet geladen worden.",
       "renamed": "hernoemd"

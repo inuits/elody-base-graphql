@@ -120,13 +120,15 @@ export const baseQueries = gql`
 
   query GetRelationLabelsForIds(
     $ids: [String!]!
-    $type: String!
+    $types: [String!]!
+    $historyKeys: [String!]
     $metadataKeyAsLabel: String
     $rootKeyAsLabel: String
   ) {
     RelationLabelsForIds(
       ids: $ids
-      type: $type
+      types: $types
+      historyKeys: $historyKeys
       metadataKeyAsLabel: $metadataKeyAsLabel
       rootKeyAsLabel: $rootKeyAsLabel
     ) {

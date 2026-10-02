@@ -2639,7 +2639,8 @@ export const baseSchema = gql`
     EntityHistoryVersionDetail(id: String!, type: String!, versionId: String!): Entity
     RelationLabelsForIds(
       ids: [String!]!
-      type: String!
+      types: [String!]!
+      historyKeys: [String!]
       metadataKeyAsLabel: String
       rootKeyAsLabel: String
     ): [KeyAndValue!]!

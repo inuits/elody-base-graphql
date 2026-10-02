@@ -290,6 +290,7 @@
     "history": {
       "select-version": "اختيار الإصدار",
       "current-version": "الإصدار الحالي",
+      "current-version-number": "الإصدار الحالي (الإصدار {number})",
       "no-items": "لا توجد عناصر",
       "view-history": "عرض السجل",
       "edited-by": "عدّله {author} في {date}",
@@ -297,6 +298,7 @@
       "version-label": "الإصدار {number} ({date})",
       "version-label-undated": "الإصدار {number}",
       "no-history": "لا يوجد سجل لهذا العنصر بعد.",
+      "no-previous-versions": "لا توجد إصدارات سابقة بعد.",
       "versions-load-error": "تعذّر تحميل السجل. يرجى المحاولة لاحقًا.",
       "version-load-error": "تعذّر تحميل هذا الإصدار.",
       "renamed": "أُعيدت تسميته"
