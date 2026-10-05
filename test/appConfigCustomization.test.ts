@@ -11,13 +11,14 @@ const withCustomization = (
 });
 
 describe('getConfig customization', () => {
-  it('passes the client theme through to the frontend', () => {
-    const config = getConfig(withCustomization({ clientTheme: 'aicap' }));
-    expect(config.customization.clientTheme).toBe('aicap');
+  it('passes the client colour tokens through to the frontend', () => {
+    const theme = { '--color-accent': '#7A4FB5' };
+    const config = getConfig(withCustomization({ theme }));
+    expect(config.customization.theme).toEqual(theme);
   });
 
-  it('leaves the client theme out when none is configured', () => {
+  it('leaves the theme out when none is configured', () => {
     const config = getConfig(withCustomization({}));
-    expect(config.customization.clientTheme).toBeUndefined();
+    expect(config.customization.theme).toBeUndefined();
   });
 });

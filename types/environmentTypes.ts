@@ -107,8 +107,10 @@ export interface Environment {
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
     userEmailMetadataKey?: string;
-    // Design-system client scope; the PWA sets <body data-elody-client>.
-    clientTheme?: string;
+    // Design-system colour tokens for this deployment ({ "--color-accent":
+    // "#…" }); the PWA sets them on <body> at boot. Only --color-* tokens
+    // with colour values are applied.
+    theme?: Record<string, string>;
   };
   allowAnonymousUsers: boolean;
   tenantDefiningTypes?: string;
@@ -230,8 +232,10 @@ export interface FullyOptionalEnvironmentInput {
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
     userEmailMetadataKey?: string;
-    // Design-system client scope; the PWA sets <body data-elody-client>.
-    clientTheme?: string;
+    // Design-system colour tokens for this deployment ({ "--color-accent":
+    // "#…" }); the PWA sets them on <body> at boot. Only --color-* tokens
+    // with colour values are applied.
+    theme?: Record<string, string>;
   };
   allowAnonymousUsers?: boolean;
   tenantDefiningTypes?: string;
