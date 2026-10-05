@@ -283,6 +283,8 @@
       }
     },
     "dropdown": {
+      "n-selected": "{n} gekozen",
+      "no-options": "Geen opties",
       "select-option": "selecteer optie"
     },
     "dropzone": {
@@ -368,6 +370,7 @@
       }
     },
     "autocomplete": {
+      "remove-chip": "Verwijder",
       "find-more-options-placeholder": "Typ om meer opties te zoeken"
     },
     "form": {
@@ -409,6 +412,7 @@
         "immutable-field": "Dit veld kan niet gewijzigd worden, het behouden record houdt zijn eigen waarde."
       },
       "labels": {
+        "no-value": "Geen waarde",
         "email": "Email",
         "first-name": "Voornaam",
         "last-name": "Achternaam",

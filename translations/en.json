@@ -288,6 +288,8 @@
       }
     },
     "dropdown": {
+      "n-selected": "{n} selected",
+      "no-options": "No options",
       "select-option": "select option"
     },
     "dropzone": {
@@ -371,6 +373,7 @@
       }
     },
     "autocomplete": {
+      "remove-chip": "Remove",
       "find-more-options-placeholder": "Start typing to find more options"
     },
     "form": {
@@ -414,6 +417,7 @@
         "immutable-field": "This field cannot be changed, so the surviving record keeps its own value."
       },
       "labels": {
+        "no-value": "No value",
         "email": "Email",
         "first-name": "First name",
         "last-name": "Last name",

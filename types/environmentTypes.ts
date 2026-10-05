@@ -107,6 +107,8 @@ export interface Environment {
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
     userEmailMetadataKey?: string;
+    // Design-system client scope; the PWA sets <body data-elody-client>.
+    clientTheme?: string;
   };
   allowAnonymousUsers: boolean;
   tenantDefiningTypes?: string;
@@ -228,6 +230,8 @@ export interface FullyOptionalEnvironmentInput {
     uploadEntityTypeToCreate?: Entitytyping;
     entityIdKey?: string;
     userEmailMetadataKey?: string;
+    // Design-system client scope; the PWA sets <body data-elody-client>.
+    clientTheme?: string;
   };
   allowAnonymousUsers?: boolean;
   tenantDefiningTypes?: string;

@@ -70,6 +70,7 @@ export const getConfig = (config: Environment) => {
           ? false
           : config.customization.hideEmptyFields,
       entityIdKey: config.customization.entityIdKey || '_id',
+      clientTheme: config.customization.clientTheme,
     },
     allowAnonymousUsers: config.allowAnonymousUsers,
     tenantDefiningTypes: config.tenantDefiningTypes,
