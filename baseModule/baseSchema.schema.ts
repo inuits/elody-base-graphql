@@ -1401,6 +1401,7 @@ export const baseSchema = gql`
     relationType(input: String): String
     viewMode(input: EntityListViewMode): EntityListViewMode
     enableNavigation(input: Boolean): Boolean
+    hideInHistory(input: Boolean): Boolean
     customQuery(input: String): String
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String

@@ -1557,6 +1557,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     viewMode: async (parent: any, { input }, { dataSources }) => {
       return input || EntityListViewMode.Library;
     },
+    hideInHistory: async (_source, { input }) => {
+      return input ?? false;
+    },
     enableNavigation: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : true;
     },

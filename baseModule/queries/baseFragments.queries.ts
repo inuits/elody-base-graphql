@@ -228,6 +228,7 @@ export const baseFragments = gql`
       isCollapsed(input: false)
       enableNavigation(input: false)
       disableLibraryBar(input: true)
+      hideInHistory(input: true)
       entityTypes(input: [history])
       customQuery(input: "GetEntityHistoryVersionList")
       customQueryFilters(input: "GetEntityHistoryVersionListFilters")
