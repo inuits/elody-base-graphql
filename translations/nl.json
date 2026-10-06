@@ -380,6 +380,10 @@
       "search": "Zoek geschiedenis"
     },
     "history": {
+      "added": "toegevoegd",
+      "removed": "verwijderd",
+      "changed": "Gewijzigd",
+      "unchanged": "Ongewijzigd",
       "select-version": "Selecteer versie",
       "current-version": "Huidige versie",
       "current-version-number": "Huidige versie (Versie {number})",

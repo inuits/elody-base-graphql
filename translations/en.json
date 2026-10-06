@@ -383,6 +383,10 @@
       "search": "Search History"
     },
     "history": {
+      "added": "added",
+      "removed": "removed",
+      "changed": "Changed",
+      "unchanged": "Unchanged",
       "select-version": "Select version",
       "current-version": "Current version",
       "current-version-number": "Current version (Version {number})",
