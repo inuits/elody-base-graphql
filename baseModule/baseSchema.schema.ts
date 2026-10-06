@@ -1923,6 +1923,7 @@ export const baseSchema = gql`
 
   type WindowElement {
     label(input: String): String!
+    hideInHistory(input: Boolean): Boolean
     panels: WindowElementPanel
     layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions

@@ -1709,6 +1709,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
+    hideInHistory: async (_source, { input }) => {
+      return input ?? false;
+    },
     panels: async (
       parent: unknown,
       {},
