@@ -163,6 +163,7 @@ import {
   RepetitiveFinalizeRelation,
   RepetitiveMetadataPrefill,
   EntityPickerSearchMode,
+  HistoryVersionResults,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -436,7 +437,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         advancedFilterInputs,
         limit ?? undefined,
         skip ?? undefined
-      );
+      ) as unknown as Promise<HistoryVersionResults>;
     },
     EntityHistoryVersionDetail: async (
       _source,
