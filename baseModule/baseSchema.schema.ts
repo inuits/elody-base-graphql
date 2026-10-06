@@ -1729,6 +1729,8 @@ export const baseSchema = gql`
     masked(input: Boolean): Boolean
     revealQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
+    "SHACL UI sh:languageIn: the order in which language-tagged values are preferred"
+    languageIn(input: [String!]): [String!]
     customValue(input: String): String
     permitted(input: [String!]): Boolean
     readOnly(input: [String!]): Boolean

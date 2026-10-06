@@ -1965,6 +1965,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     isMultilingual: async (_source, { input }, { dataSources }) => {
       return input ?? false;
     },
+    languageIn: async (_source, { input }) => {
+      return input ?? [];
+    },
     valueTranslationKey: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },
