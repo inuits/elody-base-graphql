@@ -1088,6 +1088,13 @@ export const baseSchema = gql`
     value: String!
   }
 
+  type EntityHistoryVersion {
+    versionId: String!
+    documentVersion: Int
+    timestamp: String
+    editedBy: String
+  }
+
   type Metadata {
     key: String!
     value: JSON!
@@ -2648,6 +2655,20 @@ export const baseSchema = gql`
       fetchPolicy: String
       preferredLanguage: String
     ): EntitiesResults
+    EntityHistoryVersions(
+      id: String!
+      type: String!
+      limit: Int
+      skip: Int
+    ): [EntityHistoryVersion!]!
+    EntityHistoryVersionDetail(id: String!, type: String!, versionId: String!): Entity
+    RelationLabelsForIds(
+      ids: [String!]!
+      types: [String!]!
+      historyKeys: [String!]
+      metadataKeyAsLabel: String
+      rootKeyAsLabel: String
+    ): [KeyAndValue!]!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!
     PermissionMappingCreate(entityType: String!): Boolean!

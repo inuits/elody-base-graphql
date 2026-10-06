@@ -2,6 +2,7 @@ import { Module } from 'graphql-modules';
 import { baseModule } from '../baseModule/baseModule';
 import { CollectionAPI } from '../sources/collection';
 import { GraphqlAPI } from '../sources/graphql';
+import { HistoryServiceAPI } from '../sources/historyService';
 import { DataSources, OptionalDataSources } from '../types';
 import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Environment } from '../types/environmentTypes';
@@ -75,6 +76,26 @@ const baseElodyElodyConfig: ElodyConfig = {
           environment,
           session,
           cache,
+          context: { tenantId },
+        }),
+      };
+    },
+    (
+      environment: Environment,
+      session: any,
+      cache: any,
+      clientIp: string,
+      clientOrigin: string | undefined,
+      tenantId?: string
+    ) => {
+      if (!environment.api.historyServiceUrl) return {};
+      return {
+        HistoryServiceAPI: new HistoryServiceAPI({
+          environment,
+          session,
+          cache,
+          clientIp,
+          clientOrigin,
           context: { tenantId },
         }),
       };

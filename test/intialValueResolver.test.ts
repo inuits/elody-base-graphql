@@ -8,6 +8,7 @@ import {
   resolveIntialValueRelationMetadata,
   resolveIntialValueRelations,
   resolveIntialValueRepeatableMetadata,
+  fetchRelationEntity,
 } from '../resolvers/intialValueResolver';
 import { DataSources } from '../types';
 
@@ -354,5 +355,81 @@ describe('resolveIntialValueRepeatableMetadata', () => {
     );
 
     expect(result).toBe('Title');
+  });
+});
+
+describe('fetchRelationEntity for history versions', () => {
+  const liveEntity = {
+    id: 'PERS-1',
+    _id: 'live-pers-1',
+    type: 'person',
+    metadata: [{ key: 'name', value: 'New name' }],
+  };
+  const historicalEntity = {
+    id: 'PERS-1',
+    _id: 'hist-pers-1',
+    type: 'person',
+    metadata: [{ key: 'name', value: 'Old name' }],
+  };
+
+  const makeDataSources = () =>
+    ({
+      CollectionAPI: {
+        getEntity: vi.fn().mockResolvedValue(liveEntity),
+        getHistoryEntity: vi.fn().mockResolvedValue(historicalEntity),
+      },
+    }) as unknown as DataSources;
+
+  it('reads a related entity as it was in the history version when the relation carries its own history key', async () => {
+    const dataSources = makeDataSources();
+
+    const entity = await fetchRelationEntity(
+      dataSources,
+      { key: 'PERS-1', type: 'refAuthors', historyKey: 'hist-pers-1' },
+      '',
+      'name',
+      '',
+      ''
+    );
+
+    expect(entity).toEqual(historicalEntity);
+    expect(dataSources.CollectionAPI.getHistoryEntity).toHaveBeenCalledWith(
+      'person',
+      'hist-pers-1'
+    );
+  });
+
+  it('reads the live entity without a history lookup when the related entity had no history version yet', async () => {
+    const dataSources = makeDataSources();
+
+    const entity = await fetchRelationEntity(
+      dataSources,
+      { key: 'PERS-1', type: 'refAuthors', historyKey: 'PERS-1' },
+      '',
+      'name',
+      '',
+      ''
+    );
+
+    expect(entity).toEqual(liveEntity);
+    expect(dataSources.CollectionAPI.getHistoryEntity).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the live entity when the history version cannot be found', async () => {
+    const dataSources = makeDataSources();
+    (dataSources.CollectionAPI.getHistoryEntity as any).mockResolvedValue(
+      undefined
+    );
+
+    const entity = await fetchRelationEntity(
+      dataSources,
+      { key: 'PERS-1', type: 'refAuthors', historyKey: 'hist-pers-1' },
+      '',
+      'name',
+      '',
+      ''
+    );
+
+    expect(entity).toEqual(liveEntity);
   });
 });

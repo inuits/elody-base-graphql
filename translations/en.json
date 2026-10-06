@@ -382,6 +382,22 @@
     "history-view": {
       "search": "Search History"
     },
+    "history": {
+      "select-version": "Select version",
+      "current-version": "Current version",
+      "current-version-number": "Current version (Version {number})",
+      "no-items": "No items",
+      "view-history": "View history",
+      "edited-by": "Edited by {author} on {date}",
+      "title": "History",
+      "version-label": "Version {number} ({date})",
+      "version-label-undated": "Version {number}",
+      "no-history": "This item has no history yet.",
+      "no-previous-versions": "There are no earlier versions yet.",
+      "versions-load-error": "The history could not be loaded. Please try again later.",
+      "version-load-error": "This version could not be loaded.",
+      "renamed": "renamed"
+    },
     "jobs": {
       "finished": "finished",
       "failed": "failed",

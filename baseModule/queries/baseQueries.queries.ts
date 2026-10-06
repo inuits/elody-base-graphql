@@ -117,4 +117,23 @@ export const baseQueries = gql`
       failedIds
     }
   }
+
+  query GetRelationLabelsForIds(
+    $ids: [String!]!
+    $types: [String!]!
+    $historyKeys: [String!]
+    $metadataKeyAsLabel: String
+    $rootKeyAsLabel: String
+  ) {
+    RelationLabelsForIds(
+      ids: $ids
+      types: $types
+      historyKeys: $historyKeys
+      metadataKeyAsLabel: $metadataKeyAsLabel
+      rootKeyAsLabel: $rootKeyAsLabel
+    ) {
+      key
+      value
+    }
+  }
 `;

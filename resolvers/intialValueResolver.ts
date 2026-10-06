@@ -131,7 +131,7 @@ const filterRelationsByProperty = (
   });
 };
 
-const fetchRelationEntity = async (
+export const fetchRelationEntity = async (
   dataSources: DataSources,
   relation: any,
   relationEntityType: string,
@@ -159,15 +159,25 @@ const fetchRelationEntity = async (
   const entityType = relationEntityType || '';
   const collection = relationEntityType ? undefined : 'entities';
 
-  return dataSources.CollectionAPI.getEntity(
+  const liveEntity = await dataSources.CollectionAPI.getEntity(
     relation.key,
     entityType,
     collection,
     true
   );
+
+  const pointsToHistoryVersion =
+    relation.historyKey && relation.historyKey !== relation.key;
+  if (!pointsToHistoryVersion || !liveEntity?.type) return liveEntity;
+
+  const historicalEntity = await dataSources.CollectionAPI.getHistoryEntity(
+    liveEntity.type,
+    relation.historyKey
+  );
+  return historicalEntity ?? liveEntity;
 };
 
-const extractValueFromEntity = (
+export const extractValueFromEntity = (
   entity: any,
   relation: any,
   metadataKeyAsLabel: string,
