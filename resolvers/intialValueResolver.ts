@@ -177,25 +177,56 @@ export const fetchRelationEntity = async (
   return historicalEntity ?? liveEntity;
 };
 
+/** Basic filtering (RFC 4647 §3.3.1): en-GB matches the preferred language en. */
+const languageMatches = (tag: string | undefined, preferred: string): boolean => {
+  if (!tag) return false;
+  const t = tag.toLowerCase();
+  const p = preferred.toLowerCase();
+  return t === p || t.startsWith(`${p}-`);
+};
+
+/** The local name of an IRI (after the last # or /); an Elody id is its own. */
+const localName = (key: string): string => String(key).replace(/^.*[#/]/, '') || String(key);
+
+/**
+ * The label of a related entity (SHACL 1.2 UI value-node label): the first of
+ * the label keys (metadataKeyAsLabel, "a|b|c", in preference order) the entity
+ * has, in the preferred language (else a value without language, else any),
+ * and the local name of the relation's key when it has none.
+ */
 export const extractValueFromEntity = (
   entity: any,
   relation: any,
   metadataKeyAsLabel: string,
-  rootKeyAsLabel: string
+  rootKeyAsLabel: string,
+  preferredLanguage?: string
 ): string => {
   if (rootKeyAsLabel) {
     return entity?.[rootKeyAsLabel] || '';
   }
 
   if (metadataKeyAsLabel && entity?.metadata) {
-    const metadataKeys = String(metadataKeyAsLabel).split('|');
-    const metadataItem = entity.metadata.find((metadata: any) =>
-      metadataKeys.includes(metadata.key)
-    );
-    return metadataItem?.value || relation.key;
+    for (const key of String(metadataKeyAsLabel).split('|')) {
+      const items = entity.metadata.filter(
+        (metadata: any) =>
+          metadata.key === key &&
+          metadata.value !== undefined &&
+          metadata.value !== null &&
+          metadata.value !== ''
+      );
+      if (items.length === 0) continue;
+      const item =
+        (preferredLanguage &&
+          items.find((metadata: any) =>
+            languageMatches(metadata.lang, preferredLanguage)
+          )) ||
+        items.find((metadata: any) => !metadata.lang) ||
+        items[0];
+      return item.value;
+    }
   }
 
-  return relation.key;
+  return localName(relation.key);
 };
 
 const formatResults = (
@@ -287,7 +318,8 @@ const processRelations = async (
           entity,
           relation,
           metadataKeyAsLabel,
-          rootKeyAsLabel
+          rootKeyAsLabel,
+          dataSources.CollectionAPI?.preferredLanguage
         ),
         values: collectRelationMetadataValues(relation, nestedMetadataKeys),
       })),
@@ -304,7 +336,8 @@ const processRelations = async (
         entity,
         relation,
         metadataKeyAsLabel,
-        rootKeyAsLabel
+        rootKeyAsLabel,
+        dataSources.CollectionAPI?.preferredLanguage
       )
     );
 
