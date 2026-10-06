@@ -99,7 +99,9 @@ export const parseMetaData = (input: any): Metadata => {
   return {
     key: input.key as string,
     value: input.value !== undefined ? input.value : ('' as string),
-    lang: input.metadata?.filter((metadata: any) => metadata.key === "lang")?.[0].value as string,
+    // the language on the item (as collection-api stores it), else as nested metadata
+    lang: (input.lang ??
+      input.metadata?.find((metadata: any) => metadata.key === "lang")?.value) as string,
     label: input.label ? input.label : (input.key as string),
     immutable: input.immutable ? input.immutable : (false as boolean),
   };
