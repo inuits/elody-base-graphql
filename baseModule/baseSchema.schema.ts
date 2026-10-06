@@ -250,6 +250,13 @@ export const baseSchema = gql`
     metaData: PanelMetaData!
     uploadContainer: UploadContainer
     action: FormAction
+    formSection: FormSection
+  }
+
+  "A titled section of a form around its own form fields (a SHACL UI sh:PropertyGroup)"
+  type FormSection {
+    label(input: String): String!
+    formFields: FormFields!
   }
 
   enum ActionType {

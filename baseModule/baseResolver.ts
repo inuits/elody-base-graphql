@@ -2636,6 +2636,17 @@ export const baseResolver: Resolvers<ContextValue> = {
     action: async (parent: any, {}, { dataSources }) => {
       return parent as FormAction;
     },
+    formSection: async (parent: any) => {
+      return parent;
+    },
+  },
+  FormSection: {
+    label: async (_parent: any, { input }: { input?: string }) => {
+      return input ?? '';
+    },
+    formFields: async (parent: any) => {
+      return parent as FormFields;
+    },
   },
   InputField: {
     fieldName: async (parent, { input }, { dataSources }) => {
