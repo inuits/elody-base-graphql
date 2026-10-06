@@ -258,4 +258,29 @@ describe('resolveAdvancedEntities', () => {
       true
     );
   });
+
+  it('keeps a type filter that carries a distinct_by', async () => {
+    mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
+      results: [mockEntity('1', 'comment')],
+      count: 1,
+      facets: [],
+      skip: 0,
+      limit: 10,
+    });
+    const distinctFilter: AdvancedFilterInput = {
+      type: AdvancedFilterTypes.Type,
+      value: 'comment',
+      distinct_by: 'properties.category.value',
+    };
+
+    await resolveAdvancedEntities(
+      mockDataSource as unknown as DataSources,
+      'comment',
+      [distinctFilter]
+    );
+
+    const sentFilters =
+      mockDataSource.CollectionAPI.GetAdvancedEntities.mock.calls[0][3];
+    expect(sentFilters).toContainEqual(distinctFilter);
+  });
 });

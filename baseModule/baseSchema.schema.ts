@@ -1282,6 +1282,16 @@ export const baseSchema = gql`
   input ViewModesWithConfigInput {
     viewMode: ViewModes
     config: [ConfigItemInput]
+    groupBy: GroupByConfigInput
+  }
+  input GroupByConfigInput {
+    key: String!
+    filterKey: [String!]!
+    distinctBy: String!
+    groupOrderBy: String!
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
   }
   input ConfigItemInput {
     key: String!
@@ -1291,6 +1301,16 @@ export const baseSchema = gql`
   type ViewModesWithConfig {
     viewMode: ViewModes
     config: [ConfigItem]
+    groupBy: GroupByConfig
+  }
+  type GroupByConfig {
+    key: String!
+    filterKey: [String!]!
+    distinctBy: String!
+    groupOrderBy: String!
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
   }
   type ConfigItem {
     key: String!

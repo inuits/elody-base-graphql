@@ -19,7 +19,8 @@
       "status": {
         "open": "مفتوح",
         "resolved": "مغلق"
-      }
+      },
+      "no-category": "بدون فئة"
     },
     "entity-translations": {
       "baseentity": "كيان أساسي | كيانات أساسية",
@@ -522,7 +523,9 @@
       "add": "إضافة",
       "asc": "تصاعدي",
       "desc": "تنازلي",
-      "language": "اختر اللغة"
+      "language": "اختر اللغة",
+      "load-more": "تحميل المزيد",
+      "load-more-in-group": "تحميل المزيد في هذه المجموعة"
     },
     "navigation": {
       "title": "إيلودي",

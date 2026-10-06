@@ -23,7 +23,8 @@
       "creator": "Maker opmerking",
       "tagged-on": "Getagd op",
       "replies": "Reacties",
-      "last-activity": "Laatste activiteit"
+      "last-activity": "Laatste activiteit",
+      "no-category": "Zonder categorie"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",
@@ -693,7 +694,9 @@
       "add": "Toevoegen",
       "asc": "Oplopend",
       "desc": "Aflopend",
-      "language": "Kies taal"
+      "language": "Kies taal",
+      "load-more": "Meer laden",
+      "load-more-in-group": "Meer laden in deze groep"
     },
     "navigation": {
       "title": "Elody",

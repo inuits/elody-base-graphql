@@ -45,7 +45,9 @@ export const resolveAdvancedEntities = async (
   for await (const entityType of entityTypesToLoop as Entitytyping[]) {
     const iterationFilters: AdvancedFilterInput[] = advancedFilterInputs.filter(
       (filter: AdvancedFilterInput) =>
-        filter.type !== AdvancedFilterTypes.Type || filter.facets
+        filter.type !== AdvancedFilterTypes.Type ||
+        filter.facets ||
+        filter.distinct_by
     );
 
     const containsTypeFilter =
