@@ -2311,6 +2311,29 @@ export const baseSchema = gql`
     mapElement: MapElement
   }
 
+  type HistoryVersion implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    teaserMetadata: teaserMetadata
+    intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
+    relationValues: JSON
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
+    deleteQueryOptions: DeleteQueryOptions
+    mapElement: MapElement
+  }
+
+  type HistoryVersionResults {
+    results: [HistoryVersion!]!
+    count: Int!
+    limit: Int
+  }
+
   type EntitiesResults {
     results: [Entity]
     facets: JSON
@@ -2662,6 +2685,12 @@ export const baseSchema = gql`
       skip: Int
     ): [EntityHistoryVersion!]!
     EntityHistoryVersionDetail(id: String!, type: String!, versionId: String!): Entity
+    EntityHistoryVersionList(
+      type: Entitytyping
+      limit: Int
+      skip: Int
+      advancedFilterInputs: [AdvancedFilterInput!]!
+    ): HistoryVersionResults!
     RelationLabelsForIds(
       ids: [String!]!
       types: [String!]!

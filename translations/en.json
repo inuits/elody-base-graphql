@@ -380,6 +380,7 @@
       "search": "Search History"
     },
     "history": {
+      "version": "Version",
       "select-version": "Select version",
       "current-version": "Current version",
       "current-version-number": "Current version (Version {number})",

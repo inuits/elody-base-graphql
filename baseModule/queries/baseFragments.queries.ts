@@ -222,6 +222,19 @@ export const baseFragments = gql`
     }
   }
 
+  fragment entityHistoryVersionList on EntityViewElements {
+    history: entityListElement {
+      label(input: "panel-labels.history")
+      isCollapsed(input: false)
+      enableNavigation(input: false)
+      disableLibraryBar(input: true)
+      entityTypes(input: [history])
+      customQuery(input: "GetEntityHistoryVersionList")
+      customQueryFilters(input: "GetEntityHistoryVersionListFilters")
+      customBulkOperations(input: "GetEntityHistoryVersionListBulkOperations")
+    }
+  }
+
   fragment minimalBaseEntity on Entity {
     id
     uuid

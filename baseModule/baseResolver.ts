@@ -199,6 +199,7 @@ import {
 import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
 import {
   resolveEntityHistoryVersions,
+  resolveEntityHistoryVersionList,
   resolveEntityHistoryVersionDetail,
 } from '../resolvers/entityHistoryResolver';
 import {
@@ -424,6 +425,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return resolveEntityHistoryVersions(dataSources, id, type, limit, skip);
+    },
+    EntityHistoryVersionList: async (
+      _source,
+      { limit, skip, advancedFilterInputs },
+      { dataSources }
+    ) => {
+      return resolveEntityHistoryVersionList(
+        dataSources,
+        advancedFilterInputs,
+        limit ?? undefined,
+        skip ?? undefined
+      );
     },
     EntityHistoryVersionDetail: async (
       _source,
@@ -1141,6 +1154,13 @@ export const baseResolver: Resolvers<ContextValue> = {
     teaserMetadata: async (parent: any, _args, { dataSources }) => {
       return parent;
     },
+  },
+  HistoryVersion: {
+    uuid: async (parent: any) => parent.id,
+    intialValues: async (parent: any) => parent,
+    allowedViewModes: async (parent: any) => parent,
+    entityView: async (parent: any) => parent,
+    teaserMetadata: async (parent: any) => parent,
   },
   User: {
     intialValues: async (parent: any, _args, { dataSources }) => {

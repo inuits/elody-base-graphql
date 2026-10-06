@@ -377,6 +377,7 @@
       "search": "Zoek geschiedenis"
     },
     "history": {
+      "version": "Versie",
       "select-version": "Selecteer versie",
       "current-version": "Huidige versie",
       "current-version-number": "Huidige versie (Versie {number})",
