@@ -41,7 +41,7 @@ export async function applyAuthSession(
 ) {
   app.set('trust proxy', 1);
   const hasPersistentSessions =
-    appConfig.features.hasPersistentSessions || true;
+    appConfig.features.hasPersistentSessions ?? true;
 
   const sessionOptions: SessionOptions = {
     secret: appConfig.sessionSecret,
@@ -54,6 +54,10 @@ export async function applyAuthSession(
     Object.assign(sessionOptions, {
       store: MongoStore.create({ mongoUrl: mongoUrl }),
     });
+  } else if (hasPersistentSessions) {
+    console.warn(
+      '[auth] hasPersistentSessions is enabled but no Mongo config was found (MONGODB_DB_NAME, MONGODB_HOSTS, MONGODB_PORT); falling back to in-memory sessions.'
+    );
   }
 
   app.use(session(sessionOptions));
