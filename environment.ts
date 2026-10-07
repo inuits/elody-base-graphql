@@ -26,6 +26,10 @@ export const permissionsIgnored = (): boolean =>
 export const jsonBulkEditEnabled = (): boolean =>
   currentEnvironment?.features?.supportsJsonBulkEdit === true;
 
+/** Off unless a client opts in: relation labels then follow the reader's language. */
+export const relationLabelsInPreferredLanguage = (): boolean =>
+  currentEnvironment?.features?.relationLabelsInPreferredLanguage === true;
+
 const getRequiredEnv = (key: string): string => {
   const value = process.env[key];
 
@@ -121,6 +125,7 @@ export const baseEnvironment: Environment = {
     hasComments: false,
     hasPersistentSessions: true,
     supportsMultilingualMetadataEditing: false,
+    relationLabelsInPreferredLanguage: false,
     hasRedirectToExternalSites: false,
     enableCrossTabAuthSync: true,
   },

@@ -22,6 +22,7 @@ import {
   CollectionAPIEntity,
 } from '../types/collectionAPITypes';
 import { baseTypePillLabelMapping } from '../sources/typePillLabelMapping';
+import { relationLabelsInPreferredLanguage } from '../environment';
 
 export const resolveIntialValueMetadata = async (
   dataSources: DataSources,
@@ -189,10 +190,18 @@ const languageMatches = (tag: string | undefined, preferred: string): boolean =>
 const localName = (key: string): string => String(key).replace(/^.*[#/]/, '') || String(key);
 
 /**
+ * The language a relation label is chosen in: the reader's, when the client turns on
+ * features.relationLabelsInPreferredLanguage; none otherwise (the first value, as before).
+ */
+export const relationLabelLanguage = (dataSources: any): string | undefined =>
+  relationLabelsInPreferredLanguage() ? dataSources?.CollectionAPI?.preferredLanguage : undefined;
+
+/**
  * The label of a related entity (SHACL 1.2 UI value-node label): the first of
  * the label keys (metadataKeyAsLabel, "a|b|c", in preference order) the entity
- * has, in the preferred language (else a value without language, else any),
- * and the local name of the relation's key when it has none.
+ * has; with a preferred language its value in that language (else a value
+ * without language, else any), without one its first value; and the local
+ * name of the relation's key when it has none.
  */
 export const extractValueFromEntity = (
   entity: any,
@@ -215,13 +224,11 @@ export const extractValueFromEntity = (
           metadata.value !== ''
       );
       if (items.length === 0) continue;
-      const item =
-        (preferredLanguage &&
-          items.find((metadata: any) =>
-            languageMatches(metadata.lang, preferredLanguage)
-          )) ||
-        items.find((metadata: any) => !metadata.lang) ||
-        items[0];
+      const item = preferredLanguage
+        ? items.find((metadata: any) => languageMatches(metadata.lang, preferredLanguage)) ||
+          items.find((metadata: any) => !metadata.lang) ||
+          items[0]
+        : items[0];
       return item.value;
     }
   }
@@ -319,7 +326,7 @@ const processRelations = async (
           relation,
           metadataKeyAsLabel,
           rootKeyAsLabel,
-          dataSources.CollectionAPI?.preferredLanguage
+          relationLabelLanguage(dataSources)
         ),
         values: collectRelationMetadataValues(relation, nestedMetadataKeys),
       })),
@@ -337,7 +344,7 @@ const processRelations = async (
         relation,
         metadataKeyAsLabel,
         rootKeyAsLabel,
-        dataSources.CollectionAPI?.preferredLanguage
+        relationLabelLanguage(dataSources)
       )
     );
 

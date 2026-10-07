@@ -76,6 +76,8 @@ export interface Environment {
     hideSuperTenant?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
+    /** the label of a related entity in the reader's language (SHACL 1.2 UI); off: the first value */
+    relationLabelsInPreferredLanguage?: boolean;
     advancedSearch?: {
       queryBy: string;
       queryByWeights?: string;
@@ -198,6 +200,8 @@ export interface FullyOptionalEnvironmentInput {
     hideSuperTenant?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
+    /** the label of a related entity in the reader's language (SHACL 1.2 UI); off: the first value */
+    relationLabelsInPreferredLanguage?: boolean;
     advancedSearch?: {
       queryBy?: string;
       queryByWeights?: string;
