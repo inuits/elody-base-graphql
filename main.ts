@@ -62,6 +62,7 @@ import { setId, setType } from './parsers/entity';
 import { createCspMiddleware } from './helpers/contentSecurityPolicyHelper';
 import { ElodyInstance, ElodyInstanceOptions } from './elodyInstance';
 import { TranscodeService } from './sources/transcode';
+import { saveEntityRelations } from './resolvers/saveEntityRelations';
 
 const start = (options: ElodyInstanceOptions) =>
   new ElodyInstance(options).start();
@@ -123,4 +124,5 @@ export {
   resolveKeyboardLayouts,
   mayUpdateEntity,
   mayDeleteEntity,
+  saveEntityRelations,
 };
