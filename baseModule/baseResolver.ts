@@ -1,3 +1,4 @@
+import { saveEntityRelations } from '../resolvers/saveEntityRelations';
 import {
   isMetaDataRelation,
   parseIdToGetMoreData,
@@ -175,7 +176,6 @@ import {
   setPreferredLanguageForDataSources,
   getYesterdayFormatted,
   getDaysAgoFormatted,
-  buildMergedRelations,
   buildRelationsAfterBulkEdit,
   stripRelation,
 } from '../helpers/helpers';
@@ -753,34 +753,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     ) => {
       if (preferredLanguage)
         setPreferredLanguageForDataSources(dataSources, preferredLanguage);
-      const mutateRelations = async () => {
-        if (formInput.relations.length <= 0) return;
-
-        const hasDeleted = formInput.relations.some(
-          (r) => r.editStatus === EditStatus.Deleted
-        );
-
-        if (hasDeleted) {
-          const merged = buildMergedRelations(formInput.relations, []);
-          await dataSources.CollectionAPI.putRelations(id, merged, collection);
-        } else {
-          const toUpsert = buildMergedRelations(
-            formInput.relations.filter(
-              (r) =>
-                r.editStatus === EditStatus.New ||
-                r.editStatus === EditStatus.Changed
-            ),
-            []
-          );
-          if (toUpsert.length > 0) {
-            await dataSources.CollectionAPI.patchRelations(
-              id,
-              toUpsert,
-              collection
-            );
-          }
-        }
-      };
+      const mutateRelations = async () =>
+        saveEntityRelations(dataSources, id, formInput.relations, collection);
 
       const mutateMetadata = async () => {
         for (const metadata of formInput.metadata) {
