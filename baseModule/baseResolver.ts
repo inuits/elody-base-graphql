@@ -2379,8 +2379,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   GroupByOptions: {
-    options: async (_parent, { input, defaults }) => {
-      return resolveGroupByOptions(input, defaults);
+    options: async (_parent, { input, defaults }, { dataSources }) => {
+      return resolveGroupByOptions(input, defaults, (key) =>
+        dataSources.CollectionAPI.getSessionInfo(key)
+      );
     },
   },
   DropdownOption: {

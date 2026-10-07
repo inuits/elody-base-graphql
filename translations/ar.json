@@ -21,7 +21,8 @@
         "resolved": "مغلق"
       },
       "no-category": "بدون فئة",
-      "not-tagged": "بدون إشارة"
+      "not-tagged": "بدون إشارة",
+      "to-you": "إليك"
     },
     "entity-translations": {
       "baseentity": "كيان أساسي | كيانات أساسية",

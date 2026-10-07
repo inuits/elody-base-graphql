@@ -25,7 +25,8 @@
       "replies": "Reacties",
       "last-activity": "Laatste activiteit",
       "no-category": "Zonder categorie",
-      "not-tagged": "Niet getagd"
+      "not-tagged": "Niet getagd",
+      "to-you": "Aan jou"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",

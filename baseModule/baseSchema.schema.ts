@@ -1295,6 +1295,13 @@ export const baseSchema = gql`
     labelEntityTypes: [String!]
     labelMetadataKey: String
     primary: Boolean
+    pinnedGroups: [GroupByPinnedGroupInput!]
+  }
+  input GroupByPinnedGroupInput {
+    id: String!
+    label: String!
+    filterKey: [String!]!
+    value: String!
   }
   input ConfigItemInput {
     key: String!
@@ -1317,6 +1324,13 @@ export const baseSchema = gql`
     labelEntityTypes: [String!]
     labelMetadataKey: String
     primary: Boolean
+    pinnedGroups: [GroupByPinnedGroup!]
+  }
+  type GroupByPinnedGroup {
+    id: String!
+    label: String!
+    filterKey: [String!]!
+    value: String!
   }
   type ConfigItem {
     key: String!

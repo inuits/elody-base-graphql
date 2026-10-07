@@ -23,7 +23,8 @@
       "replies": "Replies",
       "last-activity": "Last activity",
       "no-category": "No category",
-      "not-tagged": "Not tagged"
+      "not-tagged": "Not tagged",
+      "to-you": "To you"
     },
     "entity-translations": {
       "baseentity": "base entity | base entities",

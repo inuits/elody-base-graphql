@@ -343,6 +343,12 @@ export const baseFragments = gql`
     labelEntityTypes
     labelMetadataKey
     primary
+    pinnedGroups {
+      id
+      label
+      filterKey
+      value
+    }
   }
 
   fragment editMetadataButton on EditMetadataButton {

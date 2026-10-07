@@ -24,12 +24,29 @@ const defaults = {
   emptyLabel: 'comments.no-category',
 };
 
+const sessionValues: Record<string, string> = { id: 'U-CURRENT' };
+
+const context = {
+  dataSources: {
+    CollectionAPI: {
+      getSessionInfo: async (key: string) => sessionValues[key],
+    },
+  },
+};
+
 const resolveOptions = (input: unknown[], optionDefaults?: unknown) =>
   (baseResolver.GroupByOptions as any).options(
     { entityType: 'comment' },
     { input, defaults: optionDefaults },
-    {}
+    context
   );
+
+const toYou = {
+  id: 'to-you',
+  label: 'comments.to-you',
+  filterKey: ['vlacc:1|properties.thread_tagged_users.value'],
+  value: 'session-$id',
+};
 
 describe('group by options', () => {
   it('returns a group by options holder for an entity type', async () => {
@@ -70,5 +87,24 @@ describe('group by options', () => {
     await expect(resolveOptions([category])).rejects.toThrow(
       'intialValues.category'
     );
+  });
+
+  it('resolves session values of pinned groups', async () => {
+    const [option] = await resolveOptions(
+      [{ ...category, pinnedGroups: [toYou] }],
+      defaults
+    );
+
+    expect(option.pinnedGroups).toEqual([{ ...toYou, value: 'U-CURRENT' }]);
+  });
+
+  it('keeps literal values of pinned groups', async () => {
+    const pinned = { ...toYou, value: 'U-OTHER' };
+    const [option] = await resolveOptions(
+      [{ ...category, pinnedGroups: [pinned] }],
+      defaults
+    );
+
+    expect(option.pinnedGroups).toEqual([pinned]);
   });
 });
