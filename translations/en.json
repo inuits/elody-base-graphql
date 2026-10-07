@@ -22,7 +22,8 @@
       },
       "replies": "Replies",
       "last-activity": "Last activity",
-      "no-category": "No category"
+      "no-category": "No category",
+      "not-tagged": "Not tagged"
     },
     "entity-translations": {
       "baseentity": "base entity | base entities",
@@ -704,7 +705,9 @@
       "desc": "Descending",
       "language": "Choose language",
       "load-more": "Load more",
-      "load-more-in-group": "Load more in this group"
+      "load-more-in-group": "Load more in this group",
+      "group-by": "Group by",
+      "no-group-by": "No grouping"
     },
     "navigation": {
       "title": "Elody",

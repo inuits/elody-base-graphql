@@ -198,6 +198,7 @@ import {
   resolveIntialValueParentRelations,
 } from '../resolvers/intialValueResolver';
 import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
+import { resolveGroupByOptions } from '../resolvers/groupByOptionsResolver';
 import {
   resolveEntityHistoryVersions,
   resolveEntityHistoryVersionList,
@@ -494,6 +495,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         type: entityType,
         sortOptions: {},
       } as Entity;
+    },
+    EntityTypeGroupByOptions: async (_source, { entityType }) => {
+      return { entityType };
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
@@ -2372,6 +2376,11 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     isAsc: async (parent, { input }, { dataSources }) => {
       return input ? input : SortingDirection.Asc;
+    },
+  },
+  GroupByOptions: {
+    options: async (_parent, { input, defaults }) => {
+      return resolveGroupByOptions(input, defaults);
     },
   },
   DropdownOption: {

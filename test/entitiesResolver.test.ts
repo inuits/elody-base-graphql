@@ -283,4 +283,32 @@ describe('resolveAdvancedEntities', () => {
       mockDataSource.CollectionAPI.GetAdvancedEntities.mock.calls[0][3];
     expect(sentFilters).toContainEqual(distinctFilter);
   });
+
+  it('keeps every group representative of a distinct_by request, even with the same id', async () => {
+    const shared = mockEntity('CMT-1', 'comment');
+    mockDataSource.CollectionAPI.GetAdvancedEntities.mockResolvedValueOnce({
+      results: [
+        { ...shared, metadata: [{ key: 'tags', value: 'U-1' }] },
+        { ...shared, metadata: [{ key: 'tags', value: 'U-2' }] },
+      ],
+      count: 2,
+      facets: [],
+      skip: 0,
+      limit: 10,
+    });
+
+    const result = await resolveAdvancedEntities(
+      mockDataSource as unknown as DataSources,
+      'comment',
+      [
+        {
+          type: AdvancedFilterTypes.Type,
+          value: 'comment',
+          distinct_by: 'properties.tags.value',
+        },
+      ]
+    );
+
+    expect(result.results.length).toBe(2);
+  });
 });

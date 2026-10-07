@@ -23,6 +23,10 @@ export const resolveAdvancedEntities = async (
   exactCount: boolean = false
 ): Promise<EntitiesResults> => {
   const entitiesMap = new Map<string, Entity>();
+  const distinctResults: Entity[] = [];
+  const isDistinctRequest = advancedFilterInputs.some(
+    (filter: AdvancedFilterInput) => filter.distinct_by
+  );
   const facetsList: RawFacetGroup[] = [];
   let limitResult = limit;
 
@@ -97,14 +101,18 @@ export const resolveAdvancedEntities = async (
     }
 
     iterationEntities.forEach((entity) => {
-      if (entity.id) {
+      if (isDistinctRequest) {
+        distinctResults.push(entity);
+      } else if (entity.id) {
         entitiesMap.set(entity.id, entity); // overwrite duplicates
       }
     });
   }
 
   return {
-    results: Array.from(entitiesMap.values()),
+    results: isDistinctRequest
+      ? distinctResults
+      : Array.from(entitiesMap.values()),
     sortKeys: [],
     facets: facetsList,
     limit: limitResult,

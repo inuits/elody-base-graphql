@@ -4,6 +4,7 @@ export type RouteQueries = {
   getEntities?: string;
   getFilters?: string;
   getSortOptions?: string;
+  getGroupByOptions?: string;
   getBulkOperations?: string;
   getMultiEntity?: string;
 };

@@ -24,7 +24,8 @@
       "tagged-on": "Getagd op",
       "replies": "Reacties",
       "last-activity": "Laatste activiteit",
-      "no-category": "Zonder categorie"
+      "no-category": "Zonder categorie",
+      "not-tagged": "Niet getagd"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",
@@ -696,7 +697,9 @@
       "desc": "Aflopend",
       "language": "Kies taal",
       "load-more": "Meer laden",
-      "load-more-in-group": "Meer laden in deze groep"
+      "load-more-in-group": "Meer laden in deze groep",
+      "group-by": "Groepeer op",
+      "no-group-by": "Geen groepering"
     },
     "navigation": {
       "title": "Elody",

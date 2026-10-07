@@ -329,9 +329,6 @@ export const baseFragments = gql`
       key
       value
     }
-    groupBy {
-      ...groupByConfig
-    }
   }
 
   fragment groupByConfig on GroupByConfig {
@@ -342,6 +339,10 @@ export const baseFragments = gql`
     pageSize
     groupsPageSize
     emptyLabel
+    label
+    labelEntityTypes
+    labelMetadataKey
+    primary
   }
 
   fragment editMetadataButton on EditMetadataButton {

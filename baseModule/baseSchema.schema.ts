@@ -1282,16 +1282,19 @@ export const baseSchema = gql`
   input ViewModesWithConfigInput {
     viewMode: ViewModes
     config: [ConfigItemInput]
-    groupBy: GroupByConfigInput
   }
   input GroupByConfigInput {
     key: String!
     filterKey: [String!]!
     distinctBy: String!
-    groupOrderBy: String!
+    groupOrderBy: String
     pageSize: Int
     groupsPageSize: Int
     emptyLabel: String
+    label: String
+    labelEntityTypes: [String!]
+    labelMetadataKey: String
+    primary: Boolean
   }
   input ConfigItemInput {
     key: String!
@@ -1301,7 +1304,6 @@ export const baseSchema = gql`
   type ViewModesWithConfig {
     viewMode: ViewModes
     config: [ConfigItem]
-    groupBy: GroupByConfig
   }
   type GroupByConfig {
     key: String!
@@ -1311,10 +1313,28 @@ export const baseSchema = gql`
     pageSize: Int
     groupsPageSize: Int
     emptyLabel: String
+    label: String
+    labelEntityTypes: [String!]
+    labelMetadataKey: String
+    primary: Boolean
   }
   type ConfigItem {
     key: String!
     value: JSON!
+  }
+
+  input GroupByDefaultsInput {
+    groupOrderBy: String
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
+  }
+
+  type GroupByOptions {
+    options(
+      input: [GroupByConfigInput!]!
+      defaults: GroupByDefaultsInput
+    ): [GroupByConfig!]!
   }
 
   type AllowedViewModes {
@@ -2674,6 +2694,7 @@ export const baseSchema = gql`
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
     EntityTypeSortOptions(entityType: String!): Entity!
+    EntityTypeGroupByOptions(entityType: String!): GroupByOptions!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
     PreviewComponents(entityType: String!): Entity
