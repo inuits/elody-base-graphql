@@ -496,8 +496,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         sortOptions: {},
       } as Entity;
     },
-    EntityTypeGroupByOptions: async (_source, { entityType }) => {
-      return { entityType };
+    EntityTypeGroupByOptions: async () => {
+      return { options: [] };
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };

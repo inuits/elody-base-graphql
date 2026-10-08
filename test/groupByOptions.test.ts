@@ -56,7 +56,7 @@ describe('group by options', () => {
       {}
     );
 
-    expect(holder).toEqual({ entityType: 'comment' });
+    expect(holder).toEqual({ options: [] });
   });
 
   it('applies the shared defaults to every option', async () => {
