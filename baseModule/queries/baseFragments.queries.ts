@@ -171,6 +171,7 @@ export const baseFragments = gql`
       key
     }
     readOnlyValueAsPlainText
+    valueAsList
   }
 
   fragment inputfield on InputField {

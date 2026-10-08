@@ -2702,6 +2702,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     readOnlyValueAsPlainText: async (parent, _args, { dataSources }) => {
       return parent.readOnlyValueAsPlainText || false;
     },
+    valueAsList: async (parent) => {
+      return parent.valueAsList || false;
+    },
     multiple: async (parent, _args, { dataSources }) => {
       return parent.multiple || false;
     },

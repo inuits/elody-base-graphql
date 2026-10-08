@@ -531,6 +531,11 @@ export const baseSchema = gql`
     hasVirtualKeyboard: Boolean
     metadataOnRelationFieldConfig: MetadataOnRelationFieldConfig
     readOnlyValueAsPlainText: Boolean
+    """
+    Always save the value as a list, even from a single-select (the backend
+    stores the key as an array, e.g. a user's role on an organization).
+    """
+    valueAsList: Boolean
     virtualKeyboardConfig(
       input: VirtualKeyboardConfigInput
     ): VirtualKeyboardConfig
