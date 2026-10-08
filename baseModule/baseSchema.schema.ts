@@ -1294,6 +1294,7 @@ export const baseSchema = gql`
     label: String
     labelEntityTypes: [String!]
     labelMetadataKey: String
+    translationKey: String
     primary: Boolean
     pinnedGroups: [GroupByPinnedGroupInput!]
   }
@@ -1323,6 +1324,7 @@ export const baseSchema = gql`
     label: String
     labelEntityTypes: [String!]
     labelMetadataKey: String
+    translationKey: String
     primary: Boolean
     pinnedGroups: [GroupByPinnedGroup!]
   }

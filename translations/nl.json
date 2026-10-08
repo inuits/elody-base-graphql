@@ -26,7 +26,8 @@
       "last-activity": "Laatste activiteit",
       "no-category": "Zonder categorie",
       "not-tagged": "Niet getagd",
-      "to-you": "Aan jou"
+      "to-you": "Aan jou",
+      "no-parent-entity-type": "Niet gelinkt aan entiteit"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",

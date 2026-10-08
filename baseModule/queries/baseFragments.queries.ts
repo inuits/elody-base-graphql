@@ -342,6 +342,7 @@ export const baseFragments = gql`
     label
     labelEntityTypes
     labelMetadataKey
+    translationKey
     primary
     pinnedGroups {
       id

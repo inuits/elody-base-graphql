@@ -24,7 +24,8 @@
       "last-activity": "Last activity",
       "no-category": "No category",
       "not-tagged": "Not tagged",
-      "to-you": "To you"
+      "to-you": "To you",
+      "no-parent-entity-type": "Not linked to entity"
     },
     "entity-translations": {
       "baseentity": "base entity | base entities",
