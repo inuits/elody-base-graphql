@@ -510,6 +510,7 @@ export const baseSchema = gql`
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]
     optionsOrderByKey: String
+    optionLabelKeys: [String!]
     advancedFilterInputForRetrievingAllOptions: [AdvancedFilterInputType!]
     advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]
@@ -902,6 +903,7 @@ export const baseSchema = gql`
   type DropdownOption {
     icon: DamsIcons
     label: String!
+    secondaryLabel: String
     value: StringOrInt!
     availableInPages(input: [RouteMatchingInput]): [RouteMatching]
     active: Boolean
