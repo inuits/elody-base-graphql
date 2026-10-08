@@ -1897,6 +1897,7 @@ export const baseSchema = gql`
       panelHeaderContentInput: PanelHeaderContentInput
     ): PanelHeaderContent
     panelType(input: PanelType!): PanelType!
+      @deprecated(reason: "The PWA derives panel behaviour from the panel contents")
     can(input: String): String
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
