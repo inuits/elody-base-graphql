@@ -2460,11 +2460,13 @@ export const baseSchema = gql`
   type FilterOptionsMappingType {
     label: String
     value: String
+    translationKey: String
   }
 
   input FilterOptionsMappingInput {
     label: String
     value: String
+    translationKey: String
   }
 
   type MatcherLabelType {

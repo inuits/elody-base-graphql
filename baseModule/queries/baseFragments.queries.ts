@@ -58,6 +58,7 @@ export const baseFragments = gql`
     filterOptionsMapping {
       label
       value
+      translationKey
     }
     limitConfig {
       optionsLimit
