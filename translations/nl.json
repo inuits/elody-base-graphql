@@ -8,6 +8,7 @@
       "cancel": "Annuleren",
       "edit": "Aanpassen",
       "edited": "bewerkt",
+      "delete": "Verwijderen",
       "resolve": "Discussie afsluiten",
       "archive": "Archiveren",
       "reopen": "Heropenen",
@@ -215,6 +216,13 @@
         "secondary-confirm": "Verwijder entiteit en media bestanden",
         "cancel": "Annuleren",
         "title": "Verwijder {0}"
+      },
+      "delete-comment": {
+        "title": "Opmerking verwijderen",
+        "message": "Ben je zeker dat je deze opmerking wilt verwijderen?",
+        "message-thread": "Ben je zeker dat je deze discussie wilt verwijderen? Alle antwoorden, ook die van anderen, worden mee verwijderd.",
+        "confirm": "Verwijderen",
+        "cancel": "Annuleren"
       },
       "delete-entities": {
         "message": "Ben je er zeker van dat je geselecteerde entiteiten wilt verwijderen?",
