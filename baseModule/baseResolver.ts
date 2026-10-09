@@ -2997,6 +2997,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     refreshAfterAction: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    navigateToCreatedEntity: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
+    },
     can: async (_source, { input }, { dataSources }) => {
       return input || [];
     },

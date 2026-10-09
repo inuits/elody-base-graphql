@@ -9,16 +9,19 @@
       "edit": "Aanpassen",
       "edited": "bewerkt",
       "resolve": "Discussie afsluiten",
+      "archive": "Archiveren",
       "reopen": "Heropenen",
       "thread-title": "Discussie",
       "empty": "Nog geen opmerkingen",
       "loading": "Opmerkingen laden...",
       "unknown-author": "Onbekende auteur",
       "resolved-hint": "Deze discussie is afgesloten. Heropen ze om te kunnen antwoorden.",
+      "archived-hint": "Deze discussie is gearchiveerd. Heropen ze om te kunnen antwoorden.",
       "reply-count": "{n} antwoord | {n} antwoord | {n} antwoorden",
       "status": {
         "open": "Open",
-        "resolved": "Afgesloten"
+        "resolved": "Afgesloten",
+        "archived": "Gearchiveerd"
       },
       "creator": "Maker opmerking",
       "tagged-on": "Getagd op",

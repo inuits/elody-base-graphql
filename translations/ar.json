@@ -9,16 +9,19 @@
       "edit": "تعديل",
       "edited": "معدّل",
       "resolve": "إغلاق",
+      "archive": "أرشفة",
       "reopen": "إعادة فتح",
       "thread-title": "مناقشة",
       "empty": "لا توجد تعليقات بعد",
       "loading": "جارٍ تحميل التعليقات...",
       "unknown-author": "مؤلف غير معروف",
       "resolved-hint": "تم إغلاق هذه المناقشة. أعد فتحها للرد.",
+      "archived-hint": "تمت أرشفة هذه المناقشة. أعد فتحها للرد.",
       "reply-count": "{n} رد | {n} رد | {n} ردود",
       "status": {
         "open": "مفتوح",
-        "resolved": "مغلق"
+        "resolved": "مغلق",
+        "archived": "مؤرشف"
       },
       "no-category": "بدون فئة",
       "not-tagged": "بدون إشارة",

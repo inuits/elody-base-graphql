@@ -2230,6 +2230,7 @@ export const baseSchema = gql`
     icon(input: String): String!
     query(input: String): String!
     refreshAfterAction(input: Boolean): Boolean!
+    navigateToCreatedEntity(input: Boolean): Boolean
     can(input: [String]): [String]
   }
 
