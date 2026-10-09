@@ -410,15 +410,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     RelationLabelsForIds: async (
       _source,
-      { ids, types, historyKeys, metadataKeyAsLabel, rootKeyAsLabel },
+      { ids, types, historyKeys, keyAsLabel },
       { dataSources }
     ) => {
       return resolveRelationLabelsForIds(dataSources, {
         ids,
         types,
         historyKeys,
-        metadataKeyAsLabel,
-        rootKeyAsLabel,
+        keyAsLabel,
       });
     },
     EntityHistoryVersions: async (
@@ -1245,9 +1244,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         key,
         source,
         uuid,
-        metadataKeyAsLabel,
+        keyAsLabel,
         nestedMetadataKeys,
-        rootKeyAsLabel,
         containsRelationPropertyKey,
         containsRelationPropertyValue,
         relationKey,
@@ -1295,8 +1293,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               dataSources,
               parent,
               key,
-              metadataKeyAsLabel as string,
-              rootKeyAsLabel as string,
+              keyAsLabel ?? undefined,
               containsRelationPropertyKey as string,
               containsRelationPropertyValue as string,
               relationEntityType as string,

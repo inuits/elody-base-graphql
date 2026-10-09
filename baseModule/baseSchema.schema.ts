@@ -1247,15 +1247,24 @@ export const baseSchema = gql`
     parentRelations
   }
 
+  enum KeyAsLabelOrigin {
+    root
+    metadata
+  }
+
+  input KeyAsLabelInput {
+    origin: KeyAsLabelOrigin!
+    key: String!
+  }
+
   type IntialValues {
     id: String!
     keyValue(
       key: String!
       source: KeyValueSource!
       uuid: String
-      metadataKeyAsLabel: String
+      keyAsLabel: KeyAsLabelInput
       nestedMetadataKeys: [String]
-      rootKeyAsLabel: String
       containsRelationPropertyKey: String
       containsRelationPropertyValue: String
       relationKey: String
@@ -2760,8 +2769,7 @@ export const baseSchema = gql`
       ids: [String!]!
       types: [String!]!
       historyKeys: [String!]
-      metadataKeyAsLabel: String
-      rootKeyAsLabel: String
+      keyAsLabel: KeyAsLabelInput
     ): [KeyAndValue!]!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

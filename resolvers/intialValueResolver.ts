@@ -10,6 +10,8 @@ import {
   EntitiesResults,
   Entity,
   Entitytyping,
+  KeyAsLabelInput,
+  KeyAsLabelOrigin,
   Metadata,
   ParentRelationsConfigInput,
   RelationDirection,
@@ -135,8 +137,7 @@ export const fetchRelationEntity = async (
   dataSources: DataSources,
   relation: any,
   relationEntityType: string,
-  metadataKeyAsLabel: string,
-  rootKeyAsLabel: string,
+  keyAsLabel: KeyAsLabelInput | undefined,
   formatter: string
 ): Promise<any> => {
   if (!relation?.key) return null;
@@ -150,8 +151,7 @@ export const fetchRelationEntity = async (
 
   const shouldFetchEntity =
     relationEntityType ||
-    metadataKeyAsLabel ||
-    rootKeyAsLabel ||
+    keyAsLabel ||
     String(formatter).startsWith('link|');
 
   if (!shouldFetchEntity) return null;
@@ -180,15 +180,14 @@ export const fetchRelationEntity = async (
 export const extractValueFromEntity = (
   entity: any,
   relation: any,
-  metadataKeyAsLabel: string,
-  rootKeyAsLabel: string
+  keyAsLabel: KeyAsLabelInput | undefined
 ): string => {
-  if (rootKeyAsLabel) {
-    return entity?.[rootKeyAsLabel] || '';
+  if (keyAsLabel?.origin === KeyAsLabelOrigin.Root) {
+    return entity?.[keyAsLabel.key] || '';
   }
 
-  if (metadataKeyAsLabel && entity?.metadata) {
-    const metadataKeys = String(metadataKeyAsLabel).split('|');
+  if (keyAsLabel?.origin === KeyAsLabelOrigin.Metadata && entity?.metadata) {
+    const metadataKeys = keyAsLabel.key.split('|');
     const metadataItem = entity.metadata.find((metadata: any) =>
       metadataKeys.includes(metadata.key)
     );
@@ -247,8 +246,7 @@ const collectRelationMetadataValues = (
 const processRelations = async (
   dataSources: DataSources,
   relations: any[],
-  metadataKeyAsLabel: string,
-  rootKeyAsLabel: string,
+  keyAsLabel: KeyAsLabelInput | undefined,
   relationEntityType: string,
   formatter: string,
   formatterSettings?: FormattersConfig,
@@ -263,8 +261,7 @@ const processRelations = async (
       dataSources,
       relation,
       relationEntityType,
-      metadataKeyAsLabel,
-      rootKeyAsLabel,
+      keyAsLabel,
       formatter
     ).then((entity) => ({ relation, entity }))
   );
@@ -283,12 +280,7 @@ const processRelations = async (
     return {
       formatter: formatter || 'pill',
       label: relationsWithEntity.map(({ entity, relation }) => ({
-        label: extractValueFromEntity(
-          entity,
-          relation,
-          metadataKeyAsLabel,
-          rootKeyAsLabel
-        ),
+        label: extractValueFromEntity(entity, relation, keyAsLabel),
         values: collectRelationMetadataValues(relation, nestedMetadataKeys),
       })),
     };
@@ -300,12 +292,7 @@ const processRelations = async (
   const results = entityResults
     .filter(({ entity }) => entity !== null)
     .map(({ entity, relation }) =>
-      extractValueFromEntity(
-        entity,
-        relation,
-        metadataKeyAsLabel,
-        rootKeyAsLabel
-      )
+      extractValueFromEntity(entity, relation, keyAsLabel)
     );
 
   if (results.length === 0) {
@@ -322,8 +309,7 @@ export const resolveIntialValueRelations = async (
   dataSources: DataSources,
   parent: any,
   key: string,
-  metadataKeyAsLabel: string,
-  rootKeyAsLabel: string,
+  keyAsLabel: KeyAsLabelInput | undefined,
   containsRelationPropertyKey: string,
   containsRelationPropertyValue: string,
   relationEntityType: string,
@@ -352,8 +338,7 @@ export const resolveIntialValueRelations = async (
     return processRelations(
       dataSources,
       filteredRelations,
-      metadataKeyAsLabel,
-      rootKeyAsLabel,
+      keyAsLabel,
       relationEntityType,
       formatter,
       formatterSettings,
@@ -506,8 +491,9 @@ export const resolveIntialValueMetadataOrRelation = async (
       dataSources,
       parent,
       relationKey,
-      relationKeyAsLabel as string,
-      '',
+      relationKeyAsLabel
+        ? { origin: KeyAsLabelOrigin.Metadata, key: relationKeyAsLabel }
+        : undefined,
       '',
       '',
       '',

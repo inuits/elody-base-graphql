@@ -1696,11 +1696,10 @@ export type IntialValuesKeyValueArgs = {
   containsRelationPropertyValue?: InputMaybe<Scalars['String']>;
   formatter?: InputMaybe<Scalars['String']>;
   key: Scalars['String'];
+  keyAsLabel?: InputMaybe<KeyAsLabelInput>;
   keyOnMetadata?: InputMaybe<Scalars['String']>;
-  metadataKeyAsLabel?: InputMaybe<Scalars['String']>;
   relationEntityType?: InputMaybe<Scalars['String']>;
   relationKey?: InputMaybe<Scalars['String']>;
-  rootKeyAsLabel?: InputMaybe<Scalars['String']>;
   source: KeyValueSource;
   technicalOrigin?: InputMaybe<Scalars['String']>;
   uuid?: InputMaybe<Scalars['String']>;
@@ -1774,6 +1773,16 @@ export type KeyValue = {
 
 export type KeyValueKeyValueArgs = {
   key: Scalars['String'];
+};
+
+export enum KeyAsLabelOrigin {
+  Metadata = 'metadata',
+  Root = 'root',
+}
+
+export type KeyAsLabelInput = {
+  key: Scalars['String'];
+  origin: KeyAsLabelOrigin;
 };
 
 export enum KeyValueSource {

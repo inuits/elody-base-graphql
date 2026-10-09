@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Entity } from '../generated-types/type-defs';
+import { KeyAsLabelOrigin, type Entity } from '../generated-types/type-defs';
 import {
   resolveIntialValueParentRoot,
   resolveIntialValueParentMetadata,
@@ -218,8 +218,7 @@ describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
       dataSources,
       { id: 'user:1', relations },
       'refOrganizations',
-      'name',
-      '',
+      { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
       '',
       '',
       '',
@@ -264,8 +263,7 @@ describe('resolveIntialValueRelations with nestedMetadataKeys', () => {
         ],
       },
       'refOrganizations',
-      'name',
-      '',
+      { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
       '',
       '',
       '',
@@ -387,8 +385,7 @@ describe('fetchRelationEntity for history versions', () => {
       dataSources,
       { key: 'PERS-1', type: 'refAuthors', historyKey: 'hist-pers-1' },
       '',
-      'name',
-      '',
+      { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
       ''
     );
 
@@ -406,8 +403,7 @@ describe('fetchRelationEntity for history versions', () => {
       dataSources,
       { key: 'PERS-1', type: 'refAuthors', historyKey: 'PERS-1' },
       '',
-      'name',
-      '',
+      { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
       ''
     );
 
@@ -425,8 +421,7 @@ describe('fetchRelationEntity for history versions', () => {
       dataSources,
       { key: 'PERS-1', type: 'refAuthors', historyKey: 'hist-pers-1' },
       '',
-      'name',
-      '',
+      { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
       ''
     );
 

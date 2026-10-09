@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
 import { DataSources } from '../types';
+import { KeyAsLabelOrigin } from '../generated-types/type-defs';
 
 const mockDataSource = {
   CollectionAPI: {
@@ -37,7 +38,7 @@ describe('resolveRelationLabelsForIds', () => {
     const result = await resolveRelationLabelsForIds(dataSources, {
       ids: ['lang-1', 'lang-2'],
       types: ['language'],
-      metadataKeyAsLabel: 'name',
+      keyAsLabel: { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
     });
 
     expect(result).toStrictEqual([
@@ -78,10 +79,38 @@ describe('resolveRelationLabelsForIds', () => {
     const result = await resolveRelationLabelsForIds(dataSources, {
       ids: ['PERS-1'],
       types: ['person'],
-      metadataKeyAsLabel: 'alias',
+      keyAsLabel: { origin: KeyAsLabelOrigin.Metadata, key: 'alias' },
     });
 
     expect(result).toStrictEqual([{ key: 'PERS-1', value: 'Jack' }]);
+  });
+
+  it('takes the first present key of a pipe-separated metadata label', async () => {
+    mockDataSource.CollectionAPI.getEntitiesByIds.mockResolvedValueOnce([
+      entity('PERS-1', { name: 'Lewis', alias: 'Jack' }, 'person'),
+    ]);
+
+    const result = await resolveRelationLabelsForIds(dataSources, {
+      ids: ['PERS-1'],
+      types: ['person'],
+      keyAsLabel: { origin: KeyAsLabelOrigin.Metadata, key: 'nickname|alias' },
+    });
+
+    expect(result).toStrictEqual([{ key: 'PERS-1', value: 'Jack' }]);
+  });
+
+  it('labels an entity by a root key when the label origin is root', async () => {
+    mockDataSource.CollectionAPI.getEntitiesByIds.mockResolvedValueOnce([
+      { ...entity('PERS-1', { name: 'Lewis' }, 'person'), filename: 'lewis.jpg' },
+    ]);
+
+    const result = await resolveRelationLabelsForIds(dataSources, {
+      ids: ['PERS-1'],
+      types: ['person'],
+      keyAsLabel: { origin: KeyAsLabelOrigin.Root, key: 'filename' },
+    });
+
+    expect(result).toStrictEqual([{ key: 'PERS-1', value: 'lewis.jpg' }]);
   });
 
   it('names an entity as it was in a history version when its history key is given', async () => {
@@ -137,7 +166,7 @@ describe('resolveRelationLabelsForIds', () => {
     const result = await resolveRelationLabelsForIds(dataSources, {
       ids: ['missing-id'],
       types: ['language'],
-      metadataKeyAsLabel: 'name',
+      keyAsLabel: { origin: KeyAsLabelOrigin.Metadata, key: 'name' },
     });
 
     expect(result).toStrictEqual([{ key: 'missing-id', value: 'missing-id' }]);
