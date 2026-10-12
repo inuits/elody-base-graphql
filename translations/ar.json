@@ -1,6 +1,7 @@
 {
   "ar": {
     "comments": {
+      "new": "جديد",
       "new-thread": "مناقشة جديدة",
       "post": "نشر",
       "reply": "رد",
@@ -8,18 +9,25 @@
       "cancel": "إلغاء",
       "edit": "تعديل",
       "edited": "معدّل",
+      "delete": "حذف",
       "resolve": "إغلاق",
+      "archive": "أرشفة",
       "reopen": "إعادة فتح",
       "thread-title": "مناقشة",
       "empty": "لا توجد تعليقات بعد",
       "loading": "جارٍ تحميل التعليقات...",
       "unknown-author": "مؤلف غير معروف",
       "resolved-hint": "تم إغلاق هذه المناقشة. أعد فتحها للرد.",
+      "archived-hint": "تمت أرشفة هذه المناقشة. أعد فتحها للرد.",
       "reply-count": "{n} رد | {n} رد | {n} ردود",
       "status": {
         "open": "مفتوح",
-        "resolved": "مغلق"
-      }
+        "resolved": "مغلق",
+        "archived": "مؤرشف"
+      },
+      "no-category": "بدون فئة",
+      "not-tagged": "بدون إشارة",
+      "to-you": "إليك"
     },
     "entity-translations": {
       "baseentity": "كيان أساسي | كيانات أساسية",
@@ -151,6 +159,13 @@
         "secondary-confirm": "حذف الكيان وملفات الوسائط",
         "cancel": "إلغاء",
         "title": "حذف {0}"
+      },
+      "delete-comment": {
+        "title": "حذف التعليق",
+        "message": "هل أنت متأكد أنك تريد حذف هذا التعليق؟",
+        "message-thread": "هل أنت متأكد أنك تريد حذف هذه المناقشة؟ سيتم حذف جميع الردود أيضًا، بما في ذلك ردود الآخرين.",
+        "confirm": "حذف",
+        "cancel": "إلغاء"
       },
       "delete-entities": {
         "message": "هل أنت متأكد أنك تريد حذف الكيانات المحددة؟",
@@ -513,6 +528,7 @@
       "ar": "العربية"
     },
     "library": {
+      "new": "جديد",
       "search": "بحث",
       "simple-search-placeholder": "البحث في {entity}",
       "items": "عناصر",
@@ -522,7 +538,11 @@
       "add": "إضافة",
       "asc": "تصاعدي",
       "desc": "تنازلي",
-      "language": "اختر اللغة"
+      "language": "اختر اللغة",
+      "load-more": "تحميل المزيد",
+      "load-more-in-group": "تحميل المزيد في هذه المجموعة",
+      "group-by": "تجميع حسب",
+      "no-group-by": "بدون تجميع"
     },
     "navigation": {
       "title": "إيلودي",

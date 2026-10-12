@@ -510,6 +510,7 @@ export const baseSchema = gql`
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]
     optionsOrderByKey: String
+    optionLabelKeys: [String!]
     advancedFilterInputForRetrievingAllOptions: [AdvancedFilterInputType!]
     advancedFilterInputForSearchingOptions: AdvancedFilterInputType
     fileTypes: [FileType]
@@ -907,6 +908,7 @@ export const baseSchema = gql`
   type DropdownOption {
     icon: DamsIcons
     label: String!
+    secondaryLabel: String
     value: StringOrInt!
     availableInPages(input: [RouteMatchingInput]): [RouteMatching]
     active: Boolean
@@ -1250,15 +1252,24 @@ export const baseSchema = gql`
     parentRelations
   }
 
+  enum KeyAsLabelOrigin {
+    root
+    metadata
+  }
+
+  input KeyAsLabelInput {
+    origin: KeyAsLabelOrigin!
+    key: String!
+  }
+
   type IntialValues {
     id: String!
     keyValue(
       key: String!
       source: KeyValueSource!
       uuid: String
-      metadataKeyAsLabel: String
+      keyAsLabel: KeyAsLabelInput
       nestedMetadataKeys: [String]
-      rootKeyAsLabel: String
       containsRelationPropertyKey: String
       containsRelationPropertyValue: String
       relationKey: String
@@ -1288,6 +1299,27 @@ export const baseSchema = gql`
     viewMode: ViewModes
     config: [ConfigItemInput]
   }
+  input GroupByConfigInput {
+    key: String!
+    filterKey: [String!]!
+    distinctBy: String!
+    groupOrderBy: String
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
+    label: String
+    labelEntityTypes: [String!]
+    labelMetadataKey: String
+    translationKey: String
+    primary: Boolean
+    pinnedGroups: [GroupByPinnedGroupInput!]
+  }
+  input GroupByPinnedGroupInput {
+    id: String!
+    label: String!
+    filterKey: [String!]!
+    value: String!
+  }
   input ConfigItemInput {
     key: String!
     value: JSON!
@@ -1297,9 +1329,44 @@ export const baseSchema = gql`
     viewMode: ViewModes
     config: [ConfigItem]
   }
+  type GroupByConfig {
+    key: String!
+    filterKey: [String!]!
+    distinctBy: String!
+    groupOrderBy: String!
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
+    label: String
+    labelEntityTypes: [String!]
+    labelMetadataKey: String
+    translationKey: String
+    primary: Boolean
+    pinnedGroups: [GroupByPinnedGroup!]
+  }
+  type GroupByPinnedGroup {
+    id: String!
+    label: String!
+    filterKey: [String!]!
+    value: String!
+  }
   type ConfigItem {
     key: String!
     value: JSON!
+  }
+
+  input GroupByDefaultsInput {
+    groupOrderBy: String
+    pageSize: Int
+    groupsPageSize: Int
+    emptyLabel: String
+  }
+
+  type GroupByOptions {
+    options(
+      input: [GroupByConfigInput!]!
+      defaults: GroupByDefaultsInput
+    ): [GroupByConfig!]!
   }
 
   type AllowedViewModes {
@@ -1406,6 +1473,7 @@ export const baseSchema = gql`
     relationType(input: String): String
     viewMode(input: EntityListViewMode): EntityListViewMode
     enableNavigation(input: Boolean): Boolean
+    hideInHistory(input: Boolean): Boolean
     customQuery(input: String): String
     customQueryRelationType(input: String): String
     customQueryFilters(input: String): String
@@ -1901,6 +1969,7 @@ export const baseSchema = gql`
       panelHeaderContentInput: PanelHeaderContentInput
     ): PanelHeaderContent
     panelType(input: PanelType!): PanelType!
+      @deprecated(reason: "The PWA derives panel behaviour from the panel contents")
     can(input: String): String
     isEditable(input: Boolean!): Boolean!
     isCollapsed(input: Boolean!): Boolean!
@@ -1927,6 +1996,7 @@ export const baseSchema = gql`
 
   type WindowElement {
     label(input: String): String!
+    hideInHistory(input: Boolean): Boolean
     panels: WindowElementPanel
     layout(input: WindowElementLayout): WindowElementLayout
     expandButtonOptions: ExpandButtonOptions
@@ -2174,6 +2244,7 @@ export const baseSchema = gql`
     icon(input: String): String!
     query(input: String): String!
     refreshAfterAction(input: Boolean): Boolean!
+    navigateToCreatedEntity(input: Boolean): Boolean
     can(input: [String]): [String]
   }
 
@@ -2316,6 +2387,29 @@ export const baseSchema = gql`
     mapElement: MapElement
   }
 
+  type HistoryVersion implements Entity {
+    id: String!
+    uuid: String!
+    type: String!
+    teaserMetadata: teaserMetadata
+    intialValues: IntialValues!
+    allowedViewModes: AllowedViewModes
+    relationValues: JSON
+    entityView: ColumnList!
+    advancedFilters: AdvancedFilters
+    sortOptions: SortOptions
+    bulkOperationOptions: BulkOperationOptions
+    previewComponent: PreviewComponent
+    deleteQueryOptions: DeleteQueryOptions
+    mapElement: MapElement
+  }
+
+  type HistoryVersionResults {
+    results: [HistoryVersion!]!
+    count: Int!
+    limit: Int
+  }
+
   type EntitiesResults {
     results: [Entity]
     facets: JSON
@@ -2439,11 +2533,13 @@ export const baseSchema = gql`
   type FilterOptionsMappingType {
     label: String
     value: String
+    translationKey: String
   }
 
   input FilterOptionsMappingInput {
     label: String
     value: String
+    translationKey: String
   }
 
   type MatcherLabelType {
@@ -2631,6 +2727,7 @@ export const baseSchema = gql`
     UserPermissions: userPermissions
     Menu(name: String!): MenuWrapper
     EntityTypeSortOptions(entityType: String!): Entity!
+    EntityTypeGroupByOptions(entityType: String!): GroupByOptions!
     DropzoneEntityToCreate: DropzoneEntityToCreate!
     PaginationLimitOptions: PaginationLimitOptions!
     PreviewComponents(entityType: String!): Entity
@@ -2667,12 +2764,17 @@ export const baseSchema = gql`
       skip: Int
     ): [EntityHistoryVersion!]!
     EntityHistoryVersionDetail(id: String!, type: String!, versionId: String!): Entity
+    EntityHistoryVersionList(
+      type: Entitytyping
+      limit: Int
+      skip: Int
+      advancedFilterInputs: [AdvancedFilterInput!]!
+    ): HistoryVersionResults!
     RelationLabelsForIds(
       ids: [String!]!
       types: [String!]!
       historyKeys: [String!]
-      metadataKeyAsLabel: String
-      rootKeyAsLabel: String
+      keyAsLabel: KeyAsLabelInput
     ): [KeyAndValue!]!
     GraphData(id: String!, graph: GraphElementInput!): JSON!
     PermissionMappingPerEntityType(type: String!): Boolean!

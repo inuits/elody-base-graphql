@@ -1,6 +1,7 @@
 {
   "nl": {
     "comments": {
+      "new": "Nieuw",
       "new-thread": "Nieuwe discussie",
       "post": "Plaatsen",
       "reply": "Antwoorden",
@@ -8,22 +9,30 @@
       "cancel": "Annuleren",
       "edit": "Aanpassen",
       "edited": "bewerkt",
+      "delete": "Verwijderen",
       "resolve": "Discussie afsluiten",
+      "archive": "Archiveren",
       "reopen": "Heropenen",
       "thread-title": "Discussie",
       "empty": "Nog geen opmerkingen",
       "loading": "Opmerkingen laden...",
       "unknown-author": "Onbekende auteur",
       "resolved-hint": "Deze discussie is afgesloten. Heropen ze om te kunnen antwoorden.",
+      "archived-hint": "Deze discussie is gearchiveerd. Heropen ze om te kunnen antwoorden.",
       "reply-count": "{n} antwoord | {n} antwoord | {n} antwoorden",
       "status": {
         "open": "Open",
-        "resolved": "Afgesloten"
+        "resolved": "Afgesloten",
+        "archived": "Gearchiveerd"
       },
       "creator": "Maker opmerking",
       "tagged-on": "Getagd op",
       "replies": "Reacties",
-      "last-activity": "Laatste activiteit"
+      "last-activity": "Laatste activiteit",
+      "no-category": "Zonder categorie",
+      "not-tagged": "Niet getagd",
+      "to-you": "Aan jou",
+      "no-parent-entity-type": "Niet gelinkt aan entiteit"
     },
     "entity-translations": {
       "baseentity": "basis entiteit | basis entiteiten",
@@ -209,6 +218,13 @@
         "cancel": "Annuleren",
         "title": "Verwijder {0}"
       },
+      "delete-comment": {
+        "title": "Opmerking verwijderen",
+        "message": "Ben je zeker dat je deze opmerking wilt verwijderen?",
+        "message-thread": "Ben je zeker dat je deze discussie wilt verwijderen? Alle antwoorden, ook die van anderen, worden mee verwijderd.",
+        "confirm": "Verwijderen",
+        "cancel": "Annuleren"
+      },
       "delete-entities": {
         "message": "Ben je er zeker van dat je geselecteerde entiteiten wilt verwijderen?",
         "confirm": "Verwijder",
@@ -384,6 +400,7 @@
       "removed": "verwijderd",
       "changed": "Gewijzigd",
       "unchanged": "Ongewijzigd",
+      "version": "Versie",
       "select-version": "Selecteer versie",
       "current-version": "Huidige versie",
       "current-version-number": "Huidige versie (Versie {number})",
@@ -691,6 +708,7 @@
       "ar": "Arabisch"
     },
     "library": {
+      "new": "Nieuw",
       "search": "Zoeken",
       "simple-search-placeholder": "Zoeken in {entity}",
       "items": "Items",
@@ -700,7 +718,11 @@
       "add": "Toevoegen",
       "asc": "Oplopend",
       "desc": "Aflopend",
-      "language": "Kies taal"
+      "language": "Kies taal",
+      "load-more": "Meer laden",
+      "load-more-in-group": "Meer laden in deze groep",
+      "group-by": "Groepeer op",
+      "no-group-by": "Geen groepering"
     },
     "navigation": {
       "title": "Elody",

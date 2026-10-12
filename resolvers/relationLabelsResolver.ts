@@ -1,5 +1,6 @@
 import { extractValueFromEntity } from './intialValueResolver';
 import { DataSources } from '../types';
+import { KeyAsLabelInput } from '../generated-types/type-defs';
 
 const TITLE_KEYS = [
   'title',
@@ -29,8 +30,7 @@ export type RelationLabelsRequest = {
   ids: string[];
   types: string[];
   historyKeys?: string[] | null;
-  metadataKeyAsLabel?: string | null;
-  rootKeyAsLabel?: string | null;
+  keyAsLabel?: KeyAsLabelInput | null;
 };
 
 export const resolveRelationLabelsForIds = async (
@@ -39,8 +39,7 @@ export const resolveRelationLabelsForIds = async (
     ids,
     types,
     historyKeys,
-    metadataKeyAsLabel,
-    rootKeyAsLabel,
+    keyAsLabel,
   }: RelationLabelsRequest
 ): Promise<{ key: string; value: string }[]> => {
   if (ids.length === 0) return [];
@@ -60,15 +59,9 @@ export const resolveRelationLabelsForIds = async (
   return ids.map((id) => {
     const entity = historical.get(id) ?? live.get(id);
     if (!entity) return { key: id, value: id };
-    const value =
-      metadataKeyAsLabel || rootKeyAsLabel
-        ? extractValueFromEntity(
-            entity,
-            { key: id },
-            metadataKeyAsLabel ?? '',
-            rootKeyAsLabel ?? ''
-          )
-        : titleOf(entity);
+    const value = keyAsLabel
+      ? extractValueFromEntity(entity, { key: id }, keyAsLabel)
+      : titleOf(entity);
     return { key: id, value: value || id };
   });
 };

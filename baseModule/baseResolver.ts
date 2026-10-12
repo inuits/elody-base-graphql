@@ -164,6 +164,7 @@ import {
   RepetitiveFinalizeRelation,
   RepetitiveMetadataPrefill,
   EntityPickerSearchMode,
+  HistoryVersionResults,
 } from '../generated-types/type-defs';
 import { ContextValue } from '../types';
 import { baseFields } from '../sources/forms';
@@ -197,8 +198,10 @@ import {
   resolveIntialValueParentRelations,
 } from '../resolvers/intialValueResolver';
 import { resolveRelationLabelsForIds } from '../resolvers/relationLabelsResolver';
+import { resolveGroupByOptions } from '../resolvers/groupByOptionsResolver';
 import {
   resolveEntityHistoryVersions,
+  resolveEntityHistoryVersionList,
   resolveEntityHistoryVersionDetail,
 } from '../resolvers/entityHistoryResolver';
 import {
@@ -407,15 +410,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     RelationLabelsForIds: async (
       _source,
-      { ids, types, historyKeys, metadataKeyAsLabel, rootKeyAsLabel },
+      { ids, types, historyKeys, keyAsLabel },
       { dataSources }
     ) => {
       return resolveRelationLabelsForIds(dataSources, {
         ids,
         types,
         historyKeys,
-        metadataKeyAsLabel,
-        rootKeyAsLabel,
+        keyAsLabel,
       });
     },
     EntityHistoryVersions: async (
@@ -424,6 +426,18 @@ export const baseResolver: Resolvers<ContextValue> = {
       { dataSources }
     ) => {
       return resolveEntityHistoryVersions(dataSources, id, type, limit, skip);
+    },
+    EntityHistoryVersionList: async (
+      _source,
+      { limit, skip, advancedFilterInputs },
+      { dataSources }
+    ) => {
+      return resolveEntityHistoryVersionList(
+        dataSources,
+        advancedFilterInputs,
+        limit ?? undefined,
+        skip ?? undefined
+      ) as unknown as Promise<HistoryVersionResults>;
     },
     EntityHistoryVersionDetail: async (
       _source,
@@ -480,6 +494,9 @@ export const baseResolver: Resolvers<ContextValue> = {
         type: entityType,
         sortOptions: {},
       } as Entity;
+    },
+    EntityTypeGroupByOptions: async () => {
+      return { options: [] };
     },
     PaginationLimitOptions: async (_source, {}, { dataSources }) => {
       return { options: [] };
@@ -1116,6 +1133,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return parent;
     },
   },
+  HistoryVersion: {
+    uuid: async (parent: any) => parent.id,
+    intialValues: async (parent: any) => parent,
+    allowedViewModes: async (parent: any) => parent,
+    entityView: async (parent: any) => parent,
+    teaserMetadata: async (parent: any) => parent,
+  },
   User: {
     intialValues: async (parent: any, _args, { dataSources }) => {
       return parent;
@@ -1194,9 +1218,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         key,
         source,
         uuid,
-        metadataKeyAsLabel,
+        keyAsLabel,
         nestedMetadataKeys,
-        rootKeyAsLabel,
         containsRelationPropertyKey,
         containsRelationPropertyValue,
         relationKey,
@@ -1244,8 +1267,7 @@ export const baseResolver: Resolvers<ContextValue> = {
               dataSources,
               parent,
               key,
-              metadataKeyAsLabel as string,
-              rootKeyAsLabel as string,
+              keyAsLabel ?? undefined,
               containsRelationPropertyKey as string,
               containsRelationPropertyValue as string,
               relationEntityType as string,
@@ -1511,6 +1533,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     viewMode: async (parent: any, { input }, { dataSources }) => {
       return input || EntityListViewMode.Library;
     },
+    hideInHistory: async (_source, { input }) => {
+      return input ?? false;
+    },
     enableNavigation: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : true;
     },
@@ -1659,6 +1684,9 @@ export const baseResolver: Resolvers<ContextValue> = {
   WindowElement: {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
+    },
+    hideInHistory: async (_source, { input }) => {
+      return input ?? false;
     },
     panels: async (
       parent: unknown,
@@ -2321,6 +2349,13 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input ? input : SortingDirection.Asc;
     },
   },
+  GroupByOptions: {
+    options: async (_parent, { input, defaults }, { dataSources }) => {
+      return resolveGroupByOptions(input, defaults, (key) =>
+        dataSources.CollectionAPI.getSessionInfo(key)
+      );
+    },
+  },
   DropdownOption: {
     subOptions: async (
       parent,
@@ -2935,6 +2970,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     refreshAfterAction: async (_source, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
+    },
+    navigateToCreatedEntity: async (_source, { input }, { dataSources }) => {
+      return input ?? false;
     },
     can: async (_source, { input }, { dataSources }) => {
       return input || [];

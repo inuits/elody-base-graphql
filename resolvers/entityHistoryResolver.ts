@@ -1,4 +1,5 @@
 import { DataSources } from '../types';
+import { AdvancedFilterInput } from '../generated-types/type-defs';
 import { setId } from '../parsers/entity';
 import { HistoryServiceAPI } from '../sources/historyService';
 
@@ -43,6 +44,60 @@ export const resolveEntityHistoryVersions = async (
 
   const start = skip ?? 0;
   return versions.slice(start, limit ? start + limit : undefined);
+};
+
+const firstValue = (value: unknown): string | undefined =>
+  (Array.isArray(value) ? value[0] : value) ?? undefined;
+
+const historyTargetFromFilters = (
+  advancedFilterInputs: AdvancedFilterInput[]
+) => {
+  const typeFilter = advancedFilterInputs.find(
+    (filter) => filter.type === 'type'
+  );
+  const idFilter = advancedFilterInputs.find(
+    (filter) =>
+      filter.type === 'selection' &&
+      (Array.isArray(filter.key) ? filter.key : [filter.key]).includes('id')
+  );
+  return {
+    id: firstValue(idFilter?.value),
+    type: firstValue(typeFilter?.value),
+  };
+};
+
+export const resolveEntityHistoryVersionList = async (
+  dataSources: DataSources,
+  advancedFilterInputs: AdvancedFilterInput[],
+  limit: number = 20,
+  skip: number = 1
+) => {
+  const { id, type } = historyTargetFromFilters(advancedFilterInputs);
+  if (!id || !type) return { results: [], count: 0, limit };
+
+  const versions = await resolveEntityHistoryVersions(dataSources, id, type);
+  const rows = versions
+    .map((version, index) => {
+      const rowId = `${id}-${version.versionId}`;
+      return {
+        _id: rowId,
+        id: rowId,
+        type: 'history',
+        metadata: [
+          { key: 'version', value: index + 1 },
+          { key: 'edited_by', value: version.editedBy },
+          { key: 'edited_at', value: version.timestamp },
+        ],
+      };
+    })
+    .reverse();
+
+  const start = (Math.max(skip, 1) - 1) * limit;
+  return {
+    results: rows.slice(start, start + limit),
+    count: rows.length,
+    limit,
+  };
 };
 
 export const resolveEntityHistoryVersionDetail = async (

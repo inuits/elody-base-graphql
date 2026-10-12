@@ -58,6 +58,7 @@ export const baseFragments = gql`
     filterOptionsMapping {
       label
       value
+      translationKey
     }
     limitConfig {
       optionsLimit
@@ -100,6 +101,7 @@ export const baseFragments = gql`
     deferEntityCreation
     metadataKeyToCreateEntityFromOption
     optionsOrderByKey
+    optionLabelKeys
     advancedFilterInputForRetrievingOptions {
       type
       key
@@ -223,6 +225,20 @@ export const baseFragments = gql`
     }
   }
 
+  fragment entityHistoryVersionList on EntityViewElements {
+    history: entityListElement {
+      label(input: "panel-labels.history")
+      isCollapsed(input: false)
+      enableNavigation(input: false)
+      disableLibraryBar(input: true)
+      hideInHistory(input: true)
+      entityTypes(input: [history])
+      customQuery(input: "GetEntityHistoryVersionList")
+      customQueryFilters(input: "GetEntityHistoryVersionListFilters")
+      customBulkOperations(input: "GetEntityHistoryVersionListBulkOperations")
+    }
+  }
+
   fragment minimalBaseEntity on Entity {
     id
     uuid
@@ -313,6 +329,27 @@ export const baseFragments = gql`
     viewMode
     config {
       key
+      value
+    }
+  }
+
+  fragment groupByConfig on GroupByConfig {
+    key
+    filterKey
+    distinctBy
+    groupOrderBy
+    pageSize
+    groupsPageSize
+    emptyLabel
+    label
+    labelEntityTypes
+    labelMetadataKey
+    translationKey
+    primary
+    pinnedGroups {
+      id
+      label
+      filterKey
       value
     }
   }
