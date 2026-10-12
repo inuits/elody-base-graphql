@@ -1,6 +1,7 @@
 {
   "ar": {
     "comments": {
+      "new": "جديد",
       "new-thread": "مناقشة جديدة",
       "post": "نشر",
       "reply": "رد",
@@ -527,6 +528,7 @@
       "ar": "العربية"
     },
     "library": {
+      "new": "جديد",
       "search": "بحث",
       "simple-search-placeholder": "البحث في {entity}",
       "items": "عناصر",

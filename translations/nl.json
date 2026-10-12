@@ -1,6 +1,7 @@
 {
   "nl": {
     "comments": {
+      "new": "Nieuw",
       "new-thread": "Nieuwe discussie",
       "post": "Plaatsen",
       "reply": "Antwoorden",
@@ -699,6 +700,7 @@
       "ar": "Arabisch"
     },
     "library": {
+      "new": "Nieuw",
       "search": "Zoeken",
       "simple-search-placeholder": "Zoeken in {entity}",
       "items": "Items",

@@ -1,6 +1,7 @@
 {
   "en": {
     "comments": {
+      "new": "New",
       "new-thread": "New discussion",
       "post": "Post",
       "reply": "Reply",
@@ -707,6 +708,7 @@
       "ar": "Arabic"
     },
     "library": {
+      "new": "New",
       "search": "Search",
       "simple-search-placeholder": "Search in {entity}",
       "items": "Items",
