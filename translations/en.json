@@ -68,6 +68,8 @@
         "delete-relation-entities": "Do you want to delete following {0} as well?",
         "blocking-relations": "There are blocking relations: {0} can not be deleted because of the following {1}.",
         "complete": "Complete",
+        "add-entry": "Add entry",
+        "add-more": "Add more",
         "next": "Next step",
         "previous": "Previous step",
         "create-entity-from-dropdown": "Create: \"{0}\""
