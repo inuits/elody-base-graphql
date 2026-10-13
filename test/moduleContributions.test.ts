@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   collectModuleFeatures,
+  collectModuleInputFields,
   collectModulePermissions,
 } from '../helpers/moduleContributions';
 import {
@@ -25,6 +26,8 @@ const moduleWithContributions = {
 
 const plainModule = { id: 'importModule' } as any;
 
+const privacyField = { type: 'dropdown', options: [] } as any;
+
 describe('collectModulePermissions', () => {
   it('gathers the permissions of every installed module', () => {
     expect(
@@ -43,6 +46,20 @@ describe('collectModuleFeatures', () => {
       savedSearch: { enabled: true, permission: 'create:saved_search' },
     });
     expect(collectModuleFeatures([plainModule])).toEqual({});
+  });
+});
+
+describe('collectModuleInputFields', () => {
+  it('gathers the input fields of every installed module', () => {
+    const moduleWithField = {
+      id: 'savedSearchModule',
+      elodyInputFields: { privacyTypeField: privacyField },
+    } as any;
+
+    expect(collectModuleInputFields([plainModule, moduleWithField])).toEqual({
+      privacyTypeField: privacyField,
+    });
+    expect(collectModuleInputFields([plainModule])).toEqual({});
   });
 });
 
