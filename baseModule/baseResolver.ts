@@ -42,6 +42,7 @@ import {
   Actions,
   ActionsOnResult,
   ActionsOnResultTypes,
+  ActionOnClick,
   DisplayCondition,
   ActionType,
   AdvancedFilterTypes,
@@ -1216,7 +1217,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     keyValue: async (
       parent: any,
       {
-        key,
+        key: explicitKey,
         source,
         uuid,
         keyAsLabel,
@@ -1234,8 +1235,10 @@ export const baseResolver: Resolvers<ContextValue> = {
         asArray = false,
         relationDirection = RelationDirection.FromEntity,
       },
-      { dataSources, customFormatters }
+      { dataSources, customFormatters },
+      info
     ) => {
+      const key = explicitKey ?? String(info.path.key);
       try {
         const resolveObject: { [key: string]: Function } = {
           metadata: () =>
@@ -1537,8 +1540,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     hideInHistory: async (_source, { input }) => {
       return input ?? false;
     },
-    enableNavigation: async (parent: any, { input }, { dataSources }) => {
-      return input !== undefined ? input : true;
+    actionOnClick: async (_source, { input }) => {
+      return input ?? ActionOnClick.Navigate;
     },
     baseLibraryMode: async (parent: any, { input }, { dataSources }) => {
       return input ? input : BaseLibraryModes.NormalBaseLibrary;
@@ -2584,9 +2587,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       { input },
       { dataSources }
     ) => {
-      return input !== undefined ? input : false;
-    },
-    displayOpenDetailPageButton: async (parent, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
   },

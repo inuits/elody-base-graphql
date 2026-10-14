@@ -229,7 +229,7 @@ export const baseFragments = gql`
     history: entityListElement {
       label(input: "panel-labels.history")
       isCollapsed(input: false)
-      enableNavigation(input: false)
+      actionOnClick(input: openPreview)
       disableLibraryBar(input: true)
       hideInHistory(input: true)
       entityTypes(input: [history])
