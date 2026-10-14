@@ -251,6 +251,20 @@ describe('AuthTokenManager', () => {
     delete process.env.ALLOW_ANONYMOUS_USERS;
   });
 
+  it('throws instead of falling back to anonymous when a logged-in session can no longer refresh', async () => {
+    process.env.ALLOW_ANONYMOUS_USERS = 'true';
+    const session: any = createSession(createJwt(-60));
+    mockRefresh.mockResolvedValueOnce(undefined);
+
+    await expect(
+      new AuthTokenManager(baseEnvironment, session).getValidToken()
+    ).rejects.toThrow('AUTH | NO VALID TOKEN');
+    await expect(
+      new AuthTokenManager(baseEnvironment, session).getValidToken()
+    ).rejects.toThrow('AUTH | NO VALID TOKEN');
+    expect(session.authExpired).toBe(true);
+  });
+
   it('returns the whitelisted IP token when the client IP matches', async () => {
     const session = createSession();
     const env: any = {
