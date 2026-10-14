@@ -659,6 +659,27 @@ export const baseSchema = gql`
     typeLink: MenuTypeLink
     requiresAuth: Boolean
     can: [String!]
+    badge: MenuBadge
+    showChildBadgeTotal: Boolean
+  }
+
+  enum MenuBadgeSource {
+    count
+    seenItems
+  }
+
+  input MenuBadgeInput {
+    source: MenuBadgeSource!
+    query: String!
+    filterQuery: String
+    entityType: String!
+  }
+
+  type MenuBadge {
+    source: MenuBadgeSource!
+    query: String!
+    filterQuery: String
+    entityType: String!
   }
 
   enum MenuIcons {
@@ -726,6 +747,8 @@ export const baseSchema = gql`
       typeLink: MenuTypeLinkInput
       requiresAuth: Boolean
       can: [String!]
+      badge: MenuBadgeInput
+      showChildBadgeTotal: Boolean
     ): MenuItem
   }
 

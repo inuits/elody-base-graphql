@@ -48,6 +48,7 @@ import {
 } from './helpers/elodyModuleHelpers';
 import {
   collectModuleFeatures,
+  collectModuleInputFields,
   collectModulePermissions,
 } from './helpers/moduleContributions';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
@@ -359,9 +360,10 @@ export class ElodyInstance {
       customEndpoint(this.app, this.environment);
     });
 
-    if (this.options.customInputFields) {
-      this.addCustomFieldsToBaseFields(this.options.customInputFields);
-    }
+    this.addCustomFieldsToBaseFields({
+      ...collectModuleInputFields(this.elodyConfig.modules),
+      ...this.options.customInputFields,
+    });
 
     if (this.options.customTypePillLabelMapping) {
       Object.entries(this.options.customTypePillLabelMapping).forEach(

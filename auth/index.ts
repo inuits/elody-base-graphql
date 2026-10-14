@@ -135,6 +135,7 @@ export function applyAuthEndpoints(
     );
     try {
       req.session.auth = await manager.authenticate(authCode, redirectUri);
+      req.session.authExpired = undefined;
       res.status(200).end('Got token succesfully.');
     } catch (e: any) {
       req.session.auth = undefined;

@@ -30,7 +30,9 @@
       "no-category": "No category",
       "not-tagged": "Not tagged",
       "to-you": "To you",
-      "no-parent-entity-type": "Not linked to entity"
+      "no-parent-entity-type": "Not linked to entity",
+      "creator": "Comment author",
+      "tagged-on": "Tagged on"
     },
     "entity-translations": {
       "baseentity": "base entity | base entities",
@@ -449,7 +451,8 @@
       "history-original-version": "Original version",
       "description": "Description",
       "other-metadata": "Other metadata",
-      "history": "History"
+      "history": "History",
+      "audit-panel": "Audit"
     },
     "metadata": {
       "tooltips": {
@@ -695,7 +698,7 @@
       "edit-label": "Edit label",
       "reset": "Reset",
       "delete": "Delete",
-      "all-filters": "All filters",
+      "all-saved-searches": "All saved searches",
       "search-title": "Search title",
       "search-modal-title": "Search filter",
       "edit": "Edit",

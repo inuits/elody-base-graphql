@@ -63,7 +63,10 @@ export class AuthTokenManager {
       );
     }
 
-    if (process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() === 'true') {
+    if (
+      process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() === 'true' &&
+      !this.session?.authExpired
+    ) {
       return '';
     }
 
@@ -111,6 +114,8 @@ export class AuthTokenManager {
       // refresh threw (e.g. ForbiddenError) — treat as failure
     }
     this.session.auth = null;
+    // An expired login must surface as a 401, not silently continue as an anonymous user who gets 403s.
+    this.session.authExpired = true;
     return null;
   }
 

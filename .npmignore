@@ -6,3 +6,4 @@
 !*.d.ts
 !*.schema.ts
 !*.queries.ts
+!helpers/relationCasing.ts

@@ -99,6 +99,7 @@ import {
   Maybe,
   MediaFileElement,
   MediaFileElementTypes,
+  MenuBadge,
   MenuIcons,
   MenuTypeLink,
   Metadata,
@@ -2261,7 +2262,17 @@ export const baseResolver: Resolvers<ContextValue> = {
   Menu: {
     menuItem: async (
       _source,
-      { label, entityType, icon, isLoggedIn, typeLink, requiresAuth, can },
+      {
+        label,
+        entityType,
+        icon,
+        isLoggedIn,
+        typeLink,
+        requiresAuth,
+        can,
+        badge,
+        showChildBadgeTotal,
+      },
       { dataSources, customPermissions }
     ) => {
       const isPermitted = await isMenuItemPermitted(
@@ -2284,6 +2295,8 @@ export const baseResolver: Resolvers<ContextValue> = {
         typeLink,
         requiresAuth,
         can,
+        badge,
+        showChildBadgeTotal,
       };
     },
   },
@@ -2311,6 +2324,12 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     can: async (parent, {}, { dataSources }) => {
       return parent.can as string[];
+    },
+    badge: async (parent) => {
+      return parent.badge as MenuBadge;
+    },
+    showChildBadgeTotal: async (parent) => {
+      return parent.showChildBadgeTotal as boolean;
     },
   },
   DropzoneEntityToCreate: {
