@@ -75,6 +75,7 @@ export type RouteMeta = {
   breadcrumbs?: Array<Breadcrumb>;
   simpleSearch?: SimpleSearch;
   multiEntityLayout?: boolean;
+  openPreviewOnClick?: boolean;
   hasEditMetadataButton?: boolean;
   hasDeleteButton?: boolean;
   entityPageConfig?: object;

@@ -118,6 +118,7 @@ those are not assignable to base-graphql's copies.
 | `breadcrumbs` | `Breadcrumb[]` | `overviewPage`, `title` (a string or `{ type, key }`), `entityType`, `key`, `relation`, `current`, `pillLabel`. |
 | `simpleSearch` | `SimpleSearch` | `{ keys, relationKeys? }` searched from this route. |
 | `multiEntityLayout` | `boolean` | Render the multi-entity layout. |
+| `openPreviewOnClick` | `boolean` | Clicking an overview list item opens its preview instead of the detail page. Needs a `previewComponent` on the listed type; without one, the click navigates. |
 | `hasEditMetadataButton` / `hasDeleteButton` | `boolean` | Show those buttons. |
 | `entityPageConfig` | `object` | Per-type single-entity page config. |
 | `can` | `string[]` | Permission resolved into `meta.permitted`. |
