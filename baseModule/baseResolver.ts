@@ -1242,7 +1242,7 @@ export const baseResolver: Resolvers<ContextValue> = {
     keyValue: async (
       parent: any,
       {
-        key,
+        key: explicitKey,
         source,
         uuid,
         keyAsLabel,
@@ -1260,8 +1260,10 @@ export const baseResolver: Resolvers<ContextValue> = {
         asArray = false,
         relationDirection = RelationDirection.FromEntity,
       },
-      { dataSources, customFormatters }
+      { dataSources, customFormatters },
+      info
     ) => {
+      const key = explicitKey ?? String(info.path.key);
       try {
         const resolveObject: { [key: string]: Function } = {
           metadata: () =>

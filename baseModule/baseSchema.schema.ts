@@ -1283,7 +1283,7 @@ export const baseSchema = gql`
   type IntialValues {
     id: String!
     keyValue(
-      key: String!
+      key: String
       source: KeyValueSource!
       uuid: String
       keyAsLabel: KeyAsLabelInput
