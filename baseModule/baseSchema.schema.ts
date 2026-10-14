@@ -1476,6 +1476,13 @@ export const baseSchema = gql`
     removeRelation
   }
 
+  enum ActionOnClick {
+    none
+    navigate
+    openPreview
+    openInModal
+  }
+
   enum EntitySubelement {
     intialValues
     relationValues
@@ -1490,7 +1497,7 @@ export const baseSchema = gql`
     entityList(metaKey: String): [Entity]
     relationType(input: String): String
     viewMode(input: EntityListViewMode): EntityListViewMode
-    enableNavigation(input: Boolean): Boolean
+    actionOnClick(input: ActionOnClick): ActionOnClick
     hideInHistory(input: Boolean): Boolean
     customQuery(input: String): String
     customQueryRelationType(input: String): String
@@ -2465,7 +2472,6 @@ export const baseSchema = gql`
 
   type PreviewConfiguration {
     keepLastActiveItemHighlighted(input: Boolean): Boolean
-    displayOpenDetailPageButton(input: Boolean): Boolean
   }
 
   type PermissionResult {

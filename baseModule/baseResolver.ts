@@ -41,6 +41,7 @@ import {
   Actions,
   ActionsOnResult,
   ActionsOnResultTypes,
+  ActionOnClick,
   DisplayCondition,
   ActionType,
   AdvancedFilterTypes,
@@ -1565,8 +1566,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     hideInHistory: async (_source, { input }) => {
       return input ?? false;
     },
-    enableNavigation: async (parent: any, { input }, { dataSources }) => {
-      return input !== undefined ? input : true;
+    actionOnClick: async (_source, { input }) => {
+      return input ?? ActionOnClick.Navigate;
     },
     baseLibraryMode: async (parent: any, { input }, { dataSources }) => {
       return input ? input : BaseLibraryModes.NormalBaseLibrary;
@@ -2612,9 +2613,6 @@ export const baseResolver: Resolvers<ContextValue> = {
       { input },
       { dataSources }
     ) => {
-      return input !== undefined ? input : false;
-    },
-    displayOpenDetailPageButton: async (parent, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
   },

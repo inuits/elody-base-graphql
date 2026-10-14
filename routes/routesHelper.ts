@@ -1,4 +1,5 @@
 import { baseRoutes } from './baseRoutes';
+import { ActionOnClick } from '../generated-types/type-defs';
 
 export type RouteQueries = {
   getEntities?: string;
@@ -75,7 +76,7 @@ export type RouteMeta = {
   breadcrumbs?: Array<Breadcrumb>;
   simpleSearch?: SimpleSearch;
   multiEntityLayout?: boolean;
-  openPreviewOnClick?: boolean;
+  actionOnClick?: ActionOnClick;
   hasEditMetadataButton?: boolean;
   hasDeleteButton?: boolean;
   entityPageConfig?: object;
