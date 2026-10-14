@@ -521,7 +521,9 @@ export class CollectionAPI extends AuthRESTDataSource {
     entityId: string,
     collection: Collection = Collection.Entities
   ): Promise<Metadata[]> {
-    return await this.get(`${collection}/${entityId}/relations`);
+    // {collection}/{id}/relations has no GET (405): read the document's own.
+    const document = await this.get<any>(`${collection}/${entityId}`);
+    return document?.relations ?? [];
   }
 
   async patchMetadata(
