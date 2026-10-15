@@ -80,6 +80,7 @@ export const getConfig = (config: Environment) => {
     GLITCH_TIP_DSN_FRONTEND: config.glitchtipDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,
     browserTracing: config.browserTracing,
+    usageAnalytics: config.usageAnalytics,
     DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT || '',
     skeletonLayouts: config.skeletonLayouts,
   };
