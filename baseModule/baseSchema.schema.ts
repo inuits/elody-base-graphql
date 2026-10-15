@@ -607,6 +607,7 @@ export const baseSchema = gql`
     EntityEditModal
     CommentThread
     BulkOperationsMerge
+    RelationPicker
   }
 
   enum ModalStyle {

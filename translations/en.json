@@ -905,6 +905,8 @@
       "copied": "Copied"
     },
     "inline-edit": {
+      "browse": "Browse…",
+      "browse-close": "Close",
       "cancel": "Cancel",
       "edit-field": "edit",
       "hint": "Enter saves · Esc cancels",

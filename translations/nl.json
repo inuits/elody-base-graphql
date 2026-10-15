@@ -891,6 +891,8 @@
       "copied": "Gekopieerd"
     },
     "inline-edit": {
+      "browse": "Blader…",
+      "browse-close": "Sluiten",
       "cancel": "Annuleer",
       "edit-field": "bewerken",
       "hint": "Enter bewaart · Esc annuleert",
