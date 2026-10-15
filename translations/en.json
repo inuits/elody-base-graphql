@@ -899,6 +899,24 @@
       "fit": "Fit",
       "zoom-in": "Zoom in",
       "zoom-out": "Zoom out"
+    },
+    "inline-edit": {
+      "cancel": "Cancel",
+      "edit-field": "edit",
+      "hint": "Enter saves · Esc cancels",
+      "hint-textarea": "Ctrl+Enter saves · Esc cancels",
+      "saved": "Saved",
+      "save-failed": "Saving failed, try again",
+      "remove-row": "Remove row",
+      "remove-row-confirm": {
+        "title": "Remove this row?",
+        "message": "Its values are deleted when you confirm.",
+        "confirm": "Remove",
+        "cancel": "Cancel"
+      },
+      "coordinates-both": "Fill in both latitude and longitude",
+      "latitude-range": "Latitude must be between -90 and 90",
+      "longitude-range": "Longitude must be between -180 and 180"
     }
   }
 }

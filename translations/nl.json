@@ -885,6 +885,24 @@
       "fit": "Passend",
       "zoom-in": "Inzoomen",
       "zoom-out": "Uitzoomen"
+    },
+    "inline-edit": {
+      "cancel": "Annuleer",
+      "edit-field": "bewerken",
+      "hint": "Enter bewaart · Esc annuleert",
+      "hint-textarea": "Ctrl+Enter bewaart · Esc annuleert",
+      "saved": "Opgeslagen",
+      "save-failed": "Opslaan mislukt, probeer opnieuw",
+      "remove-row": "Verwijder rij",
+      "remove-row-confirm": {
+        "title": "Deze rij verwijderen?",
+        "message": "De waarden worden verwijderd zodra je bevestigt.",
+        "confirm": "Verwijder",
+        "cancel": "Annuleer"
+      },
+      "coordinates-both": "Vul zowel breedtegraad als lengtegraad in",
+      "latitude-range": "Breedtegraad moet tussen -90 en 90 liggen",
+      "longitude-range": "Lengtegraad moet tussen -180 en 180 liggen"
     }
   }
 }
