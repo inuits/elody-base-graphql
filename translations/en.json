@@ -900,6 +900,10 @@
       "zoom-in": "Zoom in",
       "zoom-out": "Zoom out"
     },
+    "copy-to-clipboard": {
+      "copy": "Copy",
+      "copied": "Copied"
+    },
     "inline-edit": {
       "cancel": "Cancel",
       "edit-field": "edit",

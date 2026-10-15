@@ -886,6 +886,10 @@
       "zoom-in": "Inzoomen",
       "zoom-out": "Uitzoomen"
     },
+    "copy-to-clipboard": {
+      "copy": "Kopieer",
+      "copied": "Gekopieerd"
+    },
     "inline-edit": {
       "cancel": "Annuleer",
       "edit-field": "bewerken",
