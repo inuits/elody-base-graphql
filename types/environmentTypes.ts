@@ -6,6 +6,11 @@ export type BrowserTracing = {
   serviceName: string;
 };
 
+export type UsageAnalytics = {
+  clientId: string;
+  apiUrl: string;
+};
+
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -126,6 +131,7 @@ export interface Environment {
   glitchtipDsnFrontend: string;
   nomadNamespace: string;
   browserTracing?: BrowserTracing;
+  usageAnalytics?: UsageAnalytics;
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
@@ -249,6 +255,7 @@ export interface FullyOptionalEnvironmentInput {
   glitchtipDsnFrontend?: string;
   nomadNamespace?: string;
   browserTracing?: BrowserTracing;
+  usageAnalytics?: UsageAnalytics;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
   bulkSelectAllSizeLimit?: number;
