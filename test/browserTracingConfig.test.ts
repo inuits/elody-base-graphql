@@ -51,6 +51,21 @@ describe('browserTracingFromEnv', () => {
   });
 });
 
+describe('browserTracingFromEnv api key', () => {
+  it('passes the ingestion key the browser SDK sends, when one is set', () => {
+    expect(
+      browserTracingFromEnv({
+        OTEL_BROWSER_TRACES_URL: 'https://otel.example.org/v1/traces',
+        OTEL_BROWSER_API_KEY: 'ingest-123',
+      })
+    ).toEqual({
+      tracesUrl: 'https://otel.example.org/v1/traces',
+      serviceName: 'pwa',
+      apiKey: 'ingest-123',
+    });
+  });
+});
+
 describe('getConfig browserTracing', () => {
   it('ships the browser tracing settings to the PWA when enabled', () => {
     const browserTracing = {
