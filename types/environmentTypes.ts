@@ -4,6 +4,7 @@ import { Route } from '../routes/routesHelper';
 export type BrowserTracing = {
   tracesUrl: string;
   serviceName: string;
+  apiKey?: string;
 };
 
 export type UsageAnalytics = {

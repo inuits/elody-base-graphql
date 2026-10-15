@@ -9,5 +9,7 @@ export const browserTracingFromEnv = (
     ? {
         tracesUrl: env.OTEL_BROWSER_TRACES_URL,
         serviceName: env.OTEL_BROWSER_SERVICE_NAME || 'pwa',
+        // the collector's ingestion key, sent by the browser like any public key
+        ...(env.OTEL_BROWSER_API_KEY ? { apiKey: env.OTEL_BROWSER_API_KEY } : {}),
       }
     : undefined;
