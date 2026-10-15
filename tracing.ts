@@ -3,10 +3,9 @@ import { resourceFromAttributes } from '@opentelemetry/resources';
 import { SemanticResourceAttributes as R } from '@opentelemetry/semantic-conventions';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+import { traceExporterOptions } from './tracingConfig';
 
-const exporter = new OTLPTraceExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://alloy"4318/v1/traces',
-});
+const exporter = new OTLPTraceExporter(traceExporterOptions(process.env));
 
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({
