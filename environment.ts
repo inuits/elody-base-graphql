@@ -3,6 +3,7 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
+import { browserTracingFromEnv } from './helpers/browserTracing';
 
 export let currentEnvironment: Environment | undefined = undefined;
 
@@ -142,6 +143,7 @@ export const baseEnvironment: Environment = {
   glitchtipDsn: process.env.GLITCH_TIP_DSN || '',
   glitchtipDsnFrontend: process.env.GLITCH_TIP_DSN_FRONTEND || '',
   nomadNamespace: process.env.NOMAD_NAMESPACE || '',
+  browserTracing: browserTracingFromEnv(process.env),
   ignorePermissions: false,
   maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250 * 1024000,
   bulkSelectAllSizeLimit: 1000,

@@ -1,6 +1,11 @@
 import { Entitytyping } from '../generated-types/type-defs';
 import { Route } from '../routes/routesHelper';
 
+export type BrowserTracing = {
+  tracesUrl: string;
+  serviceName: string;
+};
+
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -120,6 +125,7 @@ export interface Environment {
   glitchtipDsn: string;
   glitchtipDsnFrontend: string;
   nomadNamespace: string;
+  browserTracing?: BrowserTracing;
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
@@ -242,6 +248,7 @@ export interface FullyOptionalEnvironmentInput {
   glitchtipDsn?: string;
   glitchtipDsnFrontend?: string;
   nomadNamespace?: string;
+  browserTracing?: BrowserTracing;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
   bulkSelectAllSizeLimit?: number;
