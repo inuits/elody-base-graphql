@@ -32,6 +32,7 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
+import { operationNamePlugin, telemetryMiddleware } from './requestTelemetry';
 import { expressMiddleware } from '@as-integrations/express4';
 import { configureFrontendForEnvironment } from './endpoints/frontendEndpoint';
 import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
@@ -215,7 +216,7 @@ export class ElodyInstance {
         depthLimit(this.environment?.apollo.maxQueryDepth || 15),
       ],
       introspection: this.environment?.apollo.introspection || false,
-      plugins: [authExtensionPlugin],
+      plugins: [authExtensionPlugin, operationNamePlugin],
       nodeEnv: this.environment.environment,
       gateway: {
         async load() {
@@ -273,6 +274,7 @@ export class ElodyInstance {
   private applyGraphqlEndpoint() {
     this.app.use(
       this.environment.apollo.graphqlPath,
+      telemetryMiddleware,
       expressMiddleware(this.apolloServer, {
         context: async ({ req, res }) => {
           if (checkRequestContentType(req, res)) return {} as ContextValue;
