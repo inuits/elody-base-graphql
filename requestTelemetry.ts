@@ -7,6 +7,19 @@ import type { NextFunction, Request, Response } from 'express';
 // the names the backend services put on their spans too (observability.py)
 const USER = 'elody.user';
 const LIBRARY = 'elody.library';
+// the browser tab's session: elody.session in the baggage, on the spans by the
+// name the browser's own spans use
+const SESSION = 'elody.session';
+const SESSION_ATTRIBUTE = 'session_id';
+export const SESSION_HEADER = 'x-elody-session-id';
+// it comes from the browser: a plain id only, never anything that could break
+// the baggage header it travels in
+const PLAIN_ID = /^[A-Za-z0-9-]{1,64}$/;
+
+const sessionOf = (req: Request): string | undefined => {
+  const value = req.headers?.[SESSION_HEADER];
+  return typeof value === 'string' && PLAIN_ID.test(value) ? value : undefined;
+};
 
 /** A stable pseudonym for a user id: the PWA's pseudonymOf, never the id itself. */
 export const pseudonymOf = (id: string): string =>
@@ -40,8 +53,9 @@ const requestSpan = () =>
   getRPCMetadata(context.active())?.span ?? trace.getActiveSpan();
 
 /**
- * Puts the request's pseudonymous user and library on its span and in the
- * baggage, so every call this request makes carries them to the next service.
+ * Puts the request's pseudonymous user and library, and the browser tab's
+ * session, on its span and in the baggage, so every call this request makes
+ * carries them to the next service.
  */
 export const telemetryMiddleware = (
   req: Request,
@@ -52,15 +66,20 @@ export const telemetryMiddleware = (
   // without tracing there is nothing to name
   if (!span?.isRecording()) return next();
   const user = telemetryUserOf((req as any).session?.auth?.accessToken);
-  if (!user) return next();
-  const attributes = {
-    [USER]: user.pseudonym,
-    ...(user.library ? { [LIBRARY]: user.library } : {}),
+  const session = sessionOf(req);
+  if (!user && !session) return next();
+  const who: Record<string, string> = {
+    ...(user ? { [USER]: user.pseudonym } : {}),
+    ...(user?.library ? { [LIBRARY]: user.library } : {}),
   };
-  span.setAttributes(attributes);
+  span.setAttributes({
+    ...who,
+    ...(session ? { [SESSION_ATTRIBUTE]: session } : {}),
+  });
+  const entries = { ...who, ...(session ? { [SESSION]: session } : {}) };
   let baggage =
     propagation.getBaggage(context.active()) ?? propagation.createBaggage();
-  for (const [key, value] of Object.entries(attributes))
+  for (const [key, value] of Object.entries(entries))
     baggage = baggage.setEntry(key, { value });
   context.with(propagation.setBaggage(context.active(), baggage), next);
 };

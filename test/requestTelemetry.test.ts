@@ -71,10 +71,64 @@ describe('the user of a request', () => {
 });
 
 describe('telemetryMiddleware', () => {
-  const requestOf = (claims?: object) =>
+  const requestOf = (claims?: object, headers: Record<string, string> = {}) =>
     ({
       session: claims ? { auth: { accessToken: tokenFor(claims) } } : {},
+      headers,
     } as any);
+
+  const baggageIn = (span: ReturnType<typeof fakeSpan>, req: any) => {
+    let carrier: Record<string, string> = {};
+    inRequest(span, () =>
+      telemetryMiddleware(req, {} as any, () => {
+        carrier = {};
+        propagation.inject(context.active(), carrier);
+      })
+    );
+    return carrier.baggage ?? '';
+  };
+
+  it("passes the browser tab's session on, also for a user not logged in", () => {
+    const span = fakeSpan();
+    const baggage = baggageIn(
+      span,
+      requestOf(undefined, {
+        'x-elody-session-id': '92a38bf0-0a28-47cf-b82b-4d534f5435c7',
+      })
+    );
+    expect(span.setAttributes).toHaveBeenCalledWith({
+      session_id: '92a38bf0-0a28-47cf-b82b-4d534f5435c7',
+    });
+    expect(baggage).toContain(
+      'elody.session=92a38bf0-0a28-47cf-b82b-4d534f5435c7'
+    );
+  });
+
+  it('names the session next to the user and library', () => {
+    const span = fakeSpan();
+    baggageIn(
+      span,
+      requestOf(
+        { sub: 'user-1', email: 'an@brugge.be' },
+        { 'x-elody-session-id': 's-1' }
+      )
+    );
+    expect(span.setAttributes).toHaveBeenCalledWith({
+      'elody.user': 'e323b4a2b40d115e',
+      'elody.library': 'brugge.be',
+      session_id: 's-1',
+    });
+  });
+
+  it('ignores a session header that is not a plain id', () => {
+    for (const value of ['x'.repeat(65), 'a,b=c', 'a b']) {
+      const baggage = baggageIn(
+        fakeSpan(),
+        requestOf(undefined, { 'x-elody-session-id': value })
+      );
+      expect(baggage).not.toContain('elody.session');
+    }
+  });
 
   it('names the user and library on the request span and in the baggage', () => {
     const span = fakeSpan();
