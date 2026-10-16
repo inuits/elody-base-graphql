@@ -36,6 +36,7 @@ import { expressMiddleware } from '@as-integrations/express4';
 import { configureFrontendForEnvironment } from './endpoints/frontendEndpoint';
 import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
 import { createMongoConnectionString } from './sources/mongo';
+import { sanitizeGraphqlVariables } from './utilities/sanitize';
 import {
   isRequiredDataSources,
   findMissingRequiredDataSources,
@@ -273,6 +274,7 @@ export class ElodyInstance {
   private applyGraphqlEndpoint() {
     this.app.use(
       this.environment.apollo.graphqlPath,
+      sanitizeGraphqlVariables,
       expressMiddleware(this.apolloServer, {
         context: async ({ req, res }) => {
           if (checkRequestContentType(req, res)) return {} as ContextValue;

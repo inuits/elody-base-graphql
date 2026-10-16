@@ -75,6 +75,7 @@ describe('ElodyInstance.buildApp', () => {
     expect(order('urlencodedParser')).toBeGreaterThan(order('jsonParser'));
     expect(order('authSession')).toBeGreaterThan(order('urlencodedParser'));
     expect(order('graphqlHandler')).toBeGreaterThan(order('authSession'));
+    expect(order('sanitizeGraphqlVariables')).toBe(order('graphqlHandler') - 1);
   });
 
   it('mounts the graphql endpoint on the configured path', () => {
