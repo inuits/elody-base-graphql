@@ -1514,6 +1514,7 @@ export const baseSchema = gql`
     fetchDeepRelations: FetchDeepRelations
     can(input: [String!]): [String!]
     cropMediafileCoordinatesKey(input: String): String
+    openPreviewByDefault(input: Boolean): Boolean
     actionsOnResult: ActionsOnResult
     displayCondition: DisplayCondition
     addEntitiesToForms(input: Boolean): Boolean
