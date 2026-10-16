@@ -44,7 +44,6 @@ import {
   getDataSourcesFromMapping,
   ElodyConfig,
   addAdditionalOptionalDataSources,
-  BASE_DATA_SOURCES,
   generateElodyConfig,
   ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
@@ -52,6 +51,7 @@ import {
   collectModuleFeatures,
   collectModuleInputFields,
   collectModulePermissions,
+  collectModuleDataSources,
   findUnmetModuleRequirements,
 } from './helpers/moduleContributions';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
@@ -152,15 +152,19 @@ export class ElodyInstance {
   }
 
   private configureApplication() {
+    const { customModuleConfig } = this.options;
     this.elodyConfig = createFullElodyConfig(
-      generateElodyConfig(this.options.customModuleConfig)
+      generateElodyConfig({
+        ...customModuleConfig,
+        dataSources: {
+          ...collectModuleDataSources(customModuleConfig.modules),
+          ...customModuleConfig.dataSources,
+        },
+      })
     );
     const unmetRequirements = findUnmetModuleRequirements(
       this.elodyConfig.modules,
-      [
-        ...BASE_DATA_SOURCES,
-        ...Object.keys(this.options.customModuleConfig.dataSources ?? {}),
-      ]
+      this.environment
     );
     if (unmetRequirements.length) throw new Error(unmetRequirements.join('\n'));
     this.permissions = {

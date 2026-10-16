@@ -85,9 +85,7 @@ export const baseEnvironment: Environment = {
       csvExportServiceEnabled:
         process.env.CSV_EXPORTER_ENABLED === 'true' || false,
     },
-    fileSystemImporterServiceUrl:
-      process.env.FILE_SYSTEM_IMPORTER_URL ||
-      'http://filesystem-importer-service:5000',
+    fileSystemImporterServiceUrl: process.env.FILE_SYSTEM_IMPORTER_URL,
     iiifUrl: process.env.IMAGE_API_URL || 'http://cantaloupe:8182',
     iiifUrlFrontend:
       process.env.IMAGE_API_URL_EXT || 'http://cantaloupe.elody.localhost:8000',

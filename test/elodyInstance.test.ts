@@ -90,28 +90,60 @@ describe('ElodyInstance.buildApp', () => {
   });
 });
 
-describe('ElodyInstance module requirements', () => {
-  it('refuses to start when a module needs a data source the client did not register', async () => {
-    const instance = new ElodyInstance({
-      customModuleConfig: {
-        modules: [
-          {
-            id: 'importModule',
-            elodyRequirements: { dataSources: ['ImportAPI'] },
-          } as any,
-        ],
-        dataSources: {},
-      },
+describe('ElodyInstance module contributions', () => {
+  const buildInstanceWith = (module: any, api: any = { promUrl: 'no-prom' }) =>
+    new ElodyInstance({
+      customModuleConfig: { modules: [module], dataSources: {} },
       appConfig: {
         environment: 'production',
-        api: { promUrl: 'no-prom' },
+        api,
         features: { SEO: false },
       } as any,
       customTranslations: {},
     });
 
+  it('registers the data sources a module ships', async () => {
+    class ShippedAPI {
+      constructor(public options: any) {}
+    }
+    const instance: any = buildInstanceWith({
+      id: 'shippingModule',
+      elodyDataSources: { ShippedAPI },
+    });
+    await instance.buildApp();
+
+    const dataSources = instance.buildDataSources({ session: {}, headers: {} });
+    expect(dataSources.ShippedAPI).toBeInstanceOf(ShippedAPI);
+  });
+
+  it('starts when a module requirement is met by the app config', async () => {
+    const instance = buildInstanceWith(
+      {
+        id: 'importModule',
+        elodyRequirements: {
+          environment: {
+            'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
+          },
+        },
+      },
+      { promUrl: 'no-prom', fileSystemImporterServiceUrl: 'http://importer' }
+    );
+
+    await expect(instance.buildApp()).resolves.toBeDefined();
+  });
+
+  it('refuses to start when a module needs a setting that is not set', async () => {
+    const instance = buildInstanceWith({
+      id: 'importModule',
+      elodyRequirements: {
+        environment: {
+          'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
+        },
+      },
+    });
+
     await expect(instance.buildApp()).rejects.toThrow(
-      'importModule requires data sources that are not registered: ImportAPI'
+      'importModule requires settings that are not set: FILE_SYSTEM_IMPORTER_URL'
     );
   });
 });

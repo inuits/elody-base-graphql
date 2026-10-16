@@ -3,6 +3,7 @@ import {
   collectModuleFeatures,
   collectModuleInputFields,
   collectModulePermissions,
+  collectModuleDataSources,
   findUnmetModuleRequirements,
 } from '../helpers/moduleContributions';
 import {
@@ -41,34 +42,54 @@ describe('collectModulePermissions', () => {
   });
 });
 
+describe('collectModuleDataSources', () => {
+  it('gathers the data sources every installed module ships', () => {
+    class ImportAPI {}
+    const importModule = {
+      id: 'importModule',
+      elodyDataSources: { ImportAPI },
+    } as any;
+
+    expect(collectModuleDataSources([plainModule, importModule])).toEqual({
+      ImportAPI,
+    });
+  });
+});
+
 describe('findUnmetModuleRequirements', () => {
-  const importModuleRequiringApi = {
+  const importModuleWithRequirements = {
     id: 'importModule',
-    elodyRequirements: { dataSources: ['ImportAPI'] },
+    elodyRequirements: {
+      environment: {
+        'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
+      },
+    },
   } as any;
 
-  it('names the module and the data sources it is missing', () => {
+  it.each([
+    ['missing', { api: {} }],
+    ['empty', { api: { fileSystemImporterServiceUrl: '' } }],
+  ])('names the env variable of a setting that is %s', (_label, environment) => {
     expect(
       findUnmetModuleRequirements(
-        [plainModule, importModuleRequiringApi],
-        ['CollectionAPI']
+        [plainModule, importModuleWithRequirements],
+        environment as any
       )
     ).toEqual([
-      'importModule requires data sources that are not registered: ImportAPI',
+      'importModule requires settings that are not set: FILE_SYSTEM_IMPORTER_URL',
     ]);
   });
 
-  it('is empty when every required data source is registered', () => {
+  it('is empty when every setting is set', () => {
     expect(
-      findUnmetModuleRequirements(
-        [importModuleRequiringApi],
-        ['CollectionAPI', 'ImportAPI']
-      )
+      findUnmetModuleRequirements([importModuleWithRequirements], {
+        api: { fileSystemImporterServiceUrl: 'http://importer:5000' },
+      } as any)
     ).toEqual([]);
   });
 
   it('ignores modules without requirements', () => {
-    expect(findUnmetModuleRequirements([plainModule], [])).toEqual([]);
+    expect(findUnmetModuleRequirements([plainModule], {} as any)).toEqual([]);
   });
 });
 

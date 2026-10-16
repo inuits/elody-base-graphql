@@ -1,14 +1,19 @@
 import { Module } from 'graphql-modules';
 import { InputField, PermissionRequestInfo } from '../generated-types/type-defs';
+import type { Environment } from '../types/environmentTypes';
+import type { ElodyModuleConfig } from './elodyModuleHelpers';
 
 export type ElodyModuleContributions = Module & {
   elodyPermissions?: { [key: string]: PermissionRequestInfo };
   elodyFeatures?: { [key: string]: ModuleFeature };
   elodyInputFields?: { [key: string]: InputField };
+  elodyDataSources?: ElodyModuleConfig['dataSources'];
   elodyRequirements?: ModuleRequirements;
 };
 
-export type ModuleRequirements = { dataSources?: string[] };
+// Maps an environment path (e.g. 'api.fileSystemImporterServiceUrl') to the
+// env variable that sets it, so the boot error can name what to configure.
+export type ModuleRequirements = { environment?: Record<string, string> };
 
 export type ModuleFeature = { enabled: boolean; permission?: string };
 
@@ -45,19 +50,33 @@ export const collectModuleInputFields = (
     {}
   );
 
+export const collectModuleDataSources = (
+  modules: Module[]
+): NonNullable<ElodyModuleConfig['dataSources']> =>
+  modules.reduce(
+    (collected, module) => ({
+      ...collected,
+      ...(module as ElodyModuleContributions).elodyDataSources,
+    }),
+    {}
+  );
+
+const readEnvironmentPath = (environment: Environment, path: string): any =>
+  path.split('.').reduce((value: any, key) => value?.[key], environment);
+
 export const findUnmetModuleRequirements = (
   modules: Module[],
-  registeredDataSources: string[]
+  environment: Environment
 ): string[] =>
   modules.flatMap((module) => {
     const required =
-      (module as ElodyModuleContributions).elodyRequirements?.dataSources ?? [];
-    const missing = required.filter(
-      (dataSource) => !registeredDataSources.includes(dataSource)
-    );
+      (module as ElodyModuleContributions).elodyRequirements?.environment ?? {};
+    const missing = Object.entries(required)
+      .filter(([path]) => !readEnvironmentPath(environment, path))
+      .map(([, envVariable]) => envVariable);
     return missing.length
       ? [
-          `${module.id} requires data sources that are not registered: ${missing.join(', ')}`,
+          `${module.id} requires settings that are not set: ${missing.join(', ')}`,
         ]
       : [];
   });
