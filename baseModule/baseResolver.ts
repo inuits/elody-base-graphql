@@ -1593,6 +1593,10 @@ export const baseResolver: Resolvers<ContextValue> = {
     cropMediafileCoordinatesKey: async (parent, { input }, { dataSources }) => {
       return input || '';
     },
+    // null when not set, so the entity type's preview configuration still applies
+    openPreviewByDefault: async (parent, { input }, { dataSources }) => {
+      return input ?? null;
+    },
     actionsOnResult: async (parent: unknown, {}, { dataSources }) => {
       return parent as ActionsOnResult;
     },
