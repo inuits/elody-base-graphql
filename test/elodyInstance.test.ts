@@ -89,3 +89,29 @@ describe('ElodyInstance.buildApp', () => {
     expect(app._router.stack.at(-1).route?.path).toBe('*');
   });
 });
+
+describe('ElodyInstance module requirements', () => {
+  it('refuses to start when a module needs a data source the client did not register', async () => {
+    const instance = new ElodyInstance({
+      customModuleConfig: {
+        modules: [
+          {
+            id: 'importModule',
+            elodyRequirements: { dataSources: ['ImportAPI'] },
+          } as any,
+        ],
+        dataSources: {},
+      },
+      appConfig: {
+        environment: 'production',
+        api: { promUrl: 'no-prom' },
+        features: { SEO: false },
+      } as any,
+      customTranslations: {},
+    });
+
+    await expect(instance.buildApp()).rejects.toThrow(
+      'importModule requires data sources that are not registered: ImportAPI'
+    );
+  });
+});

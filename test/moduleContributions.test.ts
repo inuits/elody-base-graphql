@@ -3,6 +3,7 @@ import {
   collectModuleFeatures,
   collectModuleInputFields,
   collectModulePermissions,
+  findUnmetModuleRequirements,
 } from '../helpers/moduleContributions';
 import {
   resolveModuleFeatures,
@@ -37,6 +38,37 @@ describe('collectModulePermissions', () => {
 
   it('is empty when no installed module contributes any', () => {
     expect(collectModulePermissions([plainModule])).toEqual({});
+  });
+});
+
+describe('findUnmetModuleRequirements', () => {
+  const importModuleRequiringApi = {
+    id: 'importModule',
+    elodyRequirements: { dataSources: ['ImportAPI'] },
+  } as any;
+
+  it('names the module and the data sources it is missing', () => {
+    expect(
+      findUnmetModuleRequirements(
+        [plainModule, importModuleRequiringApi],
+        ['CollectionAPI']
+      )
+    ).toEqual([
+      'importModule requires data sources that are not registered: ImportAPI',
+    ]);
+  });
+
+  it('is empty when every required data source is registered', () => {
+    expect(
+      findUnmetModuleRequirements(
+        [importModuleRequiringApi],
+        ['CollectionAPI', 'ImportAPI']
+      )
+    ).toEqual([]);
+  });
+
+  it('ignores modules without requirements', () => {
+    expect(findUnmetModuleRequirements([plainModule], [])).toEqual([]);
   });
 });
 

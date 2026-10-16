@@ -44,6 +44,7 @@ import {
   getDataSourcesFromMapping,
   ElodyConfig,
   addAdditionalOptionalDataSources,
+  BASE_DATA_SOURCES,
   generateElodyConfig,
   ElodyModuleConfig,
 } from './helpers/elodyModuleHelpers';
@@ -51,6 +52,7 @@ import {
   collectModuleFeatures,
   collectModuleInputFields,
   collectModulePermissions,
+  findUnmetModuleRequirements,
 } from './helpers/moduleContributions';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import depthLimit from 'graphql-depth-limit';
@@ -153,6 +155,14 @@ export class ElodyInstance {
     this.elodyConfig = createFullElodyConfig(
       generateElodyConfig(this.options.customModuleConfig)
     );
+    const unmetRequirements = findUnmetModuleRequirements(
+      this.elodyConfig.modules,
+      [
+        ...BASE_DATA_SOURCES,
+        ...Object.keys(this.options.customModuleConfig.dataSources ?? {}),
+      ]
+    );
+    if (unmetRequirements.length) throw new Error(unmetRequirements.join('\n'));
     this.permissions = {
       ...collectModulePermissions(this.elodyConfig.modules),
       ...this.options.customPermissions,

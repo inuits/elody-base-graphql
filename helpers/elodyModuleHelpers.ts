@@ -41,6 +41,12 @@ export type ElodyConfig = {
   endpoints: ((app: Express, environment: Environment) => void)[];
 };
 
+export const BASE_DATA_SOURCES = [
+  'CollectionAPI',
+  'GraphqlAPI',
+  'HistoryServiceAPI',
+] as const;
+
 const baseElodyElodyConfig: ElodyConfig = {
   modules: [baseModule],
   dataSources: [
