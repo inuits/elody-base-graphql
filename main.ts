@@ -21,7 +21,6 @@ import type {
 import { baseModule, baseSchema } from './baseModule/baseModule';
 import {
   getRelationsByType,
-  getPrimaryMediaFileIDOfEntity,
   getPrimaryThumbnailIDOfEntity,
   isIpAddressWhitelisted,
   getClientOrigin,
@@ -96,7 +95,6 @@ export {
   baseSchema,
   resolveMetadata,
   getRelationsByType,
-  getPrimaryMediaFileIDOfEntity,
   getPrimaryThumbnailIDOfEntity,
   parseIdToGetMoreData,
   applyPromEndpoint,

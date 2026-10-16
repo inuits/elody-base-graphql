@@ -88,17 +88,6 @@ export const getRelationsByType = (
   );
 };
 
-export const getPrimaryMediaFileIDOfEntity = (
-  entity: CollectionAPIEntity
-): string | undefined => {
-  // Todo: Needs to be updated for id on asset
-  try {
-    return entity.primary_mediafile_id;
-  } catch {
-    return undefined;
-  }
-};
-
 export const getPrimaryThumbnailIDOfEntity = (
   entity: CollectionAPIEntity
 ): string | undefined => {
@@ -117,15 +106,6 @@ export const getEntityId = (entity: any) => {
 
 export const capitalizeString = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-export const compareRelationsFilterKey = (
-  key: string,
-  comparison: string
-): boolean => {
-  const match = key.match(/relations\.(.*?)\.key/);
-  if (!match || match.length < 2) return false;
-  return match[1] === comparison;
 };
 
 export const extractErrorCode = (error: any): number => {
