@@ -115,7 +115,6 @@
       "download-title": "Download of {title}",
       "selection-toolbar": "Actions on selection",
       "selected-on-other-pages": "{count} selected on other pages",
-      "more-actions": "More actions",
       "action-for-selection": "{action} ({count} selected)",
       "undo-selection": "undo selection",
       "select-page": "select page",
