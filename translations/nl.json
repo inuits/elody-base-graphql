@@ -718,6 +718,7 @@
     },
     "library": {
       "new": "Nieuw",
+      "result-count": "{count} resultaat | {count} resultaten",
       "search": "Zoeken",
       "simple-search-placeholder": "Zoeken in {entity}",
       "items": "Items",

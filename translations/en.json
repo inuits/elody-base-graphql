@@ -730,6 +730,7 @@
     },
     "library": {
       "new": "New",
+      "result-count": "{count} result | {count} results",
       "search": "Search",
       "simple-search-placeholder": "Search in {entity}",
       "items": "Items",
