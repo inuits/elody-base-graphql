@@ -1816,7 +1816,7 @@ export const baseSchema = gql`
 
   type PanelMetaData {
     label(input: String): String
-    key(input: String!): String!
+    key(input: String): String!
     hiddenField(input: HiddenFieldInput!): HiddenField
     unit(input: Unit!): Unit!
     defaultValue(input: String): String

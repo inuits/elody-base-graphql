@@ -1868,8 +1868,8 @@ export const baseResolver: Resolvers<ContextValue> = {
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
-    key: async (_source, { input }, { dataSources }) => {
-      return input ? input : 'no-input';
+    key: async (_source, { input }, _context, info) => {
+      return input ?? String(info.path.prev?.key);
     },
     hiddenField: async (_source, { input }, { dataSources }) => {
       return input as HiddenField;

@@ -1,6 +1,6 @@
 {
   "name": "base-graphql",
-  "version": "0.10.39",
+  "version": "0.10.40",
   "license": "MIT",
   "main": "./main.ts",
   "scripts": {
@@ -59,7 +59,7 @@
     "prettier": "2.3.2",
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
-    "vitest": "3.2.6"
+    "vitest": "4.1.11"
   },
   "publishConfig": {
     "main": "./dist/main.js",

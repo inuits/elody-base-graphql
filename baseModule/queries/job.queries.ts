@@ -21,20 +21,16 @@ export const jobQueries = gql`
     }
     teaserMetadata {
       type: metaData {
-        label(input: "metadata.labels.type")
-        key(input: "type")
+        key
       }
       name: metaData {
-        label(input: "metadata.labels.name")
-        key(input: "name")
+        key
       }
       status: metaData {
-        label(input: "metadata.labels.status")
-        key(input: "status")
+        key
       }
       info: metaData {
-        label(input: "metadata.labels.info")
-        key(input: "info")
+        key
       }
       date_created: metaData {
         label(input: "metadata.labels.created-at")
@@ -105,20 +101,16 @@ export const jobQueries = gql`
               isEditable(input: true)
               isCollapsed(input: false)
               type: metaData {
-                label(input: "metadata.labels.type")
-                key(input: "type")
+                key
               }
               name: metaData {
-                label(input: "metadata.labels.name")
-                key(input: "name")
+                key
               }
               status: metaData {
-                label(input: "metadata.labels.status")
-                key(input: "status")
+                key
               }
               info: metaData {
-                label(input: "metadata.labels.info")
-                key(input: "info")
+                key
               }
               date_created: metaData {
                 label(input: "metadata.labels.created-at")
@@ -470,16 +462,13 @@ export const jobQueries = gql`
           }
           teaserMetadata {
             name: metaData {
-              label(input: "metadata.labels.name")
-              key(input: "name")
+              key
             }
             status: metaData {
-              label(input: "metadata.labels.status")
-              key(input: "status")
+              key
             }
             info: metaData {
-              label(input: "metadata.labels.info")
-              key(input: "info")
+              key
             }
             date_created: metaData {
               label(input: "metadata.labels.created-at")

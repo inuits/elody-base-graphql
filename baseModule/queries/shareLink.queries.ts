@@ -15,8 +15,7 @@ export const shareLinkQueries = gql`
     }
     teaserMetadata {
       ttl: metaData {
-        label(input: "metadata.labels.ttl")
-        key(input: "ttl")
+        key
       }
     }
   }
@@ -71,7 +70,6 @@ export const shareLinkQueries = gql`
       shareLink: formTab {
         formFields {
           ttl: metaData {
-            label(input: "metadata.labels.ttl")
             key(input: "ttl")
             inputField(type: baseTextField) {
               ...inputfield
