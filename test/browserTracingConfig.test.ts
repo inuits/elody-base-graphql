@@ -102,3 +102,20 @@ describe('getConfig browserTracing', () => {
     ).toBeUndefined();
   });
 });
+
+describe('browserTracingFromEnv through the server', () => {
+  // with the collector's internal address the browser sends to its own origin
+  // (endpoints/telemetryEndpoint.ts), and never gets the ingestion key
+  it('points the browser at the telemetry proxy', () => {
+    expect(
+      browserTracingFromEnv({
+        OTEL_BROWSER_COLLECTOR_URL: 'http://otel-collector:4318',
+        OTEL_BROWSER_API_KEY: 'ingest-1',
+        OTEL_BROWSER_TRACES_URL: 'http://hyperdx.localhost:8000/otlp/v1/traces',
+      })
+    ).toEqual({
+      tracesUrl: '/api/telemetry/otlp/v1/traces',
+      serviceName: 'pwa',
+    });
+  });
+});

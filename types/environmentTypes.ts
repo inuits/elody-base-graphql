@@ -1,3 +1,4 @@
+import type { TelemetryTargets } from '../endpoints/telemetryEndpoint';
 import { Entitytyping } from '../generated-types/type-defs';
 import { Route } from '../routes/routesHelper';
 
@@ -135,6 +136,8 @@ export interface Environment {
   nomadNamespace: string;
   browserTracing?: BrowserTracing;
   usageAnalytics?: UsageAnalytics;
+  // where the PWA's telemetry goes on to, inside the network (endpoints/telemetryEndpoint.ts)
+  telemetry?: TelemetryTargets;
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
