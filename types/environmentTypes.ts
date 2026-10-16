@@ -5,6 +5,8 @@ export type BrowserTracing = {
   tracesUrl: string;
   serviceName: string;
   apiKey?: string;
+  // repeated on every browser span, e.g. service.namespace (the client)
+  attributes?: Record<string, string>;
 };
 
 export type UsageAnalytics = {

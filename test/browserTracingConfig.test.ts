@@ -20,6 +20,25 @@ const environmentWith = (browserTracing: any): Environment =>
   } as unknown as Environment);
 
 describe('browserTracingFromEnv', () => {
+  // the client and the environment come from the same OTEL_RESOURCE_ATTRIBUTES
+  // as the server's own spans, so browser and backend filter alike in HyperDX
+  it('passes the client and environment of OTEL_RESOURCE_ATTRIBUTES on', () => {
+    expect(
+      browserTracingFromEnv({
+        OTEL_BROWSER_TRACES_URL: 'http://hyperdx.localhost:8000/otlp/v1/traces',
+        OTEL_RESOURCE_ATTRIBUTES:
+          'service.namespace=vlacc-dams, deployment.environment=local,host.name=x',
+      })
+    ).toEqual({
+      tracesUrl: 'http://hyperdx.localhost:8000/otlp/v1/traces',
+      serviceName: 'pwa',
+      attributes: {
+        'service.namespace': 'vlacc-dams',
+        'deployment.environment': 'local',
+      },
+    });
+  });
+
   it('is off when no traces url is configured', () => {
     expect(browserTracingFromEnv({})).toBeUndefined();
     expect(
