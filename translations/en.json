@@ -862,6 +862,7 @@
       "downloadZip": "Download mediafiles as zip"
     },
     "preview-component": {
+      "open-detail-page": "Open detail page",
       "open": "Open preview",
       "close": "Close preview"
     },

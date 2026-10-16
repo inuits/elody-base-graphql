@@ -848,6 +848,7 @@
       "downloadZip": "Download mediafiles als zip"
     },
     "preview-component": {
+      "open-detail-page": "Open detailpagina",
       "open": "Preview openen",
       "close": "Preview sluiten"
     },
