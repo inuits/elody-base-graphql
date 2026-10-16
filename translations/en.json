@@ -830,6 +830,8 @@
     "contextMenu": {
       "actions": "Actions",
       "actions-for": "Actions for {title}",
+      "more-actions": "More actions",
+      "more-actions-for": "More actions for {title}",
       "contextMenuLinkAction": {
         "followLink": "Open {0} in a new tab"
       },

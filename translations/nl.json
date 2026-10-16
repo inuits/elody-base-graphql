@@ -816,6 +816,8 @@
     "contextMenu": {
       "actions": "Acties",
       "actions-for": "Acties voor {title}",
+      "more-actions": "Meer acties",
+      "more-actions-for": "Meer acties voor {title}",
       "contextMenuLinkAction": {
         "followLink": "Open {0} in een nieuw tabblad"
       },
