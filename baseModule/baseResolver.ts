@@ -150,6 +150,7 @@ import {
   ContextMenuCustomAction,
   ContextMenuQueryAction,
   ContextMenuFormFlow,
+  ActionTone,
   FilterMatchers,
   MetadataOnRelationFieldConfig,
   PanelHeaderContent,
@@ -2907,6 +2908,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuLinkAction: {
+    tone: (_source, { input }) => {
+      return input ?? ActionTone.Default;
+    },
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
@@ -2918,6 +2922,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuElodyAction: {
+    tone: (_source, { input }) => {
+      return input ?? ActionTone.Default;
+    },
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
@@ -2947,6 +2954,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuGeneralAction: {
+    tone: (_source, { input }) => {
+      return input ?? ActionTone.Default;
+    },
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
@@ -2961,6 +2971,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuCustomAction: {
+    tone: (_source, { input }) => {
+      return input ?? ActionTone.Default;
+    },
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },
@@ -2981,6 +2994,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
   },
   ContextMenuQueryAction: {
+    tone: (_source, { input }) => {
+      return input ?? ActionTone.Default;
+    },
     label: async (_source, { input }, { dataSources }) => {
       return input ? input : 'no-input';
     },

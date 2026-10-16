@@ -2238,11 +2238,18 @@ export const baseSchema = gql`
     Update
   }
 
+  # How an action reads in a menu: Danger renders in danger ink, sorted last.
+  enum ActionTone {
+    Default
+    Danger
+  }
+
   type ContextMenuGeneralAction {
     label(input: String): String!
     action(input: ContextMenuGeneralActionEnum): ContextMenuGeneralActionEnum!
     icon(input: String): String!
     can(input: [String]): [String]
+    tone(input: ActionTone): ActionTone!
   }
 
   type ContextMenuElodyAction {
@@ -2255,12 +2262,14 @@ export const baseSchema = gql`
     can(input: [String]): [String]
     hidden(input: [String]): Boolean!
     showAsButton(input: Boolean): Boolean
+    tone(input: ActionTone): ActionTone!
   }
 
   type ContextMenuLinkAction {
     label(input: String): String!
     icon(input: String): String!
     can(input: [String]): [String]
+    tone(input: ActionTone): ActionTone!
   }
 
   type ContextMenuCustomAction {
@@ -2270,6 +2279,7 @@ export const baseSchema = gql`
     can(input: [String]): [String]
     endpointUrl(input: String): String
     endpointMethod(input: String): String
+    tone(input: ActionTone): ActionTone!
   }
 
   type ContextMenuQueryAction {
@@ -2279,6 +2289,7 @@ export const baseSchema = gql`
     refreshAfterAction(input: Boolean): Boolean!
     navigateToCreatedEntity(input: Boolean): Boolean
     can(input: [String]): [String]
+    tone(input: ActionTone): ActionTone!
   }
 
   type ContextMenuActions {
