@@ -64,6 +64,7 @@
         "csv-success": "CSV successfully imported",
         "csv-errors": "Errors during CSV import",
         "close": "Close",
+        "open-item": "Open {item}",
         "remove-item": "Remove {item}",
         "reset-upload": "Import more files",
         "pause-upload": "Pause upload",

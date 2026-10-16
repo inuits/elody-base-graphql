@@ -64,6 +64,7 @@
         "csv-success": "CSV succesvol geïmporteerd",
         "csv-errors": "Errors tijdens CSV import",
         "close": "Sluiten",
+        "open-item": "Open {item}",
         "remove-item": "Verwijder {item}",
         "reset-upload": "Importeer meer bestanden",
         "pause-upload": "Upload pauzeren",
