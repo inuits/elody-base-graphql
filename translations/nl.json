@@ -814,6 +814,8 @@
       }
     },
     "contextMenu": {
+      "actions": "Acties",
+      "actions-for": "Acties voor {title}",
       "contextMenuLinkAction": {
         "followLink": "Open {0} in een nieuw tabblad"
       },

@@ -828,6 +828,8 @@
       }
     },
     "contextMenu": {
+      "actions": "Actions",
+      "actions-for": "Actions for {title}",
       "contextMenuLinkAction": {
         "followLink": "Open {0} in a new tab"
       },
