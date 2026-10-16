@@ -946,6 +946,7 @@ export const baseSchema = gql`
     requiresAuth: Boolean
     can: [String!]
     allowCondition: [String]
+    tone: ActionTone
   }
 
   type RouteMatching {
@@ -971,6 +972,7 @@ export const baseSchema = gql`
     requiresAuth: Boolean
     can: [String!]
     allowCondition: [String]
+    tone: ActionTone
   }
 
   type DropzoneEntityToCreate {
