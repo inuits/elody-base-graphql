@@ -64,3 +64,15 @@ describe('getConfig usageAnalytics', () => {
     ).toBeUndefined();
   });
 });
+
+describe('usageAnalyticsFromEnv through the server', () => {
+  it('points the browser at the telemetry proxy when OpenPanel is internal', () => {
+    expect(
+      usageAnalyticsFromEnv({
+        OPENPANEL_CLIENT_ID: '1c8c5159',
+        OPENPANEL_INTERNAL_URL: 'http://op-api:3000',
+        OPENPANEL_API_URL: 'http://openpanel.localhost:8000/api',
+      })
+    ).toEqual({ clientId: '1c8c5159', apiUrl: '/api/telemetry/usage' });
+  });
+});

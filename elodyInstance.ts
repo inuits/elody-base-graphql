@@ -32,6 +32,7 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
+import { applyTelemetryEndpoint } from './endpoints/telemetryEndpoint';
 import { operationNamePlugin, telemetryMiddleware } from './requestTelemetry';
 import { expressMiddleware } from '@as-integrations/express4';
 import { configureFrontendForEnvironment } from './endpoints/frontendEndpoint';
@@ -127,6 +128,8 @@ export class ElodyInstance {
     this.applyExpressMiddleware();
     await this.apolloServer.start();
     this.applySessionMiddleware();
+    // the PWA's telemetry: after the session, which says who is logged in
+    applyTelemetryEndpoint(this.app, this.environment.telemetry ?? {});
     this.applyGraphqlEndpoint();
     this.applyDefaultEndpoints();
     this.applyModuleEndpoints();
