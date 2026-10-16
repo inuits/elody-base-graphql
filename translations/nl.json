@@ -723,6 +723,7 @@
     },
     "library": {
       "new": "Nieuw",
+      "no-media": "Geen media",
       "result-count": "{count} resultaat | {count} resultaten",
       "search": "Zoeken",
       "simple-search-placeholder": "Zoeken in {entity}",

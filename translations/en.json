@@ -735,6 +735,7 @@
     },
     "library": {
       "new": "New",
+      "no-media": "No media",
       "result-count": "{count} result | {count} results",
       "search": "Search",
       "simple-search-placeholder": "Search in {entity}",
