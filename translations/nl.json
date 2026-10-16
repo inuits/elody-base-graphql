@@ -63,6 +63,7 @@
         "success": "{0} Items geïmporteerd",
         "csv-success": "CSV succesvol geïmporteerd",
         "csv-errors": "Errors tijdens CSV import",
+        "remove-item": "Verwijder {item}",
         "reset-upload": "Importeer meer bestanden",
         "pause-upload": "Upload pauzeren",
         "resume-upload": "Upload hervatten",
@@ -684,6 +685,7 @@
       "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
     },
     "saved-searches": {
+      "title": "Opgeslagen zoekopdrachten",
       "new": "Opslaan als nieuw",
       "save-changes": "Wijzigingen opslaan",
       "edit-label": "Label bewerken",

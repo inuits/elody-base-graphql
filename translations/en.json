@@ -63,6 +63,7 @@
         "success": "{0} Items imported",
         "csv-success": "CSV successfully imported",
         "csv-errors": "Errors during CSV import",
+        "remove-item": "Remove {item}",
         "reset-upload": "Import more files",
         "pause-upload": "Pause upload",
         "resume-upload": "Resume upload",
@@ -695,6 +696,7 @@
       "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."
     },
     "saved-searches": {
+      "title": "Saved searches",
       "new": "Save as new",
       "save-changes": "Save changes",
       "edit-label": "Edit label",
