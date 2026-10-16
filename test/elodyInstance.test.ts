@@ -19,10 +19,12 @@ vi.mock('graphql-modules', async (importOriginal) => ({
 }));
 
 vi.mock('@apollo/server', () => ({
-  ApolloServer: vi.fn(() => ({
-    start: vi.fn(async () => {}),
-    cache: {},
-  })),
+  ApolloServer: vi.fn(function () {
+    return {
+      start: vi.fn(async () => {}),
+      cache: {},
+    };
+  }),
 }));
 
 vi.mock('@as-integrations/express4', () => ({
