@@ -420,6 +420,7 @@ const mapStringToValidationRule = (
     url: ValidationRules.Url,
     regex: ValidationRules.Regex,
     no_xss: ValidationRules.NoXss,
+    no_defaults: ValidationRules.NoDefaults,
     existing_date: ValidationRules.ExistingDate,
     max_date_today: ValidationRules.MaxDateToday,
     customvalue: ValidationRules.CustomValue,

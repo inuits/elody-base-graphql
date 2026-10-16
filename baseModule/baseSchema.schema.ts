@@ -234,6 +234,7 @@ export const baseSchema = gql`
     email
     url
     no_xss
+    no_defaults
     numeric
   }
 
