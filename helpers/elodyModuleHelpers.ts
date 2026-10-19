@@ -1,139 +1,55 @@
-import { Module } from 'graphql-modules';
 import { baseModule } from '../baseModule/baseModule';
 import { CollectionAPI } from '../sources/collection';
 import { GraphqlAPI } from '../sources/graphql';
 import { HistoryServiceAPI } from '../sources/historyService';
 import { DataSources, OptionalDataSources } from '../types';
-import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Environment } from '../types/environmentTypes';
-import { Express } from 'express';
+import {
+  defineElodyModule,
+  ElodyDataSource,
+  ElodyDataSourceClass,
+  ElodyModule,
+} from './elodyModule';
 
-export type ElodyModuleConfig = {
-  modules: Module[];
-  dataSources:
-    | {
-        [key: string]: new ({
-          session,
-          cache,
-        }: {
-          environment: Environment;
-          session: any;
-          cache: any;
-          clientIp: string;
-          clientOrigin?: string;
-          context: { tenantId?: string };
-        }) => AuthRESTDataSource;
-      }
-    | undefined;
-  endpoints?: ((app: Express, environment: Environment) => void)[];
-};
+export const createBaseElodyModule = (): ElodyModule =>
+  defineElodyModule({
+    name: 'baseModule',
+    graphqlModule: baseModule,
+    dataSources: [
+      { name: 'CollectionAPI', source: CollectionAPI as ElodyDataSourceClass },
+      { name: 'GraphqlAPI', source: GraphqlAPI as ElodyDataSourceClass },
+      {
+        name: 'HistoryServiceAPI',
+        source: HistoryServiceAPI as ElodyDataSourceClass,
+        enabled: (environment) => !!environment.api.historyServiceUrl,
+      },
+    ],
+  });
 
-export type ElodyConfig = {
-  modules: Module[];
-  dataSources: ((
-    environment: Environment,
-    session: any,
-    cache: any,
-    clientIp: string,
-    clientOrigin: string | undefined,
-    tenantId?: string
-  ) => OptionalDataSources)[];
-  endpoints: ((app: Express, environment: Environment) => void)[];
-};
-
-const baseElodyElodyConfig: ElodyConfig = {
-  modules: [baseModule],
-  dataSources: [
-    (
-      environment: Environment,
-      session: any,
-      cache: any,
-      clientIp: string,
-      clientOrigin: string | undefined,
-      tenantId?: string
-    ) => {
-      return {
-        CollectionAPI: new CollectionAPI({
-          environment,
-          session,
-          cache,
-          clientIp,
-          clientOrigin,
-          context: { tenantId },
-        }),
-      };
-    },
-    (
-      environment: Environment,
-      session: any,
-      cache: any,
-      clientIp: string,
-      clientOrigin: string | undefined,
-      tenantId?: string
-    ) => {
-      return {
-        GraphqlAPI: new GraphqlAPI({
-          environment,
-          session,
-          cache,
-          context: { tenantId },
-        }),
-      };
-    },
-    (
-      environment: Environment,
-      session: any,
-      cache: any,
-      clientIp: string,
-      clientOrigin: string | undefined,
-      tenantId?: string
-    ) => {
-      if (!environment.api.historyServiceUrl) return {};
-      return {
-        HistoryServiceAPI: new HistoryServiceAPI({
-          environment,
-          session,
-          cache,
-          clientIp,
-          clientOrigin,
-          context: { tenantId },
-        }),
-      };
-    },
-  ],
-  endpoints: [],
-};
-
-export const addAdditionalOptionalDataSources = (
-  _environment: Environment
-) => {};
-
-export const createFullElodyConfig = (
-  customElodyConfig: ElodyConfig
-): ElodyConfig => {
-  const fullConfig = baseElodyElodyConfig;
-  fullConfig.modules.push(...customElodyConfig.modules);
-  fullConfig.dataSources.push(...customElodyConfig.dataSources);
-  fullConfig.endpoints.push(...customElodyConfig.endpoints);
-  return fullConfig;
-};
-
-export const getDataSourcesFromMapping = (
-  ElodyConfig: ElodyConfig,
+export const buildDataSources = (
+  dataSources: ElodyDataSource[],
   environment: Environment,
   session: any,
   cache: any,
   clientIp: string,
   clientOrigin: string | undefined,
-  tenantId: string
-): DataSources => {
-  const dataSourceArray = ElodyConfig.dataSources.map((mappingItem) =>
-    mappingItem(environment, session, cache, clientIp, clientOrigin, tenantId)
-  );
-  return dataSourceArray.reduce((acc, curr) => {
-    return { ...acc, ...curr };
-  }, {}) as DataSources;
-};
+  tenantId?: string
+): OptionalDataSources =>
+  Object.fromEntries(
+    dataSources
+      .filter((dataSource) => dataSource.enabled?.(environment) ?? true)
+      .map((dataSource) => [
+        dataSource.name,
+        new dataSource.source({
+          environment,
+          session,
+          cache,
+          clientIp,
+          clientOrigin,
+          context: { tenantId },
+        }),
+      ])
+  ) as OptionalDataSources;
 
 // Required data sources live in base. Optional ones (transcode, storage, ocr,
 // import, etc.) belong in extension modules and are never listed here.
@@ -151,43 +67,4 @@ export const isRequiredDataSources = (
   dataSources: OptionalDataSources
 ): dataSources is DataSources => {
   return findMissingRequiredDataSources(dataSources).length === 0;
-};
-
-export const generateElodyConfig = (
-  elodyModuleConfig: ElodyModuleConfig
-): ElodyConfig => {
-  const { dataSources, modules, endpoints = [] } = elodyModuleConfig;
-
-  if (!dataSources) return { modules, dataSources: [], endpoints };
-
-  const dataSourceKeys = Object.keys(dataSources);
-  const dataSourcesToInitialize = dataSourceKeys.map(
-    (dataSourceKey: string) => {
-      return (
-        environment: Environment,
-        session: any,
-        cache: any,
-        clientIp: string,
-        clientOrigin: string | undefined,
-        tenantId?: string
-      ) => {
-        return {
-          [dataSourceKey]: new dataSources[dataSourceKey]({
-            environment,
-            session,
-            cache,
-            clientIp,
-            clientOrigin,
-            context: { tenantId },
-          }),
-        };
-      };
-    }
-  );
-
-  return {
-    modules: modules,
-    dataSources: dataSourcesToInitialize,
-    endpoints,
-  };
 };

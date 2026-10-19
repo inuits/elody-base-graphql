@@ -14,7 +14,7 @@ import {
   evaluateAdvancedPermission,
   isEntityTypePermitted,
 } from '../helpers/permissions';
-import type { ModuleFeature } from '../helpers/moduleContributions';
+import type { ModuleFeature } from '../helpers/elodyModule';
 import type { LandingRedirect, Route } from '../routes/routesHelper';
 
 export type AppConfigRequestContext = {

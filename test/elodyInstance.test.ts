@@ -37,16 +37,16 @@ vi.mock('@as-integrations/express4', () => ({
 }));
 
 import { ElodyInstance } from '../elodyInstance';
+import { defineElodyModule, requireSettings } from '../helpers/elodyModule';
 
 const buildInstance = () =>
   new ElodyInstance({
-    customModuleConfig: { modules: [] },
     appConfig: {
       environment: 'production',
       api: { promUrl: 'no-prom' },
       features: { SEO: false },
     } as any,
-    customTranslations: {},
+    modules: [],
   });
 
 const layerNames = (app: any): string[] =>
@@ -90,60 +90,83 @@ describe('ElodyInstance.buildApp', () => {
   });
 });
 
-describe('ElodyInstance module contributions', () => {
-  const buildInstanceWith = (module: any, api: any = { promUrl: 'no-prom' }) =>
+describe('ElodyInstance modules', () => {
+  const buildInstanceWith = (modules: any[], api: any = { promUrl: 'no-prom' }) =>
     new ElodyInstance({
-      customModuleConfig: { modules: [module], dataSources: {} },
       appConfig: {
         environment: 'production',
         api,
         features: { SEO: false },
       } as any,
-      customTranslations: {},
+      modules,
     });
 
-  it('registers the data sources a module ships', async () => {
+  it('registers the base data sources and the ones each module ships', async () => {
     class ShippedAPI {
       constructor(public options: any) {}
     }
-    const instance: any = buildInstanceWith({
-      id: 'shippingModule',
-      elodyDataSources: { ShippedAPI },
-    });
+    const instance: any = buildInstanceWith([
+      defineElodyModule({
+        name: 'shippingModule',
+        dataSources: [{ name: 'ShippedAPI', source: ShippedAPI as any }],
+      }),
+    ]);
     await instance.buildApp();
 
     const dataSources = instance.buildDataSources({ session: {}, headers: {} });
     expect(dataSources.ShippedAPI).toBeInstanceOf(ShippedAPI);
+    expect(dataSources.CollectionAPI).toBeDefined();
+    expect(dataSources.GraphqlAPI).toBeDefined();
+  });
+
+  it('mounts the endpoints a module carries', async () => {
+    const app: any = await buildInstanceWith([
+      defineElodyModule({
+        name: 'clientModule',
+        endpoints: [
+          (app) =>
+            app.get('/client-endpoint', function clientEndpoint() {}),
+        ],
+      }),
+    ]).buildApp();
+
+    expect(
+      app._router.stack.some(
+        (layer: any) => layer.route?.path === '/client-endpoint'
+      )
+    ).toBe(true);
   });
 
   it('starts when a module requirement is met by the app config', async () => {
     const instance = buildInstanceWith(
-      {
-        id: 'importModule',
-        elodyRequirements: {
-          environment: {
-            'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
-          },
-        },
-      },
+      [
+        defineElodyModule({
+          name: 'importModule',
+          initialize: (environment) =>
+            requireSettings(environment, {
+              'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
+            }),
+        }),
+      ],
       { promUrl: 'no-prom', fileSystemImporterServiceUrl: 'http://importer' }
     );
 
     await expect(instance.buildApp()).resolves.toBeDefined();
   });
 
-  it('refuses to start when a module needs a setting that is not set', async () => {
-    const instance = buildInstanceWith({
-      id: 'importModule',
-      elodyRequirements: {
-        environment: {
-          'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
-        },
-      },
-    });
+  it('refuses to start when a module fails to initialize', async () => {
+    const instance = buildInstanceWith([
+      defineElodyModule({
+        name: 'importModule',
+        initialize: (environment) =>
+          requireSettings(environment, {
+            'api.fileSystemImporterServiceUrl': 'FILE_SYSTEM_IMPORTER_URL',
+          }),
+      }),
+    ]);
 
     await expect(instance.buildApp()).rejects.toThrow(
-      'importModule requires settings that are not set: FILE_SYSTEM_IMPORTER_URL'
+      'importModule: settings are not set: FILE_SYSTEM_IMPORTER_URL'
     );
   });
 });

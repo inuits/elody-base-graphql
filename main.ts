@@ -56,18 +56,31 @@ import type {
   CollectionAPIRelation,
 } from './types/collectionAPITypes';
 import { fetchWithTokenRefresh } from './endpoints/fetchWithToken';
-import { ElodyModuleConfig } from './helpers/elodyModuleHelpers';
+import {
+  defineElodyModule,
+  requireSettings,
+} from './helpers/elodyModule';
+import type {
+  ElodyModule,
+  ElodyModuleDefinition,
+  ElodyDataSource,
+  ElodyDataSourceClass,
+  ElodyEndpoint,
+} from './helpers/elodyModule';
 import { setId, setType } from './parsers/entity';
 import { createCspMiddleware } from './helpers/contentSecurityPolicyHelper';
 import { ElodyInstance, ElodyInstanceOptions } from './elodyInstance';
 import { TranscodeService } from './sources/transcode';
 
-const start = (options: ElodyInstanceOptions) =>
-  new ElodyInstance(options).start();
-
-export { ElodyInstance };
-export type { ElodyInstanceOptions };
-export default start;
+export { ElodyInstance, defineElodyModule, requireSettings };
+export type {
+  ElodyInstanceOptions,
+  ElodyModule,
+  ElodyModuleDefinition,
+  ElodyDataSource,
+  ElodyDataSourceClass,
+  ElodyEndpoint,
+};
 export type {
   ContextValue,
   DataSources,
@@ -78,7 +91,6 @@ export type {
   CollectionAPIMediaFile,
   CollectionAPIMetadata,
   CollectionAPIRelation,
-  ElodyModuleConfig,
   Route,
   RouteMeta,
   RouteQueries,
