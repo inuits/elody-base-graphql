@@ -87,6 +87,7 @@ export const baseSchema = gql`
     PERCENT
     SECONDS_DEFAULT
     VOLT
+    BYTES
     PX
     IMAGE
   }
