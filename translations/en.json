@@ -119,6 +119,7 @@
       "selection-toolbar": "Actions on selection",
       "selected-on-other-pages": "{count} selected on other pages",
       "action-for-selection": "{action} ({count} selected)",
+      "nothing-selected": "Selection: nothing selected",
       "selection-count": "Selection: {count}",
       "clear-selection": "Clear selection",
       "select-page": "Select page",
@@ -738,6 +739,15 @@
     "library": {
       "new": "New",
       "no-media": "No media",
+      "view-mode": "View",
+      "view-modes": {
+        "list": "List view",
+        "grid": "Grid view",
+        "table": "Table view",
+        "media": "Media view",
+        "map": "Map view",
+        "pipeline": "Pipeline view"
+      },
       "result-count": "{count} result | {count} results",
       "search": "Search",
       "simple-search-placeholder": "Search in {entity}",
