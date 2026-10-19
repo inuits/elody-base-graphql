@@ -697,9 +697,11 @@
     "pagination": {
       "page": "page",
       "label": "Pagination",
+      "first": "First page",
+      "last": "Last page",
+      "page-number": "Page number",
       "previous": "Previous page",
       "next": "Next page",
-      "per-page": "{count} per page",
       "page-size": "Results per page",
       "of": "of",
       "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."

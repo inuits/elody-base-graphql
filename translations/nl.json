@@ -686,9 +686,11 @@
     "pagination": {
       "page": "pagina",
       "label": "Paginering",
+      "first": "Eerste pagina",
+      "last": "Laatste pagina",
+      "page-number": "Paginanummer",
       "previous": "Vorige pagina",
       "next": "Volgende pagina",
-      "per-page": "{count} per pagina",
       "page-size": "Resultaten per pagina",
       "of": "van",
       "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
