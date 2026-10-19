@@ -708,6 +708,8 @@
       "capped-pages-tooltip": "There are more pages than shown. Refine your search to narrow down the results."
     },
     "saved-searches": {
+      "remove-applied": "Saved search: {name}, remove",
+      "modified": "Modified",
       "title": "Saved searches",
       "new": "Save as new",
       "save-changes": "Save changes",

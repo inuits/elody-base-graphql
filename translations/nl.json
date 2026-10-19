@@ -697,6 +697,8 @@
       "capped-pages-tooltip": "Er zijn meer pagina's dan getoond. Verfijn je zoekopdracht om de resultaten te beperken."
     },
     "saved-searches": {
+      "remove-applied": "Opgeslagen zoekopdracht: {name}, verwijderen",
+      "modified": "Gewijzigd",
       "title": "Opgeslagen zoekopdrachten",
       "new": "Opslaan als nieuw",
       "save-changes": "Wijzigingen opslaan",
