@@ -1,10 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
-  collectModuleFeatures,
-  collectModuleInputFields,
-  collectModulePermissions,
-} from '../helpers/moduleContributions';
-import {
   resolveModuleFeatures,
   resolveReadableSimpleSearchTypes,
 } from '../endpoints/appConfigEndpoint';
@@ -15,53 +10,6 @@ const savedSearchPermission = {
   uri: '/entities',
   body: { type: 'saved_search' },
 };
-
-const moduleWithContributions = {
-  id: 'savedSearchModule',
-  elodyPermissions: { 'create:saved_search': savedSearchPermission },
-  elodyFeatures: {
-    savedSearch: { enabled: true, permission: 'create:saved_search' },
-  },
-} as any;
-
-const plainModule = { id: 'importModule' } as any;
-
-const privacyField = { type: 'dropdown', options: [] } as any;
-
-describe('collectModulePermissions', () => {
-  it('gathers the permissions of every installed module', () => {
-    expect(
-      collectModulePermissions([plainModule, moduleWithContributions])
-    ).toEqual({ 'create:saved_search': savedSearchPermission });
-  });
-
-  it('is empty when no installed module contributes any', () => {
-    expect(collectModulePermissions([plainModule])).toEqual({});
-  });
-});
-
-describe('collectModuleFeatures', () => {
-  it('reports a feature only while its module is installed', () => {
-    expect(collectModuleFeatures([moduleWithContributions])).toEqual({
-      savedSearch: { enabled: true, permission: 'create:saved_search' },
-    });
-    expect(collectModuleFeatures([plainModule])).toEqual({});
-  });
-});
-
-describe('collectModuleInputFields', () => {
-  it('gathers the input fields of every installed module', () => {
-    const moduleWithField = {
-      id: 'savedSearchModule',
-      elodyInputFields: { privacyTypeField: privacyField },
-    } as any;
-
-    expect(collectModuleInputFields([plainModule, moduleWithField])).toEqual({
-      privacyTypeField: privacyField,
-    });
-    expect(collectModuleInputFields([plainModule])).toEqual({});
-  });
-});
 
 describe('resolveModuleFeatures', () => {
   const request = { session: {}, headers: {}, ip: '10.0.0.1' } as any;

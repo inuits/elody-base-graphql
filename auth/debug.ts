@@ -25,14 +25,3 @@ export const logTime = () => {
     console.log(`\n\n[${new Date().toDateString()} ${new Date().toLocaleTimeString()}]`)
   }
 }
-
-export const logRefreshConfig = (_endpoint: string, _body: URLSearchParams) => {
-  if (envConfig.tokenLogging == 'true') {
-    const savedBody = _body
-    logTime()
-    console.log(`\n Refresh token endpoint "${_endpoint}"`)
-    savedBody.delete(`client_secret`)
-    console.log(`\n Refresh body `, savedBody)
-    console.log(`\n`);
-  }
-}

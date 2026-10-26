@@ -14,7 +14,7 @@ import {
   evaluateAdvancedPermission,
   isEntityTypePermitted,
 } from '../helpers/permissions';
-import type { ModuleFeature } from '../helpers/moduleContributions';
+import type { ModuleFeature } from '../helpers/elodyModule';
 import type { LandingRedirect, Route } from '../routes/routesHelper';
 
 export type AppConfigRequestContext = {
@@ -80,6 +80,8 @@ export const getConfig = (config: Environment) => {
     GLITCH_TIP_ENABLED: config.glitchtipEnabled,
     GLITCH_TIP_DSN_FRONTEND: config.glitchtipDsnFrontend,
     NOMAD_NAMESPACE: config.nomadNamespace,
+    browserTracing: config.browserTracing,
+    usageAnalytics: config.usageAnalytics,
     DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT || '',
     skeletonLayouts: config.skeletonLayouts,
   };

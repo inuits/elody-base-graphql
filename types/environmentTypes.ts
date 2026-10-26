@@ -1,5 +1,19 @@
+import type { TelemetryTargets } from '../endpoints/telemetryEndpoint';
 import { Entitytyping } from '../generated-types/type-defs';
 import { Route } from '../routes/routesHelper';
+
+export type BrowserTracing = {
+  tracesUrl: string;
+  serviceName: string;
+  apiKey?: string;
+  // repeated on every browser span, e.g. service.namespace (the client)
+  attributes?: Record<string, string>;
+};
+
+export type UsageAnalytics = {
+  clientId: string;
+  apiUrl: string;
+};
 
 export interface Environment {
   apollo: {
@@ -124,6 +138,10 @@ export interface Environment {
   glitchtipDsn: string;
   glitchtipDsnFrontend: string;
   nomadNamespace: string;
+  browserTracing?: BrowserTracing;
+  usageAnalytics?: UsageAnalytics;
+  // where the PWA's telemetry goes on to, inside the network (endpoints/telemetryEndpoint.ts)
+  telemetry?: TelemetryTargets;
   ignorePermissions: boolean;
   maxUploadSize: number;
   bulkSelectAllSizeLimit: number;
@@ -250,6 +268,8 @@ export interface FullyOptionalEnvironmentInput {
   glitchtipDsn?: string;
   glitchtipDsnFrontend?: string;
   nomadNamespace?: string;
+  browserTracing?: BrowserTracing;
+  usageAnalytics?: UsageAnalytics;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
   bulkSelectAllSizeLimit?: number;

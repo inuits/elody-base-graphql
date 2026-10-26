@@ -314,67 +314,6 @@ export const baseResolver: Resolvers<ContextValue> = {
 
       return entitiesResolverMapping[searchInputType!!]!!();
 
-      // const typeFilters = advancedFilterInputs.filter(
-      //   (advancedFilter) => advancedFilter.type === AdvancedFilterTypes.Type
-      // );
-      // let entityTypes =
-      //   typeFilters.length <= 0 ? [type!!] : typeFilters.map((filter: any) => filter.value);
-      // if (!Array.isArray(entityTypes)) entityTypes = [entityTypes];
-      // for (const entityType of entityTypes as Entitytyping[]) {
-      //   let entitiesIteration: EntitiesResults = {
-      //     results: [],
-      //     sortKeys: [],
-      //     count: 0,
-      //     limit: 0,
-      //   };
-      //   const filtersIteration =
-      //     entityTypes.length <= 1
-      //       ? advancedFilterInputs
-      //       : determineAdvancedFiltersForIteration(
-      //           entityType,
-      //           advancedFilterInputs
-      //         );
-      //   if (
-      //     advancedFilterInputs?.length >= 0 &&
-      //     (searchInputType === SearchInputType.AdvancedInputMediaFilesType ||
-      //       entityType === Entitytyping.Mediafile)
-      //   ) {
-      //     entitiesIteration =
-      //       await dataSources.CollectionAPI.GetAdvancedEntities(
-      //         Entitytyping.Mediafile,
-      //         limit || 20,
-      //         skip || 0,
-      //         filtersIteration,
-      //         searchValue || { value: '' }
-      //       );
-      //   } else if (
-      //     searchInputType === SearchInputType.AdvancedInputType &&
-      //     advancedFilterInputs?.length
-      //   ) {
-      //     entitiesIteration =
-      //       await dataSources.CollectionAPI.GetAdvancedEntities(
-      //         entityType,
-      //         limit || 20,
-      //         skip || 0,
-      //         filtersIteration,
-      //         searchValue || { value: '' }
-      //       );
-      //   } else if (searchInputType === SearchInputType.AdvancedInputType) {
-      //     entitiesIteration = await dataSources.CollectionAPI.getEntities(
-      //       limit || 20,
-      //       skip || 0,
-      //       searchValue || { value: '' },
-      //       entityType
-      //     );
-      //   }
-      //   if (entities && entitiesIteration) {
-      //     entities.results!!.push(...entitiesIteration.results!!);
-      //     entities.sortKeys!!.push(...(entitiesIteration.sortKeys || []));
-      //     entities.count!! += entitiesIteration.count!!;
-      //     entities.limit!! += entitiesIteration.limit!!;
-      //   }
-      // }
-      // return entities!!;
     },
     EntitiesHistory: async (
       _source,
@@ -701,13 +640,6 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     GetRepetitiveForm: async (_source: any, _args, { dataSources }) => {
       return {} as RepetitiveForm;
-    },
-    GetEntityDetailContextMenuActions: async (
-      _source,
-      _args,
-      { dataSources }
-    ) => {
-      return {} as ContextMenuActions;
     },
     GeoFilterForMap: async (_source, _args, { dataSources }) => {
       return {} as AdvancedFilters;

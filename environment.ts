@@ -3,6 +3,9 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
+import { browserTracingFromEnv } from './helpers/browserTracing';
+import { usageAnalyticsFromEnv } from './helpers/usageAnalytics';
+import { telemetryTargetsFromEnv } from './endpoints/telemetryEndpoint';
 
 export let currentEnvironment: Environment | undefined = undefined;
 
@@ -85,9 +88,7 @@ export const baseEnvironment: Environment = {
       csvExportServiceEnabled:
         process.env.CSV_EXPORTER_ENABLED === 'true' || false,
     },
-    fileSystemImporterServiceUrl:
-      process.env.FILE_SYSTEM_IMPORTER_URL ||
-      'http://filesystem-importer-service:5000',
+    fileSystemImporterServiceUrl: process.env.FILE_SYSTEM_IMPORTER_URL,
     iiifUrl: process.env.IMAGE_API_URL || 'http://cantaloupe:8182',
     iiifUrlFrontend:
       process.env.IMAGE_API_URL_EXT || 'http://cantaloupe.elody.localhost:8000',
@@ -142,6 +143,9 @@ export const baseEnvironment: Environment = {
   glitchtipDsn: process.env.GLITCH_TIP_DSN || '',
   glitchtipDsnFrontend: process.env.GLITCH_TIP_DSN_FRONTEND || '',
   nomadNamespace: process.env.NOMAD_NAMESPACE || '',
+  browserTracing: browserTracingFromEnv(process.env),
+  usageAnalytics: usageAnalyticsFromEnv(process.env),
+  telemetry: telemetryTargetsFromEnv(process.env),
   ignorePermissions: false,
   maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250 * 1024000,
   bulkSelectAllSizeLimit: 1000,

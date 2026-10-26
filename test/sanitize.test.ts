@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { deepSanitize, sanitizeRequestBody } from '../utilities/sanitize';
+import { deepSanitize, sanitizeGraphqlVariables } from '../utilities/sanitize';
 
 describe('deepSanitize', () => {
   describe('when given a primitive string', () => {
@@ -106,6 +106,41 @@ describe('deepSanitize', () => {
     });
   });
 
+  describe('when the string holds no dangerous markup', () => {
+    it.each([
+      ['a comparison', 'x < 5 and y > 3'],
+      ['an unclosed angle bracket', 'pa<ss&word'],
+      ['an ampersand', 'Tom & Jerry'],
+      ['a JSON string', '{"a":"<b>"}'],
+      [
+        'an AICAP word tag',
+        '<p>Hi <elody-w type="word" lemma="rex" data-entity-id="abc">regis</elody-w></p>',
+      ],
+    ])('returns %s byte for byte', (_label, value) => {
+      expect(deepSanitize(value)).toBe(value);
+    });
+  });
+
+  describe('when the string holds dangerous markup', () => {
+    it('keeps AICAP word tags while removing the script', () => {
+      const dirty =
+        '<p><elody-w type="word" lemma="rex" onclick="x()">regis</elody-w><script>x</script></p>';
+      expect(deepSanitize(dirty)).toBe(
+        '<p><elody-w type="word" lemma="rex">regis</elody-w></p>'
+      );
+    });
+
+    it('removes a javascript: URL hidden behind whitespace', () => {
+      expect(deepSanitize('<a href=" java\tscript:alert(1)">c</a>')).toBe(
+        '<a>c</a>'
+      );
+    });
+
+    it('removes an event handler on an unknown element', () => {
+      expect(deepSanitize('<foo onclick=alert(1)>t</foo>')).toBe('t');
+    });
+  });
+
   describe('when given edge cases', () => {
     it('returns null when given null', () => {
       expect(deepSanitize(null)).toBeNull();
@@ -141,71 +176,39 @@ describe('deepSanitize', () => {
   });
 });
 
-describe('sanitizeRequestBody', () => {
-  let req: any;
-  let res: any;
-  let next: any;
-  beforeEach(() => {
-    req = {};
-    res = {};
-    next = vi.fn();
+describe('sanitizeGraphqlVariables', () => {
+  const next = vi.fn();
+  beforeEach(() => next.mockClear());
+
+  it('sanitizes the GraphQL variables', () => {
+    const req: any = {
+      body: { variables: { comment: 'a <script>alert(1)</script>b' } },
+    };
+    sanitizeGraphqlVariables(req, {}, next);
+    expect(req.body.variables.comment).toBe('a b');
   });
 
-  describe('when a request contains a body', () => {
-    it('sanitizes the req.body object', () => {
-      req.body = {
-        comment: 'This is a <script>alert("XSS")</script> comment.',
-        author: 'User',
-      };
-
-      sanitizeRequestBody(req, res, next);
-
-      expect(req.body.comment).toBe('This is a  comment.');
-      expect(req.body.author).toBe('User');
+  it('leaves the query text and other body fields alone', () => {
+    const query = 'query Q { a(where: "<script>") }';
+    const req: any = {
+      body: { query, operationName: 'Q', variables: { a: 'x < 5' } },
+    };
+    sanitizeGraphqlVariables(req, {}, next);
+    expect(req.body).toEqual({
+      query,
+      operationName: 'Q',
+      variables: { a: 'x < 5' },
     });
   });
 
-  describe('when a request contains query parameters', () => {
-    it('sanitizes the req.query object', () => {
-      req.query = {
-        search: 'looking for <img src=x onerror=alert(1)>',
-        filter: 'all',
-      };
-
-      sanitizeRequestBody(req, res, next);
-
-      expect(req.query.search).toBe('looking for <img src="x">');
-      expect(req.query.filter).toBe('all');
-    });
+  it('passes requests without variables through', () => {
+    const req: any = { query: { q: '<script>' } };
+    sanitizeGraphqlVariables(req, {}, next);
+    expect(req).toEqual({ query: { q: '<script>' } });
   });
 
-  describe('when a request contains both body and query', () => {
-    it('sanitizes both req.body and req.query', () => {
-      req.body = { content: '<p onload="danger()">Hello</p>' };
-      req.query = { redirect: 'Click <a href="javascript:alert(\'bad\')">here</a>' };
-
-      sanitizeRequestBody(req, res, next);
-
-      expect(req.body.content).toBe('<p>Hello</p>');
-      expect(req.query.redirect).toBe('Click <a>here</a>');
-    });
-  });
-
-  describe('when a request has no body or query', () => {
-    it('does not modify the request object', () => {
-      const originalReq = {};
-      req = { ...originalReq };
-
-      sanitizeRequestBody(req, res, next);
-
-      expect(req).toEqual(originalReq);
-    });
-  });
-
-  describe('middleware behavior', () => {
-    it('always calls the next middleware function exactly once', () => {
-      sanitizeRequestBody(req, res, next);
-      expect(next).toHaveBeenCalledTimes(1);
-    });
+  it('calls next exactly once', () => {
+    sanitizeGraphqlVariables({ body: {} }, {}, next);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 });

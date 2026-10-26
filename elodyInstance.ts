@@ -15,12 +15,8 @@ import {
   setTypeCollectionMapping,
   getClientOrigin,
 } from './helpers/helpers';
-import {
-  Collection,
-  InputField,
-  PermissionRequestInfo,
-} from './generated-types/type-defs';
-import { ContextValue, FormattersConfig, TypeUrlMapping } from './types';
+import { InputField } from './generated-types/type-defs';
+import { ContextValue } from './types';
 import {
   createElodyEnvironment,
   getCurrentEnvironment,
@@ -32,60 +28,40 @@ import {
   Environment,
   FullyOptionalEnvironmentInput,
 } from './types/environmentTypes';
+import { applyTelemetryEndpoint } from './endpoints/telemetryEndpoint';
+import { operationNamePlugin, telemetryMiddleware } from './requestTelemetry';
 import { expressMiddleware } from '@as-integrations/express4';
 import { configureFrontendForEnvironment } from './endpoints/frontendEndpoint';
 import { defaultElodyEndpointMapping } from './sources/defaultElodyEndpointMapping';
 import { createMongoConnectionString } from './sources/mongo';
+import { sanitizeGraphqlVariables } from './utilities/sanitize';
 import {
   isRequiredDataSources,
   findMissingRequiredDataSources,
-  createFullElodyConfig,
-  getDataSourcesFromMapping,
-  ElodyConfig,
-  addAdditionalOptionalDataSources,
-  generateElodyConfig,
-  ElodyModuleConfig,
+  buildDataSources,
+  createBaseElodyModule,
 } from './helpers/elodyModuleHelpers';
 import {
-  collectModuleFeatures,
-  collectModuleInputFields,
-  collectModulePermissions,
-} from './helpers/moduleContributions';
+  assembleElodyModules,
+  AssembledElodyModules,
+  ElodyModule,
+  initializeElodyModules,
+} from './helpers/elodyModule';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import depthLimit from 'graphql-depth-limit';
 import { enableCors } from './helpers/corsHelper';
 import { enableContentSecurityPolicy } from './helpers/contentSecurityPolicyHelper';
 
 export interface ElodyInstanceOptions {
-  customModuleConfig: ElodyModuleConfig;
   appConfig: FullyOptionalEnvironmentInput;
-  customTranslations: { [key: string]: object };
-  customEndpoints?: ((app: any, environment: Environment) => void)[];
-  customInputFields?: { [key: string]: InputField };
-  customTypeCollectionMapping?: { [key: string]: Collection };
-  customPermissions?: { [key: string]: PermissionRequestInfo };
-  customFormatters?: FormattersConfig;
-  customTypeUrlMapping?: TypeUrlMapping;
-  customTypePillLabelMapping?: { [key: string]: string[] };
-  customFilterMatchers?: { [key: string]: string[] };
+  modules: ElodyModule[];
 }
 
-type ResolvedOptions = ElodyInstanceOptions &
-  Required<
-    Pick<
-      ElodyInstanceOptions,
-      | 'customEndpoints'
-      | 'customPermissions'
-      | 'customFormatters'
-      | 'customTypeUrlMapping'
-    >
-  >;
-
 export class ElodyInstance {
-  private options: ResolvedOptions;
+  private options: ElodyInstanceOptions;
+  private modules: ElodyModule[];
+  private assembled!: AssembledElodyModules;
   private environment!: Environment;
-  private elodyConfig!: ElodyConfig;
-  private permissions!: { [key: string]: PermissionRequestInfo };
   private application!: Application;
   private app!: Express;
   private httpServer!: http.Server;
@@ -93,16 +69,8 @@ export class ElodyInstance {
   private viteServer?: ViteDevServer;
 
   constructor(options: ElodyInstanceOptions) {
-    this.options = {
-      ...options,
-      customEndpoints: options.customEndpoints ?? [],
-      customPermissions: options.customPermissions ?? {},
-      customFormatters: options.customFormatters ?? {},
-      customTypeUrlMapping: options.customTypeUrlMapping ?? {
-        mapping: {},
-        reverseMapping: {},
-      },
-    };
+    this.options = options;
+    this.modules = [createBaseElodyModule(), ...options.modules];
   }
 
   async start(): Promise<void> {
@@ -126,6 +94,8 @@ export class ElodyInstance {
     this.applyExpressMiddleware();
     await this.apolloServer.start();
     this.applySessionMiddleware();
+    // the PWA's telemetry: after the session, which says who is logged in
+    applyTelemetryEndpoint(this.app, this.environment.telemetry ?? {});
     this.applyGraphqlEndpoint();
     this.applyDefaultEndpoints();
     this.applyModuleEndpoints();
@@ -142,23 +112,17 @@ export class ElodyInstance {
 
   private configureEnvironment() {
     setCurrentEnvironment(createElodyEnvironment(this.options.appConfig));
-    if (this.options.customTypeCollectionMapping) {
-      setTypeCollectionMapping(this.options.customTypeCollectionMapping);
-    }
     this.environment = getCurrentEnvironment();
   }
 
   private configureApplication() {
-    this.elodyConfig = createFullElodyConfig(
-      generateElodyConfig(this.options.customModuleConfig)
-    );
-    this.permissions = {
-      ...collectModulePermissions(this.elodyConfig.modules),
-      ...this.options.customPermissions,
-    };
-    addAdditionalOptionalDataSources(this.environment);
+    initializeElodyModules(this.modules, this.environment);
+    this.assembled = assembleElodyModules(this.modules);
+    setTypeCollectionMapping(this.assembled.typeCollectionMapping);
 
-    this.application = createApplication({ modules: this.elodyConfig.modules });
+    this.application = createApplication({
+      modules: this.assembled.graphqlModules,
+    });
 
     if (this.environment.glitchtipEnabled) {
       Sentry.init({
@@ -215,7 +179,7 @@ export class ElodyInstance {
         depthLimit(this.environment?.apollo.maxQueryDepth || 15),
       ],
       introspection: this.environment?.apollo.introspection || false,
-      plugins: [authExtensionPlugin],
+      plugins: [authExtensionPlugin, operationNamePlugin],
       nodeEnv: this.environment.environment,
       gateway: {
         async load() {
@@ -259,8 +223,8 @@ export class ElodyInstance {
   }
 
   private buildDataSources(req: any) {
-    return getDataSourcesFromMapping(
-      this.elodyConfig,
+    return buildDataSources(
+      this.assembled.dataSources,
       this.environment,
       { ...req.session },
       this.apolloServer.cache,
@@ -273,6 +237,8 @@ export class ElodyInstance {
   private applyGraphqlEndpoint() {
     this.app.use(
       this.environment.apollo.graphqlPath,
+      telemetryMiddleware,
+      sanitizeGraphqlVariables,
       expressMiddleware(this.apolloServer, {
         context: async ({ req, res }) => {
           if (checkRequestContentType(req, res)) return {} as ContextValue;
@@ -290,9 +256,9 @@ export class ElodyInstance {
 
           return {
             dataSources,
-            customPermissions: this.permissions,
-            customFormatters: this.options.customFormatters,
-            customFilterMatchers: this.options.customFilterMatchers,
+            customPermissions: this.assembled.permissions,
+            customFormatters: this.assembled.formatters,
+            customFilterMatchers: this.assembled.filterMatchers,
             session,
             parentEntityId: req.headers['x-parent-entity-id'] as string,
           };
@@ -319,12 +285,12 @@ export class ElodyInstance {
       configsEndoint: [
         this.app,
         this.environment,
-        this.options.customTranslations,
-        this.options.customTypeUrlMapping,
+        this.assembled.translations,
+        this.assembled.typeUrlMapping,
         {
           buildDataSources: (req: any) => this.buildDataSources(req),
-          permissions: this.permissions,
-          features: collectModuleFeatures(this.elodyConfig.modules),
+          permissions: this.assembled.permissions,
+          features: this.assembled.features,
         },
       ],
     };
@@ -342,7 +308,9 @@ export class ElodyInstance {
   }
 
   private applyModuleEndpoints() {
-    this.elodyConfig.endpoints.forEach((fn) => fn(this.app, this.environment));
+    this.assembled.endpoints.forEach((applyEndpoint) =>
+      applyEndpoint(this.app, this.environment)
+    );
   }
 
   private applyViewEngineAndOptionalEndpoints() {
@@ -356,22 +324,13 @@ export class ElodyInstance {
       applyPromEndpoint(this.app, this.environment.api.promUrl);
     }
 
-    this.options.customEndpoints.forEach((customEndpoint) => {
-      customEndpoint(this.app, this.environment);
-    });
+    this.addCustomFieldsToBaseFields(this.assembled.inputFields);
 
-    this.addCustomFieldsToBaseFields({
-      ...collectModuleInputFields(this.elodyConfig.modules),
-      ...this.options.customInputFields,
-    });
-
-    if (this.options.customTypePillLabelMapping) {
-      Object.entries(this.options.customTypePillLabelMapping).forEach(
-        ([key, value]) => {
-          baseTypePillLabelMapping[key] = value;
-        }
-      );
-    }
+    Object.entries(this.assembled.typePillLabelMapping).forEach(
+      ([key, value]) => {
+        baseTypePillLabelMapping[key] = value;
+      }
+    );
   }
 
   private addCustomFieldsToBaseFields(customInputFields: {

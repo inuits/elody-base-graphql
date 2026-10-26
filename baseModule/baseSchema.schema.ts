@@ -87,6 +87,7 @@ export const baseSchema = gql`
     PERCENT
     SECONDS_DEFAULT
     VOLT
+    BYTES
     PX
     IMAGE
   }
@@ -2842,7 +2843,6 @@ export const baseSchema = gql`
     ): [PermissionMapping!]!
     GetDynamicForm: Form!
     GetRepetitiveForm: RepetitiveForm
-    GetEntityDetailContextMenuActions: ContextMenuActions!
     GeoFilterForMap: AdvancedFilters
     FilterMatcherMapping(keys: [String!]): [FilterMatchers!]!
     EntityTypeFilters(type: String!): Entity!

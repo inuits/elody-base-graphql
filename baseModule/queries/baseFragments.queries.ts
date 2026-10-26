@@ -214,17 +214,6 @@ export const baseFragments = gql`
     fromRelationType
   }
 
-  fragment metadataRelation on MetadataRelation {
-    key
-    value
-    label
-    type
-    metadataOnRelation {
-      key
-      value
-    }
-  }
-
   fragment entityHistoryVersionList on EntityViewElements {
     history: entityListElement {
       label(input: "panel-labels.history")
@@ -277,16 +266,6 @@ export const baseFragments = gql`
         local_field
       }
     }
-  }
-
-  fragment filterOptionsMappingFields on FilterOptionsMappingType {
-    label
-    value
-  }
-
-  fragment limitConfigFields on AdvancedFilterLimitConfigType {
-    optionsLimit
-    facetsLimit
   }
 
   fragment bulkOperationModal on BulkOperationModal {
@@ -455,10 +434,4 @@ export const baseFragments = gql`
     }
   }
 
-  fragment entityPickerSearchConfigFragment on EntityPickerSearchConfig {
-    mode
-    metadataKeys
-    acceptedTypes
-    staticFilters
-  }
 `;

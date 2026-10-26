@@ -32,15 +32,6 @@ export interface ContextValue {
   customFilterMatchers?: Record<string, string[]>;
   parentEntityId?: string;
 }
-// TODO: Remove if unused
-export type filter = {
-  key: string;
-  label: string;
-  type: string;
-  options?: Maybe<MetadataFieldOption>[];
-  isRelation?: boolean;
-};
-
 type Filters = {
   filters: Record<string, Array<AdvancedFilter>>;
 };
