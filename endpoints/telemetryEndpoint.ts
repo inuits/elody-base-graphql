@@ -79,7 +79,8 @@ const forwardTo =
       const response = await fetchImpl(target(req), {
         method: 'POST',
         headers,
-        body: bodyOf(req),
+        // a Buffer is not a BodyInit under @types/node 22.20+ (ArrayBufferLike)
+        body: new Uint8Array(bodyOf(req)),
       });
       res.status(response.status);
       const type = response.headers.get('content-type');
