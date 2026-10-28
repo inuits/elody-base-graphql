@@ -771,11 +771,15 @@
       "make-download": "Maak een download van bestanden",
       "edit-csv": "Update metadata met CSV",
       "delete-entity-window": "Verwijder {0}",
-      "create-share-link": "Maak share link"
+      "create-share-link": "Maak share link",
+      "breadcrumb": "Kruimelpad",
+      "breadcrumb-history": "Eerdere pagina's"
     },
     "entity-navigation": {
       "open-previous": "Open vorige",
-      "open-next": "Open volgende"
+      "open-next": "Open volgende",
+      "position": "{index} van {total}",
+      "position-label": "Positie in de resultatenlijst"
     },
     "upload-fields": {
       "labels": {

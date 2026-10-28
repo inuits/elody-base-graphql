@@ -783,11 +783,15 @@
       "make-download": "Make a download of files",
       "edit-csv": "Update metadata with CSV",
       "delete-entity-window": "Delete {0}",
-      "create-share-link": "Create share link"
+      "create-share-link": "Create share link",
+      "breadcrumb": "Breadcrumb",
+      "breadcrumb-history": "Earlier pages"
     },
     "entity-navigation": {
       "open-previous": "Open previous",
-      "open-next": "Open next"
+      "open-next": "Open next",
+      "position": "{index} of {total}",
+      "position-label": "Position in the result list"
     },
     "upload-fields": {
       "labels": {
