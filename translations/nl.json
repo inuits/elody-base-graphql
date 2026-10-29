@@ -77,7 +77,8 @@
         "add-entry": "Voeg item toe",
         "next": "Volgende stap",
         "previous": "Vorige stap",
-        "create-entity-from-dropdown": "Maak \"{0}\" aan"
+        "create-entity-from-dropdown": "Maak \"{0}\" aan",
+        "undo": "Ongedaan maken"
       },
       "progress-steps": {
         "actions": {
@@ -936,7 +937,9 @@
       "save-and-close": "Bewaar en sluit",
       "finish-current-first": "Rond eerst het huidige item af of ga terug",
       "item-complete": "Dit item is klaar. Kies Bewaar en sluit om af te ronden.",
-      "rail-empty": "Nog niets aangemaakt."
+      "rail-empty": "Nog niets aangemaakt.",
+      "undo-item": "{item} ongedaan maken",
+      "undo-failed-title": "Ongedaan maken mislukt"
     },
     "pipeline": {
       "fit": "Passend",

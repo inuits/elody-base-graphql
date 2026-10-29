@@ -77,7 +77,8 @@
         "add-more": "Add more",
         "next": "Next step",
         "previous": "Previous step",
-        "create-entity-from-dropdown": "Create: \"{0}\""
+        "create-entity-from-dropdown": "Create: \"{0}\"",
+        "undo": "Undo"
       },
       "progress-steps": {
         "validate": "CSV",
@@ -950,7 +951,9 @@
       "save-and-close": "Save and close",
       "finish-current-first": "Finish or go back from the current item first",
       "item-complete": "This item is complete. Save and close to finish.",
-      "rail-empty": "Nothing created yet."
+      "rail-empty": "Nothing created yet.",
+      "undo-item": "Undo {item}",
+      "undo-failed-title": "Undo failed"
     },
     "pipeline": {
       "fit": "Fit",
