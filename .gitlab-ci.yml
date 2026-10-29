@@ -8,9 +8,9 @@ include:
     file: 'pipelines/applications/graphql-module-pipeline.yml'
     ref: 'v4.20.0'
 
-# A `beta/<name>` branch publishes <version>-<name>.<pipeline iid> under the
-# `beta-<name>` dist-tag; clients opt in with "base-graphql": "beta-<name>".
-# `latest` stays master-only.
+# A `beta/<name>` branch publishes its package.json version, which must be a
+# prerelease (e.g. 0.11.0-<name>.0), under the `beta-<name>` dist-tag; clients
+# opt in with "base-graphql": "beta-<name>". `latest` stays master-only.
 workflow:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
@@ -27,9 +27,18 @@ build-beta-job:
   script:
     - echo //nexus.inuits.io/repository/:_authToken=${NPM_CONFIG__AUTH_TOKEN} > ~/.npmrc
     - npm install -g pnpm@${PNPM_VERSION}
-    - BASE_VERSION=$(node -p "require('./package.json').version")
-    - npm version --no-git-tag-version "${BASE_VERSION}-${CI_COMMIT_REF_SLUG#beta-}.${CI_PIPELINE_IID}"
-    - mkdir -p ./generated-types
-    - pnpm exec graphql-codegen --config codegen.ci.ts
-    - pnpm build
-    - pnpm publish --tag "${CI_COMMIT_REF_SLUG}" --no-git-checks
+    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
+    - |
+      case "$NPM_PACKAGE_VERSION" in
+        *-*) ;;
+        *) echo "Version ${NPM_PACKAGE_VERSION} is not a prerelease; set e.g. 0.11.0-${CI_COMMIT_REF_SLUG#beta-}.0 on this branch."; exit 1 ;;
+      esac
+      if [ -z "$(npm view "${NPM_PACKAGE_NAME}@${NPM_PACKAGE_VERSION}" version)" ]; then
+        mkdir -p ./generated-types
+        pnpm exec graphql-codegen --config codegen.ci.ts
+        pnpm build
+        pnpm publish --tag "${CI_COMMIT_REF_SLUG}" --no-git-checks
+      else
+          echo "Version exists, skipping."
+      fi
