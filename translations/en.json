@@ -895,7 +895,15 @@
       "recrop-modal": {
         "title": "Recrop image",
         "save": "Save crop"
-      }
+      },
+      "toolbar": "Viewer actions",
+      "fullscreen": "Fullscreen",
+      "fullscreen-on": "Fullscreen. Press Escape to exit.",
+      "zoom-in": "Zoom in",
+      "zoom-out": "Zoom out",
+      "rotate": "Rotate",
+      "previous-file": "Previous file",
+      "next-file": "Next file"
     },
     "iiif-operations-modal": {
       "title": "Resize image",

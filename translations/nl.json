@@ -881,7 +881,15 @@
       "recrop-modal": {
         "title": "Afbeelding opnieuw bijsnijden",
         "save": "Bijsnijding opslaan"
-      }
+      },
+      "toolbar": "Viewer-acties",
+      "fullscreen": "Volledig scherm",
+      "fullscreen-on": "Volledig scherm. Druk op Escape om te sluiten.",
+      "zoom-in": "Zoom in",
+      "zoom-out": "Zoom uit",
+      "rotate": "Roteer",
+      "previous-file": "Vorig bestand",
+      "next-file": "Volgend bestand"
     },
     "iiif-operations-modal": {
       "title": "Afbeelding schalen",
