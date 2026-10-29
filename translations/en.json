@@ -972,6 +972,10 @@
       "coordinates-both": "Fill in both latitude and longitude",
       "latitude-range": "Latitude must be between -90 and 90",
       "longitude-range": "Longitude must be between -180 and 180"
+    },
+    "map": {
+      "label": "Map",
+      "open-in-new-tab": "Open in new tab"
     }
   }
 }

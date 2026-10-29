@@ -958,6 +958,10 @@
       "coordinates-both": "Vul zowel breedtegraad als lengtegraad in",
       "latitude-range": "Breedtegraad moet tussen -90 en 90 liggen",
       "longitude-range": "Lengtegraad moet tussen -180 en 180 liggen"
+    },
+    "map": {
+      "label": "Kaart",
+      "open-in-new-tab": "Openen in nieuw tabblad"
     }
   }
 }
