@@ -337,6 +337,22 @@ Endpoint defaults have Keycloak's URL shape but any OIDC-compliant IdP (Auth0, O
 | `domainWhiteListing` | Log & enforce client `Origin` allow-list. |
 | `SEO` | Mount `/api/seo`. |
 
+### OpenTelemetry
+
+The server's traces and console logs come from `tracing.ts`, which has to load before `express` and `graphql` are required. Preload it, for example from `NODE_OPTIONS` (the Helm chart does this when OpenTelemetry is on):
+
+```bash
+NODE_OPTIONS="--require base-graphql/dist/tracing.js" node dist/server
+```
+
+| Env var | Description |
+|---------|-------------|
+| `OTEL_SDK_DISABLED` | `true` switches everything off, even when preloaded. |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | Collector base URL (OTLP/HTTP). Console logs are only sent when it is set. |
+| `OTEL_SERVICE_NAME` | Service name; falls back to `SERVICE_NAME`, then `elody-graphql`. |
+| `OTEL_RESOURCE_ATTRIBUTES` | Extra resource attributes, e.g. `service.namespace=<instance>,deployment.environment=dev`; they override `NODE_ENV` and `APP_VERSION`/`VERSION`. |
+| `OTEL_LOGS_EXPORTER` | `none` keeps console logs local, e.g. for a traces-only backend such as Tempo. |
+
 ### Other
 
 | Key | Description |
