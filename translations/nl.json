@@ -794,7 +794,9 @@
         "csv-rows-failed": "{0} rij(en) konden niet worden bijgewerkt, zie de details bij het bestand"
       },
       "csv-template-link": "Download voorbeeld met instructies voor",
-      "link-to-documentation": "Link naar de Elody CSV documentatie"
+      "link-to-documentation": "Link naar de Elody CSV documentatie",
+      "remove-file": "Bestand verwijderen",
+      "uploaded-of": "{done} van {total} geüpload"
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",

@@ -806,7 +806,9 @@
         "csv-rows-failed": "{0} row(s) could not be updated, see the details on the file"
       },
       "csv-template-link": "Download example with instructions for",
-      "link-to-documentation": "Link to Elody CSV documentation"
+      "link-to-documentation": "Link to Elody CSV documentation",
+      "remove-file": "Remove file",
+      "uploaded-of": "{done} of {total} uploaded"
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",
