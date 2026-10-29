@@ -931,7 +931,12 @@
       "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
       "finish-failed-title": "Opslaan mislukt",
       "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw.",
-      "step-done": "(voltooid)"
+      "step-done": "(voltooid)",
+      "created-this-session": "Aangemaakt in deze sessie",
+      "save-and-close": "Bewaar en sluit",
+      "finish-current-first": "Rond eerst het huidige item af of ga terug",
+      "item-complete": "Dit item is klaar. Kies Bewaar en sluit om af te ronden.",
+      "rail-empty": "Nog niets aangemaakt."
     },
     "pipeline": {
       "fit": "Passend",
