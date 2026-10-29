@@ -889,7 +889,9 @@
       "zoom-out": "Zoom uit",
       "rotate": "Roteer",
       "previous-file": "Vorig bestand",
-      "next-file": "Volgend bestand"
+      "next-file": "Volgend bestand",
+      "previous-page": "Vorige pagina",
+      "next-page": "Volgende pagina"
     },
     "iiif-operations-modal": {
       "title": "Afbeelding schalen",

@@ -903,7 +903,9 @@
       "zoom-out": "Zoom out",
       "rotate": "Rotate",
       "previous-file": "Previous file",
-      "next-file": "Next file"
+      "next-file": "Next file",
+      "previous-page": "Previous page",
+      "next-page": "Next page"
     },
     "iiif-operations-modal": {
       "title": "Resize image",
