@@ -3,9 +3,11 @@ import jwt_decode from 'jwt-decode';
 import { getManager } from '.';
 import { Environment } from '../types/environmentTypes';
 import { isIpAddressWhitelisted, isDomainWhitelisted } from '../helpers/helpers';
+import { AuthSessionResponse } from './types';
 
-// Per-session refresh lock to prevent concurrent refresh attempts
-const refreshLocks = new WeakMap<object, Promise<string | null>>();
+// Refresh lock to prevent concurrent refresh attempts. Keyed by refresh token:
+// express-session gives every request its own copy of the session object.
+const refreshLocks = new Map<string, Promise<AuthSessionResponse | null>>();
 
 export class AuthTokenManager {
   constructor(
@@ -75,6 +77,12 @@ export class AuthTokenManager {
     });
   }
 
+  // For a token the API rejected (401) although it has not expired, e.g. because its Keycloak session ended.
+  async refreshRejectedToken(): Promise<string | null> {
+    if (!this.accessToken || !this.refreshToken) return null;
+    return this.applyRefresh(await this.sharedRefresh());
+  }
+
   private async refreshWithLock(): Promise<string | null> {
     // If the session already has a valid (non-expired) token, another
     // concurrent request already refreshed it successfully.
@@ -83,35 +91,47 @@ export class AuthTokenManager {
       return currentToken;
     }
 
-    // Check if a refresh is already in progress for this session
-    const existingLock = refreshLocks.get(this.session);
+    return this.applyRefresh(await this.sharedRefresh());
+  }
+
+  private async sharedRefresh(): Promise<AuthSessionResponse | null> {
+    const refreshToken: string = this.refreshToken;
+
+    // Check if a refresh is already in progress for this refresh token
+    const existingLock = refreshLocks.get(refreshToken);
     if (existingLock) {
       return existingLock;
     }
 
     // Start the refresh and store the promise so concurrent requests wait
     const refreshPromise = this.doRefresh();
-    refreshLocks.set(this.session, refreshPromise);
+    refreshLocks.set(refreshToken, refreshPromise);
 
     try {
       return await refreshPromise;
     } finally {
-      refreshLocks.delete(this.session);
+      refreshLocks.delete(refreshToken);
     }
   }
 
-  private async doRefresh(): Promise<string | null> {
+  private async doRefresh(): Promise<AuthSessionResponse | null> {
     try {
       const refreshed = await getManager(this.environment).refresh(
         this.accessToken,
         this.refreshToken
       );
-      if (refreshed) {
-        this.session.auth = refreshed;
-        return refreshed.accessToken;
-      }
+      if (refreshed) return refreshed;
     } catch {
       // refresh threw (e.g. ForbiddenError) — treat as failure
+    }
+    return null;
+  }
+
+  // Every request writes the outcome to its own copy of the session.
+  private applyRefresh(refreshed: AuthSessionResponse | null): string | null {
+    if (refreshed) {
+      this.session.auth = refreshed;
+      return refreshed.accessToken;
     }
     this.session.auth = null;
     // An expired login must surface as a 401, not silently continue as an anonymous user who gets 403s.

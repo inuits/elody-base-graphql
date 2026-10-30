@@ -181,8 +181,8 @@ describe('AuthTokenManager', () => {
     const newToken1 = createJwt(300);
     const newToken2 = createJwt(300);
 
-    const session1 = createSession(expiredToken1);
-    const session2 = createSession(expiredToken2);
+    const session1 = createSession(expiredToken1, 'refresh-token-1');
+    const session2 = createSession(expiredToken2, 'refresh-token-2');
 
     let callCount = 0;
     mockRefresh.mockImplementation(() => {
@@ -262,6 +262,66 @@ describe('AuthTokenManager', () => {
     await expect(
       new AuthTokenManager(baseEnvironment, session).getValidToken()
     ).rejects.toThrow('AUTH | NO VALID TOKEN');
+    expect(session.authExpired).toBe(true);
+  });
+
+  it('concurrent requests share a single refresh when each holds its own copy of the session', async () => {
+    // express-session hands every request its own session object for the same browser session
+    const expiredToken = createJwt(-60);
+    const newToken = createJwt(300);
+    const sessions = Array.from({ length: 5 }, () =>
+      createSession(expiredToken, 'shared-refresh-token')
+    );
+
+    let resolveRefresh: (value: any) => void;
+    mockRefresh.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveRefresh = resolve;
+        })
+    );
+
+    const promises = sessions.map((s) =>
+      new AuthTokenManager(baseEnvironment, s).getValidToken()
+    );
+    resolveRefresh!({ accessToken: newToken, refreshToken: 'new-refresh' });
+    const results = await Promise.all(promises);
+
+    expect(mockRefresh).toHaveBeenCalledTimes(1);
+    expect(results.every((r) => r === newToken)).toBe(true);
+    expect(sessions.every((s) => s.auth?.accessToken === newToken)).toBe(true);
+  });
+
+  it('refreshes a rejected token even though it has not expired yet', async () => {
+    const newToken = createJwt(300);
+    const session = createSession(createJwt(300));
+    mockRefresh.mockResolvedValueOnce({
+      accessToken: newToken,
+      refreshToken: 'new-refresh',
+    });
+
+    const result = await new AuthTokenManager(
+      baseEnvironment,
+      session
+    ).refreshRejectedToken();
+
+    expect(result).toBe(newToken);
+    expect(mockRefresh).toHaveBeenCalledTimes(1);
+    expect(session.auth?.accessToken).toBe(newToken);
+  });
+
+  it('clears the session when a rejected token cannot be refreshed', async () => {
+    // Otherwise /api/auth_code keeps answering "still authenticated" and ignores new codes
+    const session: any = createSession(createJwt(300));
+    mockRefresh.mockResolvedValueOnce(undefined);
+
+    const result = await new AuthTokenManager(
+      baseEnvironment,
+      session
+    ).refreshRejectedToken();
+
+    expect(result).toBeNull();
+    expect(session.auth).toBeNull();
     expect(session.authExpired).toBe(true);
   });
 
