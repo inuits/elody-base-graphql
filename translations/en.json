@@ -731,7 +731,7 @@
       "mediafile-library": "Search Mediafiles...",
       "tipMap": "Try adjusting or removing filters, or moving to another area to see results",
       "tip": "Try adjusting or removing filters to see results",
-      "search-placeholder": "Type to search..."
+      "search-placeholder": "Search…"
     },
     "language": {
       "nl": "Dutch",
@@ -753,7 +753,6 @@
       },
       "result-count": "{count} result | {count} results",
       "search": "Search",
-      "simple-search-placeholder": "Search in {entity}",
       "items": "Items",
       "sort": "Order by",
       "sort-direction": "Order direction",
@@ -765,7 +764,8 @@
       "load-more": "Load more",
       "load-more-in-group": "Load more in this group",
       "group-by": "Group by",
-      "no-group-by": "No grouping"
+      "no-group-by": "No grouping",
+      "search-in-results": "Search in results…"
     },
     "navigation": {
       "title": "Elody",
