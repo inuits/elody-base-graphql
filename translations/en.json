@@ -969,6 +969,7 @@
     "inline-edit": {
       "browse": "Browse…",
       "browse-close": "Close",
+      "browse-title": "Choose {0}",
       "cancel": "Cancel",
       "edit-field": "edit",
       "hint": "Enter saves · Esc cancels",

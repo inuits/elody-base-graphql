@@ -955,6 +955,7 @@
     "inline-edit": {
       "browse": "Blader…",
       "browse-close": "Sluiten",
+      "browse-title": "Kies {0}",
       "cancel": "Annuleer",
       "edit-field": "bewerken",
       "hint": "Enter bewaart · Esc annuleert",
