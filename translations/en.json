@@ -584,6 +584,9 @@
         "merge-entities": {
           "title": "Records merged",
           "description": "The records have been merged."
+        },
+        "guided-flow-saved": {
+          "description": "Saved."
         }
       },
       "errors": {

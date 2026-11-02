@@ -574,6 +574,9 @@
         "merge-entities": {
           "title": "Records samengevoegd",
           "description": "De records zijn samengevoegd."
+        },
+        "guided-flow-saved": {
+          "description": "Opgeslagen."
         }
       },
       "errors": {
