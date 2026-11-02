@@ -205,6 +205,7 @@ export const baseFragments = gql`
       key
       fromKey
       fromRelationType
+      fromStep
     }
   }
 

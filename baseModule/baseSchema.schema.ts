@@ -1872,6 +1872,7 @@ export const baseSchema = gql`
     key: String!
     fromKey: String!
     fromRelationType: String
+    fromStep: String
   }
 
   input CopyFromParentConfigInput {
@@ -1889,6 +1890,7 @@ export const baseSchema = gql`
     key: String!
     fromKey: String!
     fromRelationType: String
+    fromStep: String
   }
 
   type PanelRelationMetaData {
