@@ -222,11 +222,12 @@
         "title": "Editor verlaten"
       },
       "delete-entity": {
-        "message": "Ben je zeker dat je de {0} wilt verwijderen?",
-        "confirm": "Verwijder {0}",
+        "message": "Dit kan niet ongedaan gemaakt worden.",
+        "message-named": "Je verwijdert {0} definitief. Dit kan niet ongedaan gemaakt worden.",
+        "confirm": "Definitief verwijderen",
         "secondary-confirm": "Verwijder entiteit en media bestanden",
         "cancel": "Annuleren",
-        "title": "Verwijder {0}"
+        "title": "Definitief verwijderen?"
       },
       "delete-comment": {
         "title": "Opmerking verwijderen",

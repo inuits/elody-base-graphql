@@ -230,11 +230,12 @@
         "title": "Discard edit"
       },
       "delete-entity": {
-        "message": "Are you certain you wish to delete this {0}?",
-        "confirm": "Delete {0}",
+        "message": "This can't be undone.",
+        "message-named": "You're deleting {0} permanently. This can't be undone.",
+        "confirm": "Delete permanently",
         "secondary-confirm": "Delete entity and mediafiles",
         "cancel": "Cancel",
-        "title": "Delete {0}"
+        "title": "Delete permanently?"
       },
       "delete-comment": {
         "title": "Delete comment",
