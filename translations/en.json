@@ -77,7 +77,8 @@
         "add-more": "Add more",
         "next": "Next step",
         "previous": "Previous step",
-        "create-entity-from-dropdown": "Create: \"{0}\""
+        "create-entity-from-dropdown": "Create: \"{0}\"",
+        "undo": "Undo"
       },
       "progress-steps": {
         "validate": "CSV",
@@ -123,16 +124,16 @@
       "selection-count": "Selection: {count}",
       "clear-selection": "Clear selection",
       "select-page": "Select page",
-      "select-all": "select all",
+      "select-all": "Select all",
       "edit": "Edit",
       "items": "items",
       "selected": "selected",
       "capped-items-tooltip": "More results exist than shown. Refine your search for an exact count.",
       "reveal-exact-count": "Click to load the exact count",
-      "save": "save",
-      "cancel": "cancel",
-      "delete": "delete",
-      "confirm-selection": "confirm selection",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "confirm-selection": "Confirm selection",
       "add-relation": "Add {0}",
       "add-new-relation": "Add new {0}",
       "add-existing-relation": "Add existing {0}",
@@ -229,11 +230,12 @@
         "title": "Discard edit"
       },
       "delete-entity": {
-        "message": "Are you certain you wish to delete this {0}?",
-        "confirm": "Delete {0}",
+        "message": "This can't be undone.",
+        "message-named": "You're deleting {0} permanently. This can't be undone.",
+        "confirm": "Delete permanently",
         "secondary-confirm": "Delete entity and mediafiles",
         "cancel": "Cancel",
-        "title": "Delete {0}"
+        "title": "Delete permanently?"
       },
       "delete-comment": {
         "title": "Delete comment",
@@ -582,6 +584,9 @@
         "merge-entities": {
           "title": "Records merged",
           "description": "The records have been merged."
+        },
+        "guided-flow-saved": {
+          "description": "Saved."
         }
       },
       "errors": {
@@ -730,7 +735,7 @@
       "mediafile-library": "Search Mediafiles...",
       "tipMap": "Try adjusting or removing filters, or moving to another area to see results",
       "tip": "Try adjusting or removing filters to see results",
-      "search-placeholder": "Type to search..."
+      "search-placeholder": "Search…"
     },
     "language": {
       "nl": "Dutch",
@@ -752,7 +757,6 @@
       },
       "result-count": "{count} result | {count} results",
       "search": "Search",
-      "simple-search-placeholder": "Search in {entity}",
       "items": "Items",
       "sort": "Order by",
       "sort-direction": "Order direction",
@@ -764,9 +768,11 @@
       "load-more": "Load more",
       "load-more-in-group": "Load more in this group",
       "group-by": "Group by",
-      "no-group-by": "No grouping"
+      "no-group-by": "No grouping",
+      "search-in-results": "Search in results…"
     },
     "navigation": {
+      "main": "Main navigation",
       "title": "Elody",
       "entities": "Entities",
       "new": "New",
@@ -806,7 +812,9 @@
         "csv-rows-failed": "{0} row(s) could not be updated, see the details on the file"
       },
       "csv-template-link": "Download example with instructions for",
-      "link-to-documentation": "Link to Elody CSV documentation"
+      "link-to-documentation": "Link to Elody CSV documentation",
+      "remove-file": "Remove file",
+      "uploaded-of": "{done} of {total} uploaded"
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",
@@ -942,7 +950,15 @@
       "step-of": "Step {current} of {total}: {label}",
       "no-entities-yet": "Nothing added yet. Click \"Add another\" to start.",
       "finish-failed-title": "Could not save",
-      "finish-failed-description": "Something went wrong while saving. Your added items are still here — please try again."
+      "finish-failed-description": "Something went wrong while saving. Your added items are still here — please try again.",
+      "step-done": "(completed)",
+      "created-this-session": "Created this session",
+      "save-and-close": "Save and close",
+      "finish-current-first": "Finish or go back from the current item first",
+      "item-complete": "This item is complete. Save and close to finish.",
+      "rail-empty": "Nothing created yet.",
+      "undo-item": "Undo {item}",
+      "undo-failed-title": "Undo failed"
     },
     "pipeline": {
       "fit": "Fit",
@@ -956,6 +972,7 @@
     "inline-edit": {
       "browse": "Browse…",
       "browse-close": "Close",
+      "browse-title": "Choose {0}",
       "cancel": "Cancel",
       "edit-field": "edit",
       "hint": "Enter saves · Esc cancels",

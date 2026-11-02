@@ -530,7 +530,6 @@
     "library": {
       "new": "جديد",
       "search": "بحث",
-      "simple-search-placeholder": "البحث في {entity}",
       "items": "عناصر",
       "sort": "ترتيب حسب",
       "sort-direction": "اتجاه الترتيب",

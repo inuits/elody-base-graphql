@@ -77,7 +77,8 @@
         "add-entry": "Voeg item toe",
         "next": "Volgende stap",
         "previous": "Vorige stap",
-        "create-entity-from-dropdown": "Maak \"{0}\" aan"
+        "create-entity-from-dropdown": "Maak \"{0}\" aan",
+        "undo": "Ongedaan maken"
       },
       "progress-steps": {
         "actions": {
@@ -126,16 +127,16 @@
       "selection-count": "Selectie: {count}",
       "clear-selection": "Wis selectie",
       "select-page": "Selecteer pagina",
-      "select-all": "alles selecteren",
+      "select-all": "Alles selecteren",
       "edit": "Bewerken",
       "items": "items",
       "selected": "geselecteerd",
       "capped-items-tooltip": "Er zijn meer resultaten dan getoond. Verfijn je zoekopdracht voor een exact aantal.",
       "reveal-exact-count": "Klik om het exacte aantal te laden",
-      "save": "opslaan",
-      "cancel": "annuleren",
-      "delete": "verwijderen",
-      "confirm-selection": "selectie bevestigen",
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "delete": "Verwijderen",
+      "confirm-selection": "Selectie bevestigen",
       "add-relation": "Voeg bestaande {0} toe",
       "add-new-relation": "Voeg nieuwe {0} toe",
       "add-existing-relation": "Voeg bestaande {0} toe",
@@ -221,11 +222,12 @@
         "title": "Editor verlaten"
       },
       "delete-entity": {
-        "message": "Ben je zeker dat je de {0} wilt verwijderen?",
-        "confirm": "Verwijder {0}",
+        "message": "Dit kan niet ongedaan gemaakt worden.",
+        "message-named": "Je verwijdert {0} definitief. Dit kan niet ongedaan gemaakt worden.",
+        "confirm": "Definitief verwijderen",
         "secondary-confirm": "Verwijder entiteit en media bestanden",
         "cancel": "Annuleren",
-        "title": "Verwijder {0}"
+        "title": "Definitief verwijderen?"
       },
       "delete-comment": {
         "title": "Opmerking verwijderen",
@@ -572,6 +574,9 @@
         "merge-entities": {
           "title": "Records samengevoegd",
           "description": "De records zijn samengevoegd."
+        },
+        "guided-flow-saved": {
+          "description": "Opgeslagen."
         }
       },
       "errors": {
@@ -718,7 +723,7 @@
       "mediafile-library": "Zoek Mediafiles...",
       "tipMap": "Pas filters aan, verwijder ze of verplaats de kaart om resultaten te zien",
       "tip": "Pas filters aan of verwijder ze om resultaten te zien",
-      "search-placeholder": "Typ om te zoeken..."
+      "search-placeholder": "Zoek…"
     },
     "language": {
       "nl": "Nederlands",
@@ -740,7 +745,6 @@
       },
       "result-count": "{count} resultaat | {count} resultaten",
       "search": "Zoeken",
-      "simple-search-placeholder": "Zoeken in {entity}",
       "items": "Items",
       "sort": "Ordenen op",
       "sort-direction": "Sorteer richting",
@@ -752,9 +756,11 @@
       "load-more": "Meer laden",
       "load-more-in-group": "Meer laden in deze groep",
       "group-by": "Groepeer op",
-      "no-group-by": "Geen groepering"
+      "no-group-by": "Geen groepering",
+      "search-in-results": "Zoek in resultaten…"
     },
     "navigation": {
+      "main": "Hoofdnavigatie",
       "title": "Elody",
       "entities": "Entiteiten",
       "new": "Nieuw",
@@ -794,7 +800,9 @@
         "csv-rows-failed": "{0} rij(en) konden niet worden bijgewerkt, zie de details bij het bestand"
       },
       "csv-template-link": "Download voorbeeld met instructies voor",
-      "link-to-documentation": "Link naar de Elody CSV documentatie"
+      "link-to-documentation": "Link naar de Elody CSV documentatie",
+      "remove-file": "Bestand verwijderen",
+      "uploaded-of": "{done} van {total} geüpload"
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",
@@ -928,7 +936,15 @@
       "step-of": "Stap {current} van {total}: {label}",
       "no-entities-yet": "Nog niets toegevoegd. Klik op \"Nog een toevoegen\" om te starten.",
       "finish-failed-title": "Opslaan mislukt",
-      "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw."
+      "finish-failed-description": "Er ging iets mis bij het opslaan. Je toegevoegde items blijven staan — probeer het opnieuw.",
+      "step-done": "(voltooid)",
+      "created-this-session": "Aangemaakt in deze sessie",
+      "save-and-close": "Bewaar en sluit",
+      "finish-current-first": "Rond eerst het huidige item af of ga terug",
+      "item-complete": "Dit item is klaar. Kies Bewaar en sluit om af te ronden.",
+      "rail-empty": "Nog niets aangemaakt.",
+      "undo-item": "{item} ongedaan maken",
+      "undo-failed-title": "Ongedaan maken mislukt"
     },
     "pipeline": {
       "fit": "Passend",
@@ -942,6 +958,7 @@
     "inline-edit": {
       "browse": "Blader…",
       "browse-close": "Sluiten",
+      "browse-title": "Kies {0}",
       "cancel": "Annuleer",
       "edit-field": "bewerken",
       "hint": "Enter bewaart · Esc annuleert",
