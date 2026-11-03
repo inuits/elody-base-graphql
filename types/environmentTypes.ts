@@ -136,6 +136,8 @@ export interface Environment {
   nomadNamespace: string;
   browserTracing?: BrowserTracing;
   usageAnalytics?: UsageAnalytics;
+  // the UI this deployment runs (helpers/uiVersion.ts)
+  uiVersion?: string;
   // where the PWA's telemetry goes on to, inside the network (endpoints/telemetryEndpoint.ts)
   telemetry?: TelemetryTargets;
   ignorePermissions: boolean;
@@ -262,6 +264,8 @@ export interface FullyOptionalEnvironmentInput {
   nomadNamespace?: string;
   browserTracing?: BrowserTracing;
   usageAnalytics?: UsageAnalytics;
+  // the UI this deployment runs (helpers/uiVersion.ts)
+  uiVersion?: string;
   ignorePermissions?: boolean;
   maxUploadSize?: number;
   bulkSelectAllSizeLimit?: number;

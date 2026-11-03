@@ -5,6 +5,8 @@ import {
 } from './types/environmentTypes';
 import { browserTracingFromEnv } from './helpers/browserTracing';
 import { usageAnalyticsFromEnv } from './helpers/usageAnalytics';
+import { uiVersionFromPackageVersion } from './helpers/uiVersion';
+import packageJson from './package.json';
 import { telemetryTargetsFromEnv } from './endpoints/telemetryEndpoint';
 
 export let currentEnvironment: Environment | undefined = undefined;
@@ -145,6 +147,7 @@ export const baseEnvironment: Environment = {
   nomadNamespace: process.env.NOMAD_NAMESPACE || '',
   browserTracing: browserTracingFromEnv(process.env),
   usageAnalytics: usageAnalyticsFromEnv(process.env),
+  uiVersion: uiVersionFromPackageVersion(packageJson.version),
   telemetry: telemetryTargetsFromEnv(process.env),
   ignorePermissions: false,
   maxUploadSize: Number(process.env.MAX_UPLOAD_SIZE) || 250 * 1024000,

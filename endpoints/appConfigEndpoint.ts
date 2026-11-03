@@ -81,6 +81,7 @@ export const getConfig = (config: Environment) => {
     NOMAD_NAMESPACE: config.nomadNamespace,
     browserTracing: config.browserTracing,
     usageAnalytics: config.usageAnalytics,
+    uiVersion: config.uiVersion,
     DEPLOYMENT_ENVIRONMENT: process.env.DEPLOYMENT_ENVIRONMENT || '',
     skeletonLayouts: config.skeletonLayouts,
   };
