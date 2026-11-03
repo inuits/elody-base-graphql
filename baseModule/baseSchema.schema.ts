@@ -1828,7 +1828,6 @@ export const baseSchema = gql`
     copyToClipboard(input: Boolean): Boolean
     masked(input: Boolean): Boolean
     revealQuery(input: String): String
-    # In a list row: a click on the value opens this form (a GetDynamicForm query) for the row's entity.
     editFormQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
