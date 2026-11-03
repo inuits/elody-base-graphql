@@ -1871,6 +1871,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     revealQuery: async (_source, { input }) => {
       return input ?? '';
     },
+    editFormQuery: async (_source, { input }) => {
+      return input ?? null;
+    },
     customValue: async (_source, { input }, { dataSources }) => {
       return input ?? '';
     },

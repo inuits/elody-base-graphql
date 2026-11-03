@@ -198,7 +198,8 @@
       "entityEdit": {
         "title": "Edit entity",
         "updateBtn": "Update",
-        "noFields": "There are no editable fields for this entity."
+        "noFields": "There are no editable fields for this entity.",
+        "editValue": "Edit {0}"
       },
       "reorderingEntities": "Reordering entities, this may take a while...",
       "bulkEditingEntities": "Applying your changes, this may take a while...",

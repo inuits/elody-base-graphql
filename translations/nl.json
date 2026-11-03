@@ -199,6 +199,9 @@
       }
     },
     "modals": {
+      "entityEdit": {
+        "editValue": "{0} bewerken"
+      },
       "bulkEditingEntities": "Je aanpassingen worden toegepast, dit kan even duren...",
       "mergingEntities": "De records worden samengevoegd, dit kan even duren...",
       "reorderingEntities": "Entiteiten worden herordend, dit kan even duren..."
