@@ -65,13 +65,15 @@ type ExpressLayers = NonNullable<
 
 // Without this one request made thousands of spans: one per express middleware
 // (jsonParser, cors, expressInit, query) and the catch-all handler, and one per
-// resolved field. The request, the GraphQL operation and its calls out remain.
+// resolved field (form definitions resolve thousands, each through a resolver
+// of its own). The request, the GraphQL operation (parse, validate, execute)
+// and its calls out remain.
 export const instrumentationConfig = (): InstrumentationConfigMap => ({
   '@opentelemetry/instrumentation-express': {
     // ExpressLayerType's values; the instrumentation is not a direct dependency
     ignoreLayersType: ['middleware', 'request_handler'] as ExpressLayers,
   },
   '@opentelemetry/instrumentation-graphql': {
-    ignoreTrivialResolveSpans: true,
+    ignoreResolveSpans: true,
   },
 });
