@@ -6,7 +6,11 @@ import { resourceFromAttributes } from '@opentelemetry/resources';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { logs } from '@opentelemetry/api-logs';
-import { resourceAttributes, traceExporterOptions } from './tracingConfig';
+import {
+  instrumentationConfig,
+  resourceAttributes,
+  traceExporterOptions,
+} from './tracingConfig';
 import { captureConsole, logExportEnabled } from './consoleLogs';
 
 const exporter = new OTLPTraceExporter(traceExporterOptions(process.env));
@@ -18,14 +22,7 @@ const sdk = new NodeSDK({
   resource: resourceFromAttributes(resourceAttributes(process.env)),
   traceExporter: exporter,
   ...(exportLogs ? {} : { logRecordProcessors: [] }),
-  instrumentations: [
-    getNodeAutoInstrumentations({
-      // Disable some auto-instrumentations if needed
-      // '@opentelemetry/instrumentation-fs': {
-      //   enabled: false,
-      // },
-    }),
-  ],
+  instrumentations: [getNodeAutoInstrumentations(instrumentationConfig())],
 });
 
 sdk.start();
