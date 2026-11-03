@@ -120,9 +120,11 @@ describe('instrumentationConfig', () => {
     ).toEqual({ ignoreLayersType: ['middleware', 'request_handler'] });
   });
 
-  it('skips spans for fields that only return a value', () => {
+  // Form definitions resolve thousands of configured fields per query, each
+  // through a resolver of its own, so trivial-only skipping was not enough
+  it('skips every resolve span, keeping parse, validate and execute', () => {
     expect(
       instrumentationConfig()['@opentelemetry/instrumentation-graphql']
-    ).toEqual({ ignoreTrivialResolveSpans: true });
+    ).toEqual({ ignoreResolveSpans: true });
   });
 });
