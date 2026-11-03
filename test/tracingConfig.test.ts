@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { resourceAttributes, traceExporterOptions } from '../tracingConfig';
+import {
+  instrumentationConfig,
+  resourceAttributes,
+  traceExporterOptions,
+} from '../tracingConfig';
 
 // The NodeSDK applies no resource detectors once tracing.ts passes its own
 // resource, so the OTEL_* variables a deployment sets have to be read here.
@@ -103,5 +107,22 @@ describe('traceExporterOptions', () => {
           'http://otel-collector:4318/v1/traces',
       })
     ).toEqual({});
+  });
+});
+
+// One request made thousands of spans for express's middleware (jsonParser,
+// cors, expressInit, query) and the catch-all handler, and one per resolved
+// field: only the request, the GraphQL operation and its calls out are kept.
+describe('instrumentationConfig', () => {
+  it("skips express's middleware and request handler layers", () => {
+    expect(
+      instrumentationConfig()['@opentelemetry/instrumentation-express']
+    ).toEqual({ ignoreLayersType: ['middleware', 'request_handler'] });
+  });
+
+  it('skips spans for fields that only return a value', () => {
+    expect(
+      instrumentationConfig()['@opentelemetry/instrumentation-graphql']
+    ).toEqual({ ignoreTrivialResolveSpans: true });
   });
 });

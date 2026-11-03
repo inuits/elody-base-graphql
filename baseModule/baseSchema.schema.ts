@@ -1836,6 +1836,7 @@ export const baseSchema = gql`
     copyToClipboard(input: Boolean): Boolean
     masked(input: Boolean): Boolean
     revealQuery(input: String): String
+    editFormQuery(input: String): String
     isMultilingual(input: Boolean): Boolean
     customValue(input: String): String
     permitted(input: [String!]): Boolean
@@ -1880,6 +1881,7 @@ export const baseSchema = gql`
     key: String!
     fromKey: String!
     fromRelationType: String
+    fromStep: String
   }
 
   input CopyFromParentConfigInput {
@@ -1897,6 +1899,7 @@ export const baseSchema = gql`
     key: String!
     fromKey: String!
     fromRelationType: String
+    fromStep: String
   }
 
   type PanelRelationMetaData {

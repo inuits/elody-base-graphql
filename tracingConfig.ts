@@ -1,4 +1,5 @@
 import type { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import type { InstrumentationConfigMap } from '@opentelemetry/auto-instrumentations-node';
 
 type TraceExporterOptions = NonNullable<
   ConstructorParameters<typeof OTLPTraceExporter>[0]
@@ -57,3 +58,20 @@ export const traceExporterOptions = (
   env.OTEL_EXPORTER_OTLP_ENDPOINT || env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
     ? {}
     : { url: DEFAULT_TRACES_URL };
+
+type ExpressLayers = NonNullable<
+  InstrumentationConfigMap['@opentelemetry/instrumentation-express']
+>['ignoreLayersType'];
+
+// Without this one request made thousands of spans: one per express middleware
+// (jsonParser, cors, expressInit, query) and the catch-all handler, and one per
+// resolved field. The request, the GraphQL operation and its calls out remain.
+export const instrumentationConfig = (): InstrumentationConfigMap => ({
+  '@opentelemetry/instrumentation-express': {
+    // ExpressLayerType's values; the instrumentation is not a direct dependency
+    ignoreLayersType: ['middleware', 'request_handler'] as ExpressLayers,
+  },
+  '@opentelemetry/instrumentation-graphql': {
+    ignoreTrivialResolveSpans: true,
+  },
+});
