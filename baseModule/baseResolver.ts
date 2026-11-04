@@ -137,6 +137,7 @@ import {
   type WysiwygElementConfiguration,
   type TaggingExtensionConfiguration,
   ConfigItem,
+  ChangesPreview,
   ColumnList,
   AdvancedFilters,
   FilterOptionsMappingType,
@@ -2545,7 +2546,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return {};
     },
     changesPreview: async () => {
-      return {};
+      return {} as ChangesPreview;
     },
   },
   ChangesPreview: {
