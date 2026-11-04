@@ -2544,6 +2544,15 @@ export const baseResolver: Resolvers<ContextValue> = {
     previewConfiguration: async (parent, {}, { dataSources }) => {
       return {};
     },
+    changesPreview: async () => {
+      return {};
+    },
+  },
+  ChangesPreview: {
+    query: async (_parent, { input }) => input,
+    relationType: async (_parent, { input }) => input,
+    entityType: async (_parent, { input }) => input,
+    changedKeysKey: async (_parent, { input }) => input,
   },
   PreviewConfiguration: {
     keepLastActiveItemHighlighted: async (
