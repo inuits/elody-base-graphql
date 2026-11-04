@@ -879,6 +879,7 @@
       "create-new": "Create new",
       "change-type": "Choose another type",
       "back-to-search": "Back to search",
+      "current-on-host": "Current link",
       "back-to-overview": "Back to overview",
       "back-to-previous-step": "Previous step",
       "step-of": "Step {current} of {total}: {label}",
