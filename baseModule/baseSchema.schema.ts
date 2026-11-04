@@ -2493,6 +2493,14 @@ export const baseSchema = gql`
     metadataPreviewQuery(input: String): String
     showCurrentPreviewFlow(input: Boolean): Boolean
     previewConfiguration: PreviewConfiguration
+    changesPreview: ChangesPreview
+  }
+
+  type ChangesPreview {
+    query(input: String!): String!
+    relationType(input: String!): String!
+    entityType(input: Entitytyping!): Entitytyping!
+    changedKeysKey(input: String!): String!
   }
 
   type PreviewConfiguration {
