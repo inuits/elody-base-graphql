@@ -2977,6 +2977,11 @@ export const baseSchema = gql`
     style: EntityButtonStyle
   }
 
+  type RepetitiveStepHostMark {
+    relationType(input: String!): String!
+    label(input: String): String
+  }
+
   type RepetitiveStepScope {
     step(input: String!): String!
     relationType(input: String!): String!
@@ -3048,6 +3053,7 @@ export const baseSchema = gql`
     creatableTypeFromParentKey(input: String): String
     terminalActionLabel(input: String): String
     scopeToRelationOf: RepetitiveStepScope
+    markCurrentOnHost: RepetitiveStepHostMark
     relations: [RepetitiveStepRelation!]
     entityPickerSearchConfig(
       input: EntityPickerSearchConfigInput

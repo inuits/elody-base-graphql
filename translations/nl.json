@@ -934,6 +934,7 @@
       "create-new": "Nieuw aanmaken",
       "change-type": "Ander type kiezen",
       "back-to-search": "Terug naar zoeken",
+      "current-on-host": "Huidige koppeling",
       "back-to-overview": "Terug naar overzicht",
       "back-to-previous-step": "Vorige stap",
       "step-of": "Stap {current} van {total}: {label}",
