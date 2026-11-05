@@ -967,6 +967,7 @@
       "edit-field": "bewerken",
       "hint": "Enter bewaart · Esc annuleert",
       "hint-textarea": "Ctrl+Enter bewaart · Esc annuleert",
+      "save": "Bewaar",
       "saved": "Opgeslagen",
       "save-failed": "Opslaan mislukt, probeer opnieuw",
       "remove-row": "Verwijder rij",

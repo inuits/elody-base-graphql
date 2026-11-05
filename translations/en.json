@@ -979,6 +979,7 @@
       "edit-field": "edit",
       "hint": "Enter saves · Esc cancels",
       "hint-textarea": "Ctrl+Enter saves · Esc cancels",
+      "save": "Save",
       "saved": "Saved",
       "save-failed": "Saving failed, try again",
       "remove-row": "Remove row",
