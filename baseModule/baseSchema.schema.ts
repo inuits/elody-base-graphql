@@ -168,6 +168,7 @@ export const baseSchema = gql`
     gif
     json
     xlsx
+    jp2
   }
 
   enum TranscodeType {
