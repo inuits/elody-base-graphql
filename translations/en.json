@@ -792,7 +792,11 @@
       "delete-entity-window": "Delete {0}",
       "create-share-link": "Create share link",
       "breadcrumb": "Breadcrumb",
-      "breadcrumb-history": "Earlier pages"
+      "breadcrumb-history": "Earlier pages",
+      "menu-mode": {
+        "expand": "Keep menu open",
+        "collapse": "Collapse menu"
+      }
     },
     "entity-navigation": {
       "open-previous": "Open previous",
@@ -979,6 +983,7 @@
       "edit-field": "edit",
       "hint": "Enter saves · Esc cancels",
       "hint-textarea": "Ctrl+Enter saves · Esc cancels",
+      "save": "Save",
       "saved": "Saved",
       "save-failed": "Saving failed, try again",
       "remove-row": "Remove row",

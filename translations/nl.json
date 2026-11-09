@@ -782,7 +782,11 @@
       "delete-entity-window": "Verwijder {0}",
       "create-share-link": "Maak share link",
       "breadcrumb": "Kruimelpad",
-      "breadcrumb-history": "Eerdere pagina's"
+      "breadcrumb-history": "Eerdere pagina's",
+      "menu-mode": {
+        "expand": "Menu open houden",
+        "collapse": "Menu inklappen"
+      }
     },
     "entity-navigation": {
       "open-previous": "Open vorige",
@@ -967,6 +971,7 @@
       "edit-field": "bewerken",
       "hint": "Enter bewaart · Esc annuleert",
       "hint-textarea": "Ctrl+Enter bewaart · Esc annuleert",
+      "save": "Bewaar",
       "saved": "Opgeslagen",
       "save-failed": "Opslaan mislukt, probeer opnieuw",
       "remove-row": "Verwijder rij",
