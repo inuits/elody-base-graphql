@@ -796,7 +796,9 @@
       "menu-mode": {
         "expand": "Keep menu open",
         "collapse": "Collapse menu"
-      }
+      },
+      "open-menu": "Open menu",
+      "close-menu": "Close menu"
     },
     "entity-navigation": {
       "open-previous": "Open previous",

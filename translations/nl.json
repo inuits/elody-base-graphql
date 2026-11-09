@@ -786,7 +786,9 @@
       "menu-mode": {
         "expand": "Menu open houden",
         "collapse": "Menu inklappen"
-      }
+      },
+      "open-menu": "Menu openen",
+      "close-menu": "Menu sluiten"
     },
     "entity-navigation": {
       "open-previous": "Open vorige",
