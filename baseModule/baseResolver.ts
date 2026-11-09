@@ -164,6 +164,7 @@ import {
   RepetitiveFinalize,
   RepetitiveHostFinalize,
   RepetitiveStepScope,
+  RepetitiveStepHostMark,
   RepetitiveStepRelation,
   RepetitiveFinalizeRelation,
   RepetitiveMetadataPrefill,
@@ -3408,6 +3409,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     scopeToRelationOf: async (parent: any, {}, { dataSources }) => {
       return parent as RepetitiveStepScope;
     },
+    markCurrentOnHost: async (parent: any, {}, { dataSources }) => {
+      return parent as RepetitiveStepHostMark;
+    },
     relations: async (parent: any, {}, { dataSources }) => {
       return [parent ?? {}] as RepetitiveStepRelation[];
     },
@@ -3432,6 +3436,14 @@ export const baseResolver: Resolvers<ContextValue> = {
     },
     prefillMetadata: async (parent: any, {}, { dataSources }) => {
       return [parent ?? {}] as RepetitiveMetadataPrefill[];
+    },
+  },
+  RepetitiveStepHostMark: {
+    relationType: async (parent: any, { input }, { dataSources }) => {
+      return input || '';
+    },
+    label: async (parent: any, { input }, { dataSources }) => {
+      return input || '';
     },
   },
   RepetitiveStepScope: {
