@@ -910,15 +910,24 @@
       "next-page": "Volgende pagina"
     },
     "iiif-operations-modal": {
-      "title": "Afbeelding schalen",
-      "dimensions": "Afmetingen",
+      "title": "Geschaalde afbeelding downloaden",
       "format": "Uitvoerformaat",
-      "scale": "Schaal",
       "width": "Breedte",
       "height": "Hoogte",
-      "get-resized-image": "Aangepaste afbeelding ophalen",
       "missing-dimensions-title": "Afmetingen ontbreken",
-      "missing-dimensions-description": "Geef een breedte of een hoogte op om deze afbeelding te schalen."
+      "missing-dimensions-description": "Geef een breedte of een hoogte op om deze afbeelding te schalen.",
+      "original": "{filename} · origineel {width} × {height} px",
+      "size": "Grootte",
+      "custom": "Aangepast",
+      "lock-ratio": "Beeldverhouding behouden",
+      "calculated": "De lege zijde wordt berekend: {width} × {height} px",
+      "upscaled": "Groter dan het origineel, de afbeelding wordt dus opgeschaald",
+      "format-hint-jpg": "Kleinste bestand, voor web en e-mail",
+      "format-hint-png": "Verliesvrij, groter bestand",
+      "format-hint-tif": "Archiefkwaliteit, grootste bestand",
+      "cancel": "Annuleren",
+      "download": "Downloaden",
+      "downloaded": "{filename} gedownload"
     },
     "input-validation": {
       "messages": {

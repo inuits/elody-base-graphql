@@ -922,15 +922,24 @@
       "next-page": "Next page"
     },
     "iiif-operations-modal": {
-      "title": "Resize image",
-      "dimensions": "Dimensions",
+      "title": "Download resized image",
       "format": "Output format",
-      "scale": "Scale",
       "width": "Width",
       "height": "Height",
-      "get-resized-image": "Get resized image",
       "missing-dimensions-title": "Missing dimensions",
-      "missing-dimensions-description": "Enter a width or a height to resize this image."
+      "missing-dimensions-description": "Enter a width or a height to resize this image.",
+      "original": "{filename} · original {width} × {height} px",
+      "size": "Size",
+      "custom": "Custom",
+      "lock-ratio": "Keep aspect ratio",
+      "calculated": "The empty side will be calculated: {width} × {height} px",
+      "upscaled": "Larger than the original, so the image will be upscaled",
+      "format-hint-jpg": "Smallest file, for web and email",
+      "format-hint-png": "Lossless, larger file",
+      "format-hint-tif": "Archival quality, largest file",
+      "cancel": "Cancel",
+      "download": "Download",
+      "downloaded": "Downloaded {filename}"
     },
     "input-validation": {
       "messages": {
