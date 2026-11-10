@@ -852,6 +852,7 @@ export const baseSchema = gql`
     Cancel
     Table
     Sitemap
+    Wrench
   }
 
   input BulkOperationInputModal {
