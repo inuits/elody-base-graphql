@@ -15,6 +15,12 @@ export type UsageAnalytics = {
   apiUrl: string;
 };
 
+// the group a user's usage and traces are counted in (helpers/userGroup.ts)
+export type UserGroup = {
+  source: 'emailDomain' | 'tenant';
+  type: string;
+};
+
 export interface Environment {
   apollo: {
     graphqlPath: string;
@@ -136,6 +142,7 @@ export interface Environment {
   nomadNamespace: string;
   browserTracing?: BrowserTracing;
   usageAnalytics?: UsageAnalytics;
+  userGroup?: UserGroup;
   // the UI this deployment runs (helpers/uiVersion.ts)
   uiVersion?: string;
   // where the PWA's telemetry goes on to, inside the network (endpoints/telemetryEndpoint.ts)
@@ -264,6 +271,7 @@ export interface FullyOptionalEnvironmentInput {
   nomadNamespace?: string;
   browserTracing?: BrowserTracing;
   usageAnalytics?: UsageAnalytics;
+  userGroup?: UserGroup;
   // the UI this deployment runs (helpers/uiVersion.ts)
   uiVersion?: string;
   ignorePermissions?: boolean;

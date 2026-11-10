@@ -5,6 +5,7 @@ import {
 } from './types/environmentTypes';
 import { browserTracingFromEnv } from './helpers/browserTracing';
 import { usageAnalyticsFromEnv } from './helpers/usageAnalytics';
+import { userGroupFromEnv } from './helpers/userGroup';
 import { uiVersionFromPackageVersion } from './helpers/uiVersion';
 import packageJson from './package.json';
 import { telemetryTargetsFromEnv } from './endpoints/telemetryEndpoint';
@@ -147,6 +148,7 @@ export const baseEnvironment: Environment = {
   nomadNamespace: process.env.NOMAD_NAMESPACE || '',
   browserTracing: browserTracingFromEnv(process.env),
   usageAnalytics: usageAnalyticsFromEnv(process.env),
+  userGroup: userGroupFromEnv(process.env),
   uiVersion: uiVersionFromPackageVersion(packageJson.version),
   telemetry: telemetryTargetsFromEnv(process.env),
   ignorePermissions: false,
