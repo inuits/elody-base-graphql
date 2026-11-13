@@ -738,6 +738,11 @@
       "new": "Nieuw",
       "no-media": "Geen media",
       "view-mode": "Weergave",
+      "grid-size": {
+        "label": "Kaartgrootte",
+        "large": "Groot",
+        "compact": "Compact"
+      },
       "view-modes": {
         "list": "Lijstweergave",
         "grid": "Rasterweergave",
