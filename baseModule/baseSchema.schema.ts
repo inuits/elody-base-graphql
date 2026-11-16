@@ -2550,6 +2550,7 @@ export const baseSchema = gql`
     facets: [FacetInputInput!]
     defaultValueMapping: [ValueMappingInput]
     resolveDefaultValueToOptionIds: Boolean
+    preferredOptionIds: String
   }
 
   input ValueMappingInput {
@@ -2682,6 +2683,7 @@ export const baseSchema = gql`
     defaultValueMapping: [ValueMapping]
     minDropdownSearchCharacters: Int
     resolveDefaultValueToOptionIds: Boolean
+    preferredOptionIds: String
   }
 
   type AdvancedFilters {
