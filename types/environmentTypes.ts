@@ -90,6 +90,7 @@ export interface Environment {
     hideSuperTenant?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
+    hasStickyTableColumns?: boolean;
     advancedSearch?: {
       queryBy: string;
       queryByWeights?: string;
@@ -222,6 +223,7 @@ export interface FullyOptionalEnvironmentInput {
     hideSuperTenant?: boolean;
     hasComments?: boolean;
     supportsJsonBulkEdit?: boolean;
+    hasStickyTableColumns?: boolean;
     advancedSearch?: {
       queryBy?: string;
       queryByWeights?: string;

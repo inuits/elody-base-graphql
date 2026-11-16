@@ -41,6 +41,7 @@ export const getConfig = (config: Environment) => {
     },
     features: {
       hasTenantSelect: config.features.hasTenantSelect,
+      hasStickyTableColumns: config.features.hasStickyTableColumns,
       enableCrossTabAuthSync:
         config.features.enableCrossTabAuthSync === undefined
           ? true
