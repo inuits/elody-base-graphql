@@ -184,6 +184,7 @@ export const baseFragments = gql`
       key
       hidden
       entitySourceKey
+      isCandidateList
       inputField {
         ...inputfieldBase
         validation {

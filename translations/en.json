@@ -390,7 +390,8 @@
       }
     },
     "autocomplete": {
-      "find-more-options-placeholder": "Start typing to find more options"
+      "find-more-options-placeholder": "Start typing to find more options",
+      "choose-candidate": "Multiple entities found, choose the right one"
     },
     "form": {
       "create": "Create"
