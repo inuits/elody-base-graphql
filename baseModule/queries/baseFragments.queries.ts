@@ -64,6 +64,7 @@ export const baseFragments = gql`
       optionsLimit
       facetsLimit
     }
+    optionLabelKeys
     defaultMatcher
     allowedMatchers
     useOldWayToFetchOptions

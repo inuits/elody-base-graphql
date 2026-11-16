@@ -2631,6 +2631,7 @@ export const baseSchema = gql`
     metadataKeyAsLabel: String
     filterOptionsMapping: FilterOptionsMappingType
     limitConfig: AdvancedFilterLimitConfigType
+    optionLabelKeys: [String!]
     useOldWayToFetchOptions: Boolean
     entityType: String
     minDropdownSearchCharacters(value: Int): Int
@@ -2712,6 +2713,7 @@ export const baseSchema = gql`
       metadataKeyAsLabel: String
       filterOptionsMapping: FilterOptionsMappingInput
       limitConfig: AdvancedFilterLimitConfigInput
+      optionLabelKeys: [String!]
       operator: Operator
       facets: [FacetInputInput!]
       bucket: String
