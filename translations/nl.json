@@ -720,7 +720,7 @@
       "search-saved-searches": "Zoek in bewaarde zoekopdrachten"
     },
     "search": {
-      "simple-search": "Globaal zoeken in Elody",
+      "simple-search": "Globaal zoeken in {applicationTitle}",
       "noresult": "Geen resultaten gevonden voor je filters",
       "noresult-nofilters": "Geen resultaten gevonden",
       "asset-library": "Zoek asset library...",

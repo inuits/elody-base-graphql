@@ -730,7 +730,7 @@
       "search-saved-searches": "Search Saved Searches"
     },
     "search": {
-      "simple-search": "Global search in Elody",
+      "simple-search": "Global search in {applicationTitle}",
       "noresult": "No results match your filters",
       "noresult-nofilters": "No results found",
       "asset-library": "Search Asset Library...",
