@@ -737,7 +737,11 @@
       "mediafile-library": "Search Mediafiles...",
       "tipMap": "Try adjusting or removing filters, or moving to another area to see results",
       "tip": "Try adjusting or removing filters to see results",
-      "search-placeholder": "Search…"
+      "search-placeholder": "Search…",
+      "hint-search": "Search",
+      "hint-close": "Close",
+      "all-types": "All types",
+      "types-active": "{active} of {total} types"
     },
     "language": {
       "nl": "Dutch",
