@@ -35,6 +35,10 @@ export const elodyFormattersConfig: FormattersConfig = {
       background: '#daecdd',
       text: '#0b8319',
     },
+    expired: {
+      background: "#d3dae6",
+      text: "#334155",
+    },
     modified: {
       background: '#ecdada',
       text: '#ac1113',
