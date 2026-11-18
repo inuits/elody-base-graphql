@@ -104,6 +104,7 @@ export const baseFragments = gql`
     canCreateEntityFromOption
     deferEntityCreation
     metadataKeyToCreateEntityFromOption
+    metadataToCreateEntityFromOption
     optionsOrderByKey
     optionLabelKeys
     advancedFilterInputForRetrievingOptions {

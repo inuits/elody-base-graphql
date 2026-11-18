@@ -511,6 +511,7 @@ export const baseSchema = gql`
     canCreateEntityFromOption: Boolean
     deferEntityCreation: Boolean
     metadataKeyToCreateEntityFromOption: String
+    metadataToCreateEntityFromOption: JSON
     advancedFilterInputForRetrievingOptions: [AdvancedFilterInputType!]
     advancedFilterInputForRetrievingRelatedOptions: [AdvancedFilterInputType!]
     optionsOrderByKey: String
