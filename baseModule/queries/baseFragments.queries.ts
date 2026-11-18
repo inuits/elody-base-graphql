@@ -64,6 +64,7 @@ export const baseFragments = gql`
       optionsLimit
       facetsLimit
     }
+    optionLabelKeys
     defaultMatcher
     allowedMatchers
     useOldWayToFetchOptions
@@ -85,6 +86,7 @@ export const baseFragments = gql`
         mapping
       }
       resolveDefaultValueToOptionIds
+      preferredOptionIds
     }
     tooltip(value: true)
     includeDefaultValuesFromIntialValues
@@ -185,6 +187,7 @@ export const baseFragments = gql`
       key
       hidden
       entitySourceKey
+      isCandidateList
       inputField {
         ...inputfieldBase
         validation {

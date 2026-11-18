@@ -2753,6 +2753,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     entitySourceKey: async (parent: any, _args: any) => {
       return parent.entitySourceKey ?? null;
     },
+    isCandidateList: async (parent: any, _args: any) => {
+      return parent.isCandidateList ?? false;
+    },
   },
   Validation: {
     value: async (parent: any, _args: any) => {
@@ -3062,6 +3065,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         distinctBy,
         filterOptionsMapping,
         limitConfig,
+        optionLabelKeys,
         operator,
         facets,
         bucket,
@@ -3110,6 +3114,7 @@ export const baseResolver: Resolvers<ContextValue> = {
         entityType,
         filterOptionsMapping,
         limitConfig,
+        optionLabelKeys,
         operator,
         facets,
         bucket,

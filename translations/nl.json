@@ -402,7 +402,8 @@
     },
     "autocomplete": {
       "remove-chip": "Verwijder",
-      "find-more-options-placeholder": "Typ om meer opties te zoeken"
+      "find-more-options-placeholder": "Typ om meer opties te zoeken",
+      "choose-candidate": "Meerdere entiteiten gevonden, kies de juiste"
     },
     "form": {
       "create": "Creëer"

@@ -470,6 +470,7 @@ export const baseSchema = gql`
     inputField: InputField
     hidden: Boolean
     entitySourceKey: String
+    isCandidateList: Boolean
   }
 
   type MetadataOnRelationFieldConfig {
@@ -2569,6 +2570,7 @@ export const baseSchema = gql`
     facets: [FacetInputInput!]
     defaultValueMapping: [ValueMappingInput]
     resolveDefaultValueToOptionIds: Boolean
+    preferredOptionIds: String
   }
 
   input ValueMappingInput {
@@ -2649,6 +2651,7 @@ export const baseSchema = gql`
     metadataKeyAsLabel: String
     filterOptionsMapping: FilterOptionsMappingType
     limitConfig: AdvancedFilterLimitConfigType
+    optionLabelKeys: [String!]
     useOldWayToFetchOptions: Boolean
     entityType: String
     minDropdownSearchCharacters(value: Int): Int
@@ -2701,6 +2704,7 @@ export const baseSchema = gql`
     defaultValueMapping: [ValueMapping]
     minDropdownSearchCharacters: Int
     resolveDefaultValueToOptionIds: Boolean
+    preferredOptionIds: String
   }
 
   type AdvancedFilters {
@@ -2729,6 +2733,7 @@ export const baseSchema = gql`
       metadataKeyAsLabel: String
       filterOptionsMapping: FilterOptionsMappingInput
       limitConfig: AdvancedFilterLimitConfigInput
+      optionLabelKeys: [String!]
       operator: Operator
       facets: [FacetInputInput!]
       bucket: String
