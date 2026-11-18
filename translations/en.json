@@ -790,6 +790,8 @@
       "new": "New",
       "log-out": "Log out",
       "log-in": "Log in",
+      "display-size": "Display size",
+      "display-size-auto": "Automatic ({percent})",
       "go-home": "Go back home",
       "dark-mode": "Dark mode",
       "light-mode": "Light mode",

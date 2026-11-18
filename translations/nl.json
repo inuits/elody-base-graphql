@@ -780,6 +780,8 @@
       "new": "Nieuw",
       "log-out": "Uitloggen",
       "log-in": "Inloggen",
+      "display-size": "Weergavegrootte",
+      "display-size-auto": "Automatisch ({percent})",
       "go-home": "Ga terug naar het startscherm",
       "dark-mode": "Donkere modus",
       "light-mode": "Lichte modus",
