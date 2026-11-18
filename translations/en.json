@@ -786,6 +786,8 @@
       "log-out": "Log out",
       "log-in": "Log in",
       "go-home": "Go back home",
+      "dark-mode": "Dark mode",
+      "light-mode": "Light mode",
       "users": "Users",
       "jobs": "Jobs",
       "settings": "Settings",
