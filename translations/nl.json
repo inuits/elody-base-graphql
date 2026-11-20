@@ -824,7 +824,17 @@
       "csv-template-link": "Download voorbeeld met instructies voor",
       "link-to-documentation": "Link naar de Elody CSV documentatie",
       "remove-file": "Bestand verwijderen",
-      "uploaded-of": "{done} van {total} geüpload"
+      "uploaded-of": "{done} van {total} geüpload",
+      "duplicate": {
+        "exists": "Dit bestand bestaat al",
+        "open": "Openen",
+        "link": "Koppel aan dit item",
+        "skip": "Niet koppelen",
+        "will-link": "{count} bestaande worden gekoppeld",
+        "linked-title": "Bestaande bestanden gekoppeld",
+        "linked": "{count} bestaande bestanden gekoppeld",
+        "link-failed": "Koppelen van bestaande bestanden mislukt"
+      }
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",

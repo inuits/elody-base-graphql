@@ -834,7 +834,17 @@
       "csv-template-link": "Download example with instructions for",
       "link-to-documentation": "Link to Elody CSV documentation",
       "remove-file": "Remove file",
-      "uploaded-of": "{done} of {total} uploaded"
+      "uploaded-of": "{done} of {total} uploaded",
+      "duplicate": {
+        "exists": "This file already exists",
+        "open": "Open",
+        "link": "Link to this item",
+        "skip": "Don't link",
+        "will-link": "{count} existing will be linked",
+        "linked-title": "Existing files linked",
+        "linked": "{count} existing files linked",
+        "link-failed": "Linking existing files failed"
+      }
     },
     "tagging": {
       "tag-entity": "Tag {entityType}",
