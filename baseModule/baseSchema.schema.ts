@@ -1522,6 +1522,7 @@ export const baseSchema = gql`
     actionsOnResult: ActionsOnResult
     displayCondition: DisplayCondition
     addEntitiesToForms(input: Boolean): Boolean
+    localSortKey(input: String): String
   }
 
   type DisplayCondition {

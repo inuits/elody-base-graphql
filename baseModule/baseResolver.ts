@@ -1539,6 +1539,9 @@ export const baseResolver: Resolvers<ContextValue> = {
     addEntitiesToForms: async (parent, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
     },
+    localSortKey: async (_parent, { input }) => {
+      return input ?? null;
+    },
   },
   DisplayCondition: {
     key: async (_source, { input }, { dataSources }) => {
