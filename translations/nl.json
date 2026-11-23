@@ -206,7 +206,8 @@
           "unknown": "Identifier niet te controleren",
           "must-keep-recommended": "Behoud het aanbevolen record: samenvoegen naar het andere laat zijn identifier vrij, waardoor het duplicaat bij de volgende aanmaak/import terugkomt."
         }
-      }
+      },
+      "change-order": "Volgorde wijzigen"
     },
     "modals": {
       "entityEdit": {
@@ -1027,6 +1028,38 @@
     "map": {
       "label": "Kaart",
       "open-in-new-tab": "Openen in nieuw tabblad"
+    },
+    "reorder": {
+      "change-order": "Volgorde wijzigen",
+      "changing-order": "Volgorde wijzigen",
+      "hint": "Sleep rijen, typ een positie (1–{total}) of gebruik de pijlen. Verplaatsen kan over pagina's heen.",
+      "save": "Volgorde opslaan",
+      "cancel": "Annuleren",
+      "saved": "Volgorde opgeslagen",
+      "count": "{count} items",
+      "position": "Positie",
+      "filename": "Bestandsnaam",
+      "move": "Verplaatsen",
+      "move-up": "Omhoog",
+      "move-down": "Omlaag",
+      "to-end-of-page": "Naar einde van pagina {page}",
+      "to-start-of-page": "Naar begin van pagina {page}",
+      "drop-end-of-page": "Hier neerzetten → einde van pagina {page}",
+      "drop-start-of-page": "Hier neerzetten → begin van pagina {page}",
+      "moved": "{name} verplaatst naar positie {position} (pagina {page})",
+      "go-to-page": "Naar pagina {page}",
+      "dismiss": "Sluiten",
+      "page": "Pagina {page}",
+      "positions": "posities {from}–{to}",
+      "drag": "Sleep om te verplaatsen",
+      "back": "Terug",
+      "sheet-title": "{name} verplaatsen",
+      "sheet-where": "Nu op positie {position} van {total} · pagina {page}",
+      "to-start": "Naar begin",
+      "up-one": "Eén omhoog",
+      "down-one": "Eén omlaag",
+      "to-end": "Naar einde",
+      "move-to-position": "Naar positie"
     }
   }
 }

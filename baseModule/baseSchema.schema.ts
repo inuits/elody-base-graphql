@@ -990,6 +990,7 @@ export const baseSchema = gql`
     downloadMediafiles
     downloadMediafilesDirectly
     reorderEntities
+    changeOrder
     exportCsv
     exportXlsx
     exportCsvOfMediafilesFromAsset

@@ -203,7 +203,8 @@
           "unknown": "Identifier cannot be checked",
           "must-keep-recommended": "Keep the recommended record: merging into the other one leaves its identifier free, so the duplicate comes back on the next import."
         }
-      }
+      },
+      "change-order": "Change order"
     },
     "modals": {
       "entityEdit": {
@@ -1039,6 +1040,38 @@
     "map": {
       "label": "Map",
       "open-in-new-tab": "Open in new tab"
+    },
+    "reorder": {
+      "change-order": "Change order",
+      "changing-order": "Changing order",
+      "hint": "Drag rows, type a position (1–{total}) or use the arrows. Moves can cross pages.",
+      "save": "Save order",
+      "cancel": "Cancel",
+      "saved": "Order saved",
+      "count": "{count} items",
+      "position": "Position",
+      "filename": "Filename",
+      "move": "Move",
+      "move-up": "Move up",
+      "move-down": "Move down",
+      "to-end-of-page": "Move to end of page {page}",
+      "to-start-of-page": "Move to start of page {page}",
+      "drop-end-of-page": "Drop here → end of page {page}",
+      "drop-start-of-page": "Drop here → start of page {page}",
+      "moved": "{name} moved to position {position} (page {page})",
+      "go-to-page": "Go to page {page}",
+      "dismiss": "Dismiss",
+      "page": "Page {page}",
+      "positions": "positions {from}–{to}",
+      "drag": "Drag to reorder",
+      "back": "Back",
+      "sheet-title": "Move {name}",
+      "sheet-where": "Now at position {position} of {total} · page {page}",
+      "to-start": "To start",
+      "up-one": "Up one",
+      "down-one": "Down one",
+      "to-end": "To end",
+      "move-to-position": "Move to position"
     }
   }
 }
