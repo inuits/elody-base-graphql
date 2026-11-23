@@ -15,6 +15,9 @@
     "target": "es6",
     "skipLibCheck": true,
     "baseUrl": "./",
+    "paths": {
+      "vite": ["node_modules/vite/dist/node/index.d.ts"],
+    },
   },
   "exclude": [
     "node_modules",
