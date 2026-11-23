@@ -414,7 +414,16 @@ export const resolveIntialValueRelationMetadata = async (
           uuid,
           Entitytyping.BaseEntity
         );
-        label = findRelationMetadata(relatedEntity, parent.id);
+        const relatedKeys = [
+          relatedEntity?.id,
+          ...(relatedEntity?.identifiers ?? []),
+        ].filter((relatedKey) => relatedKey && relatedKey !== uuid);
+        for (const relatedKey of relatedKeys) {
+          label = findRelationMetadata(parent, relatedKey);
+          if (label !== undefined) break;
+        }
+        if (label === undefined)
+          label = findRelationMetadata(relatedEntity, parent.id);
       }
 
       if (label === undefined) label = '';
