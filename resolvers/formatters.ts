@@ -38,7 +38,7 @@ const handleLinkFormatterFromEntity = ({
   label: string;
   link: string;
   openInNewTab: boolean;
-  entity: (BaseEntity & { metadata: Metadata[] }) | string;
+  entity: Pick<BaseEntity, 'id' | 'uuid' | 'type'> | string;
 } => {
   let value: string =
     entity?.[formatterSettings.value as keyof BaseEntity] || '';
@@ -58,7 +58,10 @@ const handleLinkFormatterFromEntity = ({
   return {
     label,
     link: link.replace('$value', value),
-    entity,
+    entity:
+      entity && typeof entity === 'object'
+        ? { id: entity.id, uuid: entity.uuid, type: entity.type }
+        : entity,
     openInNewTab: formatterSettings.openInNewTab || false,
   };
 };
