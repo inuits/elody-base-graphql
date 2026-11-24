@@ -853,6 +853,7 @@ export const baseSchema = gql`
     Crop
     Cancel
     Table
+    Th
     Sitemap
     Wrench
   }

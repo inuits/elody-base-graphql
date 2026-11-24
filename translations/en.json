@@ -754,14 +754,10 @@
       "new": "New",
       "no-media": "No media",
       "view-mode": "View",
-      "grid-size": {
-        "label": "Card size",
-        "large": "Large",
-        "compact": "Compact"
-      },
       "view-modes": {
         "list": "List view",
         "grid": "Grid view",
+        "grid-compact": "Compact grid view",
         "table": "Table view",
         "media": "Media view",
         "map": "Map view",
