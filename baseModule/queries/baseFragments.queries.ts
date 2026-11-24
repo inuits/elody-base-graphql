@@ -94,6 +94,7 @@ export const baseFragments = gql`
 
   fragment inputfieldBase on InputField {
     type
+    selectedOptions
     options {
       icon
       label

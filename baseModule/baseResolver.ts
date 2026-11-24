@@ -1,3 +1,4 @@
+import { resolveSelectedOptions } from '../resolvers/selectedOptionsResolver';
 import { saveEntityRelations } from '../resolvers/saveEntityRelations';
 import {
   isMetaDataRelation,
@@ -1818,7 +1819,7 @@ export const baseResolver: Resolvers<ContextValue> = {
       return input;
     },
     inputField: async (parent: any, { type }, { dataSources }) => {
-      return baseFields[type];
+      return baseFields[type] && { ...baseFields[type], __entity: parent };
     },
     nonEditableField: async (parent: any, { input }, { dataSources }) => {
       return input !== undefined ? input : false;
@@ -2591,6 +2592,13 @@ export const baseResolver: Resolvers<ContextValue> = {
   InputField: {
     fieldName: async (parent, { input }, { dataSources }) => {
       return input || '';
+    },
+    selectedOptions: async (parent: any, _args, { dataSources }, info) => {
+      const inEntityView = info.path
+        ? JSON.stringify(info.path).includes('"entityView"')
+        : false;
+      if (!inEntityView || !parent.__entity) return null;
+      return resolveSelectedOptions(parent, parent.__entity, dataSources);
     },
     type: async (parent, _args, { dataSources }) => {
       return parent.type;

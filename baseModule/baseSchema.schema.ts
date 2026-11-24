@@ -503,6 +503,7 @@ export const baseSchema = gql`
   type InputField {
     fieldName(input: String): String
     type: String!
+    selectedOptions: JSON
     validation(input: ValidationInput): Validation
     options: [DropdownOption]
     subFields: [SubField]
