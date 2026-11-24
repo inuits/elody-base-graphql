@@ -2,7 +2,8 @@ import { AuthRESTDataSource } from '../auth/AuthRESTDataSource';
 import { Express, Request, Response } from 'express';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
-import { getClientOrigin } from '../helpers/helpers';
+import { extractErrorCode, getClientOrigin } from '../helpers/helpers';
+import { orderEndpointUrl } from './orderEndpointUrl';
 
 export const applyDownloadEndpoint = (app: Express) => {
   app.post(
@@ -10,7 +11,6 @@ export const applyDownloadEndpoint = (app: Express) => {
     async (request: Request, response: Response) => {
       try {
         const environment: Environment = getCurrentEnvironment();
-        const returnType = request.query['return_type'];
         const clientIp: string = request.headers['x-forwarded-for'] as string;
         const clientOrigin: string | undefined = getClientOrigin(
           request.headers
@@ -22,11 +22,17 @@ export const applyDownloadEndpoint = (app: Express) => {
           clientOrigin,
         });
         const result = await datasource.post(
-          `${environment.api.collectionApiUrl}/entities/${
-            request.body.parentId
-          }/order?order_by=order${
-            returnType ? `&return_type=${returnType}` : ''
-          }`,
+          orderEndpointUrl(
+            environment.api.collectionApiUrl,
+            request.body.parentId,
+            {
+              order_by: 'order',
+              return_type: request.query['return_type'] as string | undefined,
+              relation_type: request.query['relation_type'] as
+                | string
+                | undefined,
+            }
+          ),
           {
             method: 'GET',
           }
@@ -34,11 +40,11 @@ export const applyDownloadEndpoint = (app: Express) => {
         response.status(200).setHeader('Content-Type', 'text/csv');
         response.end(result);
       } catch (exception: any) {
-        const status = exception.extensions.response.status || 500;
-        const statusText =
-          exception.extensions.response.statusText || String(exception);
-        response.status(status).end(statusText);
-        response.end(JSON.stringify(exception));
+        response
+          .status(extractErrorCode(exception))
+          .end(
+            exception?.extensions?.response?.statusText || String(exception)
+          );
       }
     }
   );

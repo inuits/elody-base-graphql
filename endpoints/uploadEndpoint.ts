@@ -3,6 +3,7 @@ import { Express, Request, Response } from 'express';
 import { extractErrorCode, getClientOrigin } from '../helpers/helpers';
 import { getCurrentEnvironment } from '../environment';
 import { Environment } from '../types/environmentTypes';
+import { orderEndpointUrl } from './orderEndpointUrl';
 
 export const applyUploadEndpoint = (app: Express) => {
   const env: Environment = getCurrentEnvironment();
@@ -78,7 +79,15 @@ export const applyUploadEndpoint = (app: Express) => {
           clientOrigin,
         });
         const result = await datasource.post(
-          `${env.api.collectionApiUrl}/entities/${request.query.parentId}/order`,
+          orderEndpointUrl(
+            env.api.collectionApiUrl,
+            request.query.parentId as string,
+            {
+              relation_type: request.query['relation_type'] as
+                | string
+                | undefined,
+            }
+          ),
           {
             method: 'POST',
             headers: {
