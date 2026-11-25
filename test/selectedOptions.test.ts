@@ -207,6 +207,71 @@ describe('buildSelectedOptionsRequest', () => {
     }
   );
 
+  it('takes the entity type from the type filter when the field has no entityType', () => {
+    const inscription = {
+      id: 'AICAP0001_001MAr01',
+      uuid: 'u',
+      type: 'inscription',
+    };
+    const request = buildSelectedOptionsRequest(
+      {
+        type: 'dropdownSingleselectRelations',
+        relationType: 'ref_support',
+        advancedFilterInputForRetrievingOptions: [
+          {
+            type: 'text',
+            key: ['aicap:1|properties.name.value'],
+            value: '*',
+            match_exact: false,
+          },
+          { type: 'type', value: 'support' },
+        ],
+        relationFilter: {
+          type: 'selection',
+          key: ['aicap:1|id'],
+          value: '$relationValues.ref_support.key',
+          match_exact: true,
+          item_types: [],
+        },
+      },
+      inscription,
+      { ref_support: [{ key: 'SU-61LW0U4L0', type: 'ref_support' }] }
+    );
+    expect(request).toStrictEqual({
+      type: 'support',
+      limit: 20,
+      skip: 1,
+      searchValue: { value: '', key: 'title', order_by: '' },
+      advancedFilterInputs: [
+        {
+          type: 'type',
+          key: null,
+          value: 'support',
+          match_exact: null,
+          item_types: [],
+        },
+        {
+          lookup: null,
+          type: 'selection',
+          key: ['aicap:1|id'],
+          value: ['SU-61LW0U4L0'],
+          match_exact: true,
+          item_types: [],
+        },
+      ],
+    });
+  });
+
+  it('leaves it to the PWA when no entity type is known', () => {
+    expect(
+      build({
+        ...fields.genreTypeField,
+        entityType: undefined,
+        advancedFilterInputForRetrievingOptions: [],
+      })
+    ).toBeUndefined();
+  });
+
   it('uses the reverse relation when the field has no relation filter', () => {
     const request = build({
       type: 'dropdownMultiselectRelations',
