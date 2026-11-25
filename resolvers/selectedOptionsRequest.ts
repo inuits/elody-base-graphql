@@ -110,7 +110,7 @@ export const buildSelectedOptionsRequest = (
 ): SelectedOptionsRequest | undefined => {
   if (!field || !RELATION_FIELD_TYPES.has(field.type)) return undefined;
   if (field.resolveOptionsFilterOnModalParent) return undefined;
-  if (!field.entityType || !entity?.id) return undefined;
+  if (!entity?.id) return undefined;
   const relationType = field.relationType || field.fromRelationType;
   if (!relationType) return undefined;
 
@@ -148,6 +148,7 @@ export const buildSelectedOptionsRequest = (
     advancedFilterInputs = [relationFilter];
   }
 
+  if (!type) return undefined;
   return {
     type,
     limit: 20,
