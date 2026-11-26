@@ -54,6 +54,13 @@ export const configureFrontendForEnvironment = (
   if (vite) {
     app.use(vite.middlewares);
   } else {
+    app.use(
+      '/static-assets-pwa',
+      express.static(path.join(frontendPath, 'static-assets-pwa'), {
+        immutable: true,
+        maxAge: '1y',
+      })
+    );
     app.use(express.static(frontendPath));
   }
 
