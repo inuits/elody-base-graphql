@@ -606,7 +606,6 @@ export const baseSchema = gql`
     SearchAi
     SaveSearch
     SaveSearchPicker
-    ElodyEntityTaggingModal
     EntityDetailModal
     IiifOperationsModal
     EntityEditModal
@@ -2117,7 +2116,6 @@ export const baseSchema = gql`
 
   input TaggableEntityConfigurationInput {
     taggableEntityType: Entitytyping!
-    createNewEntityFormQuery: String # Not needed by the inline-trigger flow, which has no create-new step
     relationType: String!
     metadataFilterForTagContent: String # Unused by a BaseEntity configuration, which searches and labels via the client's simple-search setup
     replaceCharacterFromTagSettings: [CharacterReplacementSettingsInput]
@@ -2131,7 +2129,6 @@ export const baseSchema = gql`
 
   type TaggableEntityConfiguration {
     taggableEntityType: Entitytyping!
-    createNewEntityFormQuery: String
     relationType: String!
     metadataFilterForTagContent: String # Unused by a BaseEntity configuration, which searches and labels via the client's simple-search setup
     replaceCharacterFromTagSettings: [CharacterReplacementSettings]

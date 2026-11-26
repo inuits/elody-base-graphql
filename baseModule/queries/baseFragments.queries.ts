@@ -387,7 +387,6 @@ export const baseFragments = gql`
 
   fragment taggableEntityConfiguration on TaggableEntityConfiguration {
     taggableEntityType
-    createNewEntityFormQuery
     relationType
     metadataFilterForTagContent
     replaceCharacterFromTagSettings {

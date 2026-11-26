@@ -588,10 +588,6 @@
       "link-to-documentation": "رابط إلى وثائق Elody الخاصة بـ CSV"
     },
     "tagging": {
-      "tag-entity": "إضافة وسم لـ {entityType}",
-      "tag-existing": "اختر {entityType} موجود",
-      "tag-selected-button": "إضافة وسم لـ {entityType} المحدد",
-      "tag-new": "إنشاء {entityType} جديد",
       "configuration-entity-required": "يتطلب {entityType} للبدء في الوسم",
       "untag": "إزالة الوسم",
       "tag-via-flow": "إضافة وسم عبر تدفق موجّه"
