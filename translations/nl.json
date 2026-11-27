@@ -881,6 +881,10 @@
       "fit": "Passend",
       "zoom-in": "Inzoomen",
       "zoom-out": "Uitzoomen"
+    },
+    "maintenance": {
+      "title": "We zijn zo terug",
+      "description": "{applicationTitle} is in onderhoud. Probeer het later opnieuw."
     }
   }
 }

@@ -124,6 +124,7 @@ export interface Environment {
     userEmailMetadataKey?: string;
   };
   allowAnonymousUsers: boolean;
+  maintenanceMode: boolean;
   tenantDefiningTypes?: string;
   routerConfig: Route[];
   damsFrontend: string;
@@ -252,6 +253,7 @@ export interface FullyOptionalEnvironmentInput {
     userEmailMetadataKey?: string;
   };
   allowAnonymousUsers?: boolean;
+  maintenanceMode?: boolean;
   tenantDefiningTypes?: string;
   routerConfig?: Route[];
   damsFrontend?: string;

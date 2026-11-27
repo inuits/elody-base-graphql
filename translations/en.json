@@ -892,6 +892,10 @@
       "fit": "Fit",
       "zoom-in": "Zoom in",
       "zoom-out": "Zoom out"
+    },
+    "maintenance": {
+      "title": "We'll be right back",
+      "description": "{applicationTitle} is undergoing maintenance. Please try again later."
     }
   }
 }
