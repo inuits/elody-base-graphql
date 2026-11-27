@@ -952,6 +952,7 @@ export const baseSchema = gql`
     can: [String!]
     allowCondition: [String]
     tone: ActionTone
+    endpointInformation: EndpointInformation
   }
 
   type RouteMatching {
@@ -978,6 +979,7 @@ export const baseSchema = gql`
     can: [String!]
     allowCondition: [String]
     tone: ActionTone
+    endpointInformation: EndpointInformationInput
   }
 
   type DropzoneEntityToCreate {
