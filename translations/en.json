@@ -844,10 +844,6 @@
       }
     },
     "tagging": {
-      "tag-entity": "Tag {entityType}",
-      "tag-existing": "Select existing {entityType}",
-      "tag-selected-button": "Tag selected {entityType}",
-      "tag-new": "Create new {entityType}",
       "configuration-entity-required": "A {entityType} is required to be able to start tagging",
       "untag": "Untag",
       "tag-via-flow": "Tag through a guided flow"
@@ -1068,6 +1064,10 @@
       "down-one": "Down one",
       "to-end": "To end",
       "move-to-position": "Move to position"
+    },
+    "maintenance": {
+      "title": "We'll be right back",
+      "description": "{applicationTitle} is undergoing maintenance. Please try again later."
     }
   }
 }

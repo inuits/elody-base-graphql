@@ -3295,7 +3295,6 @@ export type TagConfigurationByEntityInput = {
 
 export type TaggableEntityConfiguration = {
   __typename?: 'TaggableEntityConfiguration';
-  createNewEntityFormQuery: Scalars['String'];
   metadataFilterForTagContent: Scalars['String'];
   metadataKeysToSetAsAttribute?: Maybe<Array<Maybe<Scalars['String']>>>;
   relationType: Scalars['String'];
@@ -3308,7 +3307,6 @@ export type TaggableEntityConfiguration = {
 };
 
 export type TaggableEntityConfigurationInput = {
-  createNewEntityFormQuery: Scalars['String'];
   metadataFilterForTagContent: Scalars['String'];
   metadataKeysToSetAsAttribute?: InputMaybe<
     Array<InputMaybe<Scalars['String']>>
@@ -3377,7 +3375,6 @@ export enum TypeModals {
   Confirm = 'Confirm',
   Delete = 'Delete',
   DynamicForm = 'DynamicForm',
-  ElodyEntityTaggingModal = 'ElodyEntityTaggingModal',
   EntityDetailModal = 'EntityDetailModal',
   IiifOperationsModal = 'IiifOperationsModal',
   SaveSearch = 'SaveSearch',
@@ -8907,11 +8904,6 @@ export type TaggableEntityConfigurationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['TaggableEntityConfiguration'] = ResolversParentTypes['TaggableEntityConfiguration']
 > = {
-  createNewEntityFormQuery?: Resolver<
-    ResolversTypes['String'],
-    ParentType,
-    ContextType
-  >;
   metadataFilterForTagContent?: Resolver<
     ResolversTypes['String'],
     ParentType,

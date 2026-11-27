@@ -135,6 +135,7 @@ export const baseEnvironment: Environment = {
   },
   allowAnonymousUsers:
     process.env.ALLOW_ANONYMOUS_USERS?.toLowerCase() === 'true',
+  maintenanceMode: process.env.MAINTENANCE_MODE?.toLowerCase() === 'true',
   routerConfig: [],
   damsFrontend:
     process.env.DAMS_FRONTEND_URL || 'http://dashboard.dams.localhost:8100',
