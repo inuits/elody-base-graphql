@@ -74,6 +74,7 @@ export const getConfig = (config: Environment) => {
       theme: config.customization.theme,
     },
     allowAnonymousUsers: config.allowAnonymousUsers,
+    maintenanceMode: config.maintenanceMode,
     tenantDefiningTypes: config.tenantDefiningTypes,
     routerConfig: config.routerConfig,
     bulkSelectAllSizeLimit: config.bulkSelectAllSizeLimit,
@@ -352,6 +353,17 @@ export const applyAppConfigsEndpoint = (
 ) => {
   app.get('/api/app-configs', async (req, res) => {
     const appConfig = getConfig(config);
+    const translationsAndVersion = {
+      translations: getAvailableTranslations(config, translations),
+      urlMapping,
+      version: { 'apollo-graphql-version': config.version },
+    };
+    // The backend may be down during maintenance; the PWA only shows the
+    // maintenance screen, so it needs nothing that comes from there.
+    if (config.maintenanceMode) {
+      res.end(JSON.stringify({ config: appConfig, ...translationsAndVersion }));
+      return;
+    }
     const [moduleFeatures, simpleSearch, routerConfig] = await Promise.all([
       resolveModuleFeatures(req, requestContext),
       resolveSimpleSearch(
@@ -377,9 +389,7 @@ export const applyAppConfigsEndpoint = (
             ...simpleSearch,
           },
         },
-        translations: getAvailableTranslations(config, translations),
-        urlMapping,
-        version: { 'apollo-graphql-version': config.version },
+        ...translationsAndVersion,
       })
     );
   });

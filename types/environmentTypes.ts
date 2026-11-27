@@ -129,6 +129,7 @@ export interface Environment {
     theme?: Record<string, string>;
   };
   allowAnonymousUsers: boolean;
+  maintenanceMode: boolean;
   tenantDefiningTypes?: string;
   routerConfig: Route[];
   damsFrontend: string;
@@ -262,6 +263,7 @@ export interface FullyOptionalEnvironmentInput {
     theme?: Record<string, string>;
   };
   allowAnonymousUsers?: boolean;
+  maintenanceMode?: boolean;
   tenantDefiningTypes?: string;
   routerConfig?: Route[];
   damsFrontend?: string;

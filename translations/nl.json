@@ -1052,6 +1052,10 @@
       "down-one": "Eén omlaag",
       "to-end": "Naar einde",
       "move-to-position": "Naar positie"
+    },
+    "maintenance": {
+      "title": "We zijn zo terug",
+      "description": "{applicationTitle} is in onderhoud. Probeer het later opnieuw."
     }
   }
 }

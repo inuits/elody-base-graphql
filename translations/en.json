@@ -1064,6 +1064,10 @@
       "down-one": "Down one",
       "to-end": "To end",
       "move-to-position": "Move to position"
+    },
+    "maintenance": {
+      "title": "We'll be right back",
+      "description": "{applicationTitle} is undergoing maintenance. Please try again later."
     }
   }
 }
