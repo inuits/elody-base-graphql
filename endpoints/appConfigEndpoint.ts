@@ -350,6 +350,7 @@ export const applyAppConfigsEndpoint = (
   urlMapping: TypeUrlMapping,
   requestContext?: AppConfigRequestContext
 ) => {
+  let availableTranslations: ReturnType<typeof getAvailableTranslations>;
   app.get('/api/app-configs', async (req, res) => {
     const appConfig = getConfig(config);
     const [moduleFeatures, simpleSearch, routerConfig] = await Promise.all([
@@ -366,21 +367,20 @@ export const applyAppConfigsEndpoint = (
         requestContext
       ),
     ]);
-    res.end(
-      JSON.stringify({
-        config: {
-          ...appConfig,
-          routerConfig,
-          features: {
-            ...appConfig.features,
-            ...moduleFeatures,
-            ...simpleSearch,
-          },
+    availableTranslations ??= getAvailableTranslations(config, translations);
+    res.json({
+      config: {
+        ...appConfig,
+        routerConfig,
+        features: {
+          ...appConfig.features,
+          ...moduleFeatures,
+          ...simpleSearch,
         },
-        translations: getAvailableTranslations(config, translations),
-        urlMapping,
-        version: { 'apollo-graphql-version': config.version },
-      })
-    );
+      },
+      translations: availableTranslations,
+      urlMapping,
+      version: { 'apollo-graphql-version': config.version },
+    });
   });
 };
